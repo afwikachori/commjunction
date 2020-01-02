@@ -1,60 +1,105 @@
 @extends('layout.app')
 
 @section('content')
-<!-- <div class="container"> -->
-  <div class="row" style="height: 670px;">
-    <div class="col warnain">
-      <center>
-        <img src="/pic/social.jpg" class="rounded-circle img-fluid" style="width: 22%; height: auto; margin-top: 22%; margin-bottom: 1em;">
-        <h2>Welcome to <br>
-        Community </h2>
-      </center>
-    </div>
-    <div class="col">
-    <div class="container">
-        <div class="row">
-    <div class="col">
-     <!--  1 of 3 -->
-    </div>
-    <div class="col-6" style="margin-top: 15%;">
-        <h1 style="margin-bottom: 1em;">Please login to continue</h1>
-<form>
-    <div class="form-group">
-     <input type="email" class="form-control" id="keyloginsubs"  placeholder="Enter email">
+<div class="row">
+    <div class="col-sm biruq">
+      <img src="/visual/commjuction.png" id="login-left-commjuction">
+
+    <div class="container subs_judul">
+      <h2 lang="en">Lets Get Started</h2>
+      <h5  lang="en">Gathering data with a smart application that trusted and fastest.</h5>
     </div>
 
-    <div class="input-group mb-3">
-  <input class="form-control" id="pass_subs" type="password" placeholder="Password" aria-describedby="btn_lihatpass">
-  <div class="input-group-append">
-    <button class="btn btn-outline-light" type="button" id="btn_lihatpass" onclick="showPass()" style="border-color: #ced4da;">
-         <span class="fa fa-eye" id="ico-mata" aria-hidden="true" style="color: grey;"></span>
-    </button>
-  </div>
+      <img src="/visual/loginadmin.png" id="login-left-img">
+
+    </div>
+    <div class="col-lg-4">
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-4" style="text-align: right; margin-right: 1em; margin-top: 0.5em;">
+    <a href="" class="langimg" onclick="window.lang.change('en'); return false;">
+    <img border="0" src="/img/en.png" width="30" height="30">
+    </a>
+    <a href="" class="langimg" onclick="window.lang.change('id'); return false;">
+    <img border="0" src="/img/id.png" width="30" height="30">
+    </a>
+    </div>
 </div>
 
-<button type="submit" class="btn btn-primary btn-grad" id="login_subs">Login</button>
+<div style="margin-top: 1em; margin-right: 1.5em; text-align: right;">
+ <span lang="en" class="h6 cteal">didnt have account yet ?</span>
+<a href="/subscriber/subs_personal" class="h6" id="subsregisklik" lang="en" data-lang-token="registernow">Register Now</a>
+</div>
 
-<div id="my-signin2" id="signGoogle" class="RegisterGoogle mgtop-1"></div>
+    <div class="container pdsubslogin">
+       <h2 lang="en" style="color: #4F4F4F;">Login</h2>
+       <label lang="en" class="cgrey textlogin">Please login to continue using this app</label>
 
-</form>
- <br>
-            <span class="mgtop-2">Didnt have account yet ?</span>
-            <br>
-            <a href="/subscriber/registerSubs">Register Now</a>
-            <br>
+            <!-- login  Form -->
+            <form method="POST" id="form_login_admin" action="{{route('auth_adminlogin')}}">
+
+                 {{ csrf_field() }}
+                <div class="form-group mb-3">
+                    <label class="h6 cgrey" for="input_login" lang="en">Username</label>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                </div>
+
+                <div class="form-group mb-3">
+                <label class="h6 cgrey" for="pass_subs" lang="en">Password</label>
+
+                <div class="input-group">
+                  <input class="form-control" id="pass_subs" type="password"  value="{{ old('pass_subs') }}"  class="form-control @error('pass_subs') is-invalid @enderror" name="pass_subs" required autocomplete="pass_subs" aria-describedby="btn_showpass">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-light" type="button" id="btn_showpass" onclick="showPass()" style="border-color: #ced4da;">
+                         <span class="fa fa-eye" id="ico-mata" aria-hidden="true" style="color: grey;"></span>
+                    </button>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row mb-3">
+                <div class="col">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="rememberme">
+                      <label class="h6 form-check-label cteal" for="gridCheck" style="color: rgba(14, 95, 117, 0.75);" lang="en">Remember me</label>
+                    </div>
+                </div>
+                <div class="col" style="text-align: right;">
+                    <label><a href="" class="h6" style="color: rgba(14, 95, 117, 0.4);" lang="en">Forgot password?</a></label>
+                </div>
+                </div>
+
+                <div class="form-group mb-3">
+                <button lang="en" type="submit" class="btn btn-primary" id="LoginSubscriber">Login</button>
+                </div>
+
+                <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
+
+                <center>
+                <div class="row" style="margin-bottom: 2em;">
+                    <div class="col" style="margin-bottom: 0.5em;">
+                        <div  id="signGoogle2" class="RegisterGoogle mgtop-1"></div>
+                    </div>
+                    <div class="col">
+                    
+                    </div>
+                </div> </center>
+            </form>
     </div>
-    <div class="col">
-    <!--   3 of 3 -->
-    </div>
+</div>
   </div>
-    </div>
-    </div>
-  </div>
-<!-- </div> -->
 @endsection
 
 @section('script')
 <script type="text/javascript">
+
+$( document ).ready(function() {
+
+});
+
+
  function showPass() {
   var a = document.getElementById("pass_subs");
   if (a.type == "password") {
@@ -67,21 +112,26 @@
 
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        console.log('Email: ' + profile.getEmail());
+        console.log(id_token);
+
     }
 
 
     function onSuccess(googleUser) {
         console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
     }
+
     function onFailure(error) {
         console.log(error);
     }
     function renderButton() {
-        gapi.signin2.render('my-signin2', {
+        gapi.signin2.render('signGoogle2', {
             'scope': 'profile email',
             'width': 200,
             'height': 37,

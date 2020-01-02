@@ -1,0 +1,87 @@
+*{
+    @font-face {
+    font-family: raleway;
+    src: url('src/font/raleway.ttf')  
+    format('truetype');
+    }
+    }
+
+    .commjuction-logo{
+        width: 270px;
+        height: auto;
+    }
+
+    .cgrey{
+        color: #828282;
+    }
+
+    .cgrey2{
+        color: #4F4F4F;
+    }
+
+    .clight{
+        color: #7b7b7b;
+    }
+
+    .credoren{
+        color: #F15922;
+    }
+
+    .bgimg1_email{
+        width: 330px;
+        height: auto;
+    }
+
+    .bgimg1_otp{
+        margin-top: 1.5em;
+        width: 270px;
+        height: auto;
+    }
+
+    .mgb-1{
+        margin-bottom: 1.2em;
+    }
+
+    .s15{
+        font-size: 15px;
+    }
+
+    .btn-oren{
+      background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
+      color: white;
+      border-radius: 6px;
+    }
+
+    .paynow{
+        width: 135px; 
+        margin-top: 1.5em; 
+        margin-bottom: 1.5em;
+    }
+
+    .vascomm-email{
+        width: 185px;
+    }
+
+    .abuabu{
+        color: grey;
+    }
+
+    .cd-otpq{
+    width: 23rem;
+    height: 11rem;
+    margin-top: 2em;  
+    border-radius: 10px;
+    }
+
+
+    .buletimg{
+    width: 340px;
+    position: absolute;
+    top: -10px;
+    right: -11px;
+
+    }
+
+
+
+

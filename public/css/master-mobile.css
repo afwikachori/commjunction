@@ -1,0 +1,68 @@
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 992px){
+  .modal-content {
+    width: 100%;
+  }
+
+/*//off - scrolling*/
+html, body {
+margin: 0; height: 100%; overflow: auto;
+}
+
+
+.pdcuslogin{
+  padding-top: 1.5em;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+.orenq{
+  background: linear-gradient(94.66deg, #FC6076 -2.66%, #FF9A44 102.89%);
+  height: 255px;
+  width: auto;
+}
+
+.judullogin{
+  margin-bottom: -0.3em;
+  color: white !important;
+  margin-top: 2.6em;
+}
+
+.cjudul{
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.deslogin{
+  color:white;
+  margin-top: 0.5em;
+  font-size: 15px;
+}
+
+#login-left-img{
+position: absolute;
+width: 60%;
+height: auto;
+left: 0px;
+top: 120px;
+}
+
+#LoginComm{
+	width: 263px;
+}
+
+#login-left-commjuction{
+position: absolute;
+width: 50%;
+height: auto;
+left: 45px;
+top: 30px;
+}
+
+
+
+
+
+
+} /*//end-@media*/
+

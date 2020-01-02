@@ -82,9 +82,6 @@
                                 <div class="form-group" id="list_priviledge">
                                     <select id="list_priviledge" name="priviledge" class="form-control">
                                     <option disabled selected> -- Select an Priviledge -- </option>
-                                        @foreach ($priviledge as $data)
-                                        <option value="{{$data->id}}" style="color: black;">{{ $data->name_priviledge }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>

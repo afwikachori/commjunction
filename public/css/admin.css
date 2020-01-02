@@ -1,0 +1,113 @@
+/*//off - scrolling*/
+html, body {
+  margin: 0; 
+  height: 100%; 
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  background: #F5F5F5;
+}
+
+body::-webkit-scrollbar
+{
+  width: 7px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+  background:linear-gradient(to bottom, #fffcaf, #ffe7a7, #ffd4aa, #ffc3b2, #ffb6bc);
+}
+
+
+
+/*/---------------------------------------------------//*/
+.card  .card-body.sumari {
+    padding: 1rem 1rem !important;
+}
+
+
+
+
+
+
+
+.btn-oren{
+  background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
+  color: white;
+  border-radius: 6px;
+}
+
+.cgrey{
+  color: #4F4F4F;;
+}
+
+.clight{
+  color: #BDBDBD !important;
+}
+
+.cteal{
+  color: #0E5F75;
+}
+
+.cteal2{
+  color: #4596ad;
+}
+
+.coren{
+  color: #FF9A44;
+}
+
+.cgrey1{
+  color: #828282;
+}
+
+.cgrey2{
+  color: #8c8c8c;
+}
+.s18{
+  font-size: 16px;
+}
+
+.s16{
+  font-size: 16px;
+}
+
+.s15{
+  font-size: 15px;
+}
+
+.s12{
+  font-size: 12px;
+}
+
+.s13{
+  font-size: 13px;
+}
+
+.s14{
+  font-size: 14px;
+}
+
+.s25{
+  font-size: 25px;
+}
+
+.s30{
+  font-size: 30px;
+}
+.s32{
+  font-size: 32px;
+}
+.s35{
+  font-size: 35px;
+}
+
+
+.sumari .card .card-body {
+    padding: 1rem 1rem !important;
+}

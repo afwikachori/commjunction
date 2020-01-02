@@ -1,151 +1,161 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container" style="margin-top: 1em;">
-  <form method="POST" id="form_idfitur" action="{{route('sendfeature')}}">{{ csrf_field() }}
+<nav class="navbar nav-oren">
+</nav>
+<img src="/visual/vs-pricing.png" id="shadow-fiturq">
+ <form method="POST" id="form_idfitur" action="{{route('sendfeature')}}">{{ csrf_field() }}
 
-  <div class="row">
-    <div class="col-2-md">
-     <button type="button" class="btn btn-outline-light" onclick="window.location.href = '/admin/pricing'">
-     	<span style="color: black; font-size: 19px;">Back</span>
-     </button>
-    </div>
-    <div class="col" style="text-align: right;">
-     <span style="font-size: 19px;">Feature Selected &nbsp; <span id="hitungcentang"> 0 </span> / {{count($data)}} </span> 
-    </div>
-    <div class="col-2-md">
-    	<button type="submit" id="next_pilihfitur" class="btn btn-primary btn-md btn-block">Next</button>
-    </div>
-  </div>
-  <!-- ---- -->
- <div class="row">
-    <div class="col-sm">
-      
-    </div>
-    <div class="col-md-10">
-  <h1 style="margin-top: 0.7em; margin-bottom: 0.7em;">Choose your Feature</h1>
+<a href="/admin/pricing">
+<img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
+</a><a href="/admin/pricing" class="clight backarrow">Back to Pricing</a>
 
-   @foreach($data as $newdata)
-    <!-- {{ $newdata['id'] }}
-    {{ $newdata['logo'] }}
-    {{ $newdata['title'] }}
-    {{ $newdata['description'] }} -->
-   @endforeach
+<div class="mg-pricing">
+<!-- @if (Session::has('datafitur')) -->
+<div class="row">
+  <div class="col-9">
+    <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Choose Your Features</h4>
+@if (Session::has('idaddfitur'))
+<input type="hidden" name="idaddfitur" id="idaddfitur" value="{{ Session::get('idaddfitur') }}">
+@endif
 
-  <div class="card-deck">
-
- @foreach($data as $newdata)
-   <div class="col-sm-3" style="padding-bottom: 1em;">
-    <center>
-<div class="card feature-kotak">
-  <div class="card-body">
-    <div class="roundcheck">
+<div class="row">
+ @foreach(Session::get('datafitur') as $newdata)
+<div class="col-3">
+    <div class="card" style="width: 10rem; height: 10.5rem; margin-top: 1em;">
+  <div class="card-body" style="padding: 1em !important;">
+  <div class="roundcheck">
     <input type="checkbox" class="boxfitur" name="feature_id[]" id="fitur{{ $newdata['id'] }}"  value=" {{ $newdata['id'] }}"/>
     <label for="fitur{{ $newdata['id'] }}"></label>
   </div>
-    <img src="http://21.0.0.108:2312{{ $newdata['logo'] }}" class="rounded-circle img-fluid img-feature">
-    <h4 class="card-text judul-fitur"> {{ $newdata['title'] }}</h4>
-    <a href="#" class="btn btn-primary btn-sm btn-detail-feature" data-toggle="modal" data-target="#mdl_detail_fitur{{ $newdata['id'] }}">Details</a>
+  <center>
+    <img class="rounded-circle img-fluid" src="{{ env('CDN').$newdata['logo'] }}" style="width: 45px; margin-bottom: 0.5em;">
+    <h6 class="cgrey">{{ $newdata['title'] }}</h6>
+    <small class="clight">{{ $newdata['description'] }}</small>
+  </center>
+  <div class="detail-fiturq">
+  <a href="/admin/features_detail/{{ $newdata['id'] }}">
+    <small lang="en" class="txt_detail_fitur h6 s13"> More detail
+   <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></small></a>
+ </div>
   </div>
 </div>
-</center>
+</div>
+@endforeach
+
+
+
+</div> <!-- end-row -->
+
+
+  </div> <!-- end-col 10 -->
+
+  <div class="col-3">
+    <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Popular</h4>
+    <div class="row">
+      <div class="col-3">
+        <center>
+        <img src="/visual/img-fitur-default.png" class="rounded-circle img-fluid"  style="width: 45px; height: auto;"></center>
+      </div>
+      <div class="col">
+        <h6 class="clight s15" style="margin-top: 0.5em;">Name Featured</h6>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-3">
+        <center>
+        <img src="/visual/img-fitur-default.png" class="rounded-circle img-fluid"  style="width: 45px; height: auto;"></center>
+      </div>
+      <div class="col">
+        <h6 class="clight s15" style="margin-top: 0.5em;">Name Featured</h6>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
-@endforeach
+<!-- <div class="row"> -->
+<center>
 
+ <span class="cgrey1 s16">
+ <span id="hitungcentang"> 0 </span>
+  / {{count($newdata)}} &nbsp; Feature Selected </span>
+
+<button type="submit" id="next_pilihfitur" class="btn btn-oren s14 btn-md btn-block">Next</button>
+</center>
+
+<!-- @endif -->
 </div>
-    </div>
-    <div class="col-sm">
-      
-    </div>
-  </div>
 </form>
-</div> <!-- ///end-container -->
-
- @foreach($data as $dt)
-<!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="mdl_detail_fitur{{ $dt['id'] }}" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="height: 60%;">
-      <div class="modal-header customwika">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div class="row" style="margin-top: -25px;">
-  <div class="col">
-    <center class="popku"><img src="http://21.0.0.108:2312{{ $dt['logo'] }}" class="rounded-circle img-fluid img-feature"></center>
-    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-    </div>
-  </div>
-  <div class="col-md-9 kasihwarna">
-    <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">1...</div>
-      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">.2..</div>
-      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">.3..</div>
-      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">..4.</div>
-    </div>
-  </div>
-</div>
-      </div>
-    </div>
-  </div>
-</div>
-@endforeach
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
-$(document).ready(function () {
+var cdn = '{{env("CDN")}}';  
 
+$(document).ready(function () {
+get_session_fitur();
 
 });
 
-$('.boxfitur').click(function(){  
-  var ceklis = $('input[type="checkbox"]:checked').length;
+
+
+function get_session_fitur(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/session_fitur',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+var idaddfitur = $("#idaddfitur").val();
+
+if(idaddfitur != ""){
+$('#fitur'+idaddfitur).prop('checked', 'checked');
+}
+
+        for(var i=0; i<result.length; i++){
+  $('#fitur'+result[i]).prop('checked', 'checked');
+}
+ var ceklis = $('input[type="checkbox"]:checked').length;
+
       if($(this).is(':checked')){
         $("#hitungcentang").text(ceklis);
+        $("#next_pilihfitur").removeAttr("disabled");
       }else{
+        if(ceklis == 0){
+          $("#next_pilihfitur").attr("disabled", true);
+        }
+         $("#hitungcentang").text(ceklis);
+      }
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Pricing");
+    }
+});
+}
+
+
+
+$('.boxfitur').click(function(){  
+ var ceklis = $('input[type="checkbox"]:checked').length;
+
+      if($(this).is(':checked')){
+        $("#hitungcentang").text(ceklis);
+        $("#next_pilihfitur").removeAttr("disabled");
+      }else{
+        if(ceklis == 0){
+          $("#next_pilihfitur").attr("disabled", true);
+        }
          $("#hitungcentang").text(ceklis);
       }
     });
-
-
-      $('#next_pilihfitur').click(function(){
-
-
-        // // alert("klik");
-        // var val = [];
-        // $(':checkbox:checked').each(function(i){
-        //   val[i] = $(this).val();
-        //   var myJsonString = JSON.stringify(val[i]);
-
-        //   console.log(myJsonString );
-        });
-     
-
-// function kirim_idfitur(){
-//   $.ajaxSetup({
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-// });
-// $.ajax({
-//     url: "/get_pricing_com",
-//     type: "POST",
-//     dataType: "json",
-//     success: function (status, code, data) {
-//     // console.log(status.data);
-   
-// });
-
-// }
 
 </script>
 @endsection

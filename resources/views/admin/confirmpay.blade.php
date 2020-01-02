@@ -3,28 +3,11 @@
 @section('content')
 <div class="container">
 	<center>
-		<h1 style="margin-top: 1.3em; margin-bottom: 1em;">Choose payment method !</h1>
+		<h1 style="margin-top: 1.3em; margin-bottom: 1em;">Please Confirm your Regsitrasion !</h1>
 
-@for ($i = 1; $i < 5; $i++)
-<div class="card" style="margin-bottom: 1em; width: 40%; border-radius: 20px;">
-  <div class="card-body" style="padding: 0.5rem;">
-  <div class="row">
-    <div class="col-sm-4" style="text-align: center;">
-     <img src="/pic/pay{{ $i }}.png" class="rounded-circle img-fluid img-feature-pay">
-    </div>
-    <div class="col-sm-3">
-   </div>
-    <div class="col-sm-2">
-    	<label style="text-align: center; margin-top:0.5em;">Detail</label>
-    </div>
-    <div class="col-sm-3" style="text-align: center;">
-     <button type="button" class="btn btn-primary btn-sm" style="border-radius: 7px;margin-top: 0.5em;"  data-toggle="modal" data-target="#mdl-confrim-payment{{$i}}">Choose</button>
-    </div>
-  </div>
-  </div>
-</div>
+     <button type="button" class="btn btn-primary btn-lg" style="border-radius: 7px;margin-top: 0.5em;"  data-toggle="modal" data-target="#mdl-confrim-payment">Choose</button>
 
-<div class="modal fade" id="mdl-confrim-payment{{$i}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="mdl-confrim-payment" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
     <div class="modal-content" style="width: 95%;">
     <div class="modal-header customwika" style="margin-bottom: -30px;">
@@ -35,7 +18,7 @@
       <div class="modal-body">
         <div class="container">
        <center>
-       	<img src="/pic/pay{{ $i }}.png" class="rounded-circle img-fluid" style="width: 38%; height: auto;">
+       	<img src="" class="rounded-circle img-fluid" style="width: 38%; height: auto;">
        	<p style="font-size: 20px;">payment title</p>
 
          <form method="POST" id="form_registerfirst_admin" action="{{route('adminconfirmpay')}}" enctype="multipart/form-data">
@@ -92,9 +75,8 @@
                             @endif
               </div>
             </div>
-            <input type="text" name="id_pop_payment" id="id_pop_payment" value="{{$i}}">
 
-       	<button type="submit" id="submit{{$i}}" class="btn btn-success btn-sm" style="border-radius: 8px; margin-bottom: 1em;">Choose</button>
+       	<button type="submit" id="submit" class="btn btn-success" style="border-radius: 8px; margin-bottom: 0.5em; margin-top: 0.5em">Choose</button>
        </form>
        </center>
      </div>
@@ -102,13 +84,7 @@
     </div>
   </div>
 </div>
-@endfor
-<button type="button" class="btn btn-light" style="margin-top: 1.5em;" onclick="window.location.href='/admin/pricing'">back</button>
 
-<p style="margin-top: 3em; margin-bottom: 2em;">
-	For further information please<br>
-	read our <a href="">terms & agreement</a>
-</p>
 </center>
 </div>
 

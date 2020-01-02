@@ -4,7 +4,7 @@
 <div class="container">
 <div class="pas-tengah"><center>
 	<img src="/pic/loading.gif" class="rounded-circle img-fluid" style="width: 13%; height: auto; margin-bottom: 2em;">
-	<h2>Creating Community...</h2>
+	<h2 lang="en">Creating Community...</h2>
 	</center>
 </div>
 </div>

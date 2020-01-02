@@ -4,7 +4,7 @@
 <div class="container">
 <div class="pas-tengah"><center>
 	<img src="/pic/loading.gif" class="rounded-circle img-fluid" style="width: 13%; height: auto; margin-bottom: 2em;">
-	<h2>Sending Verifiation</h2>
+	<h2 lang="en">Sending Verifiation</h2>
 	</center>
 </div>
 </div>
