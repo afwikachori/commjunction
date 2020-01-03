@@ -26,9 +26,18 @@ body::-webkit-scrollbar-thumb
 
 
 /*/---------------------------------------------------//*/
-.card  .card-body.sumari {
+.card .card-body.sumari {
     padding: 1rem 1rem !important;
 }
+
+.top-ico{
+margin-top: -2em !important;
+}
+
+
+
+
+
 
 
 
@@ -43,7 +52,11 @@ body::-webkit-scrollbar-thumb
 }
 
 .cgrey{
-  color: #4F4F4F;;
+  color: #4F4F4F;
+}
+
+.cgrey-mid{
+  color: #777777;
 }
 
 .clight{

@@ -16,6 +16,10 @@ class RegisterController extends Controller{
         return view('admin/testing');
     }
 
+    public function ReviewAdminView(){
+        return view('admin/final_review_admin');
+    }
+
     public function cobaView(){
             return view('admin/coba');
     }
@@ -439,7 +443,7 @@ class RegisterController extends Controller{
             $json = json_decode($response, true);
             // dd($json['data']);
 
-     return redirect('admin/testing')->with('pay_type', $json['data']);
+     return redirect('admin/payment')->with('pay_type', $json['data']);
 
         // return redirect('admin/testing')->with('fixfitur', $arry);
     }

@@ -23,10 +23,11 @@
                 <div class="card-body sumari">
                   <div class="row">
                     <div class="col-9">
-                    <small>Total Transaksi</small>
+                    <small class="clight">Total Transaksi</small>
+                    <h4 class="cgrey-mid">100 Transaksi</h4>
                     </div>
                     <div class="col">
-                      <i class="mdi mdi-shopping mdi-24px float-right"></i>
+                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
                     </div>
                </div>
                 </div>
@@ -34,13 +35,52 @@
             </div>
 
             <div class="col-md-3 stretch-card grid-margin">
+
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight">Total Transaksi</small>
+                    <h4 class="cgrey-mid">100 Transaksi</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-3 stretch-card grid-margin">
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight">Total Transaksi</small>
+                    <h4 class="cgrey-mid">100 Transaksi</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-3 stretch-card grid-margin">
-
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight">Total Transaksi</small>
+                    <h4 class="cgrey-mid">100 Transaksi</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
             </div>
           </div>
 

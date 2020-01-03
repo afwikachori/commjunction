@@ -9,6 +9,8 @@ Route::get('admin/coba','RegisterController@cobaView')->name('admin/coba');
 
 Route::get('admin/testing','RegisterController@test')->name('admin/testing');
 
+Route::get('admin/reviewfinal','RegisterController@ReviewAdminView')->name('admin/reviewfinal');
+
 Route::get('admin/logoutsso','RegisterController@logoutssoView');
 
 Route::get('logout','RegisterController@logout');

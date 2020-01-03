@@ -16,29 +16,32 @@
 <h6 class="h6 cgrey1" style="margin-bottom: 1em;">Choose Payment Method</h6>
 
 @foreach(Session::get('pay_type') as $dt)
-<button type="button" class="btn btn-orenline active col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this.value);">
+<button type="button" class="btn btn-orenline col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
   <i class="fa fa-exchange "></i> 
 &nbsp; {{ $dt['payment_title'] }}</button>
 &nbsp;
 @endforeach
 
 </div>
-<div class="col-5">
+<div class="col-5" id="showhide_pay" style="display: none;">
 <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
 <br>
 <!-- //tes -->
+<form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">{{ csrf_field() }}
 
-<div class="collapse-accordion" id="accordion2" role="tablist" aria-multiselectable="true">
+<div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
 
-  <div class="card">
+<!--   <div class="card border-oren active">
     <div class="card-header" role="tab" id="headingOne1">
-      <h5 class="mb-0">
+      <h6 class="mb-0 pdb1">
         <a data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+          <img src="/img/bni.png" style="width: 10%; height: auto;"> &nbsp; &nbsp;
           Collapsible Group Item #1
-          <span class="float-right">Click me</span>
-
+          <span class="float-right">
+            <i class="fa fa-chevron-right"></i>
+          </span>
         </a>
-      </h5>
+      </h6>
     </div>
 
     <div id="collapseOne2" class="collapse show" role="tabpanel" aria-labelledby="headingOne2">
@@ -47,49 +50,14 @@
       </div>
     </div>
   </div>
-  <br>
+  <br> -->
 
-  <div class="card">
-    <div class="card-header" role="tab" id="headingTwo2">
-      <h5 class="mb-0">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
-          Collapsible Group Item #2
-                  <span class="float-right">Click me</span>
-
-        </a>
-      </h5>
-    </div>
-    <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2">
-      <div class="card-block">
-        2 We have a downloads section and we're trying to track when a user downloads something. The downloads are linked as followed:
-      </div>
-    </div>
-  </div>
-  <br>
-
-
-  <div class="card">
-    <div class="card-header" role="tab" id="headingThree2">
-      <h5 class="mb-0">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree2" aria-expanded="false" aria-controls="collapseThree2">
-          Collapsible Group Item #3 
-                  <span class="float-right">Click me</span>
-
-        </a>
-      </h5>
-    </div>
-    <div id="collapseThree2" class="collapse" role="tabpanel" aria-labelledby="headingThree2">
-      <div class="card-block">
-       3 We have a downloads section and we're trying to track when a user downloads something. The downloads are linked as followed:
-      </div>
-    </div>
-  </div>
-  <br>
 
 </div>
 <!-- //endtes -->
-
-<button type="submit" class="btn btn-oren" style="width: 150px; margin-top:2em;" lang="en">Finish</button>
+<input type="hidden" name="id_pay_method" id="id_pay_method">
+<button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
+</form>
 
 </div>
 </div>
@@ -141,11 +109,26 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
+validasi_pay_next();
 
 });
 
+function pilihpay(idpay){
+  // alert(idpay);
+  $("#id_pay_method").val(idpay);
+  $(".border-oren").removeClass("active");
+  $("#cardpay"+idpay).addClass("active");
+  $("#btn_pay_next").removeAttr("disabled");
 
-function getmethod_payment(val){
+
+}
+
+
+function getmethod_payment(ini){
+$('.btn-orenline').removeClass('active');
+$(ini).addClass('active');
+var val = ini.value;
+$('#mdl-loadingajax').modal('hide');
 
   $.ajaxSetup({
     headers: {
@@ -161,16 +144,63 @@ function getmethod_payment(val){
         $('#mdl-loadingajax').modal('show');
       },
       success: function (result) {
-      console.log(result.data);
+        $("#showhide_pay").css("display", "block");
+        // $('#mdl-loadingajax').modal('hide');
+        setTimeout(function() { $('#mdl-loadingajax').modal('hide'); }, 4000);
+        validasi_pay_next();
+
+
+      var html ='';
+      var text ='';
+
+        $.each(result.data, function(i,item){
+          var isitext ='';
+
+        $.each(item.description, function(x,isides){
+          isitext +='<li>'+isides+'</li>';
+        });
+        // console.log(i , isitext)
+
+        html += 
+        '<div class="card border-oren" id="cardpay'+item.id+'">'+
+    '<div class="card-header" role="tab">'+
+      '<h6 class="mb-0 pdb1">'+
+        '<a data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne'+item.id+'" onclick="pilihpay('+item.id+');" aria-expanded="true" aria-controls="collapseOne'+item.id+'">'+
+          '<img src="'+server_cdn+item.icon+'" style="width: 10%; height: auto;"> &nbsp; &nbsp;'+ item.payment_title+
+          '<span class="float-right">'+
+            '<i class="fa fa-chevron-right"></i>'+
+          '</span>'+
+        '</a></h6></div>'+
+    '<div id="collapseOne'+item.id+'" class="collapse" role="tabpanel" aria-labelledby="headingOne2">'+
+      '<div class="card-block"><ul>'+ isitext +
+      '</ul></div></div></div><br>';
+
+        });
+
+      $('#list_paymentmethod').html(html);
+
       },
       error: function (result) {
        console.log("Cant get data payment method");
+       $('#mdl-loadingajax').modal('hide');
       }, 
       complete: function(result){
          $('#mdl-loadingajax').modal('hide');
       }
       });
 
+}
+
+
+
+function validasi_pay_next(){
+  $("#id_pay_method").val("");
+  var idpay =  $("#id_pay_method").val();
+  if( idpay == ""){
+  $("#btn_pay_next").attr("disabled", true);
+  }else{
+  $("#btn_pay_next").removeAttr("disabled");
+  }
 }
 
 </script>

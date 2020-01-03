@@ -122,6 +122,11 @@ border-color: #BDBDBD;
 border : 2px solid;
 }
 
+.card-block{
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+
 .biruq{
   background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
   max-height: 1024px;
@@ -166,6 +171,14 @@ top: 11.43%;
 bottom: 86.33%;
 }
 
+
+#left_backpay{
+position: fixed;
+left: 3.5%;
+right: 94.24%;
+top: 11.43%;
+bottom: 86.33%;
+}
 .card.cd-pricing:hover{
  border-style: solid;
  width: 18.3rem;
@@ -760,13 +773,21 @@ border: none;
 }
 
 
-.card.border-oren:active{
+/*.card.border-oren:active{
   border: 2px solid #FF9A44 !important;
+}
+*/
+.card.border-oren.active{
+  border: 3px solid #FF9A44 !important;
 }
 
-.card.border-oren.active{
-  border: 2px solid #FF9A44 !important;
+.collapse-accordion .card-header {
+  background-color: white !important;
+  color: grey;
+  padding:0;
+  
 }
+
 
 .collapse-accordion .card a[data-toggle=collapse] {
   display: block;
@@ -838,11 +859,9 @@ position: absolute;
 width: 17%;
 }
 
-.collapse-accordion .card-header {
-  background-color: white !important;
-  color: grey;
-  padding:0;
-  margin-bottom: 1em;
+.pdb1{
+  padding-top: 0.2em;
+  padding-bottom: 0.3em;
 }
 
 .btn-orenline{
@@ -850,12 +869,16 @@ width: 17%;
   border: 1px solid #828282;
 box-sizing: border-box;
 border-radius: 6px;
-color: #384049;
+color: #777777;
+}
+
+.btn-orenline:hover{
+background-color: #fff6d5;
 }
 
 .active.btn-orenline{
     margin-top: 1em;
-  border: 2px solid #FF9A44;
+  border: 3px solid #FF9A44;
 box-sizing: border-box;
 border-radius: 6px;
 color: #384049;

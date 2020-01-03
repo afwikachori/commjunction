@@ -1,142 +1,206 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
-	<center>
-		<h1 style="margin-top: 1.3em; margin-bottom: 1em;" lang="en">Choose payment method !</h1>
+<nav class="navbar navbar-light nav-oren">
+</nav>
 
+<a href="">
+<img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
+</a><a href="" class="clight backarrow">Back to Features</a>
 
-@foreach($dt_payment as $dt)
-<div class="card" style="margin-bottom: 1em; width: 40%; border-radius: 20px;">
-  <div class="card-body sespay{{ $dt['id'] }}" style="padding: 0.5rem;">
-    <form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">
-      {{ csrf_field() }}
-  <div class="row">
-    <div class="col-sm-4" style="text-align: center;">
-     <img src="http://21.0.0.108:2312{{ $dt['icon'] }}"  class="rounded-circle img-fluid img-feature-pay">
-    </div>
-    <div class="col-sm-3">
-      <input type="hidden" name="id_pay_method" id="id_pay_method" value="{{ $dt['id'] }}">
-   </div>
-    <div class="col-sm-2">
-       <button type="button" class="btn btn-light btn-sm" value="{{ $dt['id'] }}" onclick="get_iddetail(this.value)" style="border-radius: 7px;margin-top: 0.5em;" data-toggle="modal" data-target="#mdl-detail-payment{{ $dt['id'] }}" lang="en">Details</button>
-    </div>
-    <div class="col-sm-3" style="text-align: center;">
-     <button type="submit" id="pilihpay" class="btn btn-primary btn-sm" style="border-radius: 7px;margin-top: 0.5em;" lang="en">Choose</button>
-    </div>
-  </div>
-</form>
-  </div>
-</div>
+<div class="contain-pay">
+<h3 class="cgrey" lang="en">Payment Method</h3>
 
-<!-- /// modal detail payment /// -->
-<div class="modal fade mdl mdl-dtlpay" id="mdl-detail-payment{{ $dt['id'] }}" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm mdl-dtlpay" role="document">
-    <div class="modal-content" style="width: 70%;">
-    <div class="modal-header customwika" style="margin-bottom: -30px;">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <center>
-        <img src="http://21.0.0.108:2312{{ $dt['icon'] }}" class="rounded-circle img-fluid img-feature-pay"" class="rounded-circle img-fluid" style="width: 38%; height: auto;">
-        <p style="font-size: 20px;" id="judul_pay{{ $dt['id'] }}"></p>
-        <div class ="rcorners">
-          <span id="nama_bankpay{{ $dt['id'] }}"></span>
-          <br>
-           <span id="nama_ownerpay{{ $dt['id'] }}"></span>
-            <span></span>
-        </div>
-        <button type="button" value="{{ $dt['id'] }}" onclick="pilihpayment(this)" class="btn btn-success btn-sm" style="border-radius: 8px; margin-bottom: 1em;" lang="en">Choose</button>
-       </center>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="row">
+<div class="col-6">
+<h6 class="h6 cgrey1" style="margin-bottom: 1em;">Choose Payment Method</h6>
+
+@foreach(Session::get('pay_type') as $dt)
+<button type="button" class="btn btn-orenline col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
+  <i class="fa fa-exchange "></i> 
+&nbsp; {{ $dt['payment_title'] }}</button>
+&nbsp;
 @endforeach
 
+</div>
+<div class="col-5" id="showhide_pay" style="display: none;">
+<h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
+<br>
+<!-- //tes -->
+<form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">{{ csrf_field() }}
+
+<div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
+
+<!--   <div class="card border-oren active">
+    <div class="card-header" role="tab" id="headingOne1">
+      <h6 class="mb-0 pdb1">
+        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+          <img src="/img/bni.png" style="width: 10%; height: auto;"> &nbsp; &nbsp;
+          Collapsible Group Item #1
+          <span class="float-right">
+            <i class="fa fa-chevron-right"></i>
+          </span>
+        </a>
+      </h6>
+    </div>
+
+    <div id="collapseOne2" class="collapse show" role="tabpanel" aria-labelledby="headingOne2">
+      <div class="card-block">
+        1 We have a downloads section and we're trying to track when a user downloads something. The downloads are linked as followed:
+      </div>
+    </div>
+  </div>
+  <br> -->
 
 
+</div>
+<!-- //endtes -->
+<input type="hidden" name="id_pay_method" id="id_pay_method">
+<button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
+</form>
 
-<button type="button" class="btn btn-light" style="margin-top: 1.5em;" onclick="window.location.href='/admin/pricing'" lang="en">back</button>
-
-<p style="margin-top: 3em; margin-bottom: 2em;">
-  <span lang="en">
-	For further information please read our </span><a href="" lang="en" data-lang-token="terms">terms & agreement</a>
-</p>
-</center>
+</div>
 </div>
 
+
+
+
+<div class="footer-admin">
+<div class="row" style="margin-top: 1em;">
+  <div class="col">
+    <img src="/visual/commjuction.png" id="com_superadminlogin">
+    <div class="textfooter-kiri">
+    <a href="" class="cgrey"><small>Privacy Police</small></a>
+    &nbsp; &nbsp; &nbsp; &nbsp;
+    <a href="" class="cgrey"><small>Terms and Condition</small></a>
+  </div>
+  </div>
+
+  <div class="col textfooter-kanan">
+    <a href="" class="cgrey h6 s13">Documentation</a>
+    <span class="fa fa-circle" aria-hidden="true" style="color: #D96120;"></span>
+    &nbsp; &nbsp; &nbsp; &nbsp;
+    <a href="" class="cgrey h6 s13">Support</a>
+    <span class="fa fa-question" aria-hidden="true" style="color: #D96120;"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- MODAL LOADING AJAX -->
+<div class="modal fade bd-example-modal-sm" id="mdl-loadingajax" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content loadingq">
+    <center>
+    <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+<p class="h6 iniloading">Loading . . .</p>
+  <center>
+    </div>
+  </div>
+</div>
+<!-- END-MODAL -->
 @endsection
+
 
 @section('script')
 <script type="text/javascript">
+var server_cdn = '{{ env("CDN") }}';
 
-$(document).ready(function() {
-get_session_pay();
-  });
+$(document).ready(function () {
+validasi_pay_next();
+
+});
+
+function pilihpay(idpay){
+  // alert(idpay);
+  $("#id_pay_method").val(idpay);
+  $(".border-oren").removeClass("active");
+  $("#cardpay"+idpay).addClass("active");
+  $("#btn_pay_next").removeAttr("disabled");
 
 
-function pilihpayment(id_payment) { 
-  var idp = id_payment.value;
-   $("#form_pay_admin").submit();
-  
 }
 
-  function get_iddetail(id_detail){
-    $.ajaxSetup({
+
+function getmethod_payment(ini){
+$('.btn-orenline').removeClass('active');
+$(ini).addClass('active');
+var val = ini.value;
+$('#mdl-loadingajax').modal('hide');
+
+  $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-});
-     $.ajax({
-      url: '/getDetailPay',
-      data: {'payment_id': id_detail},
+  });
+  $.ajax({
+      url: '/getpayment_method',
+      data: {'payment_type_id': val},
       type: 'POST',
       datatype: 'JSON',
+      beforeSend: function(){
+        $('#mdl-loadingajax').modal('show');
+      },
       success: function (result) {
+        $("#showhide_pay").css("display", "block");
+        // $('#mdl-loadingajax').modal('hide');
+        setTimeout(function() { $('#mdl-loadingajax').modal('hide'); }, 4000);
+        validasi_pay_next();
+
 
       var html ='';
-    
- $.each(result.data, function(i,item){
- $("#tes1").html(item.payment_account);
-  $("#judul_pay"+id_detail).html(item.payment_account);
-  $("#nama_bankpay"+id_detail).html(item.payment_bank_name);
-  $("#nama_ownerpay"+id_detail).html(item.payment_owner_name);
+      var text ='';
 
-   $("#mdl-detail-payment"+id_detail).show();
-});
+        $.each(result.data, function(i,item){
+          var isitext ='';
+
+        $.each(item.description, function(x,isides){
+          isitext +='<li>'+isides+'</li>';
+        });
+        // console.log(i , isitext)
+
+        html += 
+        '<div class="card border-oren" id="cardpay'+item.id+'">'+
+    '<div class="card-header" role="tab">'+
+      '<h6 class="mb-0 pdb1">'+
+        '<a data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne'+item.id+'" onclick="pilihpay('+item.id+');" aria-expanded="true" aria-controls="collapseOne'+item.id+'">'+
+          '<img src="'+server_cdn+item.icon+'" style="width: 10%; height: auto;"> &nbsp; &nbsp;'+ item.payment_title+
+          '<span class="float-right">'+
+            '<i class="fa fa-chevron-right"></i>'+
+          '</span>'+
+        '</a></h6></div>'+
+    '<div id="collapseOne'+item.id+'" class="collapse" role="tabpanel" aria-labelledby="headingOne2">'+
+      '<div class="card-block"><ul>'+ isitext +
+      '</ul></div></div></div><br>';
+
+        });
+
+      $('#list_paymentmethod').html(html);
 
       },
       error: function (result) {
-        console.log("Cant Reach Data Id Detail Payment");
+       console.log("Cant get data payment method");
+       $('#mdl-loadingajax').modal('hide');
+      }, 
+      complete: function(result){
+         $('#mdl-loadingajax').modal('hide');
       }
       });
 
+}
+
+
+
+function validasi_pay_next(){
+  $("#id_pay_method").val("");
+  var idpay =  $("#id_pay_method").val();
+  if( idpay == ""){
+  $("#btn_pay_next").attr("disabled", true);
+  }else{
+  $("#btn_pay_next").removeAttr("disabled");
   }
-
-
-  function get_session_pay(){
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-      url: '/session_payadmin',
-      type: 'POST',
-      datatype: 'JSON',
-      success: function (result) {
-        console.log(result);
-
-        $(".sespay"+result).css("box-shadow", "0 0 15px yellow");
-        $(".sespay"+result).css('border-radius', '20px');
-        },
-      error: function (result) {
-        console.log("Cant Reach Session Payment");
-    }
-});
 }
 
 </script>
