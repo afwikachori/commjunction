@@ -163,6 +163,13 @@ top: 11.4%;
 bottom: 86.33%;
 }
 
+.backarrow1{
+position: relative;
+left: 5%;
+top: 35px;
+bottom: 86.33%;
+}
+
 #left-arrowregis{
 position: absolute;
 left: 3.5%;
@@ -173,10 +180,10 @@ bottom: 86.33%;
 
 
 #left_backpay{
-position: fixed;
+position: relative;
 left: 3.5%;
 right: 94.24%;
-top: 11.43%;
+top: 34px;
 bottom: 86.33%;
 }
 .card.cd-pricing:hover{
@@ -517,6 +524,12 @@ top: 28px;
 .s12{
   font-size: 12px;
 }
+.s11{
+  font-size: 11px;
+}
+.s10{
+  font-size: 10px;
+}
 
 .s13{
   font-size: 13px;
@@ -582,8 +595,21 @@ top: 28px;
     line-height: 35px !important;
 }
 
+#btn_showpass_review{
+  border: none;
+  border-radius: 25px;
+}
+
+#password_admin_review{
+  margin-top: -0.5em;
+}
+
 #nav-tabContent{
   margin-top: -0.7em;
+}
+
+.mgb-05{
+  margin-bottom: 0.5em;
 }
 
 .cgrey{
@@ -592,6 +618,10 @@ top: 28px;
 
 .clight{
   color: #BDBDBD !important;
+}
+
+.clight2{
+  color: #aba2a2 !important;
 }
 
 .cteal{
@@ -763,9 +793,9 @@ border: none;
 }
 
 .contain-pay{
-  margin-top: 2em;
+  margin-top: 0.5em;
   padding: 3em;
-  margin-bottom: 6em;
+  margin-bottom: 2.5em;
 }
 
 .contain-tiga{
@@ -1233,6 +1263,32 @@ margin-top: 18%;
   width: 12px;
 }
 
+.roundcheck-mini label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 20px;
+}
+
+.roundcheck-mini label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
 
 .roundcheck input[type="checkbox"] {
   visibility: hidden;
@@ -1258,11 +1314,12 @@ margin-top: 18%;
   border: 1px solid #ccc;
   border-radius: 50%;
   cursor: pointer;
-  height: 20px;
+  height: 22px;
+  width: 22px;
   left: 0;
   position: absolute;
   top: 0;
-  width: 20px;
+  
 }
 
 .roundcheck2 label:after {
@@ -1278,6 +1335,48 @@ margin-top: 18%;
   transform: rotate(-45deg);
   width: 12px;
 }
+
+
+
+
+/*///scroll-fitur final regis admin*/
+div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+  height: 140px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+}
+
+div.scrollmenu::-webkit-scrollbar {
+  /*height: 7px;  height of horizontal scrollbar ← You're missing this */
+  width: 7px;  /* width of vertical scrollbar */
+  background-color: #F5F5F5;
+}
+
+div.scrollmenu::-webkit-scrollbar-thumb
+{
+  background-color: #e0e0e0;
+}
+
+.cardku {
+  display:inline-block;
+}
+
+/*//endcroll*/
+
+
 
 .roundcheck2 input[type="checkbox"] {
   visibility: hidden;

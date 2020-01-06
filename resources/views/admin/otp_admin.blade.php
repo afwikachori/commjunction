@@ -61,8 +61,8 @@
   <div class="col-8" style="text-align: left;">
     <h6 class="clight s15" style="margin-top: 1em;">Don't recieve OTP Code ?
     <a href="" class="cteal2 h6 s15" lang="en">Resend</a></h6> 
-    <input type="text" id="email_lupapass">
-    <input type="text" id="id_community_lupaadmin">
+    <input type="text" id="email_lupapass" name="email_lupapass">
+    <input type="text" id="id_community_lupaadmin" name="id_community_lupaadmin">
   </div>
   
   <div class="col" style="text-align: right;">
@@ -139,10 +139,29 @@ $.ajax({
 
 
 function resend_otp_admin(){
-   // data: {
-   //      "email": $('').val();,
-   //      "community_id" : 
-   //    },
+  var isiemail = $('#email_lupapass').val();
+  var idcommunity =  $("#id_community_lupaadmin").val();
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/requestOTP',
+      type: 'POST',
+      datatype: 'JSON',
+      data: {
+        "email": isiemail,
+        "community_id" : idcommunity
+      },
+      success: function (result) {
+        console.log(result);
+
+      },
+      error: function (result) {
+        console.log("Cant Resend New OTP Code");
+    }
+});
 }
 
 
