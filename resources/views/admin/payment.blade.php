@@ -27,34 +27,13 @@
 <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
 <br>
 <!-- //tes -->
+
 <form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">{{ csrf_field() }}
 
 <div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
-
-<!--   <div class="card border-oren active">
-    <div class="card-header" role="tab" id="headingOne1">
-      <h6 class="mb-0 pdb1">
-        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
-          <img src="/img/bni.png" style="width: 10%; height: auto;"> &nbsp; &nbsp;
-          Collapsible Group Item #1
-          <span class="float-right">
-            <i class="fa fa-chevron-right"></i>
-          </span>
-        </a>
-      </h6>
-    </div>
-
-    <div id="collapseOne2" class="collapse show" role="tabpanel" aria-labelledby="headingOne2">
-      <div class="card-block">
-        1 We have a downloads section and we're trying to track when a user downloads something. The downloads are linked as followed:
-      </div>
-    </div>
-  </div>
-  <br> -->
-
-
+<!-- isi card -->
 </div>
-<!-- //endtes -->
+
 <input type="hidden" name="id_pay_method" id="id_pay_method">
 <button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
 </form>

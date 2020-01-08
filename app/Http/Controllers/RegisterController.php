@@ -487,19 +487,23 @@ class RegisterController extends Controller{
 
 
 
+
+
     public function requestOTP(Request $request){
     $data_lupapass =  [
         'email'        => $request['emailforgetadmin'],
         'community_id' => "104"
         ];
+    // dd($data_lupapass);
 
     Session::put('data_forgetpass_admin', $data_lupapass);
 
-    try{ 
+
     $request->validate([
             'emailforgetadmin' => 'required|email'
     ]);
 
+    try{  
     $email = $request['emailforgetadmin'];
     $url = env('SERVICE').'auth/sendotp';
     
@@ -511,24 +515,23 @@ class RegisterController extends Controller{
         ]
     ]);
 
-    Session::put('data_forgetpass_admin', $idpay);
-
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
 
+
     if ($json['success'] == true) {
-    Alert::success('We have sent an authentication Code to your email, please check your authentication code.', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
+    alert()->success('We have sent an authentication Code to your email, please check your authentication code.', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
       return view('admin/otp_admin');
     }
     }
     catch(ClientException $exception) {
-    $status_error = $exception->getCode();
 
+    $status_error = $exception->getCode();
     if( $status_error == 400){
-    Alert::warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
+    alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
     return back()->withInput();
     }else{
-    Alert::error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
+    alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
     return back()->withInput();
     }
     
@@ -538,7 +541,8 @@ class RegisterController extends Controller{
 
 
     public function NewPass_admin(Request $request){
-    try{ //try-cath
+    //     dd($request);
+    
     $request->validate([
     'newpass_admin' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:confirm_newpass|same:confirm_newpass',
     'confirm_newpass' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
@@ -550,6 +554,7 @@ class RegisterController extends Controller{
     'digit-6' => 'required|numeric', 
     ]);
 
+    try{ //try-cath
     $otp_six = $request['digit-1'].$request['digit-2'].$request['digit-3'].$request['digit-4'].$request['digit-5'].$request['digit-6'];
 
     $url = env('SERVICE').'auth/forgotpassword';
@@ -564,24 +569,67 @@ class RegisterController extends Controller{
 
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-    Alert::success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
-      return view('admin/');
 
+    if( $json['success'] == true){
+    alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
+    return view('admin/login');
+    }
+
+     
     }catch(ClientException $exception) {
     $status_error = $exception->getCode();
 
     if( $status_error == 400){
-    Alert::error('Use the resend feature to send a new OTP', 'Your OTP is no longer valid !')->autoclose(4500)->persistent('Done');
-    return back()->withInput();
+        // dd('back 400');
+    alert()->error('Use the resend feature to send a new OTP', 'Your OTP is no longer valid !')->autoclose(4500)->persistent('Done');
+    return view('admin/otp_admin');
     } //end-if
     } //end-catch
     } //end-function
 
 
+
+
+
   public function session_resendotp(){
     if(Session::has('data_forgetpass_admin')){
     $dt_resend = Session::get('data_forgetpass_admin');
-    return $dt_resend;
+    // return $dt_resend;
+    // dd($dt_resend);
+
+     try{  
+    $url = env('SERVICE').'auth/sendotp';
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+        'form_params'  => [
+        'email'        => $dt_resend['email'],
+        'community_id' => $dt_resend['community_id']
+        ]
+    ]);
+
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+
+
+    if ($json['success'] == true) {
+    alert()->success('Re-send Success Please Check Your Latest Email from us', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
+      return view('admin/otp_admin');
+    }
+    }
+    catch(ClientException $exception) {
+
+    $status_error = $exception->getCode();
+    if( $status_error == 400){
+    alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
+     return view('admin/otp_admin');
+    }else{
+    alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
+    return view('admin/otp_admin');
+    }
+    
+    } //end-try catch
+
     }
    }
 
@@ -630,13 +678,15 @@ class RegisterController extends Controller{
 
 
 // FINAL REGISTRASION - ADMIN COMMUNITY
-    public function FinalAdminRegis(Request $request){
-        // dd($request);
+    public function FinalAdminRegis(){
+
     $idpay = Session::get('data_idpay');
     $ses1  = Session::get('data_regis1');
     $ses2  = Session::get('data_regis2');
     $ses3  = Session::get('data_pricing');
     $ses4  = Session::get('data_fitur');
+
+    $back_final = Session::get('sesback_finalregis_admin');
 
     $dtpay = [
         'payment_title' => 'Pembayaran Pendaftaran Community',
@@ -656,6 +706,7 @@ class RegisterController extends Controller{
 
     $url = env('SERVICE').'registration/adcommcreate';
     $client = new \GuzzleHttp\Client();
+
     try {
         $response = $client->request('POST',$url, [
             'form_params' => $datafinal
@@ -670,11 +721,44 @@ class RegisterController extends Controller{
     // dd($json);
 
     if ($json['success'] == true) {
+     Session::forget('data_regis1');
+     Session::forget('data_regis1show');
+     Session::forget('data_idpay');
+     Session::forget('data_regis1');
+     Session::forget('data_regis2');
+     Session::forget('data_pricing');
+     Session::forget('listfitur');
+     Session::forget('fiturpilih');
+     Session::forget('data_idpay');
+     Session::forget('datafitur');
+     Session::forget('data_fitur');
+     Session::forget('sesback_finalregis_admin');
+
       return view('admin/finish');
     }else{
-    Alert::danger('Failed to submit registrasion', 'Oh Sorry!');
-      return view('admin/register6');
-    }
+        
+    if($json['status'] == 500){
+     alert()->error('Internal server error, try again by clicking finish button', 'Oh Sorry!');
+     return redirect('admin/finalreview')->with('fadmin',$back_final);  
+    }else if($json['status'] == 400){
+     Session::forget('data_regis1');
+     Session::forget('data_regis1show');
+     Session::forget('data_idpay');
+     Session::forget('data_regis1');
+     Session::forget('data_regis2');
+     Session::forget('data_pricing');
+     Session::forget('listfitur');
+     Session::forget('fiturpilih');
+     Session::forget('data_idpay');
+     Session::forget('datafitur');
+     Session::forget('data_fitur');
+     Session::forget('sesback_finalregis_admin');
+
+    alert()->error('Check your email, if you dont get message from us please Repeat your registration ', 'Process was interrupted !');
+    return view('admin/login');            
+    } //end-else
+
+    } //end sukses = false
 }
 
 
@@ -802,12 +886,16 @@ class RegisterController extends Controller{
     $dec = json_decode(json_encode($datafinal),true);
     array_push($arr, $dec);
 
+    Session::put('sesback_finalregis_admin', $arr);
+
     // dd($arr);
-    return view('admin/register6',['fadmin'=> $arr]);
-    }
+    return redirect('admin/finalreview')->with('fadmin',$arr);
+     // return view('admin/register6',['fadmin'=> $arr]);
+   }
 
     public function logout(){
      Session::forget('data_regis1');
+     Session::forget('data_regis1show');
      Session::forget('data_idpay');
      Session::forget('data_regis1');
      Session::forget('data_regis2');
@@ -816,6 +904,8 @@ class RegisterController extends Controller{
      Session::forget('fiturpilih');
      Session::forget('data_idpay');
      Session::forget('datafitur');
+     Session::forget('data_fitur');
+     Session::forget('sesback_finalregis_admin');
 
       if(!Session::has('data_regis1'))
         {
@@ -828,7 +918,8 @@ class RegisterController extends Controller{
         return view('admin/loading_creating');
     }
     public function finishView(){
-        return view('admin/finish');
+        alert()->success('Done','Please Check Your Email');
+            return view('admin/finish');
     }
 
     public function tesView(){

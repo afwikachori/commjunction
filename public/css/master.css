@@ -166,7 +166,7 @@ bottom: 86.33%;
 .backarrow1{
 position: relative;
 left: 5%;
-top: 35px;
+top: 30px;
 bottom: 86.33%;
 }
 
@@ -183,7 +183,7 @@ bottom: 86.33%;
 position: relative;
 left: 3.5%;
 right: 94.24%;
-top: 34px;
+top: 29px;
 bottom: 86.33%;
 }
 .card.cd-pricing:hover{
@@ -793,9 +793,9 @@ border: none;
 }
 
 .contain-pay{
-  margin-top: 0.5em;
+  /*margin-top: 0.5em;*/
   padding: 3em;
-  margin-bottom: 2.5em;
+  margin-bottom: 1.5em;
 }
 
 .contain-tiga{
@@ -1148,6 +1148,11 @@ width: 20%; height: auto;
 	width: 60%;
 }
 
+#imgpaymentr{
+  width: 25px;
+  height: auto;
+}
+
 .editk{
   margin-bottom: 1.5rem !important;
 }
@@ -1327,13 +1332,13 @@ margin-top: 18%;
   border-top: none;
   border-right: none;
   content: "";
-  height: 5px;
-  left: 3px;
+  height: 6px;
+  left: 4px;
   opacity: 0;
   position: absolute;
-  top: 5px;
+  top: 6px;
   transform: rotate(-45deg);
-  width: 12px;
+  width: 11px;
 }
 
 
@@ -1343,7 +1348,7 @@ margin-top: 18%;
 div.scrollmenu {
   overflow: auto;
   white-space: nowrap;
-  height: 140px;
+  height: 120px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1372,6 +1377,7 @@ div.scrollmenu::-webkit-scrollbar-thumb
 
 .cardku {
   display:inline-block;
+  margin-bottom: 0.5em;
 }
 
 /*//endcroll*/

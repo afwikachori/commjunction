@@ -60,9 +60,7 @@
   <div class="row">
   <div class="col-8" style="text-align: left;">
     <h6 class="clight s15" style="margin-top: 1em;">Don't recieve OTP Code ?
-    <a href="" class="cteal2 h6 s15" lang="en">Resend</a></h6> 
-    <input type="text" id="email_lupapass" name="email_lupapass">
-    <input type="text" id="id_community_lupaadmin" name="id_community_lupaadmin">
+    <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend</a></h6> 
   </div>
   
   <div class="col" style="text-align: right;">
@@ -71,7 +69,6 @@
     </div>
   </div>
 </form>
-
   </div>
 </div>
 </center>
@@ -84,7 +81,7 @@
   <div class="col">
     <img src="/visual/commjuction.png" id="com_superadminlogin">
     <div class="textfooter-kiri">
-    <a onclick="resend_otp_admin();" class="cgrey"><small>Privacy Police</small></a>
+    <a class="cgrey"><small>Privacy Police</small></a>
     &nbsp; &nbsp; &nbsp; &nbsp;
     <a href="" class="cgrey"><small>Terms and Condition</small></a>
   </div>
@@ -109,60 +106,11 @@ var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () { 
 
-session_resend_otp(); //ajax re-send otp
 
 });
 
 
-function session_resend_otp(){
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-      url: '/session_resendotp',
-      type: 'POST',
-      datatype: 'JSON',
-      success: function (result) {
-        if (result != ""){
-        $("#id_community_lupaadmin").val(result.email);
-        $("#email_lupapass").val(result.community_id);
-        }
-        
-      },
-      error: function (result) {
-        console.log("Cant Reach Session for Resend OTP");
-    }
-});
-}
 
-
-function resend_otp_admin(){
-  var isiemail = $('#email_lupapass').val();
-  var idcommunity =  $("#id_community_lupaadmin").val();
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-      url: '/requestOTP',
-      type: 'POST',
-      datatype: 'JSON',
-      data: {
-        "email": isiemail,
-        "community_id" : idcommunity
-      },
-      success: function (result) {
-        console.log(result);
-
-      },
-      error: function (result) {
-        console.log("Cant Resend New OTP Code");
-    }
-});
-}
 
 
 

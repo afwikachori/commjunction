@@ -9,7 +9,7 @@ Route::get('admin/coba','RegisterController@cobaView')->name('admin/coba');
 
 Route::get('admin/testing','RegisterController@test')->name('admin/testing');
 
-Route::get('admin/reviewfinal','RegisterController@ReviewAdminView')->name('admin/reviewfinal');
+Route::get('admin/finalreview','RegisterController@ReviewAdminView')->name('admin/finalreview');
 
 Route::get('admin/logoutsso','RegisterController@logoutssoView');
 
@@ -22,7 +22,7 @@ Route::get('logout','RegisterController@logout');
 
 
 //ADMIN COMMUNITY
-Route::get('admin','RegisterController@login')->name('admin/login');
+Route::get('admin','RegisterController@login')->name('admin');
 Route::post('auth_adminlogin', 'RegisterController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('loginadmin','RegisterController@loginadmin');
 
@@ -53,7 +53,7 @@ Route::post('requestOTP', 'RegisterController@requestOTP')->name('requestOTP');
 
 Route::post('NewPass_admin', 'RegisterController@NewPass_admin')->name('NewPass_admin');
 
-Route::post('session_resendotp', 'RegisterController@session_resendotp')->name('session_resendotp');
+Route::get('session_resendotp', 'RegisterController@session_resendotp')->name('session_resendotp');
 
 
 //OTP FORGET -ADMIN
@@ -127,7 +127,7 @@ Route::post('getSelectedPayment', 'RegisterController@getSelectedPayment')->name
 
 
 // FINAL ADMIN REGISTRASION 
-Route::post('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
+Route::get('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
 
 
 

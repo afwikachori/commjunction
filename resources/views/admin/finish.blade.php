@@ -56,7 +56,6 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
-
 });
 
 </script>
