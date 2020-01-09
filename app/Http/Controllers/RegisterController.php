@@ -768,13 +768,42 @@ class RegisterController extends Controller{
         return view('admin/confirmpay');
     }
 
+
+    public function get_tipepay(){
+    $url = env('SERVICE').'paymentverification/paymenttype';
+    $client = new \GuzzleHttp\Client();
+    $request = $client->post($url);
+    $response = $request->getBody();
+    $jsonku = json_decode($response, true);
+    return($jsonku);
+    }
+
+
+    public function get_carapay(Request $request){
+    $idpilih = $request['id'];
+
+    $url = env('SERVICE').'paymentverification/paymentmethod';
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+        'form_params' => [
+            'payment_type_id' => $idpilih
+        ]
+    ]);
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+
+    return $json;
+    }
+
+
+
     public function adminconfirmpay(Request $request) {
         // dd($request);
 
         $validator = $request->validate([
             'name_userpay' => 'required',
             'invoice_number' => 'required|numeric',
-            'payment_method' => 'required',
+            'method_pay' => 'required',
             'bank_receiver' => 'required',
             'name_receiver' => 'required', 
             'nominal_payment' => 'required|numeric',
@@ -786,6 +815,7 @@ class RegisterController extends Controller{
         $fileimg = "";
 
         if ($request->hasFile('file_payment')) {
+            // dd(image);
             $imgku = file_get_contents($request->file('file_payment')->getRealPath());
             $filnam = $request->file('file_payment')->getClientOriginalName();
 
@@ -794,7 +824,7 @@ class RegisterController extends Controller{
             $imageRequest = [
                 "nama"               => $input['name_userpay'],
                 "invoice_number"     => $input['invoice_number'],
-                "payment_method"     => $input['payment_method'],
+                "payment_method"     => $input['method_pay'],
                 "payment_bank_name"  => $input['bank_receiver'],
                 "payment_owner_name" => $input['name_receiver'],
                 "nominal"            => $input['nominal_payment'],

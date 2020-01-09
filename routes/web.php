@@ -75,9 +75,20 @@ Route::post('cekemail_admin', 'RegisterController@cekemail_admin')->name('cekema
 
 
 
-//register - confirm payment
+//register - CONFIRM PAYMENT - ADMIN COMM
 Route::get('admin/confirmpay','RegisterController@confirmpayView')->name('confirmpayView');
+
+Route::post('get_tipepay','RegisterController@get_tipepay')->name('get_tipepay');
+
+Route::post('get_carapay','RegisterController@get_carapay')->name('get_carapay');
+
 Route::post('adminconfirmpay','RegisterController@adminconfirmpay')->name('adminconfirmpay');
+
+
+
+
+
+
 
 // register - pricing
 Route::get('admin/pricing','RegisterController@pricingView')->name('pricingView');

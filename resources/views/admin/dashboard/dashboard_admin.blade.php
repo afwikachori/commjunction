@@ -164,7 +164,7 @@
                         <tbody>
                           <tr>
                             <td>
-                              <img src="/purple/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey </td>
+                              <img src="/purple/images/faces/face1.jpg" class="mr-2" alt="image"> Afwika Chori </td>
                             <td> Fund is not recieved </td>
                             <td>
                               <label class="badge badge-gradient-success">DONE</label>
@@ -388,14 +388,59 @@
                 </div>
               </div>
             </div>
+
+<!-- Modal INITIAL-1-->
+<div class="modal fade" id="initial1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <center>
+      <img src="/visual/hore.png" id="img-initial1">
+      <h3 class="cgrey" style="margin-bottom: 0.5em;">Congratulations !!!</h3>
+      <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member of community . Let’s look what do you can explore !</p>
+
+      <button type="button" id="btn-initial1" class="btn btn-primary btn-sm">Take a tour</button>
+      </center>
+      </div> <!-- end-modal body -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal INITIAL-2-->
+<div class="modal fade" id="initial2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <center>
+      <img src="/visual/init-fitur.png" id="img-initial2">
+      <h3 class="cgrey" style="margin-bottom: 0.5em;">Features Overview</h3>
+      <small class="clight">In this tab, you can see your feature that you have been choosen</small>
+      <br>
+      <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
+      </center>
+      </div> <!-- end-modal body -->
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
 
 $(document).ready(function () {
-
+$("#initial1").modal('show');
 });
+
+
+
+$("#btn-initial1").click(function() {
+  $("#initial1").modal('hide');
+  $("#initial2").modal('show');
+});
+
+
 
 </script>
 

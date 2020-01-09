@@ -35,6 +35,43 @@ margin-top: -2em !important;
 }
 
 
+#initial1 .modal-content{
+height: 440px;
+background-color: #ffffff !important;
+}
+
+#initial2 .modal-content{
+height: 440px;
+background-color: #ffffff !important;
+}
+
+#img-initial1{
+  width: 55%;
+  height: auto;
+  margin-bottom: 1.5em;
+  margin-top: 2em;
+}
+
+
+#img-initial2{
+  width: 55%;
+  height: auto;
+  margin-bottom: 1.5em;
+  margin-top: 2em;
+}
+
+
+#btn-initial1{
+  border-radius: 6px;
+  margin-top: 1em;
+}
+
+#btn-initial2{
+  border-radius: 6px;
+  margin-top: 2em;
+}
+
+
 
 
 
@@ -118,9 +155,4 @@ margin-top: -2em !important;
 }
 .s35{
   font-size: 35px;
-}
-
-
-.sumari .card .card-body {
-    padding: 1rem 1rem !important;
 }
