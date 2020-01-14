@@ -4,9 +4,9 @@
 <nav class="navbar navbar-light nav-oren">
 </nav>
 
-<a href="">
+<a href="/admin/pricing">
 <img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="" class="clight backarrow">Back to Features</a>
+</a><a href="/admin/pricing" class="clight backarrow">Back to Previous</a>
 
 <div class="contain-pay">
 <h3 class="cgrey" lang="en">Payment Method</h3>
@@ -33,8 +33,8 @@
 <div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
 <!-- isi card -->
 </div>
-<input type="text" name="id_pay_type" id="id_pay_type">
-<input type="text" name="id_pay_method" id="id_pay_method">
+<input type="hidden" name="id_pay_type" id="id_pay_type">
+<input type="hidden" name="id_pay_method" id="id_pay_method">
 <button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
 </form>
 
@@ -94,8 +94,7 @@ get_session_payadmin();
 });
 
 function pilihpay(idpay){
-  // alert('ini : '+idpay);
-  $("#idpayq"+idpay).trigger('click');
+  // alert("ini pay :" +idpay);
   $("#id_pay_method").val(idpay);
   $(".border-oren").removeClass("active");
   $("#cardpay"+idpay).addClass("active");
@@ -174,7 +173,7 @@ $("#id_pay_type").val(val);
 
 
 function validasi_pay_next(){
-  $("#id_pay_method").val("");
+  // $("#id_pay_method").val("");
   var idpay =  $("#id_pay_method").val();
   if( idpay == ""){
   $("#btn_pay_next").attr("disabled", true);
@@ -197,12 +196,13 @@ $.ajax({
       datatype: 'JSON',
       success: function (result) {
         console.log(result);  
-        if(result != ""){
+        if(result.id_tipe != ""){
           $("#tipe"+result.id_tipe).trigger('click');
-          // $("#idpayq"+result.id_pay).trigger('click');
-       pilihpay(result.id_pay);
+        }
+        if(result.id_pay != ""){
+          window.onclick= pilihpay(result.id_pay);
 
-     }
+        }
       },
       error: function (result) {
         console.log("Cant Reach Session Payment");

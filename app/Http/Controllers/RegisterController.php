@@ -743,6 +743,9 @@ class RegisterController extends Controller{
      Session::forget('datafitur');
      Session::forget('data_fitur');
      Session::forget('sesback_finalregis_admin');
+     Session::forget('list_payment');
+     Session::forget('data_idpay');
+     Session::forget('id_pay_type');
 
       return view('admin/finish');
     }else{
@@ -763,6 +766,9 @@ class RegisterController extends Controller{
      Session::forget('datafitur');
      Session::forget('data_fitur');
      Session::forget('sesback_finalregis_admin');
+     Session::forget('list_payment');
+     Session::forget('data_idpay');
+     Session::forget('id_pay_type');
 
     alert()->error('Check your email, if you dont get message from us please Repeat your registration ', 'Process was interrupted !');
     return view('admin/login');            
@@ -806,9 +812,28 @@ class RegisterController extends Controller{
     }
 
 
+    public function get_invoice_num(Request $request){
+    $num = $request['invoice_number'];
+
+    $url = env('SERVICE').'paymentverification/getinvoice';
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+        'form_params' => [
+            'invoice_number' => $num
+        ]
+    ]);
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+
+    return $json;
+    }
+
+
+
+
 
     public function adminconfirmpay(Request $request) {
-        // dd($request);
+        dd($request);
 
         $validator = $request->validate([
             'name_userpay' => 'required',
@@ -948,6 +973,9 @@ class RegisterController extends Controller{
      Session::forget('datafitur');
      Session::forget('data_fitur');
      Session::forget('sesback_finalregis_admin');
+     Session::forget('list_payment');
+     Session::forget('data_idpay');
+     Session::forget('id_pay_type');
 
       if(!Session::has('data_regis1'))
         {

@@ -82,6 +82,9 @@ Route::post('get_tipepay','RegisterController@get_tipepay')->name('get_tipepay')
 
 Route::post('get_carapay','RegisterController@get_carapay')->name('get_carapay');
 
+Route::post('get_invoice_num','RegisterController@get_invoice_num')->name('get_invoice_num');
+
+
 Route::post('adminconfirmpay','RegisterController@adminconfirmpay')->name('adminconfirmpay');
 
 
