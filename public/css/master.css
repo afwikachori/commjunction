@@ -224,6 +224,10 @@ opacity: 2.4;
   margin-top: 1.5em;
 }
 
+#jeniscom2{
+  background-color: white !important;
+}
+
 .otpimgbg{
 position: absolute;
 width: 339px;
@@ -575,6 +579,12 @@ top: 28px;
 }
 
 .abcRioButtonBlue{
+  height: 41px !important;
+    width: 325px !important;
+    border-radius: 6px !important;
+}
+
+#signGoogle .abcRioButtonBlue{
   height: 41px !important;
     width: 325px !important;
     border-radius: 6px !important;

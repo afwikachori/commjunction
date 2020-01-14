@@ -41,6 +41,11 @@ background-color: #ffffff !important;
 }
 
 #initial2 .modal-content{
+height: auto;
+background-color: #ffffff !important;
+}
+
+#initial3 .modal-content{
 height: 440px;
 background-color: #ffffff !important;
 }
@@ -54,6 +59,13 @@ background-color: #ffffff !important;
 
 
 #img-initial2{
+  width: 35%;
+  height: auto;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+}
+
+#img-initial3{
   width: 55%;
   height: auto;
   margin-bottom: 1.5em;
@@ -68,7 +80,18 @@ background-color: #ffffff !important;
 
 #btn-initial2{
   border-radius: 6px;
-  margin-top: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#btn-initial3{
+  border-radius: 6px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.mgku-1{
+  margin-bottom: 1em;
 }
 
 

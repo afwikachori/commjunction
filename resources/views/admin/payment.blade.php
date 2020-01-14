@@ -16,7 +16,7 @@
 <h6 class="h6 cgrey1" style="margin-bottom: 1em;">Choose Payment Method</h6>
 
 @foreach(Session::get('pay_type') as $dt)
-<button type="button" class="btn btn-orenline col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
+<button type="button" id="tipe{{ $dt['id']  }}" class="btn btn-orenline col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
   <i class="fa fa-exchange "></i> 
 &nbsp; {{ $dt['payment_title'] }}</button>
 &nbsp;
@@ -33,8 +33,8 @@
 <div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
 <!-- isi card -->
 </div>
-
-<input type="hidden" name="id_pay_method" id="id_pay_method">
+<input type="text" name="id_pay_type" id="id_pay_type">
+<input type="text" name="id_pay_method" id="id_pay_method">
 <button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
 </form>
 
@@ -88,18 +88,18 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
-validasi_pay_next();
+// validasi_pay_next();
+get_session_payadmin();
 
 });
 
 function pilihpay(idpay){
-  // alert(idpay);
+  // alert('ini : '+idpay);
+  $("#idpayq"+idpay).trigger('click');
   $("#id_pay_method").val(idpay);
   $(".border-oren").removeClass("active");
   $("#cardpay"+idpay).addClass("active");
   $("#btn_pay_next").removeAttr("disabled");
-
-
 }
 
 
@@ -108,6 +108,7 @@ $('.btn-orenline').removeClass('active');
 $(ini).addClass('active');
 var val = ini.value;
 $('#mdl-loadingajax').modal('hide');
+$("#id_pay_type").val(val);
 
   $.ajaxSetup({
     headers: {
@@ -144,7 +145,7 @@ $('#mdl-loadingajax').modal('hide');
         '<div class="card border-oren" id="cardpay'+item.id+'">'+
     '<div class="card-header" role="tab">'+
       '<h6 class="mb-0 pdb1">'+
-        '<a data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne'+item.id+'" onclick="pilihpay('+item.id+');" aria-expanded="true" aria-controls="collapseOne'+item.id+'">'+
+        '<a data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne'+item.id+'" id="idpayq'+item.id+'" onclick="pilihpay('+item.id+');" aria-expanded="true" aria-controls="collapseOne'+item.id+'">'+
           '<img src="'+server_cdn+item.icon+'" style="width: 10%; height: auto;"> &nbsp; &nbsp;'+ item.payment_title+
           '<span class="float-right">'+
             '<i class="fa fa-chevron-right"></i>'+
@@ -181,6 +182,34 @@ function validasi_pay_next(){
   $("#btn_pay_next").removeAttr("disabled");
   }
 }
+
+
+
+function get_session_payadmin(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/session_payadmin',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);  
+        if(result != ""){
+          $("#tipe"+result.id_tipe).trigger('click');
+          // $("#idpayq"+result.id_pay).trigger('click');
+       pilihpay(result.id_pay);
+
+     }
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Payment");
+    }
+});
+}
+
 
 </script>
 @endsection

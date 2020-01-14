@@ -80,7 +80,7 @@
 
  <span class="cgrey1 s16">
  <span id="hitungcentang"> 0 </span>
-  / {{count($newdata)}} &nbsp; Feature Selected </span>
+  / {{count($newdata) -1 }} &nbsp; Feature Selected </span>
 
 <button type="submit" id="next_pilihfitur" class="btn btn-oren s14 btn-md btn-block">Next</button>
 </center>

@@ -115,6 +115,7 @@ Route::get('admin/features_detail/{id_fitur}', 'RegisterController@detailFiturVi
 
 // register - payment
 Route::get('admin/payment','RegisterController@paymentView')->name('paymentView');
+Route::get('isi_payment','RegisterController@isi_payment')->name('isi_payment');
 
 Route::post('getDetailPay', 'RegisterController@getDetailPay')->name('getDetailPay');
 

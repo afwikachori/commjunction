@@ -437,15 +437,15 @@ class RegisterController extends Controller{
 
          $url = env('SERVICE').'registration/paymenttype';
 
-            $client = new \GuzzleHttp\Client();
-            $request = $client->post($url);
-            $response = $request->getBody();
-            $json = json_decode($response, true);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->post($url);
+        $response = $request->getBody();
+        $json = json_decode($response, true);
             // dd($json['data']);
 
-     return redirect('admin/payment')->with('pay_type', $json['data']);
+        Session::put('list_payment', $json['data']);
 
-        // return redirect('admin/testing')->with('fixfitur', $arry);
+     return redirect('admin/payment')->with('pay_type', $json['data']);
     }
 
     //   public function sendfeature(Request $request){
@@ -641,6 +641,16 @@ class RegisterController extends Controller{
     public function paymentView(){
         return view('admin/payment');
     }
+
+
+    public function isi_payment(){
+    if(Session::has('list_payment')){
+    $ses_payment = Session::get('list_payment');
+    
+    return redirect('admin/payment')->with('pay_type', $ses_payment);
+    }
+    }
+
 
     public function getpayment_method(Request $request){
     $idpay = $request['payment_type_id'];
@@ -887,7 +897,9 @@ class RegisterController extends Controller{
     
     public function ReviewFinal(Request $request){
     $idpay = $request['id_pay_method'];
+    $idtipepay = $request['id_pay_type'];
     Session::put('data_idpay', $idpay);
+    Session::put('id_pay_type', $idtipepay);
 
     $idpay = Session::get('data_idpay');
     $ses1 = Session::get('data_regis1');
@@ -1006,9 +1018,15 @@ class RegisterController extends Controller{
     }
 
     public function session_payadmin(){
-    if(Session::has('data_idpay')){
+    if(Session::has('data_idpay') || Session::has('id_pay_type')){
     $sespay = Session::get('data_idpay');
-    return $sespay;
+    $sestipepay = Session::get('id_pay_type');
+
+    $paramku = [
+            'id_pay'  => $sespay, 
+            'id_tipe' => $sestipepay, 
+    ];
+    return $paramku;
     }
     }
 

@@ -4,9 +4,9 @@
 <nav class="navbar navbar-light nav-oren">
 </nav>
 
-<a href="">
+<a href="{{route('isi_payment')}}">
 <img border="0"  src="/visual/left-arrow.png" id="left_backpay">
-</a><a href="" class="clight backarrow1">Back to Payment</a>
+</a><a href="{{route('isi_payment')}}" class="clight backarrow1">Back to Payment</a>
 
 <div class="contain-pay">
 <div class="row">
@@ -77,7 +77,7 @@ have you complete.
    <div class="form-group">
     <small class="clight2 mgb-05">Community Type</small>
     <h6 class="cgrey1" id="etcjenis" style="display: none;">{{ $dt['community']['cust_jenis_comm'] }}</h6>
-    <select id="type_com2" class="form-control" name="type_com2" disabled style="display: none;">
+    <select id="jeniscom2" class="form-control s13" name="jeniscom2" disabled style="display: none;">
   </select>
   </div>
 
@@ -230,10 +230,10 @@ var a = '{!! $dt["community"]["jenis_comm_id"] !!}';
 
 if (a === '1'){
   $('#etcjenis').show();
-  $('#type_com2').hide();
+  $('#jeniscom2').hide();
 }else{
   $('#etcjenis').hide();
-  $('#type_com2').show();
+  $('#jeniscom2').show();
 
 $.ajaxSetup({
     headers: {
@@ -247,34 +247,33 @@ $.ajax({
     success: function (status, code, data) {
     // console.log(status.data);
 
-    if (status.code== '00') {
+    if (status.success == true) {
       var data = status.data; 
 
-      $('#type_com2').empty();
-      $('#type_com2').append("<option disabled> --- </option>");
+      $('#jeniscom2').empty();
+      $('#jeniscom2').append("<option disabled> --- </option>");
 
       for (var i = data.length - 1; i >= 0; i--) {
-        $('#type_com2').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].jenis_comm, "</option>"));
+        $('#jeniscom2').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].jenis_comm, "</option>"));
       } 
       //Short Function Ascending//
-      $("#type_com2").html($('#type_com2 option').sort(function (x, y) {
+      $("#jeniscom2").html($('#jeniscom2 option').sort(function (x, y) {
         return $(x).val() < $(y).val() ? -1 : 1;
       }));
 
-      $("#type_com2").get(0).selectedIndex = 0; //e.preventDefault();
+      $("#jeniscom2").get(0).selectedIndex = 0; //e.preventDefault();
     }
-     const OldValue = '{{old('type_com2')}}';
+     const OldValue = '{{old('jeniscom2')}}';
     
     if(OldValue !== '') {
-      $('#type_com2').val(OldValue);
+      $('#jeniscom2').val(OldValue);
     }
     var isijenis = '{!! $dt['community']['jenis_comm_id'] !!}';
     var isirange = '{!! $dt['community']['range_member'] !!}';
 
-     $('select[name="type_com2"]').val(isijenis);
+     $('select[name="jeniscom2"]').val(isijenis);
      $('select[name="range_member2"]').val(isirange);
 
-     // showfiturpage();
     }
 });
  }
@@ -387,7 +386,7 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-        console.log(result.data);
+        // console.log(result.data);
       $.each(result.data, function(i,item){
         $("#judulpay").html(item.payment_title);
         $("#bankname").html(item.payment_bank_name);

@@ -414,10 +414,86 @@
       <div class="modal-body">
       <center>
       <img src="/visual/init-fitur.png" id="img-initial2">
-      <h3 class="cgrey" style="margin-bottom: 0.5em;">Features Overview</h3>
-      <small class="clight">In this tab, you can see your feature that you have been choosen</small>
-      <br>
+      <h4 class="cgrey" style="margin-bottom: 1em;">Features Overiew</h4>
+     </center>
+
+  <div class="row">
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+    <div class="col-6 mgku-1">
+      <div class="media">
+      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
+      <div class="media-body">
+        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
+        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
+      </div>
+    </div>
+    </div>
+  </div>
+      <center>
       <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
+      </center>
+      </div> <!-- end-modal body -->
+    </div>
+  </div>
+</div> <!-- end-modal INITIAL2 -->
+
+
+
+<!-- Modal INITIAL-3-->
+<div class="modal fade" id="initial3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <center>
+      <img src="/visual/init3.png" id="img-initial3">
+      <h3 class="cgrey" style="margin-bottom: 0.5em;">Ready For Action ?</h3>
+      <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member of community . Let’s look what do you can explore !</p>
+
+      <button type="button" id="btn-initial3" class="btn btn-primary btn-sm">Finish</button>
       </center>
       </div> <!-- end-modal body -->
     </div>
@@ -438,6 +514,19 @@ $("#initial1").modal('show');
 $("#btn-initial1").click(function() {
   $("#initial1").modal('hide');
   $("#initial2").modal('show');
+  $("#initial3").modal('hide');
+});
+
+$("#btn-initial2").click(function() {
+  $("#initial1").modal('hide');
+  $("#initial2").modal('hide');
+  $("#initial3").modal('show');
+});
+
+$("#btn-initial3").click(function() {
+  $("#initial1").modal('hide');
+  $("#initial2").modal('hide');
+  $("#initial3").modal('hide');
 });
 
 
