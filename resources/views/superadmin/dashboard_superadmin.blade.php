@@ -320,8 +320,33 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
+  session_logged_dashboard();
 
 });
+
+
+
+function session_logged_dashboard(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/session_logged_dashboard',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      if (result != ""){
+        $(".logged_fullname").text(result.user.full_name);
+      }
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Logged User Dashboard");
+    }
+});
+}
 
 </script>
 

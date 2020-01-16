@@ -4,6 +4,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <title>@yield('title')</title>
 
     <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
@@ -38,7 +43,16 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-          @yield('content')
+            @if (Session::has('ses_user_logged'))
+            
+
+            @yield('content')
+
+            @else 
+            <script>window.location = "/superadmin";</script>
+            @endif
+
+          
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

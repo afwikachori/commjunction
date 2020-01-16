@@ -2,93 +2,74 @@
 
 @section('content')
 <div class="container">
-	<center>
-		<h1 style="margin-top: 1.3em; margin-bottom: 1em;">Please Confirm your Regsitrasion !</h1>
-</center>
+<h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Please Confirm your Regsitrasion !</h3>
 <br>
 <div class="row">
   <div class="col-4">
 
- <div id="in_num">
-  <label class="h6 cgrey">INVOICE NUMBER</label>
-  <input id="invoice_number" class="form-control" type="text"  name="invoice_number" value="{{ old('invoice_number') }}" required>
+  <form method="POST" id="form_registerfirst_admin" action="{{route('adminconfirmpay')}}" enctype="multipart/form-data">{{ csrf_field() }}
 
-<button class="btn btn-oren" onclick="get_invoice_num($('#invoice_number').val())" style="text-align: left;margin-top: 0.5em;">Cek</button>  
+    <div class="form-group row">
+      <label class="h6 cgrey">Invoice Number</label>
+      <input id="invoice_number" type="text" class="form-control @error('invoice_number') is-invalid @enderror" name="invoice_number" value="{{ old('invoice_number') }}" required autocomplete="invoice_number" placeholder="Invoice Number">
+      @if($errors->has('invoice_number'))
+      <small style="color: red;">{{ $errors->first('invoice_number')}}</small>
+      @endif
+    </div>
+
+    <div class="form-group row">
+      <label class="h6 cgrey">Full Name</label>
+      <input id="name_userpay" type="text" class="form-control @error('name_userpay') is-invalid @enderror" name="name_userpay" value="{{ old('name_userpay') }}" required autocomplete="name_userpay" placeholder="Name">
+    @if($errors->has('name_com'))
+    <small style="color: red;">{{ $errors->first('name_userpay')}}</small>
+    @endif
+  </div>
+
+  <div class="form-group row">
+    <label class="h6 cgrey">Image Of Payment</label>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input form-control @error('file_payment') is-invalid @enderror" name="file_payment" value="{{ old('file_payment') }}" required autocomplete="file_payment" id="file_payment" required>
+      <label class="custom-file-label" for="file_payment" style="text-align: left;">Choose file</label>
+
+      @if($errors->has('file_payment'))
+       <small style="color: red;">Extension is <i>.jpg / .jpeg / .PDF</i></small>
+     @endif
+   </div>
+ </div>
+
+ <button type="submit" id="btn_confirmpay" class="btn btn-oren" style="border-radius: 8px; margin-bottom: 0.5em; margin-top: 1em; margin-left: -15px;">Submit</button>
+</form>
+</div> <!-- end  col-4 -->
+<div class="col-1">
 </div>
 
-     <form method="POST" id="form_registerfirst_admin" action="{{route('adminconfirmpay')}}" enctype="multipart/form-data">
-                {{ csrf_field() }}
+<div class="col-4" id="detil_pay">
+  <br>
+<div class="form-group">
+    <small class="clight2 mgb-05">Total Payment</small>
+    <h6 class="cgrey1" id="nominal_payment1"></h6>
+</div>
+
+<div class="form-group">
+    <small class="clight2 mgb-05">Bank Name</small>
+    <h6 class="cgrey1" id="bank_receiver"></h6>
+</div>
+
+<div class="form-group">
+    <small class="clight2 mgb-05">Name Receiver</small>
+    <h6 class="cgrey1" id="name_receiver"></h6>
+</div>
+
+<div class="form-group" id="hidein-img">
+    <small class="clight2 mgb-05">Your Image Payment</small>
+    <br>
+    <img id="show_imgpay" class="img-fluid rounded float-left" src="" style="width: 15%; margin-top: 0.3em; height: auto;display: none; ">
+</div>
+</div> <!-- end detail-pay -->
 
 
-              <div class="form-group row">
-                        <input id="name_userpay" type="text" class="form-control @error('name_userpay') is-invalid @enderror" name="name_userpay" value="{{ old('name_userpay') }}" required autocomplete="name_userpay" placeholder="Name">
-                        @if($errors->has('name_com'))
-                        <small style="color: red;">{{ $errors->first('name_userpay')}}</small>
-                        @endif
-              </div>
-
-             
-
-              <div class="form-group row">
-                <select disabled id="type_pay" class="form-control @error('type_pay') is-invalid @enderror" name="type_pay" data-old="{{ old('type_pay') }}" required>
-                </select>
-
-              @if($errors->has('type_pay'))
-              <small class="error_register1" style="color: red;">{{ $errors->first('type_pay')}}
-              </small>
-              @endif
-              </div>
-
-
-              <div class="form-group row">
-                <select disabled id="method_pay" class="form-control @error('method_pay') is-invalid @enderror" name="method_pay" data-old="{{ old('method_pay') }}" required>
-                </select>
-
-              @if($errors->has('method_pay'))
-              <small class="error_register1" style="color: red;">{{ $errors->first('method_pay')}}
-              </small>
-              @endif
-              </div>
-
-              <div class="form-group row">
-                        <input id="bank_receiver" type="text" class="form-control @error('bank_receiver') is-invalid @enderror" name="bank_receiver" value="{{ old('bank_receiver') }}" required disabled autocomplete="bank_receiver" placeholder="Bank Receivers">
-                        @if($errors->has('bank_receiver'))
-                        <small style="color: red;">{{ $errors->first('bank_receiver')}}</small>
-                        @endif
-              </div>
-
-              <div class="form-group row">
-                        <input id="name_receiver" type="text" class="form-control @error('name_receiver') is-invalid @enderror" name="name_receiver" value="{{ old('name_receiver') }}" required disabled autocomplete="name_receiver" placeholder="Name Receivers">
-                        @if($errors->has('name_receiver'))
-                        <small style="color: red;">{{ $errors->first('name_receiver')}}</small>
-                        @endif
-              </div>
-
-                <div class="form-group row">
-                        <input id="nominal_payment1" type="text" class="form-control @error('nominal_payment1') is-invalid @enderror" value="{{ old('nominal_payment1') }}" required disabled autocomplete="nominal_payment1" placeholder="Nominal Payment">
-
-                        <input id="nominal_payment" type="hidden" class="form-control @error('nominal_payment') is-invalid @enderror" name="nominal_payment" value="{{ old('nominal_payment') }}" required disabled autocomplete="nominal_payment" placeholder="Nominal Payment">
-                        @if($errors->has('nominal_payment'))
-                        <small style="color: red;">{{ $errors->first('nominal_payment')}}</small>
-                        @endif
-              </div>
-
-               <div class="form-group row">
-               <div class="custom-file">
-                            <input type="file" class="custom-file-input form-control @error('file_payment') is-invalid @enderror" name="file_payment" value="{{ old('file_payment') }}" required autocomplete="file_payment" id="file_payment" required>
-                            <label class="custom-file-label" for="file_payment" style="text-align: left;">Choose file</label>
-                            @if($errors->has('file_payment'))
-                           
-                            <small style="color: red;">Extension is <i>.jpg / .jpeg / .PDF</i></small>
-                            @endif
-              </div>
-            </div>
-
-        <button type="submit" id="submit" class="btn btn-success" style="border-radius: 8px; margin-bottom: 0.5em; margin-top: 0.5em">Choose</button>
-       </form>
-     </div>
-    </div>
-  </div>
+</div> <!-- end row -->
+</div> <!-- end-container -->
 
 
 </center>
@@ -99,9 +80,26 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready(function () {
-  $("#form_registerfirst_admin").css("display", "none");
+  $("#detil_pay").css("display", "none");
+  $("#name_userpay").attr("disabled", 'disabled');
+  $("#file_payment").attr("disabled", 'disabled');
+  $("#btn_confirmpay").css("display", "none");
+  $("#hidein-img").css("display", "none");
+  
+  
 
 
+});
+
+
+
+
+
+
+$('input#invoice_number').bind("change keyup input",function() { 
+  var inin = $(this).val();
+    // alert("num invoice = "+inin);
+  get_invoice_num(inin);
 });
 
 
@@ -120,18 +118,16 @@ function get_invoice_num(input){
       datatype: 'JSON',
       success: function (result) {
         var isi = result.data;
-        $("#form_registerfirst_admin").css("display", "block");
-        $("#in_num").hide();
-        console.log(isi);
-         swal(result.message);
+        // console.log(isi);
+        $("#detil_pay").fadeIn();
+        // swal(result.message);
+        $("#name_userpay").removeAttr("disabled", 'disabled');
+        $("#file_payment").removeAttr("disabled", 'disabled');
+        $("#btn_confirmpay").fadeIn();
 
-         get_tipepay(isi.payment_type_id);
-         get_carapay(isi.payment_type_id, isi.payment_method_id);
-
-         $("#nominal_payment1").val(rupiah(isi.payment_total));
-         $("#nominal_payment").val(isi.payment_total);
-         $("#bank_receiver").val(isi.payment_bank_name);
-         $("#name_receiver").val(isi.payment_owner_name);
+         $("#nominal_payment1").html(rupiah(isi.payment_total));
+         $("#bank_receiver").html(isi.payment_bank_name);
+         $("#name_receiver").html(isi.payment_owner_name);
 
       
       },
@@ -145,119 +141,13 @@ function get_invoice_num(input){
 
 
 
-
-var nominal = document.getElementById('nominal_payment1');
-nominal.addEventListener('keyup', function(e){ 
-  nominal.value = formatRupiah(this.value, 'Rp ');
-});
-
-
-function get_carapay(idku,set){
-// $('#type_pay').change(function() {    
-//     var idku = this.value;
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-    url: "/get_carapay",
-    type: "POST",
-    data:{
-    "id": idku,
-    },
-    dataType: "json",
-    success: function (hasil) {
-      // console.log(hasil);
-      $('#method_pay').empty();
-      $('#method_pay').append("<option disabled> Choose Payment Method</option>");
-      
-
-    if (hasil.success == true) {
-      var data = hasil.data; 
-
-      for (var i = data.length - 1; i >= 0; i--) {
-        $('#method_pay').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].payment_title, "</option>"));
-      } 
-
-      //Short Function Ascending//
-      $("#method_pay").html($('#method_pay option').sort(function (x, y) {
-        return $(y).val() < $(x).val() ? -1 : 1;
-      }));
-
-      $("#method_pay").get(0).selectedIndex = 0; 
-    }
-
-     const OldValue = '{{old('method_pay')}}';
-    
-    if(OldValue !== '') {
-      $('#method_pay').val(OldValue);
-    }
-    $('select[name="method_pay"]').val(set);
-
-    },error: function (error) {
-      console.log("Cant Show list payment method"+ error);
-
-    },
-});
-  // });
-}
-
-
-//dropdown payment method
-function get_tipepay(id) {  
-$('#method_pay').append("<option disabled>Please Choose Payment Type First</option>");
-
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-    url: "/get_tipepay",
-    type: "POST",
-    dataType: "json",
-    success: function (hasil) {
-      // console.log(hasil.data);
-
-      $('#type_pay').empty();
-      $('#type_pay').append("<option disabled>Choose Payment Type</option>");
-
-    if (hasil.success == true) {
-      var data = hasil.data; 
-
-      for (var i = data.length - 1; i >= 0; i--) {
-        $('#type_pay').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].payment_title, "</option>"));
-      } 
-
-      //Short Function Ascending//
-      $("#type_pay").html($('#type_pay option').sort(function (x, y) {
-        return $(y).val() < $(x).val() ? -1 : 1;
-      }));
-
-      $("#type_pay").get(0).selectedIndex = 0; 
-    }
-
-     const OldValue = '{{old('type_pay')}}';
-    
-    if(OldValue !== '') {
-      $('#type_pay').val(OldValue);
-    }
-
-    $('select[name="type_pay"]').val(id);
-
-    },error: function (error) {
-      console.log("Cant Show list payment type"+ error);
-
-    },
-});
-} //endfunction
-
-
-
 var idku = $('#id_pop_payment').val();
 //showfile name upload icon
 $('#file_payment').on('change', function () {
+// menampilkan img
+previewImgUpload("show_imgpay",this);
+$("#hidein-img").fadeIn();
+
 var fileName = $(this).val();
          if ( fileName.length > 30){
            var fileNameFst=fileName.substring(0,30);

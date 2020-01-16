@@ -747,7 +747,8 @@ class RegisterController extends Controller{
      Session::forget('data_idpay');
      Session::forget('id_pay_type');
 
-      return view('admin/finish');
+      // return view('admin/finish');
+     return view('admin/loading');
     }else{
         
     if($json['status'] == 500){
@@ -777,6 +778,14 @@ class RegisterController extends Controller{
     } //end sukses = false
 }
 
+
+
+
+
+///CONFIRM PAYMENT INVOICE ADMIN
+    public function confirmView(){
+        return view('admin/confirmpay_invoice');
+    }
 
 
     /// ######CONFIRM PAYMENT ADMIN
@@ -825,6 +834,8 @@ class RegisterController extends Controller{
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
 
+    Session::put('ses_invoice_pay', $json['data']);
+
     return $json;
     }
 
@@ -833,16 +844,13 @@ class RegisterController extends Controller{
 
 
     public function adminconfirmpay(Request $request) {
-        dd($request);
+        $inv_pay = Session::get('ses_invoice_pay');
+        // dd($inv_pay);
 
         $validator = $request->validate([
-            'name_userpay' => 'required',
+            'name_userpay'   => 'required',
             'invoice_number' => 'required|numeric',
-            'method_pay' => 'required',
-            'bank_receiver' => 'required',
-            'name_receiver' => 'required', 
-            'nominal_payment' => 'required|numeric',
-            'file_payment' => 'required|mimes:jpeg,jpg,png,pdf',
+            'file_payment'  => 'required|mimes:jpeg,jpg,png,pdf',
         ]);
 
         ///UPLOAD IMAGE KE BACK-EN
@@ -859,35 +867,44 @@ class RegisterController extends Controller{
             $imageRequest = [
                 "nama"               => $input['name_userpay'],
                 "invoice_number"     => $input['invoice_number'],
-                "payment_method"     => $input['method_pay'],
-                "payment_bank_name"  => $input['bank_receiver'],
-                "payment_owner_name" => $input['name_receiver'],
-                "nominal"            => $input['nominal_payment'],
+                "payment_method"     => $inv_pay['payment_method_id'],
+                "payment_bank_name"  => $inv_pay['payment_bank_name'],
+                "payment_owner_name" => $inv_pay['payment_owner_name'],
+                "nominal"            => $inv_pay['payment_total'],
                 "filename"           => $filnam,
                 "file"               => $imgku
             ];
 
             $url =env('SERVICE').'paymentverification/create';
+            try{
+                $responseImage = $req->sendImagePayConfirm($imageRequest,$url);
+            // dd($responseImage);
 
-            $responseImage = $req->sendImagePayConfirm($imageRequest,$url);
-            dd($responseImage);
-
-            if ($responseImage['code'] != "00") {
-                return back()->with('response', [
-                    'status'   => 'error',
-                    'messages' => [
-                        'title'   => 'Insert Image',
-                        'messages' => $responseImage['message']
-                    ]
-                ]);
-            }else{
-                dd($responseImage);
+            if ($responseImage['success'] == true) {
                 $reshasil = $responseImage['data'];
+                alert()->success('Successfully Upload','System will confirm your payment max 24hours, then Login');
+            Session::forget('ses_invoice_pay');
+            return view('admin/login');
+            }else{
+            return back()->with('response', [
+                'status'   => 'error',
+                'messages' => [
+                'title'   => 'Insert Image',
+                'messages' => $responseImage['message']]
+                ]);
+               
+            }  
+        }catch(ClientException $exception) {
+                    $status_error = $exception->getCode();
+
+                    if( $status_error == 400){
+                    Session::forget('ses_invoice_pay');
+                    alert()->warning('Anda sudah mengirim verifikasi lebih dari 3x hari ini, mohon bersabar dan tunggu', 'You have sending 3 Times!')->autoclose(4500)->persistent('Done');
+                    return back();
+                    }
             }
-        }else{
             
-    
-        } //END  UPLOAD-IMAGE 
+        }//END-IF  UPLOAD-IMAGE 
 
 
         $input = $request->all(); // getdata form by name

@@ -73,7 +73,8 @@ Route::post('cektelfon_admin', 'RegisterController@cektelfon_admin')->name('cekt
 Route::post('cekemail_admin', 'RegisterController@cekemail_admin')->name('cekemail_admin');
 
 
-
+//	ADMIN - CONFIRM PAYMENT REGIS
+Route::get('admin/confirm','RegisterController@confirmView')->name('confirmView');
 
 //register - CONFIRM PAYMENT - ADMIN COMM
 Route::get('admin/confirmpay','RegisterController@confirmpayView')->name('confirmpayView');
@@ -148,7 +149,7 @@ Route::get('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('Final
 
 
 // LOADING _ FINISH 
-Route::get('admin/loading_creating','RegisterController@loadingcreatingView')->name('loadingcreatingView');
+Route::get('admin/loading','RegisterController@loadingcreatingView')->name('admin/loading');
 Route::get('admin/finish','RegisterController@finishView')->name('finishView');
 
 
@@ -184,13 +185,17 @@ Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('ad
 
 
 //SUPERADMIN - MANAGEMENT
-Route::get('superadmin/register','SuperadminController@registerSuperView')->name('superadmin/register');
 
-Route::get('superadmin','SuperadminController@loginSuperadmin')->name('superadmin');
+Route::get('superadmin','SuperadminController@loginSuperadminView')->name('superadmin');
 
 Route::get('superadmin/dashboard','SuperadminController@dashboarSuperView')->name('superadmin/dashboard');
 
 Route::get('superadmin/user','SuperadminController@UserSuperView')->name('superadmin/user');
 
+// ---- post -----
+Route::post('loginSuperadmin','SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 
 Route::post('postAddUser','SuperadminController@postAddUser')->name('postAddUser');
+
+Route::post('session_logged_dashboard','SuperadminController@session_logged_dashboard')->name('session_logged_dashboard');
+

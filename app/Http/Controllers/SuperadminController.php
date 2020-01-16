@@ -15,12 +15,8 @@ class SuperadminController extends Controller
 	    return view('superadmin/dashboard_superadmin');
 	}
 
-    public function loginSuperadmin(){
+    public function loginSuperadminView(){
         return view('superadmin/login_superadmin');
-    }
-
-    public function registerSuperView(){
-        return view('superadmin/register_superadmin');
     }
 
      public function UserSuperView(){
@@ -35,6 +31,51 @@ class SuperadminController extends Controller
             'name_superadmin' => 'required|min:3',
         ]);
            return 'passing validate!';
+    }
+
+
+    //LOGIN SUPERADMIN
+     public function loginSuperadmin(Request $request) {
+        // dd($request);
+
+        $validator = $request->validate([
+            'username_superadmin'   => 'required',
+            'pass_superadmin' => 'required',
+        ]);
+
+        $input = $request->all();
+        $url = env('SERVICE').'auth/superadmin';
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST',$url, [
+            'form_params' => [
+            'user_name'   => $input['username_superadmin'],
+            'password'    => $input['pass_superadmin']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        $jsonlogin = $json['data'];
+
+        Session::put('ses_user_logged', $jsonlogin);
+        $user_logged = Session::get('ses_user_logged');
+        
+        $user = $user_logged['user']['full_name'];
+        // $user = $jsonlogin['user'];
+        return redirect('superadmin/dashboard')->with('fullname',$user);
+    }
+
+
+    //SESSION LOGGED USER - DASHBOARD SUPERADMIN
+    public function session_logged_dashboard(){
+    if(Session::has('ses_user_logged')){
+    $ses_loggeduser = Session::get('ses_user_logged');
+    return $ses_loggeduser;
+    }
+    else{
+        return view("/superadmin");
+    }
     }
 
 

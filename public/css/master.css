@@ -757,6 +757,22 @@ div.hr {
   line-height: 0px;
 }
 
+ #logo-loading{
+    position: absolute;
+    top: 257px;
+    left: 625px;
+    width: 105px;
+    height: auto;
+ }
+
+.loadingq{
+  background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: white;
+}
+
 .btn-grad {
 	background-image: linear-gradient(to right,#a6eaf7 0%, #C4E0E5 51%, #4CA1AF 100%)
 }

@@ -1,12 +1,14 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
-<div class="pas-tengah"><center>
-	<img src="/pic/loading.gif" class="rounded-circle img-fluid" style="width: 13%; height: auto; margin-bottom: 2em;">
-	<h2 lang="en">Creating Community...</h2>
-	</center>
+<div class="loadingq">
+
+<center>
+<div class="spinner-grow" role="status" style="position: absolute; top: 200px; width: 255px; height: 255px; top: 180px; left: 550px;">
+  <span class="sr-only">Loading...</span>
 </div>
+	<img src="/visual/logo2.png" id="logo-loading">
+</center>
 </div>
 @endsection
 
@@ -15,7 +17,7 @@
 $( document ).ready(function() {
     setTimeout(function () {
        window.location.href = "finish";
-    }, 6500); //will call the function after 2 secs.
+    }, 5000); //will call the function after 2 secs.
 });
 
 </script>
