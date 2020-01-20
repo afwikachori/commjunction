@@ -108,8 +108,9 @@ Route::get('session_backfitur', 'RegisterController@session_backfitur')->name('s
 
 Route::post('addfromdetailFitur', 'RegisterController@addfromdetailFitur')->name('addfromdetailFitur');
 
-// register - detail fitur
-Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');
+// REGISTER ADMIN- DETAIL FITUR
+
+// Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');
 
 Route::get('admin/features_detail/{id_fitur}', 'RegisterController@detailFiturView')->name('features_detail');
 
@@ -164,6 +165,11 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 
 
 // SUBSCRIBER - REGISTRASION
+
+//TES SUBS
+Route::get('subscriber/{id_fitur}', 'SubscriberController@detailFiturView')->name('features_detail');
+//END-TES
+
 Route::get('subscriber','SubscriberController@loginView')->name('subscriber');
 Route::get('subscriber/subs_personal','SubscriberController@registerPersonalView')->name('subscriber/subs_personal');
 Route::get('subscriber/subs_community','SubscriberController@registerCommView')->name('subscriber/subs_community');
@@ -174,13 +180,8 @@ Route::post('registerSubs', 'SubscriberController@registerSubs')->name('register
 
 
 
-
-
 //ADMIN-COMMUNITY (DASHBOARD)
 Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('admin/dashboard');
-
-
-
 
 
 
@@ -192,10 +193,14 @@ Route::get('superadmin/dashboard','SuperadminController@dashboarSuperView')->nam
 
 Route::get('superadmin/user','SuperadminController@UserSuperView')->name('superadmin/user');
 
+Route::get('superadmin/payment','SuperadminController@paymentSuperView')->name('superadmin/payment');
+
 // ---- post -----
 Route::post('loginSuperadmin','SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 
 Route::post('postAddUser','SuperadminController@postAddUser')->name('postAddUser');
 
 Route::post('session_logged_dashboard','SuperadminController@session_logged_dashboard')->name('session_logged_dashboard');
+
+Route::post('get_priviledge','SuperadminController@get_priviledge')->name('get_priviledge');
 

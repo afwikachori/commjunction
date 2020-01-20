@@ -14,6 +14,8 @@
 
     <title>@yield('title')</title>
 
+    <!-- ICON WEB -->
+    <link rel="icon" href="/img/commjuction_icoweb.ico"/>
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">

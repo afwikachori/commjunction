@@ -19,16 +19,32 @@ class SuperadminController extends Controller
         return view('superadmin/login_superadmin');
     }
 
-     public function UserSuperView(){
+    public function UserSuperView(){
         return view('superadmin/user_superadmin');
     }
 
-    public function postAddUser(Request $request) {
 
-    dd($request);
+    public function paymentSuperView(){
+         return view('superadmin/payment_superadmin');
+    }
+
+
+
+
+
+
+    public function postAddUser(Request $request) {
     
         $request->validate([
             'name_superadmin' => 'required|min:3',
+            'phone_super'     => 'required|min:10|numeric',
+            'email_super'     => 'required|email:rfc',
+            'division_super'  => 'required',
+            'pilih_priv'      => 'required',
+            'password_super'  => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:password_confirm|same:password_confirm',
+            'password_confirm' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
+
+
         ]);
            return 'passing validate!';
     }
@@ -76,6 +92,17 @@ class SuperadminController extends Controller
     else{
         return view("/superadmin");
     }
+    }
+
+
+    // DROPDOWN PRIVILEDGE
+    public function get_priviledge(){
+    $url = env('SERVICE').'registration/priviledge';
+    $client = new \GuzzleHttp\Client();
+    $request = $client->post($url);
+    $response = $request->getBody();
+    $jsonku = json_decode($response, true);
+    return($jsonku);
     }
 
 

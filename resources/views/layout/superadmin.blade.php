@@ -11,6 +11,10 @@
 
     <title>@yield('title')</title>
 
+    <!-- ICON WEB -->
+    <link rel="icon" href="/img/commjuction_icoweb.ico"/>
+    
+    <!-- CSS Files -->
     <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/purple/css/style.css">
@@ -18,12 +22,13 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/visual/commjuction.png" />
 
-      <!-- Styles -->
+    <!-- Styles -->
     @yield('css')
   </head>
 
   
   <body>
+    @if (Session::has('ses_user_logged'))
 
   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
@@ -43,18 +48,10 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            @if (Session::has('ses_user_logged'))
-            
-
-            @yield('content')
-
-            @else 
-            <script>window.location = "/superadmin";</script>
-            @endif
-
-          
+            @yield('content')  
           </div>
           <!-- content-wrapper ends -->
+          
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
@@ -70,6 +67,12 @@
     </div>
     <!-- container-scroller -->
 
+  @else 
+  <script>window.location = "/superadmin";</script>
+  @endif
+
+
+
 
     <!-- plugins:js -->
     <script src="/js/jquery.3.2.1.min.js"></script>
@@ -80,6 +83,9 @@
     <script src="/purple/js/misc.js"></script>
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
+
+    <!-- js custum superadmin -->
+    <script src="/js/superadmin.js"></script>
 
     @include('sweet::alert')
     

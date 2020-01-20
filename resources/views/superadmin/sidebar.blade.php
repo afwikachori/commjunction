@@ -17,10 +17,18 @@
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="/superadmin/dashboard">
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+
+             <li class="nav-item">
+              <a class="nav-link" href="/superadmin/payment">
+                <span class="menu-title">Payment</span>
+                <i class="mdi mdi-coin menu-icon"></i>
               </a>
             </li>
 
