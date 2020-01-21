@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/purple/css/style.css">
     <link rel="stylesheet" href="/css/superadmin.css">
+    <link rel="stylesheet" href="/css/dataTables.min.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/visual/commjuction.png" />
 
@@ -83,9 +84,10 @@
     <script src="/purple/js/misc.js"></script>
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
-
     <!-- js custum superadmin -->
     <script src="/js/superadmin.js"></script>
+    <script src="/js/dataTables.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
 
     @include('sweet::alert')
     

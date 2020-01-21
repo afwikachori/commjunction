@@ -204,3 +204,6 @@ Route::post('session_logged_dashboard','SuperadminController@session_logged_dash
 
 Route::post('get_priviledge','SuperadminController@get_priviledge')->name('get_priviledge');
 
+Route::post('list_req_admincomm','SuperadminController@list_req_admincomm')->name('list_req_admincomm');
+
+

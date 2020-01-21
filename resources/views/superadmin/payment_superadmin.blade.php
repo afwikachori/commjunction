@@ -23,7 +23,17 @@
 	 <div class="card">
 	 	<div class="card-body">
 	 		<h4 class="card-title">Project Status</h4>
-	 		sasldnklasndklsadlkas
+	 		<br>
+            <table id="example" class="display" style="width:100%"> <thead> 
+            <tr> 
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+            </tr>
+            </thead> 
+        </table>
 	 	</div>
 	 </div>
 	</div>
@@ -36,8 +46,29 @@
 
 $(document).ready(function () {
 session_logged_dashboard();
-
+// list_req_admincomm();
 });
+
+
+
+function list_req_admincomm(){
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/list_req_admincomm',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      },
+      error: function (result) {
+        console.log("Cant Reach List Request Admin Community");
+    }
+});
+}
 
 </script>
 

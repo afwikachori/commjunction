@@ -17,3 +17,13 @@
 .bg-grey{
 	background-color: #ebedf2;
 }
+
+.redhide{
+	display: none;
+	color: red;
+	font-size: 12px;
+}
+
+select.form-control {
+	color: #7b7b7b !important;
+}

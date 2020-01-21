@@ -33,6 +33,7 @@
                             <label class="col-sm-4 col-form-label" for="name_superadmin">Full Name</label>
                             <div class="col-sm-8">
                                <input id="name_superadmin" type="text" class="form-control @error('name_superadmin') is-invalid @enderror" name="name_superadmin" value="{{ old('name_superadmin') }}" required>
+                               <small id="pesan_namesuper" class="redhide"></small>
                             </div>
                           </div>
                         </div>
@@ -42,6 +43,7 @@
                             <label class="col-sm-4 col-form-label">Phone Number</label>
                             <div class="col-sm-8">
                             <input id="phone_super" type="text" class="form-control @error('phone_super') is-invalid @enderror" name="phone_super" value="{{ old('phone_super') }}" required>
+                            <small id="pesan_phonesuper" class="redhide"></small>
                             </div>
                           </div>
                         </div>
@@ -53,15 +55,17 @@
                             <label class="col-sm-4 col-form-label">Email Address</label>
                             <div class="col-sm-8">
                              <input id="email_super" type="email_super" class="form-control @error('email_super') is-invalid @enderror" name="email_super" value="{{ old('email_super') }}" required autocomplete="email_super">
+                            <small id="pesan_emailsuper" class="redhide"></small>
                             </div>
                           </div>
                         </div>
 
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Division</label>
+                            <label class="col-sm-4 col-form-label">Username</label>
                             <div class="col-sm-8">
-                            <input id="division_super" type="division_super" class="form-control @error('division_super') is-invalid @enderror" name="division_super" value="{{ old('division_super') }}" required autocomplete="division_super">
+                            <input id="username_super" type="text" class="form-control @error('username_super') is-invalid @enderror" name="username_super" value="{{ old('username_super') }}" required autocomplete="username_super">
+                            <small id="pesan_usernamesuper" class="redhide"></small>
                             </div>
                           </div>
                         </div>
@@ -74,29 +78,26 @@
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Password</label>
                             <div class="col-sm-8">
-
                             <div class="input-group">
-                            <input type="password" id="password_super" class="form-control @error('password_super') is-invalid @enderror" name="password_super" required autocomplete="password_super">
+                            <input type="password" id="password_super" class="form-control @error('password_super') is-invalid @enderror" name="password_super" value="{{ old('password_super') }}" required autocomplete="password_super">
                             <div class="input-group-append">
                               <button class="btn btn-sm bg-grey" type="button" onclick="showpass()">
                                 <i class="mdi mdi-eye"></i>
                               </button>
-                        </div>
-                      </div>
-
-
-
+                            </div>
+                            </div>
+                            <small id="pesan_passuper" class="redhide"></small>
                             </div>
                           </div>
                         </div>
 
                         <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Priviledge</label>
-                              <div class="col-sm-8">
-                                <select id="pilih_priv" class="form-control @error('pilih_priv') is-invalid @enderror" name="pilih_priv" data-old="{{ old('pilih_priv') }}" required>
-                                </select>
-                              </div>
+                         <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Division</label>
+                            <div class="col-sm-8">
+                            <input id="division_super" type="division_super" class="form-control @error('division_super') is-invalid @enderror" name="division_super" value="{{ old('division_super') }}" required autocomplete="division_super">
+                            <small id="pesan_divisisuper" class="redhide"></small>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -107,16 +108,29 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Confirm Password</label>
                             <div class="col-sm-8">
-                            <input id="password_confirm" type="password" class="form-control" name="password_confirm" required autocomplete="password_confirm">
+                            <input id="password_confirm" type="password" class="form-control" name="password_confirm" required value="{{ old('password_confirm') }}" autocomplete="password_confirm">
+                            <small id="pesan_cfpass" class="redhide"></small>
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-6" style="text-align: right;">
-                          <br>
+                        <div class="col-md-6">
+                        <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Priviledge</label>
+                        <div class="col-sm-8">
+                          <select id="pilih_priv" class="form-control @error('pilih_priv') is-invalid @enderror" name="pilih_priv" data-old="{{ old('pilih_priv') }}" required>
+                          </select>
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+
+                      <br>
+                      <div class="row">
+                      <div class="col-md-6"></div>
+                      <div class="col-md-6" style="text-align: right;">
                       <button type="submit" class="btn btn-gradient-primary mr-2">Add</button>
                       <button class="btn btn-light">Cancel</button>
                       </div>
-                        
                       </div>
                       
 
@@ -154,7 +168,7 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (hasil) {
-      console.log(hasil.data);
+      // console.log(hasil.data);
 
       $('#pilih_priv').empty();
       $('#pilih_priv').append("<option disabled>Choose Priviledge</option>");
@@ -170,12 +184,10 @@ $.ajax({
       $("#pilih_priv").html($('#pilih_priv option').sort(function (x, y) {
         return $(y).val() < $(x).val() ? -1 : 1;
       }));
-
       $("#pilih_priv").get(0).selectedIndex = 0; 
     }
 
-     const OldValue = '{{old('pilih_priv')}}';
-    
+    const OldValue = '{{old('pilih_priv')}}';
     if(OldValue !== '') {
       $('#pilih_priv').val(OldValue);
     }
@@ -190,7 +202,7 @@ $.ajax({
 
 
 
- function showpass() {
+function showpass() {
   var a = document.getElementById("password_super");
   if (a.type == "password") {
     a.type = "text";
@@ -198,6 +210,8 @@ $.ajax({
     a.type = "password";
   }
 }
+
+
 
 </script>
 

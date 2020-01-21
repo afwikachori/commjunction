@@ -34,19 +34,39 @@ class SuperadminController extends Controller
 
 
     public function postAddUser(Request $request) {
-    
+
         $request->validate([
             'name_superadmin' => 'required|min:3',
             'phone_super'     => 'required|min:10|numeric',
             'email_super'     => 'required|email:rfc',
+            'username_super' => 'required|min:6|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/',
             'division_super'  => 'required',
             'pilih_priv'      => 'required',
             'password_super'  => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:password_confirm|same:password_confirm',
             'password_confirm' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-
-
         ]);
-           return 'passing validate!';
+
+        $input = $request->all();
+        $url = env('SERVICE').'registration/admcreate';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST',$url, [
+            'form_params'   => [
+            'full_name'     => $input['name_superadmin'], 
+            'notelp'        => $input['phone_super'], 
+            'email'         => $input['email_super'], 
+            'divisi'        => $input['division_super'], 
+            'user_name'     => $input['username_super'], 
+            'password'      => $input['password_super'],
+            'priviledge_id' => $input['pilih_priv']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        alert()->success('New User Has Been Added!', 'Successfully')->autoclose(4500)->persistent('Done');
+        return back();
+        // dd($json);   
     }
 
 
@@ -104,6 +124,27 @@ class SuperadminController extends Controller
     $jsonku = json_decode($response, true);
     return($jsonku);
     }
+
+
+    //DATATABLE LIST REQ VERIFY ADMINN-COMM
+    public function list_req_admincomm(){
+    $user_logged = Session::get('ses_user_logged');
+   
+    $url = env('SERVICE').'paymentverification/datapaymentconfirmation';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $user_logged['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+    }
+
 
 
 } //endclas
