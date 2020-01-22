@@ -24,6 +24,27 @@
 	font-size: 12px;
 }
 
+#form_verify_admincom{
+	padding: 0.5em;
+}
+
+.img-mini{
+	width: 40px;
+	height: auto;
+}
+
+
 select.form-control {
 	color: #7b7b7b !important;
+}
+
+
+.btn-light{
+color: #afafaf;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5); 
 }

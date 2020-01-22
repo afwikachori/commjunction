@@ -147,4 +147,14 @@ class SuperadminController extends Controller
 
 
 
+    public function verify_admincom(Request $request) {
+        dd($request);
+    }
+
+
+
+
+
+
+
 } //endclas

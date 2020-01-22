@@ -19,8 +19,14 @@
     <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/purple/css/style.css">
     <link rel="stylesheet" href="/css/superadmin.css">
-    <link rel="stylesheet" href="/css/dataTables.min.css">
-    <!-- End layout styles -->
+
+    <!-- dataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+    
+
+
+    <!-- End layout styles
     <link rel="shortcut icon" href="/visual/commjuction.png" />
 
     <!-- Styles -->
@@ -84,9 +90,25 @@
     <script src="/purple/js/misc.js"></script>
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
+    <script src="/purple/js/file-upload.js"></script>
+
     <!-- js custum superadmin -->
     <script src="/js/superadmin.js"></script>
-    <script src="/js/dataTables.min.js"></script>
+
+    <!-- dataTables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+
+
+
+
+
+   
+
+    <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
 
     @include('sweet::alert')

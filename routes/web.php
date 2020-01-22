@@ -206,4 +206,6 @@ Route::post('get_priviledge','SuperadminController@get_priviledge')->name('get_p
 
 Route::post('list_req_admincomm','SuperadminController@list_req_admincomm')->name('list_req_admincomm');
 
+Route::post('verify_admincom','SuperadminController@verify_admincom')->name('verify_admincom');
+
 
