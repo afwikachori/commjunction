@@ -88,9 +88,12 @@ class RequestController extends Controller{
     public function sendImgVerify($requestImage,$url,$token){  
 
         $client = new \GuzzleHttp\Client();
-        dd($token);
+        // dd($requestImage);
 
             $request = $client->request('POST',$url,[
+            'headers' => [
+                'Authorization' => $token
+            ],
             'multipart' => [
                 [
                     'name'     => 'invoice',
@@ -106,10 +109,7 @@ class RequestController extends Controller{
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $token
-            ],
+            
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);

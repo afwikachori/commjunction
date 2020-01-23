@@ -223,5 +223,29 @@ if(this.value == ""){
 $('#fileup').on('change', function () {
   if(this.value != ""){
     $("#btn_verifyreq").removeAttr("disabled");
+    $("#pesan_fileup").hide();
+  }else{
+    $("#pesan_fileup").html("Please, Choose image first").show();
+
   }
  });
+
+function clickImage(img){
+  // $('#mdl-img-click').modal('show');
+var modal = document.getElementById("mdl-img-click");
+var img = document.getElementById(img.id);
+var modalImg = document.getElementById("mdl-img-view");
+
+img.onclick = function(){
+  $('#mdl-img-click').modal('show');
+  modalImg.src = this.src;
+}
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("closeq")[0];
+
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() { 
+//   modal.style.display = "none";
+// }
+}

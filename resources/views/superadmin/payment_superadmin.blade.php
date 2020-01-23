@@ -81,7 +81,7 @@
                 <div class="input-group col-xs-12">
                 <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                 <span class="input-group-append">
-                <button class="file-upload-browse btn btn-light" type="button">Upload</button>
+                <button class="file-upload-browse btn btn-light" type="button">Browse</button>
                 </span>
                 </div>
             <small id="pesan_fileup" class="redhide"></small>
@@ -100,6 +100,9 @@
     </div>
   </div>
 </div>
+
+
+
 @endsection
 
 @section('script')
@@ -126,9 +129,9 @@ function tabel_req_verify(){
             {mData: 'nominal'},
             {mData: 'created_at'},
             {mData: 'file_customer',
-            render: function ( data, type, row ) {
+            render: function ( data, type, row, meta ) {
             var pic = cdn+data;
-            return '<center><img src="'+pic+'" class="img-mini zoom"></center>';
+            return '<center><img src="'+pic+'" onclick="clickImage(this)" id="imgprev'+meta.row+'" class="img-mini zoom"></center>';
               }
             },
             {mData: 'invoice_number',
@@ -182,6 +185,8 @@ function showpass() {
     a.type = "password";
   }
 }
+
+
 
 </script>
 

@@ -748,7 +748,7 @@ class RegisterController extends Controller{
      Session::forget('id_pay_type');
 
       // return view('admin/finish');
-     return view('admin/loading');
+     return view('admin/loading_creating');
     }else{
         
     if($json['status'] == 500){

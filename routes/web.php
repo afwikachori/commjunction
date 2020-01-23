@@ -166,9 +166,9 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 
 // SUBSCRIBER - REGISTRASION
 
-//TES SUBS
-Route::get('subscriber/{id_fitur}', 'SubscriberController@detailFiturView')->name('features_detail');
-//END-TES
+// //TES SUBS
+// Route::get('subscriber/{id_fitur}', 'SubscriberController@detailFiturView')->name('features_detail');
+// //END-TES
 
 Route::get('subscriber','SubscriberController@loginView')->name('subscriber');
 Route::get('subscriber/subs_personal','SubscriberController@registerPersonalView')->name('subscriber/subs_personal');

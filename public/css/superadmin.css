@@ -48,3 +48,14 @@ color: #afafaf;
   -webkit-transform: scale(1.5); /* Safari 3-8 */
   transform: scale(1.5); 
 }
+
+
+#mdl-img-click .modal-header {
+	border: none;
+	background-color: #f2edf300;
+	padding: none;
+}
+#mdl-img-click .modal-content {
+	border: none;
+	background-color: #f2edf300;
+}

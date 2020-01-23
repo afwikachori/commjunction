@@ -71,8 +71,33 @@
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
+
+
+<!-- Modal INITIAL-3-->
+<div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+        </button>
+      </div>
+      <center>
+      <img id="mdl-img-view">
+    </center>
     </div>
-    <!-- container-scroller -->
+  </div>
+</div>
+
+
+
+
+
+
+</div>
+<!-- container-scroller -->
+
+
 
   @else 
   <script>window.location = "/superadmin";</script>
