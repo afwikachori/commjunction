@@ -77,7 +77,7 @@ class RegisterController extends Controller{
     }   
 
     public function registerfirst(Request $request) {
-
+        // dd($request);
     if (Session::has('data_regis1show')){
     $validimg = '';
 
@@ -906,20 +906,7 @@ class RegisterController extends Controller{
             
         }//END-IF  UPLOAD-IMAGE 
 
-
-        $input = $request->all(); // getdata form by name
-        $data = [
-                "name"            => $input['name_com'],
-                "logo"            => $fileimg,
-                "description"     => $input['descrip_com'],
-                "jenis_comm_id"   => $input['type_com'],
-                "range_member"    => $input['range_member'],
-                "cust_jenis_comm" => $input['other_type_com']
-        ];
-
-        $dataSend = json_encode($data);
-
-         return redirect('admin/loading_payment')->withErrors($validator, 'admin/confirmpay');
+         // return redirect('admin/loading_payment')->withErrors($validator, 'admin/confirmpay');
     } 
 
 ///////////////////////////////////////////////////

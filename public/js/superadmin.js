@@ -30,6 +30,19 @@ function IsEmail_valid(email) {
 }
 
 
+//IMAGE FILENAME INPUT
+// show filename di inputfile
+function filenameImg(input){
+    var fileName = $(input).val();
+         if ( fileName.length > 30){
+           var fileNameFst=fileName.substring(0,30);
+           $(input).next('.custom-file-label').html(fileNameFst+"...");
+         }else{
+          $(input).next('.custom-file-label').html(fileName);
+         }
+}
+
+
 
 // SESSION LOGIN SUPEADMIN 
 function session_logged_dashboard(){
@@ -190,3 +203,25 @@ function cekusername_superadmin(input){
       });
 
   }
+
+
+$('#pass_super').on('keyup', function () {
+  var alpanumeric = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+if(this.value == ""){
+  $("#pass_super").removeClass( "is-valid" ).removeClass( "is-invalid" );
+  $("#pesan_paswotsuper").hide();
+}else if(this.value.match(alpanumeric) && this.value.length >= 8){
+  $("#pass_super").removeClass( "is-invalid" ).addClass( "is-valid" );
+  $("#pesan_paswotsuper").hide();
+}else{
+  $("#pass_super").removeClass("is-valid" ).addClass( "is-invalid" );
+  $("#pesan_paswotsuper").html("Mininum 8 character contain Numbers and Letters!").show();
+}
+});
+
+
+$('#fileup').on('change', function () {
+  if(this.value != ""){
+    $("#btn_verifyreq").removeAttr("disabled");
+  }
+ });

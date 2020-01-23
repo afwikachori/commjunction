@@ -266,7 +266,7 @@ filenameImg(this);
 previewImg(this);
 dimensionImg(this);
 
- }) //end-onchange img
+ }); //end-onchange img
 
 </script>
 @endsection

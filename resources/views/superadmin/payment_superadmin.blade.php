@@ -51,12 +51,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
-      <form method="POST" id="form_verify_admincom" action="{{route('verify_admincom')}}">{{ csrf_field() }}
+      <form method="POST" id="form_verify_admincom" action="{{route('verify_admincom')}}" enctype="multipart/form-data">{{ csrf_field() }}
         <div class="modal-body">
         <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="invoice_num">Invoice Number</label>
             <div class="col-sm-8">
-            <input id="invoice_num" type="text" class="form-control @error('invoice_num') is-invalid @enderror" name="invoice_num" value="{{ old('invoice_num') }}" required disabled>
+            <input id="invoice_num" type="text" class="form-control @error('invoice_num') is-invalid @enderror" name="invoice_num" required readonly="readonly">
             <small id="pesan_invnum" class="redhide"></small>
             </div>
         </div>
@@ -77,7 +77,7 @@
          <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="file">File</label>
             <div class="col-sm-8">
-            <input type="file" name="img[]" class="file-upload-default">
+            <input type="file" id="fileup" name="fileup" class="file-upload-default">
                 <div class="input-group col-xs-12">
                 <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                 <span class="input-group-append">
@@ -90,7 +90,7 @@
       </div> <!-- end-modal body -->
       <div class="modal-footer">
         <div style="padding: 0.5em;">
-        <button type="submit" class="btn btn-outline-success btn-icon-text btn-sm">
+        <button type="submit" id="btn_verifyreq" class="btn btn-outline-success btn-icon-text btn-sm">
         <i class="mdi mdi-check btn-icon-prepend"></i> Verify </button>
         <button type="button" class="btn btn-outline-light btn-icon-text btn-sm close" data-dismiss="modal">
         <i class="mdi mdi-close btn-icon-prepend"></i> Cancel </button>
@@ -145,8 +145,12 @@ function tabel_req_verify(){
 
 
 function verify_reqadmin(invoice_num){
-$("#invoice_num").val(invoice_num);
+// $("#invoice_num").val(invoice_num);
+$('input[name="invoice_num"]').val(invoice_num);
 $("#modal_verify_admincom").modal('show');
+$("#btn_verifyreq").attr("disabled", true);
+
+
 }
 
 

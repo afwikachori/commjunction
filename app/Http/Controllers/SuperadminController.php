@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
 use Session;
 use Alert;
 
@@ -148,8 +149,39 @@ class SuperadminController extends Controller
 
 
     public function verify_admincom(Request $request) {
-        dd($request);
-    }
+    $validator = $request->validate([
+    'invoice_num'=> 'required',
+    'pass_super' => 'required',
+    'fileup'     => 'required',
+    ]);
+    // dd($request);
+    $user_logged = Session::get('ses_user_logged');
+    $token = $user_logged['access_token'];
+
+    $req = new RequestController; 
+    $fileimg = "";
+
+    if ($request->hasFile('fileup')) {
+        $imgku = file_get_contents($request->file('fileup')->getRealPath());
+        $filnam = $request->file('fileup')->getClientOriginalName();
+
+        $input = $request->all(); // getdata form by name
+        $imageRequest = [
+                "invoice"     => $input['invoice_num'],
+                "password"    => $input['pass_super'],
+                "filename"    => $filnam,
+                "file"        => $imgku
+        ]; 
+
+
+    $url =env('SERVICE').'paymentverification/verification';
+    $resImg = $req->sendImgVerify($imageRequest,$url,$token);
+
+    return $resImg;
+            
+    }//END-IF  UPLOAD-IMAGE 
+
+    } //end-function
 
 
 
