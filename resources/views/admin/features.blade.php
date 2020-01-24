@@ -7,22 +7,26 @@
  <form method="POST" id="form_idfitur" action="{{route('sendfeature')}}">{{ csrf_field() }}
 
 <a href="/admin/pricing">
-<img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="/admin/pricing" class="clight backarrow">Back to Pricing</a>
+<img border="0"  src="/visual/left-arrow.png" class="panahkiri">
+</a><a href="/admin/pricing" class="clight backarrow3">Back to Pricing</a>
 
-<div class="mg-pricing">
+<div class="mg-fituradmin">
 <!-- @if (Session::has('datafitur')) -->
 <div class="row">
-  <div class="col-9">
-    <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Choose Your Features</h4>
+  <div class="col-md-9">
+    <h4 class="cgrey h4" id="judul_fiturq" style="margin-bottom: 0.5em;">Choose Your Features</h4>
 @if (Session::has('idaddfitur'))
 <input type="hidden" name="idaddfitur" id="idaddfitur" value="{{ Session::get('idaddfitur') }}">
 @endif
 
 <div class="row">
+<div class="card-deck">
+
  @foreach(Session::get('datafitur') as $newdata)
-<div class="col-3">
-    <div class="card" style="width: 10rem; height: 10.5rem; margin-top: 1em;">
+
+
+<div class="col-sm-2">
+    <div class="card fiturcard">
   <div class="card-body" style="padding: 1em !important;">
   <div class="roundcheck">
     <input type="checkbox" class="boxfitur" name="feature_id[]" id="fitur{{ $newdata['id'] }}"  value=" {{ $newdata['id'] }}"/>
@@ -42,15 +46,13 @@
 </div>
 </div>
 @endforeach
-
-
-
+</div> <!-- end-deck -->
 </div> <!-- end-row -->
 
 
   </div> <!-- end-col 10 -->
 
-  <div class="col-3">
+  <div class="col-3" id="div_popular" style="padding-left: 5%;">
     <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Popular</h4>
     <div class="row">
       <div class="col-3">
@@ -80,7 +82,10 @@
 
  <span class="cgrey1 s16">
  <span id="hitungcentang"> 0 </span>
-  / {{count($newdata) -1 }} &nbsp; Feature Selected </span>
+ @if (Session::has('sum'))
+  / {{ Session::get('sum')}} &nbsp; Feature Selected 
+@endif
+</span>
 
 <button type="submit" id="next_pilihfitur" class="btn btn-oren s14 btn-md btn-block">Next</button>
 </center>

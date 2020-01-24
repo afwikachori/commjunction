@@ -10,9 +10,11 @@
 
 <div class="contain-pay">
 <div class="row">
+
   @foreach(Session::get('fadmin') as $dt)
-<div class="col">
-<h3 class="cgrey" lang="en">Verify</h3>
+
+<div class="col-md">
+<h3 class="cgrey" lang="en" id="judul_finalregis">Verify</h3>
 <small class="clight" data-lang-token="reviewadmin">Here we are, that is the last step you have seen. Please verify the data that 
 have you complete.
 </small>
@@ -21,7 +23,7 @@ have you complete.
 
 <div class="row" style="margin-top: 1em;">
 
-<div class="col-5">
+<div class="col-7">
   <div class="form-group">
     <small class="clight2 mgb-05">Full Name</small>
     <h6 class="cgrey1">{{ $dt['admin']['full_name'] }}</h6>
@@ -31,13 +33,8 @@ have you complete.
     <small class="clight2 mgb-05">Address</small>
     <h6 class="cgrey1">{{ $dt['admin']['alamat'] }}</h6>
   </div>
-
-  <div class="form-group">
-    <small class="clight2 mgb-05">Email</small>
-    <h6 class="cgrey1">{{ $dt['admin']['email'] }}</h6>
-  </div>
-  
 </div>
+
 <div class="col-5">
 <div class="form-group">
     <small class="clight2 mgb-05">Phone Number</small>
@@ -48,11 +45,21 @@ have you complete.
     <small class="clight2 mgb-05">Username</small>
     <h6 class="cgrey1">{{ $dt['admin']['user_name'] }}</h6>
 </div>
+</div>
+</div>
 
+<div class="row">
+<div class="col-md-7">
+<div class="form-group">
+    <small class="clight2 mgb-05">Email</small>
+    <h6 class="cgrey1">{{ $dt['admin']['email'] }}</h6>
+  </div>
+</div>
+<div class="col-md-5">
 <div class="form-group">
   <small class="clight2 mgb-05">Password</small>
   <div class="row">
-  <div class="col-9">
+  <div class="col-7">
     <input type="password" id="password_admin_review" readonly class="form-control-plaintext cgrey1 h6" value="{{ $dt['admin']['password'] }}">
   </div>
   <div class="col-2">
@@ -65,15 +72,15 @@ have you complete.
 </div>
 </div>
 
-<div class="row">
-<div class="col-5">
+<div class="row" style="margin-top: -0.5em;">
+<div class="col-md-7">
  <div class="form-group">
     <small class="clight2 mgb-05">Community Name</small>
     <h6 class="cgrey1">{{ $dt['community']['name'] }}</h6>
 </div>
  
 </div>
-<div class="col-5">
+<div class="col-md-5">
    <div class="form-group">
     <small class="clight2 mgb-05">Community Type</small>
     <h6 class="cgrey1" id="etcjenis" style="display: none;">{{ $dt['community']['cust_jenis_comm'] }}</h6>
@@ -85,7 +92,7 @@ have you complete.
 </div>
 
 <div class="row">
-<div class="form-group col-10">
+<div class="form-group col-md-10">
     <small class="clight2 mgb-05">Description Community</small>
     <h6 class="cgrey1 s13">
     {{ $dt['community']['description'] }}</h6>
@@ -93,7 +100,7 @@ have you complete.
 </div>
 
 </div>
-<div class="col">
+<div class="col-md">
   <div class="row">
   <div class="col">
     <h5 class="cgrey">Selected Feature</h5>
@@ -146,7 +153,7 @@ have you complete.
 
 </div> <!-- end col-6 -->
 
-<div class="col-6">
+<div class="col-md-6">
   <div class="form-group">
     <small class="clight2 mgb-05">Package Title</small>
     <h6 class="cgrey1" id="judulprice"></h6>
@@ -283,8 +290,9 @@ $.ajax({
 
 function get_selectedfitur(){
   var val = '{!! json_encode($dt["feature"]) !!}';
-  var listfitur = [JSON.parse(val)] ;
-
+  var listfitur = JSON.parse(val) ;
+// alert(val);
+// console.log("fitur dipilih : "+listfitur);
     $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -296,7 +304,7 @@ function get_selectedfitur(){
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-
+        console.log(result);
 var html ="";
 
  $.each(result.data, function(i,item){

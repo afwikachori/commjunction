@@ -13,6 +13,7 @@
 
     <div class="form-group row">
         <label lang="en" class="h6 cgrey s14">Connect With</label>
+        <br>
         <div id="my-signin3"></div> 
         <input type="hidden" id="sso_type" name="sso_type" value="1">
         <input type="hidden" id="sso_token" name="sso_token">

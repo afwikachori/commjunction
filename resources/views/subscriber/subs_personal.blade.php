@@ -36,7 +36,7 @@
 
         <div class="row">
       <div class="col-xs-12 ">
-        <nav class="navtab-subscriber">
+        <nav>
           <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
             <a class="nav-item cus-a nav-link active" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="true" lang="en">Personal Information</a>
@@ -66,7 +66,7 @@
 <!-- MODAL LOADING AJAX -->
 <div class="modal fade bd-example-modal-sm" id="mdl-loadingajax" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content loadingq">
+    <div class="modal-content loading">
     <center>
     <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
     <span class="sr-only">Loading...</span>
@@ -77,7 +77,6 @@
   </div>
 </div>
 <!-- END-MODAL -->
-
 
 @section('script')
 <script type="text/javascript">

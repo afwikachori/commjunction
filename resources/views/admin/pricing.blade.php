@@ -6,18 +6,18 @@
 <img src="/visual/vs-pricing.png" id="shadow-pricing">
 <a href="/admin/register2">
 <img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="/admin/register2" class="clight backarrow">Back to Register</a>
+</a><a href="/admin/register2" class="clight backarrow2">Back to Register</a>
 
-<div class="container mg-pricing">
+<div class="container-fluid mg-pricing">
 <div class="row">
-  <div class="col-5">
+  <div class="col-md-5">
   <h4 class="cgrey" lang="en">Choose your plan</h4>
   <p class="cgrey2" lang="en">Our Community Administrators are on their way to approve your account, please check our email!</p>
   </div>
 
-  <div class="col"></div>
+  <div class="col-sm"></div>
 
-  <div class="col-5" style="padding-left: 3em;">
+  <div class="col-md-5" style="text-align: right;">
     <div class="btn-group btn-group-lg btn_time_pricingq" role="group">
       <button type="button" class="btn btn-oren1 timeprice active"  onclick="setIdTimePricing(this.value)" id="time-pricing1" value="1" lang="en">Onetime</button>
 
@@ -28,10 +28,18 @@
 </div>
 </div>
 
-<div class="row price-ajax" id="tempat-price">
-
+<div class="row" style="text-align: center;">
+<div class="card-deck price-ajax">
 
 </div>
+</div> <!-- end-row -->
+
+
+
+<!-- <div class="row price-ajax" id="tempat-price">
+
+
+</div> -->
 </div>
 
 
@@ -116,7 +124,7 @@ $.ajax({
   var id_fitur = item.feature_type.id;
   var idprice = item.id;
 
-html += '<div class="col-sm-4">'+
+html += '<div class="col-md-4">'+
         '<div class="card cd-pricing pricing'+idprice+'">'+
           '<div class="card-body">'+
           '<center>'+

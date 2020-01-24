@@ -5,28 +5,26 @@
 </nav>
 
 <a href="/admin/pricing">
-<img border="0"  src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="/admin/pricing" class="clight backarrow">Back to Previous</a>
+<img border="0"  src="/visual/left-arrow.png" id="panah_pay">
+</a><a href="/admin/pricing" class="clight backarrow-pay">Back to Previous</a>
 
 <div class="contain-pay">
-<h3 class="cgrey" lang="en">Payment Method</h3>
+<h3 class="cgrey" lang="en" id="pay_judul">Payment Method</h3>
 
 <div class="row">
-<div class="col-6">
-<h6 class="h6 cgrey1" style="margin-bottom: 1em;">Choose Payment Method</h6>
+<div class="col-md-6">
+<h6 class="h6 cgrey1" id="judul_pilihpay">Choose Payment Method</h6>
 
 @foreach(Session::get('pay_type') as $dt)
-<button type="button" id="tipe{{ $dt['id']  }}" class="btn btn-orenline col-4 btn-sm" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
+<button type="button" id="tipe{{ $dt['id']  }}" class="btn btn-orenline col-md-4 btn-sm btn-fluid" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
   <i class="fa fa-exchange "></i> 
 &nbsp; {{ $dt['payment_title'] }}</button>
 &nbsp;
 @endforeach
 
 </div>
-<div class="col-5" id="showhide_pay" style="display: none;">
+<div class="col-md-5" id="showhide_pay" style="display: none;">
 <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
-<br>
-<!-- //tes -->
 
 <form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">{{ csrf_field() }}
 
@@ -35,7 +33,7 @@
 </div>
 <input type="hidden" name="id_pay_type" id="id_pay_type">
 <input type="hidden" name="id_pay_method" id="id_pay_method">
-<button type="submit" class="btn btn-oren"  id="btn_pay_next" style="width: 150px; margin-top:1em;" lang="en">Finish</button>
+<button type="submit" class="btn btn-oren btn-fluid"  id="btn_pay_next" lang="en">Finish</button>
 </form>
 
 </div>
@@ -69,7 +67,7 @@
 <!-- MODAL LOADING AJAX -->
 <div class="modal fade bd-example-modal-sm" id="mdl-loadingajax" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content loadingq">
+    <div class="modal-content loading">
     <center>
     <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
     <span class="sr-only">Loading...</span>
@@ -88,6 +86,8 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
+// $("#mdl-loadingajax").modal('show');
+
 // validasi_pay_next();
 get_session_payadmin();
 

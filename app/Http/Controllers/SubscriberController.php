@@ -91,6 +91,22 @@ public function registerSubs(Request $request){
 
 
 
+public function authSubscriber($name_community){
+    $url = env('SERVICE').'auth/configcomm';
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+        'form_params' => [
+            'name' => $name_community
+        ]
+    ]);
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+
+    return $json;
+}
+
+
+
 
 
 } //end-class

@@ -110,7 +110,7 @@ Route::post('addfromdetailFitur', 'RegisterController@addfromdetailFitur')->name
 
 // REGISTER ADMIN- DETAIL FITUR
 
-// Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');
+Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');
 
 Route::get('admin/features_detail/{id_fitur}', 'RegisterController@detailFiturView')->name('features_detail');
 
@@ -167,7 +167,7 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 // SUBSCRIBER - REGISTRASION
 
 // //TES SUBS
-// Route::get('subscriber/{id_fitur}', 'SubscriberController@detailFiturView')->name('features_detail');
+Route::get('subscriber/{id_fitur}', 'SubscriberController@authSubscriber')->name('subscriber/{id_fitur}');
 // //END-TES
 
 Route::get('subscriber','SubscriberController@loginView')->name('subscriber');

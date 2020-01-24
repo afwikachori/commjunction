@@ -1,8 +1,8 @@
 @extends('layout.app')
 
 @section('content')
-<div class="row" id="loginadmincom">
-    <div class="col-sm orenq">
+<div class="row" id="loginadmincom" class="full_height">
+    <div class="col-xl orenq">
       <img src="/visual/commjuction.png" id="login-left-commjuction">
 
     <div class="container cjudul">
@@ -13,7 +13,7 @@
       <img src="/visual/loginadmin.png" id="login-left-img">
 
     </div>
-    <div class="col-lg-5">
+    <div class="col-xl-5">
 <div class="row">
     <div class="col">
 
@@ -73,7 +73,7 @@
 
                 <div class="form-group mb-3">
                 <button lang="en" type="submit" class="btn btn-primary" id="LoginComm">Login</button>
-                </div><br><br>
+                </div>
                 <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
 
                 <center>

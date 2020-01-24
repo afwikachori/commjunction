@@ -316,7 +316,9 @@ class RegisterController extends Controller{
     $json = json_decode($response, true);
     $isidata = $json['data'];
 
-     return redirect('admin/features')->with('datafitur',$isidata);
+    $count = count($isidata);
+
+     return redirect('admin/features')->with(['datafitur'=>$isidata, 'sum'=>$count]);
     }
 
 
@@ -350,6 +352,7 @@ class RegisterController extends Controller{
 
     public function getSelectedFitur(Request $request){
     $idpilih = $request['id'];
+    // return $idpilih;
 
     $url = env('SERVICE').'registration/featureselected';
     $client = new \GuzzleHttp\Client();

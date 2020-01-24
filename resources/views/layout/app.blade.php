@@ -3,7 +3,8 @@
 <head>
     <!-- @yield('head') -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
 
      <meta name="google-signin-client_id" content="889108417330-5undo76r5eqfl1fuf3e93eusu2kbaei8.apps.googleusercontent.com">
    
