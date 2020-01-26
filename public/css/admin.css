@@ -34,6 +34,12 @@ body::-webkit-scrollbar-thumb
 margin-top: -2em !important;
 }
 
+.navbar .navbar-brand-wrapper .navbar-brand.brand-logo-mini img {
+    width: auto !important;
+    max-width: 100%;
+    height: 28px;
+    margin: auto;
+}
 
 #initial1 .modal-content{
 height: 440px;
@@ -94,6 +100,86 @@ background-color: #ffffff !important;
   margin-bottom: 1em;
 }
 
+.content-wrapper{
+  padding: 1rem 1.5rem !important;
+}
+
+.page-header{
+  margin: 0 0 1rem 0 !important;
+}
+
+.btn.btn-fw {
+    min-width: 115px !important;
+}
+
+.divbutton{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: right;
+}
+
+.card .card-body {
+    padding: 2.5rem 2.5rem !important;
+}
+
+#icon_com{
+  width: 58%;
+  height: auto;
+  margin-top: 5%;
+}
+
+.judulcomsetup{
+  margin-bottom: 0.2em;
+}
+
+.preper-publish{
+padding: 2rem 5rem 0;
+}
+
+
+
+/*imgae input file*/
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+/*end-imgae input*/
+
+
+.text-imgedit {
+  position: absolute;
+  top:-200px; bottom:0; left:48.5%; right:0;
+  display: table;
+  vertical-align:middle;
+  opacity:0;
+  margin: auto;
+  text-align: center;
+}
+
+.text-imgedit {
+  text-align:center;
+  transition: .5s ease-in-out all;
+}
+
+.image-upload:hover img {
+  opacity:.4;
+}
+.image-upload:hover .text-imgedit{
+  opacity:1;
+}
+
+
+
+
+
 
 
 
@@ -109,6 +195,10 @@ background-color: #ffffff !important;
   background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
   color: white;
   border-radius: 6px;
+}
+
+.cdgrey{
+  color: #656565;
 }
 
 .cgrey{
@@ -142,6 +232,15 @@ background-color: #ffffff !important;
 .cgrey2{
   color: #8c8c8c;
 }
+
+.cblue{
+color: #0FB1B5;
+}
+
+.cred{
+  color: red;
+}
+
 .s18{
   font-size: 16px;
 }

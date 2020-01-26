@@ -30,6 +30,7 @@
                   <p class="mb-1 text-black">Afwika Chori</p>
                 </div>
               </a>
+
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="#">
                   <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
@@ -89,10 +90,18 @@
             </li>
 
 
-            <li class="nav-item nav-logout d-none d-lg-block">
-              <a class="nav-link" href="#">
+            <li class="nav-item nav-logout dropdown">
+              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-settings"></i>
               </a>
+
+              <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
+                <a class="dropdown-item" href="/admin/settings">
+                 Community Setting</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                Logout</a>
+              </div>
             </li>
             
           </ul>

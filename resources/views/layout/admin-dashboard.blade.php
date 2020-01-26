@@ -6,15 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <!-- ICON WEB -->
+    <link rel="icon" href="/img/commjuction_icoweb.ico"/>
+    
+    <!-- CSS Files -->
     <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/purple/css/style.css">
-    <link rel="stylesheet" href="/css/superadmin.css">
+
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/visual/commjuction.png" />
 
-      <!-- Styles -->
-    <link rel="stylesheet" href="/css/admin.css"> <!-- //custom -->
+    <!-- Styles Custom-->
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin-mobile.css"> 
+
     @yield('css')
   </head>
 
@@ -68,9 +77,10 @@
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
 
+    <!-- Sweetalert -->
+    <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')
     
     @yield('script')
-
   </body>
 </html>

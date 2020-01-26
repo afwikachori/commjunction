@@ -14,9 +14,10 @@ class SubscriberController extends Controller{
 	return view('subscriber/login');
 }
 
-public function registerPersonalView(){
-	return view('subscriber/subs_personal');
+public function registerSubsView(){
+    return view('subscriber/register_subscriber');
 }
+
 
 public function registerCommView(){
 	return view('subscriber/subs_community');
@@ -45,7 +46,7 @@ public function url_subscriber(Request $request){
 
 public function registerSubs(Request $request){
 
-	Alert::success('Your Subscriber registrasion is successfull', 'Yay !')->autoclose(3500);
+	// Alert::success('Your Subscriber registrasion is successfull', 'Yay !')->autoclose(3500);
 	// ->persistent('Close');
 	// ->autoclose(4000);
 

@@ -43,7 +43,6 @@ body::-webkit-scrollbar-thumb
 
 .btnnextadmin{
 margin-top: 0.5em;
-margin-bottom: 2em;
 background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
 border-radius: 6px;
 width: 174px;
@@ -53,10 +52,10 @@ border:none;
 
 #login-left-img{
     position: absolute;
-    width: 65%;
+    width: 55%;
     height: auto;
     left: 0px;
-    top: 29%;
+    top: 40%;
 }
 
 
@@ -130,7 +129,7 @@ border : 2px solid;
 .biruq{
   background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
   max-height: 1200px;
-  min-height: 100vh;
+  min-height: 101vh;
   height: 100%;
   width: auto; 
 }
@@ -144,7 +143,7 @@ border : 2px solid;
 .orenq{
   background: linear-gradient(94.66deg, #FC6076 -2.66%, #FF9A44 102.89%);
   max-width: 1200px;
-  height: 100vh;
+  height: 101vh;
   width: auto;
 }
 
@@ -478,7 +477,7 @@ font-size: 35px;
 .vs-regis1{
 position: absolute;
 width: 90%;
-top: 45%;
+top: 43%;
 }
 
 .nav-tabs{
@@ -626,7 +625,6 @@ top: 28px;
   padding-right: 9%;
   max-width: 1200px
   width : 100%;
-  height: 100%;
 }
 
 #mdl-loadingajax .modal-content{

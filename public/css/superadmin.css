@@ -1,3 +1,23 @@
+body::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  background: #F5F5F5;
+}
+
+body::-webkit-scrollbar
+{
+  width: 7px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+  background:linear-gradient(to bottom, #fffcaf, #ffe7a7, #ffd4aa, #ffc3b2, #ffb6bc);
+}
+
+.page-header{
+  margin: 0 0 1rem 0;
+}
 
 .navbar .navbar-brand-wrapper .navbar-brand.brand-logo-mini img {
     width: auto !important;
@@ -7,7 +27,7 @@
 }
 
 .content-wrapper{
-	padding: 1rem 2rem !important;
+	padding: 1rem 1.5rem !important;
 }
 
 .form-group{

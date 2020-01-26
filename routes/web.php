@@ -17,14 +17,45 @@ Route::get('logout','RegisterController@logout');
 
 
 
+// ADMIN LOGIN COMMUNITY
+// Route::get('admin','AdminCommController@login')->name('admin');
+// Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
+
+//ADMIN-COMMUNITY (DASHBOARD)
+// Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('admin/dashboard');
+
+
+// admin
+Route::prefix('admin')->group(function(){
+// GET
+Route::get('/','AdminCommController@login')->name('admin');
+Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashboard');
+Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
+Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
+Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
+
+// admin/settings
+Route::prefix('settings')->group(function(){
+Route::get('/','AdminCommController@comSettingView')->name('settings');
+Route::get('/loginregis','AdminCommController@loginRegisAdminView')->name('/loginregis');
+Route::get('/membership','AdminCommController@membershipAdminView')->name('/membership');
+Route::get('/registrasion_data','AdminCommController@regisdataAdminView')->name('/registrasion_data');
+Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment');
+}); //end-admin
+
+
+//POST
+Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
+
+});
 
 
 
 
-//ADMIN COMMUNITY
-Route::get('admin','RegisterController@login')->name('admin');
-Route::post('auth_adminlogin', 'RegisterController@auth_adminlogin')->name('auth_adminlogin');
-Route::post('loginadmin','RegisterController@loginadmin');
+
+
+
+// REGISTER ADMIN COMMUNITY
 
 //register1
 Route::get('admin/register','RegisterController@registerAdminView')->name('admin/register');
@@ -167,11 +198,11 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 // SUBSCRIBER - REGISTRASION
 
 // //TES SUBS
-Route::get('subscriber/{id_fitur}', 'SubscriberController@authSubscriber')->name('subscriber/{id_fitur}');
+Route::get('subscriber/url/{name_community}', 'SubscriberController@authSubscriber')->name('subscriber/url/{name_community}');
 // //END-TES
 
 Route::get('subscriber','SubscriberController@loginView')->name('subscriber');
-Route::get('subscriber/subs_personal','SubscriberController@registerPersonalView')->name('subscriber/subs_personal');
+Route::get('subscriber/register','SubscriberController@registerSubsView')->name('subscriber/register');
 Route::get('subscriber/subs_community','SubscriberController@registerCommView')->name('subscriber/subs_community');
 Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
 
@@ -179,9 +210,6 @@ Route::post('url_subscriber', 'SubscriberController@url_subscriber')->name('url_
 Route::post('registerSubs', 'SubscriberController@registerSubs')->name('registerSubs');
 
 
-
-//ADMIN-COMMUNITY (DASHBOARD)
-Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('admin/dashboard');
 
 
 

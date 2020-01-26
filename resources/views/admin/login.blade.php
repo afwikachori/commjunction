@@ -42,8 +42,8 @@
 
                  {{ csrf_field() }}
                 <div class="form-group mb-3">
-                    <label class="h6 cgrey" for="emailadmin" lang="en">Username</label>
-                    <input lang="en" type="text" class="form-control" id="emailadmin" aria-describedby="emailHelp" class="form-control @error('emailadmin') is-invalid @enderror" name="emailadmin" value="{{ old('emailadmin') }}" required autocomplete="emailadmin" autofocus>
+                    <label class="h6 cgrey" for="useradmin" lang="en">Username</label>
+                    <input lang="en" type="text" class="form-control" id="useradmin" aria-describedby="emailHelp" class="form-control @error('useradmin') is-invalid @enderror" name="useradmin" value="{{ old('useradmin') }}" required autocomplete="useradmin" autofocus>
                 </div>
 
                 <div class="form-group mb-3">
@@ -74,6 +74,7 @@
                 <div class="form-group mb-3">
                 <button lang="en" type="submit" class="btn btn-primary" id="LoginComm">Login</button>
                 </div>
+                <br>
                 <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
 
                 <center>

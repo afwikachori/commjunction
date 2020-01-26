@@ -4,12 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>@yield('title')</title>
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <title>@yield('title')</title>
 
     <!-- ICON WEB -->
     <link rel="icon" href="/img/commjuction_icoweb.ico"/>
@@ -103,9 +101,6 @@
   <script>window.location = "/superadmin";</script>
   @endif
 
-
-
-
     <!-- plugins:js -->
     <script src="/js/jquery.3.2.1.min.js"></script>
     <script src="/purple/vendors/js/vendor.bundle.base.js"></script>
@@ -117,25 +112,17 @@
     <script src="/purple/js/todolist.js"></script>
     <script src="/purple/js/file-upload.js"></script>
 
-    <!-- js custum superadmin -->
-    <script src="/js/superadmin.js"></script>
-
     <!-- dataTables -->
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
-
-
-
-
-
-   
+    <!-- js custum superadmin -->
+    <script src="/js/superadmin.js"></script>
 
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
-
     @include('sweet::alert')
     
     @yield('script')

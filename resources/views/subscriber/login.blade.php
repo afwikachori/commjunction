@@ -30,7 +30,7 @@
 
 <div style="margin-top: 1em; margin-right: 1.5em; text-align: right;">
  <span lang="en" class="h6 cteal">didnt have account yet ?</span>
-<a href="/subscriber/subs_personal" class="h6" id="subsregisklik" lang="en" data-lang-token="registernow">Register Now</a>
+<a href="/subscriber/register" class="h6" id="subsregisklik" lang="en" data-lang-token="registernow">Register Now</a>
 </div>
 
     <div class="container pdsubslogin">

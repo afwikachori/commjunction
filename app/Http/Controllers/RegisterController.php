@@ -28,9 +28,7 @@ class RegisterController extends Controller{
         return view('admin/logoutsso');
     }
 
-	public function login(){
-        return view('admin/login');
-    }
+	
 
     public function features_detail(){
         return view('admin/features_detail');
@@ -1018,16 +1016,6 @@ class RegisterController extends Controller{
     }
     
 
-    public function loginadmin(Request $request) {
-        $request->validate([
-            'emailadmin' => 'required|email',
-            'passadmin' => 'required|password:api',
-        ]);
-
-        return 'login passing validate!';
-    }
-
-
     public function session_regisOne(){
     if(Session::has('data_regis1')){
     $ses1 = Session::get('data_regis1');
@@ -1120,24 +1108,7 @@ class RegisterController extends Controller{
 
 
 
-    public function auth_adminlogin(Request $request) {
-        $input = $request->all();
-dd($input);
-    $url = env('SERVICE').'auth/commadmin';
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'user_name'   => $input['emailadmin'],
-        'password'    => $input['passadmin']
-        ]
-    ]);
-
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json;
-
-    }
 
 
 

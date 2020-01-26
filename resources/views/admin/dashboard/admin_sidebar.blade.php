@@ -14,7 +14,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/superadmin/dashboard">
+              <a class="nav-link" href="/admin/dashboard">
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
