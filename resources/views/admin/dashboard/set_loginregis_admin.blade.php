@@ -21,6 +21,20 @@
     <div class="card-body">
     <h4 class="card-title">Setting Login & Registrasion</h4>
 
+    <form>
+    <!--   <div class="form-group">
+        <label for="exampleInputName1">Name</label>
+          <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+      </div> -->
+
+      <div class="form-group"><label for="exampleSelectGender">Login Type</label>
+        <select class="form-control" id="exampleSelectGender">
+          <option>Username & Password</option>
+          <option>Email & Password</option>
+          <option>No.Tlp & Password</option>
+        </select>
+      </div>
+
     </div>
   </div>
 </div>

@@ -8,11 +8,10 @@
     </span>Publish Preparation</h3>
 
 <nav aria-label="breadcrumb">
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">
-      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-    </li>
-  </ul>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin/settings">Community Settings</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Publish</li>
+  </ol>
 </nav>
 </div> <!-- end-page header -->
 

@@ -52,7 +52,7 @@ border:none;
 
 #login-left-img{
     position: absolute;
-    width: 55%;
+    width: 48%;
     height: auto;
     left: 0px;
     top: 40%;
@@ -85,6 +85,16 @@ height: auto;
 left: 65px;
 top: 30px;
 }
+
+
+#login-left-commjuctioncdn{
+position: absolute;
+width: 75px;
+height: 75px;
+left: 65px;
+top: 30px;
+}
+
 
 .cjudul{
   margin-left: 2em;
@@ -140,10 +150,18 @@ border : 2px solid;
   width: auto;
 }
 
+
+.bg-full-oren{
+  background: linear-gradient(94.66deg, #FC6076 -2.66%, #FF9A44 102.89%);
+height: 100vh;
+width: 100%;
+}
+
+
 .orenq{
   background: linear-gradient(94.66deg, #FC6076 -2.66%, #FF9A44 102.89%);
   max-width: 1200px;
-  height: 101vh;
+  height: 100vh;
   width: auto;
 }
 
@@ -825,11 +843,11 @@ div.hr {
   line-height: 0px;
 }
 
- #logo-loading{
+ #logo-loading-2{
     position: absolute;
-    top: 257px;
-    left: 625px;
-    width: 105px;
+    top: 35%;
+    left: 48%;
+    width: 8%;
     height: auto;
  }
 

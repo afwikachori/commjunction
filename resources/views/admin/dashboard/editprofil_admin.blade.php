@@ -7,12 +7,11 @@
       <i class="mdi mdi-table-edit"></i>
     </span>Edit Profile</h3>
 
-<nav aria-label="breadcrumb">
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">
-      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-    </li>
-  </ul>
+ <nav aria-label="breadcrumb">
+ 	<ol class="breadcrumb">
+ 		<li class="breadcrumb-item"><a href="/admin/settings">Community Settings</a></li> 
+ 		<li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
 </nav>
 </div> <!-- end-page header -->
 

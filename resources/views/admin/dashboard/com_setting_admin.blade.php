@@ -10,7 +10,7 @@
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    <span></span>Community Settings <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                   </li>
                 </ul>
               </nav>
@@ -62,16 +62,16 @@
       </div> <!-- end col-md -->
       <div class="col-md-5">
       <div class="form-group">
-        <small class="clight2 mgb-05">Email</small>
-        <p class="cgrey1">vespa.malang@gmail.com</p>
+        <small class="clight2 mgb-05">Themes</small>
+        <p class="cgrey1">Classy Blue</p>
       </div>
       <div class="form-group">
-        <small class="clight2 mgb-05">Username</small>
-        <p class="cgrey1">vespa2020</p>
+        <small class="clight2 mgb-05">Jenis Community</small>
+        <p class="cgrey1">Otomotif</p>
       </div>
       <div class="form-group">
-        <small class="clight2 mgb-05">Phone Number</small>
-        <p class="cgrey1">0812345678910</p>
+        <small class="clight2 mgb-05">Tanggal Pendaftaran</small>
+        <p class="cgrey1">27 Januari 2020</p>
       </div>
       </div><!-- end col-md -->
       </div> <!-- end-row -->

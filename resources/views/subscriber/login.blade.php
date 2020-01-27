@@ -1,13 +1,19 @@
 @extends('layout.app')
 
 @section('content')
+
+
+@if (Session::has('subs_data'))
+@foreach(Session::get('subs_data') as $dt)
+
+
 <div class="row">
     <div class="col-sm biruq">
-      <img src="/visual/commjuction.png" id="login-left-commjuction">
+      <img src="{{ env('CDN') }}{{ $dt['logo'] }}" id="login-left-commjuctioncdn" class="rounded-circle img-fluid">
 
     <div class="container subs_judul">
-      <h2 lang="en">Lets Get Started</h2>
-      <h5  lang="en">Gathering data with a smart application that trusted and fastest.</h5>
+      <h2 lang="en">{{ $dt['name'] }}</h2>
+      <h5  lang="en">{{ $dt['description'] }}</h5>
     </div>
 
       <img src="/visual/loginadmin.png" id="login-left-img">
@@ -38,13 +44,26 @@
        <label lang="en" class="cgrey textlogin">Please login to continue using this app</label>
 
             <!-- login  Form -->
-            <form method="POST" id="form_login_admin" action="{{route('auth_adminlogin')}}">
+            <form method="POST" id="form_login_admin" action="{{route('LoginSubscriber')}}">
 
                  {{ csrf_field() }}
+        <input type="hidden" class="form-control" value="{{ $dt['id'] }}" name="id_community">
+        @if( $dt['form_type'] == 1)
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="input_login" lang="en">Username</label>
                     <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
                 </div>
+        @elseif( $dt['form_type'] == 2)
+                <div class="form-group mb-3">
+                    <label class="h6 cgrey" for="input_login" lang="en">Phone Number</label>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                </div>
+        @else
+                <div class="form-group mb-3">
+                    <label class="h6 cgrey" for="input_login" lang="en">Email</label>
+                    <input lang="en" type="email" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                </div>
+        @endif
 
                 <div class="form-group mb-3">
                 <label class="h6 cgrey" for="pass_subs" lang="en">Password</label>
@@ -90,15 +109,38 @@
     </div>
 </div>
   </div>
+@endforeach
+@else
+  <script>window.location = "/404";</script>
+@endif
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
 
 $( document ).ready(function() {
-
+get_auth_subs();
 });
 
+function get_auth_subs(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/subscriber/ses_auth_subs',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Auth Subscriber");
+    }
+});
+}
 
  function showPass() {
   var a = document.getElementById("pass_subs");

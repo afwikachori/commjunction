@@ -29,7 +29,7 @@
 
   
   <body>
-
+ @if (Session::has('ses_admin_logged'))
   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -65,7 +65,9 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-
+  @else 
+  <script>window.location = "/admin";</script>
+  @endif
 
     <!-- plugins:js -->
     <script src="/js/jquery.3.2.1.min.js"></script>
@@ -77,6 +79,7 @@
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
 
+    <script src="/js/admincom.js"></script>
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')

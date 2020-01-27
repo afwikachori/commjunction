@@ -177,7 +177,7 @@ class SuperadminController extends Controller
     $url =env('SERVICE').'paymentverification/verification';
     try{
       $resImg = $req->sendImgVerify($imageRequest,$url,$token);
-      return $resImg;
+      // return $resImg;
 
       if ($resImg['success'] == true) {
         alert()->success('Successfully to verify payment from New Admin Community', 'Verified!')->autoclose(4500)->persistent('Done');

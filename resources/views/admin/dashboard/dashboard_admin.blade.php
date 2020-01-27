@@ -16,6 +16,12 @@
               </nav>
             </div>
 
+@if (Session::has('ses_admin_logged'))
+@foreach(Session::get('ses_admin_logged') as $user)
+{{ $user['user_id'] }}
+@endforeach
+@endif
+
             <div class="row">
 
             <div class="col-md-3 stretch-card grid-margin">

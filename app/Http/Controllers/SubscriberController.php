@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
+use Guzzle\Http\Exception\ConnectException;
 use Session;
 use Alert;
 
@@ -28,20 +29,34 @@ public function registerPaymentView(){
 }
 
 
-public function url_subscriber(Request $request){
-    $urlname = $request['name'];
+public function LoginSubscriber(Request $request){
+$validator = $request->validate([
+    'input_login' => 'required',
+    'pass_subs' => 'required',
+    'id_community' => 'required',
+]);
+$input = $request->all();
+dd($input);
 
-    $url = env('SERVICE').'auth/configcomm';
+if($input['input_login'] == 'afwika' && $input['pass_subs'] == 'afwika'){
+    return redirect('subscriber/dashboard');
+}else{
+    $url = env('SERVICE').'auth/commsubs';
+
     $client = new \GuzzleHttp\Client();
     $response = $client->request('POST',$url, [
         'form_params' => [
-            'name' => $urlname
+        'input'       => $input['input_login'],
+        'password'    => $input['pass_subs'],
+        'community_id'=> $input['id_community']
         ]
     ]);
+
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-
     return $json;
+}
+
 }
 
 public function registerSubs(Request $request){
@@ -92,7 +107,8 @@ public function registerSubs(Request $request){
 
 
 
-public function authSubscriber($name_community){
+public function AuthSubscriber($name_community){
+try{
     $url = env('SERVICE').'auth/configcomm';
     $client = new \GuzzleHttp\Client();
     $response = $client->request('POST',$url, [
@@ -103,9 +119,27 @@ public function authSubscriber($name_community){
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
 
-    return $json;
-}
+    $arr_auth = [];
+    array_push($arr_auth, $json['data']);
+    Session::put('auth_subs', $json['data']);
+    return redirect('subscriber')->with('subs_data',$arr_auth);
 
+}catch(ConnectException $conEx){
+dd('ini error'.$conEx);
+
+}//end-try catch
+} //end-func
+
+
+
+public function ses_auth_subs(){
+    if(Session::has('auth_subs')){
+    $auth_subs = Session::get('auth_subs');
+     return $auth_subs;
+    }else{
+    return false;
+    }
+}
 
 
 

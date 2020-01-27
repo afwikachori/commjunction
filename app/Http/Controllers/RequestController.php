@@ -9,6 +9,10 @@ use Session;
 
 class RequestController extends Controller{
 
+public function NotFoundView(){
+    return view('404');
+}
+
 	   public function sendImage($requestImage,$url)
     {	
 

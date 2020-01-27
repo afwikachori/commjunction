@@ -64,7 +64,7 @@ if($input['useradmin'] == 'afwika' && $input['passadmin'] == 'afwika'){
 	return redirect('admin/dashboard');
 }else{
     $url = env('SERVICE').'auth/commadmin';
-
+try{
     $client = new \GuzzleHttp\Client();
     $response = $client->request('POST',$url, [
         'form_params' => [
@@ -72,14 +72,35 @@ if($input['useradmin'] == 'afwika' && $input['passadmin'] == 'afwika'){
         'password'    => $input['passadmin']
         ]
     ]);
-
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-    return $json;
-}
-}
+    
+    if($json['success'] == true){
+    Session::put('ses_admin_logged', $json['data']);
+    // return $json['data']['user'];
+
+    $arr_login = [];
+    array_push($arr_login, $json['data']['user']);
+
+    return redirect('admin/dashboard')->with(['ses_admin_logged'=>$arr_login ]);
+    }
+
+}catch(ClientException $exception) {
+$code_error = $exception->getCode();
+   if( $code_error == 404){
+    alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
+    return back()->withInput();
+    }
+    
+} //end-catch
+} //end-if
+} //end-func
 
 
+public function LogoutAdmin(){
+     Session::forget('ses_admin_logged');
+     return view('admin/login');
+}
 
 
 

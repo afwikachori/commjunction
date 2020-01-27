@@ -27,7 +27,12 @@
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Afwika Chori</p>
+                  @if (Session::has('ses_admin_logged'))
+@foreach(Session::get('ses_admin_logged') as $user)
+<p class="mb-1 text-black">{{ $user['full_name'] }} </p>
+@endforeach
+@endif
+                 
                 </div>
               </a>
 
@@ -35,7 +40,7 @@
                 <a class="dropdown-item" href="#">
                   <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/admin/logout">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
               </div>
             </li>
@@ -99,8 +104,8 @@
                 <a class="dropdown-item" href="/admin/settings">
                  Community Setting</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
-                Logout</a>
+                <a class="dropdown-item" href="">
+                Etc</a>
               </div>
             </li>
             

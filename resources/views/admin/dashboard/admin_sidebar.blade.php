@@ -1,17 +1,34 @@
  <ul class="nav">
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
-                <div class="nav-profile-image">
+@if (Session::has('ses_admin_logged'))
+@foreach(Session::get('ses_admin_logged') as $user)
+
+       <div class="nav-profile-image">
                   <img src="/img/default.png" alt="profile">
                   <span class="login-status online"></span>
                   <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2">Afwika Chori</span>
-                  <span class="text-secondary text-small">Community Administrator</span>
+
+                  <span class="font-weight-bold mb-2">
+                  {{ $user['full_name'] }}</span>
+                 
+                    @if($user['user_level'] == 1)
+                     <span class="text-secondary text-small">Admin Commjuction
+                     </span>
+                    @elseif($user['user_level'] == 2)
+                    <span class="text-secondary text-small">Admin Community
+                     </span>
+                    @else
+                    <span class="text-secondary text-small">Subscriber
+                     </span>
+                    @endif
+                  
                 </div>
-                <!-- <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i> -->
-              </a>
+@endforeach
+@endif        
+        </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/admin/dashboard">

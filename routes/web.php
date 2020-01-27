@@ -24,11 +24,16 @@ Route::get('logout','RegisterController@logout');
 //ADMIN-COMMUNITY (DASHBOARD)
 // Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('admin/dashboard');
 
+//404
+Route::get('404','RequestController@NotFoundView')->name('404');
+
+
 
 // admin
 Route::prefix('admin')->group(function(){
 // GET
 Route::get('/','AdminCommController@login')->name('admin');
+Route::get('/logout', 'AdminCommController@LogoutAdmin')->name('logout');
 Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashboard');
 Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
@@ -196,17 +201,28 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 
 
 // SUBSCRIBER - REGISTRASION
+Route::prefix('subscriber')->group(function(){
+Route::get('/','SubscriberController@loginView')->name('subscriber');
 
-// //TES SUBS
-Route::get('subscriber/url/{name_community}', 'SubscriberController@authSubscriber')->name('subscriber/url/{name_community}');
-// //END-TES
+Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
 
-Route::get('subscriber','SubscriberController@loginView')->name('subscriber');
+Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
+Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
+});
+
+
+//GET
+
+
+
 Route::get('subscriber/register','SubscriberController@registerSubsView')->name('subscriber/register');
+
 Route::get('subscriber/subs_community','SubscriberController@registerCommView')->name('subscriber/subs_community');
+
 Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
 
-Route::post('url_subscriber', 'SubscriberController@url_subscriber')->name('url_subscriber');
+//POST
+
 Route::post('registerSubs', 'SubscriberController@registerSubs')->name('registerSubs');
 
 
