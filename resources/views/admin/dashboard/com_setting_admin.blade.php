@@ -156,6 +156,8 @@
 @section('script')
 <script type="text/javascript">
 
+var cdn = '{{ env("CDN") }}';
+
 $(document).ready(function () {
 });
 

@@ -9,16 +9,37 @@
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
           </button>
-          <div class="search-field d-none d-md-block">
-            <form class="d-flex align-items-center h-100" action="#">
-              <div class="input-group">
-                <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
-              </div>
-            </form>
+
+
+          <ul class="navbar-nav navbar-nav-center">
+          <li class="nav-item">
+          <div class="d-none d-md-block">
+            <a class="nav-link" href="" >
+               Fitur Base 1
+              </a>
           </div>
+        </li>
+
+         <li class="nav-item">
+          <div class="d-none d-md-block">
+            <a class="nav-link" href="" >
+               Fitur Base 2
+              </a>
+          </div>
+        </li>
+
+         <li class="nav-item">
+          <div class="d-none d-md-block">
+            <a class="nav-link" href="" >
+               Fitur Base 3
+              </a>
+          </div>
+        </li>
+        
+         
+      </ul>
+
+
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
@@ -27,11 +48,12 @@
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black admin_name_logged">
-                     @if(Session::has('nama_admin'))
-                      {{ Session::get('nama_admin')}}
+<p class="mb-1 text-black">
+   @if(Session::has('fullname'))
+                      {{ Session::get('fullname')}}
                     @endif
-                  </p>
+</p>
+
                  
                 </div>
               </a>

@@ -16,12 +16,6 @@
               </nav>
             </div>
 
-@if (Session::has('ses_admin_logged'))
-@foreach(Session::get('ses_admin_logged') as $user)
-{{ $user['user_id'] }}
-@endforeach
-@endif
-
             <div class="row">
 
             <div class="col-md-3 stretch-card grid-margin">
@@ -506,13 +500,33 @@
   </div>
 </div>
 
+
+
+<!-- MODAL LOADING AJAX -->
+<div class="modal fade bd-example-modal-sm" id="mdl-loadingajax_admin" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content loading">
+    <center>
+    <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+<p class="h6 iniloading">Loading . . .</p>
+  <center>
+    </div>
+  </div>
+</div>
+<!-- END-MODAL -->
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
 
+var server_cdn = '{{ env("CDN") }}';
+
 $(document).ready(function () {
-$("#initial1").modal('show');
+  session_admin_logged();
+// $("#initial1").modal('show');
 });
 
 

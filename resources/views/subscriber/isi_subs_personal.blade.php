@@ -5,12 +5,12 @@
     </div>
 </div>
 
-<form method="POST" id="form_regispersonal_subs" action="{{route('registerSubs')}}">{{ csrf_field() }}
+<form method="POST" id="form_regispersonal_subs" action="{{route('registerSubscriber')}}">{{ csrf_field() }}
 
 <div class="container">
 <div class="row">
     <div class="col">
-
+<input type="text" class="form-control" name="name_community" id="name_community">
     <div class="form-group row">
         <label lang="en" class="h6 cgrey s14">Connect With</label>
         <br>
@@ -69,7 +69,7 @@
             <input type="text"  readonly class="form-control-plaintext" id="community_id" name="community_id">
           </div>
           <div class="col-8">
-            <input type="text" name="auth_url" id="auth_url" value="" class="form-control">
+            <input type="hide" name="auth_url" id="auth_url" value="" class="form-control" disabled>
           </div>
         </div>
        
@@ -118,11 +118,11 @@
 
 <div class="form-group row">
 
-    <button type="submit" class="btn btn-regissubs1" id="submit_personalsubs" lang="en">
-    <div class="display-loading" style="display: none;">
-    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> &nbsp;Loading...</div>
+    <button type="button" class="btn btn-regissubs1" onclick="next_submit();" id="submit_personalsubs" lang="en">
+   <!--  <div class="display-loading" style="display: none;">
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> &nbsp;Loading...</div> -->
     Next</button>
   </div>
 </div> <!-- end-container -->
 
-</form>
+<!-- </form> -->

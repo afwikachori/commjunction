@@ -76,13 +76,10 @@ try{
     $json = json_decode($response, true);
     
     if($json['success'] == true){
-    Session::put('ses_admin_logged', $json['data']);
-    // return $json['data']['user'];
+    Session::put('session_admin_logged', $json['data']);
+    $nameku = $json['data']['user']['full_name'];
 
-    $arr_login = [];
-    array_push($arr_login, $json['data']['user']);
-
-    return redirect('admin/dashboard')->with(['ses_admin_logged'=>$arr_login ]);
+    return redirect('admin/dashboard')->with('nama_admin',$nameku );
     }
 
 }catch(ClientException $exception) {
@@ -97,9 +94,19 @@ $code_error = $exception->getCode();
 } //end-func
 
 
+//SESSION LOGGED USER - DASHBOARD SUPERADMIN
+public function session_admin_logged(){
+    if(Session::has('session_admin_logged')){
+    $ses_login = Session::get('session_admin_logged');
+    return $ses_login['user'];
+    }else{
+    return redirect('admin');
+    }
+}
+
 public function LogoutAdmin(){
      Session::forget('ses_admin_logged');
-     return view('admin/login');
+     return redirect('admin');
 }
 
 

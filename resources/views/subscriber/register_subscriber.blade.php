@@ -35,7 +35,7 @@
       </div>
 
         <div class="row">
-      <div class="col-xs-12 ">
+      <div class="col-md-12">
         <nav>
           <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
@@ -81,10 +81,44 @@
 @section('script')
 <script type="text/javascript">
 var server = '{{ env('SERVICE') }}';
+var cdn = '{{ env('CDN') }}';
 
 $(document).ready(function () {
-  // swal(server);
+ses_auth_subs(); //custom-validation.js
 });
+
+function next_submit(){
+  $("#nav-community-tab").trigger("click");
+}
+
+// SESSION LOGIN SUBSVRIBER 
+function ses_auth_subs(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/subscriber/ses_auth_subs',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      if (result != ""){
+        $("#community_id").val(result.id);
+        $("#icon_comm_subs").attr("src",cdn+result.logo);
+        $("#judul_comm_subs").html(result.name);
+        $("#deskripsi_comm").html(result.description);
+        $("#name_community").val(result.name);
+
+      }
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Logged User Dashboard");
+    }
+});
+}
+
 
 
 

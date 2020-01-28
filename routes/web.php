@@ -51,9 +51,9 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 
 //POST
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
+Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');
 
 });
-
 
 
 
@@ -204,10 +204,13 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
 
+Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('dashboard');
+
 Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
 
 Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
 Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
+Route::post('session_subscriber_logged', 'SubscriberController@session_subscriber_logged')->name('session_subscriber_logged');
 });
 
 
@@ -223,7 +226,7 @@ Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')
 
 //POST
 
-Route::post('registerSubs', 'SubscriberController@registerSubs')->name('registerSubs');
+Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->name('registerSubscriber');
 
 
 

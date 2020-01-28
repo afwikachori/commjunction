@@ -28,6 +28,10 @@ public function registerPaymentView(){
 	return view('subscriber/subs_payment');
 }
 
+public function DashboardSubsView(){
+    return view('subscriber/dashboard/dashboard_subs');
+}
+
 
 public function LoginSubscriber(Request $request){
 $validator = $request->validate([
@@ -36,7 +40,6 @@ $validator = $request->validate([
     'id_community' => 'required',
 ]);
 $input = $request->all();
-dd($input);
 
 if($input['input_login'] == 'afwika' && $input['pass_subs'] == 'afwika'){
     return redirect('subscriber/dashboard');
@@ -54,55 +57,90 @@ if($input['input_login'] == 'afwika' && $input['pass_subs'] == 'afwika'){
 
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-    return $json;
+    $jsonlogin = $json['data'];
+
+    Session::put('session_subscriber_logged', $jsonlogin);
+    // $user_logged = Session::get('session_subscriber_logged');
+    // dd($user_logged);
+    $user = $jsonlogin['user']['user_name'];
+
+return redirect('subscriber/dashboard')->with('fullname',$user);
 }
+} //end-func
 
-}
 
-public function registerSubs(Request $request){
+//SESSION LOGGED USER - DASHBOARD Subscriber
+    public function session_subscriber_logged(){
+    if(Session::has('session_subscriber_logged')){
+    $ses_loggeduser = Session::get('session_subscriber_logged');
+    return $ses_loggeduser['user'];
+    }
+    // else{
+    //     return view("/superadmin");
+    // }
+    }
 
-	// Alert::success('Your Subscriber registrasion is successfull', 'Yay !')->autoclose(3500);
-	// ->persistent('Close');
-	// ->autoclose(4000);
 
+public function registerSubscriber(Request $request){
+    // dd($request);
 	  $validator = $request->validate([
             'fullname_subs' => 'required|min:3',
             'notlp_subs' => 'required|min:10|numeric',
-            'email_subs' => 'required|email:rfc',
+            'email_subs' => 'required|email',
             'username_subs' => 'required|min:6|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/', ///angka huruf
             'password_subs' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:password_confirm|same:passconfirm_subs',
             'passconfirm_subs' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
         ]);
 
         $input = $request->all(); // getdata form by name
-        $data = [
-            'full_name'  	=> $input['fullname_subs'], 
-            'notelp' 	 	=> $input['notlp_subs'], 
-            'email' 	 	=> $input['email_subs'], 
-            'user_name' 	=> $input['username_subs'], 
-            'password'      => $input['password_subs'],
-            'community_id'	=> $input['community_id'],
-            "sso_type"     	=> $input['sso_type'],
-            "sso_token"  	=> $input['sso_token']
-        ];
+        $url_comname = $input['name_community'];
+        // $data = [
+        //     'full_name'  	=> $input['fullname_subs'], 
+        //     'notelp' 	 	=> $input['notlp_subs'], 
+        //     'email' 	 	=> $input['email_subs'], 
+        //     'user_name' 	=> $input['username_subs'], 
+        //     'password'      => $input['password_subs'],
+        //     'community_id'	=> $input['community_id'],
+        //     "sso_type"     	=> $input['sso_type'],
+        //     "sso_token"  	=> $input['sso_token']
+        // ];
 
         // dd($data);
-        
+    try {
     $url = env('SERVICE').'registration/subscriber';
     $client = new \GuzzleHttp\Client();
-    try {
-        $response = $client->request('POST',$url, [
-            'form_params' => $data
-        ]);
-    } catch (RequestException $exception) {
-        $response = $exception->getResponse();
-    }
-    
+    $response = $client->request('POST',$url, [
+        'form_params' =>  [
+            'full_name'     => $input['fullname_subs'], 
+            'notelp'        => $input['notlp_subs'], 
+            'email'         => $input['email_subs'], 
+            'user_name'     => $input['username_subs'], 
+            'password'      => $input['password_subs'],
+            'community_id'  => $input['community_id'],
+            "sso_type"      => $input['sso_type'],
+            "sso_token"     => $input['sso_token']
+        ]
+    ]);  
+
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
+    dd($json);
 
-    Alert::success('Your Subscriber registrasion is successfull', 'Yay !');
-    return view('subscriber/subs_personal');
+    //alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
+
+    // return redirect('subscriber/url/'.$name_community);
+
+    } catch (RequestException $exception) {
+        // $response = $exception->getResponse();
+        $code =$exception->getCode();
+        // dd($code);
+        if($code == 400){
+       alert()->error('Your Community Not Active Yet', 'Ooops Sorry!');
+        return back()->withInput();
+        }
+    }
+    
+  
 }
 
 
@@ -136,9 +174,10 @@ public function ses_auth_subs(){
     if(Session::has('auth_subs')){
     $auth_subs = Session::get('auth_subs');
      return $auth_subs;
-    }else{
-    return false;
     }
+    // else{
+    // return false;
+    // }
 }
 
 

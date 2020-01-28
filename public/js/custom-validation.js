@@ -440,3 +440,28 @@ span.onclick = function() {
 }
 }
 
+
+
+
+// SESSION LOGIN SUBSVRIBER 
+function session_subscriber_logged(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/subscriber/session_subscriber_logged',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      // if (result != ""){
+      //   $(".logged_fullname").text(result.user.full_name);
+      // }
+      },
+      error: function (result) {
+        console.log("Cant Reach Session Logged User Dashboard");
+    }
+});
+}

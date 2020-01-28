@@ -61,7 +61,7 @@
         @else
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="input_login" lang="en">Email</label>
-                    <input lang="en" type="email" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
                 </div>
         @endif
 

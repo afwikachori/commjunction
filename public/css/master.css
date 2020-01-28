@@ -515,7 +515,8 @@ top: 43%;
     border-bottom: 2.5px solid !important;
     font-size: 16px;
     font-weight: bold;
-    width: 50% !important;
+    min-width: 250px;
+    width: 250px !important;
     text-align: center !important;
 }
 .nav-tabs .nav-link {
@@ -526,7 +527,8 @@ top: 43%;
     color: #BDBDBD;
     border-color: #BDBDBD;
     font-size: 16px;
-    width: 50% !important;
+    min-width: 250px;
+    width: 250px !important;
     text-align: center !important;
 }
 
