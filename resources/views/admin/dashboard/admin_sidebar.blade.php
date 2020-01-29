@@ -1,11 +1,13 @@
  <ul class="nav">
             <li class="nav-item nav-profile">
               <center>
-                <img src="" class="rounded-circle img-fluid dash-img-profil" id="pic_comm">
-                <br>
-              <span class="font-weight-bold mb-2" class="status-comm">
+                <img src="/img/default.png" class="rounded-circle img-fluid dash-img-profil logo_komunitas" style="margin-bottom: 3%;">
+          <div class="nav-profile-text d-flex flex-column">
+          <span class="font-weight-bold judul_komunitas">
+          Community Name</span>
+          <span class="text-secondary text-small" id="comm_status_admin">
+          Status Community</span>
               
-              </span>
               </center>
             </li>
             <li class="nav-item">

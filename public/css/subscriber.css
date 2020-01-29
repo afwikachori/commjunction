@@ -25,6 +25,10 @@ body::-webkit-scrollbar-thumb
 
 
 /*/---------------------------------------------------//*/
+.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #d9d9d9 !important;
+    color: #ffffff !important;
+}
 
 .content-wrapper{
   padding: 1rem 1.5rem !important;

@@ -1,7 +1,7 @@
 
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <a class="navbar-brand brand-logo" href="">
-            <img src="/visual/commjuction.png" alt="logo" /></a>
+            <img src="/visual/commjuction.png" id="logo_admin_img" alt="logo" /></a>
           <a class="navbar-brand brand-logo-mini" href="">
             <img src="/visual/logo.png" alt="logo" class="img-logo-admincom" /></a>
         </div>
@@ -27,7 +27,7 @@
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black admin_name_logged">
+                  <p class="mb-1 text-black user_admin_logged">
                      @if(Session::has('nama_admin'))
                       {{ Session::get('nama_admin')}}
                     @endif

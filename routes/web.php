@@ -52,7 +52,7 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 //POST
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');
-
+Route::post('get_dashboard_admin','AdminCommController@get_dashboard_admin')->name('get_dashboard_admin');
 });
 
 
@@ -203,8 +203,10 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 // SUBSCRIBER - REGISTRASION
 Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
-
-Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('dashboard');
+Route::prefix('dashboard')->group(function(){
+Route::get('/','SubscriberController@DashboardSubsView')->name('dashboard');
+Route::get('/membership','SubscriberController@MembershipSubsView')->name('membership');
+});
 
 Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
 

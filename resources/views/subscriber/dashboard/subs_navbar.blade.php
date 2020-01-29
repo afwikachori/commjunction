@@ -10,8 +10,7 @@
             <span class="mdi mdi-menu"></span>
           </button>
 
-
-          <ul class="navbar-nav navbar-nav-center">
+  <ul class="navbar-nav navbar-menu-wrapper d-flex align-items-stretch" id="nav_web_help">
           <li class="nav-item">
           <div class="d-none d-md-block">
             <a class="nav-link" href="" >
@@ -38,6 +37,25 @@
         
          
       </ul>
+
+<!--   <ul class="navbar-nav" id="nav_mobile_help">
+    <li class="nav-item nav-logout dropdown">
+              <a class="nav-link dropdown-toggle" id="helpDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-arrow-down-bold-hexagon-outline"></i>
+              </a>
+
+              <div class="dropdown-menu navbar-dropdown dropdown-menu-left" aria-labelledby="helpDropdown">
+                <a class="dropdown-item" href="/admin/settings">
+                 Fitur Base 1</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="">
+                Fitur Base 2</a>
+                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="">
+                Fitur Base 3</a>
+              </div>
+            </li>
+  </ul> -->
 
 
           <ul class="navbar-nav navbar-nav-right">

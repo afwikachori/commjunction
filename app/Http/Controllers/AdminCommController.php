@@ -98,15 +98,34 @@ $code_error = $exception->getCode();
 public function session_admin_logged(){
     if(Session::has('session_admin_logged')){
     $ses_login = Session::get('session_admin_logged');
-    return $ses_login['user'];
+    return $ses_login;
     }else{
     return redirect('admin');
     }
 }
 
 public function LogoutAdmin(){
-     Session::forget('ses_admin_logged');
+     Session::forget('session_admin_logged');
      return redirect('admin');
+}
+
+public function get_dashboard_admin(){
+    $ses_login = Session::get('session_admin_logged');
+    // return $ses_login['access_token'];
+
+    $url = env('SERVICE').'dashboard/admincommunity';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
 }
 
 

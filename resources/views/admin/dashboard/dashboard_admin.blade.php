@@ -5,7 +5,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> Dashboard  <small style="color: grey !important;">Summary your app perfomance</small></h3>
+                </span> Dashboard</h3>
 
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -18,13 +18,63 @@
 
             <div class="row">
 
-            <div class="col-md-3 stretch-card grid-margin">
+            <div class="col-md-3 stretch-card grid-margin" style="padding-right: 12px; padding-left: 12px;">
               <div class="card sumari">
                 <div class="card-body sumari">
                   <div class="row">
                     <div class="col-9">
-                    <small class="clight">Total Transaksi</small>
-                    <h4 class="cgrey-mid">100 Transaksi</h4>
+                    <small class="clight">Total Feature Active</small>
+                    <h4 class="cgrey-mid" id="total_komunitas">0 Features</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-chart-bubble mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
+            </div>
+
+              <div class="col-md-3 stretch-card grid-margin" style="padding-right: 12px; padding-left: 12px;">
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight">Total Subscriber</small>
+                    <h4 class="cgrey-mid">0 Person</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-human-handsup mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 stretch-card grid-margin" style="padding-right: 12px; padding-left: 12px;">
+
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight">
+                    Total Transaction Count</small>
+                    <h4 class="cgrey-mid" id="total_transaction_count">0 Transaction</h4>
+                    </div>
+                    <div class="col">
+                      <i class="mdi mdi-cart mdi-24px float-right top-ico cteal"></i>
+                    </div>
+               </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 stretch-card grid-margin" style="padding-right: 12px; padding-left: 12px;">
+              <div class="card sumari">
+                <div class="card-body sumari">
+                  <div class="row">
+                    <div class="col-9">
+                    <small class="clight"> Total Transaction Number</small>
+                    <h4 class="cgrey-mid" id="total_trans_number">0 Transaction</h4>
                     </div>
                     <div class="col">
                       <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
@@ -34,54 +84,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 stretch-card grid-margin">
-
-              <div class="card sumari">
-                <div class="card-body sumari">
-                  <div class="row">
-                    <div class="col-9">
-                    <small class="clight">Total Transaksi</small>
-                    <h4 class="cgrey-mid">100 Transaksi</h4>
-                    </div>
-                    <div class="col">
-                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
-                    </div>
-               </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card sumari">
-                <div class="card-body sumari">
-                  <div class="row">
-                    <div class="col-9">
-                    <small class="clight">Total Transaksi</small>
-                    <h4 class="cgrey-mid">100 Transaksi</h4>
-                    </div>
-                    <div class="col">
-                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
-                    </div>
-               </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3 stretch-card grid-margin">
-              <div class="card sumari">
-                <div class="card-body sumari">
-                  <div class="row">
-                    <div class="col-9">
-                    <small class="clight">Total Transaksi</small>
-                    <h4 class="cgrey-mid">100 Transaksi</h4>
-                    </div>
-                    <div class="col">
-                      <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
-                    </div>
-               </div>
-                </div>
-              </div>
-            </div>
+          
           </div>
 
 
@@ -93,9 +96,9 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                     <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Top Subscriber <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
+                    <h2 class="mb-5">0</h2>
                     <h6 class="card-text">Increased by 60%</h6>
                   </div>
                 </div>
@@ -104,10 +107,10 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Weekly Transation <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
+                    <h2 class="mb-5">0</h2>
+                    <h6 class="card-text">Decreased by 0%</h6>
                   </div>
                 </div>
               </div>
@@ -117,8 +120,8 @@
                     <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
+                    <h2 class="mb-5">0</h2>
+                    <h6 class="card-text">Increased by 0%</h6>
                   </div>
                 </div>
               </div>
@@ -417,66 +420,15 @@
       <h4 class="cgrey" style="margin-bottom: 1em;">Features Overiew</h4>
      </center>
 
-  <div class="row">
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-    <div class="col-6 mgku-1">
-      <div class="media">
-      <img src="/img/default.png" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">
-      <div class="media-body">
-        <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-        <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque.</small>
-      </div>
-    </div>
-    </div>
-  </div>
-      <center>
-      <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
-      </center>
+  <div class="row modal_initial_fitur">
+    <!-- isi admincom.js / get_initial_feature(); -->
+  </div> 
       </div> <!-- end-modal body -->
+      <center>
+  <div class="modal-footer" id="mdl-footer-initialfitur">
+      <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
+  </div>
+    </center>
     </div>
   </div>
 </div> <!-- end-modal INITIAL2 -->
@@ -525,9 +477,29 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
-  session_admin_logged();
-// $("#initial1").modal('show');
+
+get_dashboard_admin(); //data dashboard
+
 });
+
+function get_dashboard_admin(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/admin/get_dashboard_admin',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      },
+      error: function (result) {
+        console.log("Cant Get Data For Dashboard");
+    }
+});
+}
 
 
 

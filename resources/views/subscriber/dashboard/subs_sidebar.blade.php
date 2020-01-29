@@ -19,6 +19,13 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a class="nav-link" href="/subscriber/dashboard/membership">
+                <span class="menu-title">Membership Type</span>
+                <i class="mdi mdi-wallet-membership menu-icon"></i>
+              </a>
+            </li>
+
             <li class="nav-item sidebar-actions">
               <span class="nav-link">
                 <div class="border-bottom">

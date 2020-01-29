@@ -26,12 +26,17 @@ body::-webkit-scrollbar-thumb
 
 
 /*/---------------------------------------------------//*/
+.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #d9d9d9 !important;
+    color: #ffffff !important;
+}
+
 .card .card-body.sumari {
     padding: 1rem 1rem !important;
 }
 
-.top-ico{
-margin-top: 0em !important;
+.top-ico {
+    margin-top: 0.5em !important;
 }
 
 .navbar .navbar-brand-wrapper .navbar-brand.brand-logo-mini img {
@@ -42,17 +47,20 @@ margin-top: 0em !important;
 }
 
 #initial1 .modal-content{
-height: 440px;
+height: auto;
+min-height: 440px;
 background-color: #ffffff !important;
+
 }
 
 #initial2 .modal-content{
 height: auto;
 background-color: #ffffff !important;
+min-height: 440px;
 }
 
 #initial3 .modal-content{
-height: 440px;
+min-height: 440px;
 background-color: #ffffff !important;
 }
 
@@ -177,8 +185,8 @@ padding: 2rem 5rem 0;
 }
 
 .dash-img-profil{
-    height: 60%;
-    width: 60%;
+    height: 45%;
+    width: 45%;
 
 }
 
@@ -187,6 +195,27 @@ padding: 2rem 5rem 0;
   border: none;
   color: white;
 }
+
+#nav_mobile_help{
+  display: none;
+}
+
+#nav_web_help{
+  display: block;
+}
+
+#profil_admin_dash{
+  margin-top: 5%;
+  width: 120px;
+  height: 120px;
+}
+
+#mdl-footer-initialfitur{
+  text-align: center !important;
+  border-top: none !important;
+  display: block;
+}
+
 
 
 

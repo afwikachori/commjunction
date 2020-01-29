@@ -32,6 +32,10 @@ public function DashboardSubsView(){
     return view('subscriber/dashboard/dashboard_subs');
 }
 
+public function MembershipSubsView(){
+    return view('subscriber/dashboard/membership_type');
+}
+
 
 public function LoginSubscriber(Request $request){
 $validator = $request->validate([

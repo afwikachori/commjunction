@@ -95,7 +95,7 @@
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
 
-    <script src="/js/admincom.js"></script>
+    <script src="{{ asset('/js/admincom.js') }}"></script>
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')

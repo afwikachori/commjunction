@@ -40,38 +40,38 @@
       <div class="row">
       <div class="col-md-3">
       <div class="form-group">
-        <small class="clight2 mgb-05">Community Name</small><br>
-      <img src="/img/imgtester.jpg" class="rounded-circle img-fluid" id="icon_com">
+        <small class="clight2 mgb-1">Community Icon</small><br>
+      <img src="/img/default.png" class="rounded-circle img-fluid logo_komunitas" id="profil_admin_dash">
       </div> 
 
       </div> <!-- end-col-md -->
       <div class="col-md-4">
       <div class="form-group">
         <small class="clight2 mgb-05">Community Name</small>
-        <p class="cgrey1">Komunitas Vespa</p>
+        <p class="cgrey1 judul_komunitas">Title</p>
       </div>
       <div class="form-group">
-        <small class="clight2 mgb-05">Alamat</small>
-        <p class="cgrey1">Jl.Raya Malang - Jatim</p>
+        <small class="clight2 mgb-05">Address</small>
+        <p class="cgrey1">-</p>
       </div>
        <div class="form-group">
         <small class="clight2 mgb-05">Administrator Name</small>
-        <p class="cgrey1">Afwika Chori</p>
+        <p class="cgrey1 user_admin_logged">-</p>
       </div>
 
       </div> <!-- end col-md -->
       <div class="col-md-5">
       <div class="form-group">
         <small class="clight2 mgb-05">Themes</small>
-        <p class="cgrey1">Classy Blue</p>
+        <p class="cgrey1">-</p>
       </div>
       <div class="form-group">
         <small class="clight2 mgb-05">Jenis Community</small>
-        <p class="cgrey1">Otomotif</p>
+        <p class="cgrey1">-</p>
       </div>
       <div class="form-group">
         <small class="clight2 mgb-05">Tanggal Pendaftaran</small>
-        <p class="cgrey1">27 Januari 2020</p>
+        <p class="cgrey1">-</p>
       </div>
       </div><!-- end col-md -->
       </div> <!-- end-row -->
@@ -80,7 +80,7 @@
       <div class="col-md-12">
       <div class="form-group">
         <small class="clight2 mgb-05">Community Description</small>
-        <p class="cgrey1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <p class="cgrey1 deskripsi_komunitas">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500.</p>
       </div>
       </div>
     </div>  <!-- end-cardbody -->
@@ -155,8 +155,7 @@
 
 @section('script')
 <script type="text/javascript">
-
-var cdn = '{{ env("CDN") }}';
+var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
 });
