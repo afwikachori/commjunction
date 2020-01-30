@@ -21,6 +21,39 @@
     <div class="card-body">
     <h4 class="card-title">Setting Membership Type</h4>
 
+    <div id="filter-subs">
+      <form>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+           <h6 class="cgrey2 s14">Custom Your Domain</h6>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Free Membership<i class="input-helper"></i>
+            </label>
+            </div>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Paid Membership <i class="input-helper"></i>
+            </label>
+            </div>
+      </div>
+      </div> <!-- end-col-8 -->
+      <div class="col-md-4">
+ <!-- <div class="card-footer bg-transparent"> -->
+        <div style="text-align: right; margin-top: 4em;">
+<button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
+        &nbsp;
+<button type="button" onclick="location.href ='/admin/publish'" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
+</div>
+      <!-- </div> -->
+      </div>
+    </div>
+
+    </form>
+    </div>
+
     </div>
   </div>
 </div>

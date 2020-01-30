@@ -156,6 +156,34 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Pending Subscriber</h4>
+
+                    <div id="filter-subs">
+                      <div class="row">
+                        <div class="col-md-5">
+                         <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" class="form-control form-control-sm">
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" class="form-control form-control-sm">
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                        <center>
+                        <button type="button" id="btn-filter-subs-date" class="btn btn-outline-primary btn-rounded btn-icon">
+                        <i class="mdi mdi-account-search"></i>
+                        </button>
+                      </center>
+                        </div>
+                      </div>
+                    </div> <!-- end-filtersub -->
+
+
+
+                    <br>
                     <div class="table-responsive">
                      <table id="tabel_pending_subs" class="table table-hover dt-responsive nowrap" style="width:100%"> 
                       <thead> 

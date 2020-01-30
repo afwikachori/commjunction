@@ -20,7 +20,7 @@
   <div class="card">
     <div class="card-body">
     <h4 class="card-title">Membership Type Subscriber</h4>
-
+    
     </div>
   </div>
 </div>

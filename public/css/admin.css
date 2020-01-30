@@ -244,6 +244,21 @@ background-color: #f1f1f1;
 }
 
 
+#filter-subs{
+width:100% !important;
+height: auto !important;
+border-radius: 12px !important;
+border: 1px solid #cccccc !important;
+padding: 1em 2em 0em 2em !important;
+}
+
+#btn-filter-subs-date{
+  margin-top: 1.5em !important;
+}
+
+#set-padding{
+  padding: 0 10% 0 10%;
+}
 
 
 
