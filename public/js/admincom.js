@@ -69,3 +69,43 @@ var arr = [];
     });
      $('.modal_initial_fitur').html(html);
 }
+
+
+
+
+//validasi format email
+function IsEmail(email) {
+        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+           return false;
+        }else{
+           return true;
+        }
+      }//end-valid email
+
+
+function clickImage(img){
+var modal = document.getElementById("mdl-img-click");
+var img = document.getElementById(img.id);
+var modalImg = document.getElementById("mdl-img-view");
+
+img.onclick = function(){
+  $('#mdl-img-click').modal('show');
+  modalImg.src = this.src;
+}
+}
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [day, month, year].join('/');
+}

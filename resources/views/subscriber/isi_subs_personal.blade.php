@@ -10,7 +10,7 @@
 <div class="container">
 <div class="row">
     <div class="col">
-<input type="text" class="form-control" name="name_community" id="name_community">
+<input type="hidden" class="form-control" name="name_community" id="name_community">
     <div class="form-group row">
         <label lang="en" class="h6 cgrey s14">Connect With</label>
         <br>
@@ -64,16 +64,7 @@
     <div class="col">
         <div class="form-group row"> 
         <label class="h6 clight s14" for="community_id" lang="en">Id Community</label>
-        <div class="row">
-          <div class="col">
             <input type="text"  readonly class="form-control-plaintext" id="community_id" name="community_id">
-          </div>
-          <div class="col-8">
-            <input type="hide" name="auth_url" id="auth_url" value="" class="form-control" disabled>
-          </div>
-        </div>
-       
-            
         </div>
 
       <div class="form-group row">

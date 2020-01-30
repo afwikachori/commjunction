@@ -98,18 +98,6 @@ public function registerSubscriber(Request $request){
 
         $input = $request->all(); // getdata form by name
         $url_comname = $input['name_community'];
-        // $data = [
-        //     'full_name'  	=> $input['fullname_subs'], 
-        //     'notelp' 	 	=> $input['notlp_subs'], 
-        //     'email' 	 	=> $input['email_subs'], 
-        //     'user_name' 	=> $input['username_subs'], 
-        //     'password'      => $input['password_subs'],
-        //     'community_id'	=> $input['community_id'],
-        //     "sso_type"     	=> $input['sso_type'],
-        //     "sso_token"  	=> $input['sso_token']
-        // ];
-
-        // dd($data);
     try {
     $url = env('SERVICE').'registration/subscriber';
     $client = new \GuzzleHttp\Client();
@@ -128,12 +116,16 @@ public function registerSubscriber(Request $request){
 
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-    dd($json);
+    // dd($json);
 
-    //alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
+    if($json['success'] == true){
+    alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
+    $url_sukses = '/subscriber/url/'.$url_comname;    
+    
+    return back()->with('register_sukses', $url_sukses);
 
-    // return redirect('subscriber/url/'.$name_community);
-
+    // return redirect('subscriber/url/'.$url_comname)->with('register_sukses', $url_sukses);
+    }
     } catch (RequestException $exception) {
         // $response = $exception->getResponse();
         $code =$exception->getCode();

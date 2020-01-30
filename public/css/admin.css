@@ -216,10 +216,32 @@ padding: 2rem 5rem 0;
   display: block;
 }
 
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5); 
+}
 
 
+#mdl-img-click .modal-header {
+  border: none;
+  background-color: #f2edf300;
+  padding: none;
+}
+#mdl-img-click .modal-content {
+  border: none;
+  background-color: #f2edf300;
+}
 
 
+.bg-greymuda{
+background-color: #f1f1f1;
+}
+
+.btn-kecil{
+  width: 30px !important;
+  height: 30px !important;
+}
 
 
 

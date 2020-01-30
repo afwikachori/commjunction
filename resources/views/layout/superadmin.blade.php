@@ -71,7 +71,7 @@
       <!-- page-body-wrapper ends -->
 
 
-<!-- Modal INITIAL-3-->
+<!-- MOdal Image Viewer-->
 <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">

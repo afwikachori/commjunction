@@ -1,6 +1,15 @@
 @extends('layout.app')
 
 @section('content')
+
+@if (Session::has('register_sukses'))
+<script>
+ setTimeout(function () {
+       window.location.href = "{{ Session::get('register_sukses') }}";
+    }, 5000); //will call the function after 2 secs.
+</script>
+@endif
+
   <div class="row">
     <div class="col biruq">
        <img src="/visual/commjuction.png" id="commjuction-regis1">
@@ -22,7 +31,7 @@
         <div class="col">
         <div class="sigin">
           <span lang="en" class="h6 cteal">Already member?</span>
-          <a href="/admin" class="h6" id="klikregister" lang="en" data-lang-token="registernow">&nbsp;Sign In</a>
+          <a href="" class="h6" id="klik_login_subs" lang="en" data-lang-token="registernow">&nbsp;Sign In</a>
         </div>
         </div>
       </div>
@@ -108,6 +117,8 @@ $.ajax({
         $("#community_id").val(result.id);
         $("#icon_comm_subs").attr("src",cdn+result.logo);
         $("#judul_comm_subs").html(result.name);
+        
+        $("#klik_login_subs").attr("href", "/subscriber/url/"+result.name);
         $("#deskripsi_comm").html(result.description);
         $("#name_community").val(result.name);
 
@@ -178,52 +189,6 @@ function showPass() {
 
 
 
-$('#auth_url').keypress(function(event){
-  var isi = $('#auth_url').val();
-  var keycode = (event.keyCode ? event.keyCode : event.which);
-  if(keycode == '13'){
-  $("#submit_personalsubs").attr("disabled", true);
-  auth_url_subs(isi);
-  
-  }
-
-});
-
-
-
-function auth_url_subs(val){
-  $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  $.ajax({
-      url: '/url_subscriber',
-      data: {'name': val},
-      type: 'POST',
-      datatype: 'JSON',
-      beforeSend: function(){
-        $('#mdl-loadingajax').modal('show');
-      },
-      success: function (result) {
-      var dt = result.data;
-
-      $("#community_id").val(dt.id);
-      $("#judul_comm_subs").html(dt.name);
-      $("#deskrip_com_subs").text(dt.description);
-      $("#icon_comm_subs").attr("src", server+dt.logo);
-
-      },
-      error: function (result) {
-       console.log("Cant get data from url subscriber");
-      }, 
-      complete: function(result){
-         $('#mdl-loadingajax').modal('hide');
-         $("#submit_personalsubs").removeAttr("disabled");
-      }
-      });
-
-}
 
 
 </script>

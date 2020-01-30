@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/admin-mobile.css"> 
 
+    <!-- chart -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"> 
+
+
+
     @yield('css')
   </head>
 
@@ -81,6 +86,24 @@
 </div>
 <!-- END-MODAL -->
 
+
+<!-- MOdal Image Viewer-->
+<div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+        </button>
+      </div>
+      <center>
+      <img id="mdl-img-view">
+    </center>
+    </div>
+  </div>
+</div>
+
+
   @else 
   <script>window.location = "/admin";</script>
   @endif
@@ -95,7 +118,15 @@
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
 
+    <script src="/purple/js/todolist.js"></script>
+
     <script src="{{ asset('/js/admincom.js') }}"></script>
+
+    <!-- chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')

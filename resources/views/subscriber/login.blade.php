@@ -2,11 +2,8 @@
 
 @section('content')
 
-
 @if (Session::has('subs_data'))
 @foreach(Session::get('subs_data') as $dt)
-
-
 <div class="row">
     <div class="col-sm biruq">
       <img src="{{ env('CDN') }}{{ $dt['logo'] }}" id="login-left-commjuctioncdn" class="rounded-circle img-fluid">
@@ -16,7 +13,7 @@
       <h5  lang="en">{{ $dt['description'] }}</h5>
     </div>
 
-      <img src="/visual/loginadmin.png" id="login-left-img">
+      <img src="/visual/loginadmin.png" id="login-img-subs">
 
     </div>
     <div class="col-lg-4">
