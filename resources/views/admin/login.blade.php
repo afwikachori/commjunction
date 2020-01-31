@@ -10,7 +10,7 @@
       <p class="deslogin" lang="en">Gathering data with a smart application that trusted and fastest.</p>
     </div>
 
-      <img src="/visual/loginadmin.png" id="login-left-img">
+      <img src="/visual/loginadmin.png" id="img-loginadmin">
 
     </div>
     <div class="col-xl-5">

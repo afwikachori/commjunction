@@ -16,6 +16,12 @@
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/admin/subs_management">
+                <span class="menu-title">Subscriber Management</span>
+                <i class="mdi mdi-account-multiple menu-icon"></i>
+              </a>
+            </li>
 
             <li class="nav-item sidebar-actions">
               <span class="nav-link">

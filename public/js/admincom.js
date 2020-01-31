@@ -25,7 +25,7 @@ $.ajax({
       $(".judul_komunitas").html(user.community_name);
       $(".deskripsi_komunitas").html(user.community_description);
       
-      if(user.status == 1){ //first-login
+       if(user.status == 1){ //first-login
         get_initial_feature(result.feature); //isi data 
         $("#initial1").modal('show');
         $("#comm_status_admin").html("Verified - First Login");
@@ -36,7 +36,6 @@ $.ajax({
         window.location.href = "/admin";
       }
 
-      
       
     }
       },

@@ -53,7 +53,7 @@
         <b class="cgrey">@smartcomm.id</b></h6>
       <br>
       <div class="form-group">
-         <h6 class="cgrey2 s14">Custom Your Domain</h6>
+         <h6 class="s14" style="color: #fff;">Custom Your Domain</h6>
           <input type="text" class="form-control">
       </div>
 

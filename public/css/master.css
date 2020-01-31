@@ -58,6 +58,13 @@ border:none;
     top: 40%;
 }
 
+#img-loginadmin{
+      height: auto;
+    width: 66%;
+    top: 26%;
+    position: absolute;
+}
+}
 
 #googleRegis{
   margin-top: -0.2em;

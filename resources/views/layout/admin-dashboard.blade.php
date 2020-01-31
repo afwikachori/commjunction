@@ -22,7 +22,10 @@
 
     <!-- Styles Custom-->
     <link rel="stylesheet" href="/css/admin.css">
-    <link rel="stylesheet" href="/css/admin-mobile.css"> 
+    <link rel="stylesheet" href="/css/admin-mobile.css">
+
+    <!-- tags --> 
+    <link rel="stylesheet" href="/css/tags/tagify.css"> 
 
     <!-- chart -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"> 
@@ -34,7 +37,7 @@
 
   
   <body>
-
+ @if (Session::has('session_admin_logged'))
   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -103,6 +106,10 @@
   </div>
 </div>
 
+  @else 
+  <script>window.location = "/admin";</script>
+  @endif
+
 
 
     <!-- plugins:js -->
@@ -119,8 +126,16 @@
 
     <script src="{{ asset('/js/admincom.js') }}"></script>
 
+    <script src="/js/tags/tagify.min.js"></script>
+
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+        <!-- dataTables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 
 

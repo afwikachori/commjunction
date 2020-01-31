@@ -38,6 +38,7 @@ Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashbo
 Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
+Route::get('/subs_management','AdminCommController@SubsManagementView')->name('/subs_management');
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -53,6 +54,8 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');
 Route::post('get_dashboard_admin','AdminCommController@get_dashboard_admin')->name('get_dashboard_admin');
+
+Route::post('tabel_subs_management','AdminCommController@tabel_subs_management')->name('tabel_subs_management');
 });
 
 
@@ -245,6 +248,8 @@ Route::get('superadmin/user','SuperadminController@UserSuperView')->name('supera
 Route::get('superadmin/payment','SuperadminController@paymentSuperView')->name('superadmin/payment');
 
 // ---- post -----
+Route::get('superadmin/logout', 'SuperadminController@LogoutSuperadmin')->name('superadmin/logout');
+
 Route::post('loginSuperadmin','SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 
 Route::post('postAddUser','SuperadminController@postAddUser')->name('postAddUser');
@@ -253,7 +258,7 @@ Route::post('session_logged_dashboard','SuperadminController@session_logged_dash
 
 Route::post('get_priviledge','SuperadminController@get_priviledge')->name('get_priviledge');
 
-Route::post('list_req_admincomm','SuperadminController@list_req_admincomm')->name('list_req_admincomm');
+Route::post('list_req_admincomm','SuperadminController@list_req_admincomm_func')->name('list_req_admincomm');
 
 Route::post('verify_admincom','SuperadminController@verify_admincom')->name('verify_admincom');
 

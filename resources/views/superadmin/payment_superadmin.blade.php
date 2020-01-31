@@ -111,6 +111,8 @@ var cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
 session_logged_dashboard(); //penting
 // list_req_admincomm();
+
+
 tabel_req_verify(); //datables
 });
 

@@ -48,6 +48,9 @@ public function SetpaymentAdminView(){
 	return view('admin/dashboard/set_payment_admin');
 }
 
+public function SubsManagementView(){
+    return view('admin/dashboard/subscriber_management');
+}
 
 
 // METHOD POST 
@@ -114,6 +117,27 @@ public function get_dashboard_admin(){
     // return $ses_login['access_token'];
 
     $url = env('SERVICE').'dashboard/admincommunity';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+public function tabel_subs_management(){
+    $ses_login = Session::get('session_admin_logged');
+
+    return $ses_login['access_token'];
+
+    $url = env('SERVICE').'subsmanagement/listsubs';
     $client = new \GuzzleHttp\Client();
 
     $response = $client->request('POST',$url, [
