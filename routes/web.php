@@ -39,6 +39,13 @@ Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
 Route::get('/subs_management','AdminCommController@SubsManagementView')->name('/subs_management');
+Route::get('/membership_management','AdminCommController@MembershipManagementView')->name('/membership_management');
+
+Route::get('detail_subscriber/{id_subs}', 'AdminCommController@detailSubcriberManagementView')->name('detail_subscriber/{id_subs}');
+Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementView')->name('edit_subscriber/{id_subs}');
+
+Route::get('detail_pendingsubs/{id_subs}', 'AdminCommController@detailPendingSubcriberView')->name('detail_pendingsubs/{id_subs}');
+
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -56,7 +63,26 @@ Route::post('session_admin_logged','AdminCommController@session_admin_logged')->
 Route::post('get_dashboard_admin','AdminCommController@get_dashboard_admin')->name('get_dashboard_admin');
 
 Route::post('tabel_subs_management','AdminCommController@tabel_subs_management')->name('tabel_subs_management');
+Route::post('tabel_subs_pending','AdminCommController@tabel_subs_pending')->name('tabel_subs_pending');
+
+Route::post('edit_profil_community','AdminCommController@edit_profil_community')->name('edit_profil_community');
+
+
+Route::post('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
+
+Route::post('setting_loginresgis_comm','AdminCommController@setting_loginresgis_comm')->name('setting_loginresgis_comm');
+
+Route::post('setting_membership_comm','AdminCommController@setting_membership_comm')->name('setting_membership_comm');
+
+Route::post('tabel_list_regisdata','AdminCommController@tabel_list_regisdata')->name('tabel_list_regisdata');
+
+Route::post('setting_regisdata_comm','AdminCommController@setting_regisdata_comm')->name('setting_regisdata_comm');
+
+
+
 });
+
+
 
 
 

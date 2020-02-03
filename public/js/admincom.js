@@ -2,7 +2,11 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
-  session_admin_logged();
+session_admin_logged();
+// file_browser_profil();
+
+
+
 });
 
 
@@ -17,21 +21,35 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-        // console.log(result);
+        console.log(result.access_token);
       var user = result.user;
     if (result != ""){
       $(".logo_komunitas").attr("src", server_cdn+user.community_logo);
       $(".user_admin_logged").html(user.full_name);
       $(".judul_komunitas").html(user.community_name);
       $(".deskripsi_komunitas").html(user.community_description);
-      
+      $(".alamat_admin_komunitas").html(user.alamat);
+      $(".tanggalregis_komunitas").html(formatDate(user.community_created));
+
+      //edit-profil comm
+      $("#edit_namacom").val(user.community_name);
+      $("#edit_deskripsicom").val(user.community_description);
+      $("#edit_idcom").val(user.user_id);
+      $(".logo_komunitas").attr("src", server_cdn+user.community_logo);
+
        if(user.status == 1){ //first-login
         get_initial_feature(result.feature); //isi data 
         $("#initial1").modal('show');
         $("#comm_status_admin").html("Verified - First Login");
+        $(".statuscomm").html('Newbie');
+         $(".statuscomm").addClass('badge-warning');
       }else if(user.status == 2){
          $("#comm_status_admin").html("Active");
+         $(".statuscomm").html('Active');
+         $(".statuscomm").addClass('badge-success');
       }else{ //status=0 belum aktif
+         $(".statuscomm").html('Deactive');
+         $(".statuscomm").addClass('badge-danger');
         swal("Your account not verified, please wait system or call Commjuction's Administrator", "Inactive", "error");
         window.location.href = "/admin";
       }
@@ -107,4 +125,37 @@ function formatDate(date) {
         day = '0' + day;
 
     return [day, month, year].join('/');
+}
+
+
+//TAB MENU LINE
+
+$(".tabbable-line li a").click(function() {
+  $(".tabbable-line li").removeClass('active');
+    $(this).parent().addClass('active');
+});
+
+
+function file_browser_profil(){
+
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+    $(".file-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".upload-button").on('click', function() {
+       $(".file-upload").click();
+    });
 }

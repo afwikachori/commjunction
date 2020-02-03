@@ -133,7 +133,6 @@ class SuperadminController extends Controller
 // return $user_logged['access_token'];
     // return  env('SERVICE');
 
-    $tokenstatic = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA5LCJ1c2VyX2lkIjoiQURDTS04ODE1MjMxMDEyNTU3NjgzMjAyMDAxMTciLCJ1c2VyX25hbWUiOiJicmlhbl9hbmdncmlhd2FuIiwibGV2ZWwiOjIsInNzb190eXBlIjoxLCJjb21tX2lkIjoxMDQsImRic3FsIjoiY29tbWp1bmN0aW9uXzEwNCIsImRibW9uZ28iOiJjb21tanVuY3Rpb25fMTA0IiwiaWF0IjoxNTgwNDU3Njg4LCJleHAiOjE1ODMwNDk2ODh9.v8mx2JvjM12WxhtccXySrG83MfgleOkAMo1tfmMMaR8';
    
     $url = env('SERVICE').'paymentverification/datapaymentconfirmation';
     $client = new \GuzzleHttp\Client();
@@ -141,8 +140,7 @@ class SuperadminController extends Controller
     $response = $client->request('POST',$url, [
     'headers' => [
     'Content-Type' => 'application/json',
-    // 'Authorization' => $user_logged['access_token']
-    'Authorization' => $tokenstatic
+    'Authorization' => $user_logged['access_token']
     ]
     ]);
 

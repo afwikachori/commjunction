@@ -24,56 +24,51 @@
       <h4 class="card-title">Edit Community Profile</h4>  
       <br>
 
-<form>
+<form method="POST" id="form_edit_community" action="{{route('edit_profil_community')}}" enctype="multipart/form-data">{{ csrf_field() }}
 <center>
-<div class="image-upload">
-	<label for="file-input">
-    	<img class="rounded-circle img-fluid" id="img_editprofil" src="/img/def-profil.png"/>
-    </label>
-    <div class="text-imgedit">Edit</div>
-    <input id="file-input" name="file-input" type="file"/>
+  <div class="img-upload-profil">
+     <div class="circle">
+       <img class="profile-pic rounded-circle img-fluid logo_komunitas" src="/img/focus.png">
+     </div>
+     <div class="p-image editcom">
+      <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" style="width: 30px; height: 30px;">
+       <i class="mdi mdi-camera upload-button"></i>
+      </button>
+        <input class="file-upload file-upload-default" type="file" id="fileup" name="fileup" accept="image/*"/>
+     </div>
 </div>
 </center>
-<label class="cblue" style="margin-bottom: 3%;">About Community</label>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-group row">
-		<label for="exampleInputUsername2" class="col-sm-4 col-form-label">Community Name</label>
-		<div class="col-sm-8">
-		<input type="text" class="form-control" id="exampleInputUsername2">
-		</div>
-		</div>
-
-		<div class="form-group row">
-		<label for="exampleInputUsername2" class="col-sm-4 col-form-label">Address</label>
-		<div class="col-sm-8">
-		<input type="text" class="form-control" id="exampleInputUsername2">
-		</div>
-		</div>
-	</div> <!-- end-col-md -->
-
-	<div class="col-md-6">
-		<div class="form-group row">
-		<label for="exampleInputUsername2" class="col-sm-4 col-form-label">Administrator Name</label>
-		<div class="col-sm-8">
-		<input type="text" class="form-control" id="exampleInputUsername2">
-		</div>
-		</div>
-
-		<div class="form-group row">
-		<label for="exampleInputUsername2" class="col-sm-4 col-form-label">Description</label>
-		<div class="col-sm-8">
-		<input type="text" class="form-control" id="exampleInputUsername2">
+		<label for="" class="col-sm-3 col-form-label">Community Name</label>
+		<div class="col-sm-9">
+		<input type="text" class="form-control input-abu" id="edit_namacom" name="edit_namacom">
 		</div>
 		</div>
 	</div> <!-- end-col-md -->
 </div>
 
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group row">
+		<label  class="col-sm-3 col-form-label">Description Community</label>
+		<div class="col-sm-9">
+		<textarea class="form-control input-abu" id="edit_deskripsicom" name="edit_deskripsicom" rows="4"></textarea>
+		</div>
+		</div>
+</div>
+</div>
+
+<input type="text" class="form-control input-abu" id="edit_idcom" readonly="readonly">
+<br>
+
 <div style="text-align: right;">
-<button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
+<button type="button" onclick="location.href ='/admin/settings'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
         &nbsp;
-<button type="button" onclick="location.href ='/admin/publish'" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
+<button type="submit" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
 </div>
 
 </form>
@@ -92,7 +87,7 @@
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
-
+file_browser_profil();
 });
 
 $('#file-input').on('change', function () {

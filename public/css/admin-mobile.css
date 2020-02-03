@@ -17,11 +17,117 @@ font-size: 1rem !important;
 }
 
 
+
+
+/*SUBCRIBER MANAGEMEN TAB */
+
+.tabbable-line > .nav-tabs {
+border: none;
+    margin: 0px!important;
+    position: relative;
+    left: 0px !important;
+}
+
 } /*end-mobile*/
 
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {...}
+@media only screen and (max-width: 600px) {
+	.tabbable-line > .nav-tabs {
+border: none;
+    margin: 0px!important;
+    position: relative;
+    left: 0px !important;
+}
+
+.col-activity{
+  margin-top: 1.5em;
+}
+
+.sisi-kanan{
+  margin-top: -1.2em;
+}
+
+
+
+
+/*//IMAGE UPLOAD BUNDER - FILE BROWSER*/
+.img-upload-profil{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  margin-top: 1em;
+  margin-bottom: 10%;
+}
+
+.profile-pic {
+    max-width: 128px;
+    max-height: 128px;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.file-upload {
+    display: none;
+}
+.circle {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    margin-top: 1em;
+    border: 5px solid #efefef;
+    position: absolute;
+    top: 72px;
+      margin-left: auto;
+  margin-right: auto;
+    text-align: center;
+}
+img .profile-pic {
+    max-width: 100%;
+    height: auto;
+}
+.p-image {
+margin-top: 2em;
+left: 75%;
+color: #666666;
+transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+position: relative;
+}
+
+.p-image.editcom {
+margin-top: 2.5em;
+left: 55%;
+color: #666666;
+transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+position: relative;
+}
+
+.p-image:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+.upload-button {
+  font-size: 1.2em;
+}
+
+.upload-button:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+  color: #999;
+}
+/*END-FILE IMAGE UPLOAD*/
+
+
+
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {...}

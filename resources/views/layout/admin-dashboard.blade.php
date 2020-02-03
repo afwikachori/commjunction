@@ -30,6 +30,10 @@
     <!-- chart -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"> 
 
+    <!-- dataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+    
 
 
     @yield('css')
@@ -121,7 +125,7 @@
     <script src="/purple/js/misc.js"></script>
     <script src="/purple/js/dashboard.js"></script>
     <script src="/purple/js/todolist.js"></script>
-
+    <script src="/purple/js/file-upload.js"></script>
     <script src="/purple/js/todolist.js"></script>
 
     <script src="{{ asset('/js/admincom.js') }}"></script>

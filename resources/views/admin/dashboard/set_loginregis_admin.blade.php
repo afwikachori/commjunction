@@ -22,27 +22,27 @@
     <h4 class="card-title">Setting Login & Registrasion</h4>
 
     <br><br>
-    <form>
+    <form method="POST" id="form_setting_loginregis" action="{{route('setting_loginresgis_comm')}}" enctype="multipart/form-data">{{ csrf_field() }}
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-5">
         <div class="form-group">
       <!-- <h6 class="cgrey2">Login Type for Subscriber</h6> -->
-           <h6 class="cgrey2 s14">Custom Your Domain</h6>
+           <h6 class="cgrey2 s14">Form Type Subscriber Login</h6>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Username & Password <i class="input-helper"></i>
+              <input type="radio" class="form-check-input" name="optionsRadios" id="" value="1"> Username & Password <i class="input-helper"></i>
             </label>
             </div>
 
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Phone Number & Password <i class="input-helper"></i>
+              <input type="radio" class="form-check-input" name="optionsRadios" id="" value="2"> Phone Number & Password <i class="input-helper"></i>
             </label>
             </div>
 
         <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Email & Password <i class="input-helper"></i>
+              <input type="radio" class="form-check-input" name="optionsRadios" id="" value="3"> Email & Password <i class="input-helper"></i>
             </label>
             </div>
       </div>
@@ -52,35 +52,39 @@
         &nbsp;
         <b class="cgrey">@smartcomm.id</b></h6>
       <br>
-      <div class="form-group">
+      <div class="row">
+        <div class="col-md-8 form-group" style="padding-right: 3px;">
          <h6 class="s14" style="color: #fff;">Custom Your Domain</h6>
-          <input type="text" class="form-control">
+          <input type="text" name="subdomain" class="form-control">
+        </div>
+        <div class="col-md-4" style="margin-top: 2em; padding-left: 0px !important;">
+          <small><i class="cgrey tebal">smartcomm.id</i></small>
+        </div>
       </div>
-
+  
     </div> <!-- end-col-6 -->
 
-      <div class="col-md-8">
+      <div class="col-md-7">
        <div class="form-group">
         <h6 class="cgrey2">
 
       <div class="form-group">
-        <label for="exampleTextarea1">Headline Text Login Portal</label>
-          <input type="text" class="form-control">
+        <label for="">Headline Text Login Portal</label>
+          <input type="text" name="headline" class="form-control">
       </div>
 
       <div class="form-group">
-        <label for="exampleTextarea1">Custom Descripyion Text Login Portal</label>
-        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+        <label for="">Description Text Login Portal</label>
+        <textarea class="form-control" id="" name="description_custom" rows="4"></textarea>
         </div>
        <div class="form-group">
         <label>Image Portal Login</label>
-        <input type="file" name="img[]" class="file-upload-default">
-        <div class="input-group col-xs-12">
-          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-          <span class="input-group-append">
-            <button class="file-upload-browse btn btn-gradient-light" type="button">Upload</button>
-          </span>
-        </div>
+         <input type="file" id="fileup" name="fileup" class="file-upload-default">
+                <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                <span class="input-group-append">
+                <button class="file-upload-browse btn btn-light" type="button">Browse</button>
+                </span>
       </div>
     </div>
       </div>
@@ -90,7 +94,7 @@
         <div style="text-align: right; margin-top: 2em;">
 <button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
         &nbsp;
-<button type="button" onclick="location.href ='/admin/publish'" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
+<button type="submit" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
 </div>
       <!-- </div> -->
   </form>

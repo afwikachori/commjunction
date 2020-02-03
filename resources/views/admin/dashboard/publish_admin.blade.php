@@ -24,7 +24,7 @@
       <h4 class="card-title">Publish Preparation</h4>  
       </div> <!-- end-col-9 -->
       <div class="col-md-3" style="text-align: right;">
-      <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Publish Now</button>
+      <button type="button" id="btn_publish_now" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Publish Now</button>
       </div> <!-- end-col-3 -->
     </div>
 
@@ -107,6 +107,12 @@ var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
 });
 
+
+
+$("#btn_publish_now").click(function () {
+  // alert("terklik");
+  window.location.href = "{{url('/admin/setting_publish_comm')}}"
+});
 
 
 </script>

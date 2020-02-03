@@ -18,181 +18,31 @@
 <div class="row">
  <div class="col-12">
   <div class="card">
+  <div class="card-header putih">
+   <div class="row">
+     <div class="col-md-8 cgrey" style="margin-top: 0.5em;">
+      Registrasion Data
+     </div>
+     <div class="col-md-4" style="text-align: right;">
+      <button class="btn btn-birumuda btn-sm" id="btn-add-question"> Add Question</button>
+     </div>
+   </div>
+  </div>
     <div class="card-body">
-    <h4 class="card-title">Setting Registrasion Data</h4>
-<br>
 
-    <div class="row borderan">
-      <div class="col-md-4">
-       <div class="form-group">
-        <label>Input Text Box</label>
-        <input type="text" class="form-control">
-      </div>
-      </div>
-
-      <div class="col-md-4">
-       <div class="form-group">
-        <label>Date Picker</label>
-        <input type="date" class="form-control" >
-      </div>
-      </div>
-
-      <div class="col-md-2">
-      <div class="form-group">
-        <label>Check Box</label>
-          <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input"> Default </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-               <input type="checkbox" class="form-check-input" checked> Checked </label>
-          </div>
-      </div>
-      </div>
-
-      <div class="col-md-2">
-         <div class="form-group">  
-          <label>Radio Button</label>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Default </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" checked> Selected </label>
-          </div>
-        </div>
-
-      </div>
-    </div> <!-- end-borderan -->
-<br>
-<br>
-
-
-<h6 style="margin-bottom: 0.6em;">Input Your Data</h6>
-
-<div class="row">
-<div class="col-md-5">
- <div class="form-group">
-  <label for="aa123">Your Question</label>
-  <input type="text" class="form-control" id="aa123">
- </div>
-</div>
-
-<div class="col-md-2">
-<div class="form-group">
-  <label for="exampleSelectGender">Input Type</label>
-  <select class="form-control" id="exampleSelectGender">
-    <option>Input Text Box</option>
-    <option>Date Picker</option>
-    <option>Checkbox</option>
-    <option>Radiobutton</option>
-  </select>
-</div>
-</div>
-<div class="col-md-5">
-<div class="form-group">
-  <label for="tags2">List Option List</label>
-    <textarea class="form-control" placeholder="Enter to make option" id="tags2" name="tags2"></textarea>
- </div> <!-- end-form group -->
-
-</div>
-</div> <!-- end-row -->
-
-<div class="row">
-<div class="col-md-5">
- <div class="form-group">
-  <label for="aa123">Your Question</label>
-  <input type="text" class="form-control" id="aa123">
- </div>
-</div>
-
-<div class="col-md-2">
-<div class="form-group">
-  <label for="exampleSelectGender">Input Type</label>
-  <select class="form-control" id="exampleSelectGender">
-    <option>Input Text Box</option>
-    <option>Date Picker</option>
-    <option>Checkbox</option>
-    <option>Radiobutton</option>
-  </select>
-</div>
-</div>
-<div class="col-md-5">
-<div class="form-group">
-  <label for="tags2">List Option List</label>
-    <textarea class="form-control" placeholder="Enter to make option" id="tags2" name="tags2"></textarea>
- </div> <!-- end-form group -->
-
-</div>
-</div> <!-- end-row -->
-
-<div class="row">
-<div class="col-md-5">
- <div class="form-group">
-  <label for="aa123">Your Question</label>
-  <input type="text" class="form-control" id="aa123">
- </div>
-</div>
-
-<div class="col-md-2">
-<div class="form-group">
-  <label for="exampleSelectGender">Input Type</label>
-  <select class="form-control" id="exampleSelectGender">
-    <option>Input Text Box</option>
-    <option>Date Picker</option>
-    <option>Checkbox</option>
-    <option>Radiobutton</option>
-  </select>
-</div>
-</div>
-<div class="col-md-5">
-<div class="form-group">
-  <label for="tags2">List Option List</label>
-    <textarea class="form-control" placeholder="Enter to make option" id="tags2" name="tags2"></textarea>
- </div> <!-- end-form group -->
-
-</div>
-</div> <!-- end-row -->
-
-
-<div class="row">
-<div class="col-md-5">
- <div class="form-group">
-  <label for="aa123">Your Question</label>
-  <input type="text" class="form-control" id="aa123">
- </div>
-</div>
-
-<div class="col-md-2">
-<div class="form-group">
-  <label for="exampleSelectGender">Input Type</label>
-  <select class="form-control" id="exampleSelectGender">
-    <option>Input Text Box</option>
-    <option>Date Picker</option>
-    <option>Checkbox</option>
-    <option>Radiobutton</option>
-  </select>
-</div>
-</div>
-<div class="col-md-5">
-<div class="form-group">
-  <label for="tags2">List Option List</label>
-    <textarea class="form-control" placeholder="Enter to make option" id="tags2" name="tags2"></textarea>
- </div> <!-- end-form group -->
-
-</div>
-</div> <!-- end-row -->
-
-
-<div style="text-align: right; margin-top: 2em;">
-<button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
-        &nbsp;
-<button type="button" onclick="location.href ='/admin/publish'" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save</button>
-</div>
-
-
+          <!-- tabel all susbcriber -->  
+        <table id="tabel_list_regisdata" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
+          <thead> 
+            <tr> 
+              <th>ID Question</th>
+              <th>Question Title</th>
+              <th>Type</th>
+              <th>Date Created</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+        </table>
+          <!-- end tabel all  -->
 
     </div>
   </div>
@@ -201,14 +51,85 @@
 
 
 
+<!-- //MODAL ADD QUESTION REGIS -->
+<div class="modal fade" id="modal_add_question" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+    <div class="modal-header" style="border: none;">
+        <h5 class="modal-title putih">Add New Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  method="POST" id="form_add_dataregis" action="{{route('setting_regisdata_comm')}}">{{ csrf_field() }}
+          <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+            <label>Default input</label>
+            <input type="text" class="form-control input-abu" name="question_regis">
+          </div>
+          </div>  
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Input Type</label>
+              <select class="form-control input-abu" id="tipedata_regis" name="tipedata_regis">
+                <option value="1">Input Text Box</option>
+                <option value="2">Date Picker</option>
+                <option value="3">Checkbox</option>
+                <option value="4">Radiobutton</option>
+              </select>
+            </div>
+          </div>         
+          </div>
+
+<div class="row form-group">
+  <div class="col-md-3" style="margin-top: 1em;">
+    <label class="cgrey">Choose Input</label>
+  </div>
+  <div class="col-md-7">
+    <input type="text" class="form-control input-abu" name="pilihan_input1">
+  </div> 
+</div>
+
+<div class="row form-group">
+  <div class="col-md-3" style="margin-top: 1em;">
+    <label class="cgrey">Choose Input</label>
+  </div>
+  <div class="col-md-7">
+    <input type="text" class="form-control input-abu" name="pilihan_input2">
+  </div>
+</div>
+
+<div id="isi_newrow"></div>
+
+<center>
+<button type="button" class="btn btn-icon-text" id="addnewrow">
+  <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
+<small>Add New Row</small> </button>
+</center>
+      </div>
+      <div class="modal-footer putih">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" style="border-radius: 6px;">Cancel</button>
+        <button type="submit" class="btn btn-teal btn-sm">Submit</button>
+      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
 
-  tagsInput();
-
+  // tagsInput();
+tabel_cek();
+tabel_list_regisdata();
+addRowRegisData();
 });
 
 function tagsInput(){
@@ -223,6 +144,119 @@ document.querySelector('input[type=checkbox]').addEventListener('change', functi
     document.body.classList[this.checked ? 'add' : 'remove']('disabled');
 })
 }
+
+
+function tabel_cek(){
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/admin/tabel_list_regisdata',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        // console.log(result);
+        // console.log(result[0].param_form_array[0]);
+        
+        $.each(result, function(i,item){
+          var judul = item.param_form_array[0];
+        var tipedata = item.param_form_array[1];
+      
+        });
+      },
+      error: function (result) {
+        console.log("Cant Show");
+    }
+});
+}
+
+function tabel_list_regisdata(){
+    var tabel = $('#tabel_list_regisdata').DataTable({
+        responsive: true,
+        ajax: {
+            url: '/admin/tabel_list_regisdata',
+            type: 'POST',
+            dataSrc :'',
+            timeout: 30000,
+        },
+        columns: [
+            {mData: 'id'},
+            {mData: 'param_form_array',
+            render: function ( data, type, row, meta ) {
+              var judul = data[0];
+              return judul;
+            }
+          },
+          {mData: 'param_form_array',
+            render: function ( data, type, row, meta ) {
+              var tipedata = data[1];
+              return tipedata;
+            }
+          },
+          {mData: 'id'},
+          {mData: 'id',
+            render: function ( data, type, row, meta ) {
+          return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon" onClick="detail_regisdata('+data+');">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</button>';
+              }
+            }
+        ],
+
+    });
+
+}
+
+
+$( "#btn-add-question" ).click(function() {
+  $("#modal_add_question").modal('show');
+});
+
+
+function detail_regisdata(id_regisdata){
+alert('id list regis data : '+ id_regisdata);
+}
+
+function addRowRegisData(){
+    // Add row
+  var row=1;
+  var id =3;
+
+  $(document).on("click", "#addnewrow", function () {
+  var new_row = '<div class="row form-group newly" id="row'+row+'">'+
+  '<div class="col-md-3" style="margin-top: 1em;">'+
+    '<label class="cgrey">Choose Input</label>'+
+  '</div>'+
+  '<div class="col-md-7">'+
+    '<input type="text" class="form-control input-abu" name="pilihan_input'+id+'">'+
+  '</div>'+
+  '<div class="col-md">'+
+    '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">'+
+      '<i class="mdi mdi-delete"></i>'+
+    '</button>'+
+  '</div>'+
+'</div>';
+
+  $('#isi_newrow').append(new_row);
+  row++;
+  id++;
+  return false;
+  });
+  
+  // Remove criterion
+  $(document).on("click", ".delete-row", function () {
+  //  alert("deleting row#"+row);
+    if(row>1) {
+      $(this).closest('div .newly').remove();
+      row--;
+    }
+  return false;
+  });
+
+}
+
 
 
 

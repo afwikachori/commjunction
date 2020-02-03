@@ -20,21 +20,148 @@
   <div class="card">
     <div class="card-body">
 
-       <table id="tabel_subscriber" class="table table-hover dt-responsive nowrap" style="width:100%"> <thead> 
-            <tr> 
-                <th>No</th>
-                <th>ID Subscriber</th>
-                <th>Subcriber Name</th>
-                <th>Status</th>
-                <th>Last Login</th>
-                <th>Action</th>
-            </tr>
-            </thead> 
-        </table>
 
+        <div class="tabbable-line">
+          <ul class="nav nav-tabs ">
+            <li class="tab-subs active" id="tab_all">
+              <a href="#tab_default_1" data-toggle="tab">
+                All
+              </a>
+            </li>
+            <li class="tab-subs" id="tab_pending">
+              <a href="#tab_default_2" data-toggle="tab">
+                Pending
+              </a>
+            </li>
+
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_default_1">
+
+      <button type="button" id="btn-filter-date" class="btn btn-tosca">Filter</button>
+          <!-- tabel all susbcriber -->  
+        <table id="tabel_subscriber" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
+          <thead> 
+            <tr> 
+              <th>ID Subscriber</th>
+              <th>Membership</th>
+              <th>Subcriber Name</th>
+              <th>Status</th>
+              <th>Last Login</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+        </table>
+          <!-- end tabel all  -->
+          </div>
+
+
+      <div class="tab-pane" id="tab_default_2">
+        <!-- tabel all susbcriber -->  
+        <table id="tabel_subs_pending" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
+          <thead> 
+            <tr> 
+              <th>ID Subscriber</th>
+              <th>Membership</th>
+              <th>Subcriber Name</th>
+              <th>Status</th>
+              <th>Last Login</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+        </table>
+          <!-- end tabel all  -->
+      </div>
+
+
+          </div>
+        </div>
 </div>
 </div>
 </div>
+</div>
+
+
+
+
+<!-- MODAL FILTER DATE -->
+<div class="modal fade" id="modal_filter_date_subs" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+    <div class="modal-header" style="border: none;">
+      <center>
+        <h4 class="modal-title cgrey">Filter Data</h4>
+      </center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+      <form method="POST" id="form_filter_subsall" action="{{route('tabel_subs_management')}}" enctype="multipart/form-data">{{ csrf_field() }}
+        <div class="modal-body">
+      <div class="form-group">
+        <label for="start_date">Start Date</label>
+        <input type="date" id="subs_datemulai" name="subs_datemulai" class="form-control" id="start_date">
+      </div>
+
+      <div class="form-group">
+        <label for="start_date">End Date</label>
+        <input type="date" id="subs_dateselesai" name="subs_dateselesai" class="form-control" id="end_date">
+      </div>
+
+      </div> <!-- end-modal body -->
+      <div class="modal-footer" style="border: none;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="submit" class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Submit </button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- //MODAL MEMBERSHIP TYPE -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    <form>
+      <div class="modal-header" style="border: none;">
+      <center>
+        <h4 class="modal-title cgrey">Filter Data</h4>
+      </center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+    <div class="form-group">
+        <label for="membership_tipe">Membership Type</label>
+          <select class="form-control" id="membership_tipe">
+            <option>a</option>
+            <option>b</option>
+            <option>c</option>
+            <option>d</option>
+          </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+       <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="submit" class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Submit </button>
+    </div>
+  </form>
+    </div>
+  </div>
 </div>
 
 
@@ -45,11 +172,18 @@ var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
 
-tabel_subscriber_management();
-
+tabel_subscriber_all();
+tabel_subscriber_pending();
 // tabel_subs();
 
 });
+
+
+$( "#btn-filter-date" ).click(function() {
+  $("#modal_filter_date_subs").modal('show');
+});
+
+
 
 function tabel_subs(){
 $.ajaxSetup({
@@ -72,18 +206,75 @@ $.ajax({
 
 
 
-function tabel_subscriber_management(){
+function tabel_subscriber_pending(){
+    var tabel = $('#tabel_subs_pending').DataTable({
+        responsive: true,
+        ajax: {
+            url: '/admin/tabel_subs_pending',
+            type: 'POST',
+            dataSrc :'',
+            timeout: 30000,
+        },
+        columns: [
+            {mData: 'status'},
+            {mData: 'status'},
+            {mData: 'full_name'},
+            {mData: 'status',
+            render: function ( data, type, row ) {
+              // console.log(data);
+              var isihtml;
+              if(data == 1){ //first-login
+              isihtml = "First Login";
+              }else if(data == 2){
+              isihtml = "Active"
+              }else if(data == 3){
+                isihtml = "Published";
+              }else{
+                isihtml = "Pending";
+              }
+
+              var htmlku = '<label class="badge badge-gradient-danger">'+isihtml+'</label>';
+              
+              return htmlku;
+            }
+          },
+            {mData: 'created_at'},
+            {mData: 'status',
+            render: function ( data, type, row,meta ) {
+          return '<a href="/admin/detail_pendingsubs/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</a>';
+              }
+            }
+        ],
+
+    });
+
+}
+
+function tabel_subscriber_all(){
     var tabel = $('#tabel_subscriber').DataTable({
         responsive: true,
         ajax: {
             url: '/admin/tabel_subs_management',
             type: 'POST',
             dataSrc :'',
-            timeout: 30000
+            timeout: 30000,
         },
         columns: [
-            {mData: ''},
-            {mData: ''},
+            {mData: 'status'},
+            {mData: 'membership',
+            render: function ( data, type, row, meta ) {
+              // console.log(data);
+              var isiku;
+            if(data == null ){
+              isiku = '<label style="color:red;">null</label>';
+            }else{
+              isiku = data.membership;
+            }
+            return isiku;
+          }
+            },
             {mData: 'full_name'},
             {mData: 'status',
             render: function ( data, type, row ) {
@@ -105,11 +296,11 @@ function tabel_subscriber_management(){
             }
           },
             {mData: 'created_at'},
-            {mData: 'action',
-            render: function ( data, type, row ) {
-          return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
-                '<i class="mdi mdi-eye"></i>'+
-                '</button>';
+            {mData: 'full_name',
+            render: function ( data, type, row, meta ) {
+          return '<a href="/admin/detail_subscriber/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</a>';
               }
             }
         ],

@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-4" style="text-align: right;">
         <span>Community Status</span> &nbsp; &nbsp;
-        <span class="cblue">Active</span>
+        <span class="badge statuscomm">Status</span>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
       </div>
       <div class="form-group">
         <small class="clight2 mgb-05">Address</small>
-        <p class="cgrey1">-</p>
+        <p class="cgrey1 alamat_admin_komunitas">-</p>
       </div>
        <div class="form-group">
         <small class="clight2 mgb-05">Administrator Name</small>
@@ -71,7 +71,7 @@
       </div>
       <div class="form-group">
         <small class="clight2 mgb-05">Tanggal Pendaftaran</small>
-        <p class="cgrey1">-</p>
+        <p class="cgrey1 tanggalregis_komunitas">-</p>
       </div>
       </div><!-- end col-md -->
       </div> <!-- end-row -->

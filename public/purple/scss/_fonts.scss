@@ -29,3 +29,27 @@
        url('../fonts/Ubuntu/Ubuntu-Bold.woff') format('woff'), /* Pretty Modern Browsers */
        url('../fonts/Ubuntu/Ubuntu-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
 }
+
+
+@font-face {
+  font-family: 'sfpro-light';
+  src: url('../fonts/SFPro/SF Pro Display Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/SFPro/SF Pro Display Light.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Light.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Light.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'sfpro-regular';
+  src: url('../fonts/SFPro/SF Pro Display Regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/SFPro/SF Pro Display Regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Regular.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'sfpro-bold';
+  src: url('../fonts/SFPro/SF Pro Display Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/SFPro/SF Pro Display Bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/SFPro/SF Pro Display Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+}

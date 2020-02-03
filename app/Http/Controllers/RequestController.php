@@ -121,6 +121,76 @@ public function NotFoundView(){
     }
 
 
+       public function editProfilCommunity($requestImage,$url,$token){  
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+            $request = $client->request('POST',$url,[
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'name',
+                    'contents' =>  $requestImage["name"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+            
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(),true);
+        return $dataku;
+    }
+
+
+    public function SettingLoginRegis($requestImage,$url,$token){  
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+            $request = $client->request('POST',$url,[
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'form_type',
+                    'contents' =>  $requestImage["form_type"]
+                ],
+                [
+                    'name'     => 'headline_text',
+                    'contents' =>  $requestImage["headline_text"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'     => 'subdomain',
+                    'contents' =>  $requestImage["subdomain"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+            
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(),true);
+        return $dataku;
+    }
 
 
 

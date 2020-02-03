@@ -22,20 +22,20 @@
     <h4 class="card-title">Setting Membership Type</h4>
 
     <div id="filter-subs">
-      <form>
+  <form method="POST" id="form_setting_membership" action="{{route('setting_membership_comm')}}">{{ csrf_field() }}
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
            <h6 class="cgrey2 s14">Custom Your Domain</h6>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Free Membership<i class="input-helper"></i>
+              <input type="radio" class="form-check-input" name="membership" id="" value="1"> Free Membership<i class="input-helper"></i>
             </label>
             </div>
 
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Paid Membership <i class="input-helper"></i>
+              <input type="radio" class="form-check-input" name="membership" id="" value="2"> Paid Membership<i class="input-helper"></i>
             </label>
             </div>
       </div>
@@ -43,9 +43,9 @@
       <div class="col-md-4">
  <!-- <div class="card-footer bg-transparent"> -->
         <div style="text-align: right; margin-top: 4em;">
-<button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
+<button type="button" onclick="location.href ='/admin/settings'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
         &nbsp;
-<button type="button" onclick="location.href ='/admin/publish'" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
+<button type="submit" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
 </div>
       <!-- </div> -->
       </div>

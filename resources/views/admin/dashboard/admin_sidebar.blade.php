@@ -22,13 +22,11 @@
                 <i class="mdi mdi-account-multiple menu-icon"></i>
               </a>
             </li>
-
-            <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                <button class="btn btn-block btn-md btn-gradient-primary mt-4" onclick="">Menu</button> 
-                </div>
-                
-              </span>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/membership_management">
+                <span class="menu-title">Membership Management</span>
+                <i class="mdi mdi-account-multiple menu-icon"></i>
+              </a>
             </li>
+           
           </ul>
