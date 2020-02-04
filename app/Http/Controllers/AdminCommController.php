@@ -406,11 +406,11 @@ $response = $client->post($url, $datakirim);
 $response = $response->getBody()->getContents();
 $json = json_decode($response, true);
 
-return $json;
+// return $json;
 
 if($json['success'] == true){
-alert()->success('Succcessflly adding new question','Question Added !')->persistent('Done');
-return redirect('/admin/settings/registrasion_data');
+alert()->success('Succcessflly set Membership type for your community','Succcessflly Set Membership !')->persistent('Done');
+return redirect('/admin/settings/membership');
 }
 }
 
@@ -518,7 +518,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
 
-public function tabel_req_subs(){
+public function tabel_req_membership(){
 $ses_login = Session::get('session_admin_logged');
 
     $url = env('SERVICE').'membershipmanagement/membershipreq';

@@ -43,7 +43,7 @@
 
 
     <div class="tab-pane" id="tab_member_2">  
-        <table id="tabel_req_subs" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
+        <table id="tabel_req_member" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
           <thead> 
             <tr> 
               <th>ID</th>
@@ -71,8 +71,30 @@
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
 get_membership_admin();
-tabel_req_subs();
+
+// tabel_tes();
+tabel_req_membership();
 });
+
+
+function tabel_tes(){
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/admin/tabel_req_subscriber',
+      type: 'POST',
+      datatype: 'JSON',
+      success: function (result) {
+        console.log(result);
+      },
+      error: function (result) {
+        console.log("Cant membership req DataTable");
+    }
+});
+}
 
 
 function get_membership_admin(){
@@ -115,19 +137,19 @@ $("#show_membership").html(isimember);
 
 
 
-function tabel_req_subs(){
-    var tabel = $('#tabel_req_subs').DataTable({
+function tabel_req_membership(){
+    var tabel = $('#tabel_req_member').DataTable({
         responsive: true,
         ajax: {
-            url: '/admin/tabel_req_subs',
+            url: '/admin/tabel_req_membership',
             type: 'POST',
             dataSrc :'',
             timeout: 30000,
         },
         columns: [
-            {mData: 'id'},
+            {mData: 'user_id'},
             {mData: 'full_name'},
-            {mData: 'payment_status'},
+            {mData: 'payment_status_title'},
             {mData: 'membership'},
             {mData: 'id',
             render: function ( data, type, row,meta ) {
