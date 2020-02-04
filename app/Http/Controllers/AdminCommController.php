@@ -146,33 +146,33 @@ public function get_dashboard_admin(){
 
 
 public function tabel_subs_management(Request $request){
-    $ses_login = Session::get('session_admin_logged');
-    // return $ses_login['access_token'];
-    $input = $request->all();
-    // return $input;
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+$client = new \GuzzleHttp\Client();    
 
-    if($input != null){
-    $url = env('SERVICE').'subsmanagement/filtersubsbydate
-';
-    $client = new \GuzzleHttp\Client();
-    $request = $client->request('POST',$url,[
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ],
-            'form_params' => [
-            'start_date'   => $input['subs_datemulai'],
-            'end_date'    => $input['subs_dateselesai']
-            ],
-        ]);
+try{
+if($request['subs_datemulai'] != null && $request['subs_dateselesai'] != null ){
+    
+$urlx = env('SERVICE').'subsmanagement/filtersubsbydate';
+    $headers = [
+     'Content-Type' => 'application/json',
+     'Authorization' => $ses_login['access_token']
+    ];
+    $bodyku = json_encode([
+    'start_date'   => $input['subs_datemulai'],
+    'end_date'    => $input['subs_dateselesai']
+    ]);
+    $options = [
+    'body' => $bodyku,
+    'headers' => $headers,
+    ];
+
+    $response = $client->post($urlx, $options);
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
     return $json['data'];
-
-    }else{
-    $url = env('SERVICE').'subsmanagement/listsubs';
-    $client = new \GuzzleHttp\Client();
-
+}else{ //data-all
+$url = env('SERVICE').'subsmanagement/listsubs';
     $response = $client->request('POST',$url, [
     'headers' => [
     'Content-Type' => 'application/json',
@@ -183,10 +183,14 @@ public function tabel_subs_management(Request $request){
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
     return $json['data'];
+} //end-else    
+} catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    if( $status_error == 500){
+        return json_encode('Data Not Found');
     }
-
-    
-}
+} 
+} //end-func
 
 
 public function tabel_subs_pending(){
@@ -460,6 +464,79 @@ alert()->success('Succcessflly adding new question','Question Added !')->persist
 return redirect('/admin/settings/registrasion_data');
 }
 } //endfunc
+
+
+
+public function filter_subs(){
+$ses_login = Session::get('session_admin_logged');
+$urlx = env('SERVICE').'subsmanagement/filtersubsbydate
+';
+
+$client = new \GuzzleHttp\Client();
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+'start_date'   => $input['subs_datemulai'],
+'end_date'    => $input['subs_dateselesai']
+]);
+
+$options = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+$response = $client->post($urlx, $options);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+return $json;
+
+}
+
+
+
+public function get_list_membership_admin(){
+$ses_login = Session::get('session_admin_logged');
+// return $ses_login;
+// return $ses_login['access_token'];
+
+    $url = env('SERVICE').'membershipmanagement/listmembership';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+
+public function tabel_req_subs(){
+$ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'membershipmanagement/membershipreq';
+
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
 
 
 

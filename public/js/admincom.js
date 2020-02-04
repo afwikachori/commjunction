@@ -21,7 +21,7 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-        console.log(result.access_token);
+        // console.log(result.access_token);
       var user = result.user;
     if (result != ""){
       $(".logo_komunitas").attr("src", server_cdn+user.community_logo);

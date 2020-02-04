@@ -37,8 +37,19 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab_default_1">
+<div class="row">
+  <div class="col-md-8">
+    <button type="button" id="btn-filter-date" class="btn btn-tosca btn-sm" style="min-width: 120px;">Filter</button>
+  </div>
+  <div class="col-md-4" style="text-align: right;">
+    <button type="button" id="reset_tbl_subsall" class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable">
+      <i class="mdi mdi-refresh"></i>
+    </button>
+  </div>
+</div>
+      
 
-      <button type="button" id="btn-filter-date" class="btn btn-tosca">Filter</button>
+
           <!-- tabel all susbcriber -->  
         <table id="tabel_subscriber" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
           <thead> 
@@ -65,7 +76,7 @@
               <th>Membership</th>
               <th>Subcriber Name</th>
               <th>Status</th>
-              <th>Last Login</th>
+              <th>Created Date</th>
               <th>Action</th>
             </tr>
           </thead> 
@@ -96,7 +107,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
-      <form method="POST" id="form_filter_subsall" action="{{route('tabel_subs_management')}}" enctype="multipart/form-data">{{ csrf_field() }}
+      <form>{{ csrf_field() }}
         <div class="modal-body">
       <div class="form-group">
         <label for="start_date">Start Date</label>
@@ -114,7 +125,7 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="submit" class="btn btn-tosca btn-sm">
+    <button type="button" onclick="tabel_subscriber_all()" class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Submit </button>
       </div>
@@ -184,6 +195,13 @@ $( "#btn-filter-date" ).click(function() {
 });
 
 
+$( "#reset_tbl_subsall" ).click(function() {
+  $("#subs_datemulai").val("");
+ $("#subs_dateselesai").val("");
+ tabel_subscriber_all();
+});
+
+
 
 function tabel_subs(){
 $.ajaxSetup({
@@ -195,6 +213,10 @@ $.ajax({
       url: '/admin/tabel_subs_management',
       type: 'POST',
       datatype: 'JSON',
+      data: {
+            "subs_datemulai": $("#subs_datemulai").val(),
+            "subs_dateselesai" : $("#subs_dateselesai").val() 
+    },
       success: function (result) {
         console.log(result);
       },
@@ -203,6 +225,95 @@ $.ajax({
     }
 });
 }
+
+
+
+
+function tabel_subscriber_all(){
+$('#tabel_subscriber').dataTable().fnClearTable();
+$('#tabel_subscriber').dataTable().fnDestroy();
+
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    var tabel = $('#tabel_subscriber').DataTable({
+        responsive: true,
+        ajax: {
+            url: '/admin/tabel_subs_management',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+            "subs_datemulai": $("#subs_datemulai").val(),
+            "subs_dateselesai" : $("#subs_dateselesai").val() 
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            // $('#tabel_subscriber tbody').;
+            $('#tabel_subscriber tbody').empty().append(nofound);
+            },
+        },
+        error: function(request, status, errorThrown){
+          console.log(errorThrown);
+        },
+        columns: [
+            {mData: 'user_id'},
+            {mData: 'membership',
+            render: function ( data, type, row, meta ) {
+              // console.log(data);
+              var isiku;
+            if(data == null ){
+              isiku = '<label style="color:red;">null</label>';
+            }else{
+              isiku = data.membership;
+            }
+            return isiku;
+          }
+            },
+            {mData: 'full_name'},
+            {mData: 'status',
+            render: function ( data, type, row ) {
+              // console.log(data);
+              var isihtml;
+              if(data == 1){ //first-login
+              isihtml = "First Login";
+              }else if(data == 2){
+              isihtml = "Active"
+              }else if(data == 3){
+                isihtml = "Published";
+              }else{
+                isihtml = "Deactive";
+              }
+
+              var htmlisi = '<label class="badge badge-gradient-info">'+isihtml+'</label>';
+              
+              return htmlisi;
+            }
+          },
+            {mData: 'created_at',
+             render: function ( data, type, row,meta ) {
+            return formatDate(data);
+            }
+            },
+            {mData: 'full_name',
+            render: function ( data, type, row, meta ) {
+          return '<a href="/admin/detail_subscriber/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</a>';
+              }
+            }
+        ],
+
+    });
+ $("#subs_datemulai").val("");
+ $("#subs_dateselesai").val("") 
+ $("#modal_filter_date_subs").modal('hide');
+}
+
+
+
 
 
 
@@ -238,7 +349,11 @@ function tabel_subscriber_pending(){
               return htmlku;
             }
           },
-            {mData: 'created_at'},
+            {mData: 'created_at',
+             render: function ( data, type, row,meta ) {
+            return formatDate(data);
+            }
+            },
             {mData: 'status',
             render: function ( data, type, row,meta ) {
           return '<a href="/admin/detail_pendingsubs/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
@@ -252,62 +367,6 @@ function tabel_subscriber_pending(){
 
 }
 
-function tabel_subscriber_all(){
-    var tabel = $('#tabel_subscriber').DataTable({
-        responsive: true,
-        ajax: {
-            url: '/admin/tabel_subs_management',
-            type: 'POST',
-            dataSrc :'',
-            timeout: 30000,
-        },
-        columns: [
-            {mData: 'status'},
-            {mData: 'membership',
-            render: function ( data, type, row, meta ) {
-              // console.log(data);
-              var isiku;
-            if(data == null ){
-              isiku = '<label style="color:red;">null</label>';
-            }else{
-              isiku = data.membership;
-            }
-            return isiku;
-          }
-            },
-            {mData: 'full_name'},
-            {mData: 'status',
-            render: function ( data, type, row ) {
-              // console.log(data);
-              var isihtml;
-              if(data == 1){ //first-login
-              isihtml = "First Login";
-              }else if(data == 2){
-              isihtml = "Active"
-              }else if(data == 3){
-                isihtml = "Published";
-              }else{
-                isihtml = "Deactive";
-              }
-
-              var htmlisi = '<label class="badge badge-gradient-info">'+isihtml+'</label>';
-              
-              return htmlisi;
-            }
-          },
-            {mData: 'created_at'},
-            {mData: 'full_name',
-            render: function ( data, type, row, meta ) {
-          return '<a href="/admin/detail_subscriber/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
-          '<i class="mdi mdi-eye"></i>'+
-                '</a>';
-              }
-            }
-        ],
-
-    });
-
-}
 
 
 </script>

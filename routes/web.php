@@ -78,6 +78,9 @@ Route::post('tabel_list_regisdata','AdminCommController@tabel_list_regisdata')->
 
 Route::post('setting_regisdata_comm','AdminCommController@setting_regisdata_comm')->name('setting_regisdata_comm');
 
+Route::post('get_list_membership_admin','AdminCommController@get_list_membership_admin')->name('get_list_membership_admin');
+
+Route::post('tabel_req_subs','AdminCommController@tabel_req_subs')->name('tabel_req_subs');
 
 
 });

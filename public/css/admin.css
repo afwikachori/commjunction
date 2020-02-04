@@ -360,6 +360,52 @@ outline: none !important;
   background-color: 
 }
 
+.btn_reset_dtable{
+    width: 30px !important;
+    height: 30px !important;
+    padding: 0;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    color: grey !important;
+}
+
+.btn_reset_dtable:hover{
+    background-color: #96DEDA !important;
+    color: white !important;
+
+}
+
+.card-member{
+  padding-right: 1em !important;
+  padding-left: 1em !important;
+}
+
+.stretch-card > .card.member {
+    width: 100%;
+    height: auto;
+    min-height: 167px;
+    min-width: 270px;
+}
+
+.card .card-body.member {
+    padding: 1rem 1rem !important;
+}
+
+.grid-margin.card-member{
+margin-bottom: 0em !important;
+}
+
+.card .card-body .card-member {
+    padding: 1.5rem 1.5rem !important;
+}
+
+.logo-membership{
+  width: 55px;
+  height: 55px;
+  margin-bottom: 5%;
+}
+
+
 
 /*//IMAGE UPLOAD BUNDER - FILE BROWSER*/
 .img-upload-profil{
@@ -561,6 +607,22 @@ border: none;
     position: relative;
     left: 78%;
 }
+
+/*//member*/
+.tabbable-line > .nav-tabs.member{
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 64%;
+}
+
+.tabbable-line > .nav-tabs.member > li {
+  margin-right: 5px;
+  text-align: center;
+  min-width: 174px;
+}
+
+
 .tabbable-line > .nav-tabs > li {
   margin-right: 5px;
   text-align: center;
@@ -579,6 +641,18 @@ border: none;
   min-width: 100px;
   text-align: center;
 }
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 174px;
+  text-align: center;
+}
+
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 174px;
+  text-align: center;
+}
+
 .tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
   border: 0;
   background: none !important;
@@ -594,6 +668,14 @@ border: none;
 border-bottom: 3px solid #0E5F75;
     position: relative;
     min-width: 100px;
+    text-align: center;
+}
+
+/*member*/
+.tabbable-line > .nav-tabs.member > li.active {
+border-bottom: 3px solid #0E5F75;
+    position: relative;
+    min-width: 174px;
     text-align: center;
 }
 }
