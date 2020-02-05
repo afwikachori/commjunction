@@ -25,7 +25,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/admin/membership_management">
                 <span class="menu-title">Membership Management</span>
-                <i class="mdi mdi-account-multiple menu-icon"></i>
+                <i class="mdi mdi-account-card-details menu-icon"></i>
               </a>
             </li>
            

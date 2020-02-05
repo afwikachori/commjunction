@@ -46,11 +46,11 @@
         <table id="tabel_req_member" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
           <thead> 
             <tr> 
-              <th>ID</th>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Membership Type</th>
-              <th>Action</th>
+              <th class="th-center"> ID Subscriber</th>
+              <th class="th-center"> Name</th>
+              <th class="th-center"> Status</th>
+              <th class="th-center"> Membership Type</th>
+              <th class="th-center"> Action</th>
             </tr>
           </thead> 
         </table>

@@ -39,7 +39,7 @@
             <div class="tab-pane active" id="tab_default_1">
 <div class="row">
   <div class="col-md-8">
-    <button type="button" id="btn-filter-date" class="btn btn-tosca btn-sm" style="min-width: 120px;">Filter</button>
+    <button type="button" id="btn-filter-subs" class="btn btn-tosca btn-sm" style="min-width: 120px; margin-bottom: 1em;">Filter</button>
   </div>
   <div class="col-md-4" style="text-align: right;">
     <button type="button" id="reset_tbl_subsall" class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable">
@@ -98,7 +98,8 @@
 <!-- MODAL FILTER DATE -->
 <div class="modal fade" id="modal_filter_date_subs" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="background-color: #ffffff;">
+    <div class="modal-content filtersubs" style="background-color: #ffffff;">
+
     <div class="modal-header" style="border: none;">
       <center>
         <h4 class="modal-title cgrey">Filter Data</h4>
@@ -107,73 +108,85 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
-      <form>{{ csrf_field() }}
-        <div class="modal-body">
+
+        <nav>
+          <div class="nav nav-tabs filter nav-fill" id="nav-tab" role="tablist">
+
+            <a class="nav-item cus-a nav-link s12 active" id="nav-datefilter-tab" data-toggle="tab" href="#nav-datefilter" role="tab" aria-controls="nav-datefilter" aria-selected="true" lang="en">Filter Date</a>
+
+            <a class="nav-item cus-a nav-link s12" id="nav-membershipfilter-tab" data-toggle="tab" href="#nav-membershipfilter" role="tab" aria-controls="nav-membershipfilter" aria-selected="false" lang="en">Membership</a>
+
+          </div>
+        </nav>
+
+      <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-datefilter" role="tabpanel" aria-labelledby="nav-datefilter-tab">
+      <form>
+      <fieldset id="form_date_filter">
+      <div class="modal-body">
       <div class="form-group">
         <label for="start_date">Start Date</label>
-        <input type="date" id="subs_datemulai" name="subs_datemulai" class="form-control" id="start_date">
+        <input type="date" id="subs_datemulai" name="subs_datemulai" class="form-control input-abu" id="start_date">
       </div>
 
       <div class="form-group">
         <label for="start_date">End Date</label>
-        <input type="date" id="subs_dateselesai" name="subs_dateselesai" class="form-control" id="end_date">
+        <input type="date" id="subs_dateselesai" name="subs_dateselesai" class="form-control input-abu" id="end_date">
       </div>
+      </div> 
 
-      </div> <!-- end-modal body -->
-      <div class="modal-footer" style="border: none;">
+    <div class="modal-footer" style="border: none;">
     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" onclick="tabel_subscriber_all()" class="btn btn-tosca btn-sm">
+    <button type="button" id="btn_filter_date" class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Submit </button>
-      </div>
+    </div>
+  </fieldset>
   </form>
-    </div>
-  </div>
-</div>
+        </div>
+        
 
-
-
-
-<!-- //MODAL MEMBERSHIP TYPE -->
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-    <form>
-      <div class="modal-header" style="border: none;">
-      <center>
-        <h4 class="modal-title cgrey">Filter Data</h4>
-      </center>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-    <div class="form-group">
-        <label for="membership_tipe">Membership Type</label>
-          <select class="form-control" id="membership_tipe">
-            <option>a</option>
-            <option>b</option>
-            <option>c</option>
-            <option>d</option>
-          </select>
+    <div class="tab-pane fade" id="nav-membershipfilter" role="tabpanel" aria-labelledby="nav-membershipfilter-tab">
+      <form>
+      <fieldset id="form_member_filter">
+      <div class="modal-body">
+      <div class="form-group">
+      <label for="membership_tipe">Membership Type</label>
+        <select class="form-control input-abu" id="membership_tipe">
+        </select>
       </div>
-    </div>
-    <div class="modal-footer">
-       <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
+      </div> 
+
+    <div class="modal-footer" style="border: none; margin-top: 90px;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="submit" class="btn btn-tosca btn-sm">
+    <button type="button" id="btn_filter_membership" class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Submit </button>
     </div>
+  </fieldset>
   </form>
-    </div>
+        </div>
+          
+        </div>
+ 
+
+      
+
+    </div> <!-- END-MDL CONTENT -->
   </div>
 </div>
+
+
+
+
+
+  
 
 
 @endsection
@@ -182,22 +195,24 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
-
+get_membership_subs();
 tabel_subscriber_all();
 tabel_subscriber_pending();
 // tabel_subs();
 
+
 });
 
 
-$( "#btn-filter-date" ).click(function() {
+$( "#btn-filter-subs" ).click(function() {
   $("#modal_filter_date_subs").modal('show');
 });
 
 
-$( "#reset_tbl_subsall" ).click(function() {
+$("#reset_tbl_subsall" ).click(function() {
   $("#subs_datemulai").val("");
  $("#subs_dateselesai").val("");
+  $("#membership_tipe").val("");
  tabel_subscriber_all();
 });
 
@@ -214,8 +229,9 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       data: {
-            "subs_datemulai": $("#subs_datemulai").val(),
-            "subs_dateselesai" : $("#subs_dateselesai").val() 
+      "subs_datemulai": $("#subs_datemulai").val(),
+      "subs_dateselesai" : $("#subs_dateselesai").val(),
+      "membership" : $("#membership_tipe").val()
     },
       success: function (result) {
         console.log(result);
@@ -226,6 +242,16 @@ $.ajax({
 });
 }
 
+$("#btn_filter_date" ).click(function() {
+$('#membership_tipe').val("");
+tabel_subscriber_all();
+});
+
+$("#btn_filter_membership" ).click(function() {
+$("#subs_datemulai").val("");
+$("#subs_dateselesai").val("");
+tabel_subscriber_all();
+});
 
 
 
@@ -247,7 +273,8 @@ $.ajaxSetup({
             timeout: 30000,
             data: {
             "subs_datemulai": $("#subs_datemulai").val(),
-            "subs_dateselesai" : $("#subs_dateselesai").val() 
+            "subs_dateselesai" : $("#subs_dateselesai").val(),
+            "membership" : $("#membership_tipe").val()
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
             var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -278,18 +305,16 @@ $.ajaxSetup({
               // console.log(data);
               var isihtml;
               if(data == 1){ //first-login
-              isihtml = "First Login";
+              isihtml = '<label class="badge badge-gradient-info">Newly</label>';
               }else if(data == 2){
-              isihtml = "Active"
+               isihtml = '<label class="badge badge-gradient-success">Active</label>';
               }else if(data == 3){
-                isihtml = "Published";
+              isihtml = '<label class="badge badge-gradient-warning">Waiting</label>';
               }else{
-                isihtml = "Deactive";
+              isihtml = '<label class="badge badge-gradient-danger">Pending</label>';
               }
 
-              var htmlisi = '<label class="badge badge-gradient-info">'+isihtml+'</label>';
-              
-              return htmlisi;
+              return isihtml;
             }
           },
             {mData: 'created_at',
@@ -297,9 +322,10 @@ $.ajaxSetup({
             return formatDate(data);
             }
             },
-            {mData: 'full_name',
+            {mData: 'user_id',
             render: function ( data, type, row, meta ) {
-          return '<a href="/admin/detail_subscriber/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+              // console.log(data);
+          return '<a href="/admin/detail_subscriber/'+data+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
           '<i class="mdi mdi-eye"></i>'+
                 '</a>';
               }
@@ -366,6 +392,40 @@ function tabel_subscriber_pending(){
     });
 
 }
+
+
+
+//dropdown 
+function get_membership_subs() {       
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+    url: "/admin/get_membership_subs",
+    type: "POST",
+    dataType: "json",
+    success: function (result) {
+
+      $('#membership_tipe').empty();
+      $('#membership_tipe').append("<option disabled> Choose </option>");
+
+      for (var i = result.length - 1; i >= 0; i--) {
+        $('#membership_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].membership, "</option>"));
+      } 
+      //Short Function Ascending//
+      $("#membership_tipe").html($('#membership_tipe option').sort(function (x, y) {
+        return $(y).val() < $(x).val() ? -1 : 1;
+      }));
+
+      $("#membership_tipe").get(0).selectedIndex = 0; 
+
+    }
+});
+} //endfunction
+
+
 
 
 

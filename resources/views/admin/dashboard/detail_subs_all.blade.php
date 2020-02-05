@@ -29,35 +29,56 @@
     </div>
   </div>
     <div class="card-body">
+
+
 <div class="bunder-ring">
-       <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png">
-     </div>
+  @if ($sso_picture == 0)
+<img class="profile-pic rounded-circle img-fluid" src="/img/focus.png">
+  @else
+<img class="profile-pic rounded-circle img-fluid" src="{{ $sso_picture }}">
+  @endif
+       
+</div>
 
 <div class="row">
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Fullname</small>
-    <p class="cgrey1 tebal">{{ $profil_subs }} tester nama</p>
+    <p class="cgrey1 tebal">{{ $full_name }} </p>
   </div>
   <div class="form-group">
     <small class="clight">Username</small>
-    <p class="cgrey1 tebal">@afwikachori123</p>
+    <p class="cgrey1 tebal">-</p>
+  </div>
+  <div class="form-group">
+    <small class="clight">Status</small>
+    <p class="cgrey1 tebal">
+      {{ $status }}
+    </p>
+  </div>
+   <div class="form-group">
+    <small class="clight">Membership Type</small>
+    <p class="cgrey1 tebal">{{ $membership_id }}</p>
   </div>
 </div>
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Phone Number</small>
-    <p class="cgrey1 tebal">08101010101010</p>
+    <p class="cgrey1 tebal"></p>
   </div>
   <div class="form-group">
-    <small class="clight">email</small>
-    <p class="cgrey1 tebal">pikachu@gmail.com</p>
+    <small class="clight">Email</small>
+    <p class="cgrey1 tebal">-</p>
+  </div>
+  <div class="form-group">
+    <small class="clight">Join at</small>
+    <p class="cgrey1 tebal"> {{ $created_at }}</p>
   </div>
 </div>
 </div>
     </div>
     <div class="card-footer putih" style="text-align: right; margin-bottom: 1em;">
-      <button type="button" onclick="window.location.href = '/admin/edit_subscriber/{{ $profil_subs }}'" class="btn btn-sm btn-teal">Edit Data</button>
+      <button type="button" onclick="window.location.href = '/admin/edit_subscriber/{{$user_id}}'" class="btn btn-sm btn-teal">Edit Data</button>
     </div>
   </div>
 </div>

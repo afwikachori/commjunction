@@ -149,7 +149,7 @@ public function tabel_subs_management(Request $request){
 $ses_login = Session::get('session_admin_logged');
 $input = $request->all();
 $client = new \GuzzleHttp\Client();    
-
+// return $input;
 try{
 if($request['subs_datemulai'] != null && $request['subs_dateselesai'] != null ){
     
@@ -240,9 +240,51 @@ public function setting_publish_comm(){
 
 
 public function detailSubcriberManagementView($id_subs){
-$iniid = 'data tester '.$id_subs;
-    return view('admin/dashboard/detail_subs_all', ['profil_subs' => $id_subs ]);
+$ses_login = Session::get('session_admin_logged');
+$urlx = env('SERVICE').'subsmanagement/detailsubs';
+
+$client = new \GuzzleHttp\Client();
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+'user_id'   => $id_subs
+]);
+
+$options = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+$response = $client->post($urlx, $options);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+$in = $json['data'];
+
+if($in['status'] == 3){
+$status = 'Published';
+}else if($in['status'] == 2){
+$status = 'Active';
+}else if($in['status'] == 1){
+$status = 'Deactive';
+}else{
+$status = 'Newly Join';
+}
+
+$dtaku = [
+"user_id"       => $in['user_id'],
+"full_name"     => $in['full_name'],
+"created_at"    => $in['created_at'],
+"status"        => $status,
+"membership_id" => $in['membership_id'],
+"sso_picture"   => $in['sso_picture'],
+];
+// dd($dtaku);
+return view('admin/dashboard/detail_subs_all')->with($dtaku);
 }        
+
+
 
 public function editSubsManagementView($id_subs){
     return view('admin/dashboard/editsubs_profil', ['idsubs' => $id_subs ]);
@@ -524,6 +566,25 @@ $ses_login = Session::get('session_admin_logged');
     $url = env('SERVICE').'membershipmanagement/membershipreq';
 
     $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+public function get_membership_subs(){
+    $ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'subsmanagement/membership';
+    $client = new \GuzzleHttp\Client();
+
     $response = $client->request('POST',$url, [
     'headers' => [
     'Content-Type' => 'application/json',

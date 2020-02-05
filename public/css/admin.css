@@ -375,6 +375,10 @@ outline: none !important;
 
 }
 
+.sidebar .nav .nav-item {
+  padding: 0 1.5rem !important;
+}
+
 .card-member{
   padding-right: 1em !important;
   padding-left: 1em !important;
@@ -385,6 +389,10 @@ outline: none !important;
     height: auto;
     min-height: 167px;
     min-width: 270px;
+}
+
+.th-center{
+  text-align: center !important;
 }
 
 .card .card-body.member {
@@ -698,3 +706,45 @@ border-bottom: 3px solid #0E5F75;
 .portlet .tabbable-line > .tab-content {
   padding-bottom: 0;
 }
+
+
+.modal-content.filtersubs{
+min-height: 407px;
+height: auto;
+}
+
+/*///// NAV FILTER //////////*/
+
+.nav-tabs.filter{
+  width: 100% !important;
+  padding: 0px 12px;
+  border-bottom: none;
+}
+
+.nav-tabs .nav-link.disabled {
+  min-width: 50%;
+    color: #BDBDBD !important;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #018c85 !important;
+    background-color: transparent;
+    border-color: transparent transparent #4F4F4F;
+    border-bottom: 2.5px solid !important;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center !important;
+}
+.nav-tabs .nav-link {
+    border: 0px solid transparent;
+    border-bottom: 2px solid !important;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #BDBDBD;
+    border-color: #BDBDBD;
+    font-size: 14px;
+    text-align: center !important;
+}
+/*END-NAV*/

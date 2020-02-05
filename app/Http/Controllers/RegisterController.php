@@ -48,6 +48,8 @@ class RegisterController extends Controller{
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
 
+    return $json['data'];
+
     return view('admin/features_detail', ['data' => $json['data'], 'idfitur'=> $id_fitur ]);
     }        
 
