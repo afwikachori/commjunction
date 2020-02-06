@@ -126,12 +126,12 @@
       <div class="modal-body">
       <div class="form-group">
         <label for="start_date">Start Date</label>
-        <input type="date" id="subs_datemulai" name="subs_datemulai" class="form-control input-abu" id="start_date">
+        <input type="date" id="subs_datemulai" name="subs_datemulai" class="form-control input-abu" >
       </div>
 
       <div class="form-group">
         <label for="start_date">End Date</label>
-        <input type="date" id="subs_dateselesai" name="subs_dateselesai" class="form-control input-abu" id="end_date">
+        <input type="date" id="subs_dateselesai" name="subs_dateselesai" class="form-control input-abu" >
       </div>
       </div> 
 
@@ -174,15 +174,9 @@
         </div>
           
         </div>
- 
-
-      
-
     </div> <!-- END-MDL CONTENT -->
   </div>
 </div>
-
-
 
 
 
@@ -242,15 +236,15 @@ $.ajax({
 });
 }
 
-$("#btn_filter_date" ).click(function() {
+$("#btn_filter_date" ).click(function(e) {
 $('#membership_tipe').val("");
 tabel_subscriber_all();
 });
 
-$("#btn_filter_membership" ).click(function() {
+$("#btn_filter_membership" ).click(function(e) {
 $("#subs_datemulai").val("");
 $("#subs_dateselesai").val("");
-tabel_subscriber_all();
+filter_membership_subs();
 });
 
 
@@ -325,8 +319,8 @@ $.ajaxSetup({
             {mData: 'user_id',
             render: function ( data, type, row, meta ) {
               // console.log(data);
-          return '<a href="/admin/detail_subscriber/'+data+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
-          '<i class="mdi mdi-eye"></i>'+
+          return '<a href="/admin/detail_subscriber/'+data+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">'+
+          '<i class="mdi mdi-eye matadetail"></i>'+
                 '</a>';
               }
             }
@@ -382,8 +376,8 @@ function tabel_subscriber_pending(){
             },
             {mData: 'status',
             render: function ( data, type, row,meta ) {
-          return '<a href="/admin/detail_pendingsubs/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
-          '<i class="mdi mdi-eye"></i>'+
+          return '<a href="/admin/detail_pendingsubs/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">'+
+          '<i class="mdi mdi-eye matadetail"></i>'+
                 '</a>';
               }
             }
@@ -427,6 +421,87 @@ $.ajax({
 
 
 
+
+function filter_membership_subs(){
+$('#tabel_subscriber').dataTable().fnClearTable();
+$('#tabel_subscriber').dataTable().fnDestroy();
+
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    var tabel = $('#tabel_subscriber').DataTable({
+        responsive: true,
+        ajax: {
+            url: '/admin/filter_membership_subs',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+            "membership" : $("#membership_tipe").val()
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            // $('#tabel_subscriber tbody').;
+            $('#tabel_subscriber tbody').empty().append(nofound);
+            },
+        },
+        error: function(request, status, errorThrown){
+          console.log(errorThrown);
+        },
+        columns: [
+            {mData: 'user_id'},
+            {mData: 'membership',
+            render: function ( data, type, row, meta ) {
+              // console.log(data);
+              var isiku;
+            if(data == null ){
+              isiku = '<label style="color:red;">null</label>';
+            }else{
+              isiku = data.membership;
+            }
+            return isiku;
+          }
+            },
+            {mData: 'full_name'},
+            {mData: 'status',
+            render: function ( data, type, row ) {
+              // console.log(data);
+              var isihtml;
+              if(data == 1){ //first-login
+              isihtml = '<label class="badge badge-gradient-info">Newly</label>';
+              }else if(data == 2){
+               isihtml = '<label class="badge badge-gradient-success">Active</label>';
+              }else if(data == 3){
+              isihtml = '<label class="badge badge-gradient-warning">Waiting</label>';
+              }else{
+              isihtml = '<label class="badge badge-gradient-danger">Pending</label>';
+              }
+
+              return isihtml;
+            }
+          },
+            {mData: 'created_at',
+             render: function ( data, type, row,meta ) {
+            return formatDate(data);
+            }
+            },
+            {mData: 'user_id',
+            render: function ( data, type, row, meta ) {
+              // console.log(data);
+          return '<a href="/admin/detail_subscriber/'+data+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</a>';
+              }
+            }
+        ],
+
+    });
+ $("#subs_datemulai").val("");
+ $("#subs_dateselesai").val("") 
+ $("#modal_filter_date_subs").modal('hide');
+}
 
 
 </script>

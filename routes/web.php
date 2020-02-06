@@ -40,6 +40,7 @@ Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/edit
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
 Route::get('/subs_management','AdminCommController@SubsManagementView')->name('/subs_management');
 Route::get('/membership_management','AdminCommController@MembershipManagementView')->name('/membership_management');
+Route::get('/profile_management','AdminCommController@ProfileManagementView')->name('/profile_management');
 
 Route::get('detail_subscriber/{id_subs}', 'AdminCommController@detailSubcriberManagementView')->name('detail_subscriber/{id_subs}');
 Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementView')->name('edit_subscriber/{id_subs}');
@@ -82,7 +83,18 @@ Route::post('get_list_membership_admin','AdminCommController@get_list_membership
 
 Route::post('tabel_req_membership','AdminCommController@tabel_req_membership')->name('tabel_req_membership');
 
+Route::post('filter_membership_subs', 'AdminCommController@filter_membership_subs')->name('filter_membership_subs');
+
+Route::post('tabel_payment_community','AdminCommController@tabel_payment_community')->name('tabel_payment_community');
+
 Route::post('get_membership_subs', 'AdminCommController@get_membership_subs');
+
+Route::post('get_payment_tipe', 'AdminCommController@get_payment_tipe');
+
+Route::post('get_detail_membership_req', 'AdminCommController@get_detail_membership_req')->name('get_detail_membership_req');
+;
+
+
 });
 
 

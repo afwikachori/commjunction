@@ -153,13 +153,32 @@ background-color: #ffffff !important;
 padding: 2rem 5rem 0;
 }
 
+.melengkung10px{
+  border-radius: 10px !important;
+}
 
+.melengkung6px{
+  border-radius: 6px !important;
+}
+
+
+.detilhref{
+  border-radius: 20px !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.mdi.matadetail{
+    position: relative !important;
+    top: 7px !important;
+}
 
 
 .dash-img-profil{
-    height: 45%;
-    width: 45%;
-
+    height: 35%;
+    width: 35%;
+    min-height: 90px;
+    min-width: 90px;
 }
 
 .modal_ajax .modal-content{
@@ -437,6 +456,11 @@ margin-bottom: 0em !important;
     display: none;
 }
 
+.detail_member{
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
 .bunder-ring {
     border-radius: 1000px !important;
     overflow: hidden;
@@ -447,6 +471,25 @@ margin-bottom: 0em !important;
     margin-right: auto;
     text-align: center;
     margin-bottom: 1em;
+
+}
+
+.icon-req-member{
+  width: 60px;
+  height: 60px;
+}
+
+.bunder-ring2 {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    border: 6px solid #efefef;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 1em;
+    margin-left: 5em;
 }
 
 .circle {
@@ -513,7 +556,10 @@ position: relative;
 background: linear-gradient(125.96deg, #96DEDA 0%, #50C9C3 56.6%);
 color: white;
 min-width: 15%;
+border-radius: 10px;
+border: none;
 }
+
 .btn-oren{
   background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
   color: white;
@@ -686,7 +732,7 @@ border-bottom: 3px solid #0E5F75;
     min-width: 174px;
     text-align: center;
 }
-}
+
 
 
 .tabbable-line > .nav-tabs > li.active > a {

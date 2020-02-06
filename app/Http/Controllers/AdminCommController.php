@@ -64,6 +64,15 @@ public function MembershipManagementView(){
     return view('admin/dashboard/membership_management');
 }
 
+public function ProfileManagementView(){
+    return view('admin/dashboard/profile_management_admin');
+}
+
+
+
+
+
+
 
 // METHOD POST 
 public function auth_adminlogin(Request $request) {
@@ -191,6 +200,41 @@ $url = env('SERVICE').'subsmanagement/listsubs';
     }
 } 
 } //end-func
+
+
+
+
+public function filter_membership_subs(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+$client = new \GuzzleHttp\Client(); 
+
+$urlx = env('SERVICE').'subsmanagement/filtersubsbymembership';
+$headers = [
+     'Content-Type' => 'application/json',
+     'Authorization' => $ses_login['access_token']
+    ];
+$bodyku = json_encode([
+    'membership_id'   => $input['membership'],
+    ]);
+    $options = [
+    'body' => $bodyku,
+    'headers' => $headers,
+    ];
+
+try{
+    $response = $client->post($urlx, $options);
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    if( $status_error == 500){
+        return json_encode('Data Not Found');
+    }
+}
+}
+
 
 
 public function tabel_subs_pending(){
@@ -599,6 +643,66 @@ public function get_membership_subs(){
 
 
 
+public function get_payment_tipe(){
+    $ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'commsetting/listpaymenttype';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+public function tabel_payment_community(){
+$ses_login = Session::get('session_admin_logged');
+$url = env('SERVICE').'commsetting/listpaymenttype';
+$client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+return $json['data'];
+}
+
+
+public function get_detail_membership_req(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'membershipmanagement/detailmembershipreq';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode(['invoice_number' => $input['invoice_number']]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+
+return $json['data'];
+}
 
 
 

@@ -48,6 +48,51 @@ border: none;
   margin-top: -1.2em;
 }
 
+.card .card-body.memberku {
+    padding: 1.5rem 1rem !important;
+}
+
+/*//member*/
+.tabbable-line.memberaku{
+    margin-top: 2.5em;
+}
+
+.tabbable-line > .nav-tabs.member > li {
+  margin-right: 5px;
+  text-align: center;
+  min-width: 125px;
+}
+
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 125px;
+  text-align: center;
+}
+
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 125px;
+  text-align: center;
+}
+
+.tabbable-line > .nav-tabs.member > li.active {
+border-bottom: 3px solid #0E5F75;
+    position: relative;
+    min-width: 125px;
+    text-align: center;
+}
+
+
+
+.bunder-ring2 {
+margin-left: 0em;
+}
+
+
+
+
+
+
 
 
 
