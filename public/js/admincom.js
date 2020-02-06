@@ -21,9 +21,14 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
+      console.log(result);
         // console.log(result.access_token);
       var user = result.user;
     if (result != ""){
+      $(".username_komunitas").html(user.user_name);
+      $(".phone_komunitas").html(user.notelp);
+      $(".email_komunitas").html(user.email);
+
       $(".logo_komunitas").attr("src", server_cdn+user.community_logo);
       $(".user_admin_logged").html(user.full_name);
       $(".judul_komunitas").html(user.community_name);
@@ -145,14 +150,14 @@ $(".tabbable-line li a").click(function() {
 });
 
 
-function file_browser_profil(){
+// function file_browser_profil(){
 
-    var readURL = function(input) {
+    var readURLuser = function(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('.profile-pic').attr('src', e.target.result);
+                $('#view_edit_user').attr('src', e.target.result);
             }
     
             reader.readAsDataURL(input.files[0]);
@@ -160,11 +165,11 @@ function file_browser_profil(){
     }
     
 
-    $(".file-upload").on('change', function(){
-        readURL(this);
+    $("#file_edit_profil_user").on('change', function(){
+        readURLuser(this);
     });
     
-    $(".upload-button").on('click', function() {
-       $(".file-upload").click();
+    $("#browse_user_admin").on('click', function() {
+       $("#file_edit_profil_user").click();
     });
-}
+// }

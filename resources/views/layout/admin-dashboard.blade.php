@@ -110,6 +110,103 @@
   </div>
 </div>
 
+
+
+
+
+
+<!-- MODAL DETAIL REQ MEMBERSHIP-->
+<div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+
+  <div class="modal-header" style="padding-bottom: 0em !important;">
+    <h4 class="modal-title cgrey">Add Payment Type</h4>
+   
+    <label class="badge statuscomm melengkung6px"></label>
+</div> <!-- end-header -->
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+<!--   <div class="img-upload-profil">
+     <div class="circle">
+       <img class="profile-pic rounded-circle img-fluid logo_komunitas" src="/img/focus.png">
+     </div>
+     <div class="p-image editcom">
+      <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" style="width: 30px; height: 30px;">
+       <i class="mdi mdi-camera upload-button"></i>
+      </button>
+        <input class="file-upload file-upload-default" type="file" id="fileup" name="fileup" accept="image/*"/>
+     </div>
+</div> -->
+<div class="img-upload-profil editprofil">
+     <div class="circle editprofil">
+       <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/focus.png">
+     </div>
+     <div class="p-image editprofil">
+      <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" value="editprofil" style="width: 30px; height: 30px;">
+       <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
+      </button>
+        <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil" type="file" name="fileup" accept="image/*"/>
+     </div>
+</div> 
+
+
+
+<div class="row">
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Fullname</small>
+    <p class="cgrey1 tebal user_admin_logged">-</p>
+  </div>
+  <div class="form-group">
+    <small class="clight">Username</small>
+    <p class="cgrey1 tebal username_komunitas">-</p>
+  </div>
+   <div class="form-group">
+    <small class="clight">Alamat</small>
+    <p class="cgrey1 tebal alamat_admin_komunitas"></p>
+  </div>
+   <div class="form-group">
+    <small class="clight">Membership Type</small>
+    <p class="cgrey1 tebal">-</p>
+  </div>
+</div>
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Phone Number</small>
+    <p class="cgrey1 tebal phone_komunitas">-</p>
+  </div>
+  <div class="form-group">
+    <small class="clight">Email</small>
+    <p class="cgrey1 tebal email_komunitas">-</p>
+  </div>
+  <div class="form-group">
+    <small class="clight">Join at</small>
+    <p class="cgrey1 tebal tanggalregis_komunitas"> -</p>
+  </div>
+</div>
+</div>
+</div> <!-- end-body -->
+
+  <div class="modal-footer" style="border: none;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="button" id="" class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Edit </button>
+  </div>  <!-- end-footer     -->
+</div> <!-- END-MDL CONTENT -->
+  </div>
+</div>
+
+
+
+
+
+
+
   @else 
   <script>window.location = "/admin";</script>
   @endif

@@ -28,13 +28,13 @@
 <center>
   <div class="img-upload-profil">
      <div class="circle">
-       <img class="profile-pic rounded-circle img-fluid logo_komunitas" src="/img/focus.png">
+       <img class="profile-pic rounded-circle img-fluid logo_komunitas editcom" id="view_profil_com" src="/img/focus.png">
      </div>
      <div class="p-image editcom">
       <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" style="width: 30px; height: 30px;">
-       <i class="mdi mdi-camera upload-button"></i>
+       <i class="mdi mdi-camera upload-button" id="btn_up_logo_komunitas"></i>
       </button>
-        <input class="file-upload file-upload-default" type="file" id="fileup" name="fileup" accept="image/*"/>
+        <input class="file-upload file-upload-default" id="file-upload-komunitas" type="file" id="fileup" name="fileup" accept="image/*"/>
      </div>
 </div>
 </center>
@@ -87,26 +87,30 @@
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
-file_browser_profil();
+// file_browser_profil();
 });
 
-$('#file-input').on('change', function () {
- previewEditImg(this);
- }); //end-onchange img
 
+    
 
- function previewEditImg(input) {
- 	if (input.files && input.files[0]) {
- 	var reader = new FileReader();
+$("#file-upload-komunitas").on('change', function(){
+        readURLini(this);
+});
+    
+$("#btn_up_logo_komunitas").on('click', function() {
+       $("#file-upload-komunitas").click();
+});
 
- 	reader.onload = function (e) { 
- 	$('#img_editprofil').show().attr('src', e.target.result);
- 	}
- 	reader.readAsDataURL(input.files[0]);
-  }
+var readURLini = function(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#view_profil_com').attr('src', e.target.result);
+    }
+  reader.readAsDataURL(input.files[0]);
+ }
 }
-
-
 
 </script>
 

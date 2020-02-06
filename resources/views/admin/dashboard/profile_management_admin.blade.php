@@ -24,7 +24,7 @@
         Detail Subscriber
       </div>
       <div class="col-sm-4 sisi-kanan" style="text-align: right;">
-        <button type="button" class="btn btn-ijo btn-sm">Status</button>
+        <label class="badge statuscomm melengkung6px"></label>
       </div>
     </div>
   </div>
@@ -40,41 +40,39 @@
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Fullname</small>
-    <p class="cgrey1 tebal">{{ $full_name }} </p>
+    <p class="cgrey1 tebal user_admin_logged">-</p>
   </div>
   <div class="form-group">
     <small class="clight">Username</small>
-    <p class="cgrey1 tebal">-</p>
+    <p class="cgrey1 tebal username_komunitas">-</p>
   </div>
-  <div class="form-group">
-    <small class="clight">Status</small>
-    <p class="cgrey1 tebal">
-      {{ $status }}
-    </p>
+   <div class="form-group">
+    <small class="clight">Alamat</small>
+    <p class="cgrey1 tebal alamat_admin_komunitas"></p>
   </div>
    <div class="form-group">
     <small class="clight">Membership Type</small>
-    <p class="cgrey1 tebal">{{ $membership_id }}</p>
+    <p class="cgrey1 tebal">-</p>
   </div>
 </div>
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Phone Number</small>
-    <p class="cgrey1 tebal"></p>
+    <p class="cgrey1 tebal phone_komunitas">-</p>
   </div>
   <div class="form-group">
     <small class="clight">Email</small>
-    <p class="cgrey1 tebal">-</p>
+    <p class="cgrey1 tebal email_komunitas">-</p>
   </div>
   <div class="form-group">
     <small class="clight">Join at</small>
-    <p class="cgrey1 tebal"> {{ $created_at }}</p>
+    <p class="cgrey1 tebal tanggalregis_komunitas"> -</p>
   </div>
 </div>
 </div>
     </div>
     <div class="card-footer putih" style="text-align: right; margin-bottom: 1em;">
-      <button type="button" onclick="window.location.href = '/admin/edit_subscriber/{{$user_id}}'" class="btn btn-sm btn-teal">Edit Data</button>
+      <button type="button" onclick="window.location.href = '/admin/edit_subscriber/'" class="btn btn-sm btn-teal">Edit Data</button>
     </div>
   </div>
 </div>
