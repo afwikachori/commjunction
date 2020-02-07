@@ -36,6 +36,17 @@ $.ajax({
       $(".alamat_admin_komunitas").html(user.alamat);
       $(".tanggalregis_komunitas").html(formatDate(user.community_created));
 
+      //edit profile admin
+      $("#name_admin").val(user.full_name);
+      $("#username_admin").val(user.user_name);
+      $("#phone_admin").val(user.notelp);
+      $("#email_admin").val(user.email);
+      $("#alamat_admin").val(user.alamat);
+      // if(user.picture != "0"){
+      //   $("#view_edit_user").attr("src", server_cdn+user.picture);
+      // }
+
+
       //edit-profil comm
       $("#edit_namacom").val(user.community_name);
       $("#edit_deskripsicom").val(user.community_description);
@@ -173,3 +184,13 @@ $(".tabbable-line li a").click(function() {
        $("#file_edit_profil_user").click();
     });
 // }
+
+ function showPassNew() {
+  var a = document.getElementById("new_pass_admin");
+  if (a.type == "password") {
+    a.type = "text";
+  } else {
+    a.type = "password";
+  }
+}
+

@@ -567,13 +567,32 @@ position: relative;
 }
 
 
+/*.logo_komunitas{
+  width: 30px !important;
+  height: 30px !important;
+}
+*/
+.modal-footer.changepass{
+  border: none;
+    margin-left: 10%;
+    margin-right: 10%;
+  margin-bottom: 5%;
+}
 
 
+#img_changepass{
+  width: 70px;
+  height: 70px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
 
-
-
-
-
+#img_signout_admin{
+  width: 90px;
+  height: 90px;
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+}
 
 .btn-tosca{
 background: linear-gradient(125.96deg, #96DEDA 0%, #50C9C3 56.6%);
@@ -655,6 +674,13 @@ color: #0FB1B5;
 
 .s14{
   font-size: 14px;
+}
+.s19{
+  font-size: 19px;
+}
+
+.s20{
+  font-size: 20px;
 }
 
 .s25{

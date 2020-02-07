@@ -40,7 +40,7 @@
                 <a class="dropdown-item"  data-toggle="modal" data-target="#modal_profile_management">
                   <i class="mdi mdi mdi-brush mr-2 text-primary"></i> Profile Management</a>
                 <div class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="/admin/logout">
+                 <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout_admin" data-dismiss="modal">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
 
 

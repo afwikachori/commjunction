@@ -28,5 +28,12 @@
                 <i class="mdi mdi-account-card-details menu-icon"></i>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/user_management">
+                <span class="menu-title">User Management</span>
+                <i class="mdi mdi-account-plus menu-icon"></i>
+              </a>
+            </li>
            
           </ul>

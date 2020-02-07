@@ -153,6 +153,51 @@ public function NotFoundView(){
     }
 
 
+
+     public function editProfileAdmin($requestImage,$url,$token){  
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+            $request = $client->request('POST',$url,[
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'user_name',
+                    'contents' =>  $requestImage["user_name"]
+                ],
+                [
+                    'name'     => 'full_name',
+                    'contents' =>  $requestImage["full_name"]
+                ],
+                  [
+                    'name'     => 'notelp',
+                    'contents' =>  $requestImage["notelp"]
+                ],
+                [
+                    'name'     => 'email',
+                    'contents' =>  $requestImage["email"]
+                ],
+                 [
+                    'name'     => 'alamat',
+                    'contents' =>  $requestImage["alamat"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+            
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(),true);
+        return $dataku;
+    }
+
+
     public function SettingLoginRegis($requestImage,$url,$token){  
 
         $client = new \GuzzleHttp\Client();

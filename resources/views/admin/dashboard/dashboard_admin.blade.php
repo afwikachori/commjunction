@@ -359,7 +359,7 @@ var photo;
 if(item.sso_picture != "0"){
  photo = '<img src="'+item.sso_picture+'" onclick="clickImage(this)" id="imgprev'+i+'" class="img-mini zoom">';
 }else{
-photo ='<img src="/img/default.png" class="rounded-circle img-fluid dash-img-profil logo_komunitas" style="margin-bottom: 3%;">';
+photo ='<img src="" class="rounded-circle img-fluid dash-img-profil logo_komunitas" style="margin-bottom: 3%; width:30px; height:30px;">';
 }
 var tgl = formatDate(item.created_at);
 var numer = i +1;

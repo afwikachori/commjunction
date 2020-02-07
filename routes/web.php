@@ -40,7 +40,7 @@ Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/edit
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
 Route::get('/subs_management','AdminCommController@SubsManagementView')->name('/subs_management');
 Route::get('/membership_management','AdminCommController@MembershipManagementView')->name('/membership_management');
-Route::get('/profile_management','AdminCommController@ProfileManagementView')->name('/profile_management');
+Route::get('/user_management','AdminCommController@UserManagementView')->name('/user_management');
 
 Route::get('detail_subscriber/{id_subs}', 'AdminCommController@detailSubcriberManagementView')->name('detail_subscriber/{id_subs}');
 Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementView')->name('edit_subscriber/{id_subs}');
@@ -92,10 +92,23 @@ Route::post('get_membership_subs', 'AdminCommController@get_membership_subs');
 Route::post('get_payment_tipe', 'AdminCommController@get_payment_tipe');
 
 Route::post('get_detail_membership_req', 'AdminCommController@get_detail_membership_req')->name('get_detail_membership_req');
-;
+
+Route::post('edit_profile_admincom', 'AdminCommController@edit_profile_admincom')->name('edit_profile_admincom');
+
+Route::post('change_password_admincom', 'AdminCommController@change_password_admincom')->name('change_password_admincom');
+
+Route::post('tabel_user_management', 'AdminCommController@tabel_user_management')->name('tabel_user_management');
+
+Route::post('add_user_management', 'AdminCommController@add_user_management')->name('add_user_management');
+
+Route::post('get_user_tipe_manage', 'AdminCommController@get_user_tipe_manage')->name('get_user_tipe_manage');
+
+Route::post('add_useredit_management', 'AdminCommController@add_useredit_management')->name('add_useredit_management');
 
 
-});
+Route::post('nonaktif_status_subs', 'AdminCommController@nonaktif_status_subs')->name('nonaktif_status_subs');
+
+}); //ADMIN-COMMUNITY
 
 
 

@@ -64,8 +64,8 @@ public function MembershipManagementView(){
     return view('admin/dashboard/membership_management');
 }
 
-public function ProfileManagementView(){
-    return view('admin/dashboard/profile_management_admin');
+public function UserManagementView(){
+    return view('admin/dashboard/user_management');
 }
 
 
@@ -130,9 +130,36 @@ public function session_admin_logged(){
 }
 
 public function LogoutAdmin(){
-     Session::forget('session_admin_logged');
-     return redirect('admin');
+    $ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'profilemanagement/logout';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+try{
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    Session::forget('session_admin_logged');
+
+    if($json['success'] == true){
+        return redirect('admin');
+    }
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    if( $status_error == 401){
+       alert()->error('Over linit time, please do login again', 'Unauthorized')->persistent('Done');
+        return redirect('admin');
+    }
 }
+} //enfunc
+
+
 
 public function get_dashboard_admin(){
     $ses_login = Session::get('session_admin_logged');
@@ -321,6 +348,7 @@ $dtaku = [
 "full_name"     => $in['full_name'],
 "created_at"    => $in['created_at'],
 "status"        => $status,
+"status_id"     => $in['status'],
 "membership_id" => $in['membership_id'],
 "sso_picture"   => $in['sso_picture'],
 ];
@@ -703,6 +731,254 @@ $json = json_decode($response, true);
 
 return $json['data'];
 }
+
+
+public function edit_profile_admincom(Request $request){
+// dd($request);
+
+    $ses_login = Session::get('session_admin_logged');
+    $token = $ses_login['access_token'];
+
+    $req = new RequestController; 
+    $fileimg = "";
+
+    if ($request->hasFile('fileup')) {
+        $imgku = file_get_contents($request->file('fileup')->getRealPath());
+        $filnam = $request->file('fileup')->getClientOriginalName();
+
+        $input = $request->all(); // getdata form by name
+        $imageRequest = [
+        "user_name" => $input['username_admin'],
+        "full_name" => $input['name_admin'],
+        "notelp" => $input['phone_admin'],
+        "email" => $input['email_admin'],
+        "alamat" => $input['alamat_admin'],
+        "filename" => $filnam,
+        "file" => $imgku
+        ]; 
+
+
+    $url =env('SERVICE').'profilemanagement/editprofile';
+    try{
+      $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
+      // return $resImg;
+
+      if ($resImg['success'] == true) {
+        alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+        return back();
+      }
+    }catch(ClientException $exception) {
+        dd($exception);
+    }
+    }else{//END-IF  UPLOAD-IMAGE 
+     $input = $request->all(); // getdata form by name
+        $imageRequest = [
+        "user_name" => $input['username_admin'],
+        "full_name" => $input['name_admin'],
+        "notelp" => $input['phone_admin'],
+        "email" => $input['email_admin'],
+        "alamat" => $input['alamat_admin'],
+        "filename"    => "",
+        "file"        => ""
+        ]; 
+
+
+    $url =env('SERVICE').'profilemanagement/editprofile';
+    try{
+      $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
+      // return $resImg;
+
+      if ($resImg['success'] == true) {
+        alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+        return back();
+      }
+    }catch(ClientException $exception) {
+        dd($exception);
+    }
+    }// endelse
+} //endfunc
+
+
+
+public function change_password_admincom(Request $request){
+// dd($request);
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'profilemanagement/changepassword';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+    'old_password' => $input['old_pass_admin'],
+    'new_password' => $input['new_pass_admin']
+]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+try{
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+if( $json['success'] == true){
+       alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
+        return back();
+    }
+
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    // return $status_error;
+    if( $status_error == 400){
+       alert()->error('Your Old Password didnt match', 'Wrong Password')->persistent('Done');
+        return back();
+    }
+}
+
+}
+
+
+
+public function tabel_user_management(){
+$ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'usermanagement/listuser';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+
+
+public function get_user_tipe_manage(){
+    $ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'usermanagement/listusertype';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+
+public function add_user_management(Request $request){
+// dd($request);
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'usermanagement/createuser';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+    "full_name" => $input['name_user'],
+    "user_name" => $input['username_user'],
+    "notelp" => $input['phone_user'],
+    "email" => $input['email_user'],
+    "alamat" => $input['alamat_user'],
+    "usertype_id" => $input['user_tipe'],
+    "password" => $input['pass_user'],
+]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+try{
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+if( $json['success'] == true){
+       alert()->success('Successfully to add new user', 'Added')->persistent('Done');
+        return back();
+    }
+
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    // return $status_error;
+    if( $status_error == 400){
+       alert()->error('Proccess might interrupted at the middle, try again', 'Opps')->persistent('Done');
+        return back();
+    }
+}
+}
+
+
+
+public function add_useredit_management(Request $request){
+dd($request);
+
+}
+
+
+public function nonaktif_status_subs(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'subsmanagement/nonactivesubs';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode(['user_id' => $input['idsubs'] ]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+
+
+if($json['success'] == true){
+alert()->success('Succcessflly to change your subscriber status ','Success !')->persistent('Done');
+return back();
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

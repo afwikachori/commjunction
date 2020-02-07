@@ -115,29 +115,21 @@
 
 
 
-<!-- MODAL DETAIL REQ MEMBERSHIP-->
+<!-- MODAL EDIT PROFILE-->
 <div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: #ffffff;">
 
+<form method="POST" id="form_edit_profiladmincom" action="{{route('edit_profile_admincom')}}" enctype="multipart/form-data">
+{{ csrf_field() }}
+
   <div class="modal-header" style="padding-bottom: 0em !important;">
-    <h4 class="modal-title cgrey">Add Payment Type</h4>
+    <h4 class="modal-title cgrey">Edit Profile</h4>
    
-    <label class="badge statuscomm melengkung6px"></label>
+    <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm" style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_admin" data-dismiss="modal">Change Password</button>
 </div> <!-- end-header -->
 
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-<!--   <div class="img-upload-profil">
-     <div class="circle">
-       <img class="profile-pic rounded-circle img-fluid logo_komunitas" src="/img/focus.png">
-     </div>
-     <div class="p-image editcom">
-      <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" style="width: 30px; height: 30px;">
-       <i class="mdi mdi-camera upload-button"></i>
-      </button>
-        <input class="file-upload file-upload-default" type="file" id="fileup" name="fileup" accept="image/*"/>
-     </div>
-</div> -->
 <div class="img-upload-profil editprofil">
      <div class="circle editprofil">
        <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/focus.png">
@@ -156,35 +148,29 @@
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Fullname</small>
-    <p class="cgrey1 tebal user_admin_logged">-</p>
+    <input type="text" id="name_admin" name="name_admin" class="form-control input-abu" >
   </div>
   <div class="form-group">
     <small class="clight">Username</small>
-    <p class="cgrey1 tebal username_komunitas">-</p>
-  </div>
-   <div class="form-group">
-    <small class="clight">Alamat</small>
-    <p class="cgrey1 tebal alamat_admin_komunitas"></p>
-  </div>
-   <div class="form-group">
-    <small class="clight">Membership Type</small>
-    <p class="cgrey1 tebal">-</p>
+     <input type="text" id="username_admin" name="username_admin" class="form-control input-abu" >
   </div>
 </div>
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Phone Number</small>
-    <p class="cgrey1 tebal phone_komunitas">-</p>
+     <input type="text" id="phone_admin" name="phone_admin" class="form-control input-abu" >
   </div>
   <div class="form-group">
     <small class="clight">Email</small>
-    <p class="cgrey1 tebal email_komunitas">-</p>
-  </div>
-  <div class="form-group">
-    <small class="clight">Join at</small>
-    <p class="cgrey1 tebal tanggalregis_komunitas"> -</p>
+    <input type="text" id="email_admin" name="email_admin" class="form-control input-abu" >
   </div>
 </div>
+</div>
+<div class="row">
+   <div class="col-md-12 form-group">
+    <small class="clight">Alamat</small>
+    <textarea class="form-control input-abu" id="alamat_admin" name="alamat_admin" rows="3"></textarea>
+  </div>
 </div>
 </div> <!-- end-body -->
 
@@ -193,14 +179,102 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" id="" class="btn btn-tosca btn-sm">
+    <button type="submit" id="" class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Edit </button>
   </div>  <!-- end-footer     -->
+</form>
 </div> <!-- END-MDL CONTENT -->
+
   </div>
 </div>
 
+
+
+<!-- MODAL CHANGE PASSWORD-->
+<div class="modal fade" id="modal_changepass_admin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content" style="background-color: #ffffff; width: 400px;
+    min-height: 350px;">
+
+<form method="POST" id="form_changepass_admin" action="{{route('change_password_admincom')}}" enctype="multipart/form-data">
+{{ csrf_field() }}
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+  <center>
+    <img src="/img/key.png" id="img_changepass">
+  </center>
+<div class="form-group">
+    <small class="clight">Old Password</small>
+     <input type="password" id="old_pass_admin" name="old_pass_admin" class="form-control input-abu" >
+  </div>
+
+<div class="form-group">
+    <small class="clight">New Password</small>
+<div class="input-group">
+    <input class="form-control input-abu" id="new_pass_admin" type="password" name="new_pass_admin" required="" autocomplete="passadmin" aria-describedby="btn_newshowpass">
+    <div class="input-group-append">
+<a class="btn btn-outline-light" type="button" id="btn_newshowpass" onclick="showPassNew()" style="background-color: #efefef; border-radius: 0px 10px 10px 0px;">
+  <span class="mdi mdi-eye s16" aria-hidden="true" style="color: grey;"></span>
+</a>
+</div>
+</div>
+</div>
+</div> <!-- end-body -->
+
+  <div class="modal-footer changepass" style="border: none;">
+    <center>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> No, Im Doubt
+    </button>
+    &nbsp;
+    <button type="submit"class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Yeah, Im Sure </button>
+  </center>
+  </div>  <!-- end-footer     -->
+</form>
+</div> <!-- END-MDL CONTENT -->
+
+  </div>
+</div>
+
+
+
+
+
+
+<!-- MODAL LOGOUT-->
+<div class="modal fade" id="modal_logout_admin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content" style="background-color: #ffffff; width: 80%;
+    min-height: 350px;">
+
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+  <center>
+    <img src="/img/logout.png" id="img_signout_admin">
+    <h3 class="cgrey">Logout Comfirmation</h3> 
+    <small class="clight">Are you sure, you want to exit ?</small>
+  </center>
+</div> <!-- end-body -->
+
+  <div class="modal-footer changepass" style="border: none;">
+    <center>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> No, Im Doubt
+    </button>
+    &nbsp;
+    <a href="/admin/logout" type="button"class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Yeah, Im Sure </a>
+  </center>
+  </div>  <!-- end-footer     -->
+
+</div> <!-- END-MDL CONTENT -->
+
+  </div>
+</div>
 
 
 

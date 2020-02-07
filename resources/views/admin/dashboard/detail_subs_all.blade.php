@@ -24,7 +24,16 @@
         Detail Subscriber
       </div>
       <div class="col-sm-4 sisi-kanan" style="text-align: right;">
-        <button type="button" class="btn btn-ijo btn-sm">Status</button>
+        <form  method="POST" id="formedit_status_subs" action="{{route('nonaktif_status_subs')}}">
+          {{ csrf_field() }}
+          <input type="hidden" name="idsubs" value="{{$user_id}}">
+        @if($status_id == 1)
+         <button type="submit" class="btn btn-danger melengkung10px btn-sm">{{ $status }}</button>
+        @else
+         <button type="submit" class="btn btn-ijo btn-sm">{{ $status }}</button>
+        @endif
+       
+      </form>
       </div>
     </div>
   </div>
@@ -47,38 +56,30 @@
     <p class="cgrey1 tebal">{{ $full_name }} </p>
   </div>
   <div class="form-group">
-    <small class="clight">Username</small>
-    <p class="cgrey1 tebal">-</p>
-  </div>
-  <div class="form-group">
     <small class="clight">Status</small>
     <p class="cgrey1 tebal">
       {{ $status }}
     </p>
   </div>
-   <div class="form-group">
-    <small class="clight">Membership Type</small>
-    <p class="cgrey1 tebal">{{ $membership_id }}</p>
-  </div>
 </div>
+
 <div class="col-md">
-  <div class="form-group">
-    <small class="clight">Phone Number</small>
-    <p class="cgrey1 tebal"></p>
-  </div>
-  <div class="form-group">
-    <small class="clight">Email</small>
-    <p class="cgrey1 tebal">-</p>
-  </div>
   <div class="form-group">
     <small class="clight">Join at</small>
     <p class="cgrey1 tebal"> {{ $created_at }}</p>
   </div>
+  <div class="form-group">
+    <small class="clight">Membership Type</small>
+    <p class="cgrey1 tebal">
+@if($membership_id == 1)
+Free
+@else
+Paid
+@endif
+</p>
+  </div>
 </div>
 </div>
-    </div>
-    <div class="card-footer putih" style="text-align: right; margin-bottom: 1em;">
-      <button type="button" onclick="window.location.href = '/admin/edit_subscriber/{{$user_id}}'" class="btn btn-sm btn-teal">Edit Data</button>
     </div>
   </div>
 </div>
