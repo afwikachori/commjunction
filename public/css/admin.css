@@ -474,6 +474,16 @@ margin-bottom: 0em !important;
 
 }
 
+.img_file_bayar_subs{
+    background: #f1f1f1;
+    border-radius: 10%;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border: none;
+    margin-bottom: 1em;
+}
+
 .icon-req-member{
   width: 60px;
   height: 60px;
@@ -564,6 +574,10 @@ position: relative;
     margin-right: auto;
     width: 25%;
     margin-bottom: 5%;
+}
+
+.cfblue{
+  color : #0FB1B5;
 }
 
 

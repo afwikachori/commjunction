@@ -72,7 +72,7 @@
     <div class="modal-content" style="background-color: #ffffff;">
 
   <div class="modal-header" style="padding-bottom: 0em !important;">
-    <h4 class="modal-title cgrey">Add Payment Type</h4>
+    <h4 class="modal-title cgrey">Detail Request  Membership Type</h4>
    
     <label class="badge badge-secondary melengkung10px" id="status_member" style="text-align: right; min">Requested</label>
 </div> <!-- end-header -->
@@ -135,34 +135,96 @@
     <p class="cgrey1 tebal" id="isi_paytipe">-</p>
   </div>
 
-  <div class="form-group" style="margin-top: 5%;">
-    <small class="clight">Total Payment</small>
-    <p class="cgrey1 tebal" id="isi_totalpay">-</p>
-  </div>
-
-   <div class="form-group" style="margin-top: 5%;">
-    <small class="clight">Paid</small>
-    <p id="isi_paid">-</p>
-  </div>
-
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <center>
+    <div class="form-group" style="margin-bottom: 0.5em;">
+    <small class="clight" style="margin-bottom: 2%;">Payment Detail</small><br>
+    <a href="" class="cfblue s16 tebal" data-toggle="modal" data-target="#modal_detail_pay_membership" data-dismiss="modal">
+      <i>View Detail Payment</i></a>
+  </div>
+</center>
+  </div>
+</div>
+
 </div> <!-- end-body -->
 
-  <div class="modal-footer" style="border: none;">
+  <div class="modal-footer" style="border: none;padding-right: 30%; padding-bottom:3%;">
+
+    <center>
     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" id="" class="btn btn-tosca btn-sm">
+    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px">
     <i class="mdi mdi-check btn-icon-prepend">
-        </i> Submit </button>
+        </i> Approve </button>
+    </center>
+
   </div>  <!-- end-footer     -->
+
 </div> <!-- END-MDL CONTENT -->
   </div>
 </div>
 
 
+
+
+
+<!-- MODAL DETAIL PAYMENT MEMBERSHIP-->
+<div class="modal fade" id="modal_detail_pay_membership" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+
+  <div class="modal-header" style="padding-bottom: 0em !important;">
+    <h4 class="modal-title cgrey">Detail Payment</h4>
+   
+    <button type="button" id="btn_paymentmember_confirm" class="btn btn-tosca btn-sm" style="margin-bottom: 1em;" data-toggle="modal" data-target="#" data-dismiss="modal">Payment Confirm</button>
+</div> <!-- end-header -->
+
+<div class="modal-body detail_member">
+<center>
+    <img src="/img/lunas.jpg" class="img_file_bayar_subs">
+
+    <div class="row">
+    <div class="col-md-6">
+    <div class="form-group" style="margin-top: 5%;">
+    <small class="clight">Total Payment</small>
+    <p class="cgrey1 tebal" id="isi_totalpay">-</p>
+    </div>
+    </div>
+
+    <div class="col-md-6">
+    <div class="form-group" style="margin-top: 5%;">
+    <small class="clight">Paid</small>
+    <p id="isi_paid">-</p>
+    </div> 
+    </div>
+  </div>
+</center>
+
+</div> <!-- end-body -->
+
+  <div class="modal-footer" style="border: none;padding-right: 30%; padding-bottom:3%;">
+
+    <center>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Approve </button>
+    </center>
+
+  </div>  <!-- end-footer     -->
+
+</div> <!-- END-MDL CONTENT -->
+  </div>
+</div>
 
 
 

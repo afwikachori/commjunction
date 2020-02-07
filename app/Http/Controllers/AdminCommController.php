@@ -333,14 +333,17 @@ $response = $response->getBody()->getContents();
 $json = json_decode($response, true);
 $in = $json['data'];
 
-if($in['status'] == 3){
-$status = 'Published';
-}else if($in['status'] == 2){
-$status = 'Active';
-}else if($in['status'] == 1){
+//status
+if($in['status'] == 4){
 $status = 'Deactive';
+}else if($in['status'] == 3){
+$status = 'Active';
+}else if($in['status'] == 2){
+$status = 'Pending Membership';
+}else if($in['status'] == 1){
+$status = 'Newly';
 }else{
-$status = 'Newly Join';
+$status = 'Pending';
 }
 
 $dtaku = [
@@ -761,7 +764,7 @@ public function edit_profile_admincom(Request $request){
     $url =env('SERVICE').'profilemanagement/editprofile';
     try{
       $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
-      // return $resImg;
+      return $resImg;
 
       if ($resImg['success'] == true) {
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');

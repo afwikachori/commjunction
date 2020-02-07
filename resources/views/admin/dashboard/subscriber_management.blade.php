@@ -301,9 +301,13 @@ $.ajaxSetup({
               if(data == 1){ //first-login
               isihtml = '<label class="badge badge-gradient-info">Newly</label>';
               }else if(data == 2){
-               isihtml = '<label class="badge badge-gradient-success">Active</label>';
-              }else if(data == 3){
-              isihtml = '<label class="badge badge-gradient-warning">Waiting</label>';
+               isihtml = '<label class="badge badge-gradient-warning">Pending Membership</label>';
+              }
+              else if(data == 3){
+              isihtml = '<label class="badge badge-gradient-success">Active</label>';
+              }
+              else if(data == 4){
+              isihtml = '<label class="badge badge-gradient-secondary">Deactive</label>';
               }else{
               isihtml = '<label class="badge badge-gradient-danger">Pending</label>';
               }

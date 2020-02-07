@@ -27,10 +27,10 @@
         <form  method="POST" id="formedit_status_subs" action="{{route('nonaktif_status_subs')}}">
           {{ csrf_field() }}
           <input type="hidden" name="idsubs" value="{{$user_id}}">
-        @if($status_id == 1)
-         <button type="submit" class="btn btn-danger melengkung10px btn-sm">{{ $status }}</button>
-        @else
+        @if($status_id == 3)
          <button type="submit" class="btn btn-ijo btn-sm">{{ $status }}</button>
+         @else
+         <button type="submit" class="btn btn-danger melengkung10px btn-sm">{{ $status }}</button>
         @endif
        
       </form>
