@@ -30,6 +30,12 @@ $.ajax({
       $(".email_komunitas").html(user.email);
 
       $(".logo_komunitas").attr("src", server_cdn+user.community_logo);
+     if(user.picture != "0" ){
+      $(".foto_profil_admin").attr("src", server_cdn+user.picture);
+      $("#view_edit_user").attr("src", server_cdn+user.picture);
+     }
+      $(".foto_profil_admin").attr("src", server_cdn+user.picture);
+      $("#view_edit_user").attr("src", server_cdn+user.picture);
       $(".user_admin_logged").html(user.full_name);
       $(".judul_komunitas").html(user.community_name);
       $(".deskripsi_komunitas").html(user.community_description);
@@ -194,3 +200,11 @@ $(".tabbable-line li a").click(function() {
   }
 }
 
+ function showPassText(ini) {
+  var a = document.getElementById(ini);
+  if (a.type == "password") {
+    a.type = "text";
+  } else {
+    a.type = "password";
+  }
+}

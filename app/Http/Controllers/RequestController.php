@@ -238,5 +238,55 @@ public function NotFoundView(){
     }
 
 
+ public function accReqMembership($requestImage,$url,$token){  
 
-}
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+            $request = $client->request('POST',$url,[
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'invoice_number',
+                    'contents' =>  $requestImage["invoice_number"]
+                ],
+                [
+                    'name'     => 'payment_status',
+                    'contents' =>  $requestImage["payment_status"]
+                ],
+                 [
+                    'name'     => 'subscriber_id',
+                    'contents' =>  $requestImage["subscriber_id"]
+                ],
+                 [
+                    'name'     => 'cancel_description',
+                    'contents' =>  $requestImage["cancel_description"]
+                ],
+                [
+                    'name'     => 'password',
+                    'contents' =>  $requestImage["password"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+            
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(),true);
+        return $dataku;
+    }
+
+
+
+
+
+
+
+
+
+} //END_CLASS

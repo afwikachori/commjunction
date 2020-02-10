@@ -62,7 +62,7 @@
 </div>
 </div>
 
-<input type="text" class="form-control input-abu" id="edit_idcom" readonly="readonly">
+<input type="hidden" class="form-control input-abu" id="edit_idcom" readonly="readonly">
 <br>
 
 <div style="text-align: right;">

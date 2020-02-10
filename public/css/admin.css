@@ -548,6 +548,8 @@ position: relative;
 }
 /*END-FILE IMAGE UPLOAD*/
 
+
+
 .circle.editprofil{
     border-radius: 1000px !important;
     overflow: hidden;
@@ -576,9 +578,47 @@ position: relative;
     margin-bottom: 5%;
 }
 
+
 .cfblue{
   color : #0FB1B5;
 }
+
+
+.up_acc_file{
+  margin-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  border: 1px solid #dadada;
+  border-style: dashed;
+  width: 100%;
+  min-height: 110px;
+}
+
+.p-image.accmember {
+    margin-bottom: 0.5em;
+    margin-top: 1em !important;
+    color: #666666;
+    left: 0px !important;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+/*    position: relative;*/
+}
+
+#view_img_member{
+  margin-top: 1em;
+  height: 85px;
+  width: auto;
+  border-radius: 10px;
+  display: none;
+}
+
+#btn_showpass_accmember{
+  background-color: #efefef; 
+  border-radius: 0px 10px 10px 0px;     
+  padding: 15px 10px 10px 10px;
+}
+
+
 
 
 /*.logo_komunitas{

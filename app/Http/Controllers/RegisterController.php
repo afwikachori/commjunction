@@ -220,10 +220,6 @@ class RegisterController extends Controller{
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
     return $json;
-    
-
-
-
     } 
 
      public function cektelfon_admin(Request $request){

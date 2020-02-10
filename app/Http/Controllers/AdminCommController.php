@@ -397,7 +397,7 @@ public function edit_profil_community(Request $request){
     $url =env('SERVICE').'commsetting/editcomm';
     try{
       $resImg = $req->editProfilCommunity($imageRequest,$url,$token);
-      // return $resImg;
+      return $resImg;
 
       if ($resImg['success'] == true) {
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
@@ -738,14 +738,14 @@ return $json['data'];
 
 public function edit_profile_admincom(Request $request){
 // dd($request);
-
     $ses_login = Session::get('session_admin_logged');
     $token = $ses_login['access_token'];
+    $ses_user = $ses_login['user'];
 
     $req = new RequestController; 
     $fileimg = "";
 
-    if ($request->hasFile('fileup')) {
+if ($request->hasFile('fileup')) {
         $imgku = file_get_contents($request->file('fileup')->getRealPath());
         $filnam = $request->file('fileup')->getClientOriginalName();
 
@@ -760,20 +760,39 @@ public function edit_profile_admincom(Request $request){
         "file" => $imgku
         ]; 
 
-
     $url =env('SERVICE').'profilemanagement/editprofile';
     try{
       $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
-      return $resImg;
+      // return $resImg['data'];
+    if ($resImg['success'] == true) {
+         Session::put('session_admin_logged.user', [
+        "user_name" => $resImg['data']['user_name'],
+        "full_name" => $resImg['data']['full_name'],
+        "picture" => $resImg['data']['sso_picture'],
+        "notelp" => $resImg['data']['notelp'],
+        "email" => $resImg['data']['email'],
+        "alamat" => $resImg['data']['alamat'],
+        //////////////////////
+        "community_name" => $ses_user['community_name'],
+        "community_description" => $ses_user['community_description'],
+        "community_logo" => $ses_user['community_logo'],
+        /////////////////////
+        "user_id" => $ses_user['user_id'],
+        "level" => $ses_user['level'],
+        "status" => $ses_user['status'],
+        "community_created" => $ses_user['community_created'],
+        "community_type" => $ses_user['community_type'],
+        "community_membership_type" => $ses_user['community_membership_type'],
+        ]); 
 
-      if ($resImg['success'] == true) {
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
         return back();
       }
     }catch(ClientException $exception) {
         dd($exception);
     }
-    }else{//END-IF  UPLOAD-IMAGE 
+
+}else{//END-IF  UPLOAD-IMAGE 
      $input = $request->all(); // getdata form by name
         $imageRequest = [
         "user_name" => $input['username_admin'],
@@ -785,19 +804,39 @@ public function edit_profile_admincom(Request $request){
         "file"        => ""
         ]; 
 
-
     $url =env('SERVICE').'profilemanagement/editprofile';
     try{
       $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
-      // return $resImg;
 
       if ($resImg['success'] == true) {
-        alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
-        return back();
-      }
-    }catch(ClientException $exception) {
-        dd($exception);
-    }
+        Session::put('session_admin_logged.user', [
+        "user_name" => $resImg['data']['user_name'],
+        "full_name" => $resImg['data']['full_name'],
+        "picture" => $resImg['data']['sso_picture'],
+        "notelp" => $resImg['data']['notelp'],
+        "email" => $resImg['data']['email'],
+        "alamat" => $resImg['data']['alamat'],
+        //////////////////////
+        "community_name" => $ses_user['community_name'],
+        "community_description" => $ses_user['community_description'],
+        "community_logo" => $ses_user['community_logo'],
+        /////////////////////
+        "user_id" => $ses_user['user_id'],
+        "level" => $ses_user['level'],
+        "status" => $ses_user['status'],
+        "community_created" => $ses_user['community_created'],
+        "community_type" => $ses_user['community_type'],
+        "community_membership_type" => $ses_user['community_membership_type'],
+        ]); 
+    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+    return back();
+    } //end if sukses
+
+}catch(ClientException $exception) {
+ alert()->error('Try again later', 'Get Something Wrong')->persistent('Done');
+    return back();
+        // dd($exception);
+}
     }// endelse
 } //endfunc
 
@@ -973,8 +1012,45 @@ return back();
 
 
 
+public function approval_req_membership(Request $request){
+    // dd($request);
+$ses_login = Session::get('session_admin_logged');
+$token = $ses_login['access_token'];
+$input = $request->all(); // getdata req
+
+$req = new RequestController; 
+$fileimg = "";
+
+if ($request->hasFile('fileup')) {
+    $imgku = file_get_contents($request->file('fileup')->getRealPath());
+    $filnam = $request->file('fileup')->getClientOriginalName();
+if($request->input('action') == 'approve'){
+$paystatus = 3;
+}else if($request->input('action') == 'reject'){
+$paystatus = 2;
+}
+
+    $imageRequest = [
+        "invoice_number" => $input['invoice_num_acc'],
+        "payment_status" => $paystatus,
+        "password"       => $input['acc_password'],
+        "subscriber_id"  => $input['id_subs_acc'],
+        "cancel_description" => $input['acc_komen'],
+        "filename"       => $filnam,
+        "file"           => $imgku
+    ]; 
 
 
+$url =env('SERVICE').'membershipmanagement/approvalmembership';
+$resImg = $req->accReqMembership($imageRequest,$url,$token);
+return $resImg;
+    // if ($resImg['success'] == true) {
+    //     alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+    //     return back();
+    // }
+
+} //endif
+}
 
 
 
