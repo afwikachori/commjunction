@@ -157,7 +157,7 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px">
+    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px" data-toggle="modal" data-target="#modal_confirm_membership" data-dismiss="modal">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Approve </button>
     </center>
@@ -213,7 +213,7 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px">
+    <button type="button" id="" class="btn btn-teal btn-sm melengkung10px" data-toggle="modal" data-target="#modal_confirm_membership" data-dismiss="modal">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Approve </button>
     </center>
@@ -252,7 +252,7 @@
       <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" value="accmember" style="width: 38px; height: 38px;">
        <i id="browse_acc_member" class="mdi mdi-camera upload-button accmember" style="font-size: 1.5rem;"></i>
       </button>
-        <input id="file_acc_member" class="file-upload file-upload-default accmember" type="file" name="fileup" required accept="image/*"/>
+        <input id="file_acc_member" class="file-upload file-upload-default accmember" type="file" name="fileup" accept="image/*"/>
      </div>
      <small class="clight s11">Upload payment proof here or choose file</small>
      <br>
@@ -273,7 +273,7 @@
 <div class="col-md-9">
 <div class="form-group">
 <div class="input-group">
-    <input class="form-control input-abu" id="acc_password" type="password" name="acc_password" required=""  aria-describedby="btn_showpass_accmember">
+    <input class="form-control input-abu" id="acc_password" type="password" name="acc_password" required  aria-describedby="btn_showpass_accmember">
     <div class="input-group-append">
 <a class="btn btn-outline-light" type="button" id="btn_showpass_accmember" onclick="showPassText('acc_password')">
   <span class="mdi mdi-eye s16" aria-hidden="true" style="color: grey;"></span>

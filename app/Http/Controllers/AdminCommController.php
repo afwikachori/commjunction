@@ -1044,9 +1044,11 @@ if ($request->hasFile('fileup')) {
     $imgku = file_get_contents($request->file('fileup')->getRealPath());
     $filnam = $request->file('fileup')->getClientOriginalName();
 if($request->input('action') == 'approve'){
-$paystatus = "3";
-}else if($request->input('action') == 'reject'){
 $paystatus = "2";
+$paystatusjudul = "Membership Approved";
+}else if($request->input('action') == 'reject'){
+$paystatus = "3";
+$paystatusjudul = "Membership Rejected";
 }
 
     $imageRequest = [
@@ -1059,14 +1061,21 @@ $paystatus = "2";
         "file"           => $imgku
     ]; 
 
-
 $url =env('SERVICE').'membershipmanagement/approvalmembership';
+try{
 $resImg = $req->accReqMembership($imageRequest,$url,$token);
-return $resImg;
-    // if ($resImg['success'] == true) {
-    //     alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
-    //     return back();
-    // }
+    if ($resImg['success'] == true) {
+        alert()->success('Successfully give membership approval', $paystatusjudul)->persistent('Done');
+    return back();
+    }
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    if( $status_error == 400){
+       alert()->error('Your password didnt match, please check again', 'Wrong Password!')->persistent('Done');
+    return back();
+    }
+}
+
 
 } //endif
 }
