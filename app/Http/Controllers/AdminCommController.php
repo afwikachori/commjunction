@@ -1075,13 +1075,35 @@ $resImg = $req->accReqMembership($imageRequest,$url,$token);
     return back();
     }
 }
-
-
 } //endif
 }
 
 
 
+
+public function detail_user_management(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'usermanagement/detailuser';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode(['user_id' => $input['user_id']]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+
+return $json['data'];
+}
 
 
 

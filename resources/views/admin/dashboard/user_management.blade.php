@@ -143,6 +143,85 @@
 
 
 
+
+
+<!-- MODAL DETAIL USER MANAGEMENT-->
+<div class="modal fade" id="modal_detail_user" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+
+<div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">
+    <h4 class="modal-title cgrey">Detail User</h4>
+</div> <!-- end-header -->
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+
+
+<div class="bunder-ring">
+<img class="profile-pic rounded-circle img-fluid" id="foto_user" src="/img/noimg.jpg">
+</div>
+
+<div class="row">
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Fullname</small>
+   <p class="cgrey1 tebal" id="detail_nama"></p>
+  </div>
+    <div class="form-group">
+    <small class="clight">Phone Number</small>
+     <p class="cgrey1 tebal" id="detail_hp"></p>
+  </div>
+
+</div>
+
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Email</small>
+    <p class="cgrey1 tebal" id="detail_email"></p>
+  </div>
+  <div class="form-group">
+     <small class="clight">User Type</small>
+    <p class="cgrey1 tebal" id="detail_usertipe"></p>
+  </div>
+
+</div>
+</div>
+
+<small class="cgrey tebal">Account Information</small>
+<div class="row" style="margin-top: 0.5em;">
+  <div class="form-group col-md-6" style="padding-bottom: -0.5em;">
+    <small class="clight">Username</small>
+     <p class="cgrey1 tebal" id="detail_username"></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group col-md-12" style="margin-top: -1.5em;">
+    <small class="clight">Address</small>
+   <p class="cgrey1 tebal" id="detail_alamat"></p>
+  </div>
+</div>
+
+
+</div> <!-- end-body -->
+
+  <div class="modal-footer" style="border: none;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="submit" id="" class="btn btn-teal btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Edit User </button>
+  </div>  <!-- end-footer     -->
+
+</div> <!-- END-MDL CONTENT -->
+
+  </div>
+</div>
+
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -190,9 +269,9 @@ function tabel_user_management(){
             {mData: 'user_type'},
             {mData: 'user_id',
             render: function ( data, type, row,meta ) {
-          return '<a href="" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"  onclick="detail_user_manage(\'' + data + '\')">'+
-          '<i class="mdi mdi-eye matadetail"></i>'+
-                '</a>';
+          return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"  onclick="detail_user_manage(\'' + data + '\')">'+
+          '<i class="mdi mdi-eye"></i>'+
+                '</button>';
               }
             }
         ],
@@ -202,7 +281,36 @@ function tabel_user_management(){
 }
 
 function detail_user_manage(iduser){
-alert(iduser);
+$("#modal_detail_user").modal("show");
+
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+      url: '/admin/detail_user_management',
+      type: 'POST',
+      datatype: 'JSON',
+      data: {
+      "user_id": iduser
+      },
+      success: function (result) {
+        // console.log(result[0]);
+      var res = result[0];
+    // $("#foto_user").attr("src", server_cdn+res.foto);
+      $("#detail_nama").html(res.full_name);
+      $("#detail_username").html(res.user_name);
+      $("#detail_email").html(res.email);
+      $("#detail_hp").html(res.notelp);
+      $("#detail_alamat").html(res.alamat);
+      $("#detail_usertipe").html(res.user_type);
+
+      },
+      error: function (result) {
+        console.log("Cant Show Detail User");
+    }
+});
 }
 
  function showPassword() {

@@ -68,7 +68,6 @@ Route::post('tabel_subs_pending','AdminCommController@tabel_subs_pending')->name
 
 Route::post('edit_profil_community','AdminCommController@edit_profil_community')->name('edit_profil_community');
 
-
 Route::post('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
 
 Route::post('setting_loginresgis_comm','AdminCommController@setting_loginresgis_comm')->name('setting_loginresgis_comm');
@@ -108,6 +107,9 @@ Route::post('add_useredit_management', 'AdminCommController@add_useredit_managem
 Route::post('nonaktif_status_subs', 'AdminCommController@nonaktif_status_subs')->name('nonaktif_status_subs');
 
 Route::post('approval_req_membership', 'AdminCommController@approval_req_membership')->name('approval_req_membership');
+
+Route::post('detail_user_management', 'AdminCommController@detail_user_management')->name('detail_user_management');
+
 
 }); //ADMIN-COMMUNITY
 
