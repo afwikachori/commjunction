@@ -373,10 +373,10 @@ public function detailPendingSubcriberView($id_pending){
 
 
 public function edit_profil_community(Request $request){
-// dd($request);
-    
     $ses_login = Session::get('session_admin_logged');
     $token = $ses_login['access_token'];
+    $ses_user = $ses_login['user'];
+    // return $ses_user;
 
     $req = new RequestController; 
     $fileimg = "";
@@ -397,9 +397,28 @@ public function edit_profil_community(Request $request){
     $url =env('SERVICE').'commsetting/editcomm';
     try{
       $resImg = $req->editProfilCommunity($imageRequest,$url,$token);
-      return $resImg;
+      $hasil = $resImg['data'];
+    if ($resImg['success'] == true) {
+     Session::put('session_admin_logged.user', [
+        "user_name" => $ses_user['user_name'],
+        "full_name" => $ses_user['full_name'],
+        "picture" => $ses_user['picture'],
+        "notelp" => $ses_user['notelp'],
+        "email" => $ses_user['email'],
+        "alamat" => $ses_user['alamat'],
+        //////////////////////
+        "community_name" => $hasil['name'],
+        "community_description" => $hasil['description'],
+        "community_logo" => $hasil['logo'],
+        /////////////////////
+        "user_id" => $ses_user['user_id'],
+        "level" => $ses_user['level'],
+        "status" => $ses_user['status'],
+        "community_created" => $ses_user['community_created'],
+        "community_type" => $ses_user['community_type'],
+        "community_membership_type" => $ses_user['community_membership_type'],
+        ]); 
 
-      if ($resImg['success'] == true) {
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
         return back();
       }
@@ -1025,9 +1044,9 @@ if ($request->hasFile('fileup')) {
     $imgku = file_get_contents($request->file('fileup')->getRealPath());
     $filnam = $request->file('fileup')->getClientOriginalName();
 if($request->input('action') == 'approve'){
-$paystatus = 3;
+$paystatus = "3";
 }else if($request->input('action') == 'reject'){
-$paystatus = 2;
+$paystatus = "2";
 }
 
     $imageRequest = [
