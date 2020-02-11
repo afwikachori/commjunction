@@ -102,13 +102,16 @@ Route::post('add_user_management', 'AdminCommController@add_user_management')->n
 
 Route::post('get_user_tipe_manage', 'AdminCommController@get_user_tipe_manage')->name('get_user_tipe_manage');
 
-Route::post('add_useredit_management', 'AdminCommController@add_useredit_management')->name('add_useredit_management');
-
 Route::post('nonaktif_status_subs', 'AdminCommController@nonaktif_status_subs')->name('nonaktif_status_subs');
 
 Route::post('approval_req_membership', 'AdminCommController@approval_req_membership')->name('approval_req_membership');
 
 Route::post('detail_user_management', 'AdminCommController@detail_user_management')->name('detail_user_management');
+
+Route::post('edit_user_management', 'AdminCommController@edit_user_management')->name('edit_user_management');
+
+
+
 
 
 }); //ADMIN-COMMUNITY

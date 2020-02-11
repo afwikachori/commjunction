@@ -49,7 +49,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: #ffffff;">
 
-<form method="POST" id="form_add_user_manage" action="{{route('add_user_management')}}" enctype="multipart/form-data">
+<form method="POST" id="form_edit_usermanage" action="{{route('edit_user_management')}}" enctype="multipart/form-data">
 {{ csrf_field() }}
 
 <div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">
@@ -155,12 +155,9 @@
 </div> <!-- end-header -->
 
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-
-
 <div class="bunder-ring">
 <img class="profile-pic rounded-circle img-fluid" id="foto_user" src="/img/noimg.jpg">
 </div>
-
 <div class="row">
 <div class="col-md">
   <div class="form-group">
@@ -171,9 +168,7 @@
     <small class="clight">Phone Number</small>
      <p class="cgrey1 tebal" id="detail_hp"></p>
   </div>
-
 </div>
-
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Email</small>
@@ -183,7 +178,6 @@
      <small class="clight">User Type</small>
     <p class="cgrey1 tebal" id="detail_usertipe"></p>
   </div>
-
 </div>
 </div>
 
@@ -201,8 +195,6 @@
    <p class="cgrey1 tebal" id="detail_alamat"></p>
   </div>
 </div>
-
-
 </div> <!-- end-body -->
 
   <div class="modal-footer" style="border: none;">
@@ -210,11 +202,72 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="submit" id="" class="btn btn-teal btn-sm">
+    <button type="button" id="" class="btn btn-teal btn-sm" data-toggle="modal" data-target="#modal_edit_user" data-dismiss="modal">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Edit User </button>
   </div>  <!-- end-footer     -->
+</div> <!-- END-MDL CONTENT -->
+  </div>
+</div>
 
+
+
+
+
+<!-- MODAL EDIT USER MANAGEMENT-->
+<div class="modal fade" id="modal_edit_user" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ffffff;">
+
+<form method="POST" id="form_add_user_manage" action="{{route('edit_user_management')}}">
+{{ csrf_field() }}
+
+<div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">
+    <h4 class="modal-title cgrey">Edit User</h4>
+</div> <!-- end-header -->
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
+
+
+<div class="row">
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Fullname</small>
+    <input type="text" id="edit_nama" readonly class="form-control-plaintext melengkung10px">
+  </div>
+    <div class="form-group">
+    <small class="clight">Phone Number</small>
+     <input type="text" id="edit_phone" name="edit_phone" class="form-control input-abu" >
+  </div>
+
+</div>
+
+<div class="col-md">
+  <div class="form-group">
+    <small class="clight">Email</small>
+    <input type="email" id="edit_email" name="edit_email" class="form-control input-abu" >
+  </div>
+  <div class="form-group">
+     <small class="clight">User Type</small>
+    <select class="form-control input-abu" name="user_tipe_edit" id="user_tipe_edit">    
+    </select>
+  </div>
+</div>
+
+  <input type="hidden" id="idnya_user" name="idnya_user" class="form-control input-abu">
+</div>
+</div> <!-- end-body -->
+
+  <div class="modal-footer" style="border: none;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button type="submit" class="btn btn-teal btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Edit </button>
+  </div>  <!-- end-footer     -->
+</form>
 </div> <!-- END-MDL CONTENT -->
 
   </div>
@@ -296,7 +349,7 @@ $.ajax({
       "user_id": iduser
       },
       success: function (result) {
-        // console.log(result[0]);
+        console.log(result[0]);
       var res = result[0];
     // $("#foto_user").attr("src", server_cdn+res.foto);
       $("#detail_nama").html(res.full_name);
@@ -305,6 +358,12 @@ $.ajax({
       $("#detail_hp").html(res.notelp);
       $("#detail_alamat").html(res.alamat);
       $("#detail_usertipe").html(res.user_type);
+
+      $("#edit_nama").val(res.full_name);
+      $("#edit_email").val(res.email);
+      $("#edit_phone").val(res.notelp);
+      $("#idnya_user").val(res.user_id);
+      $('select[name="user_tipe_edit"]').val(res.user_type_id);
 
       },
       error: function (result) {
@@ -356,8 +415,27 @@ $.ajax({
     if(OldValue !== '') {
       $('#user_tipe').val(OldValue);
     }
+// ______________________________________________
 
+      $('#user_tipe_edit').empty();
+      $('#user_tipe_edit').append("<option disabled> Choose </option>");
+
+      for (var i = result.length - 1; i >= 0; i--) {
+        $('#user_tipe_edit').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+      } 
+      //Short Function Ascending//
+      $("#user_tipe_edit").html($('#user_tipe_edit option').sort(function (x, y) {
+        return $(y).val() < $(x).val() ? -1 : 1;
+      }));
+
+      $("#user_tipe_edit").get(0).selectedIndex = 0; 
+
+       const OldValue2 = '{{old('user_tipe_edit')}}';
+    
+    if(OldValue2 !== '') {
+      $('#user_tipe_edit').val(OldValue);
     }
+}
 });
 } //endfunction
 

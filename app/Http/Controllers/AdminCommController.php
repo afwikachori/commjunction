@@ -994,11 +994,6 @@ if( $json['success'] == true){
 
 
 
-public function add_useredit_management(Request $request){
-dd($request);
-
-}
-
 
 public function nonaktif_status_subs(Request $request){
 $ses_login = Session::get('session_admin_logged');
@@ -1108,6 +1103,49 @@ return $json['data'];
 
 
 
+public function edit_user_management(Request $request){
+// dd($request);
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'usermanagement/edituser';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+    "user_id" => $input['idnya_user'],
+    "notelp" => $input['edit_phone'],
+    "email" => $input['edit_email'],
+    "usertype_id" => $input['user_tipe_edit'],
+]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+
+try{
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+if( $json['success'] == true){
+       alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
+        return back();
+    }
+
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    // return $status_error;
+    if( $status_error == 400){
+       alert()->error('Proccess might interrupted at the middle, try again', 'Opps')->persistent('Done');
+        return back();
+    }
+}
+}
 
 
 
