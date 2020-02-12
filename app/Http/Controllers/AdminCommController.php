@@ -757,9 +757,28 @@ public function get_payment_tipe(){
 }
 
 
+public function get_bank_pay(){
+    $ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'commsetting/listbank';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
 public function tabel_payment_community(){
 $ses_login = Session::get('session_admin_logged');
-$url = env('SERVICE').'commsetting/listpaymenttype';
+$url = env('SERVICE').'commsetting/listpayment';
 $client = new \GuzzleHttp\Client();
 
     $response = $client->request('POST',$url, [
@@ -1230,6 +1249,66 @@ if( $json['success'] == true){
     }
 }
 }
+
+
+
+public function add_payment_subs(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'commsetting/addpayment';
+$client = new \GuzzleHttp\Client();
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+    'payment_title' => $input['payment_name'],
+    'payment_type_id' => $input['payment_tipe'],
+    'payment_owner_name' => $input['rekening_name'],
+    'no_rekening' => $input['rekening_number'],
+    'description' => [$input['deskripsi_paysubs']],
+    'bank_name' => $input['bank_name'],
+    'payment_time_limit' => $input['pay_time_limit'],
+    'status' => $input['payment_status']
+]);
+return $bodyku;
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+try{
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+
+if( $json['success'] == true){
+       alert()->success('Successfully to add new payment method', 'Added')->persistent('Done');
+        return redirect('admin/settings/payment');
+}
+}catch(ClientException $exception) {
+    $status_error = $exception->getCode();
+    if( $status_error == 400){
+       alert()->error('Data Bank tidak boleh sama dengan list yang sudah ada', 'Sorry')->persistent('Done');
+    return back();
+    }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

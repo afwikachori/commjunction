@@ -90,6 +90,8 @@ Route::post('get_membership_subs', 'AdminCommController@get_membership_subs');
 
 Route::post('get_payment_tipe', 'AdminCommController@get_payment_tipe');
 
+Route::post('get_bank_pay','AdminCommController@get_bank_pay');
+
 Route::post('get_detail_membership_req', 'AdminCommController@get_detail_membership_req')->name('get_detail_membership_req');
 
 Route::post('edit_profile_admincom', 'AdminCommController@edit_profile_admincom')->name('edit_profile_admincom');
@@ -111,6 +113,9 @@ Route::post('detail_user_management', 'AdminCommController@detail_user_managemen
 Route::post('edit_user_management', 'AdminCommController@edit_user_management')->name('edit_user_management');
 
 Route::post('approval_pending_subs', 'AdminCommController@approval_pending_subs')->name('approval_pending_subs');
+
+Route::post('add_payment_subs', 'AdminCommController@add_payment_subs')->name('add_payment_subs');
+
 
 
 }); //ADMIN-COMMUNITY

@@ -433,7 +433,7 @@ $.ajax({
        const OldValue2 = '{{old('user_tipe_edit')}}';
     
     if(OldValue2 !== '') {
-      $('#user_tipe_edit').val(OldValue);
+      $('#user_tipe_edit').val(OldValue2);
     }
 }
 });

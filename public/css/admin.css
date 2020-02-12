@@ -173,12 +173,37 @@ padding: 2rem 5rem 0;
     top: 7px !important;
 }
 
+.round-label{
+  min-width: 80px;
+  border-radius: 8px;
+}
+
 
 .dash-img-profil{
     height: 35%;
     width: 35%;
     min-height: 90px;
     min-width: 90px;
+}
+
+.bg-hijau{
+background-color: #cbe8b9;
+}
+
+.bg-merah{
+  background-color: #ffd6d6;
+}
+
+.bg-kuning{
+  background-color: #fcf5b0;
+}
+
+.bg-abu{
+  background-color: #c8dad3;
+}
+
+.bg-biru{
+background-color: #beebe9;
 }
 
 .modal_ajax .modal-content{

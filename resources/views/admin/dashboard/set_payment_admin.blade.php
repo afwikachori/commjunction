@@ -15,83 +15,20 @@
 <div class="row">
  <div class="col-12">
   <div class="card">
-    <div class="card-body">
-
-<div class="row">
-  <div class="col-md-8">
-  <h4 class="card-title">Setting Payment Subscriber</h4>  
-  </div>
-  <div class="col-md-4" style="text-align: right;">
-    <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-rounded btn-fw">Add Button</button>
-  </div>
-</div>
-<br>
-
-<div class="paddig-10" style="padding-right: 10%; padding-left: 10%;">
-<small class="cgrey2">Default</small>
-<br>
-<div class="row borderan-pay" style="margin-top: 0.5em;">
-<div class="col-md">
-<img src="/img/default.png" class="rounded-circle img-fluid" style="width: 35px; height: 35px;">
-</div>
-<div class="col-md-6">
-<h6 class="cgrey">Payment Name</h6>
-  
-</div>
-<div class="col-md-4" style="text-align: right;">
-  <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-sm btn-rounded btn-fw">Detail</button>
-</div>
-</div>
-
-<br><br>
-
-<small class="cgrey2">Other</small>
-<br>
-<div class="row borderan-pay" style="margin-top: 0.5em; margin-bottom: 1em;">
-<div class="col-md">
-<img src="/img/default.png" class="rounded-circle img-fluid" style="width: 35px; height: 35px;">
-</div>
-<div class="col-md-6">
-<h6 class="cgrey">Payment Name</h6>
-  
-</div>
-<div class="col-md-4" style="text-align: right;">
-  <small style="color: red; margin-top: 0.5em;">Not Active</small> &nbsp;&nbsp;
-  <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-sm btn-rounded btn-fw">Detail</button>
-</div>
-</div>
-
-
-<div class="row borderan-pay" style="margin-top: 0.5em; margin-bottom: 1em;">
-<div class="col-md">
-<img src="/img/default.png" class="rounded-circle img-fluid" style="width: 35px; height: 35px;">
-</div>
-<div class="col-md-6">
-<h6 class="cgrey">Payment Name</h6>
-  
-</div>
-<div class="col-md-4" style="text-align: right;">
-  <small style="color: red; margin-top: 0.5em;">Not Active</small> &nbsp;&nbsp;
-  <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-sm btn-rounded btn-fw">Detail</button>
-</div>
-</div>
-
-
-<div class="row borderan-pay" style="margin-top: 0.5em; margin-bottom: 1em;">
-<div class="col-md">
-<img src="/img/default.png" class="rounded-circle img-fluid" style="width: 35px; height: 35px;">
-</div>
-<div class="col-md-6">
-<h6 class="cgrey">Payment Name</h6>
-  
-</div>
-<div class="col-md-4" style="text-align: right;">
-  <small style="color: red; margin-top: 0.5em;">Not Active</small> &nbsp;&nbsp;
-  <button type="button" onclick="location.href =''" class="btn btn-gradient-warning btn-sm btn-rounded btn-fw">Detail</button>
-</div>
-</div>
-
-</div> <!-- div padding -->
+  <div class="card-body">
+      <!-- tabel all susbcriber -->  
+        <table id="tabel_paysubs" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
+          <thead> 
+            <tr> 
+              <th>ID Pay</th>
+              <th>Payment Title</th>
+              <th>Bank Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+        </table>
+      <!-- end tabel all  -->
   </div>
 </div>
 </div>
@@ -112,40 +49,71 @@
         </button>
     </div>
 
+<form method="POST" id="form_add_payment_subs" action="{{route('add_payment_subs')}}">
+{{ csrf_field() }}
 <div class="modal-body">
 <div class="row">
   <div class="col-md-6">
     <div class="form-group">
-        <label for="">Payment Name</label>
+       <label>Payment Name</label>
         <input type="text" id="payment_name" name="payment_name" class="form-control input-abu">
     </div>
   </div>
   <div class="col-md-6">
     <div class="form-group">
-    <label for="">Payment Type</label>
+   <label>Payment Type</label>
     <select class="form-control input-abu" id="payment_tipe" name="payment_tipe">
     </select>
   </div>
   </div>
 </div>
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-6">
   <div class="form-group">
-    <label for="">Nama Pemilik Rekening</label>
+   <label>Nama Pemilik Rekening</label>
     <input type="text" id="rekening_name" name="rekening_name" class="form-control input-abu">
-  </div>
-  <div class="form-group">
-    <label for="">Nomer Rekening</label>
-    <input type="text" id="rekening_number" name="rekening_number" class="form-control input-abu">
   </div>
 </div>
 <div class="col-md-6">
+  <div class="form-group">
+   <label>Nomer Rekening</label>
+    <input type="text" id="rekening_number" name="rekening_number" class="form-control input-abu">
+  </div>
+</div>
+
+<div class="col-md-12 form-group">
+    <small>Dekripsi</small>
+    <textarea class="form-control input-abu" id="deskripsi_paysubs" name="deskripsi_paysubs" rows="2"></textarea>
+  </div>
+
+<div class="col-md-6">
+  <div class="form-group">
+   <label>Bank Name</label>
+    <select class="form-control input-abu" id="bank_name" name="bank_name">
+    </select>
+  </div>
+  <div class="form-group">
+<label for="">Payment Time Limit</label>
+<select class="form-control input-abu" id="pay_time_limit" name="pay_time_limit" value="{{old('pay_time_limit')}}">
+  <option selected disabled> Choose </option>
+  <option value="1"> 1 Day </option>
+  <option value="2"> 2 Days </option>
+  <option value="3"> 3 Days </option>
+  <option value="4"> 4 Days </option>
+  <option value="5"> 5 Days </option>
+  <option value="6"> 6 Days </option>
+  <option value="7"> 7 Days </option>
+</select>
+</div>
+</div>
+
+<div class="col-md-6">
 <div class="form-group">
 <label for="">Payment Status</label>
-<select class="form-control input-abu" id="payment_status" name="payment_status">
+<select class="form-control input-abu" id="payment_status" name="payment_status" value="{{old('payment_status')}}">
   <option selected disabled> Choose </option>
   <option value="1"> Active </option>
-  <option value="2"> Deactive </option>
+  <option value="0"> Deactive </option>
 </select>
 </div>
 </div>
@@ -153,15 +121,16 @@
 
           
 </div> <!-- end-body -->
-    <div class="modal-footer" style="border: none;">
+    <div class="modal-footer" style="border: none; margin-top: -1.5em;">
     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button type="button" id="btn_filter_membership" class="btn btn-tosca btn-sm">
+    <button type="submit" id="btn_add_paysubs" class="btn btn-teal btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
-        </i> Submit </button>
+        </i> Add </button>
     </div>  <!-- end-footer     -->
+  </form>
     </div> <!-- END-MDL CONTENT -->
   </div>
 </div>
@@ -174,9 +143,10 @@
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
-
+tabel_payment_community();
 tabel_tes();
 get_payment_tipe();
+get_bank_pay();
 });
 
 function tabel_tes(){
@@ -206,7 +176,7 @@ $("#modal_add_payment").modal("show");
 
 
 function tabel_payment_community(){
-    var tabel = $('#tabel_req_member').DataTable({
+    var tabel = $('#tabel_paysubs').DataTable({
         responsive: true,
         ajax: {
             url: '/admin/tabel_payment_community',
@@ -215,15 +185,25 @@ function tabel_payment_community(){
             timeout: 30000,
         },
         columns: [
-            {mData: 'user_id'},
-            {mData: 'full_name'},
-            {mData: 'payment_status_title'},
-            {mData: 'membership'},
+            {mData: 'id'},
+            {mData: 'payment_title'},
+            {mData: 'payment_bank_name'},
+            {mData: 'status',
+            render: function ( data, type, row,meta ) {
+            var ket ='';
+            if(data == 0){ 
+              ket = '<label class="badge bg-merah round-label">Deactive</label>';
+            }else{
+               ket = '<label class="badge bg-hijau round-label">Active</label>';
+            }
+            return ket;
+            }
+            },
             {mData: 'id',
             render: function ( data, type, row,meta ) {
-          return '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detil_subs">'+
+          return '<button type="button" class="btn btn-gradient-light btn-sm btn-rounded btn-icon" style="width:28px; height:28px;">'+
           '<i class="mdi mdi-eye"></i>'+
-                '</a>';
+                '</button>';
               }
             }
         ],
@@ -246,12 +226,12 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (result) {
-      console.log(result);
+      // console.log(result);
       $('#payment_tipe').empty();
       $('#payment_tipe').append("<option disabled> Choose </option>");
 
       for (var i = result.length - 1; i >= 0; i--) {
-        $('#payment_tipe').append("<option value=\"".concat(i, "\">").concat(result[i].payment_title, "</option>"));
+        $('#payment_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].payment_title, "</option>"));
       } 
       //Short Function Ascending//
       $("#payment_tipe").html($('#payment_tipe option').sort(function (x, y) {
@@ -260,6 +240,43 @@ $.ajax({
 
       $("#payment_tipe").get(0).selectedIndex = 0; 
 
+    }
+});
+} //endfunction
+
+
+
+
+//dropdown bank
+function get_bank_pay() {       
+$.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+    url: "/admin/get_bank_pay",
+    type: "POST",
+    dataType: "json",
+    success: function (result) {
+      $('#bank_name').empty();
+      $('#bank_name').append("<option disabled> Choose </option>");
+
+      for (var i = result.length - 1; i >= 0; i--) {
+        $('#bank_name').append("<option value=\"".concat(result[i].nama_bank, "\">").concat(result[i].nama_bank, "</option>"));
+      } 
+      //Short Function Ascending//
+      $("#bank_name").html($('#bank_name option').sort(function (x, y) {
+        return $(x).text() < $(y).text() ? -1 : 1;
+      }));
+
+      $("#bank_name").get(0).selectedIndex = 0; 
+
+       const OldValue2 = '{{old('bank_name')}}';
+    
+    if(OldValue2 !== '') {
+      $('#bank_name').val(OldValue2);
+    }
     }
 });
 } //endfunction
