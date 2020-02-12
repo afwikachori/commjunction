@@ -367,8 +367,53 @@ public function editSubsManagementView($id_subs){
 
 
 public function detailPendingSubcriberView($id_pending){
-    $iniid = 'data pending tester '.$id_pending;
-    return view('admin/dashboard/detail_subs_pending', ['profil_subs' => $iniid ]);
+$ses_login = Session::get('session_admin_logged');
+$urlx = env('SERVICE').'subsmanagement/detailsubs';
+
+$client = new \GuzzleHttp\Client();
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+'user_id'   => $id_pending
+]);
+
+$options = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+
+$response = $client->post($urlx, $options);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+$in = $json['data'];
+
+//status
+if($in['status'] == 4){
+$status = 'Deactive';
+}else if($in['status'] == 3){
+$status = 'Active';
+}else if($in['status'] == 2){
+$status = 'Pending Membership';
+}else if($in['status'] == 1){
+$status = 'Newly';
+}else{
+$status = 'Pending';
+}
+
+$dtaku = [
+"user_id"       => $in['user_id'],
+"full_name"     => $in['full_name'],
+"created_at"    => $in['created_at'],
+"status"        => $status,
+"status_id"     => $in['status'],
+"membership_id" => $in['membership_id'],
+"sso_picture"   => $in['sso_picture'],
+];
+// dd($dtaku);
+
+return view('admin/dashboard/detail_subs_pending')->with($dtaku);
 }
 
 
@@ -1019,9 +1064,8 @@ $json = json_decode($response, true);
 
 if($json['success'] == true){
 alert()->success('Succcessflly to change your subscriber status ','Success !')->persistent('Done');
-return back();
+return redirect('admin/subs_management');
 }
-
 }
 
 
@@ -1072,6 +1116,46 @@ $resImg = $req->accReqMembership($imageRequest,$url,$token);
 }
 } //endif
 }
+
+
+
+public function approval_pending_subs(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'subsmanagement/approvalsubs';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode([
+    'user_id' => $input['id_subspending'],
+    'approval' => $input['approval'],
+    'description' => $input['alasan_approv']
+]);
+
+if($input['approval'] == "true"){
+$textatus = 'Approved';
+}else{
+$textatus = 'Rejected';
+}
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+
+if ($json['success'] == true) {
+    alert()->success('Successfully give a approval', $textatus)->persistent('Done');
+    return redirect('admin/subs_management');
+}
+}
+
 
 
 

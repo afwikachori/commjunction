@@ -110,8 +110,7 @@ Route::post('detail_user_management', 'AdminCommController@detail_user_managemen
 
 Route::post('edit_user_management', 'AdminCommController@edit_user_management')->name('edit_user_management');
 
-
-
+Route::post('approval_pending_subs', 'AdminCommController@approval_pending_subs')->name('approval_pending_subs');
 
 
 }); //ADMIN-COMMUNITY

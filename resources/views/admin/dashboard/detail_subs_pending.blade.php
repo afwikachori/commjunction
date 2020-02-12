@@ -20,46 +20,57 @@
   <div class="card" style="min-height: 485px;">
   <div class="card-header putih">
     <div class="row">
-      <div class="col-md-8 cgrey" style="margin-top: 0.5em;">
+      <div class="col-md-12 cgrey" style="margin-top: 0.5em;">
         Detail Pending Subscriber
-      </div>
-      <div class="col-sm-4 sisi-kanan" style="text-align: right;">
-        <button type="button" class="btn btn-sm btn-danger" style="border-radius: 6px;">Deactive</button>
       </div>
     </div>
   </div>
-    <div class="card-body">
-<center>
-     <div class="bunder-ring">
-       <img class="profile-pic rounded-circle img-fluid" src="/img/cam.png">
-     </div>
-</center>
+<div class="card-body">
+<div class="bunder-ring">
+  @if ($sso_picture == 0)
+<img class="profile-pic rounded-circle img-fluid" src="/img/focus.png">
+  @else
+<img class="profile-pic rounded-circle img-fluid" src="{{ $sso_picture }}">
+  @endif
+       
+</div>
 
 <div class="row">
 <div class="col-md">
   <div class="form-group">
     <small class="clight">Fullname</small>
-    <p class="cgrey1 tebal">{{ $profil_subs }}</p>
+    <p class="cgrey1 tebal">{{ $full_name }} </p>
   </div>
   <div class="form-group">
-    <small class="clight">Username</small>
-    <p class="cgrey1 tebal">@afwikachori123</p>
+    <small class="clight">Status</small>
+    <p class="cgrey1 tebal">
+      {{ $status }}
+    </p>
   </div>
 </div>
+
 <div class="col-md">
   <div class="form-group">
-    <small class="clight">Phone Number</small>
-    <p class="cgrey1 tebal">08101010101010</p>
+    <small class="clight">Join at</small>
+    <p class="cgrey1 tebal"> {{ $created_at }}</p>
   </div>
   <div class="form-group">
-    <small class="clight">email</small>
-    <p class="cgrey1 tebal">pikachu@gmail.com</p>
+    <small class="clight">Membership Type</small>
+    <p class="cgrey1 tebal">
+@if($membership_id == 1)
+Free
+@else
+Paid
+@endif
+</p>
   </div>
 </div>
 </div>
     </div>
+
+
     <div class="card-footer putih" style="text-align: right; margin-bottom: 1em;">
-      <button type="button" onclick="give_approval('{{$profil_subs }}');" class="btn btn-sm btn-teal">Approval</button>
+      <button type="button" onclick="give_approval('{{$user_id }}');" class="btn btn-sm btn-teal">Approval</button>
     </div>
   </div>
 </div>
@@ -115,7 +126,8 @@
 <div class="modal fade" id="modal_approval_pendingsubs" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content modal" style="background-color: #ffffff; width: 80%;">
-      <form method="POST" id="" action="">{{ csrf_field() }}
+      <form method="POST" id="form_acc_pending_subs"  action="{{route('approval_pending_subs')}}">
+        {{ csrf_field() }}
         <div class="modal-body">
       <center>
         <br>
@@ -125,18 +137,18 @@
 <br>
       <div class="form-group" style="margin-top: 1em;">
         <input type="hidden" value="" class="form-control" id="id_subspending" name="id_subspending">
-         <textarea class="form-control input-abu" id="alasan_approv" rows="5"></textarea>
+         <textarea class="form-control input-abu" id="alasan_approv" name="alasan_approv" rows="5"></textarea>
       </div>
 
       </div> <!-- end-modal body -->
-      <div class="modal-footer" style="border: none; margin-top: 1em; text-align: center;">
-    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
-      <i class="mdi mdi-close"></i> Cancel
+      <div class="modal-footer" style="border: none; margin-top: 1em; text-align: center; padding-right: 25%; padding-bottom: 5%;">
+    <button class="btn btn-light btn-sm"type="submit" name="approval" value="false">
+      <i class="mdi mdi-close"></i> Reject
     </button>
     &nbsp;
-    <button type="submit" class="btn btn-tosca btn-sm">
+    <button type="submit" name="approval" value="true" class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
-        </i> Submit </button>
+        </i> Approve </button>
       </div>
   </form>
     </div>

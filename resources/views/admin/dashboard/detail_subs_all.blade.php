@@ -37,9 +37,8 @@
       </div>
     </div>
   </div>
-    <div class="card-body">
-
-
+  
+<div class="card-body">
 <div class="bunder-ring">
   @if ($sso_picture == 0)
 <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png">

@@ -192,9 +192,8 @@ $(document).ready(function () {
 get_membership_subs();
 tabel_subscriber_all();
 tabel_subscriber_pending();
-// tabel_subs();
 
-
+tabel_subs();
 });
 
 
@@ -219,14 +218,9 @@ $.ajaxSetup({
     }
 });
 $.ajax({
-      url: '/admin/tabel_subs_management',
+      url: '/admin/tabel_subs_pending',
       type: 'POST',
       datatype: 'JSON',
-      data: {
-      "subs_datemulai": $("#subs_datemulai").val(),
-      "subs_dateselesai" : $("#subs_dateselesai").val(),
-      "membership" : $("#membership_tipe").val()
-    },
       success: function (result) {
         console.log(result);
       },
@@ -351,8 +345,19 @@ function tabel_subscriber_pending(){
             timeout: 30000,
         },
         columns: [
-            {mData: 'status'},
-            {mData: 'status'},
+            {mData: 'user_id'},
+            {mData: 'membership',
+            render: function(data,type,row,meta) {
+              // console.log(data);
+              var isiku;
+            if(data == null ){
+              isiku = '<label style="color:red;">null</label>';
+            }else{
+              isiku = data.membership;
+            }
+            return isiku;
+            }
+            },            
             {mData: 'full_name'},
             {mData: 'status',
             render: function ( data, type, row ) {
@@ -378,9 +383,9 @@ function tabel_subscriber_pending(){
             return formatDate(data);
             }
             },
-            {mData: 'status',
+            {mData: 'user_id',
             render: function ( data, type, row,meta ) {
-          return '<a href="/admin/detail_pendingsubs/'+meta.row+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">'+
+          return '<a href="/admin/detail_pendingsubs/'+data+'" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">'+
           '<i class="mdi mdi-eye matadetail"></i>'+
                 '</a>';
               }
