@@ -153,6 +153,21 @@ background-color: #ffffff !important;
 padding: 2rem 5rem 0;
 }
 
+.btn-ready-card{
+background: linear-gradient(106deg, #FC6076 -2.66%, #FF9A44 102.89%);
+border-radius: 15px;
+font-size: 0.65rem !important;
+
+}
+
+.bg-gradient-blue{
+background: linear-gradient(106.53deg, #96DEDA 0%, #50C9C3 56.6%);
+}
+
+.melengkung15px{
+  border-radius: 15px !important;
+}
+
 .melengkung10px{
   border-radius: 10px !important;
 }
@@ -773,6 +788,10 @@ color: #0FB1B5;
 
 .s11{
   font-size: 11px;
+}
+
+.s10{
+  font-size: 10px;
 }
 
 .s13{

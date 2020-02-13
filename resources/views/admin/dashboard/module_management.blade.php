@@ -82,6 +82,36 @@
 <div class="modal fade" id="mdl_detail_module_active" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
 <div class="modal-content" style="background-color: #ffffff; min-height: 350px;">
+  <div class="modal-header" style="padding-bottom: 0em !important;">
+    <h4 class="modal-title cgrey">Edit Profile</h4>
+   
+    <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm" style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_admin" data-dismiss="modal">Change Password</button>
+</div> <!-- end-header -->
+
+<div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+Module Active Detail
+</div> <!-- end-body -->
+
+  <div class="modal-footer" style="border: none;">
+    <center>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <a href="t" type="button"class="btn btn-teal btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i>Activate</a>
+  </center>
+  </div>  <!-- end-footer     -->
+</div> <!-- END-MDL CONTENT -->
+  </div>
+</div>
+
+
+<!-- MODAL ALL - aktifkan dan Detail-->
+<div class="modal fade" id="md_all_aktifkan_module" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+<div class="modal-content" style="background-color: #ffffff; min-height: 350px;">
 
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
 Module Active Detail
@@ -153,25 +183,26 @@ $.ajax({
       
       $.each(result, function(i,item){
       var logo = server_cdn+item.logo;  
-      isiui += '<div class="col-md-4 stretch-card '+
-                    'grid-margin card-member">'+
-                '<div class="card bg-gradient-success card-img-holder text-white member">'+
-                  '<div class="card-body member">'+
-                  '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />'+
-                  '<label class="badge label-oren float-right">Active</label>'+
-                    '<img src="'+logo+'" class="rounded-circle img-fluid img-card">'+
-                  '<div class="row">'+
-                    '<div class="col-md-12">'+
-                      '<h4>'+item.feature_type_title+'</h4>'+
-                    '</div>'+
-                    '<div class="col-md-12" style="text-align: right;">'+
-                      '<a href="" class="a_setmodule"'+
-                      'data-toggle="modal" data-target="#mdl_detail_module_active" data-dismiss="modal">'+
-                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting'+
-                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>'+
-                      '</small></a>'+
-                    '</div>'+
-                  '</div></div></div></div>';
+      isiui += 
+      '<div class="col-md-4 stretch-card '+
+        'grid-margin card-member">'+
+          '<div class="card bg-gradient-blue card-img-holder text-white member">'+
+            '<div class="card-body member">'+
+              '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />'+
+                         '<label class="badge btn-oren melengkung10px float-right">Active</label>'+
+              '<img src="'+logo+'" class="rounded-circle img-fluid img-card">'+
+                '<div class="row">'+
+                '<div class="col-md-12">'+
+                    '<h4>'+item.feature_type_title+'</h4>'+
+                '</div>'+
+                '<div class="col-md-12" style="text-align: right;">'+
+                  '<a href="" class="a_setmodule"'+
+                    'data-toggle="modal" data-target="#mdl_detail_module_active" data-dismiss="modal">'+
+                    '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting'+
+                    ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>'+
+                  '</small></a>'+
+              '</div>'+
+        '</div></div></div></div>';
       });
 
 $("#show_module_active").html(isiui);
@@ -205,21 +236,18 @@ $.ajax({
       var logo = server_cdn+item.logo;  
       isiui += '<div class="col-md-4 stretch-card '+
                     'grid-margin card-member">'+
-                '<div class="card bg-gradient-success card-img-holder text-white member">'+
+                '<div class="card bg-gradient-blue card-img-holder text-white member">'+
                   '<div class="card-body member">'+
                   '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />'+
-                  '<label class="badge label-oren float-right">Active</label>'+
                     '<img src="'+logo+'" class="rounded-circle img-fluid img-card">'+
                   '<div class="row">'+
-                    '<div class="col-md-12">'+
+                    '<div class="col-md-7">'+
                       '<h4>'+item.feature_type_title+'</h4>'+
                     '</div>'+
-                    '<div class="col-md-12" style="text-align: right;">'+
-                      '<a href="" class="a_setmodule"'+
-                      'data-toggle="modal" data-target="#mdl_detail_module_active" data-dismiss="modal">'+
-                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting'+
-                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>'+
-                      '</small></a>'+
+                    '<div class="col-md-5" style="text-align: right;">'+
+                    '<button class="btn btn-sm btn-ready-card"'+
+                    'data-toggle="modal" data-target="#md_all_aktifkan_module"'+
+                    'data-dismiss="modal">'+'Active</button>'+
                     '</div>'+
                   '</div></div></div></div>';
       });
