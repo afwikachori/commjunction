@@ -59,7 +59,6 @@ Route::get('/registrasion_data','AdminCommController@regisdataAdminView')->name(
 Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment');
 }); //end-admin
 
-
 //POST
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');
@@ -124,6 +123,7 @@ Route::post('get_active_module_list', 'AdminCommController@get_active_module_lis
 
 Route::post('get_all_module_list', 'AdminCommController@get_all_module_list')->name('get_all_module_list');
 
+Route::post('detail_module_all', 'AdminCommController@detail_module_all')->name('detail_module_all');
 
 
 
@@ -150,7 +150,7 @@ Route::post('get_jenis_com', 'RegisterController@get_jenis_com');
 
 
 
-/// SESSION - BACK 
+/// SESSION - BACK
 Route::post('session_regisOne', 'RegisterController@session_regisOne')->name('session_regisOne');
 Route::post('session_regisTwo', 'RegisterController@session_regisTwo')->name('session_regisTwo');
 Route::post('session_pricing', 'RegisterController@session_pricing')->name('session_pricing');
@@ -257,13 +257,13 @@ Route::post('getSelectedPayment', 'RegisterController@getSelectedPayment')->name
 
 
 
-// FINAL ADMIN REGISTRASION 
+// FINAL ADMIN REGISTRASION
 Route::get('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
 
 
 
 
-// LOADING _ FINISH 
+// LOADING _ FINISH
 Route::get('admin/loading','RegisterController@loadingcreatingView')->name('admin/loading');
 Route::get('admin/finish','RegisterController@finishView')->name('finishView');
 

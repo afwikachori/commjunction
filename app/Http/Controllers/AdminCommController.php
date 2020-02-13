@@ -11,10 +11,10 @@ use Alert;
 
 class AdminCommController extends Controller{
 
-// METHOD GET 
+// METHOD GET
 
-// @if (Session::has('session_admin_logged')) 
-// @else 
+// @if (Session::has('session_admin_logged'))
+// @else
 //   <script>window.location = "/admin";</script>
 //   @endif
 
@@ -76,7 +76,7 @@ public function ModuleManagementView(){
 
 
 
-// METHOD POST 
+// METHOD POST
 public function auth_adminlogin(Request $request) {
 $request->validate([
    'useradmin' => 'required',
@@ -115,7 +115,7 @@ $code_error = $exception->getCode();
     alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
     return back()->withInput();
     }
-    
+
 } //end-catch
 } //end-if
 } //end-func
@@ -186,11 +186,11 @@ public function get_dashboard_admin(){
 public function tabel_subs_management(Request $request){
 $ses_login = Session::get('session_admin_logged');
 $input = $request->all();
-$client = new \GuzzleHttp\Client();    
+$client = new \GuzzleHttp\Client();
 // return $input;
 try{
 if($request['subs_datemulai'] != null && $request['subs_dateselesai'] != null ){
-    
+
 $urlx = env('SERVICE').'subsmanagement/filtersubsbydate';
     $headers = [
      'Content-Type' => 'application/json',
@@ -221,13 +221,13 @@ $url = env('SERVICE').'subsmanagement/listsubs';
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
     return $json['data'];
-} //end-else    
+} //end-else
 } catch(ClientException $exception) {
     $status_error = $exception->getCode();
     if( $status_error == 500){
         return json_encode('Data Not Found');
     }
-} 
+}
 } //end-func
 
 
@@ -236,7 +236,7 @@ $url = env('SERVICE').'subsmanagement/listsubs';
 public function filter_membership_subs(Request $request){
 $ses_login = Session::get('session_admin_logged');
 $input = $request->all();
-$client = new \GuzzleHttp\Client(); 
+$client = new \GuzzleHttp\Client();
 
 $urlx = env('SERVICE').'subsmanagement/filtersubsbymembership';
 $headers = [
@@ -359,7 +359,7 @@ $dtaku = [
 ];
 // dd($dtaku);
 return view('admin/dashboard/detail_subs_all')->with($dtaku);
-}        
+}
 
 
 
@@ -425,7 +425,7 @@ public function edit_profil_community(Request $request){
     $ses_user = $ses_login['user'];
     // return $ses_user;
 
-    $req = new RequestController; 
+    $req = new RequestController;
     $fileimg = "";
 
     if ($request->hasFile('fileup')) {
@@ -438,7 +438,7 @@ public function edit_profil_community(Request $request){
                 "description" => $input['edit_deskripsicom'],
                 "filename"    => $filnam,
                 "file"        => $imgku
-        ]; 
+        ];
 
 
     $url =env('SERVICE').'commsetting/editcomm';
@@ -464,7 +464,7 @@ public function edit_profil_community(Request $request){
         "community_created" => $ses_user['community_created'],
         "community_type" => $ses_user['community_type'],
         "community_membership_type" => $ses_user['community_membership_type'],
-        ]); 
+        ]);
 
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
         return back();
@@ -472,14 +472,14 @@ public function edit_profil_community(Request $request){
     }catch(ClientException $exception) {
         dd($exception);
     }
-    }else{//END-IF  UPLOAD-IMAGE 
+    }else{//END-IF  UPLOAD-IMAGE
      $input = $request->all(); // getdata form by name
         $imageRequest = [
                 "name"        => $input['edit_namacom'],
                 "description" => $input['edit_deskripsicom'],
                 "filename"    => "",
                 "file"        => ""
-        ]; 
+        ];
 
 
     $url =env('SERVICE').'commsetting/editcomm';
@@ -505,7 +505,7 @@ public function setting_loginresgis_comm(Request $request){
     $ses_login = Session::get('session_admin_logged');
     $token = $ses_login['access_token'];
 
-    $req = new RequestController; 
+    $req = new RequestController;
     $fileimg = "";
 
     if ($request->hasFile('fileup')) {
@@ -520,7 +520,7 @@ public function setting_loginresgis_comm(Request $request){
             "subdomain"     => $input['subdomain'],
             "filename"      => $filnam,
             "file"          => $imgku
-        ]; 
+        ];
 
 
     $url =env('SERVICE').'commsetting/loginregister';
@@ -535,7 +535,7 @@ public function setting_loginresgis_comm(Request $request){
     }catch(ClientException $exception) {
         dd($exception);
     }
-    }else{//END-IF  UPLOAD-IMAGE 
+    }else{//END-IF  UPLOAD-IMAGE
      $input = $request->all(); // getdata form by name
      $imageRequest = [
             "form_type"     => $input['optionsRadios'],
@@ -544,7 +544,7 @@ public function setting_loginresgis_comm(Request $request){
             "subdomain"     => $input['subdomain'],
             "filename"      => "",
             "file"          => ""
-        ]; 
+        ];
 
 
     $url =env('SERVICE').'commsetting/loginregister';
@@ -623,7 +623,7 @@ public function tabel_list_regisdata(){
 public function setting_regisdata_comm(Request $request){
 $ses_login = Session::get('session_admin_logged');
 
-$in = $request->except('_token'); 
+$in = $request->except('_token');
 $param_isi = array_values($in);
 
 $url = env('SERVICE').'commsetting/addregistrationdata';
@@ -827,7 +827,7 @@ public function edit_profile_admincom(Request $request){
     $token = $ses_login['access_token'];
     $ses_user = $ses_login['user'];
 
-    $req = new RequestController; 
+    $req = new RequestController;
     $fileimg = "";
 
 if ($request->hasFile('fileup')) {
@@ -843,7 +843,7 @@ if ($request->hasFile('fileup')) {
         "alamat" => $input['alamat_admin'],
         "filename" => $filnam,
         "file" => $imgku
-        ]; 
+        ];
 
     $url =env('SERVICE').'profilemanagement/editprofile';
     try{
@@ -868,7 +868,7 @@ if ($request->hasFile('fileup')) {
         "community_created" => $ses_user['community_created'],
         "community_type" => $ses_user['community_type'],
         "community_membership_type" => $ses_user['community_membership_type'],
-        ]); 
+        ]);
 
         alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
         return back();
@@ -877,7 +877,7 @@ if ($request->hasFile('fileup')) {
         dd($exception);
     }
 
-}else{//END-IF  UPLOAD-IMAGE 
+}else{//END-IF  UPLOAD-IMAGE
      $input = $request->all(); // getdata form by name
         $imageRequest = [
         "user_name" => $input['username_admin'],
@@ -887,7 +887,7 @@ if ($request->hasFile('fileup')) {
         "alamat" => $input['alamat_admin'],
         "filename"    => "",
         "file"        => ""
-        ]; 
+        ];
 
     $url =env('SERVICE').'profilemanagement/editprofile';
     try{
@@ -912,7 +912,7 @@ if ($request->hasFile('fileup')) {
         "community_created" => $ses_user['community_created'],
         "community_type" => $ses_user['community_type'],
         "community_membership_type" => $ses_user['community_membership_type'],
-        ]); 
+        ]);
     alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
     return back();
     } //end if sukses
@@ -1097,7 +1097,7 @@ $ses_login = Session::get('session_admin_logged');
 $token = $ses_login['access_token'];
 $input = $request->all(); // getdata req
 
-$req = new RequestController; 
+$req = new RequestController;
 $fileimg = "";
 
 if ($request->hasFile('fileup')) {
@@ -1119,7 +1119,7 @@ $paystatusjudul = "Membership Rejected";
         "cancel_description" => $input['acc_komen'],
         "filename"       => $filnam,
         "file"           => $imgku
-    ]; 
+    ];
 
 $url =env('SERVICE').'membershipmanagement/approvalmembership';
 try{
@@ -1368,7 +1368,29 @@ $ses_login = Session::get('session_admin_logged');
 }
 
 
+    public function detail_module_all(Request $request){
+        $ses_login = Session::get('session_admin_logged');
+        $input = $request->all();
 
+        $url = env('SERVICE') . 'modulemanagement/detailmodule';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(['feature_id' => $input['feature_id']]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        $response = $client->post($url, $datakirim);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json['data'];
+    }
 
 
 

@@ -8,8 +8,8 @@
 }
 
 html, body {
-  margin: 0; 
-  height: 100%; 
+  margin: 0;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   font-family: arial !important;
@@ -161,7 +161,7 @@ font-size: 0.65rem !important;
 }
 
 .bg-gradient-blue{
-background: linear-gradient(106.53deg, #96DEDA 0%, #50C9C3 56.6%);
+background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
 }
 
 .melengkung15px{
@@ -171,6 +171,11 @@ background: linear-gradient(106.53deg, #96DEDA 0%, #50C9C3 56.6%);
 .melengkung10px{
   border-radius: 10px !important;
 }
+
+.melengkung8px{
+  border-radius: 8px !important;
+}
+
 
 .melengkung6px{
   border-radius: 6px !important;
@@ -259,7 +264,7 @@ background-color: #50b7b9;
 .zoom:hover {
   -ms-transform: scale(1.5); /* IE 9 */
   -webkit-transform: scale(1.5); /* Safari 3-8 */
-  transform: scale(1.5); 
+  transform: scale(1.5);
 }
 
 
@@ -320,26 +325,26 @@ margin-left: 0.2em;
 }
 
 
-tags{ 
+tags{
     min-width:400px;
-    max-width:600px; 
+    max-width:600px;
     margin: 0em 0em;
 }
 
 
-.disabled{ 
-  tags{ display:none; 
-    & + input, & + textarea{ 
-      display:inline-block !important; 
-      width:350px; 
-      padding:.5em; 
-      border:1px inset; 
+.disabled{
+  tags{ display:none;
+    & + input, & + textarea{
+      display:inline-block !important;
+      width:350px;
+      padding:.5em;
+      border:1px inset;
     }
   }
 }
 
 tags.tagify.form-control{
-margin-top: 0em !important; 
+margin-top: 0em !important;
 height: 100%;
 min-height: 47px;
 }
@@ -425,7 +430,7 @@ outline: none !important;
 }
 
 .status_aktif{
-  background-color: 
+  background-color:
 }
 
 .btn_reset_dtable{
@@ -486,6 +491,12 @@ margin-bottom: 0em !important;
   height: 55px;
   margin-bottom: 5%;
   margin-top: 1em;
+}
+
+.img-card2{
+  width: 100%;
+  height: auto;
+  margin: auto;
 }
 
 
@@ -668,11 +679,30 @@ position: relative;
 }
 
 #btn_showpass_accmember{
-  background-color: #efefef; 
-  border-radius: 0px 10px 10px 0px;     
+  background-color: #efefef;
+  border-radius: 0px 10px 10px 0px;
   padding: 15px 10px 10px 10px;
 }
 
+
+#md_all_aktifkan_module .modal-content{
+background-color: #ffffff;
+ min-height: 350px;
+padding-left: 3%;
+padding-right: 3%;
+}
+
+.img-fitur-module{
+    width: 50px;
+    height: 50px;
+}
+
+.row .kanan{
+    text-align: right;
+}
+.row .kiri{
+    text-align: left;
+}
 
 
 
@@ -717,6 +747,12 @@ border: none;
   border-radius: 10px;
 }
 
+.btn-oren2{
+background: linear-gradient(108.22deg, #eca64e -2.66%, #efce5d 102.89%);
+  color: white;
+  border-radius: 10px;
+}
+
 .a_setmodule:hover{
     color: #0056b3;
     text-decoration: none;
@@ -731,6 +767,10 @@ border: none;
 }
 
 .cputih{
+  color: white;
+}
+
+.cwhite{
   color: white;
 }
 
