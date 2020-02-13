@@ -68,7 +68,9 @@ public function UserManagementView(){
     return view('admin/dashboard/user_management');
 }
 
-
+public function ModuleManagementView(){
+    return view("admin/dashboard/module_management");
+}
 
 
 
@@ -1327,9 +1329,43 @@ return redirect('admin/settings/payment');
 
 
 
+public function get_active_module_list(){
+$ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'modulemanagement/activemodule';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
 
 
 
+public function get_all_module_list(){
+$ses_login = Session::get('session_admin_logged');
+
+    $url = env('SERVICE').'modulemanagement/allmodule';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
 
 
 

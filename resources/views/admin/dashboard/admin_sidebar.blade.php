@@ -35,5 +35,13 @@
                 <i class="mdi mdi-account-plus menu-icon"></i>
               </a>
             </li>
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/module_management">
+                <span class="menu-title">Module Management</span>
+                <i class="mdi mdi-view-module menu-icon"></i>
+              </a>
+            </li
            
           </ul>

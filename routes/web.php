@@ -47,6 +47,8 @@ Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementV
 
 Route::get('detail_pendingsubs/{id_subs}', 'AdminCommController@detailPendingSubcriberView')->name('detail_pendingsubs/{id_subs}');
 
+Route::get('/module_management','AdminCommController@ModuleManagementView')->name('/module_management');
+
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -118,6 +120,9 @@ Route::post('add_payment_subs', 'AdminCommController@add_payment_subs')->name('a
 
 Route::post('delete_payment_subs', 'AdminCommController@delete_payment_subs')->name('delete_payment_subs');
 
+Route::post('get_active_module_list', 'AdminCommController@get_active_module_list')->name('get_active_module_list');
+
+Route::post('get_all_module_list', 'AdminCommController@get_all_module_list')->name('get_all_module_list');
 
 
 

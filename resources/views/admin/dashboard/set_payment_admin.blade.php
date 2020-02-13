@@ -154,7 +154,7 @@
 
 <form method="POST" id="form_delete_paysubs" action="{{route('delete_payment_subs')}}">
 {{ csrf_field() }}
-<input type="text" name="id_paymentsubs" id="id_paymentsubs">
+<input type="hidden" name="id_paymentsubs" id="id_paymentsubs">
  <button type="submit" class="btn bg-merah melengkung10px btn-sm">
     <i class="mdi mdi-delete btn-icon-prepend">
     </i> Delete </button>
