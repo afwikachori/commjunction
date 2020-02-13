@@ -122,13 +122,19 @@ Paid
 
 
 
-<!-- MODAL FILTER DATE -->
+<!-- MODAL APPROVAL -->
 <div class="modal fade" id="modal_approval_pendingsubs" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content modal" style="background-color: #ffffff; width: 80%;">
+    <div class="modal-content modal" style="background-color: #ffffff;">
       <form method="POST" id="form_acc_pending_subs"  action="{{route('approval_pending_subs')}}">
         {{ csrf_field() }}
-        <div class="modal-body">
+
+        <div class="modal-header"> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></div>
+
+        <div class="modal-body" style="margin-top: -1.5em;">
       <center>
         <br>
         <h3 class="cgrey">Approval Confirmation</h3>
@@ -146,7 +152,7 @@ Paid
       <i class="mdi mdi-close"></i> Reject
     </button>
     &nbsp;
-    <button type="submit" name="approval" value="true" class="btn btn-tosca btn-sm">
+    <button type="submit" name="approval" value="true" class="btn btn-teal btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Approve </button>
       </div>

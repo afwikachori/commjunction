@@ -138,6 +138,45 @@
 
 
 
+<!-- MODAL DETAIL PAYMENT SUBS  -->
+<div class="modal fade" id="modal_detail_paymentsubs" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content modal" style="background-color: #ffffff;">
+
+    <div class="modal-header" style="border-bottom: none;"> 
+      <h4 class="modal-title cgrey">Detail Payment</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+  <div class="modal-body" style="margin-top: -1.5em; min-height: 300px;">
+
+<form method="POST" id="form_delete_paysubs" action="{{route('delete_payment_subs')}}">
+{{ csrf_field() }}
+<input type="text" name="id_paymentsubs" id="id_paymentsubs">
+ <button type="submit" class="btn bg-merah melengkung10px btn-sm">
+    <i class="mdi mdi-delete btn-icon-prepend">
+    </i> Delete </button>
+</form>
+
+
+   </div> <!-- end-modal body -->
+    
+  <div class="modal-footer" style="border: none; margin-top: 1em; text-align: center; padding-right: 25%; padding-bottom: 5%;">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+      <i class="mdi mdi-close"></i> Cancel
+    </button>
+    &nbsp;
+    <button class="btn btn-teal btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Approve </button>
+  </div>
+
+    </div>
+  </div>
+</div>
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -192,16 +231,16 @@ function tabel_payment_community(){
             render: function ( data, type, row,meta ) {
             var ket ='';
             if(data == 0){ 
-              ket = '<label class="badge bg-merah round-label">Deactive</label>';
+              ket = '<label class="badge bg-abu round-label">Deactive</label>';
             }else{
-               ket = '<label class="badge bg-hijau round-label">Active</label>';
+               ket = '<label class="badge bg-tosca round-label">Active</label>';
             }
             return ket;
             }
             },
             {mData: 'id',
             render: function ( data, type, row,meta ) {
-          return '<button type="button" class="btn btn-gradient-light btn-sm btn-rounded btn-icon" style="width:28px; height:28px;">'+
+          return '<button type="button" class="btn btn-gradient-light btn-sm btn-rounded btn-icon" style="width:28px; height:28px; "  onclick="detail_subspay(\'' + data + '\')">'+
           '<i class="mdi mdi-eye"></i>'+
                 '</button>';
               }
@@ -280,6 +319,16 @@ $.ajax({
     }
 });
 } //endfunction
+
+
+
+
+function detail_subspay(idpay){
+// alert(idpay);
+$("#id_paymentsubs").val(idpay);
+$("#modal_detail_paymentsubs").modal("show");
+}
+
 
 </script>
 

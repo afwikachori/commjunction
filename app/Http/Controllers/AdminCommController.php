@@ -1272,7 +1272,7 @@ $bodyku = json_encode([
     'payment_time_limit' => $input['pay_time_limit'],
     'status' => $input['payment_status']
 ]);
-return $bodyku;
+// return $bodyku;
 
 $datakirim = [
 'body' => $bodyku,
@@ -1297,6 +1297,33 @@ if( $json['success'] == true){
 }
 }
 
+
+public function delete_payment_subs(Request $request){
+$ses_login = Session::get('session_admin_logged');
+$input = $request->all();
+
+$url = env('SERVICE').'commsetting/deletepayment';
+$client = new \GuzzleHttp\Client();
+
+$headers = [
+ 'Content-Type' => 'application/json',
+ 'Authorization' => $ses_login['access_token']
+];
+$bodyku = json_encode(['payment_id' => $input['id_paymentsubs']]);
+
+$datakirim = [
+'body' => $bodyku,
+'headers' => $headers,
+];
+$response = $client->post($url, $datakirim);
+$response = $response->getBody()->getContents();
+$json = json_decode($response, true);
+// return $json;
+if( $json['success'] == true){
+alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
+return redirect('admin/settings/payment');
+}
+}
 
 
 

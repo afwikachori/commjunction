@@ -175,7 +175,8 @@ padding: 2rem 5rem 0;
 
 .round-label{
   min-width: 80px;
-  border-radius: 8px;
+  border-radius: 12px;
+  color: white;
 }
 
 
@@ -199,11 +200,14 @@ background-color: #cbe8b9;
 }
 
 .bg-abu{
-  background-color: #c8dad3;
+  background-color: #cacaca;
 }
 
 .bg-biru{
 background-color: #beebe9;
+}
+.bg-tosca{
+background-color: #50b7b9;
 }
 
 .modal_ajax .modal-content{

@@ -116,6 +116,12 @@ Route::post('approval_pending_subs', 'AdminCommController@approval_pending_subs'
 
 Route::post('add_payment_subs', 'AdminCommController@add_payment_subs')->name('add_payment_subs');
 
+Route::post('delete_payment_subs', 'AdminCommController@delete_payment_subs')->name('delete_payment_subs');
+
+
+
+
+
 
 
 }); //ADMIN-COMMUNITY
