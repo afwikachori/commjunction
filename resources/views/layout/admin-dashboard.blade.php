@@ -11,7 +11,7 @@
 
     <!-- ICON WEB -->
     <link rel="icon" href="/img/commjuction_icoweb.ico"/>
-    
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
@@ -24,22 +24,22 @@
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/admin-mobile.css">
 
-    <!-- tags --> 
-    <link rel="stylesheet" href="/css/tags/tagify.css"> 
+    <!-- tags -->
+    <link rel="stylesheet" href="/css/tags/tagify.css">
 
     <!-- chart -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
     <!-- dataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
-    
+
 
 
     @yield('css')
   </head>
 
-  
+
   <body>
  @if (Session::has('session_admin_logged'))
   <div class="container-scroller">
@@ -125,7 +125,7 @@
 
   <div class="modal-header" style="padding-bottom: 0em !important;">
     <h4 class="modal-title cgrey">Edit Profile</h4>
-   
+
     <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm" style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_admin" data-dismiss="modal">Change Password</button>
 </div> <!-- end-header -->
 
@@ -140,7 +140,7 @@
       </button>
         <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil" type="file" name="fileup" accept="image/*"/>
      </div>
-</div> 
+</div>
 
 
 
@@ -254,7 +254,7 @@
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
   <center>
     <img src="/img/logout.png" id="img_signout_admin">
-    <h3 class="cgrey">Logout Comfirmation</h3> 
+    <h3 class="cgrey">Logout Comfirmation</h3>
     <small class="clight">Are you sure, you want to exit ?</small>
   </center>
 </div> <!-- end-body -->
@@ -268,6 +268,10 @@
     <a href="/admin/logout" type="button"class="btn btn-tosca btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
         </i> Yeah, Im Sure </a>
+     {{-- <button onclick="logout_admin_community()" type="button"class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend">
+        </i> Yeah, Im Sure </button> --}}
+
   </center>
   </div>  <!-- end-footer     -->
 
@@ -281,7 +285,7 @@
 
 
 
-  @else 
+  @else
   <script>window.location = "/admin";</script>
   @endif
 
@@ -317,7 +321,7 @@
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')
-    
+
     @yield('script')
   </body>
 </html>

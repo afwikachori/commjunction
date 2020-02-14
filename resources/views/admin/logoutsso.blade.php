@@ -10,7 +10,7 @@
 
 $(document).ready(function () {
 onLoad();
-});  
+});
 
 function onLoad() {
 	gapi.load('auth2', function() {
@@ -26,7 +26,7 @@ function signOut() {
     });
   }
 
-  
+
 
 </script>
 

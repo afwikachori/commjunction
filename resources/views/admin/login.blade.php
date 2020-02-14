@@ -43,14 +43,14 @@
                  {{ csrf_field() }}
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="useradmin" lang="en">Username</label>
-                    <input lang="en" type="text" class="form-control" id="useradmin" aria-describedby="emailHelp" class="form-control @error('useradmin') is-invalid @enderror" name="useradmin" value="{{ old('useradmin') }}" required autocomplete="useradmin" autofocus>
+                    <input lang="en" type="text" class="form-control" id="useradmin" aria-describedby="emailHelp" class="form-control @error('useradmin') is-invalid @enderror" name="useradmin" required autocomplete="useradmin" autofocus>
                 </div>
 
                 <div class="form-group mb-3">
                 <label class="h6 cgrey" for="passadmin" lang="en">Password</label>
 
                 <div class="input-group">
-                  <input class="form-control" id="passadmin" type="password"  value="{{ old('passadmin') }}"  class="form-control @error('passadmin') is-invalid @enderror" name="passadmin" required autocomplete="passadmin" aria-describedby="btn_showpass">
+                  <input class="form-control" id="passadmin" type="password"  class="form-control @error('passadmin') is-invalid @enderror" name="passadmin" required autocomplete="passadmin" aria-describedby="btn_showpass">
                   <div class="input-group-append">
                     <button class="btn btn-outline-light" type="button" id="btn_showpass" onclick="showPass()" style="border-color: #ced4da;">
                          <span class="fa fa-eye" id="ico-mata" aria-hidden="true" style="color: grey;"></span>
@@ -62,7 +62,7 @@
                 <div class="row mb-3">
                 <div class="col">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="rememberme">
+                      <input class="form-check-input" type="checkbox" id="rememberme_admincomm" name="rememberme_admincomm" onclick="remember_me_admin()">
                       <label class="h6 form-check-label cteal" for="gridCheck" style="color: rgba(14, 95, 117, 0.75);" lang="en">Remember me</label>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         <div  id="signGoogle" class="RegisterGoogle mgtop-1"></div>
                     </div>
                     <div class="col">
-                    
+
                     </div>
                 </div> </center>
             </form>
@@ -94,10 +94,16 @@
 
 @section('script')
 <script type="text/javascript">
+var server_cdn = '{{ env("CDN") }}';
+
+$(document).ready(function () {
+checking_remember();
+});
+
 
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); 
+        console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
@@ -141,6 +147,52 @@
     b.class = "fa fa-eye";
   }
 }
+
+
+
+function remember_me_admin() {
+  var checkBox = document.getElementById("rememberme_admincomm");
+
+  if (checkBox.checked == true){
+    var username = $('#useradmin').val();
+    var password = $('#passadmin').val();
+
+    $.cookie('useradmin', username, { expires: 30 });
+    $.cookie('passadmin', password, { expires: 30 });
+    $.cookie('rememberme_admincomm', true, { expires: 30 });
+  }
+  else {
+    $.cookie('useradmin', null);
+    $.cookie('passadmin', null);
+    $.cookie('remember', null);
+  }
+}
+
+function checking_remember() {
+var remember = $.cookie('rememberme_admincomm');
+
+if ( remember == 'true' ) {
+    var username = $.cookie('useradmin');
+    var password = $.cookie('passadmin');
+    
+if( username != null && password != null){
+    $('#useradmin').val(username);
+    $('#passadmin').val(password);
+    $('#rememberme_admincomm').attr( "checked", "checked");
+}else{
+     $('#useradmin').val("");
+    $('#passadmin').val("");
+    $('#rememberme_admincomm').removeAttr( "checked", "checked");
+}
+
+ }else{
+    $('#useradmin').val("");
+    $('#passadmin').val("");
+    $('#rememberme_admincomm').removeAttr( "checked", "checked");
+ }
+}
+
+
 
 </script>
 

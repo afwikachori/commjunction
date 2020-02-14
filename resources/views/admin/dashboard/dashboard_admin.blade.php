@@ -147,10 +147,10 @@
     </div>
   </div>
   </div>
-              
 
 
-           
+
+
             <div class="row">
               <div class="col-md-9 grid-margin stretch-card">
                 <div class="card">
@@ -185,10 +185,10 @@
 
                     <br>
                     <div class="table-responsive">
-                     <table id="tabel_pending_subs" class="table table-hover dt-responsive nowrap" style="width:100%"> 
-                      <thead> 
-                        <tr> 
-                         <center> 
+                     <table id="tabel_pending_subs" class="table table-hover dt-responsive nowrap" style="width:100%">
+                      <thead>
+                        <tr>
+                         <center>
                             <th class="bg-greymuda">No</th>
                             <th class="bg-greymuda">Name</th>
                             <th class="bg-greymuda">Photo</th>
@@ -196,9 +196,9 @@
                             <th class="bg-greymuda">Action</th>
                           </center>
                         </tr>
-                        </thead> 
+                        </thead>
                         <tbody id="isi_pendingsubs">
-                          
+
                         </tbody>
                     </table>
                     </div>
@@ -210,7 +210,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Top 5 Subsciber</h4>
                    <ul class="list-star" id="top-5-subs">
-                      
+
                     </ul>
                   </div>
                 </div>
@@ -247,7 +247,7 @@
 
   <div class="row modal_initial_fitur">
     <!-- isi admincom.js / get_initial_feature(); -->
-  </div> 
+  </div>
       </div> <!-- end-modal body -->
       <center>
   <div class="modal-footer" id="mdl-footer-initialfitur">
@@ -331,16 +331,16 @@ $.ajax({
       $(".total_transaction_count").html(result.total_transaction_count +" Transaction");
       $(".total_trans_number").html(result.total_transaction_number +" Transaction");
 
-      if(result.top_subscriber != ""){
+      if(result.top_subscriber[0] != ""){
       var top5 ='';
-      $.each(result.top_subscriber, function(i,item){
+      $.each(result.top_subscriber[0], function(i,item){
         top5 += ' <li>'+item.full_name+'</li>';
       });
       $('#top-5-subs').html(top5);
       }else{
       $('#top-5-subs').html('<center><br><br><br><br><h2 class="display-3" style="color: #c5c5c5;">No Data</h1></center>');
       }
-     
+
 
       },
       error: function (result) {

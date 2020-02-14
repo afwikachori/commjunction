@@ -60,7 +60,7 @@ $.ajax({
       $(".logo_komunitas").attr("src", server_cdn+user.community_logo);
 
        if(user.status == 1){ //first-login
-        get_initial_feature(result.feature); //isi data 
+        get_initial_feature(result.feature); //isi data
         $("#initial1").modal('show');
         $("#comm_status_admin").html("Verified - First Login");
         $(".statuscomm").html('Newbie');
@@ -76,7 +76,7 @@ $.ajax({
         window.location.href = "/admin";
       }
 
-      
+
     }
       },
       error: function (result) {
@@ -93,7 +93,7 @@ var arr = [];
       var html ='';
      $.each(arr, function(i,item){
     // console.log(item.title);
-    html += 
+    html +=
     '<div class="col-md-6 mgku-1">'+
       '<div class="media">'+
           '<img src="'+server_cdn+item.logo+'" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">'+
@@ -108,6 +108,20 @@ var arr = [];
     });
      $('.modal_initial_fitur').html(html);
 }
+
+
+
+// function logout_admin_community() {
+//     gapi.load('auth2', function () {
+//         gapi.auth2.init();
+//     });
+
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//         window.location.href = "/admin/logout";
+//     });
+
+// }
 
 
 
@@ -135,11 +149,11 @@ img.onclick = function(){
 }
 
 function rupiah(val){
-var   bilangan = val;    
+var   bilangan = val;
 var reverse = bilangan.toString().split('').reverse().join(''),
   ribuan  = reverse.match(/\d{1,3}/g);
   ribuan  = ribuan.join('.').split('').reverse().join('');
- 
+
 return ribuan;
 }
 
@@ -150,9 +164,9 @@ function formatDate(date) {
         day = '' + d.getDate(),
         year = d.getFullYear();
 
-    if (month.length < 2) 
+    if (month.length < 2)
         month = '0' + month;
-    if (day.length < 2) 
+    if (day.length < 2)
         day = '0' + day;
 
     return [day, month, year].join('/');
@@ -176,16 +190,16 @@ $(".tabbable-line li a").click(function() {
             reader.onload = function (e) {
                 $('#view_edit_user').attr('src', e.target.result);
             }
-    
+
             reader.readAsDataURL(input.files[0]);
         }
     }
-    
+
 
     $("#file_edit_profil_user").on('change', function(){
         readURLuser(this);
     });
-    
+
     $("#browse_user_admin").on('click', function() {
        $("#file_edit_profil_user").click();
     });
