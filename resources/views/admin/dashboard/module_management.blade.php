@@ -82,21 +82,62 @@
 
 
 
-<!-- MODAL DETAIL MODULE ACTIVE-->
+<!-- MODAL SETTING  MODULE -->
 <div class="modal fade" id="mdl_detail_module_active" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="background-color: #ffffff; min-height: 350px;">
-            <div class="modal-header" style="padding-bottom: 0em !important;">
-                <h4 class="modal-title cgrey">Detail Module</h4>
-
-                <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm" style="margin-bottom: 1em;"
-                    data-toggle="modal" data-target="#modal_changepass_admin" data-dismiss="modal">Change
-                    Password</button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
+            <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
+                <h3 class="modal-title cgrey">Setting Module</h3>
+                <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>
             </div> <!-- end-header -->
 
-            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                Module Active Detail
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <small class="cgrey1 tebal name_setting">Setting Name</small>
+                                <p class="clight s13 deskripsi_setting">
+                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <small class="cgrey1 tebal name_setting">Setting Name</small>
+                                <p class="clight s13 deskripsi_setting">
+                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <small class="cgrey1 tebal name_setting">Setting Name</small>
+                                <p class="clight s13 deskripsi_setting">
+                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
+                        </div>
+                    </div>
+
+
+                </form>
             </div> <!-- end-body -->
 
             <div class="modal-footer" style="border: none;">
@@ -300,7 +341,9 @@
                         '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                         '<div class="card-body member">' +
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<label class="badge btn-oren melengkung10px float-right">Active</label>' +
+                        '<button class="btn btn-sm badge btn-oren melengkung10px" style="position:absolute; margin-bottom:-1em; right:5%;"'+
+                        'onclick="detail_module_all(\'' + item.feature_id + '\')">'+
+                        '<small>Ready</small></button><br>' +
                         '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                         '<div class="row">' +
                         '<div class="col-md-12">' +
@@ -459,10 +502,18 @@
                 }
 
                 var subf = '';
+                var jum = 0;
                 $.each(dt.subfeature, function (i, item) {
                     // console.log(item);
+                    var colum;
+                    jum++;
+                    if(jum == 1){
+                        colum = "col-md-12";
+                    }else{
+                        colum = "col-md-6";
+                    }
 
-                    subf += '<div class="col-md-6 stretch-card grid-margin' +
+                    subf += '<div class="'+colum+' stretch-card grid-margin' +
                         'data-toggle="tooltip" data-placement="top" title="'+item.description+'"'+
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
                         '<div class="card bg-gradient-blue card-img-holder text-white">' +
