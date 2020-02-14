@@ -125,6 +125,8 @@ Route::post('get_all_module_list', 'AdminCommController@get_all_module_list')->n
 
 Route::post('detail_module_all', 'AdminCommController@detail_module_all')->name('detail_module_all');
 
+Route::post('aktifasi_module_admincomm', 'AdminCommController@aktifasi_module_admincomm')->name('aktifasi_module_admincomm');
+
 
 
 

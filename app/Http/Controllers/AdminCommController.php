@@ -13,7 +13,7 @@ class AdminCommController extends Controller{
 
 // METHOD GET
 
-// @if (Session::has('session_admin_logged'))
+// @if (session()->has('session_admin_logged'))
 // @else
 //   <script>window.location = "/admin";</script>
 //   @endif
@@ -103,7 +103,7 @@ try{
     // dd($json);
 
     if($json['success'] == true){
-    Session::put('session_admin_logged', $json['data']);
+    session()->put('session_admin_logged', $json['data']);
     $nameku = $json['data']['user']['full_name'];
 
     return redirect('admin/dashboard')->with('nama_admin',$nameku );
@@ -123,8 +123,8 @@ $code_error = $exception->getCode();
 
 //SESSION LOGGED USER - DASHBOARD SUPERADMIN
 public function session_admin_logged(){
-    if(Session::has('session_admin_logged')){
-    $ses_login = Session::get('session_admin_logged');
+    if(session()->has('session_admin_logged')){
+    $ses_login = session()->get('session_admin_logged');
     return $ses_login;
     }else{
     return redirect('admin');
@@ -132,7 +132,7 @@ public function session_admin_logged(){
 }
 
 public function LogoutAdmin(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'profilemanagement/logout';
     $client = new \GuzzleHttp\Client();
@@ -147,7 +147,7 @@ public function LogoutAdmin(){
 try{
     $response = $response->getBody()->getContents();
     $json = json_decode($response, true);
-    Session::forget('session_admin_logged');
+   session()->forget('session_admin_logged');
 
     if($json['success'] == true){
         return redirect('admin');
@@ -164,7 +164,7 @@ try{
 
 
 public function get_dashboard_admin(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
     // return $ses_login['access_token'];
 
     $url = env('SERVICE').'dashboard/admincommunity';
@@ -184,7 +184,7 @@ public function get_dashboard_admin(){
 
 
 public function tabel_subs_management(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 $client = new \GuzzleHttp\Client();
 // return $input;
@@ -234,7 +234,7 @@ $url = env('SERVICE').'subsmanagement/listsubs';
 
 
 public function filter_membership_subs(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 $client = new \GuzzleHttp\Client();
 
@@ -267,7 +267,7 @@ try{
 
 
 public function tabel_subs_pending(){
-     $ses_login = Session::get('session_admin_logged');
+     $ses_login = session()->get('session_admin_logged');
 
     // return $ses_login['access_token'];
 
@@ -288,7 +288,7 @@ public function tabel_subs_pending(){
 
 
 public function setting_publish_comm(){
-     $ses_login = Session::get('session_admin_logged');
+     $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'commsetting/publish';
     $client = new \GuzzleHttp\Client();
@@ -313,7 +313,7 @@ public function setting_publish_comm(){
 
 
 public function detailSubcriberManagementView($id_subs){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $urlx = env('SERVICE').'subsmanagement/detailsubs';
 
 $client = new \GuzzleHttp\Client();
@@ -369,7 +369,7 @@ public function editSubsManagementView($id_subs){
 
 
 public function detailPendingSubcriberView($id_pending){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $urlx = env('SERVICE').'subsmanagement/detailsubs';
 
 $client = new \GuzzleHttp\Client();
@@ -420,7 +420,7 @@ return view('admin/dashboard/detail_subs_pending')->with($dtaku);
 
 
 public function edit_profil_community(Request $request){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
     $token = $ses_login['access_token'];
     $ses_user = $ses_login['user'];
     // return $ses_user;
@@ -446,7 +446,7 @@ public function edit_profil_community(Request $request){
       $resImg = $req->editProfilCommunity($imageRequest,$url,$token);
       $hasil = $resImg['data'];
     if ($resImg['success'] == true) {
-     Session::put('session_admin_logged.user', [
+     session()->put('session_admin_logged.user', [
         "user_name" => $ses_user['user_name'],
         "full_name" => $ses_user['full_name'],
         "picture" => $ses_user['picture'],
@@ -502,7 +502,7 @@ public function edit_profil_community(Request $request){
 public function setting_loginresgis_comm(Request $request){
 // dd($request);
 
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
     $token = $ses_login['access_token'];
 
     $req = new RequestController;
@@ -568,7 +568,7 @@ public function setting_loginresgis_comm(Request $request){
 
 public function setting_membership_comm(Request $request){
 // dd($request);
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'commsetting/membershiptype';
@@ -600,7 +600,7 @@ return redirect('/admin/settings/membership');
 
 
 public function tabel_list_regisdata(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'commsetting/listregistrationdata';
     $client = new \GuzzleHttp\Client();
@@ -621,7 +621,7 @@ public function tabel_list_regisdata(){
 
 
 public function setting_regisdata_comm(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 
 $in = $request->except('_token');
 $param_isi = array_values($in);
@@ -650,37 +650,11 @@ return redirect('/admin/settings/registrasion_data');
 
 
 
-public function filter_subs(){
-$ses_login = Session::get('session_admin_logged');
-$urlx = env('SERVICE').'subsmanagement/filtersubsbydate
-';
-
-$client = new \GuzzleHttp\Client();
-$headers = [
- 'Content-Type' => 'application/json',
- 'Authorization' => $ses_login['access_token']
-];
-$bodyku = json_encode([
-'start_date'   => $input['subs_datemulai'],
-'end_date'    => $input['subs_dateselesai']
-]);
-
-$options = [
-'body' => $bodyku,
-'headers' => $headers,
-];
-
-$response = $client->post($urlx, $options);
-$response = $response->getBody()->getContents();
-$json = json_decode($response, true);
-return $json;
-
-}
 
 
 
 public function get_list_membership_admin(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 // return $ses_login;
 // return $ses_login['access_token'];
 
@@ -702,7 +676,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
 public function tabel_req_membership(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'membershipmanagement/membershipreq';
 
@@ -721,7 +695,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
 public function get_membership_subs(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'subsmanagement/membership';
     $client = new \GuzzleHttp\Client();
@@ -741,7 +715,7 @@ public function get_membership_subs(){
 
 
 public function get_payment_tipe(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'commsetting/listpaymenttype';
     $client = new \GuzzleHttp\Client();
@@ -760,7 +734,7 @@ public function get_payment_tipe(){
 
 
 public function get_bank_pay(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'commsetting/listbank';
     $client = new \GuzzleHttp\Client();
@@ -779,7 +753,7 @@ public function get_bank_pay(){
 
 
 public function tabel_payment_community(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $url = env('SERVICE').'commsetting/listpayment';
 $client = new \GuzzleHttp\Client();
 
@@ -797,7 +771,7 @@ return $json['data'];
 
 
 public function get_detail_membership_req(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'membershipmanagement/detailmembershipreq';
@@ -823,7 +797,7 @@ return $json['data'];
 
 public function edit_profile_admincom(Request $request){
 // dd($request);
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
     $token = $ses_login['access_token'];
     $ses_user = $ses_login['user'];
 
@@ -850,7 +824,7 @@ if ($request->hasFile('fileup')) {
       $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
       // return $resImg['data'];
     if ($resImg['success'] == true) {
-         Session::put('session_admin_logged.user', [
+         session()->put('session_admin_logged.user', [
         "user_name" => $resImg['data']['user_name'],
         "full_name" => $resImg['data']['full_name'],
         "picture" => $resImg['data']['sso_picture'],
@@ -894,7 +868,7 @@ if ($request->hasFile('fileup')) {
       $resImg = $req->editProfileAdmin($imageRequest,$url,$token);
 
       if ($resImg['success'] == true) {
-        Session::put('session_admin_logged.user', [
+        session()->put('session_admin_logged.user', [
         "user_name" => $resImg['data']['user_name'],
         "full_name" => $resImg['data']['full_name'],
         "picture" => $resImg['data']['sso_picture'],
@@ -929,7 +903,7 @@ if ($request->hasFile('fileup')) {
 
 public function change_password_admincom(Request $request){
 // dd($request);
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'profilemanagement/changepassword';
@@ -972,7 +946,7 @@ if( $json['success'] == true){
 
 
 public function tabel_user_management(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'usermanagement/listuser';
     $client = new \GuzzleHttp\Client();
@@ -993,7 +967,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
 public function get_user_tipe_manage(){
-    $ses_login = Session::get('session_admin_logged');
+    $ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'usermanagement/listusertype';
     $client = new \GuzzleHttp\Client();
@@ -1014,7 +988,7 @@ public function get_user_tipe_manage(){
 
 public function add_user_management(Request $request){
 // dd($request);
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'usermanagement/createuser';
@@ -1062,7 +1036,7 @@ if( $json['success'] == true){
 
 
 public function nonaktif_status_subs(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'subsmanagement/nonactivesubs';
@@ -1093,7 +1067,7 @@ return redirect('admin/subs_management');
 
 public function approval_req_membership(Request $request){
     // dd($request);
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $token = $ses_login['access_token'];
 $input = $request->all(); // getdata req
 
@@ -1141,7 +1115,7 @@ $resImg = $req->accReqMembership($imageRequest,$url,$token);
 
 
 public function approval_pending_subs(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'subsmanagement/approvalsubs';
@@ -1182,7 +1156,7 @@ if ($json['success'] == true) {
 
 
 public function detail_user_management(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'usermanagement/detailuser';
@@ -1210,7 +1184,7 @@ return $json['data'];
 
 public function edit_user_management(Request $request){
 // dd($request);
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'usermanagement/edituser';
@@ -1255,7 +1229,7 @@ if( $json['success'] == true){
 
 
 public function add_payment_subs(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'commsetting/addpayment';
@@ -1301,7 +1275,7 @@ if( $json['success'] == true){
 
 
 public function delete_payment_subs(Request $request){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 $input = $request->all();
 
 $url = env('SERVICE').'commsetting/deletepayment';
@@ -1330,7 +1304,7 @@ return redirect('admin/settings/payment');
 
 
 public function get_active_module_list(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'modulemanagement/activemodule';
     $client = new \GuzzleHttp\Client();
@@ -1350,7 +1324,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
 public function get_all_module_list(){
-$ses_login = Session::get('session_admin_logged');
+$ses_login = session()->get('session_admin_logged');
 
     $url = env('SERVICE').'modulemanagement/allmodule';
     $client = new \GuzzleHttp\Client();
@@ -1369,7 +1343,7 @@ $ses_login = Session::get('session_admin_logged');
 
 
     public function detail_module_all(Request $request){
-        $ses_login = Session::get('session_admin_logged');
+        $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
         $url = env('SERVICE') . 'modulemanagement/detailmodule';
@@ -1392,6 +1366,36 @@ $ses_login = Session::get('session_admin_logged');
         return $json['data'];
     }
 
+
+    public function aktifasi_module_admincomm(Request $request){
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'modulemanagement/addmodule';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'feature_id' => $input['id_modulefitur'],
+            'payment_time' => $input['payment_time'],
+            'payment_method_id' => $input['payment_method_id']
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        $response = $client->post($url, $datakirim);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        if ($json['success'] == true) {
+            alert()->success('Successfully Add Module Feature', 'Module Added')->persistent('Done');
+            return redirect('admin/module_management');
+        }
+    }
 
 
 

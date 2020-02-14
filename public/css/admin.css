@@ -216,6 +216,11 @@ border-radius: 10px;
 background-color: #cbe8b9;
 }
 
+.bg-ijo{
+ background: linear-gradient(106deg, #43b95f -2.66%, #b3e273 102.89%);
+border: none;
+}
+
 .bg-merah{
   background-color: #ffd6d6;
 }
@@ -375,6 +380,11 @@ min-height: 47px;
   border: none;
 }
 
+#md_all_aktifkan_module .modal-dialog{
+width: 800px;
+}
+
+
 
 .btn-ijo{
   background: #299643;
@@ -382,6 +392,15 @@ min-height: 47px;
   border-radius: 10px;
   font-weight: lighter !important;
   border: none;
+}
+
+.btn-gradient-ijo{
+background: linear-gradient(117.13deg, #22bf6f 0%, #6adc6a 56.6%);
+color: white;
+  border-radius: 10px;
+  font-weight: lighster !important;
+  border: none;
+  min-width: 75px;;
 }
 
 
@@ -687,7 +706,7 @@ position: relative;
 
 #md_all_aktifkan_module .modal-content{
 background-color: #ffffff;
- min-height: 350px;
+ min-height: 560px;
 padding-left: 3%;
 padding-right: 3%;
 }
