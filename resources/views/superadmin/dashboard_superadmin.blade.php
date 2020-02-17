@@ -27,8 +27,8 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <small class="clight">Total Feature Active</small>
-                        <h4 class="cgrey-mid total_fituraktif">0 Features</h4>
+                        <small class="clight">Total Community</small>
+                        <h6 class="cgrey-mid dashone total_komunitas">0 Community</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-chart-bubble mdi-24px float-right top-ico cteal"></i>
@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-9">
                         <small class="clight">Total Subscriber</small>
-                        <h4 class="cgrey-mid total_subs">0 Person</h4>
+                        <h4 class="cgrey-mid dashone total_subs">0 Person</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-human-handsup mdi-24px float-right top-ico cteal"></i>
@@ -62,7 +62,7 @@
                     <div class="col-9">
                         <small class="clight">
                             Total Transaction Count</small>
-                        <h4 class="cgrey-mid total_transaction_count">0 Transaction</h4>
+                        <h4 class="cgrey-mid dashone total_transaction_count">0 Transaction</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-cart mdi-24px float-right top-ico cteal"></i>
@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-9">
                         <small class="clight"> Total Transaction Number</small>
-                        <h4 class="cgrey-mid total_trans_number">0 Transaction</h4>
+                        <h4 class="cgrey-mid dashone total_trans_number">0 Transaction</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
@@ -149,7 +149,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Chart Transaction</h4>
-                <canvas id="myChartTransaction"></canvas>
+                <canvas id="myChartTransaction_superadmin"></canvas>
             </div>
         </div>
     </div>
@@ -185,93 +185,6 @@
 
 
 
-    $("#btn-initial1").click(function () {
-        $("#initial1").modal('hide');
-        $("#initial2").modal('show');
-        $("#initial3").modal('hide');
-    });
-
-    $("#btn-initial2").click(function () {
-        $("#initial1").modal('hide');
-        $("#initial2").modal('hide');
-        $("#initial3").modal('show');
-    });
-
-    $("#btn-initial3").click(function () {
-        $("#initial1").modal('hide');
-        $("#initial2").modal('hide');
-        $("#initial3").modal('hide');
-    });
-
-    function chart_activity(data) {
-        var dt = data[0];
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-
-            // The data for our dataset
-            data: {
-                labels: [dt.x],
-                datasets: [{
-                    label: dt.x,
-                    backgroundColor: 'rgb(255, 255, 230)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [dt.y]
-                }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
-    }
-
-    function chart_activity(data) {
-        var dt = data[0];
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-
-            // The data for our dataset
-            data: {
-                labels: [dt.x],
-                datasets: [{
-                    label: dt.x,
-                    backgroundColor: 'rgb(255, 255, 230)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [dt.y]
-                }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
-    }
-
-    function chart_transaction(data) {
-        var dt = data[0];
-        var ctx = document.getElementById('myChartTransaction').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-            // The data for our dataset
-            data: {
-                labels: [dt.x],
-                datasets: [{
-                    label: dt.x,
-                    backgroundColor: 'rgb(255, 255, 230)',
-                    borderColor: 'rgb(0, 184, 230)',
-                    data: [dt.y]
-                }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
-    }
-
-
 
 
     function get_dashboard_superadmin() {
@@ -285,26 +198,71 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
-                // console.log("subs" +pending_subs);
-                chart_activity(result.chart_activity);
+                // console.log(result.chart_transaction);
+
+
                 chart_transaction(result.chart_transaction);
 
-                $(".total_fituraktif").html(result.total_feature_active + " Features");
-                $(".total_subs").html(result.total_subscriber + " Person");
-                $(".total_transaction_count").html(result.total_transaction_count + " Transaction");
-                $(".total_trans_number").html(result.total_transaction_number + " Transaction");
+                var jumlah_subs =0;
+                $.each(result.total_subscriber, function (i, item) {
+                jumlah_subs++;
+                });
+                $(".total_komunitas").html(jumlah_subs + " Communities")
 
 
 
             },
             error: function (result) {
-                console.log("Cant Show");
+                console.log("Cant Show Dashboard Admin Commjuction");
             }
         });
     }
 
 
+
+
+    function chart_transaction(data) {
+        // console.log(data);
+        var ex =[];
+        var ye = [];
+        var colr = [];
+
+        $.each(data, function (i, item) {
+         ex.push(item.x);
+         ye.push(item.y);
+         colr.push(getRandomColor());
+        });
+
+        console.log(colr);
+
+        var ctx = document.getElementById('myChartTransaction_superadmin').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: [ex],
+                datasets: [{
+                    label: 'Trasaction',
+                    backgroundColor: colr,
+                    borderColor: colr,
+                    data: [ye]
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    }
+
+    function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
 
 </script>
