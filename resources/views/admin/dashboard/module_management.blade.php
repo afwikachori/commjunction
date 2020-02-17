@@ -8,7 +8,7 @@
         </span> Module Management</h3>
 
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-tosca btn-sm">Add New Module</button>
+        <!-- <button type="button" class="btn btn-tosca btn-sm">Add New Module</button> -->
     </nav>
 </div>
 
@@ -254,7 +254,8 @@
                     <div class="col-md-6">
                         <small class="clight">Module Features</small>
                         <div class="row">
-                            <div class="card-deck show_subfitur_module">
+                            <div class="card-deck show_subfitur_module" 
+                            style="width:100%;">
                                 <!-- mulai -->
                                 <!-- <div class="col-md-6 stretch-card grid-margin"
                                     style="margin-right: -2em; margin-bottom: 0.5em;">
@@ -507,13 +508,8 @@
                     // console.log(item);
                     var colum;
                     jum++;
-                    if(jum == 1){
-                        colum = "col-md-12";
-                    }else{
-                        colum = "col-md-6";
-                    }
 
-                    subf += '<div class="'+colum+' stretch-card grid-margin' +
+                    subf += '<div class="col-md-6 stretch-card grid-margin' +
                         'data-toggle="tooltip" data-placement="top" title="'+item.description+'"'+
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
                         '<div class="card bg-gradient-blue card-img-holder text-white">' +

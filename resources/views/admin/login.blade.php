@@ -80,7 +80,7 @@
                 <center>
                 <div class="row" style="margin-bottom: 2em;">
                     <div class="col" style="margin-bottom: 0.5em;">
-                        <div  id="signGoogle" class="RegisterGoogle mgtop-1"></div>
+                       <div class="g-signin2 login" data-onsuccess="onSignIn"></div>
                     </div>
                     <div class="col">
 
@@ -101,6 +101,8 @@ checking_remember();
 });
 
 
+
+/// BUTTON GOOGLE SIGIN
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
         console.log('ID: ' + profile.getId());
@@ -108,7 +110,6 @@ checking_remember();
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
     }
-
 
     function onSuccess(googleUser) {
         console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
@@ -121,20 +122,11 @@ checking_remember();
     function onFailure(error) {
         console.log(error);
     }
+// END-BUTTON GOOGLE SIGIN
 
 
-    function renderButton() {
-        gapi.signin2.render('signGoogle', {
-            'scope': 'profile email',
-            'width': 185,
-            'height': 33,
-            'border-radius': 20,
-            'longtitle': true,
-            'theme': 'light',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-        });
-    }
+
+
 
  function showPass() {
   var a = document.getElementById("passadmin");
@@ -174,17 +166,15 @@ var remember = $.cookie('rememberme_admincomm');
 if ( remember == 'true' ) {
     var username = $.cookie('useradmin');
     var password = $.cookie('passadmin');
-    
-if( username != null && password != null){
-    $('#useradmin').val(username);
-    $('#passadmin').val(password);
-    $('#rememberme_admincomm').attr( "checked", "checked");
-}else{
-     $('#useradmin').val("");
-    $('#passadmin').val("");
-    $('#rememberme_admincomm').removeAttr( "checked", "checked");
-}
-
+    if( username != null && password != null){
+        $('#useradmin').val(username);
+        $('#passadmin').val(password);
+        $('#rememberme_admincomm').attr( "checked", "checked");
+    }else{
+        $('#useradmin').val("");
+        $('#passadmin').val("");
+        $('#rememberme_admincomm').removeAttr( "checked", "checked");
+    }
  }else{
     $('#useradmin').val("");
     $('#passadmin').val("");

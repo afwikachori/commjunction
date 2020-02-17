@@ -1400,6 +1400,25 @@ $ses_login = session()->get('session_admin_logged');
 
 
 
+public function cek_prepare_publish(){
+    $ses_login = session()->get('session_admin_logged');
+
+    $url = env('SERVICE').'commsetting/listsettingcomm';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
 
 
 

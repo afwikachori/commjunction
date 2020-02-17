@@ -28,7 +28,7 @@
 </div>
 </div>
 
-<div class="row" style="text-align: center;">
+<div class="row justify-content-center" style="text-align: center;">
 <div class="card-deck price-ajax">
 
 </div>
@@ -55,7 +55,7 @@ get_pricing();
 });
 
 var id_fitur="";
-var isi =""; 
+var isi ="";
 // $("#time-pricing1" ).click(function() {
 //   $( "#tampung_idtime").value(this.value);
 // });
@@ -106,7 +106,7 @@ function setIdTimePricing(idtime) {
 }
 
 //dropdown get jenis komunitas
-function get_pricing() {     
+function get_pricing() {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -119,12 +119,12 @@ $.ajax({
     success: function (status, code, data) {
     // console.log(status.data);
     var html ='';
-    
+
  $.each(status.data, function(i,item){
   var id_fitur = item.feature_type.id;
   var idprice = item.id;
 
-html += '<div class="col-md-4">'+
+html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1em;">'+
         '<div class="card cd-pricing pricing'+idprice+'">'+
           '<div class="card-body">'+
           '<center>'+
@@ -170,7 +170,7 @@ html += '<div class="col-md-4">'+
  get_session_pricing();
   }
 });
-} 
+}
 
 
 
@@ -188,7 +188,7 @@ $.ajax({
         console.log(result);
         if(result != ""){
         var idtime = result.payment_time;
-$(".price-ajax").fadeIn(900); 
+$(".price-ajax").fadeIn(900);
 $("#time-pricing"+idtime).css('font-weight', 'bold');
 $("#time-pricing"+idtime).css('color', '#2b4690');
 $(".pricing"+result.pricing_id).css("box-shadow", "0 0 20px yellow");

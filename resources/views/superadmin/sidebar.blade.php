@@ -27,7 +27,7 @@
 
              <li class="nav-item">
               <a class="nav-link" href="/superadmin/payment">
-                <span class="menu-title">Payment</span>
+                <span class="menu-title">Verify Payment</span>
                 <i class="mdi mdi-coin menu-icon"></i>
               </a>
             </li>
@@ -35,9 +35,9 @@
             <li class="nav-item sidebar-actions">
               <span class="nav-link">
                 <div class="border-bottom">
-                <button class="btn btn-block btn-lg btn-gradient-primary mt-4" onclick="window.location.href='/superadmin/user'"> + Add User</button> 
+                <button class="btn btn-block btn-lg btn-gradient-primary mt-4" onclick="window.location.href='/superadmin/user'"> + Add User</button>
                 </div>
-                
+
               </span>
             </li>
           </ul>

@@ -10,11 +10,11 @@
 
 // FORMAT PISAH UANG RUPIAH
 function rupiah(val){
-var   bilangan = val;    
+var   bilangan = val;
 var reverse = bilangan.toString().split('').reverse().join(''),
   ribuan  = reverse.match(/\d{1,3}/g);
   ribuan  = ribuan.join('.').split('').reverse().join('');
- 
+
 return ribuan;
 }
 
@@ -44,15 +44,15 @@ function filenameImg(input){
 
 
 
-// SESSION LOGIN SUPEADMIN 
-function session_logged_dashboard(){
+// SESSION LOGIN SUPEADMIN
+function session_logged_superadmin(){
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
 $.ajax({
-      url: '/session_logged_dashboard',
+    url: '/session_logged_superadmin',
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
@@ -62,7 +62,7 @@ $.ajax({
       }
       },
       error: function (result) {
-        console.log("Cant Reach Session Logged User Dashboard");
+        console.log("Cant Reach Session Logged Admin Comjuction");
     }
 });
 }
@@ -198,7 +198,7 @@ function cekusername_superadmin(input){
       },
       error: function (result) {
         console.log("Cant not check unique username");
-       
+
       }
       });
 
@@ -245,7 +245,7 @@ img.onclick = function(){
 // var span = document.getElementsByClassName("closeq")[0];
 
 // // When the user clicks on <span> (x), close the modal
-// span.onclick = function() { 
+// span.onclick = function() {
 //   modal.style.display = "none";
 // }
 }

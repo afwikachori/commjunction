@@ -21,17 +21,17 @@
   </div>
 
 <div class="card-body">
- <!-- tabel all susbcriber -->  
-        <table id="tabel_user_manage" class="table table-hover table-striped dt-responsive nowrap" style="width:100%"> 
-          <thead> 
-            <tr> 
+ <!-- tabel all susbcriber -->
+        <table id="tabel_user_manage" class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
+          <thead>
+            <tr>
               <th>ID User</th>
               <th>Name</th>
               <th>Username</th>
               <th>User Type</th>
               <th>Action</th>
             </tr>
-          </thead> 
+          </thead>
         </table>
           <!-- end tabel all  -->
 </div> <!-- //body -->
@@ -79,7 +79,7 @@
   </div>
   <div class="form-group">
      <small class="clight">User Type</small>
-    <select class="form-control input-abu" id="user_tipe" name="user_tipe">    
+    <select class="form-control input-abu" id="user_tipe" name="user_tipe">
     </select>
   </div>
 
@@ -109,7 +109,7 @@
   </div>
 </div>
 <div class="col-md-6">
-  
+
 <div class="form-group">
     <small class="clight">Confirm Password</small>
 <div class="input-group">
@@ -249,7 +249,7 @@
   </div>
   <div class="form-group">
      <small class="clight">User Type</small>
-    <select class="form-control input-abu" name="user_tipe_edit" id="user_tipe_edit">    
+    <select class="form-control input-abu" name="user_tipe_edit" id="user_tipe_edit">
     </select>
   </div>
 </div>
@@ -384,8 +384,8 @@ $.ajax({
 
 
 
-//dropdown 
-function get_user_tipe_manage() {       
+//dropdown
+function get_user_tipe_manage() {
 $.ajaxSetup({
     headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -402,16 +402,16 @@ $.ajax({
 
       for (var i = result.length - 1; i >= 0; i--) {
         $('#user_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-      } 
+      }
       //Short Function Ascending//
       $("#user_tipe").html($('#user_tipe option').sort(function (x, y) {
         return $(y).val() < $(x).val() ? -1 : 1;
       }));
 
-      $("#user_tipe").get(0).selectedIndex = 0; 
+      $("#user_tipe").get(0).selectedIndex = 0;
 
        const OldValue = '{{old('user_tipe')}}';
-    
+
     if(OldValue !== '') {
       $('#user_tipe').val(OldValue);
     }
@@ -422,16 +422,16 @@ $.ajax({
 
       for (var i = result.length - 1; i >= 0; i--) {
         $('#user_tipe_edit').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-      } 
+      }
       //Short Function Ascending//
       $("#user_tipe_edit").html($('#user_tipe_edit option').sort(function (x, y) {
         return $(y).val() < $(x).val() ? -1 : 1;
       }));
 
-      $("#user_tipe_edit").get(0).selectedIndex = 0; 
+      $("#user_tipe_edit").get(0).selectedIndex = 0;
 
        const OldValue2 = '{{old('user_tipe_edit')}}';
-    
+
     if(OldValue2 !== '') {
       $('#user_tipe_edit').val(OldValue2);
     }

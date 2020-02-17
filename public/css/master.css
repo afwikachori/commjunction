@@ -1,15 +1,15 @@
 *{
     @font-face {
   font-family: raleway;
-  src: url('/public/font/ralewayextralight.ttf')  
+  src: url('/public/font/ralewayextralight.ttf')
   format('truetype');
 }
   }
 
 /*//off - scrolling*/
 html, body {
-  margin: 0; 
-  height: 100%; 
+  margin: 0;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -29,6 +29,17 @@ body::-webkit-scrollbar
 body::-webkit-scrollbar-thumb
 {
   background:linear-gradient(to bottom, #fffcaf, #ffe7a7, #ffd4aa, #ffc3b2, #ffb6bc);
+}
+
+
+/* google login admin community */
+.login .abcRioButton.abcRioButtonLightBlue{
+  height: 36px;
+  min-width : 300px;
+  width: 100%;
+  border-radius: 10px !important;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 
@@ -148,7 +159,7 @@ border : 2px solid;
   max-height: 1200px;
   min-height: 100vh;
  /* height: 100%;*/
-  width: auto; 
+  width: auto;
 }
 
 .full_height{
@@ -269,7 +280,7 @@ height: auto;
 margin-top: 3%;
  border-width: 3px;
  border-color: #FF9A44;
- margin-top: 0em;  
+ margin-top: 0em;
  border-radius: 10px;
 }
 
@@ -381,8 +392,8 @@ left: -76px;
 }
 
 .fiturcard{
-width: 9.5rem; 
-height: auto; 
+width: 9.5rem;
+height: auto;
 min-height: 11.5rem;
 margin-top: 5%;
 }
@@ -397,7 +408,7 @@ margin-top: 10%;
 border-radius: 10px;
 background-image: url("/visual/card-pricing.png");
 background-repeat: no-repeat;
-background-position: center; 
+background-position: center;
 background-size: cover;
 }
 
@@ -457,7 +468,7 @@ font-size: 35px;
 }
 
 /* Add Animation */
-.modal-contentq, #caption {  
+.modal-contentq, #caption {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;
@@ -465,12 +476,12 @@ font-size: 35px;
 }
 
 @-webkit-keyframes zoom {
-  from {-webkit-transform:scale(0)} 
+  from {-webkit-transform:scale(0)}
   to {-webkit-transform:scale(1)}
 }
 
 @keyframes zoom {
-  from {transform:scale(0)} 
+  from {transform:scale(0)}
   to {transform:scale(1)}
 }
 
@@ -557,7 +568,7 @@ top: 43%;
 }
 
 #form_regispersonal_subs{
-  margin-bottom: 0.5em; 
+  margin-bottom: 0.5em;
   margin-top: 0.5em;
 }
 
@@ -782,8 +793,8 @@ top: 28px;
 }*/
 
 #bg-superadmin {
-  margin: 0; 
-  height: 100%; 
+  margin: 0;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -820,7 +831,7 @@ margin-bottom: 1em;
 }
 
 .textlogin{
-  margin-top: 0em; 
+  margin-top: 0em;
   margin-bottom: 1.5em;
   /*font-size: 18px;*/
 }
@@ -872,9 +883,9 @@ div.hr {
 .btn-grad {
 	background-image: linear-gradient(to right,#a6eaf7 0%, #C4E0E5 51%, #4CA1AF 100%)
 }
-.btn-grad:hover { 
+.btn-grad:hover {
 	background-position: right center;
-	color: black; 
+	color: black;
 }
 .bg-colour{
 	background-image: linear-gradient(to right, #BE93C5 0%, #7BC6CC 51%, #BE93C5 100%)
@@ -937,7 +948,7 @@ border: none;
   background-color: white !important;
   color: grey;
   padding:0;
-  
+
 }
 
 
@@ -1101,8 +1112,8 @@ height: 30px;
   text-align: right;
 }
 
-#LoginComm:hover { 
-	background-position: right center; 
+#LoginComm:hover {
+	background-position: right center;
 }
 #loginSuper{
 	width: 150px;
@@ -1113,8 +1124,8 @@ height: 30px;
 	margin-top: 2em;
   color: white;
 }
-#loginSuper:hover { 
-	background-position: right center; 
+#loginSuper:hover {
+	background-position: right center;
 	color: white;
 }
 
@@ -1185,7 +1196,7 @@ top: 119px;
 
 
 .imgprice{
-width: 20%; height: auto; 
+width: 20%; height: auto;
 }
 
 .hideku{
@@ -1239,17 +1250,17 @@ width: 20%; height: auto;
 }
 
 .feature-kotak{
-	width: 14rem; 
-	height: 14rem; 
-	margin-bottom: 1em; 
+	width: 14rem;
+	height: 14rem;
+	margin-bottom: 1em;
 	border-radius:28px;
 	text-align: center;
 }
 
 .feature-kotak2{
-  width: 8rem; 
-  height: 8rem; 
-  margin-bottom: 1em; 
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: 1em;
   border-radius:25px;
   text-align: center;
 }
@@ -1296,7 +1307,7 @@ width: 20%; height: auto;
 
 .buletborder{
   border-radius:1rem;
-  margin-bottom:1em; 
+  margin-bottom:1em;
   min-height: 90px;
   padding-right: 1em;
   padding-left: 1em;
@@ -1340,7 +1351,7 @@ margin-top: 18%;
 .zoom:hover {
   -ms-transform: scale(1.5); /* IE 9 */
   -webkit-transform: scale(1.5); /* Safari 3-8 */
-  transform: scale(1.5); 
+  transform: scale(1.5);
 }
 
 .size-review{
@@ -1348,7 +1359,7 @@ margin-top: 18%;
   height: 400px;
 	background-color: #fbfbfb;
 	margin-top: 1em;
-  margin-right: 
+  margin-right:
 }
 
 #lbl-amount{
@@ -1453,7 +1464,7 @@ margin-top: 18%;
   left: 0;
   position: absolute;
   top: 0;
-  
+
 }
 
 .roundcheck2 label:after {

@@ -52,11 +52,11 @@ class SuperadminController extends Controller
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST',$url, [
             'form_params'   => [
-            'full_name'     => $input['name_superadmin'], 
-            'notelp'        => $input['phone_super'], 
-            'email'         => $input['email_super'], 
-            'divisi'        => $input['division_super'], 
-            'user_name'     => $input['username_super'], 
+            'full_name'     => $input['name_superadmin'],
+            'notelp'        => $input['phone_super'],
+            'email'         => $input['email_super'],
+            'divisi'        => $input['division_super'],
+            'user_name'     => $input['username_super'],
             'password'      => $input['password_super'],
             'priviledge_id' => $input['pilih_priv']
             ]
@@ -67,7 +67,7 @@ class SuperadminController extends Controller
 
         alert()->success('New User Has Been Added!', 'Successfully')->autoclose(4500)->persistent('Done');
         return back();
-        // dd($json);   
+        // dd($json);
     }
 
 
@@ -95,9 +95,9 @@ class SuperadminController extends Controller
         $json = json_decode($response, true);
         $jsonlogin = $json['data'];
 
-        Session::put('ses_user_logged', $jsonlogin);
-        $user_logged = Session::get('ses_user_logged');
-        
+        session()->put('session_logged_superadmin', $jsonlogin);
+        $user_logged = session()->get('session_logged_superadmin');
+
         $user = $user_logged['user']['full_name'];
         // $user = $jsonlogin['user'];
         return redirect('superadmin/dashboard')->with('fullname',$user);
@@ -105,9 +105,9 @@ class SuperadminController extends Controller
 
 
     //SESSION LOGGED USER - DASHBOARD SUPERADMIN
-    public function session_logged_dashboard(){
-    if(Session::has('ses_user_logged')){
-    $ses_loggeduser = Session::get('ses_user_logged');
+    public function session_logged_superadmin(){
+    if(session()->has('session_logged_superadmin')){
+    $ses_loggeduser = session()->get('session_logged_superadmin');
     return $ses_loggeduser;
     }
     else{
@@ -129,11 +129,11 @@ class SuperadminController extends Controller
 
     //DATATABLE LIST REQ VERIFY ADMINN-COMM
     public function list_req_admincomm_func(){
-    $user_logged = Session::get('ses_user_logged');
+    $user_logged = session()->get('session_logged_superadmin');
 // return $user_logged['access_token'];
     // return  env('SERVICE');
 
-   
+
     $url = env('SERVICE').'paymentverification/datapaymentconfirmation';
     $client = new \GuzzleHttp\Client();
 
@@ -158,10 +158,10 @@ class SuperadminController extends Controller
     'fileup'     => 'required',
     ]);
     // dd($request);
-    $user_logged = Session::get('ses_user_logged');
+    $user_logged = session()->get('session_logged_superadmin');
     $token = $user_logged['access_token'];
 
-    $req = new RequestController; 
+    $req = new RequestController;
     $fileimg = "";
 
     if ($request->hasFile('fileup')) {
@@ -174,7 +174,7 @@ class SuperadminController extends Controller
                 "password"    => $input['pass_super'],
                 "filename"    => $filnam,
                 "file"        => $imgku
-        ]; 
+        ];
 
 
     $url =env('SERVICE').'paymentverification/verification';
@@ -195,17 +195,61 @@ class SuperadminController extends Controller
     }
 
     return $resImg;
-            
-    }//END-IF  UPLOAD-IMAGE 
-
+    }//END-IF  UPLOAD-IMAGE
     } //end-function
 
 
 
 public function LogoutSuperadmin(){
-     Session::forget('ses_user_logged');
+     session()->forget('session_logged_superadmin');
      return redirect('superadmin');
 }
+
+public function get_dashboard_superadmin(){
+  $ses_login = session()->get('session_logged_superadmin');
+
+    $url = env('SERVICE').'dashboard/commjunction';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

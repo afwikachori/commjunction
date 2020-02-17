@@ -29,7 +29,7 @@ Route::get('404','RequestController@NotFoundView')->name('404');
 
 
 
-// admin
+// ADMIN COMMUNITY
 Route::prefix('admin')->group(function(){
 // GET
 Route::get('/','AdminCommController@login')->name('admin');
@@ -48,6 +48,7 @@ Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementV
 Route::get('detail_pendingsubs/{id_subs}', 'AdminCommController@detailPendingSubcriberView')->name('detail_pendingsubs/{id_subs}');
 
 Route::get('/module_management','AdminCommController@ModuleManagementView')->name('/module_management');
+Route::get('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
 
 
 // admin/settings
@@ -69,7 +70,6 @@ Route::post('tabel_subs_pending','AdminCommController@tabel_subs_pending')->name
 
 Route::post('edit_profil_community','AdminCommController@edit_profil_community')->name('edit_profil_community');
 
-Route::post('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
 
 Route::post('setting_loginresgis_comm','AdminCommController@setting_loginresgis_comm')->name('setting_loginresgis_comm');
 
@@ -127,6 +127,7 @@ Route::post('detail_module_all', 'AdminCommController@detail_module_all')->name(
 
 Route::post('aktifasi_module_admincomm', 'AdminCommController@aktifasi_module_admincomm')->name('aktifasi_module_admincomm');
 
+Route::post('cek_prepare_publish', 'AdminCommController@cek_prepare_publish')->name('cek_prepare_publish');
 
 
 
@@ -314,24 +315,26 @@ Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->na
 
 
 
-//SUPERADMIN - MANAGEMENT
+//SUPERADMIN
+Route::prefix('superadmin')->group(function(){
 
-Route::get('superadmin','SuperadminController@loginSuperadminView')->name('superadmin');
+Route::get('/','SuperadminController@loginSuperadminView')->name('superadmin');
+Route::get('/dashboard','SuperadminController@dashboarSuperView')->name('/dashboard');
+Route::get('/user','SuperadminController@UserSuperView')->name('/user');
+Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment');
 
-Route::get('superadmin/dashboard','SuperadminController@dashboarSuperView')->name('superadmin/dashboard');
+//-------POST------
+Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_superadmin');
 
-Route::get('superadmin/user','SuperadminController@UserSuperView')->name('superadmin/user');
-
-Route::get('superadmin/payment','SuperadminController@paymentSuperView')->name('superadmin/payment');
-
-// ---- post -----
+});
+// ---- post : superadmin-----
 Route::get('superadmin/logout', 'SuperadminController@LogoutSuperadmin')->name('superadmin/logout');
 
 Route::post('loginSuperadmin','SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 
 Route::post('postAddUser','SuperadminController@postAddUser')->name('postAddUser');
 
-Route::post('session_logged_dashboard','SuperadminController@session_logged_dashboard')->name('session_logged_dashboard');
+Route::post('session_logged_superadmin','SuperadminController@session_logged_superadmin')->name('session_logged_superadmin');
 
 Route::post('get_priviledge','SuperadminController@get_priviledge')->name('get_priviledge');
 
