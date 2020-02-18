@@ -1,18 +1,22 @@
 
-
-*{
-    @font-face {
-  font-family: sf_pro;
-  src: url('/public/font/sf_pro.ttf')format('truetype');
-}
-}
-
 html, body {
   margin: 0;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   font-family: arial !important;
+}
+
+
+*{
+  font-family: 'SF Pro Display Regular' !important;
+}
+
+@font-face {
+  font-family: "SF Pro Display Regular";
+  src:  url("/assets/font/sf_pro.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body::-webkit-scrollbar-track

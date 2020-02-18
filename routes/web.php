@@ -322,10 +322,12 @@ Route::get('/','SuperadminController@loginSuperadminView')->name('superadmin');
 Route::get('/dashboard','SuperadminController@dashboarSuperView')->name('/dashboard');
 Route::get('/user','SuperadminController@UserSuperView')->name('/user');
 Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment');
+Route::get('/module','SuperadminController@ModuleManagementView')->name('/module');
 
 //-------POST------
 Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_superadmin');
-
+Route::post('get_all_module_list_superadmin', 'SuperadminController@get_all_module_list_superadmin');
+Route::post('detail_module_all_super', 'SuperadminController@detail_module_all_super');
 });
 // ---- post : superadmin-----
 Route::get('superadmin/logout', 'SuperadminController@LogoutSuperadmin')->name('superadmin/logout');

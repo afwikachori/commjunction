@@ -29,6 +29,10 @@ class SuperadminController extends Controller
          return view('superadmin/payment_superadmin');
     }
 
+    public function ModuleManagementView(){
+        return view('superadmin/module_management_super');
+    }
+
 
 
 
@@ -82,8 +86,9 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $url = env('SERVICE').'auth/superadmin';
-
         $client = new \GuzzleHttp\Client();
+
+        try{
         $response = $client->request('POST',$url, [
             'form_params' => [
             'user_name'   => $input['username_superadmin'],
@@ -101,6 +106,14 @@ class SuperadminController extends Controller
         $user = $user_logged['user']['full_name'];
         // $user = $jsonlogin['user'];
         return redirect('superadmin/dashboard')->with('fullname',$user);
+
+    }catch(ClientException $exception) {
+        $status_error = $exception->getCode();
+        if( $status_error == 404){
+        alert()->error('Password didnt match with your username', 'Invalid')->persistent('Done');
+            return back()->withInput();
+        }
+    }
     }
 
 
@@ -225,7 +238,48 @@ public function get_dashboard_superadmin(){
 
 
 
+public function get_all_module_list_superadmin(){
+$ses_login = session()->get('session_logged_superadmin');
 
+    $url = env('SERVICE').'modulemanagement/allmodule';
+    $client = new \GuzzleHttp\Client();
+
+    $response = $client->request('POST',$url, [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Authorization' => $ses_login['access_token']
+    ]
+    ]);
+
+    $response = $response->getBody()->getContents();
+    $json = json_decode($response, true);
+    return $json['data'];
+}
+
+
+    public function detail_module_all_super(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'modulemanagement/detailmodule';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(['feature_id' => $input['feature_id']]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        $response = $client->post($url, $datakirim);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json['data'];
+    }
 
 
 

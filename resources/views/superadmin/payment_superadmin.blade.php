@@ -8,14 +8,14 @@
     	<span class="page-title-icon bg-gradient-primary text-white mr-2">
     		<i class="mdi mdi-coin"></i>
         </span> Payment </h3>
-    
+
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
         	<li class="breadcrumb-item active" aria-current="page">
         		<span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
             </li>
         </ul>
-    </nav>        
+    </nav>
 </div>
 
 <div class="row">
@@ -24,8 +24,8 @@
 	 	<div class="card-body">
 	 		<h4 class="card-title">Project Status</h4>
 	 		<br>
-            <table id="example" class="table table-hover dt-responsive nowrap" style="width:100%"> <thead> 
-            <tr> 
+            <table id="example" class="table table-hover dt-responsive nowrap" style="width:100%"> <thead>
+            <tr>
                 <th>Nama</th>
                 <th>Bank</th>
                 <th>Nominal</th>
@@ -33,7 +33,7 @@
                 <th>Bukti Bayar</th>
                 <th>Action</th>
             </tr>
-            </thead> 
+            </thead>
         </table>
 	 	</div>
 	 </div>
@@ -64,7 +64,7 @@
             <label class="col-sm-4 col-form-label">Password</label>
             <div class="col-sm-8">
             <div class="input-group">
-            <input type="password" id="pass_super" class="form-control @error('pass_super') is-invalid @enderror" name="pass_super" value="{{ old('pass_super') }}" required autocomplete="pass_super"> 
+            <input type="password" id="pass_super" class="form-control @error('pass_super') is-invalid @enderror" name="pass_super" value="{{ old('pass_super') }}" required autocomplete="pass_super">
             <div class="input-group-append">
             <button class="btn btn-sm btn-light" type="button" onclick="showpass()">
             <i class="mdi mdi-eye"></i>
@@ -109,7 +109,8 @@
 <script type="text/javascript">
 var cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
-session_logged_dashboard(); //penting
+
+    session_logged_superadmin();
 // list_req_admincomm();
 
 

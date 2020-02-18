@@ -33,7 +33,7 @@
 
 
   <body>
-    @if (Session::has('ses_user_logged'))
+    @if (Session::has('session_logged_superadmin'))
 
   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->

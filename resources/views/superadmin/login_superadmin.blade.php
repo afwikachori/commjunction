@@ -39,7 +39,7 @@
                         <div class="form-group ">
                             <label for="username_superadmin" class="h6 s14" lang="en">Username</label>
                             <input type="text" name="username_superadmin" class="form-control" id="username_superadmin"
-                                placeholder="Username" lang="en">
+                             value="{{ old('username_superadmin') }}"   placeholder="Username" lang="en">
                         </div>
 
                         <div class="form-group  mgtop-1">
@@ -139,21 +139,21 @@
 
 
     function remember_me_superadmin() {
-        // alert('ceked');
+        alert('ceked');
         var checkBox = document.getElementById("rememberme_superadmin");
 
         if (checkBox.checked == true) {
-            var username = $('#username_superadmin').val();
-            var password = $('#pass_superadmin').val();
+            var username_super = $('#username_superadmin').val();
+            var password_super = $('#pass_superadmin').val();
 
-            $.cookie('useradmin', username, { expires: 30 });
-            $.cookie('passadmin', password, { expires: 30 });
+            $.cookie('username_super', username_super, { expires: 30 });
+            $.cookie('password_super', password_super, { expires: 30 });
             $.cookie('rememberme_superadmin', true, { expires: 30 });
         }
         else {
-            $.cookie('useradmin', null);
-            $.cookie('passadmin', null);
-            $.cookie('remember', null);
+            $.cookie('username_super', null);
+            $.cookie('password_super', null);
+            $.cookie('rememberme_superadmin', null);
         }
     }
 
@@ -161,20 +161,18 @@
 
     function checking_remember_superadmin() {
         var remember = $.cookie("rememberme_superadmin");
-        if (remember == 'true') {
-            var username = $.cookie('useradmin');
-            var password = $.cookie('passadmin');
-            if (username != null && password != null) {
 
-                $('#username_superadmin').val(username);
-                $('#pass_superadmin').val(password);
+        if (remember == 'true') {
+            // alert("true");
+            var username_super = $.cookie('username_super');
+            var password_super = $.cookie('password_super');
+
+                $('#username_superadmin').val(username_super);
+                $('#pass_superadmin').val(password_super);
                 $('#rememberme_superadmin').attr("checked", "checked");
-            } else {
-                $('#username_superadmin').val("");
-                $('#pass_superadmin').val("");
-                $('#rememberme_superadmin').removeAttr("checked", "checked");
-            }
+
         } else {
+            //  alert("salah");
             $('#username_superadmin').val("");
             $('#pass_superadmin').val("");
             $('#rememberme_superadmin').removeAttr("checked", "checked");

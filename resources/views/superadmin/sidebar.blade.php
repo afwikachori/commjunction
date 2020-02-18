@@ -2,7 +2,7 @@
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
                 <div class="nav-profile-image">
-                  <img src="/img/default.png" alt="profile">
+                  <img src="/img/commjuction_icoweb.ico" alt="profile">
                   <span class="login-status online"></span>
                   <!--change to offline or busy as needed-->
                 </div>
@@ -14,7 +14,6 @@
                   </span>
                   <span class="text-secondary text-small">Project Manager</span>
                 </div>
-                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
             </li>
 
@@ -32,12 +31,18 @@
               </a>
             </li>
 
-            <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                <button class="btn btn-block btn-lg btn-gradient-primary mt-4" onclick="window.location.href='/superadmin/user'"> + Add User</button>
-                </div>
-
-              </span>
+             <li class="nav-item">
+              <a class="nav-link" href="/superadmin/module">
+                <span class="menu-title">Module Management</span>
+                <i class="mdi mdi-view-module menu-icon"></i>
+              </a>
             </li>
+
+             <li class="nav-item">
+              <a class="nav-link" href="">
+                <span class="menu-title">User Management</span>
+                <i class="mdi mdi-account-convert menu-icon"></i>
+              </a>
+            </li>
+
           </ul>
