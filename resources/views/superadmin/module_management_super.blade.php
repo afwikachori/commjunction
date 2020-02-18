@@ -178,8 +178,7 @@
     <div class="modal-dialog modal-lg" role="document" style="width: auto; max-width:900px;">
         <div class="modal-content">
 
-            <form method="POST" id="form_edit_profiladmincom" action="{{route('edit_profile_admincom')}}"
-                enctype="multipart/form-data">
+            <form method="POST" id="form_create_new_module" action="{{route('add_create_new_module')}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="modal-body" style="padding: 3%;">
@@ -241,11 +240,11 @@
                                 <small class="cgrey">Input for sub-module</small>
 
                                 <div class="row form-group">
-                                    <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-5 col-sm-12">
                                         <input type="text" name="judul_submodul1" class="form-control input-abu"
                                             placeholder="Title">
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-7 col-sm-12" style="padding-left:0px;">
                                         <input type="text" name="deskripsi_submodul1" class="form-control input-abu"
                                             placeholder="Description">
                                     </div>
@@ -329,7 +328,7 @@
                         '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                         '<div class="card-body member">' +
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
+                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card module">' +
                         '<div class="row">' +
                         '<div class="col-md-7">' +
                         '<small class="cgrey">' + item.title + '</small>' +
@@ -481,10 +480,10 @@
         $(document).on("click", "#addnewrow", function () {
             var new_row = '<div class="row form-group newly" id="row' + row + '"'+
                 'style="margin-top:1em;">' +
-                '<div class="col-md-5" style="padding-right:0px;">' +
+                '<div class="col-md-4" style="padding-right:0px;">' +
                 '<input type="text" name="judul_submodul'+id+'" class="form-control input-abu" placeholder="Title">'+
                 '</div>' +
-                '<div class="col-md-6" style="padding-right:0px;">' +
+                '<div class="col-md-7" style="padding-right:0px;">' +
                 '<input type="text" name="deskripsi_submodul'+id+'" class="form-control input-abu" placeholder="Description">'+
                 '</div>' +
                 '<div class="col-md" style="padding-right:0px; padding-left: 5px;">' +

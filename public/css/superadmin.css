@@ -488,3 +488,9 @@ img .profile-pic {
     position: relative;
 }
 /* ///end-file upload */
+
+
+.img-card.module{
+width: 40px;
+height: 40px;
+}

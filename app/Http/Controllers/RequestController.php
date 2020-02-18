@@ -14,9 +14,9 @@ public function NotFoundView(){
 }
 
 	   public function sendImage($requestImage,$url)
-    {	
+    {
 
-    	
+
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
@@ -42,7 +42,7 @@ public function NotFoundView(){
 
 
 
-       public function sendImagePayConfirm($requestImage,$url){   
+       public function sendImagePayConfirm($requestImage,$url){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -89,7 +89,7 @@ public function NotFoundView(){
 
 
 
-    public function sendImgVerify($requestImage,$url,$token){  
+    public function sendImgVerify($requestImage,$url,$token){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -113,7 +113,7 @@ public function NotFoundView(){
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            
+
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);
@@ -121,7 +121,7 @@ public function NotFoundView(){
     }
 
 
-       public function editProfilCommunity($requestImage,$url,$token){  
+       public function editProfilCommunity($requestImage,$url,$token){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -145,7 +145,7 @@ public function NotFoundView(){
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            
+
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);
@@ -154,7 +154,7 @@ public function NotFoundView(){
 
 
 
-     public function editProfileAdmin($requestImage,$url,$token){  
+     public function editProfileAdmin($requestImage,$url,$token){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -190,7 +190,7 @@ public function NotFoundView(){
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            
+
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);
@@ -198,7 +198,7 @@ public function NotFoundView(){
     }
 
 
-    public function SettingLoginRegis($requestImage,$url,$token){  
+    public function SettingLoginRegis($requestImage,$url,$token){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -230,7 +230,7 @@ public function NotFoundView(){
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            
+
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);
@@ -238,7 +238,7 @@ public function NotFoundView(){
     }
 
 
- public function accReqMembership($requestImage,$url,$token){  
+ public function accReqMembership($requestImage,$url,$token){
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -274,12 +274,48 @@ public function NotFoundView(){
                     'filename'  => $requestImage["filename"]
                 ]
             ],
-            
+
         ]);
 
         $dataku = json_decode($request->getBody()->getContents(),true);
         return $dataku;
     }
+
+    public function upload_image_module($requestImage, $url, $token){
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'title',
+                    'contents' =>  $requestImage["title"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'     => 'feature_type_id',
+                    'contents' =>  $requestImage["feature_type_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
 
 
 

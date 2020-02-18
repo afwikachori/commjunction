@@ -12,33 +12,41 @@ use Alert;
 class SuperadminController extends Controller
 {
 
-	public function dashboarSuperView(){
-	    return view('superadmin/dashboard_superadmin');
-	}
+    public function dashboarSuperView()
+    {
+        return view('superadmin/dashboard_superadmin');
+    }
 
-    public function loginSuperadminView(){
+    public function loginSuperadminView()
+    {
         return view('superadmin/login_superadmin');
     }
 
-    public function UserSuperView(){
+    public function UserSuperView()
+    {
         return view('superadmin/user_superadmin');
     }
 
 
-    public function paymentSuperView(){
-         return view('superadmin/payment_superadmin');
+    public function paymentSuperView()
+    {
+        return view('superadmin/payment_superadmin');
     }
 
-    public function ModuleManagementView(){
+    public function ModuleManagementView()
+    {
         return view('superadmin/module_management_super');
     }
 
+    public function UserTypeView(){
+        return view('superadmin/usertype_management_super');
+    }
 
 
 
 
-
-    public function postAddUser(Request $request) {
+    public function postAddUser(Request $request)
+    {
 
         $request->validate([
             'name_superadmin' => 'required|min:3',
@@ -52,17 +60,17 @@ class SuperadminController extends Controller
         ]);
 
         $input = $request->all();
-        $url = env('SERVICE').'registration/admcreate';
+        $url = env('SERVICE') . 'registration/admcreate';
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST',$url, [
+        $response = $client->request('POST', $url, [
             'form_params'   => [
-            'full_name'     => $input['name_superadmin'],
-            'notelp'        => $input['phone_super'],
-            'email'         => $input['email_super'],
-            'divisi'        => $input['division_super'],
-            'user_name'     => $input['username_super'],
-            'password'      => $input['password_super'],
-            'priviledge_id' => $input['pilih_priv']
+                'full_name'     => $input['name_superadmin'],
+                'notelp'        => $input['phone_super'],
+                'email'         => $input['email_super'],
+                'divisi'        => $input['division_super'],
+                'user_name'     => $input['username_super'],
+                'password'      => $input['password_super'],
+                'priviledge_id' => $input['pilih_priv']
             ]
         ]);
 
@@ -76,7 +84,8 @@ class SuperadminController extends Controller
 
 
     //LOGIN SUPERADMIN
-     public function loginSuperadmin(Request $request) {
+    public function loginSuperadmin(Request $request)
+    {
         // dd($request);
 
         $validator = $request->validate([
@@ -85,179 +94,185 @@ class SuperadminController extends Controller
         ]);
 
         $input = $request->all();
-        $url = env('SERVICE').'auth/superadmin';
+        $url = env('SERVICE') . 'auth/superadmin';
         $client = new \GuzzleHttp\Client();
 
-        try{
-        $response = $client->request('POST',$url, [
-            'form_params' => [
-            'user_name'   => $input['username_superadmin'],
-            'password'    => $input['pass_superadmin']
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'user_name'   => $input['username_superadmin'],
+                    'password'    => $input['pass_superadmin']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            $jsonlogin = $json['data'];
+
+            session()->put('session_logged_superadmin', $jsonlogin);
+            $user_logged = session()->get('session_logged_superadmin');
+
+            $user = $user_logged['user']['full_name'];
+            // $user = $jsonlogin['user'];
+            return redirect('superadmin/dashboard')->with('fullname', $user);
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 404) {
+                alert()->error('Password didnt match with your username', 'Invalid')->persistent('Done');
+                return back()->withInput();
+            }
+        }
+    }
+
+
+    //SESSION LOGGED USER - DASHBOARD SUPERADMIN
+    public function session_logged_superadmin()
+    {
+        if (session()->has('session_logged_superadmin')) {
+            $ses_loggeduser = session()->get('session_logged_superadmin');
+            return $ses_loggeduser;
+        } else {
+            return view("/superadmin");
+        }
+    }
+
+
+    // DROPDOWN PRIVILEDGE
+    public function get_priviledge()
+    {
+        $url = env('SERVICE') . 'registration/priviledge';
+        $client = new \GuzzleHttp\Client();
+        $request = $client->post($url);
+        $response = $request->getBody();
+        $jsonku = json_decode($response, true);
+        return ($jsonku);
+    }
+
+
+    //DATATABLE LIST REQ VERIFY ADMINN-COMM
+    public function list_req_admincomm_func()
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        // return $user_logged['access_token'];
+        // return  env('SERVICE');
+
+
+        $url = env('SERVICE') . 'paymentverification/datapaymentconfirmation';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $user_logged['access_token']
             ]
         ]);
 
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
-        $jsonlogin = $json['data'];
+        return $json['data'];
+    }
 
-        session()->put('session_logged_superadmin', $jsonlogin);
+
+
+    public function verify_admincom(Request $request)
+    {
+        $validator = $request->validate([
+            'invoice_num' => 'required',
+            'pass_super' => 'required',
+            'fileup'     => 'required',
+        ]);
+        // dd($request);
         $user_logged = session()->get('session_logged_superadmin');
+        $token = $user_logged['access_token'];
 
-        $user = $user_logged['user']['full_name'];
-        // $user = $jsonlogin['user'];
-        return redirect('superadmin/dashboard')->with('fullname',$user);
+        $req = new RequestController;
+        $fileimg = "";
 
-    }catch(ClientException $exception) {
-        $status_error = $exception->getCode();
-        if( $status_error == 404){
-        alert()->error('Password didnt match with your username', 'Invalid')->persistent('Done');
-            return back()->withInput();
-        }
-    }
-    }
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
 
-
-    //SESSION LOGGED USER - DASHBOARD SUPERADMIN
-    public function session_logged_superadmin(){
-    if(session()->has('session_logged_superadmin')){
-    $ses_loggeduser = session()->get('session_logged_superadmin');
-    return $ses_loggeduser;
-    }
-    else{
-        return view("/superadmin");
-    }
-    }
-
-
-    // DROPDOWN PRIVILEDGE
-    public function get_priviledge(){
-    $url = env('SERVICE').'registration/priviledge';
-    $client = new \GuzzleHttp\Client();
-    $request = $client->post($url);
-    $response = $request->getBody();
-    $jsonku = json_decode($response, true);
-    return($jsonku);
-    }
-
-
-    //DATATABLE LIST REQ VERIFY ADMINN-COMM
-    public function list_req_admincomm_func(){
-    $user_logged = session()->get('session_logged_superadmin');
-// return $user_logged['access_token'];
-    // return  env('SERVICE');
-
-
-    $url = env('SERVICE').'paymentverification/datapaymentconfirmation';
-    $client = new \GuzzleHttp\Client();
-
-    $response = $client->request('POST',$url, [
-    'headers' => [
-    'Content-Type' => 'application/json',
-    'Authorization' => $user_logged['access_token']
-    ]
-    ]);
-
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json['data'];
-    }
-
-
-
-    public function verify_admincom(Request $request) {
-    $validator = $request->validate([
-    'invoice_num'=> 'required',
-    'pass_super' => 'required',
-    'fileup'     => 'required',
-    ]);
-    // dd($request);
-    $user_logged = session()->get('session_logged_superadmin');
-    $token = $user_logged['access_token'];
-
-    $req = new RequestController;
-    $fileimg = "";
-
-    if ($request->hasFile('fileup')) {
-        $imgku = file_get_contents($request->file('fileup')->getRealPath());
-        $filnam = $request->file('fileup')->getClientOriginalName();
-
-        $input = $request->all(); // getdata form by name
-        $imageRequest = [
+            $input = $request->all(); // getdata form by name
+            $imageRequest = [
                 "invoice"     => $input['invoice_num'],
                 "password"    => $input['pass_super'],
                 "filename"    => $filnam,
                 "file"        => $imgku
-        ];
+            ];
 
 
-    $url =env('SERVICE').'paymentverification/verification';
-    try{
-      $resImg = $req->sendImgVerify($imageRequest,$url,$token);
-      // return $resImg;
+            $url = env('SERVICE') . 'paymentverification/verification';
+            try {
+                $resImg = $req->sendImgVerify($imageRequest, $url, $token);
+                // return $resImg;
 
-      if ($resImg['success'] == true) {
-        alert()->success('Successfully to verify payment from New Admin Community', 'Verified!')->autoclose(4500)->persistent('Done');
-        return back();
-      }
-    }catch(ClientException $exception) {
-    $status_error = $exception->getCode();
-    if( $status_error == 400){
-    alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
-    return back();
-    }
-    }
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully to verify payment from New Admin Community', 'Verified!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $exception) {
+                $status_error = $exception->getCode();
+                if ($status_error == 400) {
+                    alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            }
 
-    return $resImg;
-    }//END-IF  UPLOAD-IMAGE
+            return $resImg;
+        } //END-IF  UPLOAD-IMAGE
     } //end-function
 
 
 
-public function LogoutSuperadmin(){
-     session()->forget('session_logged_superadmin');
-     return redirect('superadmin');
-}
+    public function LogoutSuperadmin()
+    {
+        session()->forget('session_logged_superadmin');
+        return redirect('superadmin');
+    }
 
-public function get_dashboard_superadmin(){
-  $ses_login = session()->get('session_logged_superadmin');
+    public function get_dashboard_superadmin()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
 
-    $url = env('SERVICE').'dashboard/commjunction';
-    $client = new \GuzzleHttp\Client();
+        $url = env('SERVICE') . 'dashboard/commjunction';
+        $client = new \GuzzleHttp\Client();
 
-    $response = $client->request('POST',$url, [
-    'headers' => [
-    'Content-Type' => 'application/json',
-    'Authorization' => $ses_login['access_token']
-    ]
-    ]);
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
 
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json['data'];
-}
-
-
-
-public function get_all_module_list_superadmin(){
-$ses_login = session()->get('session_logged_superadmin');
-
-    $url = env('SERVICE').'modulemanagement/allmodule';
-    $client = new \GuzzleHttp\Client();
-
-    $response = $client->request('POST',$url, [
-    'headers' => [
-    'Content-Type' => 'application/json',
-    'Authorization' => $ses_login['access_token']
-    ]
-    ]);
-
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json['data'];
-}
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
 
 
-    public function detail_module_all_super(Request $request){
+
+    public function get_all_module_list_superadmin()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'modulemanagement/allmodule';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+    public function detail_module_all_super(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -283,29 +298,45 @@ $ses_login = session()->get('session_logged_superadmin');
 
 
 
+    public function add_create_new_module(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $token = $ses_login['access_token'];
+        $input = $request->all();
+        // return $input;
+        $req = new RequestController;
+        $fileimg = "";
+        $imgku = file_get_contents($request->file('fileup')->getRealPath());
+        $filnam = $request->file('fileup')->getClientOriginalName();
+        $url = env('SERVICE') . 'modulemanagement/addfeature';
 
+        if ($request->hasFile('fileup')) {
+            $imageRequest = [
+                "title"             => $input['judul_modul'],
+                "description"       => $input['dekripsi_modul'],
+                "feature_type_id"   => $input['fitur_tipe'],
+                "filename"          => $filnam,
+                "file"              => $imgku
+            ];
+        } else {
+            $imageRequest = [
+                "title"             => $input['judul_modul'],
+                "description"       => $input['dekripsi_modul'],
+                "feature_type_id"   => $input['fitur_tipe'],
+                "filename"          => "",
+                "file"              => ""
+            ];
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        try {
+            $resImg = $req->upload_image_module($imageRequest, $url, $token);
+            return $resImg['data']['feature_id'];
+            // if ($resImg['success'] == true) {
+            //     alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
+            //     return back();
+            // }
+        } catch (ClientException $exception) {
+            dd($exception);
+        }
+    }
 } //endclas

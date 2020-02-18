@@ -323,14 +323,16 @@ Route::get('/dashboard','SuperadminController@dashboarSuperView')->name('/dashbo
 Route::get('/user','SuperadminController@UserSuperView')->name('/user');
 Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment');
 Route::get('/module','SuperadminController@ModuleManagementView')->name('/module');
+Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
+Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
 
 //-------POST------
 Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_superadmin');
 Route::post('get_all_module_list_superadmin', 'SuperadminController@get_all_module_list_superadmin');
 Route::post('detail_module_all_super', 'SuperadminController@detail_module_all_super');
+Route::post('add_create_new_module', 'SuperadminController@add_create_new_module')->name('add_create_new_module');
 });
 // ---- post : superadmin-----
-Route::get('superadmin/logout', 'SuperadminController@LogoutSuperadmin')->name('superadmin/logout');
 
 Route::post('loginSuperadmin','SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 

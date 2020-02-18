@@ -39,8 +39,8 @@
             </li>
 
              <li class="nav-item">
-              <a class="nav-link" href="">
-                <span class="menu-title">User Management</span>
+              <a class="nav-link" href="/superadmin/usertype">
+                <span class="menu-title">User Type Management</span>
                 <i class="mdi mdi-account-convert menu-icon"></i>
               </a>
             </li>
