@@ -332,6 +332,9 @@ Route::post('get_all_module_list_superadmin', 'SuperadminController@get_all_modu
 Route::post('detail_module_all_super', 'SuperadminController@detail_module_all_super');
 Route::post('add_create_new_module', 'SuperadminController@add_create_new_module')->name('add_create_new_module');
 Route::post('tabel_usertype_superadmin', 'SuperadminController@tabel_usertype_superadmin')->name('tabel_usertype_superadmin');
+Route::post('get_listfitur_usertype_ceklist', 'SuperadminController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
+Route::post('add_new_usertype_management', 'SuperadminController@add_new_usertype_management')->name('add_new_usertype_management');
+Route::post('edit_usertype_management', 'SuperadminController@edit_usertype_management')->name('edit_usertype_management');
 
 });
 // ---- post : superadmin-----

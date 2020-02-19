@@ -417,7 +417,6 @@
                 var jum = 0;
                 $.each(dt.subfeature, function (i, item) {
                     // console.log(item);
-                    var colum;
                     jum++;
 
                     subf += '<div class="col-md-6 stretch-card grid-margin' +

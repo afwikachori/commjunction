@@ -347,26 +347,28 @@ class SuperadminController extends Controller
                     array_push($data, $dataArray);
                 }
                 // return $data ;
+                foreach ($data as $i => $isi) {
+                    // dd($isi);
+                    $url = env('SERVICE') . 'modulemanagement/addsubfeature';
+                    $client = new \GuzzleHttp\Client();
 
-                $url = env('SERVICE') . 'modulemanagement/addsubfeature';
-                $client = new \GuzzleHttp\Client();
+                    $headers = [
+                        'Content-Type' => 'application/json',
+                        'Authorization' => $token
+                    ];
 
-                $headers = [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $token
-                ];
+                    $bodyku = json_encode($isi);
 
-                $bodyku = json_encode([$data]);
+                    $datakirim = [
+                        'body' => $bodyku,
+                        'headers' => $headers,
+                    ];
+                    $response = $client->post($url, $datakirim);
+                    $response = $response->getBody()->getContents();
+                    $json = json_decode($response, true);
 
-                $datakirim = [
-                    'body' => $bodyku,
-                    'headers' => $headers,
-                ];
-                $response = $client->post($url, $datakirim);
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
-
-                return $json;
+                    return $json;
+                }
             }
         } catch (ClientException $exception) {
             dd($exception->getMessage());
@@ -374,7 +376,8 @@ class SuperadminController extends Controller
     }
 
 
-    public function tabel_usertype_superadmin(){
+    public function tabel_usertype_superadmin()
+    {
         $ses_login = session()->get('session_logged_superadmin');
 
         $url = env('SERVICE') . 'usertype/listusertype';
@@ -392,11 +395,125 @@ class SuperadminController extends Controller
         return $json['data'];
     }
 
+    public function get_listfitur_usertype_ceklist()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'usertype/listfeature';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
 
 
 
+    public function add_new_usertype_management(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
 
+        $subftr = [];
+        foreach ($input['subfitur'] as $i => $dt) {
+            $dataArray = [
+                'subfeature_id'       => $dt
+            ];
+            array_push($subftr, $dataArray);
+        }
 
+        $url = env('SERVICE') . 'usertype/create';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'title' => $input['nama_usertipe'],
+            'description' => $input['dekripsi_usertipe'],
+            'subfeature' => $subftr,
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add User Type', 'Added!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+            }
+        }
+    }
+
+public function edit_usertype_management(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $subftr = [];
+        foreach ($input['subfitur'] as $i => $dt) {
+            $dataArray = [
+                'subfeature_id'       => $dt
+            ];
+            array_push($subftr, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'usertype/edit';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'usertype_id' => $input['idfitur_usertype_edit'],
+            'title' => $input['nama_usertipe_edit'],
+            'description' => $input['dekripsi_usertipe_edit'],
+            'subfeature' => $subftr,
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+            }
+        }
+}
 
 
 
