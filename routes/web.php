@@ -331,6 +331,8 @@ Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_super
 Route::post('get_all_module_list_superadmin', 'SuperadminController@get_all_module_list_superadmin');
 Route::post('detail_module_all_super', 'SuperadminController@detail_module_all_super');
 Route::post('add_create_new_module', 'SuperadminController@add_create_new_module')->name('add_create_new_module');
+Route::post('tabel_usertype_superadmin', 'SuperadminController@tabel_usertype_superadmin')->name('tabel_usertype_superadmin');
+
 });
 // ---- post : superadmin-----
 

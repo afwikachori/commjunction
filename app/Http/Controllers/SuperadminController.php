@@ -38,7 +38,8 @@ class SuperadminController extends Controller
         return view('superadmin/module_management_super');
     }
 
-    public function UserTypeView(){
+    public function UserTypeView()
+    {
         return view('superadmin/usertype_management_super');
     }
 
@@ -297,20 +298,21 @@ class SuperadminController extends Controller
     }
 
 
-
     public function add_create_new_module(Request $request)
     {
         $ses_login = session()->get('session_logged_superadmin');
         $token = $ses_login['access_token'];
         $input = $request->all();
-        // return $input;
+        $subf = $request->except('_token', 'judul_modul', 'dekripsi_modul', 'fitur_tipe', 'fileup');
+
         $req = new RequestController;
         $fileimg = "";
-        $imgku = file_get_contents($request->file('fileup')->getRealPath());
-        $filnam = $request->file('fileup')->getClientOriginalName();
         $url = env('SERVICE') . 'modulemanagement/addfeature';
 
         if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
             $imageRequest = [
                 "title"             => $input['judul_modul'],
                 "description"       => $input['dekripsi_modul'],
@@ -330,13 +332,72 @@ class SuperadminController extends Controller
 
         try {
             $resImg = $req->upload_image_module($imageRequest, $url, $token);
-            return $resImg['data']['feature_id'];
-            // if ($resImg['success'] == true) {
-            //     alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
-            //     return back();
-            // }
+            $id_fitur =  $resImg['data']['feature_id'];
+            // return $resImg;
+
+            if ($resImg['success'] == true) {
+
+                $data = [];
+                foreach ($subf as $i => $dt) {
+                    $dataArray = [
+                        'title'       => $dt[0],
+                        'description' => $dt[1],
+                        'feature_id' => $id_fitur,
+                    ];
+                    array_push($data, $dataArray);
+                }
+                // return $data ;
+
+                $url = env('SERVICE') . 'modulemanagement/addsubfeature';
+                $client = new \GuzzleHttp\Client();
+
+                $headers = [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $token
+                ];
+
+                $bodyku = json_encode([$data]);
+
+                $datakirim = [
+                    'body' => $bodyku,
+                    'headers' => $headers,
+                ];
+                $response = $client->post($url, $datakirim);
+                $response = $response->getBody()->getContents();
+                $json = json_decode($response, true);
+
+                return $json;
+            }
         } catch (ClientException $exception) {
-            dd($exception);
+            dd($exception->getMessage());
         }
     }
+
+
+    public function tabel_usertype_superadmin(){
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'usertype/listusertype';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+
+
+
+
+
+
 } //endclas

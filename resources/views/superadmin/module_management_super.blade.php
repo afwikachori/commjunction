@@ -241,11 +241,11 @@
 
                                 <div class="row form-group">
                                     <div class="col-md-5 col-sm-12">
-                                        <input type="text" name="judul_submodul1" class="form-control input-abu"
+                                        <input type="text" name="sub1[]" class="form-control input-abu"
                                             placeholder="Title">
                                     </div>
                                     <div class="col-md-7 col-sm-12" style="padding-left:0px;">
-                                        <input type="text" name="deskripsi_submodul1" class="form-control input-abu"
+                                        <input type="text" name="sub1[]" class="form-control input-abu"
                                             placeholder="Description">
                                     </div>
                                 </div>
@@ -481,10 +481,10 @@
             var new_row = '<div class="row form-group newly" id="row' + row + '"'+
                 'style="margin-top:1em;">' +
                 '<div class="col-md-4" style="padding-right:0px;">' +
-                '<input type="text" name="judul_submodul'+id+'" class="form-control input-abu" placeholder="Title">'+
+                '<input type="text" name="sub'+id+'[]" class="form-control input-abu" placeholder="Title">'+
                 '</div>' +
                 '<div class="col-md-7" style="padding-right:0px;">' +
-                '<input type="text" name="deskripsi_submodul'+id+'" class="form-control input-abu" placeholder="Description">'+
+                '<input type="text" name="sub'+id+'[]" class="form-control input-abu" placeholder="Description">'+
                 '</div>' +
                 '<div class="col-md" style="padding-right:0px; padding-left: 5px;">' +
                 '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
