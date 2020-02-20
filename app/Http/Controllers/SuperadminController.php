@@ -350,7 +350,6 @@ class SuperadminController extends Controller
                         'feature_id' => $id_fitur,
                     ];
                     array_push($data, $dataArray);
-
                 }
                 // return $data ;
 
@@ -375,12 +374,11 @@ class SuperadminController extends Controller
                     $response = $response->getBody()->getContents();
                     $json = json_decode($response, true);
 
-                    if ($i == $length-1){
+                    if ($i == $length - 1) {
                         alert()->success('Successfully Add Module and Subfeature', 'Has been Added!')->autoclose(4500);
                         return back();
                     }
                 }
-
             }
         } catch (ClientException $exception) {
             dd($exception->getMessage());
@@ -552,7 +550,8 @@ class SuperadminController extends Controller
 
 
 
-    public function add_endpoint_module(Request $request){
+    public function add_endpoint_module(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         $url = env('SERVICE') . 'modulemanagement/addmoduleendpoint';
@@ -602,6 +601,119 @@ class SuperadminController extends Controller
     }
 
 
+    public function get_list_komunitas()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'transmanagement/listcommunity';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+    public function get_list_transaction_tipe()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'transmanagement/listtransactiontype';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+
+    public function get_list_subcriber_name(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'transmanagement/listsubscriber';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $input['community_id']
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+    }
+
+public function show_tabel_transaksi(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+// return $input;
+        $url = env('SERVICE') . 'transmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "start_date" => $input['tanggal_mulai'],
+            "end_date" => $input['tanggal_selesai'],
+            "community_id" => $input['komunitas'],
+            "transaction_type_id" => $input['tipe_trans'],
+            "subscriber_id" => $input['subs_name'],
+            "transaction_status" => $input['status_trans']
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json;
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+}
 
 
 

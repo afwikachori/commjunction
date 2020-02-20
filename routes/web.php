@@ -336,8 +336,14 @@ Route::post('tabel_usertype_superadmin', 'SuperadminController@tabel_usertype_su
 Route::post('get_listfitur_usertype_ceklist', 'SuperadminController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
 Route::post('add_new_usertype_management', 'SuperadminController@add_new_usertype_management')->name('add_new_usertype_management');
 Route::post('edit_usertype_management', 'SuperadminController@edit_usertype_management')->name('edit_usertype_management');
-Route::post('tabel_transaksi_all_super', 'SuperadminController@tabel_transaksi_all_super')->name('tabel_transaksi_all_super');
+
 Route::post('add_endpoint_module', 'SuperadminController@add_endpoint_module')->name('add_endpoint_module');
+Route::post('get_list_komunitas', 'SuperadminController@get_list_komunitas')->name('get_list_komunitas');
+
+Route::post('get_list_transaction_tipe', 'SuperadminController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
+Route::post('get_list_subcriber_name', 'SuperadminController@get_list_subcriber_name')->name('get_list_subcriber_name');
+Route::post('show_tabel_transaksi', 'SuperadminController@show_tabel_transaksi')->name('show_tabel_transaksi');
+
 
 
 

@@ -54,6 +54,12 @@ body::-webkit-scrollbar-thumb
 
 }
 
+#tab_transaction_param .card .card-body {
+    padding: 1.5rem 1.5rem !important;
+}
+#tab_transaction_param{
+    border: 1px solid #d9d9d9;
+}
 
 .dropdown .dropdown-menu .dropdown-item:hover {
     background-color: #d9d9d9 !important;
