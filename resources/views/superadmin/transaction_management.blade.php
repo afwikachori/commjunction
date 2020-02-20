@@ -25,17 +25,19 @@
                     <div class="card">
                         <div class="card-header row" id="headingOne" style="background-color: white; border: none;">
                             <div class="col-md-10">
-                            <h4 class="mb-0">
-                                <a data-toggle="collapse" href="#collapseOne" role="button" data-target="#collapseOne"
-                                    aria-expanded="true" aria-controls="collapseOne" style="color:#0e6f73;">
-                                    Choose Parameter First &nbsp;
-                                    <i class="mdi mdi-chevron-down cteal"></i>
-                                </a>
-                            </h4>
+                                <h4 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapseOne" role="button"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                                        style="color:#0e6f73;">
+                                        Choose Parameter First &nbsp;
+                                        <i class="mdi mdi-chevron-down cteal"></i>
+                                    </a>
+                                </h4>
                             </div>
                             <div class="col-md-2" style="text-align: right;">
                                 <button type="button" id="reset_tbl_trans" style="width: 25px; height: 25px;"
-                                    class="btn btn-abu btn-icon btn-sm melengkung10px">
+                                    class="btn btn-abu btn-icon btn-sm melengkung10px" data-toggle="modal"
+                                    data-target="#modal_detail_trans" data-dismiss="modal">
                                     <i class="mdi mdi-refresh"></i>
                                 </button>
                             </div>
@@ -83,7 +85,7 @@
                                                 <small class="clight"> Transaction Status</small>
                                                 <select class="form-control input-abu" name="status_trans"
                                                     id="status_trans">
-                                                    <option value=""> NULL </option>
+                                                    <option value="null"> Choose </option>
                                                     <option value="1"> Pending </option>
                                                     <option value="2"> Approval </option>
                                                     <option value="3"> Cancel </option>
@@ -150,6 +152,160 @@
     </div>
 </div>
 
+
+
+<!-- MODAL DETAIL TRASACTION-->
+<div class="modal fade" id="modal_detail_trans" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="width: 100%; max-width: 900px;">
+        <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: right; margin-right: 5px;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+            <div class="modal-body" style="padding:25px; min-height: 550px; height: auto; padding: 5px 25px 0px 25px;">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12" style="border-right: 1px solid #E0E0E0; height: 100%;">
+                        <h4 class="tebal cgrey2">Detail Transaction</h4>
+
+                        <h5 class="cblue" style="margin-bottom: 1em;">INV3414223131231232</h5>
+
+                        <small class="clight">Transaction Date</small>
+                        <p class="cgrey2">2020-02-28</p>
+
+                        <div class="row">
+                            <div class="col-md-2" style="padding-right: 1px;">
+                                <img src="/img/cam.png" class="rounded-circle img-fluid" style="width: 40px;">
+                            </div>
+                            <div class="col-md-4" style="padding: 0px;">
+                                <small class="clight">Community Name</small>
+                                <p class="cgrey2">Brian Community</p>
+                            </div>
+                            <div class="col-md-2" style="padding-right: 10px; padding-left: 0px; text-align: right;">
+                                <img src="/img/def-profil.png" class="rounded-circle img-fluid" style="width: 40px;">
+                            </div>
+                            <div class="col-md-4" style="padding: 0px;">
+                                <small class="clight">Subcriber Name</small>
+                                <p class="cgrey2">Bpk Anggriawan</p>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Param Name</small>
+                                <p class="cgrey2">Content or value</p>
+                            </div>
+                        </div>
+
+                        <div class="footer_mdl" style="text-align: right; margin-top: 22%;">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                style="border-radius: 10px;">
+                                <i class="mdi mdi-close"></i> Cancel
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-teal btn-sm">
+                                <i class="mdi mdi-check btn-icon-prepend"></i>
+                                Download</button>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-12" style="height: 100%;">
+                        <div style="text-align: right;">
+                            <small class="clight" style="margin-top: 0.5em;">Payment Status</small> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-tosca melengkung10px btn-sm">
+                            Paid</button>
+                        </div>
+
+                        <br>
+                        <h5 class="cgrey tebal">Payment Confirmation</h5>
+                        <div class="row" style="padding: 0 5% 0 5%;">
+                            <div class="col-md-12" style="height: 115px; background-color: lavender; border-radius: 10px;">
+
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 0.5em;">
+                            <div class="col-md-4">
+                                <small class="clight">Account Name</small>
+                                <p class="cgrey2">Lala Marion Jola</p>
+                            </div>
+                            <div class="col-md-4">
+                                 <small class="clight">Account Number</small>
+                                <p class="cgrey2">0822414121</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="clight">Bank Name</small>
+                                <p class="cgrey2">Bank BCA</p>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <h5 class="cgrey tebal">Payment Confirmation</h5>
+                        <div class="row" style="padding: 0 5% 0 5%;">
+                            <div class="col-md-12" style="height: 115px; background-color: lavender; border-radius: 10px;">
+
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 0.5em;">
+                            <div class="col-md-6">
+                                <small class="clight">Approver Name</small>
+                                <p class="cgrey2">Lia Safitri</p>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="clight">Approved Date</small>
+                                <p class="cgrey2">20-02-2020</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end-body -->
+
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -164,7 +320,8 @@
     });
 
     function tabel_tes() {
-        alert('klik tes');
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -242,14 +399,14 @@
 
 
                 $('#komunitas').empty();
-                $('#komunitas').append("<option value=''> NULL </option>");
+                $('#komunitas').append("<option value='null'> Choose</option>");
 
                 for (var i = result.length - 1; i >= 0; i--) {
                     $('#komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
                 }
                 //Short Function Ascending//
                 $("#komunitas").html($('#komunitas option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
+                    return $(x).val() < $(y).val() ? -1 : 1;
                 }));
 
                 $("#komunitas").get(0).selectedIndex = 0;
@@ -280,14 +437,14 @@
             success: function (result) {
                 // console.log(result);
                 $('#tipe_trans').empty();
-                $('#tipe_trans').append("<option value=''> NULL </option>");
+                $('#tipe_trans').append("<option value='null'> Choose</option>");
 
                 for (var i = result.length - 1; i >= 0; i--) {
                     $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
                 }
                 //Short Function Ascending//
                 $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
+                    return $(x).val() < $(y).val() ? -1 : 1;
                 }));
 
                 $("#tipe_trans").get(0).selectedIndex = 0;
@@ -324,7 +481,7 @@
                 // console.log(result);
                 $('.subs_name').fadeIn("fast");
                 $('#subs_name').empty();
-                $('#subs_name').append("<option value=''> NULL </option>");
+                $('#subs_name').append("<option value='null'> Choose</option>");
 
                 for (var i = result.length - 1; i >= 0; i--) {
                     $('#subs_name').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].full_name, "</option>"));

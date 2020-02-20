@@ -679,7 +679,8 @@ class SuperadminController extends Controller
 public function show_tabel_transaksi(Request $request){
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
-// return $input;
+        // return $ses_login['access_token'];
+
         $url = env('SERVICE') . 'transmanagement/listall';
         $client = new \GuzzleHttp\Client();
         $headers = [
@@ -693,8 +694,8 @@ public function show_tabel_transaksi(Request $request){
             "transaction_type_id" => $input['tipe_trans'],
             "subscriber_id" => $input['subs_name'],
             "transaction_status" => $input['status_trans']
-
         ]);
+        // return $bodyku;
 
         $datakirim = [
             'body' => $bodyku,
