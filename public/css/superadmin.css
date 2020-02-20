@@ -190,6 +190,13 @@ select.form-control {
     border-radius: 10px;
     border: none;
 }
+.btn-abu {
+    background: linear-gradient(125.96deg, #ded0d0 0%, #c3cdd6 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
+    border: none;
+}
 
 .btn-oren {
     background: linear-gradient(108.22deg, #fc6076 -2.66%, #ff9a44 102.89%);
@@ -582,3 +589,108 @@ input[type=checkbox] {
   color: #50c9c3;
 }
 /* END-TREE CHECKBOX */
+
+
+
+
+/*SUBCRIBER MANAGEMEN TAB */
+.tabbable-panel {
+  border:1px solid #eee;
+  padding: 10px;
+}
+
+.tabbable-line > .nav-tabs {
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 78%;
+}
+
+/*//member*/
+.tabbable-line > .nav-tabs.member{
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 64%;
+}
+
+.tabbable-line > .nav-tabs.member > li {
+  margin-right: 5px;
+  text-align: center;
+  min-width: 174px;
+}
+
+
+.tabbable-line > .nav-tabs > li {
+  margin-right: 5px;
+  text-align: center;
+  min-width: 100px;
+}
+.tabbable-line > .nav-tabs > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 100px;
+  text-align: center;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 174px;
+  text-align: center;
+}
+
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs.member > li:hover {
+  border-bottom: 3px solid rgb(80,144,247);
+  min-width: 174px;
+  text-align: center;
+}
+
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+border-bottom: 3px solid #0E5F75;
+    position: relative;
+    min-width: 100px;
+    text-align: center;
+}
+
+/*member*/
+.tabbable-line > .nav-tabs.member > li.active {
+border-bottom: 3px solid #0E5F75;
+    position: relative;
+    min-width: 174px;
+    text-align: center;
+}
+
+.tabbable-line > .nav-tabs > li.active > a {
+  border: 0;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+.tabbable-line > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}

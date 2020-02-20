@@ -12,6 +12,8 @@
     <nav aria-label="breadcrumb">
         <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_create_new_module"
             data-dismiss="modal">Add New Module</button>
+        <button type="button" class="btn btn-abu btn-sm" data-toggle="modal" data-target="#modal_add_endpoint_module"
+            data-dismiss="modal">Add Endpoint</button>
     </nav>
 </div>
 
@@ -178,7 +180,8 @@
     <div class="modal-dialog modal-lg" role="document" style="width: auto; max-width:900px;">
         <div class="modal-content">
 
-            <form method="POST" id="form_create_new_module" action="{{route('add_create_new_module')}}" enctype="multipart/form-data">
+            <form method="POST" id="form_create_new_module" action="{{route('add_create_new_module')}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="modal-body" style="padding: 3%;">
@@ -237,18 +240,17 @@
                             <h4 class="cdarkgrey tebal">Add Sub Module</h4>
 
 
-                                <small class="cgrey">Input for sub-module</small>
+                            <small class="cgrey">Input for sub-module</small>
 
-                                <div class="row form-group">
-                                    <div class="col-md-5 col-sm-12">
-                                        <input type="text" name="sub1[]" class="form-control input-abu"
-                                            placeholder="Title">
-                                    </div>
-                                    <div class="col-md-7 col-sm-12" style="padding-left:0px;">
-                                        <input type="text" name="sub1[]" class="form-control input-abu"
-                                            placeholder="Description">
-                                    </div>
+                            <div class="row form-group">
+                                <div class="col-md-5 col-sm-12">
+                                    <input type="text" name="sub1[]" class="form-control input-abu" placeholder="Title">
                                 </div>
+                                <div class="col-md-7 col-sm-12" style="padding-left:0px;">
+                                    <input type="text" name="sub1[]" class="form-control input-abu"
+                                        placeholder="Description">
+                                </div>
+                            </div>
 
                             <div id="isi_newrow">
 
@@ -262,10 +264,6 @@
 
                         </div>
                     </div>
-
-
-
-
                 </div> <!-- end-body -->
 
                 <div class="modal-footer" style="border: none; padding:3%;">
@@ -284,6 +282,88 @@
     </div>
 </div>
 
+
+
+
+
+<!-- MODAL ADD NEW USERTYPE-->
+<div class="modal fade" id="modal_add_endpoint_module" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <form method="POST" id="form_add_usertype" action="{{route('add_new_usertype_management')}}">
+        {{ csrf_field() }}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border:none;">
+                    <h4 class="modal-title cdarkgrey">New Endpoint Module</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5; min-height: 300px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="cgrey">Endpoint</small>
+                                <input type="text" id="endpoint" name="endpoint"
+                                    class="form-control input-abu">
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Directory</small>
+                                <input type="text" id="directory" name="directory" class="form-control input-abu">
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Function</small>
+                                <input type="text" id="function" name="function" class="form-control input-abu">
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Subfeature ID</small>
+                                <input type="text" id="subfiturid" name="subfiturid" class="form-control input-abu">
+                            </div>
+                        </div> <!--  end-6 -->
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="cgrey">Method</small>
+                                <select class="form-control input-abu" id="method">
+                                    <option selected disabled>Choose</option>
+                                    <option value="POST">POST</option>
+                                    <option value="GET">GET</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Controller</small>
+                                <input type="text" id="controller" name="controller" class="form-control input-abu">
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Auth</small>
+                                <input type="text" id="auth" name="auth" class="form-control input-abu">
+                            </div>
+                            <div class="form-group">
+                                <small class="cgrey">Body</small>
+                                <input type="text" id="bodyku" name="bodyku" class="form-control input-abu">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; padding-left: 5%;padding-right: 5%; margin-bottom: 2%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Add </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 
@@ -477,13 +557,13 @@
         var id = 2;
 
         $(document).on("click", "#addnewrow", function () {
-            var new_row = '<div class="row form-group newly" id="row' + row + '"'+
+            var new_row = '<div class="row form-group newly" id="row' + row + '"' +
                 'style="margin-top:1em;">' +
                 '<div class="col-md-4" style="padding-right:0px;">' +
-                '<input type="text" name="sub'+id+'[]" class="form-control input-abu" placeholder="Title">'+
+                '<input type="text" name="sub' + id + '[]" class="form-control input-abu" placeholder="Title">' +
                 '</div>' +
                 '<div class="col-md-7" style="padding-right:0px;">' +
-                '<input type="text" name="sub'+id+'[]" class="form-control input-abu" placeholder="Description">'+
+                '<input type="text" name="sub' + id + '[]" class="form-control input-abu" placeholder="Description">' +
                 '</div>' +
                 '<div class="col-md" style="padding-right:0px; padding-left: 5px;">' +
                 '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
@@ -508,8 +588,8 @@
             }
             return false;
         });
-
     }
+
 
 </script>
 

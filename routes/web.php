@@ -325,6 +325,7 @@ Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment')
 Route::get('/module','SuperadminController@ModuleManagementView')->name('/module');
 Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
 Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
+Route::get('/transaction', 'SuperadminController@TransactionManagementView')->name('/transaction');
 
 //-------POST------
 Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_superadmin');
@@ -335,6 +336,8 @@ Route::post('tabel_usertype_superadmin', 'SuperadminController@tabel_usertype_su
 Route::post('get_listfitur_usertype_ceklist', 'SuperadminController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
 Route::post('add_new_usertype_management', 'SuperadminController@add_new_usertype_management')->name('add_new_usertype_management');
 Route::post('edit_usertype_management', 'SuperadminController@edit_usertype_management')->name('edit_usertype_management');
+Route::post('tabel_transaksi_all_super', 'SuperadminController@tabel_transaksi_all_super')->name('tabel_transaksi_all_super');
+
 
 });
 // ---- post : superadmin-----

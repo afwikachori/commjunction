@@ -43,6 +43,10 @@ class SuperadminController extends Controller
         return view('superadmin/usertype_management_super');
     }
 
+    public function TransactionManagementView(){
+        return view('superadmin/transaction_management');
+    }
+
 
 
 
@@ -514,6 +518,27 @@ public function edit_usertype_management(Request $request){
             }
         }
 }
+
+    public function tabel_transaksi_all_super(){
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'transmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
 
 
 

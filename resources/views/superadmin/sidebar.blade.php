@@ -45,4 +45,11 @@
               </a>
             </li>
 
+             <li class="nav-item">
+              <a class="nav-link" href="/superadmin/transaction">
+                <span class="menu-title">Transaction Management</span>
+                <i class="mdi mdi-cart menu-icon"></i>
+              </a>
+            </li>
+
           </ul>
