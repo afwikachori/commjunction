@@ -337,6 +337,8 @@ Route::post('get_listfitur_usertype_ceklist', 'SuperadminController@get_listfitu
 Route::post('add_new_usertype_management', 'SuperadminController@add_new_usertype_management')->name('add_new_usertype_management');
 Route::post('edit_usertype_management', 'SuperadminController@edit_usertype_management')->name('edit_usertype_management');
 Route::post('tabel_transaksi_all_super', 'SuperadminController@tabel_transaksi_all_super')->name('tabel_transaksi_all_super');
+Route::post('add_endpoint_module', 'SuperadminController@add_endpoint_module')->name('add_endpoint_module');
+
 
 
 });

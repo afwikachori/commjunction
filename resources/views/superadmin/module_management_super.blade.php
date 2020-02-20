@@ -290,7 +290,7 @@
 <div class="modal fade" id="modal_add_endpoint_module" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-    <form method="POST" id="form_add_usertype" action="{{route('add_new_usertype_management')}}">
+    <form method="POST" id="form_add_usertype" action="{{route('add_endpoint_module')}}">
         {{ csrf_field() }}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -311,22 +311,22 @@
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Directory</small>
-                                <input type="text" id="directory" name="directory" class="form-control input-abu">
+                                <input type="text" id="directory" name="directory" value="/module/example/controllers/" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Function</small>
-                                <input type="text" id="function" name="function" class="form-control input-abu">
+                                <input type="text" id="function" name="function" value="delete" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Subfeature ID</small>
-                                <input type="text" id="subfiturid" name="subfiturid" class="form-control input-abu">
+                                <input type="text" id="subfiturid" name="subfiturid" value="154" class="form-control input-abu">
                             </div>
                         </div> <!--  end-6 -->
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="cgrey">Method</small>
-                                <select class="form-control input-abu" id="method">
+                                <select class="form-control input-abu" id="method" name="method">
                                     <option selected disabled>Choose</option>
                                     <option value="POST">POST</option>
                                     <option value="GET">GET</option>
@@ -334,15 +334,15 @@
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Controller</small>
-                                <input type="text" id="controller" name="controller" class="form-control input-abu">
+                                <input type="text" id="controller" name="controller" value="example" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Auth</small>
-                                <input type="text" id="auth" name="auth" class="form-control input-abu">
+                                <input type="text" id="auth" name="auth" value="1" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Body</small>
-                                <input type="text" id="bodyku" name="bodyku" class="form-control input-abu">
+                                <input type="text" id="bodyku" name="bodyku" value="1" class="form-control input-abu">
                             </div>
                         </div>
                     </div>

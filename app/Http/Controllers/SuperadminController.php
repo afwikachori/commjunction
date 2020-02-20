@@ -43,7 +43,8 @@ class SuperadminController extends Controller
         return view('superadmin/usertype_management_super');
     }
 
-    public function TransactionManagementView(){
+    public function TransactionManagementView()
+    {
         return view('superadmin/transaction_management');
     }
 
@@ -349,10 +350,13 @@ class SuperadminController extends Controller
                         'feature_id' => $id_fitur,
                     ];
                     array_push($data, $dataArray);
+
                 }
                 // return $data ;
+
+                $length = count($data);
                 foreach ($data as $i => $isi) {
-                    // dd($isi);
+                    // dd(json_encode($isi));
                     $url = env('SERVICE') . 'modulemanagement/addsubfeature';
                     $client = new \GuzzleHttp\Client();
 
@@ -371,8 +375,12 @@ class SuperadminController extends Controller
                     $response = $response->getBody()->getContents();
                     $json = json_decode($response, true);
 
-                    return $json;
+                    if ($i == $length-1){
+                        alert()->success('Successfully Add Module and Subfeature', 'Has been Added!')->autoclose(4500);
+                        return back();
+                    }
                 }
+
             }
         } catch (ClientException $exception) {
             dd($exception->getMessage());
@@ -420,7 +428,8 @@ class SuperadminController extends Controller
 
 
 
-    public function add_new_usertype_management(Request $request){
+    public function add_new_usertype_management(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -461,15 +470,18 @@ class SuperadminController extends Controller
         } catch (ClientException $exception) {
             $code = $exception->getMessage();
             if ($code == 400) {
-            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
             }
             if ($code == 404) {
                 alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
             }
         }
     }
 
-public function edit_usertype_management(Request $request){
+    public function edit_usertype_management(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -517,9 +529,10 @@ public function edit_usertype_management(Request $request){
                 alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
             }
         }
-}
+    }
 
-    public function tabel_transaksi_all_super(){
+    public function tabel_transaksi_all_super()
+    {
         $ses_login = session()->get('session_logged_superadmin');
 
         $url = env('SERVICE') . 'transmanagement/listall';
@@ -535,6 +548,57 @@ public function edit_usertype_management(Request $request){
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+    }
+
+
+
+    public function add_endpoint_module(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $url = env('SERVICE') . 'modulemanagement/addmoduleendpoint';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "endpoint"      => $input['endpoint'],
+            "method"        => $input['method'],
+            "directory"     => $input['directory'],
+            "controller"    => $input['controller'],
+            "fungsi"        => $input['function'],
+            "subfeature_id" => $input['subfiturid'],
+            "auth"          => $input['auth'],
+            "body"          => $input['bodyku'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add New Module Endpoint', 'Added!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Cannot add Dual Endpoint ', 'Failed!')->autoclose(4000);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+            }
+            return back();
+        }
     }
 
 
