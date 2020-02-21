@@ -390,6 +390,34 @@ select.form-control .input-abu {
     font-size: 35px;
 }
 
+/* btn datatble export  */
+button.dt-button, div.dt-button, a.dt-button {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 0.333em !important;
+    margin-bottom: 0.333em !important;
+    padding: 0.3em 0.5em !important;
+    /* border: 1px solid #dcdcdc !important; */
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 0.88em;
+    line-height: 1em !important;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    background: linear-gradient(106.53deg, #e6e9ea 0%, #e4f8ff 56.6%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9');
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis;
+}
+
 .btn-ready-card {
     background: linear-gradient(106deg, #fc6076 -2.66%, #ff9a44 102.89%);
     border-radius: 15px;

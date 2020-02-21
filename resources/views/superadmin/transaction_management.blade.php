@@ -349,32 +349,6 @@
 
 
 
-    function detail_usertype_manage(idini) {
-        alert(idini);
-        // $("#modal_edit_usertype").modal("show");
-
-        // $.ajaxSetup({
-        //     headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-        // $.ajax({
-        //       url: '/admin/detail_user_management',
-        //       type: 'POST',
-        //       datatype: 'JSON',
-        //       data: {
-        //       "user_id": iduser
-        //       },
-        //       success: function (result) {
-
-        //       },
-        //       error: function (result) {
-        //         console.log("Cant Show Detail User");
-        //     }
-        // });
-    }
-
-
 
     //dropdown komunitas list
     function get_list_komunitas() {
@@ -514,6 +488,20 @@
         $("#collapseOne").removeClass('show');
 
         var tabel = $('#tabel_trans').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+               'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
+                    }
+                }
+            ],
             responsive: true,
             ajax: {
                 url: '/superadmin/tabel_transaksi_show',
@@ -545,9 +533,10 @@
                 { mData: 'status_title' },
                 { mData: 'id',
                     render: function (data, type, row, meta) {
-                        console.log(data);
+                         var dt = [row.invoice_number, row.payment_level, row.community_id];
+                        // console.log(data);
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_transaksi_all(\'' + data + '\')">' +
+                            'onclick="detail_transaksi_all(\'' + dt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -562,8 +551,28 @@
 
 
 
-function detail_transaksi_all(idtrans) {
+function detail_transaksi_all(dt_trans) {
     $("#modal_detail_trans").modal('show');
+console.log(dt_trans);
+        // $.ajaxSetup({
+        //     headers: {
+        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+        // $.ajax({
+        //       url: '/admin/detail_user_management',
+        //       type: 'POST',
+        //       datatype: 'JSON',
+        //       data: {
+        //       "user_id": iduser
+        //       },
+        //       success: function (result) {
+
+        //       },
+        //       error: function (result) {
+        //         console.log("Cant Show Detail User");
+        //     }
+        // });
 }
 
 </script>
