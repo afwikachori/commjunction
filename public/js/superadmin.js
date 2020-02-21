@@ -56,7 +56,7 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-        // console.log(result);
+          console.log(result.access_token);
       if (result != ""){
         $(".logged_fullname").text(result.user.full_name);
       }

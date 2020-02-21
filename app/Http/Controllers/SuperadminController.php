@@ -676,7 +676,7 @@ class SuperadminController extends Controller
         }
     }
 
-public function show_tabel_transaksi(Request $request){
+public function tabel_transaksi_show(Request $request){
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         // return $ses_login['access_token'];
@@ -706,7 +706,7 @@ public function show_tabel_transaksi(Request $request){
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json;
+            return $json['data'];
 
             if ($json['success'] == true) {
                 return $json['data'];

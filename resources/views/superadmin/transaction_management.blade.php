@@ -36,8 +36,7 @@
                             </div>
                             <div class="col-md-2" style="text-align: right;">
                                 <button type="button" id="reset_tbl_trans" style="width: 25px; height: 25px;"
-                                    class="btn btn-abu btn-icon btn-sm melengkung10px" data-toggle="modal"
-                                    data-target="#modal_detail_trans" data-dismiss="modal">
+                                    class="btn btn-abu btn-icon btn-sm melengkung10px">
                                     <i class="mdi mdi-refresh"></i>
                                 </button>
                             </div>
@@ -103,8 +102,7 @@
                                     </div>
 
                                     <div style="text-align: right !important;">
-                                        <button type="button" onclick="tabel_tes()"
-                                            class="btn btn-teal btn-tosca btn-sm melengkung10px"
+                                        <button type="button" id="btn_showtable_transaksi" class="btn btn-teal btn-sm melengkung10px"
                                             style="margin-top: 2%;">
                                             <i class="mdi mdi-check btn-icon-prepend">
                                             </i> Show
@@ -116,7 +114,8 @@
                     </div>
                 </div>
 
-                <div class="showin_table_trans" style="display: none;">
+
+                <div class="showin_table_trans" style="display: none;margin-top: 5%;">
                     <div class="row">
                         <div class="col-md-8">
                             <button type="button" id="btn_filter_trans" class="btn btn-tosca btn-sm"
@@ -139,7 +138,6 @@
                                 <th>Subcriber Name</th>
                                 <th>Community Name</th>
                                 <th>Status</th>
-                                <th>Last Login</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -320,15 +318,13 @@
     });
 
     function tabel_tes() {
-
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/superadmin/show_tabel_transaksi',
+            url: '/superadmin/tabel_transaksi_show',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
@@ -340,7 +336,6 @@
                 "status_trans": $("#status_trans").val(),
                 "subs_name": $("#subs_name").val()
             },
-            datatype: 'JSON',
             success: function (result) {
                 console.log(result);
             },
@@ -399,14 +394,14 @@
 
 
                 $('#komunitas').empty();
-                $('#komunitas').append("<option value='null'> Choose</option>");
+                $('#komunitas').append("<option disabled> Choose</option>");
 
                 for (var i = result.length - 1; i >= 0; i--) {
                     $('#komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
                 }
                 //Short Function Ascending//
                 $("#komunitas").html($('#komunitas option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
+                    return $(y).val() < $(x).val() ? -1 : 1;
                 }));
 
                 $("#komunitas").get(0).selectedIndex = 0;
@@ -444,7 +439,7 @@
                 }
                 //Short Function Ascending//
                 $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
+                    return $(y).val() < $(x).val() ? -1 : 1;
                 }));
 
                 $("#tipe_trans").get(0).selectedIndex = 0;
@@ -488,7 +483,7 @@
                 }
                 //Short Function Ascending//
                 $("#subs_name").html($('#subs_name option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
+                    return $(y).val() < $(x).val() ? -1 : 1;
                 }));
 
                 $("#subs_name").get(0).selectedIndex = 0; const
@@ -501,24 +496,31 @@
     });
     //end list subscriber
 
+        $("#btn_showtable_transaksi").click(function (e) {
+            tabel_tes();
+            show_tabel_transaksi();
+        });
+
+
+
+
+
 
     function show_tabel_transaksi() {
-        // $('#tabel_subscriber').dataTable().fnClearTable();
-        // $('#tabel_subscriber').dataTable().fnDestroy();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        $('#tabel_trans').dataTable().fnClearTable();
+        $('#tabel_trans').dataTable().fnDestroy();
+
+        $(".showin_table_trans").show();
+        $("#collapseOne").removeClass('show');
+
         var tabel = $('#tabel_trans').DataTable({
             responsive: true,
             ajax: {
-                url: '/superadmin/show_tabel_transaksi',
+                url: '/superadmin/tabel_transaksi_show',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "subs_datemulai": $("#subs_datemulai").val(),
                     "komunitas": $("#komunitas").val(),
                     "tanggal_mulai": $("#tanggal_mulai").val(),
                     "tanggal_selesai": $("#tanggal_selesai").val(),
@@ -529,73 +531,40 @@
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     // $('#tabel_subscriber tbody').;
-                    $('#tabel_subscriber tbody').empty().append(nofound);
+                    $('#tabel_trans tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
                 console.log(errorThrown);
             },
             columns: [
-                { mData: 'user_id' },
-                {
-                    mData: 'membership',
+                { mData: 'invoice_number' },
+                { mData: 'created_at' },
+                { mData: 'name' },
+                { mData: 'level_title' },
+                { mData: 'status_title' },
+                { mData: 'id',
                     render: function (data, type, row, meta) {
-                        // console.log(data);
-                        var isiku;
-                        if (data == null) {
-                            isiku = '<label style="color:red;">null</label>';
-                        } else {
-                            isiku = data.membership;
-                        }
-                        return isiku;
-                    }
-                },
-                { mData: 'full_name' },
-                {
-                    mData: 'status',
-                    render: function (data, type, row) {
-                        // console.log(data);
-                        var isihtml;
-                        if (data == 1) { //first-login
-                            isihtml = '<label class="badge badge-gradient-info">Newly</label>';
-                        } else if (data == 2) {
-                            isihtml = '<label class="badge badge-gradient-warning">Pending Membership</label>';
-                        }
-                        else if (data == 3) {
-                            isihtml = '<label class="badge badge-gradient-success">Active</label>';
-                        }
-                        else if (data == 4) {
-                            isihtml = '<label class="badge badge-gradient-secondary">Deactive</label>';
-                        } else {
-                            isihtml = '<label class="badge badge-gradient-danger">Pending</label>';
-                        }
-
-                        return isihtml;
-                    }
-                },
-                {
-                    mData: 'created_at',
-                    render: function (data, type, row, meta) {
-                        return formatDate(data);
-                    }
-                },
-                {
-                    mData: 'user_id',
-                    render: function (data, type, row, meta) {
-                        // console.log(data);
-                        return '<a href="/admin/detail_subscriber/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                            '<i class="mdi mdi-eye matadetail"></i>' +
-                            '</a>';
+                        console.log(data);
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_transaksi_all(\'' + data + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
                     }
                 }
             ],
 
         });
-        $("#subs_datemulai").val("");
-        $("#subs_dateselesai").val("")
-        $("#modal_filter_date_subs").modal('hide');
+        // $("#subs_datemulai").val("");
+        // $("#subs_dateselesai").val("")
+        // $("#modal_filter_date_subs").modal('hide');
     }
 
+
+
+function detail_transaksi_all(idtrans) {
+    $("#modal_detail_trans").modal('show');
+}
 
 </script>
 
