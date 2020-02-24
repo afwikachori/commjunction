@@ -595,8 +595,9 @@ class SuperadminController extends Controller
             }
             if ($code == 404) {
                 alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
             }
-            return back();
+
         }
     }
 
@@ -712,11 +713,48 @@ public function tabel_transaksi_show(Request $request){
                 return $json['data'];
             }
         } catch (ClientException $exception) {
-            return $exception;
+            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
+            return back();
         }
 }
 
+public function detail_transaksi_superadmin(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $ses_login['access_token'];
 
+        $url = env('SERVICE') . 'transmanagement/detail';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "invoice_number" => $input['invoice_number'],
+            "community_id" => $input['community_id'],
+            "payment_level" => $input['payment_level']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
+            return back();
+        }
+}
 
 
 } //endclas

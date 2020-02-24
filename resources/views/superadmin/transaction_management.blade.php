@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                             data-parent="#tab_transaction_param">
                             <div class="card-body">
                                 <form>
@@ -102,8 +102,8 @@
                                     </div>
 
                                     <div style="text-align: right !important;">
-                                        <button type="button" id="btn_showtable_transaksi" class="btn btn-teal btn-sm melengkung10px"
-                                            style="margin-top: 2%;">
+                                        <button type="button" id="btn_showtable_transaksi"
+                                            class="btn btn-teal btn-sm melengkung10px" style="margin-top: 2%;">
                                             <i class="mdi mdi-check btn-icon-prepend">
                                             </i> Show
                                         </button>
@@ -115,11 +115,12 @@
                 </div>
 
 
-                <div class="showin_table_trans" style="display: none;margin-top: 5%;">
+                <div class="showin_table_trans" style="display: none;margin-top: 1%;">
                     <div class="row">
                         <div class="col-md-8">
                             <button type="button" id="btn_filter_trans" class="btn btn-tosca btn-sm"
-                                style="min-width: 120px; margin-bottom: 1em;">Filter</button>
+                                style="min-width: 120px; margin-bottom: 1em;" data-toggle="modal"
+                                data-target="#modal_trasaksi_filter" data-dismiss="modal">Filter</button>
                         </div>
                         <div class="col-md-4" style="text-align: right;">
                             <button type="button" id="reset_tbl_subsall"
@@ -136,7 +137,7 @@
                                 <th>Invoice</th>
                                 <th>Transaction Date</th>
                                 <th>Subcriber Name</th>
-                                <th>Community Name</th>
+                                <th>Transaction Type</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -157,19 +158,20 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="width: 100%; max-width: 900px;">
         <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: right; margin-right: 5px;">
-            <span aria-hidden="true">&times;</span>
-        </button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                style="text-align: right; margin-right: 5px;">
+                <span aria-hidden="true">&times;</span>
+            </button>
 
             <div class="modal-body" style="padding:25px; min-height: 550px; height: auto; padding: 5px 25px 0px 25px;">
                 <div class="row">
                     <div class="col-md-6 col-sm-12" style="border-right: 1px solid #E0E0E0; height: 100%;">
                         <h4 class="tebal cgrey2">Detail Transaction</h4>
 
-                        <h5 class="cblue" style="margin-bottom: 1em;">INV3414223131231232</h5>
+                        <h5 class="cblue" style="margin-bottom: 1em;" id="invoice_trans">-</h5>
 
                         <small class="clight">Transaction Date</small>
-                        <p class="cgrey2">2020-02-28</p>
+                        <p class="cgrey2" id="date_trans">-</p>
 
                         <div class="row">
                             <div class="col-md-2" style="padding-right: 1px;">
@@ -177,62 +179,45 @@
                             </div>
                             <div class="col-md-4" style="padding: 0px;">
                                 <small class="clight">Community Name</small>
-                                <p class="cgrey2">Brian Community</p>
+                                <p class="cgrey2" id="komunitas_trans">-</p>
                             </div>
                             <div class="col-md-2" style="padding-right: 10px; padding-left: 0px; text-align: right;">
                                 <img src="/img/def-profil.png" class="rounded-circle img-fluid" style="width: 40px;">
                             </div>
                             <div class="col-md-4" style="padding: 0px;">
                                 <small class="clight">Subcriber Name</small>
-                                <p class="cgrey2">Bpk Anggriawan</p>
+                                <p class="cgrey2" id="subscriber_trans">-</p>
                             </div>
                         </div>
 
                         <br><br>
+
                         <div class="row">
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
+                            <div class="col-md-6">
+                                <small class="clight">Level Title</small>
+                                <p class="cgrey2" id="level_title_trans">-</p>
                             </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
-                            </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
+                            <div class="col-md-6">
+                                <small class="clight">Status</small>
+                                <p class="cgrey2" id="statusjudul_trans">-</p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
+                            <div class="col-md-6">
+                                <small class="clight">Transaction Type</small>
+                                <p class="cgrey2" id="jenis_trans">-</p>
                             </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
+                            <div class="col-md-6">
+                                <small class="clight">Transaction</small>
+                                <p class="cgrey2" id="transaksi_trans">-</p>
                             </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
+                            <div class="col-md-6">
+                                <small class="clight">Total Nominal</small>
+                                <p class="cgrey2" id="nominal_trans">-</p>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
-                            </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
-                            </div>
-                            <div class="col-md-4">
-                                <small class="clight">Param Name</small>
-                                <p class="cgrey2">Content or value</p>
-                            </div>
-                        </div>
 
                         <div class="footer_mdl" style="text-align: right; margin-top: 22%;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
@@ -249,30 +234,32 @@
 
                     <div class="col-md-6 col-sm-12" style="height: 100%;">
                         <div style="text-align: right;">
-                            <small class="clight" style="margin-top: 0.5em;">Payment Status</small> &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn btn-tosca melengkung10px btn-sm">
-                            Paid</button>
+                            <small class="clight" style="margin-top: 0.5em;">Payment Status</small>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div id="status_color"></div>
                         </div>
 
                         <br>
                         <h5 class="cgrey tebal">Payment Confirmation</h5>
                         <div class="row" style="padding: 0 5% 0 5%;">
-                            <div class="col-md-12" style="height: 115px; background-color: lavender; border-radius: 10px;">
-
+                            <div class="col-md-12"
+                                style="height: 115px; background-color: lavender; border-radius: 10px;">
+                                <img src="" id="img_pay_confirm" onclick="clickImage(this)"
+                                    style="height: 115px; width: 100%;">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
                             <div class="col-md-4">
-                                <small class="clight">Account Name</small>
-                                <p class="cgrey2">Lala Marion Jola</p>
+                                <small class="clight">Account Name</small><br>
+                                <small class="cgrey2" id="nama_confirm_trans">-</small>
                             </div>
                             <div class="col-md-4">
-                                 <small class="clight">Account Number</small>
-                                <p class="cgrey2">0822414121</p>
+                                <small class="clight">Bank Name</small><br>
+                                <small class="cgrey2" id="bank_confirm_trans">-</small>
                             </div>
                             <div class="col-md-4">
-                                <small class="clight">Bank Name</small>
-                                <p class="cgrey2">Bank BCA</p>
+                                <small class="clight">Date Confirmation</small><br>
+                                <small class="cgrey2" id="date_confirm_trans">-</small>
                             </div>
                         </div>
 
@@ -280,18 +267,20 @@
 
                         <h5 class="cgrey tebal">Payment Confirmation</h5>
                         <div class="row" style="padding: 0 5% 0 5%;">
-                            <div class="col-md-12" style="height: 115px; background-color: lavender; border-radius: 10px;">
-
+                            <div class="col-md-12"
+                                style="height: 115px; background-color: lavender; border-radius: 10px;">
+                                <img src="" id="img_pay_aprov" onclick="clickImage(this)"
+                                    style="height: 115px; width: 100%;">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
-                            <div class="col-md-6">
-                                <small class="clight">Approver Name</small>
-                                <p class="cgrey2">Lia Safitri</p>
+                            <div class="col-md-4">
+                                <small class="clight">Approver Name</small><br>
+                                <small class="cgrey2" id="name_approv_trans">-</s>
                             </div>
-                            <div class="col-md-6">
-                                <small class="clight">Approved Date</small>
-                                <p class="cgrey2">20-02-2020</p>
+                            <div class="col-md-8">
+                                <small class="clight">Approved Date</small><br>
+                                <small class="cgrey2" id="date_approv_trans">-</small>
                             </div>
                         </div>
 
@@ -302,6 +291,109 @@
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
+
+
+
+<!-- MODAL FILTER TRANSAKSI-->
+<div class="modal fade" id="modal_trasaksi_filter" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form>
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey">Filter Transaction</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">Start Date</small>
+                                <input type="date" id="tanggal_mulai2" name="tanggal_mulai2"
+                                    class="form-control input-abu">
+                            </div>
+
+                            <div class="form-group">
+                                <small class="clight s13">Transaction Type</small>
+                                <select class="form-control input-abu" name="tipe_trans2" id="tipe_trans2">
+                                </select>
+                            </div>
+
+                        </div> <!-- end-col-md -->
+
+
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">End Date</small>
+                                <input type="date" id="tanggal_selesai2" name="tanggal_selesai2"
+                                    class="form-control input-abu">
+                            </div>
+
+                            <div class="form-group">
+                                <small class="clight s13"> Transaction Status</small>
+                                <select class="form-control input-abu" name="status_trans2" id="status_trans2">
+                                    <option value="null"> Choose </option>
+                                    <option value="1"> Pending </option>
+                                    <option value="2"> Approval </option>
+                                    <option value="3"> Cancel </option>
+                                </select>
+                            </div>
+
+                        </div> <!-- end-col-md -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <center>
+                                <label class="cgrey2" style="margin-top: 2em;">
+                                    Community
+                                </label>
+                            </center>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group">
+                                <select class="form-control input-abu" name="komunitas2" id="komunitas2">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row showinsubs2">
+                        <div class="col-md">
+                            <center>
+                                <label class="cgrey2" style="margin-top: 2em;">
+                                    Subscriber
+                                </label>
+                            </center>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group">
+                                <select class="form-control input-abu" name="subs_name2" id="subs_name2">
+                                    <option selected disabled> Choose Community First</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_filter_transaksi" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Filter </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
+
 
 
 @endsection
@@ -347,13 +439,25 @@
     }
 
 
+    $("#reset_tbl_trans").click(function () {
+        resetparam_trans();
+    });
 
+    function resetparam_trans() {
+        $("#komunitas").val("");
+        $("#tanggal_mulai").val("");
+        $("#tanggal_selesai").val("");
+        $("#tipe_trans").val("");
+        $("#status_trans").val("");
+        $("#subs_name").val("");
+    }
 
 
     //dropdown komunitas list
     function get_list_komunitas() {
         // SUBSCRIBER DROPDOWN HIDE
         $('.subs_name').hide();
+        $(".showinsubs2").hide();
 
         $.ajaxSetup({
             headers: {
@@ -365,8 +469,6 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
-
-
                 $('#komunitas').empty();
                 $('#komunitas').append("<option disabled> Choose</option>");
 
@@ -384,6 +486,25 @@
 
                 if (OldKomunitas !== '') {
                     $('#komunitas').val(OldKomunitas);
+                }
+                // _________________________________________________________________
+                $('#komunitas2').empty();
+                $('#komunitas2').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas2").html($('#komunitas2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#komunitas2").get(0).selectedIndex = 0;
+
+                const OldKomunitas2 = "{{old('komunitas2')}}";
+
+                if (OldKomunitas2 !== '') {
+                    $('#komunitas2').val(OldKomunitas2);
                 }
             }
         });
@@ -423,6 +544,25 @@
                 if (OldTipetrans !== '') {
                     $('#tipe_trans').val(OldTipetrans);
                 }
+                // ___________________________________________________________________
+                $('#tipe_trans2').empty();
+                $('#tipe_trans2').append("<option value='null'> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#tipe_trans2").get(0).selectedIndex = 0;
+
+                const OldTipetrans2 = "{{old('tipe_trans2')}}";
+
+                if (OldTipetrans2 !== '') {
+                    $('#tipe_trans2').val(OldTipetrans2);
+                }
             }
         });
     } //endfunction
@@ -448,7 +588,7 @@
             },
             success: function (result) {
                 // console.log(result);
-                $('.subs_name').fadeIn("fast");
+                $('#subs_name').fadeIn("fast");
                 $('#subs_name').empty();
                 $('#subs_name').append("<option value='null'> Choose</option>");
 
@@ -461,22 +601,68 @@
                 }));
 
                 $("#subs_name").get(0).selectedIndex = 0; const
-                    OldSubs = "{{old('subs_name')}}"; if (OldSubs !== '') { $('#subs_name').val(OldSubs); }
+                    OldSubs = "{{old('subs_name')}}";
+                if (OldSubs !== '') {
+                    $('#subs_name').val(OldSubs);
+                }
+
             },
             error: function (result) {
-                $('.subs_name').fadeOut("fast");
+                $('#subs_name').fadeOut("fast");
             }
         });
     });
     //end list subscriber
 
-        $("#btn_showtable_transaksi").click(function (e) {
-            tabel_tes();
-            show_tabel_transaksi();
+
+    //dropdown subs_name list
+    $('#komunitas2').change(function () {
+        // alert("dasdsadsadas");
+        var itempilih = this.value;
+        console.log(itempilih);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+        $.ajax({
+            url: "/superadmin/get_list_subcriber_name",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "community_id": itempilih,
+            },
+            success: function (result) {
+
+                $('.showinsubs2').fadeIn("fast");
+                $('#subs_name2').empty();
+                $('#subs_name2').append("<option value='null'> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#subs_name2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].full_name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#subs_name2").html($('#subs_name2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#subs_name2").get(0).selectedIndex = 0; const
+                    OldSubs2 = "{{old('subs_name2')}}";
+                if (OldSubs2 !== '') { $('#subs_name2').val(OldSubs2); }
+
+            },
+            error: function (result) {
+                $('#subs_name2').fadeOut("fast");
+            }
+        });
+    });
+    //end list subscriber
 
 
-
+    $("#btn_showtable_transaksi").click(function (e) {
+        // tabel_tes();
+        show_tabel_transaksi();
+    });
 
 
 
@@ -485,12 +671,14 @@
         $('#tabel_trans').dataTable().fnDestroy();
 
         $(".showin_table_trans").show();
-        $("#collapseOne").removeClass('show');
+        // $("#collapseOne").removeClass('show');
+        $("#tab_transaction_param").hide();
+
 
         var tabel = $('#tabel_trans').DataTable({
             dom: 'Bfrtip',
             buttons: [
-               'csv', 'excel', 'pdf', 'print', {
+                'csv', 'excel', 'pdf', 'print', {
                     text: 'JSON',
                     action: function (e, dt, button, config) {
                         var data = dt.buttons.exportData();
@@ -529,11 +717,12 @@
                 { mData: 'invoice_number' },
                 { mData: 'created_at' },
                 { mData: 'name' },
-                { mData: 'level_title' },
+                { mData: 'transaction_type' },
                 { mData: 'status_title' },
-                { mData: 'id',
+                {
+                    mData: 'id',
                     render: function (data, type, row, meta) {
-                         var dt = [row.invoice_number, row.payment_level, row.community_id];
+                        var dt = [row.invoice_number, row.payment_level, row.community_id];
                         // console.log(data);
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_transaksi_all(\'' + dt + '\')">' +
@@ -544,36 +733,153 @@
             ],
 
         });
-        // $("#subs_datemulai").val("");
-        // $("#subs_dateselesai").val("")
-        // $("#modal_filter_date_subs").modal('hide');
     }
 
 
 
-function detail_transaksi_all(dt_trans) {
-    $("#modal_detail_trans").modal('show');
-console.log(dt_trans);
-        // $.ajaxSetup({
-        //     headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-        // $.ajax({
-        //       url: '/admin/detail_user_management',
-        //       type: 'POST',
-        //       datatype: 'JSON',
-        //       data: {
-        //       "user_id": iduser
-        //       },
-        //       success: function (result) {
+    function detail_transaksi_all(dt_trans) {
+        $("#modal_detail_trans").modal('show');
+        var trans = dt_trans.split(',');
+        // console.log(trans);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/detail_transaksi_superadmin',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                "invoice_number": trans[0],
+                "payment_level": trans[1],
+                "community_id": trans[2],
+            },
+            success: function (result) {
+                console.log(result);
 
-        //       },
-        //       error: function (result) {
-        //         console.log("Cant Show Detail User");
-        //     }
-        // });
-}
+                $("#invoice_trans").html(result.invoice_number);
+                $("#date_trans").html(result.created_at);
+                $("#komunitas_trans").html(result.community_name);
+                $("#subscriber_trans").html(result.name);
+                $("#level_title_trans").html(result.level_title);
+                $("#nominal_trans").html(result.grand_total);
+                $("#jenis_trans").html(result.transaction_type);
+                $("#statusjudul_trans").html(result.status_title);
+                $("#transaksi_trans").html(result.transaction);
+
+                var uiku = '';
+                if (result.data_confirmation.file != "") {
+                    $("#img_pay_confirm").attr("src", server_cdn + result.data_confirmation.file);
+                    $("#nama_confirm_trans").html(result.data_confirmation.created_by);
+                    $("#date_confirm_trans").html(result.data_confirmation.created_at);
+
+                    uiku = '<button type="button" class="btn btn-tosca' +
+                        'melengkung10px btn-sm"> Paid</button >';
+                    $("#status_color").html(uiku);
+                } else {
+                    $("#img_pay_confirm").attr("src", "");
+                    uiku = '<button type="button" class="btn btn-abu' +
+                        'melengkung10px btn-sm"> Not Yet</button >';
+                    $("#status_color").html(uiku);
+                }
+
+
+                if (result.data_verification.file != "") {
+                    $("#img_pay_aprov").attr("src", server_cdn + result.data_verification.file);
+                    $("#name_approv_trans").html(result.data_verification.verification_by);
+                    $("#date_approv_trans").html(result.data_verification.verification_at);
+                }
+
+
+                // $("#").html(result.);
+                // $("#").html(result.);
+                // $("#").html(result.);
+
+            },
+            error: function (result) {
+                console.log("Cant Show Detail User");
+            }
+        });
+    }
+
+
+
+
+
+        $("#btn_filter_transaksi").click(function (e) {
+            // alert("filter");
+            resetparam_trans();
+            $('#tabel_trans').dataTable().fnClearTable();
+            $('#tabel_trans').dataTable().fnDestroy();
+
+            $(".showin_table_trans").show();
+            // $("#collapseOne").removeClass('show');
+            $("#tab_transaction_param").hide();
+
+            $("#modal_trasaksi_filter").modal("hide");
+
+
+            var tabel = $('#tabel_trans').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv', 'excel', 'pdf', 'print', {
+                        text: 'JSON',
+                        action: function (e, dt, button, config) {
+                            var data = dt.buttons.exportData();
+
+                            $.fn.dataTable.fileSave(
+                                new Blob([JSON.stringify(data)]),
+                                'Export.json'
+                            );
+                        }
+                    }
+                ],
+                responsive: true,
+                ajax: {
+                    url: '/superadmin/tabel_transaksi_show',
+                    type: 'POST',
+                    dataSrc: '',
+                    timeout: 30000,
+                    data: {
+                        "komunitas": $("#komunitas2").val(),
+                        "tanggal_mulai": $("#tanggal_mulai2").val(),
+                        "tanggal_selesai": $("#tanggal_selesai2").val(),
+                        "tipe_trans": $("#tipe_trans2").val(),
+                        "status_trans": $("#status_trans2").val(),
+                        "subs_name": $("#subs_name2").val()
+                    },
+                    error: function (jqXHR, ajaxOptions, thrownError) {
+                        var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                        // $('#tabel_subscriber tbody').;
+                        $('#tabel_trans tbody').empty().append(nofound);
+                    },
+                },
+                error: function (request, status, errorThrown) {
+                    console.log(errorThrown);
+                },
+                columns: [
+                    { mData: 'invoice_number' },
+                    { mData: 'created_at' },
+                    { mData: 'name' },
+                    { mData: 'transaction_type' },
+                    { mData: 'status_title' },
+                    {
+                        mData: 'id',
+                        render: function (data, type, row, meta) {
+                            var dt = [row.invoice_number, row.payment_level, row.community_id];
+                            // console.log(data);
+                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                                'onclick="detail_transaksi_all(\'' + dt + '\')">' +
+                                '<i class="mdi mdi-eye"></i>' +
+                                '</button>';
+                        }
+                    }
+                ],
+
+            });
+        });
+
 
 </script>
 

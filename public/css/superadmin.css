@@ -203,6 +203,13 @@ select.form-control {
     border-radius: 10px;
     border: none;
 }
+.btn-ijo {
+    background: linear-gradient(125.96deg, #0fb34e 0%, #90b466 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
+}
+
 
 .btn-oren {
     background: linear-gradient(108.22deg, #fc6076 -2.66%, #ff9a44 102.89%);
@@ -407,7 +414,7 @@ button.dt-button, div.dt-button, a.dt-button {
     color: black;
     white-space: nowrap;
     overflow: hidden;
-    background: linear-gradient(106.53deg, #e6e9ea 0%, #e4f8ff 56.6%) !important;
+    background: linear-gradient(106.53deg, #e6e9ea 0%, #e4f2f7 56.6%) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9');
     -webkit-user-select: none;
     -moz-user-select: none;

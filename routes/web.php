@@ -343,6 +343,7 @@ Route::post('get_list_komunitas', 'SuperadminController@get_list_komunitas')->na
 Route::post('get_list_transaction_tipe', 'SuperadminController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
 Route::post('get_list_subcriber_name', 'SuperadminController@get_list_subcriber_name')->name('get_list_subcriber_name');
 Route::post('tabel_transaksi_show', 'SuperadminController@tabel_transaksi_show')->name('tabel_transaksi_show');
+Route::post('detail_transaksi_superadmin', 'SuperadminController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
 
 
 
