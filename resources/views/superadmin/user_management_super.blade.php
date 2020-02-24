@@ -1,5 +1,7 @@
-@extends('layout.admin-dashboard')
-@section('title', 'User Management')
+@extends('layout.superadmin')
+
+@section('title', 'Users Management')
+
 @section('content')
             <div class="page-header">
               <h3 class="page-title">
@@ -278,11 +280,11 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-var server_cdn = '{{ env("CDN") }}';
-
-$(document).ready(function () {
-get_user_tipe_manage();
-tabel_user_management();
+    var server_cdn = '{{ env("CDN") }}';
+    $(document).ready(function () {
+    session_logged_superadmin();
+    // get_user_tipe_manage();
+    // tabel_user_management();
 // tabel_tes();
 });
 

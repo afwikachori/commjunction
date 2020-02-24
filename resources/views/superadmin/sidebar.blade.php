@@ -12,7 +12,7 @@
                       {{ Session::get('fullname')}}
                     @endif
                   </span>
-                  <span class="text-secondary text-small">Project Manager</span>
+                  <span class="text-secondary text-small">Administrator</span>
                 </div>
               </a>
             </li>
@@ -28,6 +28,13 @@
               <a class="nav-link" href="/superadmin/payment">
                 <span class="menu-title">Verify Payment</span>
                 <i class="mdi mdi-coin menu-icon"></i>
+              </a>
+            </li>
+
+             <li class="nav-item">
+              <a class="nav-link" href="/superadmin/subscriber">
+                <span class="menu-title">Subscriber Management</span>
+                <i class="mdi mdi-account-multiple menu-icon"></i>
               </a>
             </li>
 
@@ -49,6 +56,13 @@
               <a class="nav-link" href="/superadmin/transaction">
                 <span class="menu-title">Transaction Management</span>
                 <i class="mdi mdi-cart menu-icon"></i>
+              </a>
+            </li>
+
+               <li class="nav-item">
+              <a class="nav-link" href="/superadmin/user_manage">
+                <span class="menu-title">User Management</span>
+                <i class="mdi mdi-account-plus menu-icon"></i>
               </a>
             </li>
 

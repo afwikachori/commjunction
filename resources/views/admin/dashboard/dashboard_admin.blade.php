@@ -1,5 +1,7 @@
 @extends('layout.admin-dashboard')
 
+@section('title', 'Dashboard Community')
+
 @section('content')
             <div class="page-header">
               <h3 class="page-title">

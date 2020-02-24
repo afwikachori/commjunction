@@ -326,6 +326,9 @@ Route::get('/module','SuperadminController@ModuleManagementView')->name('/module
 Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
 Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
 Route::get('/transaction', 'SuperadminController@TransactionManagementView')->name('/transaction');
+Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
+Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
+
 
 //-------POST------
 Route::post('get_dashboard_superadmin','SuperadminController@get_dashboard_superadmin');
@@ -344,6 +347,10 @@ Route::post('get_list_transaction_tipe', 'SuperadminController@get_list_transact
 Route::post('get_list_subcriber_name', 'SuperadminController@get_list_subcriber_name')->name('get_list_subcriber_name');
 Route::post('tabel_transaksi_show', 'SuperadminController@tabel_transaksi_show')->name('tabel_transaksi_show');
 Route::post('detail_transaksi_superadmin', 'SuperadminController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
+
+Route::post('tabel_subs_komunitas_super','SuperadminController@tabel_subs_komunitas_super')->name('tabel_subs_komunitas_super');
+Route::post('tabel_subs_pending_super','SuperadminController@tabel_subs_pending_super')->name('tabel_subs_pending_super');
+
 
 
 

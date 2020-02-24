@@ -48,6 +48,16 @@ class SuperadminController extends Controller
         return view('superadmin/transaction_management');
     }
 
+    public function SubscriberManagementSuperView()
+    {
+        return view('superadmin/subscriber_management_super');
+    }
+
+    public function UserManagementSuperView()
+    {
+        return view('superadmin/user_management_super');
+    }
+
 
 
 
@@ -597,7 +607,6 @@ class SuperadminController extends Controller
                 alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
                 return back();
             }
-
         }
     }
 
@@ -644,7 +653,8 @@ class SuperadminController extends Controller
 
 
 
-    public function get_list_subcriber_name(Request $request){
+    public function get_list_subcriber_name(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -677,7 +687,8 @@ class SuperadminController extends Controller
         }
     }
 
-public function tabel_transaksi_show(Request $request){
+    public function tabel_transaksi_show(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         // return $ses_login['access_token'];
@@ -716,9 +727,10 @@ public function tabel_transaksi_show(Request $request){
             alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
             return back();
         }
-}
+    }
 
-public function detail_transaksi_superadmin(Request $request){
+    public function detail_transaksi_superadmin(Request $request)
+    {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         // return $ses_login['access_token'];
@@ -754,7 +766,51 @@ public function detail_transaksi_superadmin(Request $request){
             alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
             return back();
         }
-}
+    }
 
+    public function tabel_subs_komunitas_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $client = new \GuzzleHttp\Client();
 
+        try {
+            $url = env('SERVICE') . 'subsmanagement/listcomm';
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    } //end-func
+
+    public function tabel_subs_pending_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        // return $ses_login['access_token'];
+
+        $url = env('SERVICE') . 'subsmanagement/listsubspendingbycomm';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
 } //endclas
