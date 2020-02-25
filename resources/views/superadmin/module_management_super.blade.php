@@ -376,7 +376,7 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-        session_logged_superadmin();
+        // session_logged_superadmin();
         get_module_all_superadmin();
         addRowSubModule();
 

@@ -178,7 +178,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        session_logged_superadmin();
+        // session_logged_superadmin();
         get_dashboard_superadmin();
 
     });

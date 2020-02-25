@@ -110,10 +110,7 @@
 var cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
 
-    session_logged_superadmin();
-// list_req_admincomm();
-
-
+    // session_logged_superadmin();
 tabel_req_verify(); //datables
 });
 

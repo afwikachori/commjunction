@@ -58,6 +58,11 @@ class SuperadminController extends Controller
         return view('superadmin/user_management_super');
     }
 
+    public function LogManagementSuperView()
+    {
+        return view('superadmin/log_management_super');
+    }
+
 
 
 
@@ -242,8 +247,33 @@ class SuperadminController extends Controller
 
     public function LogoutSuperadmin()
     {
-        session()->forget('session_logged_superadmin');
-        return redirect('superadmin');
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'profilemanagement/logout';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        try {
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            session()->forget('session_logged_superadmin');
+
+            if ($json['success'] == true) {
+                return redirect('superadmin');
+            }
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 401) {
+                alert()->error('Over limit time, please do login again', 'Unauthorized')->persistent('Done');
+                return redirect('superadmin');
+            }
+        }
     }
 
     public function get_dashboard_superadmin()
@@ -800,6 +830,145 @@ class SuperadminController extends Controller
         // return $ses_login['access_token'];
 
         $url = env('SERVICE') . 'subsmanagement/listsubspendingbycomm';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+    public function tabel_subscriber_comm_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'subsmanagement/listsubsbycomm';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "community_id" => $input['community_id']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return 'error';
+        }
+    }
+
+    public function tabel_user_management_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'usermanagement/listuser';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+    public function detail_user_management_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'usermanagement/detailuser';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(['user_id' => $input['user_id']]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        $response = $client->post($url, $datakirim);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json['data'];
+    }
+
+
+
+    public function tabel_log_management_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'modulereport/listactivity';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $input['community_id'],
+            'start_date' => $input['start_date'],
+            'end_date' => $input['end_date'],
+            'user_level' => $input['user_level'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+    public function list_komunitas_log()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'logmanagement/listcommunity';
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('POST', $url, [

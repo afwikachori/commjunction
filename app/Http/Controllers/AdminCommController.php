@@ -155,7 +155,7 @@ try{
 }catch(ClientException $exception) {
     $status_error = $exception->getCode();
     if( $status_error == 401){
-       alert()->error('Over linit time, please do login again', 'Unauthorized')->persistent('Done');
+       alert()->error('Over limit time, please do login again', 'Unauthorized')->persistent('Done');
         return redirect('admin');
     }
 }

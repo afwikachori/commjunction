@@ -6,6 +6,12 @@
   //           defaultLang: 'en'
   //       });
 
+var server_cdn = '{{ env("CDN") }}';
+
+$(document).ready(function () {
+    session_logged_superadmin();
+
+});
 
 
 // FORMAT PISAH UANG RUPIAH

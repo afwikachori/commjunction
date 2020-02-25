@@ -328,6 +328,7 @@ Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
 Route::get('/transaction', 'SuperadminController@TransactionManagementView')->name('/transaction');
 Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
 Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
+Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->name('/log_management');
 
 
 //-------POST------
@@ -349,7 +350,14 @@ Route::post('tabel_transaksi_show', 'SuperadminController@tabel_transaksi_show')
 Route::post('detail_transaksi_superadmin', 'SuperadminController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
 
 Route::post('tabel_subs_komunitas_super','SuperadminController@tabel_subs_komunitas_super')->name('tabel_subs_komunitas_super');
+Route::post('tabel_subscriber_comm_super','SuperadminController@tabel_subscriber_comm_super')->name('tabel_subscriber_comm_super');
 Route::post('tabel_subs_pending_super','SuperadminController@tabel_subs_pending_super')->name('tabel_subs_pending_super');
+
+Route::post('tabel_user_management_super','SuperadminController@tabel_user_management_super')->name('tabel_user_management_super');
+Route::post('detail_user_management_super','SuperadminController@detail_user_management_super')->name('detail_user_management_super');
+Route::post('tabel_log_management_super','SuperadminController@tabel_log_management_super')->name('tabel_log_management_super');
+
+Route::post('list_komunitas_log','SuperadminController@list_komunitas_log')->name('list_komunitas_log');
 
 
 

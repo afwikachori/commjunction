@@ -108,41 +108,34 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-        session_logged_superadmin();
-        // tabel_tes();
+        // session_logged_superadmin();
+
         tabel_subs_komunitas_super();
 
-
-    $('#tabel_komunitas_subs tbody').on('click', 'tr', function () {
-        var table = $('#example').DataTable();
-        var data = table.row(this).data();
-
-        console.log(data[0]);
-    } );
 
     });  //end- document ready
 
 
-        function tabel_tes() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/superadmin/tabel_subs_komunitas_super',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (result) {
-                    console.log(result);
-                    console.log("Cant Show");
-                }
-            });
-        }
+        // function tabel_tes() {
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/superadmin/tabel_subs_komunitas_super',
+        //         type: 'POST',
+        //         dataSrc: '',
+        //         timeout: 30000,
+        //         success: function (result) {
+        //             console.log(result);
+        //         },
+        //         error: function (result) {
+        //             console.log(result);
+        //             console.log("Cant Show");
+        //         }
+        //     });
+        // }
 
 
 
@@ -175,6 +168,57 @@
 
     function tabel_subscriber_commjuction(idkomunitas) {
         alert(idkomunitas);
+          $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/superadmin/tabel_subscriber_comm_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                "community_id": idkomunitas,
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+
+                    console.log("Cant Show");
+                }
+            });
+
+//  $('#tabel_komunitas_subs').dataTable().fnClearTable();
+// $('#tabel_komunitas_subs').dataTable().fnDestroy();
+
+//     var tabel = $('#tabel_komunitas_subs').DataTable({
+//             responsive: true,
+//             ajax: {
+//                 url: '/superadmin/tabel_subs_komunitas_super',
+//                 type: 'POST',
+//                 dataSrc: '',
+//                 timeout: 30000,
+//                 data: {
+//                 "community_id": idkomunitas,
+//             },
+//             },
+
+//             columns: [
+//                 { mData: 'id' },
+//                 { mData: 'name' },
+//                 { mData: 'created_at' },
+//                 { mData: 'range_member' },
+//                 { mData: 'id',
+//                     render: function (data, type, row, meta) {
+//                         return '<button type="button" class="btn btn-abu btn-sm s9" onclick="tabel_subscriber_commjuction('+data+')">Subscriber</button>';
+//                     }
+//                 }
+//             ],
+
+//         });
+
     }
 
 

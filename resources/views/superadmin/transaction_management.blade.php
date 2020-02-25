@@ -346,7 +346,7 @@
                     <div class="row">
                         <div class="col-md">
                             <center>
-                                <label class="cgrey2" style="margin-top: 2em;">
+                                <label class="cgrey2" style="margin-top: 1.5em;">
                                     Community
                                 </label>
                             </center>
@@ -362,7 +362,7 @@
                     <div class="row showinsubs2">
                         <div class="col-md">
                             <center>
-                                <label class="cgrey2" style="margin-top: 2em;">
+                                <label class="cgrey2" style="margin-top: 1.5em;">
                                     Subscriber
                                 </label>
                             </center>

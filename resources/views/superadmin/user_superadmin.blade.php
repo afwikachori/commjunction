@@ -8,14 +8,14 @@
     	<span class="page-title-icon bg-gradient-primary text-white mr-2">
     		<i class="mdi mdi-account"></i>
         </span> Users </h3>
-    
+
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
         	<li class="breadcrumb-item active" aria-current="page">
         		<span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
             </li>
         </ul>
-    </nav>        
+    </nav>
 </div>
 <div class="row">
  <div class="col-12">
@@ -132,7 +132,7 @@
                       <button class="btn btn-light">Cancel</button>
                       </div>
                       </div>
-                      
+
 
                     </form>
                   </div>
@@ -147,7 +147,7 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
-session_logged_dashboard();
+// session_logged_dashboard();
 get_priviledge();
 
 });
@@ -155,7 +155,7 @@ get_priviledge();
 
 
 //dropdown payment method
-function get_priviledge() {  
+function get_priviledge() {
 $('#method_pay').append("<option disabled>Please Choose Payment Type First</option>");
 
 $.ajaxSetup({
@@ -174,17 +174,17 @@ $.ajax({
       $('#pilih_priv').append("<option disabled>Choose Priviledge</option>");
 
     if (hasil.success == true) {
-      var data = hasil.data; 
+      var data = hasil.data;
 
       for (var i = data.length - 1; i >= 0; i--) {
         $('#pilih_priv').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].priviledge, "</option>"));
-      } 
+      }
 
       //Short Function Ascending//
       $("#pilih_priv").html($('#pilih_priv option').sort(function (x, y) {
         return $(y).val() < $(x).val() ? -1 : 1;
       }));
-      $("#pilih_priv").get(0).selectedIndex = 0; 
+      $("#pilih_priv").get(0).selectedIndex = 0;
     }
 
     const OldValue = '{{old('pilih_priv')}}';

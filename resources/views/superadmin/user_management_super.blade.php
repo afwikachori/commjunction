@@ -158,7 +158,7 @@
 
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
 <div class="bunder-ring">
-<img class="profile-pic rounded-circle img-fluid" id="foto_user" src="/img/noimg.jpg">
+<img class="profile-pic rounded-circle img-fluid" id="foto_user" src="" onError="this.onerror=null;this.src='/img/noimg.jpg';">
 </div>
 <div class="row">
 <div class="col-md">
@@ -192,7 +192,7 @@
 </div>
 
 <div class="row">
-  <div class="form-group col-md-12" style="margin-top: -1.5em;">
+  <div class="form-group col-md-12" style="margin-top: -1em;">
     <small class="clight">Address</small>
    <p class="cgrey1 tebal" id="detail_alamat"></p>
   </div>
@@ -282,9 +282,9 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-    session_logged_superadmin();
+    // session_logged_superadmin();
     // get_user_tipe_manage();
-    // tabel_user_management();
+    tabel_user_management();
 // tabel_tes();
 });
 
@@ -312,7 +312,7 @@ function tabel_user_management(){
     var tabel = $('#tabel_user_manage').DataTable({
         responsive: true,
         ajax: {
-            url: '/admin/tabel_user_management',
+            url: '/superadmin/tabel_user_management_super',
             type: 'POST',
             dataSrc :'',
             timeout: 30000,
@@ -344,21 +344,33 @@ $.ajaxSetup({
     }
 });
 $.ajax({
-      url: '/admin/detail_user_management',
+      url: '/superadmin/detail_user_management_super',
       type: 'POST',
       datatype: 'JSON',
       data: {
       "user_id": iduser
       },
       success: function (result) {
-        console.log(result[0]);
       var res = result[0];
-    // $("#foto_user").attr("src", server_cdn+res.foto);
+      console.log(res);
+
+      if(res.picture != null){
+        $("#foto_user").attr("src", server_cdn+res.picture);
+      }else{
+          $("#foto_user").attr("src", "/img/noimg.jpg");
+      }
+
       $("#detail_nama").html(res.full_name);
       $("#detail_username").html(res.user_name);
       $("#detail_email").html(res.email);
       $("#detail_hp").html(res.notelp);
-      $("#detail_alamat").html(res.alamat);
+
+      if(res.alamat != null){
+          $("#detail_alamat").html(res.alamat);
+      }else{
+           $("#detail_alamat").html('-');
+      }
+
       $("#detail_usertipe").html(res.user_type);
 
       $("#edit_nama").val(res.full_name);

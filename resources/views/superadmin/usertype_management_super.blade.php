@@ -143,7 +143,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        session_logged_superadmin();
+        // session_logged_superadmin();
         // tabel_tes();
         tabel_usertype_management();
 

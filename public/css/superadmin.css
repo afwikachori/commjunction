@@ -54,6 +54,11 @@ body::-webkit-scrollbar-thumb
 
 }
 
+#mdl-img-click .modal-content {
+    background-color: #ffffff00 !important;
+    border: none;
+}
+
 #tab_transaction_param .card .card-body {
     padding: 1.5rem 1.5rem !important;
 }
@@ -145,6 +150,10 @@ body::-webkit-scrollbar-thumb
 
 #form_verify_admincom {
     padding: 0.5em;
+}
+
+.putih{
+    background-color: #ffffff !important;
 }
 
 .img-mini {
