@@ -329,6 +329,7 @@ Route::get('/transaction', 'SuperadminController@TransactionManagementView')->na
 Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
 Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
 Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->name('/log_management');
+Route::get('/module_report', 'SuperadminController@ModuleReportSuperView')->name('/module_report');
 
 
 //-------POST------
@@ -359,8 +360,10 @@ Route::post('tabel_log_management_super','SuperadminController@tabel_log_managem
 
 Route::post('list_komunitas_log','SuperadminController@list_komunitas_log')->name('list_komunitas_log');
 
-
-
+Route::post('get_list_community_modulereport','SuperadminController@get_list_community_modulereport')->name('get_list_community_modulereport');
+Route::post('get_list_fitur_modulereport','SuperadminController@get_list_fitur_modulereport')->name('get_list_fitur_modulereport');
+Route::post('get_subfitur_modulereport','SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');
+Route::post('tabel_module_report_superadmin','SuperadminController@tabel_module_report_superadmin')->name('tabel_module_report_superadmin');
 
 
 });

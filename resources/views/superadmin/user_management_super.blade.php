@@ -311,6 +311,12 @@ $.ajax({
 function tabel_user_management(){
     var tabel = $('#tabel_user_manage').DataTable({
         responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
         ajax: {
             url: '/superadmin/tabel_user_management_super',
             type: 'POST',

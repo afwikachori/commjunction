@@ -78,6 +78,7 @@ body::-webkit-scrollbar-thumb
     padding: 0 1.25rem !important;
 }
 
+
 .navbar .navbar-brand-wrapper .navbar-brand.brand-logo-mini img {
     width: auto !important;
     max-width: 100%;
@@ -155,6 +156,57 @@ body::-webkit-scrollbar-thumb
 .putih{
     background-color: #ffffff !important;
 }
+
+/* //PAGINATION DATATABLE */
+.pagination{
+    font-size: 11px !important;
+}
+
+.page-item.active .page-link {
+    z-index: 1 !important;
+    color: #fff !important;
+    background-color: #0E5F75 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    min-width: 30px !important;
+    text-align: center !important;
+}
+
+.page-item:last-child .page-link {
+    background-color: #F3F2F7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.page-item.disabled .page-link {
+     background-color: #F3F2F7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+.page-item:first-child .page-link {
+       background-color: #F3F2F7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.pagination a.page-link{
+    border: none !important;
+    color: rgb(88, 88, 88) !important;
+    font-weight: bold;
+}
+.pagination a.page-link{
+    border: none !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+}
+
+.paginate_button.page-item{
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+}
+/* //end-PGINATION DATATBLE */
+
+
 
 .img-mini {
     width: 40px;

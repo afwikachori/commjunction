@@ -189,6 +189,12 @@
                 }
             ],
             responsive: true,
+             language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/superadmin/tabel_log_management_super',
                 type: 'POST',

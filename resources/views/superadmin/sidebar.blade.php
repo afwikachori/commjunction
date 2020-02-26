@@ -73,4 +73,11 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/superadmin/module_report">
+            <span class="menu-title">Module Report</span>
+            <i class="mdi mdi-book-open-variant menu-icon"></i>
+        </a>
+    </li>
+
 </ul>

@@ -63,6 +63,10 @@ class SuperadminController extends Controller
         return view('superadmin/log_management_super');
     }
 
+    public function ModuleReportSuperView(){
+        return view('superadmin/module_report_super');
+    }
+
 
 
 
@@ -982,4 +986,120 @@ class SuperadminController extends Controller
         $json = json_decode($response, true);
         return $json['data'];
     }
+
+
+
+    public function get_list_community_modulereport()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'modulereport/listcommunity';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+    public function get_list_fitur_modulereport()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'modulereport/listfeature';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+    public function get_subfitur_modulereport(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'modulereport/listsubfeature';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'feature_id' => $input['feature_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function tabel_module_report_superadmin(Request $request){
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+
+        $url = env('SERVICE') . 'modulereport/listactivity';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "community_id"  => $input['community_id'],
+            "start_date" => $input['start_date'],
+            "end_date" => $input['end_date'],
+            "feature_id" => $input['feature_id'],
+            "sub_feature_id" => $input['sub_feature_id'],
+            "user_level" => $input['user_level'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+
 } //endclas
