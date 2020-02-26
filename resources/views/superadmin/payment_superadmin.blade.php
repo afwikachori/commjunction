@@ -143,7 +143,6 @@ function tabel_req_verify(){
         ],
 
     });
-
 }
 
 

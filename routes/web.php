@@ -330,6 +330,7 @@ Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')-
 Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
 Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->name('/log_management');
 Route::get('/module_report', 'SuperadminController@ModuleReportSuperView')->name('/module_report');
+Route::get('/pricing_management', 'SuperadminController@PricingManageSuperView')->name('/pricing_management');
 
 
 //-------POST------
@@ -364,6 +365,9 @@ Route::post('get_list_community_modulereport','SuperadminController@get_list_com
 Route::post('get_list_fitur_modulereport','SuperadminController@get_list_fitur_modulereport')->name('get_list_fitur_modulereport');
 Route::post('get_subfitur_modulereport','SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');
 Route::post('tabel_module_report_superadmin','SuperadminController@tabel_module_report_superadmin')->name('tabel_module_report_superadmin');
+Route::post('tabel_pricing_management_superadmin','SuperadminController@tabel_pricing_management_superadmin')->name('tabel_pricing_management_superadmin');
+
+
 
 
 });

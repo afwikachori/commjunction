@@ -156,6 +156,12 @@ body::-webkit-scrollbar-thumb
 .putih{
     background-color: #ffffff !important;
 }
+.text-wrap{
+    white-space:normal;
+}
+.width-200{
+    width:200px;
+}
 
 /* //PAGINATION DATATABLE */
 .pagination{
@@ -170,6 +176,12 @@ body::-webkit-scrollbar-thumb
     border-radius: 10px !important;
     min-width: 30px !important;
     text-align: center !important;
+}
+
+.paginate_button.page-item {
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+    border-radius: 10px !important;
 }
 
 .page-item:last-child .page-link {

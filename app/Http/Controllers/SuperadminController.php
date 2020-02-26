@@ -67,6 +67,9 @@ class SuperadminController extends Controller
         return view('superadmin/module_report_super');
     }
 
+    public function PricingManageSuperView(){
+        return view('superadmin/pricing_management_super');
+    }
 
 
 
@@ -1098,6 +1101,26 @@ class SuperadminController extends Controller
                 return json_encode('Data Not Found');
             }
         }
+    }
+
+
+
+    public function tabel_pricing_management_superadmin(){
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'pricingmanagement/listpricing';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
     }
 
 

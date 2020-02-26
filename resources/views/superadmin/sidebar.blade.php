@@ -80,4 +80,11 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/superadmin/pricing_management">
+            <span class="menu-title">Pricing Management</span>
+            <i class="mdi mdi-diamond menu-icon"></i>
+        </a>
+    </li>
+
 </ul>
