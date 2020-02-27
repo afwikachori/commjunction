@@ -136,6 +136,9 @@
     <!-- js custum superadmin -->
     <script src="/js/superadmin.js"></script>
 
+     <!-- js multiselect -->
+    <script src="/js/BsMultiSelect.js"></script>
+
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')

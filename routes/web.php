@@ -367,7 +367,12 @@ Route::post('get_subfitur_modulereport','SuperadminController@get_subfitur_modul
 Route::post('tabel_module_report_superadmin','SuperadminController@tabel_module_report_superadmin')->name('tabel_module_report_superadmin');
 Route::post('tabel_pricing_management_superadmin','SuperadminController@tabel_pricing_management_superadmin')->name('tabel_pricing_management_superadmin');
 
+Route::post('detail_pricing_super','SuperadminController@detail_pricing_super')->name('detail_pricing_super');
+Route::post('add_pricing_super','SuperadminController@add_pricing_super')->name('add_pricing_super');
+Route::post('get_list_fitur_pricing','SuperadminController@get_list_fitur_pricing')->name('get_list_fitur_pricing');
+Route::post('get_list_tipepricing','SuperadminController@get_list_tipepricing')->name('get_list_tipepricing');
 
+Route::post('edit_pricing_super','SuperadminController@edit_pricing_super')->name('edit_pricing_super');
 
 
 });

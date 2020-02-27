@@ -7,13 +7,15 @@ use GuzzleHttp\Client;
 use Exception;
 use Session;
 
-class RequestController extends Controller{
+class RequestController extends Controller
+{
 
-public function NotFoundView(){
-    return view('404');
-}
+    public function NotFoundView()
+    {
+        return view('404');
+    }
 
-	   public function sendImage($requestImage,$url)
+    public function sendImage($requestImage, $url)
     {
 
 
@@ -22,50 +24,51 @@ public function NotFoundView(){
         ];
         $client = new \GuzzleHttp\Client();
 
-        $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'multipart' => [
-                 [
+                [
                     'name'     => 'directory',
                     'contents' =>  $requestImage["directory"]
                 ],
                 [
                     'name'    => 'file',
                     'contents'  => $requestImage["image"],
-                    'filename'=> $requestImage["filename"]
+                    'filename' => $requestImage["filename"]
                 ]
             ]
         ]);
 
-        $data = json_decode($request->getBody()->getContents(),true);
+        $data = json_decode($request->getBody()->getContents(), true);
         return $data;
     }
 
 
 
-       public function sendImagePayConfirm($requestImage,$url){
+    public function sendImagePayConfirm($requestImage, $url)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-        $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'multipart' => [
                 [
                     'name'     => 'nama',
                     'contents' =>  $requestImage["nama"]
                 ],
-                 [
+                [
                     'name'     => 'invoice_number',
                     'contents' =>  $requestImage["invoice_number"]
                 ],
-                 [
+                [
                     'name'     => 'payment_method',
                     'contents' =>  $requestImage["payment_method"]
                 ],
-                 [
+                [
                     'name'     => 'payment_bank_name',
                     'contents' =>  $requestImage["payment_bank_name"]
                 ],
-                 [
+                [
                     'name'     => 'payment_owner_name',
                     'contents' =>  $requestImage["payment_owner_name"]
                 ],
@@ -82,19 +85,20 @@ public function NotFoundView(){
         ]);
 
 
-        $data = json_decode($request->getBody()->getContents(),true);
+        $data = json_decode($request->getBody()->getContents(), true);
         return $data;
     }
 
 
 
 
-    public function sendImgVerify($requestImage,$url,$token){
+    public function sendImgVerify($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-            $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $token
             ],
@@ -116,17 +120,18 @@ public function NotFoundView(){
 
         ]);
 
-        $dataku = json_decode($request->getBody()->getContents(),true);
+        $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
 
 
-       public function editProfilCommunity($requestImage,$url,$token){
+    public function editProfilCommunity($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-            $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $token
             ],
@@ -148,18 +153,19 @@ public function NotFoundView(){
 
         ]);
 
-        $dataku = json_decode($request->getBody()->getContents(),true);
+        $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
 
 
 
-     public function editProfileAdmin($requestImage,$url,$token){
+    public function editProfileAdmin($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-            $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $token
             ],
@@ -172,7 +178,7 @@ public function NotFoundView(){
                     'name'     => 'full_name',
                     'contents' =>  $requestImage["full_name"]
                 ],
-                  [
+                [
                     'name'     => 'notelp',
                     'contents' =>  $requestImage["notelp"]
                 ],
@@ -180,7 +186,7 @@ public function NotFoundView(){
                     'name'     => 'email',
                     'contents' =>  $requestImage["email"]
                 ],
-                 [
+                [
                     'name'     => 'alamat',
                     'contents' =>  $requestImage["alamat"]
                 ],
@@ -193,17 +199,18 @@ public function NotFoundView(){
 
         ]);
 
-        $dataku = json_decode($request->getBody()->getContents(),true);
+        $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
 
 
-    public function SettingLoginRegis($requestImage,$url,$token){
+    public function SettingLoginRegis($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-            $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $token
             ],
@@ -233,17 +240,18 @@ public function NotFoundView(){
 
         ]);
 
-        $dataku = json_decode($request->getBody()->getContents(),true);
+        $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
 
 
- public function accReqMembership($requestImage,$url,$token){
+    public function accReqMembership($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
 
-            $request = $client->request('POST',$url,[
+        $request = $client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $token
             ],
@@ -256,11 +264,11 @@ public function NotFoundView(){
                     'name'     => 'payment_status',
                     'contents' =>  $requestImage["payment_status"]
                 ],
-                 [
+                [
                     'name'     => 'subscriber_id',
                     'contents' =>  $requestImage["subscriber_id"]
                 ],
-                 [
+                [
                     'name'     => 'cancel_description',
                     'contents' =>  $requestImage["cancel_description"]
                 ],
@@ -277,11 +285,12 @@ public function NotFoundView(){
 
         ]);
 
-        $dataku = json_decode($request->getBody()->getContents(),true);
+        $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
 
-    public function upload_image_module($requestImage, $url, $token){
+    public function upload_image_module($requestImage, $url, $token)
+    {
 
         $client = new \GuzzleHttp\Client();
         // dd($requestImage);
@@ -319,10 +328,55 @@ public function NotFoundView(){
 
 
 
+    public function sendImgUploadPricing($requestImage, $url, $token)
+    {
 
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
 
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'title',
+                    'contents' =>  $requestImage["title"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'     => 'grand_pricing',
+                    'contents' =>  $requestImage["grand_pricing"]
+                ],
+                [
+                    'name'     => 'price_annual',
+                    'contents' =>  $requestImage["price_annual"]
+                ],
+                [
+                    'name'     => 'price_monthly',
+                    'contents' =>  $requestImage["price_monthly"]
+                ],
+                [
+                    'name'     => 'pricing_type',
+                    'contents' =>  $requestImage["pricing_type"]
+                ],
+                [
+                    'name'     => 'feature_id',
+                    'contents' =>  $requestImage["feature_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
 
+        ]);
 
-
-
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
 } //END_CLASS
