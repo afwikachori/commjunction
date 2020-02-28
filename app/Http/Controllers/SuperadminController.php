@@ -1183,6 +1183,8 @@ class SuperadminController extends Controller
         $input = $request->all();
         $token = $ses_login['access_token'];
 
+        // return $input;
+
         if (is_array($input['multi_fiturpricing'])) {
             $fiturlist = implode(", ", $input['multi_fiturpricing']);
         } else {
@@ -1241,6 +1243,7 @@ class SuperadminController extends Controller
         $token = $ses_login['access_token'];
 
         // return $input;
+
         if (is_array($input['edit_multi_fiturpricing'])) {
             $fiturlist = implode(", ", $input['edit_multi_fiturpricing']);
         } else {

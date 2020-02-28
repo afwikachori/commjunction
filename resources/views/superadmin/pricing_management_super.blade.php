@@ -250,7 +250,7 @@
                                 <small class="clight s13">Feature</small>
                                 <div id="hide_multi_add" style="display: none;">
                                     <select id="multi_fiturpricing" name="multi_fiturpricing[]"
-                                        class="form-control input-abu" multiple="multiple" style="display: none;">
+                                        class="form-control input-abu" multiple="multiple">
 
                                     </select>
                                 </div>
@@ -284,12 +284,13 @@
 <div class="modal fade" id="modal_edit_pricing_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff; margin-bottom: 10%;">
+        <div class="modal-content" style="background-color: #ffffff;">
             <form method="POST" id="form_edit_pricing_super" action="{{route('edit_pricing_super')}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
 
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none;">
+                <div class="modal-header"
+                    style="padding-left: 5%;padding-right: 5%; border: none; padding-bottom: 0px;">
                     <h4 class="modal-title cgrey">Edit Pricing</h4>
                     <div class="pricing_status" style="text-align: right;"></div>
 
@@ -298,7 +299,8 @@
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
                     <div class="row">
                         <div class="col-md-12">
-                                    <input class="form-control input-abu" id="id_pricing_edit" name="id_pricing_edit" type="hidden">
+                            <input class="form-control input-abu" id="id_pricing_edit" name="id_pricing_edit"
+                                type="hidden">
                             <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                 <div class="circle">
                                     <img id="view_img_pricing_edit" class="profile-pic rounded-circle img-fluid"
@@ -321,14 +323,13 @@
                             <div class="form-group">
                                 <small class="clight s13">Pricing Name</small>
                                 <input type="text" id="edit_nama_pricing" name="edit_nama_pricing"
-                                    class="form-control input-abu" >
+                                    class="form-control input-abu">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Pricing Type</small>
-                                <select class="form-control input-abu" name="edit_tipepricing" id="edit_tipepricing"
-                                    >
+                                <select class="form-control input-abu" name="edit_tipepricing" id="edit_tipepricing">
                                     <option disabled selected> Choose</option>
                                     <option value="1"> Registrasion </option>
                                     <option value="2"> Feature</option>
@@ -339,23 +340,21 @@
                             <div class="form-group">
                                 <small class="clight s13">Description Pricing</small>
                                 <textarea class="form-control input-abu" id="edit_deskripsi_pricing"
-                                    name="edit_deskripsi_pricing" rows="2" ></textarea>
+                                    name="edit_deskripsi_pricing" rows="2"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <h5 class="cgrey tebal" style="margin-top: 1em;">Pricing Information</h5>
+                    <h6 class="cgrey tebal" style="margin-top: 0.5em;">Pricing Information</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Onetime Price</small>
-                                <input type="text" id="edit_sekali" name="edit_sekali" class="form-control input-abu"
-                                    >
+                                <input type="text" id="edit_sekali" name="edit_sekali" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Monthly Price</small>
-                                <input type="text" id="edit_bulanan" name="edit_bulanan" class="form-control input-abu"
-                                    >
+                                <input type="text" id="edit_bulanan" name="edit_bulanan" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Annual Price</small>
@@ -369,30 +368,32 @@
                             </select>
                         </div> -->
 
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 1.75em;">
-                                    <small class="clight s13">Status Activation</small>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="edit_status_pricing" name="edit_status_pricing">
-                                        <label class="custom-control-label" for="edit_status_pricing"></label>
-                                    </div>
-                                </div>
-                                <div style="display: none;" id="hide_fitur_edit">
-                                    <small class="clight s13">Feature</small>
-                                    <div id="hide_multi_edit" style="display: none;">
-                                        <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]" class="form-control input-abu"
-                                            multiple="multiple" style="display: none;">
-
-                                        </select>
-                                    </div>
-                                    <select id="fiturpricing_edit" name="edit_multi_fiturpricing" class="form-control input-abu">
-                                    </select>
+                        <div class="col-md-6">
+                            <div class="form-group" style="margin-bottom: 1.75em;">
+                                <small class="clight s13">Status Activation</small>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="edit_status_pricing"
+                                        name="edit_status_pricing">
+                                    <label class="custom-control-label" for="edit_status_pricing"></label>
                                 </div>
                             </div>
+                            <div style="display: none;" id="hide_fitur_edit">
+                                <small class="clight s13">Feature</small>
+                                <div id="hide_multi_edit" style="display: none;">
+                                    <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]"
+                                        class="form-control input-abu" multiple="multiple">
+
+                                    </select>
+                                </div>
+                                <select id="fiturpricing_edit" name="edit_multi_fiturpricing"
+                                    class="form-control input-abu">
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em; margin-top: -1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
@@ -449,11 +450,11 @@
     $("#edit_status_pricing").on('change', function () {
         if ($(this).is(':checked')) {
             switchStatus = $(this).is(':checked');
-            alert(switchStatus);// To verify
+            // alert(switchStatus);// To verify
         }
         else {
             switchStatus = $(this).is(':checked');
-            alert(switchStatus);// To verify
+            // alert(switchStatus);// To verify
         }
     });
 
@@ -580,12 +581,12 @@
                 }
 
                 var arf = [];
+                var len = res.pricing_feature.length;
                 $.each(res.pricing_feature, function (i, item) {
                     //  console.log(item.feature_id);
                     arf.push(item.feature_id);
                 });
                 var fiturs = arf.toString();
-
 
                 //edit
                 $("#edit_nama_pricing").val(res.title);
@@ -595,12 +596,12 @@
                 $("#edit_bulanan").val(res.price_monthly);
                 $("#edit_tahunan").val(res.price_annual);
                 $("#id_pricing_edit").val(idku);
-                 if(res.status == 1){
-                     $("#edit_status_pricing").attr("checked", true);
-                 }else{
-                      $("#edit_status_pricing").attr("checked", false);
-                 }
-                // $("edit_status_pricing").val();
+
+                if (res.status == 1) {
+                    $("#edit_status_pricing").attr("checked", true);
+                } else {
+                    $("#edit_status_pricing").attr("checked", false);
+                }
 
                 if (res.pricing_type == 1) {
                     $("#hide_fitur_edit").show(); //div colum
@@ -611,16 +612,14 @@
                     $("#hide_multi_edit").hide();
                     $("#fiturpricing_edit").show();
                 }
-
-                // $('#range_member').val(result.range_member).attr("selected", "selected");
-
-
-                $.each(fiturs.split(","), function (i, e) {
-                    $("#edit_multi_fiturpricing option[value='" + e + "']").prop('checked', 'checked');
-                    // $("#edit_multi_fiturpricing").val(e).attr("selected", "selected");
+                if (len <= 1) {
+                    $("#edit_multi_fiturpricing").val(arf);
+                } else {
                     $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
-                    console.log(e);
-                });
+                }
+
+                // $.each(fiturs.split(","), function (i, e) {
+                // });
                 //end-edit
 
 
@@ -743,7 +742,7 @@
                 }));
 
                 $("#multi_fiturpricing").get(0).selectedIndex = 0;
-                $("#multi_fiturpricing").bsMultiSelect();  //multiselect
+                // $("#multi_fiturpricing").bsMultiSelect();  //multiselect
 
                 const Oldfitur = "{{old('multi_fiturpricing')}}";
 
@@ -781,7 +780,7 @@
                 }));
 
                 $("#edit_multi_fiturpricing").get(0).selectedIndex = 0;
-                $("#edit_multi_fiturpricing").bsMultiSelect();  //multiselect
+                // $("#edit_multi_fiturpricing").bsMultiSelect();  //multiselect
 
                 const Oldfitur2 = "{{old('edit_multi_fiturpricing')}}";
 
