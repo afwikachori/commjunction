@@ -379,4 +379,66 @@ class RequestController extends Controller
         $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
+
+    public function sendImgEditPricing($requestImage, $url, $token)
+    {
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'title',
+                    'contents' =>  $requestImage["title"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'     => 'grand_pricing',
+                    'contents' =>  $requestImage["grand_pricing"]
+                ],
+                [
+                    'name'     => 'price_annual',
+                    'contents' =>  $requestImage["price_annual"]
+                ],
+                [
+                    'name'     => 'price_monthly',
+                    'contents' =>  $requestImage["price_monthly"]
+                ],
+                [
+                    'name'     => 'pricing_type',
+                    'contents' =>  $requestImage["pricing_type"]
+                ],
+                [
+                    'name'     => 'feature_id',
+                    'contents' =>  $requestImage["feature_id"]
+                ],
+                [
+                    'name'     => 'pricing_id',
+                    'contents' =>  $requestImage["pricing_id"]
+                ],
+                [
+                    'name'     => 'status',
+                    'contents' =>  $requestImage["status"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
+
 } //END_CLASS

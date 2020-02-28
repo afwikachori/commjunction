@@ -370,7 +370,6 @@ Route::post('tabel_pricing_management_superadmin','SuperadminController@tabel_pr
 Route::post('detail_pricing_super','SuperadminController@detail_pricing_super')->name('detail_pricing_super');
 Route::post('add_pricing_super','SuperadminController@add_pricing_super')->name('add_pricing_super');
 Route::post('get_list_fitur_pricing','SuperadminController@get_list_fitur_pricing')->name('get_list_fitur_pricing');
-Route::post('get_list_tipepricing','SuperadminController@get_list_tipepricing')->name('get_list_tipepricing');
 
 Route::post('edit_pricing_super','SuperadminController@edit_pricing_super')->name('edit_pricing_super');
 

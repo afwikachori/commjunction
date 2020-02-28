@@ -1177,32 +1177,17 @@ class SuperadminController extends Controller
 
 
 
-    public function get_list_tipepricing()
-    {
-        $ses_login = session()->get('session_logged_superadmin');
-
-        $url = env('SERVICE') . 'pricingmanagement/featuretype';
-        $client = new \GuzzleHttp\Client();
-
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
-    }
-
-
     public function add_pricing_super(Request $request)
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         $token = $ses_login['access_token'];
-        $fiturlist = implode(", ", $input['multi_fiturpricing']);
+
+        if (is_array($input['multi_fiturpricing'])) {
+            $fiturlist = implode(", ", $input['multi_fiturpricing']);
+        } else {
+            $fiturlist = $input['multi_fiturpricing'];
+        }
 
         $req = new RequestController;
         $fileimg = "";
@@ -1228,11 +1213,13 @@ class SuperadminController extends Controller
             $url = env('SERVICE') . 'pricingmanagement/addpricing';
             try {
                 $resImg = $req->sendImgUploadPricing($imageRequest, $url, $token);
+                // return $resImg;
                 if ($resImg['success'] == true) {
                     alert()->success('Successfully add new pricing type', 'Added!')->autoclose(4500)->persistent('Done');
                     return back();
                 }
             } catch (ClientException $exception) {
+                return $exception;
                 $status_error = $exception->getCode();
                 if ($status_error == 400) {
                     alert()->error('So sorry cant add new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
@@ -1244,12 +1231,28 @@ class SuperadminController extends Controller
 
 
 
+
+
+
     public function edit_pricing_super(Request $request)
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         $token = $ses_login['access_token'];
-        $fiturlist = implode(", ", $input['edit_multi_fiturpricing']);
+
+        // return $input;
+        if (is_array($input['edit_multi_fiturpricing'])) {
+            $fiturlist = implode(", ", $input['edit_multi_fiturpricing']);
+        } else {
+            $fiturlist = $input['edit_multi_fiturpricing'];
+        }
+
+        if (isset($input['edit_status_pricing'])) {
+            $statuspr = 1;
+        } else {
+            $statuspr = 0;
+        }
+
 
         $req = new RequestController;
         $fileimg = "";
@@ -1259,46 +1262,48 @@ class SuperadminController extends Controller
             $filnam = $request->file('fileup')->getClientOriginalName();
 
             $imageRequest = [
-                "title"          => $input['add_nama_pricing'],
-                "description"    => $input['add_deskripsi_pricing'],
-                "grand_pricing"  => $input['add_sekali'],
-                "price_annual"   => $input['add_tahunan'],
-                "price_monthly"  => $input['add_bulanan'],
-                "pricing_type"   => $input['add_tipepricing'],
+                "title"          => $input['edit_nama_pricing'],
+                "description"    => $input['edit_deskripsi_pricing'],
+                "grand_pricing"  => $input['edit_sekali'],
+                "price_annual"   => $input['edit_tahunan'],
+                "price_monthly"  => $input['edit_bulanan'],
+                "pricing_type"   => $input['edit_tipepricing'],
                 "feature_id"     => $fiturlist,
+                "pricing_id"     => $input['id_pricing_edit'],
+                "status"     => $statuspr,
                 "filename"    => $filnam,
                 "file"        => $imgku
             ];
-        }else{
+        } else {
             $imageRequest = [
-                "title"          => $input['add_nama_pricing'],
-                "description"    => $input['add_deskripsi_pricing'],
-                "grand_pricing"  => $input['add_sekali'],
-                "price_annual"   => $input['add_tahunan'],
-                "price_monthly"  => $input['add_bulanan'],
-                "pricing_type"   => $input['add_tipepricing'],
+                "title"          => $input['edit_nama_pricing'],
+                "description"    => $input['edit_deskripsi_pricing'],
+                "grand_pricing"  => $input['edit_sekali'],
+                "price_annual"   => $input['edit_tahunan'],
+                "price_monthly"  => $input['edit_bulanan'],
+                "pricing_type"   => $input['edit_tipepricing'],
                 "feature_id"     => $fiturlist,
+                "pricing_id"     => $input['id_pricing_edit'],
+                "status"     => $statuspr,
                 "filename"    => "",
                 "file"        => ""
             ];
         }  //END-IF  UPLOAD-IMAGE
 
-            $urledit = env('SERVICE') . 'pricingmanagement/editpricing';
-            try {
-                $resImg = $req->sendImgUploadPricing($imageRequest, $urledit, $token);
-                if ($resImg['success'] == true) {
-                    alert()->success('Successfully Edit pricing type', 'Updated!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
-            } catch (ClientException $exception) {
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('So sorry cant edit new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+        $urledit = env('SERVICE') . 'pricingmanagement/editpricing';
+        try {
+            $resImg = $req->sendImgEditPricing($imageRequest, $urledit, $token);
+            if ($resImg['success'] == true) {
+                alert()->success('Successfully Edit pricing type', 'Updated!')->autoclose(4500)->persistent('Done');
+                return back();
             }
-
+        } catch (ClientException $exception) {
+            return $exception;
+            $status_error = $exception->getCode();
+            if ($status_error == 400) {
+                alert()->error('So sorry cant edit new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
+                return back();
+            }
+        }
     }
-
-
 } //endclas

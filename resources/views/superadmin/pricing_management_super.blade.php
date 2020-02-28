@@ -179,6 +179,7 @@
                     </div> <!-- end-header -->
 
                     <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
@@ -210,8 +211,10 @@
                                 <div class="form-group">
                                     <small class="clight s13">Pricing Type</small>
                                     <select class="form-control input-abu" name="add_tipepricing" id="add_tipepricing"
-                                        value="{{old('add_tipepricing')}}" required>
-
+                                        required>
+                                        <option disabled selected> Choose</option>
+                                        <option value="1"> Registrasion </option>
+                                        <option value="2"> Feature</option>
                                     </select>
                                 </div>
                             </div>
@@ -243,10 +246,16 @@
                                         class="form-control input-abu" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="display: none;" id="hide_fitur_add">
                                 <small class="clight s13">Feature</small>
-                                <select id="multi_fiturpricing" name="multi_fiturpricing[]"
-                                    class="form-control input-abu" multiple="multiple" style="display: none;" required>
+                                <div id="hide_multi_add" style="display: none;">
+                                    <select id="multi_fiturpricing" name="multi_fiturpricing[]"
+                                        class="form-control input-abu" multiple="multiple" style="display: none;">
+
+                                    </select>
+                                </div>
+
+                                <select id="fiturpricing" name="multi_fiturpricing" class="form-control input-abu">
 
                                 </select>
                             </div>
@@ -275,7 +284,7 @@
 <div class="modal fade" id="modal_edit_pricing_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff; height: auto;">
+        <div class="modal-content" style="background-color: #ffffff; margin-bottom: 10%;">
             <form method="POST" id="form_edit_pricing_super" action="{{route('edit_pricing_super')}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -289,6 +298,7 @@
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
                     <div class="row">
                         <div class="col-md-12">
+                                    <input class="form-control input-abu" id="id_pricing_edit" name="id_pricing_edit" type="hidden">
                             <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                 <div class="circle">
                                     <img id="view_img_pricing_edit" class="profile-pic rounded-circle img-fluid"
@@ -300,7 +310,7 @@
                                         <i id="browse_img_pricing_edit" class="mdi mdi-camera upload-button"></i>
                                     </button>
                                     <input id="file_img_pricing_edit" class="file-upload file-upload-default"
-                                        type="file" name="fileup" accept="image/*" required />
+                                        type="file" name="fileup" accept="image/*" />
                                 </div>
                             </div>
                         </div>
@@ -311,15 +321,17 @@
                             <div class="form-group">
                                 <small class="clight s13">Pricing Name</small>
                                 <input type="text" id="edit_nama_pricing" name="edit_nama_pricing"
-                                    class="form-control input-abu" required>
+                                    class="form-control input-abu" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Pricing Type</small>
                                 <select class="form-control input-abu" name="edit_tipepricing" id="edit_tipepricing"
-                                    required>
-
+                                    >
+                                    <option disabled selected> Choose</option>
+                                    <option value="1"> Registrasion </option>
+                                    <option value="2"> Feature</option>
                                 </select>
                             </div>
                         </div>
@@ -327,7 +339,7 @@
                             <div class="form-group">
                                 <small class="clight s13">Description Pricing</small>
                                 <textarea class="form-control input-abu" id="edit_deskripsi_pricing"
-                                    name="edit_deskripsi_pricing" rows="2" required></textarea>
+                                    name="edit_deskripsi_pricing" rows="2" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -338,27 +350,46 @@
                             <div class="form-group">
                                 <small class="clight s13">Onetime Price</small>
                                 <input type="text" id="edit_sekali" name="edit_sekali" class="form-control input-abu"
-                                    required>
+                                    >
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Monthly Price</small>
                                 <input type="text" id="edit_bulanan" name="edit_bulanan" class="form-control input-abu"
-                                    required>
+                                    >
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Annual Price</small>
-                                <input type="text" id="edit_tahunan" name="edit_tahunan" class="form-control input-abu"
-                                    required>
+                                <input type="text" id="edit_tahunan" name="edit_tahunan" class="form-control input-abu">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <small class="clight s13">Feature</small>
                             <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]"
                                 class="form-control input-abu" multiple="multiple" style="display: none;" required>
                             </select>
-                        </div>
+                        </div> -->
+
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom: 1.75em;">
+                                    <small class="clight s13">Status Activation</small>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="edit_status_pricing" name="edit_status_pricing">
+                                        <label class="custom-control-label" for="edit_status_pricing"></label>
+                                    </div>
+                                </div>
+                                <div style="display: none;" id="hide_fitur_edit">
+                                    <small class="clight s13">Feature</small>
+                                    <div id="hide_multi_edit" style="display: none;">
+                                        <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]" class="form-control input-abu"
+                                            multiple="multiple" style="display: none;">
+
+                                        </select>
+                                    </div>
+                                    <select id="fiturpricing_edit" name="edit_multi_fiturpricing" class="form-control input-abu">
+                                    </select>
+                                </div>
+                            </div>
                     </div>
-                   
                 </div> <!-- end-body -->
 
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
@@ -384,17 +415,13 @@
 
     $(document).ready(function () {
         tabel_all_pricing_super();
-        get_list_tipepricing();
+
         get_list_fitur_pricing();
 
 
         // tabel_tes();
     });  //end- document ready
 
-
-    function  iniklick() {
-        console.log($("#edit_multi_fiturpricing").val());
-    }
 
     function tabel_tes() {
         $.ajaxSetup({
@@ -417,6 +444,18 @@
         });
     }
 
+
+    var switchStatus = false;
+    $("#edit_status_pricing").on('change', function () {
+        if ($(this).is(':checked')) {
+            switchStatus = $(this).is(':checked');
+            alert(switchStatus);// To verify
+        }
+        else {
+            switchStatus = $(this).is(':checked');
+            alert(switchStatus);// To verify
+        }
+    });
 
     function tabel_all_pricing_super() {
         var tabel = $('#tabel_all_pricing_super').DataTable({
@@ -484,9 +523,9 @@
                         if (totalfitur == 0) {
                             return '<center>' + totalfitur + '</center>';
                         } else if (totalfitur == 1) {
-                            return '<center>' + totalfitur + '  Feature </center>';
+                            return '<center>' + totalfitur + '  <small>Feature </small></center>';
                         } else {
-                            return '<center>' + totalfitur + '  Features </center>';
+                            return '<center>' + totalfitur + '   <small>Features </small></center>';
                         }
                     }
                 },
@@ -541,11 +580,11 @@
                 }
 
                 var arf = [];
-                 $.each(res.pricing_feature, function (i, item) {
+                $.each(res.pricing_feature, function (i, item) {
                     //  console.log(item.feature_id);
-                     arf.push(item.feature_id.toString());
-                 });
-                 var fiturs = arf.toString();
+                    arf.push(item.feature_id);
+                });
+                var fiturs = arf.toString();
 
 
                 //edit
@@ -555,14 +594,33 @@
                 $("#edit_sekali").val(res.grand_pricing);
                 $("#edit_bulanan").val(res.price_monthly);
                 $("#edit_tahunan").val(res.price_annual);
-                $("#edit_multi_fiturpricing").val(arf);
-                console.log(arf);
+                $("#id_pricing_edit").val(idku);
+                 if(res.status == 1){
+                     $("#edit_status_pricing").attr("checked", true);
+                 }else{
+                      $("#edit_status_pricing").attr("checked", false);
+                 }
+                // $("edit_status_pricing").val();
 
-                // $.each(fiturs.split(","), function (i, e) {
-                //     $("#edit_multi_fiturpricing option[value='" + e + "']").prop("selected", true);
+                if (res.pricing_type == 1) {
+                    $("#hide_fitur_edit").show(); //div colum
+                    $("#hide_multi_edit").show();
+                    $("#fiturpricing_edit").hide();
+                } else {
+                    $("#hide_fitur_edit").show(); //div colum
+                    $("#hide_multi_edit").hide();
+                    $("#fiturpricing_edit").show();
+                }
 
-                //     console.log(e);
-                // });
+                // $('#range_member').val(result.range_member).attr("selected", "selected");
+
+
+                $.each(fiturs.split(","), function (i, e) {
+                    $("#edit_multi_fiturpricing option[value='" + e + "']").prop('checked', 'checked');
+                    // $("#edit_multi_fiturpricing").val(e).attr("selected", "selected");
+                    $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
+                    console.log(e);
+                });
                 //end-edit
 
 
@@ -625,7 +683,7 @@
 
 
     $("#file_img_pricing_edit").on('change', function () {
-         if (this.files && this.files[0]) {
+        if (this.files && this.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
@@ -639,6 +697,27 @@
     $("#browse_img_pricing_edit").on('click', function () {
         $("#file_img_pricing_edit").click();
     });
+
+
+    //dropdown fitur add
+    $('#add_tipepricing').change(function () {
+        var itempilih = this.value;
+        if (itempilih == 1) {
+            $("#hide_fitur_add").show(); //div colum
+            $("#hide_multi_add").show();
+            $("#fiturpricing").hide();
+        } else {
+            $("#hide_fitur_add").show(); //div colum
+            $("#hide_multi_add").hide();
+            $("#fiturpricing").show();
+        }
+    });
+
+
+
+
+
+
 
     //dropdown list fitur
     function get_list_fitur_pricing() {
@@ -672,6 +751,25 @@
                     $('#multi_fiturpricing').val(Oldfitur);
                 }
                 // _____________________________________________________________
+
+                $('#fiturpricing').empty();
+                $('#fiturpricing').append("<option disabled> Choose</option>");
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#fiturpricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#fiturpricing").html($('#fiturpricing option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#fiturpricing").get(0).selectedIndex = 0;
+
+                const Oldfiturq = "{{old('fiturpricing')}}";
+
+                if (Oldfiturq !== '') {
+                    $('#fiturpricing').val(Oldfiturq);
+                }
+                // _____________________________________________________________
                 $('#edit_multi_fiturpricing').empty();
                 $('#edit_multi_fiturpricing').append("<option disabled selected> Choose</option>");
                 for (var i = result.length - 1; i >= 0; i--) {
@@ -690,70 +788,31 @@
                 if (Oldfitur2 !== '') {
                     $('#edit_multi_fiturpricing').val(Oldfitur);
                 }
+                // _____________________________________________________________
+
+                $('#fiturpricing_edit').empty();
+                $('#fiturpricing_edit').append("<option disabled> Choose</option>");
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#fiturpricing_edit').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#fiturpricing_edit").html($('#fiturpricing_edit option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#fiturpricing_edit").get(0).selectedIndex = 0;
+
+                const Oldfiturqedit = "{{old('fiturpricing_edit')}}";
+
+                if (Oldfiturqedit !== '') {
+                    $('#fiturpricing_edit').val(Oldfiturqedit);
+                }
 
 
 
             }
         });
     } //endfunction
-
-
-
-    //dropdown list fitur
-    function get_list_tipepricing() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/get_list_tipepricing",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                $('#add_tipepricing').empty();
-                $('#add_tipepricing').append("<option disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#add_tipepricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#add_tipepricing").html($('#add_tipepricing option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#add_tipepricing").get(0).selectedIndex = 0;
-
-                const Oldtipe = "{{old('add_tipepricing')}}";
-
-                if (Oldtipe !== '') {
-                    $('#add_tipepricing').val(Oldtipe);
-                }
-                // -------------------------------------------------
-
-                $('#edit_tipepricing').empty();
-                $('#edit_tipepricing').append("<option disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#edit_tipepricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#edit_tipepricing").html($('#edit_tipepricing option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#edit_tipepricing").get(0).selectedIndex = 0;
-
-                const Oldtipe2 = "{{old('edit_tipepricing')}}";
-
-                if (Oldtipe2 !== '') {
-                    $('#add_tipepricing').val(Oldtipe2);
-                }
-            }
-        });
-    } //endfunction
-
-
 
 
 
