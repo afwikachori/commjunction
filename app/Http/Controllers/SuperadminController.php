@@ -1336,10 +1336,13 @@ class SuperadminController extends Controller
     }
 
 
+
     public function tabel_report_transaksi_super(Request $request)
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+
+        // return $input;
 
         $url = env('SERVICE') . 'reportmanagement/admreporttrans';
         $client = new \GuzzleHttp\Client();
@@ -1356,7 +1359,7 @@ class SuperadminController extends Controller
             "transaction_status"  => $input['transaction_status'],
             "min_transaction"  => $input['min_transaction'],
             "max_transaction"  => $input['max_transaction'],
-            "community_name"  => $input['community_name'],
+            "community_id"  => $input['community_id'],
         ]);
 
         $datakirim = [
@@ -1376,4 +1379,48 @@ class SuperadminController extends Controller
             }
         }
     }
+
+
+    public function tabel_concile_report_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'reportmanagement/admreconcile';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "transaction_type_id"  => $input['transaction_type_id'],
+            "community_id"  => $input['community_id'],
+            "month" => $input['month'],
+            "year" => $input['year'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+
+
+
 } //endclas

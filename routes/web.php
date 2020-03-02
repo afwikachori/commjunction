@@ -129,6 +129,9 @@ Route::post('aktifasi_module_admincomm', 'AdminCommController@aktifasi_module_ad
 
 Route::post('cek_prepare_publish', 'AdminCommController@cek_prepare_publish')->name('cek_prepare_publish');
 
+/// report management/subscriber
+Route::post('tabel_subscriber_report_super','AdminCommController@tabel_subscriber_report_super')->name('tabel_subscriber_report_super');
+Route::post('get_list_subscriber_report_super','AdminCommController@get_list_subscriber_report_super')->name('get_list_subscriber_report_super');
 
 
 
@@ -374,6 +377,9 @@ Route::post('edit_pricing_super','SuperadminController@edit_pricing_super')->nam
 Route::post('get_list_transaction_type_super','SuperadminController@get_list_transaction_type_super')->name('get_list_transaction_type_super');
 
 Route::post('tabel_report_transaksi_super','SuperadminController@tabel_report_transaksi_super')->name('tabel_report_transaksi_super');
+Route::post('tabel_concile_report_super','SuperadminController@tabel_concile_report_super')->name('tabel_concile_report_super');
+
+
 
 
 

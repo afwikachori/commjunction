@@ -1420,6 +1420,61 @@ public function cek_prepare_publish(){
 
 
 
+    public function get_list_subscriber_report_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'reportmanagement/listsubscriber';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+    public function tabel_subscriber_report_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'reportmanagement/subscriber';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "start_date"  => $input['start_date'],
+            "end_date"  => $input['end_date'],
+            "subscriber_id" => $input['subscriber_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
 
 
 
