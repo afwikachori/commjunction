@@ -14,6 +14,13 @@ $(document).ready(function () {
 });
 
 
+//tab-line
+$(".tabbable-line li a").click(function () {
+    $(".tabbable-line li").removeClass('active');
+    $(this).parent().addClass('active');
+});
+
+
 // FORMAT PISAH UANG RUPIAH
 function rupiah(val){
 var   bilangan = val;

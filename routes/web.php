@@ -331,6 +331,7 @@ Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name
 Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->name('/log_management');
 Route::get('/module_report', 'SuperadminController@ModuleReportSuperView')->name('/module_report');
 Route::get('/pricing_management', 'SuperadminController@PricingManageSuperView')->name('/pricing_management');
+Route::get('/report_management', 'SuperadminController@reportManagementSuperadmin')->name('/report_management');
 
 
 //-------POST------
@@ -366,12 +367,15 @@ Route::post('get_list_fitur_modulereport','SuperadminController@get_list_fitur_m
 Route::post('get_subfitur_modulereport','SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');
 Route::post('tabel_module_report_superadmin','SuperadminController@tabel_module_report_superadmin')->name('tabel_module_report_superadmin');
 Route::post('tabel_pricing_management_superadmin','SuperadminController@tabel_pricing_management_superadmin')->name('tabel_pricing_management_superadmin');
-
 Route::post('detail_pricing_super','SuperadminController@detail_pricing_super')->name('detail_pricing_super');
 Route::post('add_pricing_super','SuperadminController@add_pricing_super')->name('add_pricing_super');
 Route::post('get_list_fitur_pricing','SuperadminController@get_list_fitur_pricing')->name('get_list_fitur_pricing');
-
 Route::post('edit_pricing_super','SuperadminController@edit_pricing_super')->name('edit_pricing_super');
+Route::post('get_list_transaction_type_super','SuperadminController@get_list_transaction_type_super')->name('get_list_transaction_type_super');
+
+Route::post('tabel_report_transaksi_super','SuperadminController@tabel_report_transaksi_super')->name('tabel_report_transaksi_super');
+
+
 
 
 });

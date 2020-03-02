@@ -246,6 +246,12 @@ select.form-control {
     color: #afafaf;
 }
 
+.tabbable-line.tabreport > .nav-tabs {
+    border: none;
+    margin: 0px;
+    position: relative;
+    left: 46% !important;
+}
 .zoom:hover {
     -ms-transform: scale(1.5); /* IE 9 */
     -webkit-transform: scale(1.5); /* Safari 3-8 */

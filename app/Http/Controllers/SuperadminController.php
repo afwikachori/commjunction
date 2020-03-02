@@ -74,6 +74,12 @@ class SuperadminController extends Controller
     }
 
 
+    public function reportManagementSuperadmin()
+    {
+        return view('superadmin/report_management_super');
+    }
+
+
 
     public function postAddUser(Request $request)
     {
@@ -1306,6 +1312,67 @@ class SuperadminController extends Controller
             if ($status_error == 400) {
                 alert()->error('So sorry cant edit new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
                 return back();
+            }
+        }
+    }
+
+    public function get_list_transaction_type_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'reportmanagement/transactiontype';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+    public function tabel_report_transaksi_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'reportmanagement/admreporttrans';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "start_date"  => $input['start_date'],
+            "end_date"  => $input['end_date'],
+            "transaction_type_id"  => $input['transaction_type_id'],
+            "transaction_status"  => $input['transaction_status'],
+            "min_transaction"  => $input['min_transaction'],
+            "max_transaction"  => $input['max_transaction'],
+            "community_name"  => $input['community_name'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
             }
         }
     }

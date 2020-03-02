@@ -52,8 +52,6 @@
                                 </div>
                             </div>
 
-
-
                             <!-- tabel all susbcriber -->
                             <table id="tabel_komunitas_subs"
                                 class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
@@ -63,6 +61,21 @@
                                         <th>Community Name</th>
                                         <th>Register Date</th>
                                         <th>Range Member</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <!-- end tabel all  -->
+
+                                   <!-- tabel all susbcriber -->
+                            <table id="tabel_show_subs"
+                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%; display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>ID Subscriber</th>
+                                        <th>Subscriber Name</th>
+                                        <th>Join Date</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -87,6 +100,8 @@
                                 </thead>
                             </table>
                             <!-- end tabel all  -->
+
+
                         </div>
 
 
@@ -167,57 +182,69 @@
 
 
     function tabel_subscriber_commjuction(idkomunitas) {
-        alert(idkomunitas);
-          $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
+        // alert(idkomunitas);
+        //   $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/superadmin/tabel_subscriber_comm_super',
+        //         type: 'POST',
+        //         dataSrc: '',
+        //         timeout: 30000,
+        //         data: {
+        //         "community_id": idkomunitas,
+        //         },
+        //         success: function (result) {
+        //             console.log(result);
+        //         },
+        //         error: function (result) {
+
+        //             console.log("Cant Show");
+        //         }
+        //     });
+
+$("#tabel_komunitas_subs").hide();
+ $('#tabel_show_subs').show();
+ $('#tabel_komunitas_subs').dataTable().fnClearTable();
+$('#tabel_komunitas_subs').dataTable().fnDestroy();
+
+    var tabel = $('#tabel_show_subs').DataTable({
+            responsive: true,
+            ajax: {
                 url: '/superadmin/tabel_subscriber_comm_super',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
                 "community_id": idkomunitas,
+            },timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_module_report_superadmin tbody').empty().append(nofound);
                 },
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (result) {
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+            },
 
-                    console.log("Cant Show");
+            columns: [
+                { mData: 'user_id' },
+                { mData: 'full_name' },
+                { mData: 'created_at' },
+                { mData: 'status' },
+                { mData: 'id',
+                    render: function (data, type, row, meta) {
+                       return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_subs_super(\'' + data + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
                 }
-            });
+            ],
 
-//  $('#tabel_komunitas_subs').dataTable().fnClearTable();
-// $('#tabel_komunitas_subs').dataTable().fnDestroy();
-
-//     var tabel = $('#tabel_komunitas_subs').DataTable({
-//             responsive: true,
-//             ajax: {
-//                 url: '/superadmin/tabel_subs_komunitas_super',
-//                 type: 'POST',
-//                 dataSrc: '',
-//                 timeout: 30000,
-//                 data: {
-//                 "community_id": idkomunitas,
-//             },
-//             },
-
-//             columns: [
-//                 { mData: 'id' },
-//                 { mData: 'name' },
-//                 { mData: 'created_at' },
-//                 { mData: 'range_member' },
-//                 { mData: 'id',
-//                     render: function (data, type, row, meta) {
-//                         return '<button type="button" class="btn btn-abu btn-sm s9" onclick="tabel_subscriber_commjuction('+data+')">Subscriber</button>';
-//                     }
-//                 }
-//             ],
-
-//         });
+        });
 
     }
 

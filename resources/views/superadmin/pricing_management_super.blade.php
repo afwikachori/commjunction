@@ -289,8 +289,7 @@
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
 
-                <div class="modal-header"
-                    style="padding-left: 5%;padding-right: 5%; border: none; padding-bottom: 0px;">
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none; padding-bottom: 0px;">
                     <h4 class="modal-title cgrey">Edit Pricing</h4>
                     <div class="pricing_status" style="text-align: right;"></div>
 
@@ -588,6 +587,7 @@
                 });
                 var fiturs = arf.toString();
 
+
                 //edit
                 $("#edit_nama_pricing").val(res.title);
                 $("#edit_deskripsi_pricing").text(res.description);
@@ -596,12 +596,12 @@
                 $("#edit_bulanan").val(res.price_monthly);
                 $("#edit_tahunan").val(res.price_annual);
                 $("#id_pricing_edit").val(idku);
-
                 if (res.status == 1) {
                     $("#edit_status_pricing").attr("checked", true);
                 } else {
                     $("#edit_status_pricing").attr("checked", false);
                 }
+                // $("edit_status_pricing").val();
 
                 if (res.pricing_type == 1) {
                     $("#hide_fitur_edit").show(); //div colum
@@ -612,14 +612,16 @@
                     $("#hide_multi_edit").hide();
                     $("#fiturpricing_edit").show();
                 }
-                if (len <= 1) {
-                    $("#edit_multi_fiturpricing").val(arf);
-                } else {
-                    $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
-                }
 
-                // $.each(fiturs.split(","), function (i, e) {
-                // });
+
+                $.each(fiturs.split(","), function (i, e) {
+                    if (len == 1) {
+                        $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
+                    } else {
+                        $("#edit_multi_fiturpricing").val(fiturs).attr("selected", "selected");
+                         $("#edit_multi_fiturpricing").val(arf);
+                    }
+                });
                 //end-edit
 
 
