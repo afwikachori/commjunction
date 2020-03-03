@@ -335,6 +335,7 @@ Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->na
 Route::get('/module_report', 'SuperadminController@ModuleReportSuperView')->name('/module_report');
 Route::get('/pricing_management', 'SuperadminController@PricingManageSuperView')->name('/pricing_management');
 Route::get('/report_management', 'SuperadminController@reportManagementSuperadmin')->name('/report_management');
+Route::get('/payment_management', 'SuperadminController@paymentManagementSuperadmin')->name('/payment_management');
 
 
 //-------POST------
@@ -375,11 +376,12 @@ Route::post('add_pricing_super','SuperadminController@add_pricing_super')->name(
 Route::post('get_list_fitur_pricing','SuperadminController@get_list_fitur_pricing')->name('get_list_fitur_pricing');
 Route::post('edit_pricing_super','SuperadminController@edit_pricing_super')->name('edit_pricing_super');
 Route::post('get_list_transaction_type_super','SuperadminController@get_list_transaction_type_super')->name('get_list_transaction_type_super');
-
 Route::post('tabel_report_transaksi_super','SuperadminController@tabel_report_transaksi_super')->name('tabel_report_transaksi_super');
 Route::post('tabel_concile_report_super','SuperadminController@tabel_concile_report_super')->name('tabel_concile_report_super');
+Route::post('tabel_payment_all_super','SuperadminController@tabel_payment_all_super')->name('tabel_payment_all_super');
 
-
+Route::post('tabel_payment_active_super','SuperadminController@tabel_payment_active_super')->name('tabel_payment_active_super');
+Route::post('add_payment_management_super','SuperadminController@add_payment_management_super')->name('add_payment_management_super');
 
 
 

@@ -106,6 +106,26 @@ body::-webkit-scrollbar-thumb {
     font-size: 12px;
 }
 
+.text-wrap{
+    white-space:normal !important;
+    word-break: break-word;
+  vertical-align: top;
+}
+.width-450{
+    width:450px !important;
+}
+.width-400{
+    width:400px !important;
+}
+.width-300{
+    width:300px !important;
+}
+.width-200{
+    width:200px !important;
+}
+.width-100{
+    width:100px !important;
+}
 .card .card-body.member {
     padding: 1rem 1rem !important;
 }

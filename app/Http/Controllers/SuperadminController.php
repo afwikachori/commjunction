@@ -79,6 +79,11 @@ class SuperadminController extends Controller
         return view('superadmin/report_management_super');
     }
 
+    public function paymentManagementSuperadmin()
+    {
+        return view("superadmin/payment_management_super");
+    }
+
 
 
     public function postAddUser(Request $request)
@@ -1420,7 +1425,92 @@ class SuperadminController extends Controller
     }
 
 
+    public function tabel_payment_all_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'paymentmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
 
 
 
+    public function tabel_payment_active_super()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'paymentmanagement/listallactive';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+
+
+    public function add_payment_management_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $url = env('SERVICE') . 'paymentmanagement/add';
+        $client = new \GuzzleHttp\Client();
+        // return $input;
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "payment_title"      => $input['nama_pay'],
+            "description"        => $input['deskripsi_pay'],
+            "price_monthly"     => $input['harga_bulanan_pay'],
+            "price_annual"    => $input['harga_tahunan_pay'],
+            "minimum_monthly_subscription"        => $input['min_bulanan_pay'],
+            "minimum_annual_subscription" => $input['min_tahunan_pay'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add New Payment', 'Added!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
 } //endclas
