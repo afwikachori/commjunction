@@ -1632,4 +1632,78 @@ class SuperadminController extends Controller
             }
         }
     }
+
+
+    public function get_list_bank_name_subpay(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'paymentmanagement/listbank';
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+
+    public function add_subpayment_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $token = $ses_login['access_token'];
+        // dd($input);
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+            $input = $request->all(); // getdata form by name
+
+            $imageRequest = [
+                "payment_title"     => $input['sub_namapay'],
+                "description"       => $input['sub_deskripsi'],
+                "bank_name"         => $input['sub_nama_bank'],
+                "no_rekening"       => $input['sub_rekening'],
+                "payment_owner_name"     => $input['sub_owner_bank'],
+                "payment_time_limit" => $input['sub_timelimit'],
+                "payment_type_id"    => $input['subid_payment'],
+                "filename"    => $filnam,
+                "file"        => $imgku
+            ];
+
+
+            $url = env('SERVICE') . 'paymentmanagement/addsubpayment';
+            try {
+                $resImg = $req->addSubPaymentSuper($imageRequest, $url, $token);
+                // return $resImg;
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully add new sub-payment', 'Added!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $exception) {
+                // return $exception;
+                $status_error = $exception->getCode();
+                if ($status_error == 400) {
+                    alert()->error('So sorry cant add new sub-payment!', 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            }
+        } //END-IF  UPLOAD-IMAGE
+    }
+
+
 } //endclas

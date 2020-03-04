@@ -384,7 +384,9 @@ Route::post('tabel_payment_active_super','SuperadminController@tabel_payment_act
 Route::post('add_payment_management_super','SuperadminController@add_payment_management_super')->name('add_payment_management_super');
 Route::post('detail_payment_all_super','SuperadminController@detail_payment_all_super')->name('detail_payment_all_super');
 Route::post('get_setting_subpayment_super','SuperadminController@get_setting_subpayment_super')->name('get_setting_subpayment_super');
+Route::post('get_list_bank_name_subpay','SuperadminController@get_list_bank_name_subpay')->name('get_list_bank_name_subpay');
 
+Route::post('add_subpayment_super','SuperadminController@add_subpayment_super')->name('add_subpayment_super');
 Route::post('edit_payment_management_super','SuperadminController@edit_payment_management_super')->name('edit_payment_management_super');
 
 

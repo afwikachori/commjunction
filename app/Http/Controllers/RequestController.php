@@ -441,4 +441,57 @@ class RequestController extends Controller
     }
 
 
+
+    public function addSubPaymentSuper($requestImage, $url, $token)
+    {
+
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'payment_title',
+                    'contents' =>  $requestImage["payment_title"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
+                ],
+                [
+                    'name'     => 'bank_name',
+                    'contents' =>  $requestImage["bank_name"]
+                ],
+                [
+                    'name'     => 'no_rekening',
+                    'contents' =>  $requestImage["no_rekening"]
+                ],
+                [
+                    'name'     => 'payment_owner_name',
+                    'contents' =>  $requestImage["payment_owner_name"]
+                ],
+                [
+                    'name'     => 'payment_time_limit',
+                    'contents' =>  $requestImage["payment_time_limit"]
+                ],
+                [
+                    'name'     => 'payment_type_id',
+                    'contents' =>  $requestImage["payment_type_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
 } //END_CLASS

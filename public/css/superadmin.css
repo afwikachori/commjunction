@@ -697,6 +697,11 @@ a.dt-button {
     min-width: 90px;
 }
 
+.circle.subpay{
+    position: relative !important;
+    margin-bottom: 1em;
+}
+
 .label-oren {
     background: linear-gradient(106deg, #fc6076 -2.66%, #ff9a44 102.89%);
     border-radius: 10px;
@@ -724,7 +729,10 @@ a.dt-button {
 }
 
 .bg-biru {
-    background-color: #beebe9;
+    background-color: #c1e4e3;
+}
+.bg-biru {
+    background-color: #c1e4e3;
 }
 .bg-tosca {
     background-color: #50b7b9;
