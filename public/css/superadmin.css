@@ -238,7 +238,73 @@ body::-webkit-scrollbar-thumb {
     margin-left: 3px !important;
     margin-right: 3px !important;
 }
+ div.dataTables_wrapper div.dataTables_filter input {
+    border-radius: 8px !important;
+}
+
+/* div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    font-size: 14px !important;
+}
+
+.btn, .btn-group.open .dropdown-toggle, .btn:active, .btn:focus, .btn:hover, .btn:visited, a, a:active, a:checked, a:focus, a:hover, a:visited, body, button, button:active, button:hover, button:visited, div, input, input:active, input:focus, input:hover, input:visited, select, select:active, select:focus, select:visited, textarea, textarea:active, textarea:focus, textarea:hover, textarea:visited {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: 14px !important;
+    color: #646464 !important;
+} */
+
 /* //end-PGINATION DATATBLE */
+
+
+#modal_detail_payment_all_super tbody{
+    font-size: 10px !important;
+}
+
+
+/* TAB DETAIL PAYMENT MANAGEMENT */
+.tabbable-line.sub_pay_super{
+    margin-top: -1.3em;
+
+}
+.tabbable-line.sub_pay_super > .nav-tabs.sub_pay_super {
+    border: none;
+    margin: 0px;
+    position: relative;
+    left: 62%;
+}
+
+
+#img_detail_payment_super{
+width:85px;
+height:85px;
+ background-color: #a7a7a7a7;
+ margin-bottom: 0.5em;
+}
+
+
+.div-info-payment{
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-top: 1em;
+}
+
+
+.tabbable-line.sub_pay_super > .nav-tabs.sub_pay_super > li.active {
+    border-bottom: 3px solid #0e5f75;
+    position: relative;
+    min-width: 50px !important;
+    text-align: center;
+}
+
+.tabbable-line.sub_pay_super > .nav-tabs.sub_pay_super > li {
+    margin-right: 5px;
+    text-align: center;
+    min-width: 50px !important;
+}
+/* END - DETAIL */
+
+
 
 .img-mini {
     width: 40px;
@@ -271,6 +337,13 @@ select.form-control {
     margin: 0px;
     position: relative;
     left: 57% !important;
+}
+
+.tabbable-line.payment > .nav-tabs {
+    border: none;
+    margin: 0px;
+    position: relative;
+    left: 90% !important;
 }
 .zoom:hover {
     -ms-transform: scale(1.5); /* IE 9 */
@@ -408,6 +481,9 @@ color: #c97474 !important;
 }
 /*END-NAV*/
 
+
+
+
 .sidebar .nav .nav-item.nav-profile .nav-link .nav-profile-text {
     margin-left: 0.2rem !important;
 }
@@ -443,6 +519,9 @@ color: #c97474 !important;
 
 .coren {
     color: #ff9a44;
+}
+.cgrey2 {
+    color: #4d4c4c !important;
 }
 
 .cgrey1 {

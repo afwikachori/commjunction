@@ -93,12 +93,20 @@
             </li>
 
 
-            <li class="nav-item nav-logout d-none d-lg-block">
-              <a class="nav-link" href="#">
+                <li class="nav-item nav-logout dropdown">
+              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-settings"></i>
               </a>
+
+              <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
+                <a class="dropdown-item" href="/superadmin/add_user">
+                 Add User</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="">
+                Etc</a>
+              </div>
             </li>
-            
+
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>

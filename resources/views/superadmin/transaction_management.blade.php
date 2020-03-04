@@ -798,7 +798,8 @@
 
             },
             error: function (result) {
-                console.log("Cant Show Detail User");
+                console.log(result);
+                console.log("Cant Show Detail");
             }
         });
     }

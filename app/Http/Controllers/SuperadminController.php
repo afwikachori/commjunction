@@ -813,8 +813,7 @@ class SuperadminController extends Controller
                 return $json['data'];
             }
         } catch (ClientException $exception) {
-            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
-            return back();
+            return $exception;
         }
     }
 
@@ -1503,6 +1502,126 @@ class SuperadminController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Add New Payment', 'Added!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
+
+
+    public function detail_payment_all_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'paymentmanagement/detail';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "payment_id" => $input['payment_id'],
+            "payment_title" => $input['payment_title'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+    }
+
+
+    public function get_setting_subpayment_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'paymentmanagement/listsetting';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "payment_id" => $input['payment_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+    }
+
+
+
+    public function edit_payment_management_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $url = env('SERVICE') . 'paymentmanagement/edit';
+        $client = new \GuzzleHttp\Client();
+        // return $input;
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "payment_id"         => $input['edit_idpay'],
+            "payment_title"      => $input['edit_nama_pay'],
+            "description"        => $input['edit_deskripsi_pay'],
+            "price_monthly"      => $input['edit_harga_bulanan_pay'],
+            "price_annual"       => $input['edit_harga_tahunan_pay'],
+            "minimum_monthly_subscription" => $input['edit_min_bulanan_pay'],
+            "minimum_annual_subscription"  => $input['edit_min_tahunan_pay'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Edit Payment', 'Edited!')->autoclose(4000);
                 return back();
             }
         } catch (ClientException $exception) {

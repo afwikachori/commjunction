@@ -323,7 +323,7 @@ Route::prefix('superadmin')->group(function(){
 
 Route::get('/','SuperadminController@loginSuperadminView')->name('superadmin');
 Route::get('/dashboard','SuperadminController@dashboarSuperView')->name('/dashboard');
-Route::get('/user','SuperadminController@UserSuperView')->name('/user');
+Route::get('/add_user','SuperadminController@UserSuperView')->name('/add_user');
 Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment');
 Route::get('/module','SuperadminController@ModuleManagementView')->name('/module');
 Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
@@ -382,7 +382,10 @@ Route::post('tabel_payment_all_super','SuperadminController@tabel_payment_all_su
 
 Route::post('tabel_payment_active_super','SuperadminController@tabel_payment_active_super')->name('tabel_payment_active_super');
 Route::post('add_payment_management_super','SuperadminController@add_payment_management_super')->name('add_payment_management_super');
+Route::post('detail_payment_all_super','SuperadminController@detail_payment_all_super')->name('detail_payment_all_super');
+Route::post('get_setting_subpayment_super','SuperadminController@get_setting_subpayment_super')->name('get_setting_subpayment_super');
 
+Route::post('edit_payment_management_super','SuperadminController@edit_payment_management_super')->name('edit_payment_management_super');
 
 
 
