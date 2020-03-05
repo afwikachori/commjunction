@@ -84,6 +84,10 @@ class SuperadminController extends Controller
         return view("superadmin/payment_management_super");
     }
 
+    public function NotificationManagementSuperadmin(){
+        return view("superadmin/notification_management_super");
+    }
+
 
 
     public function postAddUser(Request $request)
@@ -1706,4 +1710,170 @@ class SuperadminController extends Controller
     }
 
 
+
+    public function edit_subpayment_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $token = $ses_login['access_token'];
+        // dd($input);
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+            $input = $request->all(); // getdata form by name
+
+            $imageRequest = [
+                "payment_title"     => $input['edit_sub_namapay'],
+                "description"       => $input['edit_sub_deskripsi'],
+                "bank_name"         => $input['edit_sub_nama_bank'],
+                "no_rekening"       => $input['edit_sub_rekening'],
+                "payment_owner_name"     => $input['edit_sub_owner_bank'],
+                "payment_time_limit" => $input['edit_sub_timelimit'],
+                "payment_method_id"    => $input['payment_method_id'],
+                "filename"    => $filnam,
+                "file"        => $imgku
+            ];
+
+
+            $url = env('SERVICE') . 'paymentmanagement/editsubpayment';
+            try {
+                $resImg = $req->editSubPaymentSuper($imageRequest, $url, $token);
+                // return $resImg;
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully Edit sub-payment', 'Sub-Payment Edited!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $exception) {
+                // return $exception;
+                $status_error = $exception->getCode();
+                if ($status_error == 400) {
+                    alert()->error('So sorry cant Edit sub-payment!', 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            }
+        } //END-IF  UPLOAD-IMAGE
+    }
+
+
+
+    public function tabel_generate_notification_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $input['community_id'],
+            'start_date' => $input['start_date'],
+            'end_date' => $input['end_date'],
+            'filter_title'  => $input['filter_title'],
+            'notification_sub_type' => $input['notification_sub_type'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json;
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function get_list_user_notif_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'notificationmanagement/listusers';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "user_type" => $input['user_type'],
+            "community_id" => $input['community_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function send_notification_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        return $input;
+
+        $url = env('SERVICE') . 'notificationmanagement/sendnotification';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "title" => $input['title'],
+            "description" => $input['description'],
+            "user_type" => $input['user_type'],
+            "user_id" => $input['user_id'],
+            "notification_type" => $input['notification_type'],
+            "notification_sub_type" => $input['notification_sub_type'],
+            "community_id" => $input['community_id'],
+            "url" => $input['url'],
+            "broadcats_status" => $input['broadcats_status'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
 } //endclas

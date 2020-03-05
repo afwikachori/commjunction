@@ -101,4 +101,11 @@
         </a>
     </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="/superadmin/notification_management">
+            <span class="menu-title">Notification Management</span>
+            <i class="mdi mdi-bell-ring menu-icon"></i>
+        </a>
+    </li>
+
 </ul>

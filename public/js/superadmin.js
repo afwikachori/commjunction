@@ -81,6 +81,12 @@ $.ajax({
 }
 
 
+function errorImg() {
+    $('.rounded-circle').attr('src', '/img/noimg.jpg');
+}
+
+
+
 // VALIDASI FORM SUPERADMIN - ADD User
 $('#name_superadmin').on('keyup', function () {
   var letters = /^[a-zA-Z\s]*$/;

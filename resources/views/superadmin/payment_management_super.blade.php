@@ -186,103 +186,7 @@
 </div>
 
 
-<!-- MODAL EDIT PAYMENT SUPER -->
-<div class="modal fade" id="modal_edit_payment_super" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-            <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none;">
-                <h4 class="modal-title cgrey">Edit Payment</h4>
-            </div> <!-- end-header -->
-            <form method="POST" id="form_edit_payment_super" action="{{route('edit_payment_management_super')}}">
-                {{ csrf_field() }}
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <input type="hidden" id="edit_idpay" name="edit_idpay">
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight s13">Payment Name</small>
-                                <input type="text" id="edit_nama_pay" name="edit_nama_pay"
-                                    class="form-control input-abu">
-                            </div>
 
-                        </div> <!-- end-col-md -->
-
-                        <div class="col-md">
-                            <div class="form-group" style="display: none;">
-                                <small class="clight s13">Payment Type</small>
-                                <select class="form-control input-abu" name="edit_tipe_pay" id="edit_tipe_pay">
-                                    <option selected disabled> Choose </option>
-                                </select>
-                            </div>
-
-                        </div> <!-- end-col-md -->
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h6 class="cdarkgrey s13 tebal" style="margin-bottom: 0.5em;">Payment Information</h6>
-                            <div class="form-group">
-                                <small class="clight s13">Payment Description</small>
-                                <textarea type="text" id="edit_deskripsi_pay" name="edit_deskripsi_pay"
-                                    class="form-control input-abu" rows="2"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight s13">Price Montly</small>
-                                <input type="text" id="edit_harga_bulanan_pay" name="edit_harga_bulanan_pay"
-                                    class="form-control input-abu">
-                            </div>
-                        </div> <!-- end-col-md -->
-
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight s13">Price Annual</small>
-                                <input type="text" id="edit_harga_tahunan_pay" name="edit_harga_tahunan_pay"
-                                    class="form-control input-abu">
-                            </div>
-                        </div> <!-- end-col-md -->
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight s13">Minimum Montly</small>
-                                <input type="text" id="edit_min_bulanan_pay" name="edit_min_bulanan_pay"
-                                    class="form-control input-abu">
-                            </div>
-                        </div> <!-- end-col-md -->
-
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight s13">Minimum Annual</small>
-                                <input type="text" id="edit_min_tahunan_pay" name="edit_min_tahunan_pay"
-                                    class="form-control input-abu">
-                            </div>
-                        </div> <!-- end-col-md -->
-                    </div>
-
-                </div> <!-- end-body -->
-
-                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" id="btn_edit_payment_super" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Edit </button>
-                </div> <!-- end-footer     -->
-            </form>
-        </div> <!-- END-MDL CONTENT -->
-    </div>
-</div>
 
 
 <!-- MODAL DETAIL PAYMENT-->
@@ -369,13 +273,87 @@
 
 
                                 <div class="tab-pane" id="tab_default_2a">
-                                    <br>
-                                    <small class="cgrey">Click to edit</small>
-                                    <br>
-                                    <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                                    <form method="POST" id="form_edit_payment_super"
+                                        action="{{route('edit_payment_management_super')}}">
+                                        {{ csrf_field() }}
+                                        <div>
+                                            <h5 class="cteal">Edit Payment</h5>
+
+                                            <input type="hidden" id="edit_idpay" name="edit_idpay">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Payment Name</small>
+                                                        <input type="text" id="edit_nama_pay" name="edit_nama_pay"
+                                                            class="form-control input-abu">
+                                                    </div>
+
+                                                </div> <!-- end-col-md -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Payment Description</small>
+                                                        <textarea type="text" id="edit_deskripsi_pay"
+                                                            name="edit_deskripsi_pay" class="form-control input-abu"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Price Montly</small>
+                                                        <input type="text" id="edit_harga_bulanan_pay"
+                                                            name="edit_harga_bulanan_pay"
+                                                            class="form-control input-abu">
+                                                    </div>
+                                                </div> <!-- end-col-md -->
+
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Price Annual</small>
+                                                        <input type="text" id="edit_harga_tahunan_pay"
+                                                            name="edit_harga_tahunan_pay"
+                                                            class="form-control input-abu">
+                                                    </div>
+                                                </div> <!-- end-col-md -->
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Minimum Montly</small>
+                                                        <input type="text" id="edit_min_bulanan_pay"
+                                                            name="edit_min_bulanan_pay" class="form-control input-abu">
+                                                    </div>
+                                                </div> <!-- end-col-md -->
+
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <small class="clight s13">Minimum Annual</small>
+                                                        <input type="text" id="edit_min_tahunan_pay"
+                                                            name="edit_min_tahunan_pay" class="form-control input-abu">
+                                                    </div>
+                                                </div> <!-- end-col-md -->
+                                            </div>
+
+                                        </div> <!-- end-body -->
+
+                                        <div class="footer-button" style="text-align: right; margin-top: 10%;">
+                                            <button type="submit" id="btn_edit_payment_super"
+                                                class="btn btn-teal btn-sm">
+                                                <i class="mdi mdi-check btn-icon-prepend">
+                                                </i> Edit </button>
+                                        </div>
+                                    </form>
+
+                                    <!-- <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
                                         data-target="#modal_edit_payment_super" data-dismiss="modal"
                                         style="margin-top: 0.5em;">
-                                        Edit Payment</button>
+                                        Edit Payment</button> -->
                                 </div>
 
                             </div>
@@ -406,6 +384,7 @@
                                     <th class="cgrey2"><b> Status </b></th>
                                     <th class="cgrey2"><b> Time Limit </b></th>
                                     <th class="cgrey2"><b> Account </b></th>
+                                    <th class="cgrey2"><b> Description </b></th>
                                     <th class="cgrey2"><b> Action </b></th>
                                 </tr>
                             </thead>
@@ -538,76 +517,215 @@
         <div class="modal-content" style="background-color: #ffffff;">
 
 
-            <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none;">
-                <h4 class="modal-title cgrey">Detail Sub-Payment</h4>
-                <div class="pricing_status" style="text-align: right;"></div>
-
-            </div> <!-- end-header -->
-
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
+                <h4 class="modal-title cgrey">Detail Sub-Payment</h4>
+                <div id="subpay_status" style="text-align: right; margin-top: -1.5em; margin-bottom: 1.5em;"></div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="circle" style="position: relative; margin-bottom: 1em;">
-                            <img id="img_subpay" class="profile-pic rounded-circle img-fluid" src="/img/focus.png">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight s13">Payment Name</small>
-                            <p id="detail_nama_pay"> </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight s13">Payment Time Limit</small>
-                            <p id="detail_time_limit"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-12" style="margin-top: -0.5em;">
-                        <div class="form-group">
-                            <small class="clight s13">Description</small>
-                            <p id="detail_deskripsi_pay"></p>
-                        </div>
-                    </div>
-                </div>
+                <div class="tabbable-line" style="margin-top: -0.5em;">
+                    <ul class="nav nav-tabs detailsubpay">
+                        <li class="tab-subs active" id="tab_all">
+                            <a href="#tab_default_1_subpay" data-toggle="tab">
+                                Detail
+                            </a>
+                        </li>
+                        <li class="tab-subs" id="tab_pending">
+                            <a href="#tab_default_2_subpay" data-toggle="tab">
+                                Setting Sub
+                            </a>
+                        </li>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight s13"> Bank Name</small>
-                            <p id="detail_bank_pay"></p>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_default_1_subpay" style="height: auto; min-height: 455px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="circle" style="position: relative; margin-bottom: 1em;">
+                                        <img src="" id="img_subpay" class="profile-pic rounded-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Payment Name</small>
+                                        <p id="detail_nama_pay"> </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Payment Time Limit</small>
+                                        <p id="detail_time_limit"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top: -0.5em;">
+                                    <div class="form-group">
+                                        <small class="clight s13">Description</small>
+                                        <ul>
+                                            <div id="detail_deskripsi_pay"></div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13"> Bank Name</small>
+                                        <p id="detail_bank_pay"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <small class="clight s13"> Rekening Numbers</small>
+                                        <p id="detail_rekening"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13"> Owner Bank Name</small>
+                                        <p id="detail_bankname"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="border: none;">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    style="border-radius: 10px;">
+                                    <i class="mdi mdi-close"></i> Cancel
+                                </button>
+                                &nbsp;
+                                <button type="submit" id="klik_edit_subpay" class="btn btn-teal btn-sm"
+                                    data-toggle="modal" data-target="#modal_edit_subpayment_super" data-dismiss="modal">
+                                    <i class="mdi mdi-check btn-icon-prepend">
+                                    </i> Edit Subpayment </button>
+                            </div> <!-- end-footer     -->
+
                         </div>
-                        <div class="form-group">
-                            <small class="clight s13"> Rekening Numbers</small>
-                            <p id="detail_rekening"></p>
+                        <!-- {{-- endtab --}} -->
+
+                        <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 455px;">
+                            <h2 class="ctosca">Settings</h2>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight s13"> Owner Bank Name</small>
-                            <p id="detail_bankname"></p>
-                        </div>
+                        <!-- {{-- endtab --}} -->
+
                     </div>
                 </div>
             </div> <!-- end-body -->
 
-            <div class="modal-footer" style="border: none; margin-bottom: 1em;">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                    <i class="mdi mdi-close"></i> Cancel
-                </button>
-                &nbsp;
-                <button type="submit" id="klik_edit_subpay" class="btn btn-teal btn-sm">
-                    <i class="mdi mdi-check btn-icon-prepend">
-                    </i> Edit </button>
-            </div> <!-- end-footer     -->
 
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
+
+
+<!-- MODAL EDIT SUB-PAYMENT MANAGEMENT-->
+<div class="modal fade" id="modal_edit_subpayment_super" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div id="tampil_detail_pricing">
+                <form method="POST" id="form_edit_pricing" action="{{route('edit_subpayment_super')}}"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
+
+                    <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none;">
+                        <h4 class="modal-title cgrey">Edit Sub-Payment</h4>
+                        <div class="pricing_status" style="text-align: right;"></div>
+
+                    </div> <!-- end-header -->
+
+                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
+                        <input type="hidden" id="payment_method_id" name="payment_method_id">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
+                                    <div class="circle">
+                                        <img id="view_img_subpay_edit" class="profile-pic rounded-circle img-fluid"
+                                            src="/img/focus.png">
+                                    </div>
+                                    <div class="p-image">
+                                        <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
+                                            style="width: 30px; height: 30px;">
+                                            <i id="browse_img_subpay_edit" class="mdi mdi-camera upload-button"></i>
+                                        </button>
+                                        <input id="file_img_subpay_edit" class="file-upload file-upload-default"
+                                            type="file" name="fileup" accept="image/*" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Pricing Name</small>
+                                    <input type="text" id="edit_sub_namapay" name="edit_sub_namapay"
+                                        class="form-control input-abu" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Payment Time Limit</small>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input type="text" id="edit_sub_timelimit" name="edit_sub_timelimit"
+                                                class="form-control input-abu" required>
+                                        </div>
+                                        <div class="col-4" style="padding-left: 0px !important;">
+                                            <small class="cgrey" style="margin-top: 0.5em;"> Days </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top: -0.5em;">
+                                <div class="form-group">
+                                    <small class="clight s13">Description</small>
+                                    <textarea class="form-control input-abu" id="edit_sub_deskripsi"
+                                        name="edit_sub_deskripsi" rows="2" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13"> Bank Name</small>
+                                    <select class="form-control input-abu" name="edit_sub_nama_bank"
+                                        id="edit_sub_nama_bank">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <small class="clight s13"> Rekening Numbers</small>
+                                    <input type="text" id="edit_sub_rekening" name="edit_sub_rekening"
+                                        class="form-control input-abu" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13"> Owner Bank Name</small>
+                                    <input type="text" id="edit_sub_owner_bank" name="edit_sub_owner_bank"
+                                        class="form-control input-abu" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end-body -->
+
+                    <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" id="edit_subpayment_super" class="btn btn-teal btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> Edit </button>
+                    </div> <!-- end-footer     -->
+                </form>
+            </div>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
 
 @endsection
 @section('script')
@@ -738,10 +856,7 @@
                 $("#edit_min_bulanan_pay").val(res.minimum_monthly_subscription);
                 $("#edit_min_tahunan_pay").val(res.minimum_annual_subscription);
 
-
-
-                get_setting_subpayment_super(param[0]);
-
+                // get_setting_subpayment_super(param[0]);
                 var jsnDt = res.payment_methods;
 
                 $('#tabel_sub_payment_super').dataTable({
@@ -756,11 +871,12 @@
                     columns: [
                         { mData: 'id' },
                         { mData: 'payment_title' },
-                        { mData: 'icon',
-                        render: function (data, type, row, meta) {
-                            var dtimg = server_cdn + data;
-                            return  '<img src="'+dtimg+'" style="width:30px;" class="rounded-circle img-fluid">';
-                        }
+                        {
+                            mData: 'icon',
+                            render: function (data, type, row, meta) {
+                                var dtimg = server_cdn + data;
+                                return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid" onclick="clickImage(this)" onerror="errorImg()">';
+                            }
                         },
                         { mData: 'payment_bank_name' },
                         { mData: 'payment_owner_name' },
@@ -776,13 +892,50 @@
                                 return isine;
                             }
                         },
-                        { mData: 'payment_time_limit' },
+                        {
+                            mData: 'payment_time_limit',
+                            render: function (data, type, row, meta) {
+                                var inin = '';
+                                if (data == 0) {
+                                    inin = data;
+                                } else if (data == 1) {
+                                    inin = '<small class="clight"> ' + data + '  Day</small>';
+                                } else {
+                                    inin = '<small class="clight"> ' + data + '  Days</small>';
+                                }
+                                return inin;
+                            }
+                        },
                         { mData: 'payment_account' },
+                        {
+                            mData: 'description',
+                            render: function (data, type, row, meta) {
+                                var uiku = '';
+                                $.each(data, function (i, item) {
+                                    uiku += '<li>' + item + '</li>';
+                                });
+                                return "<div class='text-wrap width-300'><ul>" + uiku + "</ul></div>";
+                            },
+                        },
                         {
                             mData: 'id',
                             render: function (data, type, row, meta) {
+                                var datasubpay = {
+                                    "id": row.id,
+                                    "payment_title": row.payment_title,
+                                    "icon": row.icon,
+                                    "payment_bank_name": row.payment_bank_name,
+                                    "payment_owner_name": row.payment_owner_name,
+                                    "payment_time_limit": row.payment_time_limit,
+                                    "payment_account": row.payment_account,
+                                    "status": row.status,
+                                    "description": row.description,
+                                };
+                                var ini = JSON.stringify(datasubpay);
+                                localStorage.setItem("data_subpay", ini);
+
                                 return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                                    'onclick="detail_subpayment_all(\'' + data + '\')">' +
+                                    'onclick="mdl_detail_subpayment_all(\'' + data + '\')">' +
                                     '<i class="mdi mdi-eye"></i>' +
                                     '</button>';
                             }
@@ -802,37 +955,84 @@
 
 
 
-
-    function detail_subpayment_all(params) {
+    //MODAL DETAIL SUB_PAYMENT
+    function mdl_detail_subpayment_all(params) {
+        sessionStorage.removeItem('data_subpay');
         $("#modal_detail_payment_all_super").modal("hide");
         $("#modal_detail_subpayment_super").modal("show");
+
+        var dtk = localStorage.getItem("data_subpay");
+        var isi = JSON.parse(dtk);
+
+        var statusui = '';
+        if (isi.status == 0) {
+            statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
+        } else {
+            statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
+        }
+        $("#subpay_status").html(statusui);
+
+        var icn = isi.icon;
+        var cekimg = icn.slice(0, 1);
+
+        if (cekimg == "/") {
+            var isiimg = icn.slice(1);
+        } else {
+            var isiimg = isi.icon;
+        }
+        var imglogo = server_cdn + isiimg;
+
+        $('#img_subpay').attr('src', imglogo);
+        $("#detail_nama_pay").html(isi.payment_title);
+        $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+        var uiku2 = '';
+        $.each(isi.description, function (i, item) {
+            uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+        });
+        $("#detail_deskripsi_pay").html(uiku2);
+        $("#detail_bank_pay").html(isi.payment_bank_name);
+        $("#detail_rekening").html(isi.payment_account);
+        $("#detail_bankname").html(isi.payment_owner_name);
+
+        //SET DATA EDIT SUB-PAYMENT
+        $("#payment_method_id").val(isi.id);
+        $("#edit_sub_namapay ").val(isi.payment_title);
+        $("#edit_sub_timelimit ").val(isi.payment_time_limit);
+        $('select[name="edit_sub_nama_bank"]').val(isi.payment_bank_name);
+        $("#view_img_subpay_edit").attr('src', imglogo);
+        $("#edit_sub_deskripsi ").text(isi.description);
+        $("#edit_sub_nama_bank ").val(isi.payment_bank_name);
+        $("#edit_sub_owner_bank ").val(isi.payment_owner_name);
+        $("#edit_sub_rekening ").val(isi.payment_account);
+
     }
 
 
 
-    function get_setting_subpayment_super(idnya) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/superadmin/get_setting_subpayment_super',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            data: {
-                "payment_id": idnya,
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
-            }
-        });
-    }
+
+    // function get_setting_subpayment_super(idnya) {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //     $.ajax({
+    //         url: '/superadmin/get_setting_subpayment_super',
+    //         type: 'POST',
+    //         dataSrc: '',
+    //         timeout: 30000,
+    //         data: {
+    //             "payment_id": idnya,
+    //         },
+    //         success: function (result) {
+    //             console.log(result);
+    //         },
+    //         error: function (result) {
+    //             console.log(result);
+    //             console.log("Cant Show");
+    //         }
+    //     });
+    // }
 
 
 
@@ -860,9 +1060,21 @@
                 $("#sub_nama_bank").html($('#sub_nama_bank option').sort(function (x, y) {
                     return $(x).val() < $(y).val() ? -1 : 1;
                 }));
-
                 $("#sub_nama_bank").get(0).selectedIndex = 0;
+                // ______________________________________________________________________________
 
+                $('#edit_sub_nama_bank').empty();
+                $('#edit_sub_nama_bank').append("<option disabled value='0'> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#edit_sub_nama_bank').append("<option value=\"".concat(result[i].nama_bank, "\">").concat(result[i].nama_bank, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#edit_sub_nama_bank").html($('#edit_sub_nama_bank option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#edit_sub_nama_bank").get(0).selectedIndex = 0;
             }
         });
     } //endfunction
@@ -878,16 +1090,32 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
-
     $("#file_img_subpay").on('change', function () {
         readURLpay(this);
     });
-
     $("#browse_img_subpay").on('click', function () {
         $("#file_img_subpay").click();
     });
+
+
+    var readURLpayEdit = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#view_img_subpay_edit').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#file_img_subpay_edit").on('change', function () {
+        readURLpayEdit(this);
+    });
+    $("#browse_img_subpay_edit").on('click', function () {
+        $("#file_img_subpay_edit").click();
+    });
+
 
 </script>
 

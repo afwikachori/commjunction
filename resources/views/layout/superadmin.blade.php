@@ -34,6 +34,7 @@
 
 
   <body>
+
     @if (Session::has('session_logged_superadmin'))
 
   <div class="container-scroller">

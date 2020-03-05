@@ -336,6 +336,7 @@ Route::get('/module_report', 'SuperadminController@ModuleReportSuperView')->name
 Route::get('/pricing_management', 'SuperadminController@PricingManageSuperView')->name('/pricing_management');
 Route::get('/report_management', 'SuperadminController@reportManagementSuperadmin')->name('/report_management');
 Route::get('/payment_management', 'SuperadminController@paymentManagementSuperadmin')->name('/payment_management');
+Route::get('/notification_management', 'SuperadminController@NotificationManagementSuperadmin')->name('/notification_management');
 
 
 //-------POST------
@@ -347,25 +348,19 @@ Route::post('tabel_usertype_superadmin', 'SuperadminController@tabel_usertype_su
 Route::post('get_listfitur_usertype_ceklist', 'SuperadminController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
 Route::post('add_new_usertype_management', 'SuperadminController@add_new_usertype_management')->name('add_new_usertype_management');
 Route::post('edit_usertype_management', 'SuperadminController@edit_usertype_management')->name('edit_usertype_management');
-
 Route::post('add_endpoint_module', 'SuperadminController@add_endpoint_module')->name('add_endpoint_module');
 Route::post('get_list_komunitas', 'SuperadminController@get_list_komunitas')->name('get_list_komunitas');
-
 Route::post('get_list_transaction_tipe', 'SuperadminController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
 Route::post('get_list_subcriber_name', 'SuperadminController@get_list_subcriber_name')->name('get_list_subcriber_name');
 Route::post('tabel_transaksi_show', 'SuperadminController@tabel_transaksi_show')->name('tabel_transaksi_show');
 Route::post('detail_transaksi_superadmin', 'SuperadminController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
-
 Route::post('tabel_subs_komunitas_super','SuperadminController@tabel_subs_komunitas_super')->name('tabel_subs_komunitas_super');
 Route::post('tabel_subscriber_comm_super','SuperadminController@tabel_subscriber_comm_super')->name('tabel_subscriber_comm_super');
 Route::post('tabel_subs_pending_super','SuperadminController@tabel_subs_pending_super')->name('tabel_subs_pending_super');
-
 Route::post('tabel_user_management_super','SuperadminController@tabel_user_management_super')->name('tabel_user_management_super');
 Route::post('detail_user_management_super','SuperadminController@detail_user_management_super')->name('detail_user_management_super');
 Route::post('tabel_log_management_super','SuperadminController@tabel_log_management_super')->name('tabel_log_management_super');
-
 Route::post('list_komunitas_log','SuperadminController@list_komunitas_log')->name('list_komunitas_log');
-
 Route::post('get_list_community_modulereport','SuperadminController@get_list_community_modulereport')->name('get_list_community_modulereport');
 Route::post('get_list_fitur_modulereport','SuperadminController@get_list_fitur_modulereport')->name('get_list_fitur_modulereport');
 Route::post('get_subfitur_modulereport','SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');
@@ -379,18 +374,17 @@ Route::post('get_list_transaction_type_super','SuperadminController@get_list_tra
 Route::post('tabel_report_transaksi_super','SuperadminController@tabel_report_transaksi_super')->name('tabel_report_transaksi_super');
 Route::post('tabel_concile_report_super','SuperadminController@tabel_concile_report_super')->name('tabel_concile_report_super');
 Route::post('tabel_payment_all_super','SuperadminController@tabel_payment_all_super')->name('tabel_payment_all_super');
-
 Route::post('tabel_payment_active_super','SuperadminController@tabel_payment_active_super')->name('tabel_payment_active_super');
 Route::post('add_payment_management_super','SuperadminController@add_payment_management_super')->name('add_payment_management_super');
 Route::post('detail_payment_all_super','SuperadminController@detail_payment_all_super')->name('detail_payment_all_super');
 Route::post('get_setting_subpayment_super','SuperadminController@get_setting_subpayment_super')->name('get_setting_subpayment_super');
 Route::post('get_list_bank_name_subpay','SuperadminController@get_list_bank_name_subpay')->name('get_list_bank_name_subpay');
-
 Route::post('add_subpayment_super','SuperadminController@add_subpayment_super')->name('add_subpayment_super');
 Route::post('edit_payment_management_super','SuperadminController@edit_payment_management_super')->name('edit_payment_management_super');
-
-
-
+Route::post('edit_subpayment_super','SuperadminController@edit_subpayment_super')->name('edit_subpayment_super');
+Route::post('tabel_generate_notification_super','SuperadminController@tabel_generate_notification_super')->name('tabel_generate_notification_super');
+Route::post('get_list_user_notif_super','SuperadminController@get_list_user_notif_super')->name('get_list_user_notif_super');
+Route::post('send_notification_super','SuperadminController@send_notification_super')->name('send_notification_super');
 });
 // ---- post : superadmin-----
 
