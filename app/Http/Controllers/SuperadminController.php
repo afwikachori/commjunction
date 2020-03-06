@@ -1767,8 +1767,8 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
-        // $url = env('SERVICE') . 'notificationmanagement/listnotification';
-        $url = '21.0.0.108:2312/api/notificationmanagement/listnotification';
+        $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        // $url = '21.0.0.108:2312/api/notificationmanagement/listnotification';
         $client = new \GuzzleHttp\Client();
 
         $headers = [
@@ -1841,8 +1841,8 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         // return $input;
-        $url = '21.0.0.108:2312/api/notificationmanagement/sendnotification';
-        // $url = env('SERVICE') . 'notificationmanagement/sendnotification';
+        // $url = '21.0.0.108:2312/api/notificationmanagement/sendnotification';
+        $url = env('SERVICE') . 'notificationmanagement/sendnotification';
         $client = new \GuzzleHttp\Client();
 
         $headers = [
@@ -1899,6 +1899,44 @@ class SuperadminController extends Controller
                 alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
                 return back();
             }
+        }
+    }
+
+
+
+    public function detail_generate_notif_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'notificationmanagement/detailnotification';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "notification_id" => $input['notification_id'],
+            "level_status" => $input['level_status'],
+            "community_id" => $input['community_id']
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
         }
     }
 } //endclas

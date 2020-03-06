@@ -33,10 +33,6 @@
                 <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
                     data-toggle="modal" data-target="#modal_filter_notif_super">
                     Generate Notification</button>
-                <button type="button" class="btn btn-abu btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
-                    data-toggle="modal" data-target="#modal_detail_notif">
-                    detail ex</button>
-
 
                 <table id="tabel_generate_notif_super" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%; display: none;">
@@ -269,24 +265,85 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <form>
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                <div class="modal-header" style="border: none; padding-bottom: 0px;">
                     <h4 class="modal-title cgrey">Detail Notification</h4>
                 </div> <!-- end-header -->
 
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                <div class="modal-body" style="height: auto;">
 
                     <div class="row">
                         <div class="col-md-12">
                             <center>
-                                <i class="mdi mdi-bell-ring icon-lg text-success"
-                                    style="font-size: 6em; margin-top: 1em;"></i>
-                                <br>
+                                <img src="/img/notif.png">
                             </center>
 
-                            <small class="clight">Notification Content</small>
+                            <h6 class="cgrey">Notification Content</h6>
+                            <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
+                             border-radius: 10px; width: 100%; margin-top: 0.5em;
+                            padding: 5%;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Title</small>
+                                            <p class="cgrey" id="detail_judul"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Notification Type</small>
+                                            <p class="cgrey" id="detail_tipenotif"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <small class="clight s13">Description</small>
+                                            <p class="cgrey" id="detail_dekripsi"></p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div
-                                style="background-color: #d1d1d1; width: 50px; height: 50px; border-radius: 10px; width: 100%; height: 200px; margin-top: 0.5em;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Community Name</small>
+                                            <p class="cgrey" id="detail_komunitas"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">User Type</small>
+                                            <p class="cgrey" id="detail_usertipe"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Created Date</small>
+                                            <p class="cgrey s13" id="detail_tanggal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Created By</small>
+                                            <p class="cgrey s13" id="dibuat_oleh"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-bottom: 0px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="clight s13">Specific User</small>
+                                            <p class="cgrey s13" id="detail_user" style="margin-bottom: -0.5em;"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -295,7 +352,7 @@
 
                 </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em; margin-top: -1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
@@ -418,9 +475,9 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-
+                        var inidt = [data, row.level_status, row.community_id];
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_notif_super(\'' + data + '\')">' +
+                            'onclick="detail_notif_super(\'' + inidt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -497,8 +554,41 @@
         });
     } //endfunction
 
-    function detail_notif_super(idku) {
-        alert(idku);
+    function detail_notif_super(dtku) {
+        var dtnya = dtku.split(',');
+        //   console.log(dtnya);
+        $("#modal_detail_notif").modal('show');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/detail_generate_notif_super',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                "notification_id": dtnya[0],
+                "level_status": dtnya[1],
+                "community_id": dtnya[2],
+            },
+            success: function (result) {
+                console.log(result);
+                var res = result;
+                $("#detail_judul ").html(res.title);
+                $("#detail_dekripsi ").html(res.description);
+                $("#detail_komunitas ").html(res.community_name);
+                $("#detail_tanggal ").html(res.created_at);
+                $("#detail_user ").html(res.user_id);
+                $("#detail_usertipe ").html(res.user_type_title);
+                $("#detail_tipenotif ").html(res.notifcation_sub_type_title);
+                $("#dibuat_oleh ").html(res.created_by);
+
+            },
+            error: function (result) {
+                console.log("Cant Show");
+            }
+        });
     }
 
 

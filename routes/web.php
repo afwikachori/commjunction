@@ -385,6 +385,9 @@ Route::post('edit_subpayment_super','SuperadminController@edit_subpayment_super'
 Route::post('tabel_generate_notification_super','SuperadminController@tabel_generate_notification_super')->name('tabel_generate_notification_super');
 Route::post('get_list_user_notif_super','SuperadminController@get_list_user_notif_super')->name('get_list_user_notif_super');
 Route::post('send_notification_super','SuperadminController@send_notification_super')->name('send_notification_super');
+Route::post('detail_generate_notif_super','SuperadminController@detail_generate_notif_super')->name('detail_generate_notif_super');
+
+
 });
 // ---- post : superadmin-----
 
