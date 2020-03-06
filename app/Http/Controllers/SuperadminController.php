@@ -1767,7 +1767,8 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
-        $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        // $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        $url = '21.0.0.108:2312/api/notificationmanagement/listnotification';
         $client = new \GuzzleHttp\Client();
 
         $headers = [
@@ -1790,7 +1791,7 @@ class SuperadminController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json;
+            return $json['data'];
         } catch (ClientException $exception) {
             $status_error = $exception->getCode();
             if ($status_error == 500) {
@@ -1840,8 +1841,8 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         // return $input;
-
-        $url = env('SERVICE') . 'notificationmanagement/sendnotification';
+        $url = '21.0.0.108:2312/api/notificationmanagement/sendnotification';
+        // $url = env('SERVICE') . 'notificationmanagement/sendnotification';
         $client = new \GuzzleHttp\Client();
 
         $headers = [

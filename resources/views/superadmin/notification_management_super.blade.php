@@ -38,15 +38,16 @@
                     detail ex</button>
 
 
-                <table id="tabel_log_magement_super" class="table table-hover table-striped dt-responsive nowrap"
-                    style="width:100%;">
+                <table id="tabel_generate_notif_super" class="table table-hover table-striped dt-responsive nowrap"
+                    style="width:100%; display: none;">
                     <thead>
                         <tr>
                             <th><b> ID </b></th>
+                            <th><b> Title </b></th>
                             <th><b> Type Notif</b></th>
                             <th><b> User Type </b></th>
-                            <th><b> Notification Title </b></th>
-                            <th><b> Content</b></th>
+                            <th><b> Community Type </b></th>
+                            <th><b> Status</b></th>
                             <th><b> Created By </b></th>
                             <th><b> Date </b></th>
                             <th><b> Action </b></th>
@@ -144,8 +145,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form method="POST" id="form_send_notification_super"
-            action="{{route('send_notification_super')}}">
+            <form method="POST" id="form_send_notification_super" action="{{route('send_notification_super')}}">
                 {{ csrf_field() }}<div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Send Notification</h4>
                 </div> <!-- end-header -->
@@ -354,7 +354,7 @@
 
 
     $("#btn_generate_notif_super").click(function () {
-        // tabel_log_magement_super();
+        tabel_generate_notif_super();
         tabel_tes();
     });
 
@@ -372,28 +372,13 @@
 
 
 
-    function tabel_log_magement_super() {
-        $('#tabel_log_magement_super').dataTable().fnClearTable();
-        $('#tabel_log_magement_super').dataTable().fnDestroy();
-
-        $('#tabel_log_magement_super').show();
+    function tabel_generate_notif_super() {
+        $('#tabel_generate_notif_super').dataTable().fnClearTable();
+        $('#tabel_generate_notif_super').dataTable().fnDestroy();
+        $('#tabel_generate_notif_super').show();
         $('#modal_filter_notif_super').modal('hide');
 
-        var tabel = $('#tabel_log_magement_super').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel', 'pdf', 'print', {
-                    text: 'JSON',
-                    action: function (e, dt, button, config) {
-                        var data = dt.buttons.exportData();
-
-                        $.fn.dataTable.fileSave(
-                            new Blob([JSON.stringify(data)]),
-                            'Export.json'
-                        );
-                    }
-                }
-            ],
+        var tabel = $('#tabel_generate_notif_super').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -402,39 +387,40 @@
                 }
             },
             ajax: {
-                url: '/superadmin/tabel_log_management_super',
+                url: '/superadmin/tabel_generate_notification_super',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas").val(),
+                    "community_id": $("#list_komunitas_notif").val(),
                     "start_date": $("#tanggal_mulai2").val(),
                     "end_date": $("#tanggal_selesai2").val(),
-                    "user_level": $("#list_userlevel").val()
+                    "filter_title": $("#list_judul_notif").val(),
+                    "notification_sub_type": $("#tipe_notif").val(),
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_log_magement_super tbody').empty().append(nofound);
+                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_generate_notif_super tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
                 console.log(errorThrown);
             },
             columns: [
-                { mData: 'user_name' },
-                { mData: 'user_level' },
-                { mData: 'module' },
-                { mData: 'activity' },
-                { mData: 'endpoint' },
-                { mData: 'date' },
-                { mData: 'code_response' },
+                { mData: 'id' },
+                { mData: 'title' },
+                { mData: 'notifcation_sub_type_title' },
+                { mData: 'user_type_title' },
+                { mData: 'community_name' },
+                { mData: 'status_notifcation' },
+                { mData: 'created_by' },
+                { mData: 'created_at' },
                 {
-                    mData: 'code_response',
+                    mData: 'id',
                     render: function (data, type, row, meta) {
-                        var dt = [row.response];
 
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_log_super(\'' + data + '\')">' +
+                            'onclick="detail_notif_super(\'' + data + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -452,13 +438,13 @@
             switchStatus = $(this).is(':checked');
             $("#hide_user_notif").fadeIn('fast');
             cek_param_list_user();
-             $("#idstatus_notif").val("1");
+            $("#idstatus_notif").val("1");
         }
         else {
             switchStatus = $(this).is(':checked');
             $("#hide_user_notif").fadeOut('fast');
             cek_param_list_user();
-             $("#idstatus_notif").val("2");
+            $("#idstatus_notif").val("2");
         }
     });
 
@@ -502,7 +488,7 @@
                 }));
 
                 $("#komunitas_notif").get(0).selectedIndex = 0;
-                    Olddt = "{{old('usekomunitas_notifr_notif')}}";
+                Olddt = "{{old('usekomunitas_notifr_notif')}}";
                 if (Olddt !== '') {
                     $('#komunitas_notif').val(Olddt);
                 }
@@ -511,19 +497,19 @@
         });
     } //endfunction
 
-    function detail_log_super(resp) {
-        console.log(resp);
+    function detail_notif_super(idku) {
+        alert(idku);
     }
 
 
-     $('#tipenotif').change(function () {
-         var ipilih = this.value;
-         if(ipilih == "1"){
+    $('#tipenotif').change(function () {
+        var ipilih = this.value;
+        if (ipilih == "1") {
             $("#hide_urlnotif").fadeIn('fast');
-         }else{
-              $("#hide_urlnotif").fadeOut('fast');
-         }
-     });
+        } else {
+            $("#hide_urlnotif").fadeOut('fast');
+        }
+    });
 
     //dropdown subs_name list
     $('#komunitas_notif').change(function () {
@@ -565,7 +551,7 @@
             },
             error: function (result) {
                 $('#hide_user_notif').fadeOut("fast");
-               $('#user_notif').empty();
+                $('#user_notif').empty();
                 $('#user_notif').append("<option disabled value='0'>No Related User</option>");
             }
         });
