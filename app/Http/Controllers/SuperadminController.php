@@ -84,7 +84,8 @@ class SuperadminController extends Controller
         return view("superadmin/payment_management_super");
     }
 
-    public function NotificationManagementSuperadmin(){
+    public function NotificationManagementSuperadmin()
+    {
         return view("superadmin/notification_management_super");
     }
 
@@ -1838,8 +1839,7 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
-
-        return $input;
+        // return $input;
 
         $url = env('SERVICE') . 'notificationmanagement/sendnotification';
         $client = new \GuzzleHttp\Client();
@@ -1848,31 +1848,55 @@ class SuperadminController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
+
+        if (isset($input['user_notif'])) {
+            $user = $input['user_notif'];
+        } else {
+            $user = "";
+        }
+
+        if (isset($input['url_notif'])) {
+            $urlq = $input['url_notif'];
+        } else {
+            $urlq = "";
+        }
+
+
         $bodyku = json_encode([
-            "title" => $input['title'],
-            "description" => $input['description'],
-            "user_type" => $input['user_type'],
-            "user_id" => $input['user_id'],
-            "notification_type" => $input['notification_type'],
-            "notification_sub_type" => $input['notification_sub_type'],
-            "community_id" => $input['community_id'],
-            "url" => $input['url'],
-            "broadcats_status" => $input['broadcats_status'],
+            "title" => $input['judul_notif'],
+            "description" => $input['deksripsi_notif'],
+            "user_type" => $input['usertipe_notif'],
+            "user_id" => $user,
+            "notification_type" => $input['tipenotif'],
+            "notification_sub_type" => $input['subtipe_notif'],
+            "community_id" => $input['komunitas_notif'],
+            "url" => $urlq,
+            "broadcast_status" => $input['idstatus_notif'],
         ]);
 
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
         ];
+
         try {
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json['data'];
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
+                return back();
+            }
         } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
             }
         }
     }
