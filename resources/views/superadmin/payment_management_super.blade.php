@@ -607,12 +607,12 @@
                             <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
                                 data-target="#modul_add_settings_subpay" data-dismiss="modal">
                                 Add Settings</button>
-                            <center>
-                                <h3 class="clight" id="ket_setting_subpay" style="margin-top:2em;"></h3>
-                            </center>
+                                <br>
+
+                            <div class="isi_setting_subpay" style="margin-top: 1.5em;">
+                            </div>
                         </div>
                         <!-- {{-- endtab --}} -->
-
                     </div>
                 </div>
             </div> <!-- end-body -->
@@ -737,82 +737,82 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <form method="POST" id="form_add_settings_subpay" action="{{route('add_setting_sub_payment')}}">
         {{ csrf_field() }}
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-        <div class="modal-content"
-            style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
-            <div class="modal-header" style="padding-bottom: 0.5em !important; border:none;">
-                <h3 class="modal-title cgrey">Add Setting Sub-Payment</h3>
-                <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>  -->
-            </div> <!-- end-header -->
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content"
+                style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
+                <div class="modal-header" style="padding-bottom: 0.5em !important; border:none;">
+                    <h3 class="modal-title cgrey">Add Setting Sub-Payment</h3>
+                    <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>  -->
+                </div> <!-- end-header -->
 
-            <div class="modal-body">
-                <div class="row-input">
-                    <input type="hidden" class="set_id_paymethod" name="set_id_paymethod">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <small class="clight s13">Title</small>
-                                <input type="text" id="set_judul" name="set_judul" class="form-control input-abu"
-                                    required>
+                <div class="modal-body">
+                    <div class="row-input">
+                        <input type="hidden" class="set_id_paymethod" name="set_id_paymethod">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <small class="clight s13">Title</small>
+                                    <input type="text" id="set_judul" name="set_judul" class="form-control input-abu"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <small class="clight s13">Setting Type</small>
+                                    <select class="form-control input-abu" name="set_tipe" id="set_tipe">
+                                        <option selected disabled> Choose </option>
+                                        <option value="1"> Radio Button </option>
+                                        <option value="2"> Inputan </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <small class="clight s13">Description</small>
+                                <textarea type="text" id="set_deskripsi" name="set_deskripsi"
+                                    class="form-control input-abu" rows="1"></textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <div class=" form-group">
+                                    <small class="clight s13">Value</small>
+                                    <input type="text" id="set_value" name="set_value" class="form-control input-abu"
+                                        required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <small class="clight s13">Setting Type</small>
-                                <select class="form-control input-abu" name="set_tipe" id="set_tipe">
-                                    <option selected disabled> Choose </option>
-                                    <option value="1"> Radio Button </option>
-                                    <option value="2"> Inputan </option>
-                                </select>
+                        <div class="row">
+                            <div class="col-md" style="margin-top: 0.5em;">
+                                <small class="clight s13">Tag Html</small>
                             </div>
-                        </div>
-                        <div class="col-md-5">
-                            <small class="clight s13">Description</small>
-                            <textarea type="text" id="set_deskripsi" name="set_deskripsi" class="form-control input-abu"
-                                rows="1"></textarea>
-                        </div>
-                        <div class="col-md-2">
-                            <div class=" form-group">
-                                <small class="clight s13">Value</small>
-                                <input type="text" id="set_value" name="set_value" class="form-control input-abu"
-                                    required>
+                            <div class="col-md-11">
+                                <input type="text" id="set_tag_html" name="set_tag_html"
+                                    class="form-control input-abu"></input>
                             </div>
+
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md" style="margin-top: 0.5em;">
-                            <small class="clight s13">Tag Html</small>
-                        </div>
-                        <div class="col-md-11">
-                            <input type="text" id="set_tag_html" name="set_tag_html"
-                                class="form-control input-abu"></input>
-                        </div>
 
-                    </div>
-                </div>
+                    <div id="isi_newrow"></div>
 
-                <div id="isi_newrow"></div>
+                    <center>
+                        <button type="button" class="btn btn-icon-text" id="addnewrow">
+                            <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
+                            <small>Add New Input</small> </button>
+                    </center>
+                </div> <!-- end-body -->
 
-                <center>
-                    <button type="button" class="btn btn-icon-text" id="addnewrow">
-                        <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                        <small>Add New Input</small> </button>
-                </center>
-            </div> <!-- end-body -->
-
-            <div class="modal-footer" style="border: none;">
-                <center>
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">Add Settings</button>
-                </center>
-            </div> <!-- end-footer     -->
-        </div> <!-- END-MDL CONTENT -->
-    </div>
-</form>
+                <div class="modal-footer" style="border: none;">
+                    <center>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-teal btn-sm">Add Settings</button>
+                    </center>
+                </div> <!-- end-footer     -->
+            </div> <!-- END-MDL CONTENT -->
+        </div>
+    </form>
 </div>
 
 
@@ -872,7 +872,7 @@
                 '</div>';
 
             var row_baru = '<div class="newly"  id="row' + row + '">' +
-                '<hr>'+
+                '<hr>' +
                 '<div class="row">' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
@@ -1207,10 +1207,31 @@
             },
             success: function (result) {
                 console.log(result);
+                var uiku = '';
+                $.each(result, function (i, item) {
+                    if (item.setting_type == 1) {
+                        var tipe = 'Input Text';
+                    } else {
+                        var tipe = 'Radio Button';
+                    }
+                    uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                        '<div class="col-9"><div class="form-group">' +
+                        '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                        '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                        '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-3">' +
+                        '<input type="text" value="' + item.value + '"' +
+                        'class="form-control input-abu param_setting" disabled>' +
+                        '</div></div></div>';
+                });
+                $(".isi_setting_subpay").html(uiku);
             },
             error: function (result) {
                 if (result == '404') {
-                    $("#ket_setting_subpay").html('No List Settings');
+                    console.log('data not found');
                 }
             }
         });

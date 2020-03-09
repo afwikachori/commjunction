@@ -388,6 +388,9 @@ Route::post('get_list_user_notif_super','SuperadminController@get_list_user_noti
 Route::post('send_notification_super','SuperadminController@send_notification_super')->name('send_notification_super');
 Route::post('detail_generate_notif_super','SuperadminController@detail_generate_notif_super')->name('detail_generate_notif_super');
 Route::post('add_setting_sub_payment','SuperadminController@add_setting_sub_payment')->name('add_setting_sub_payment');
+Route::post('tabel_generate_inbox_super','SuperadminController@tabel_generate_inbox_super')->name('tabel_generate_inbox_super');
+Route::post('send_inbox_message_super','SuperadminController@send_inbox_message_super')->name('send_inbox_message_super');
+Route::post('get_list_user_inbox_super','SuperadminController@get_list_user_inbox_super')->name('get_list_user_inbox_super');
 
 
 });

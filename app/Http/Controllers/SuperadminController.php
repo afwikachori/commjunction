@@ -2003,4 +2003,141 @@ class SuperadminController extends Controller
             }
         }
     }
+
+
+
+    public function tabel_generate_inbox_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        // return $input;
+
+        $url = env('SERVICE') . 'inboxmanagement/listmessage';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            'community_id' => $input['community_id'],
+            'start_date' => $input['start_date'],
+            'end_date' => $input['end_date'],
+            'filter_title'  => $input['filter_title'],
+            'message_type' => $input['message_type'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json;
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function send_inbox_message_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $input;
+
+        $url = env('SERVICE') . 'inboxmanagement/sendmessage';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        if (isset($input['list_user'])) {
+            $user = $input['list_user'];
+        } else {
+            $user = "";
+        }
+
+
+        $bodyku = json_encode([
+            "title" => $input['judul_inbox'],
+            "description" => $input['deksripsi_inbox'],
+            "user_type" => $input['usertipe_inbox'],
+            "user_id" => $user,
+            "message_type" =>  $input['tipe_inbox'],
+            "community_id" => $input['komunitas_inbox'],
+            "broadcast_status" => $input['bc_status'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+        }
+    }
+
+
+    public function get_list_user_inbox_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/listusers';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "user_type" => $input['user_type'],
+            "community_id" => $input['community_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
 } //endclas
