@@ -90,14 +90,8 @@
 </div>
 
 
-
-
-
-
 </div>
 <!-- container-scroller -->
-
-
 
   @else
   <script>window.location = "/superadmin";</script>

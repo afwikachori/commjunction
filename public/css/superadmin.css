@@ -153,6 +153,11 @@ body::-webkit-scrollbar-thumb {
     min-width: 240px;
 }
 
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .th-center {
     text-align: center !important;
 }

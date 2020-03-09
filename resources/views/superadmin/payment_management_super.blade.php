@@ -604,7 +604,12 @@
                         <!-- {{-- endtab --}} -->
 
                         <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 455px;">
-                            <h2 class="ctosca">Settings</h2>
+                            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                                data-target="#modul_add_settings_subpay" data-dismiss="modal">
+                                Add Settings</button>
+                            <center>
+                                <h3 class="clight" id="ket_setting_subpay" style="margin-top:2em;"></h3>
+                            </center>
                         </div>
                         <!-- {{-- endtab --}} -->
 
@@ -727,6 +732,90 @@
 </div>
 
 
+<!-- MODAL SETTING  MODULE -->
+<div class="modal fade" id="modul_add_settings_subpay" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form method="POST" id="form_add_settings_subpay" action="{{route('add_setting_sub_payment')}}">
+        {{ csrf_field() }}
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content"
+            style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
+            <div class="modal-header" style="padding-bottom: 0.5em !important; border:none;">
+                <h3 class="modal-title cgrey">Add Setting Sub-Payment</h3>
+                <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>  -->
+            </div> <!-- end-header -->
+
+            <div class="modal-body">
+                <div class="row-input">
+                    <input type="hidden" class="set_id_paymethod" name="set_id_paymethod">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <small class="clight s13">Title</small>
+                                <input type="text" id="set_judul" name="set_judul" class="form-control input-abu"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <small class="clight s13">Setting Type</small>
+                                <select class="form-control input-abu" name="set_tipe" id="set_tipe">
+                                    <option selected disabled> Choose </option>
+                                    <option value="1"> Radio Button </option>
+                                    <option value="2"> Inputan </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <small class="clight s13">Description</small>
+                            <textarea type="text" id="set_deskripsi" name="set_deskripsi" class="form-control input-abu"
+                                rows="1"></textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <div class=" form-group">
+                                <small class="clight s13">Value</small>
+                                <input type="text" id="set_value" name="set_value" class="form-control input-abu"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md" style="margin-top: 0.5em;">
+                            <small class="clight s13">Tag Html</small>
+                        </div>
+                        <div class="col-md-11">
+                            <input type="text" id="set_tag_html" name="set_tag_html"
+                                class="form-control input-abu"></input>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="isi_newrow"></div>
+
+                <center>
+                    <button type="button" class="btn btn-icon-text" id="addnewrow">
+                        <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
+                        <small>Add New Input</small> </button>
+                </center>
+            </div> <!-- end-body -->
+
+            <div class="modal-footer" style="border: none;">
+                <center>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-teal btn-sm">Add Settings</button>
+                </center>
+            </div> <!-- end-footer     -->
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</form>
+</div>
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -735,6 +824,7 @@
     $(document).ready(function () {
         tabel_payment_all_super();
         get_list_bank_name_subpay();
+        addRowDinamic();
     });  //end
 
 
@@ -759,6 +849,94 @@
         });
     }
 
+
+
+    function addRowDinamic() {
+        // Add row
+        var row = 1;
+        var id = 2;
+
+        $(document).on("click", "#addnewrow", function () {
+            var new_row = '<div class="row form-group newly" id="row' + row + '">' +
+                '<div class="col-md-3" style="margin-top: 1em;">' +
+                '<label class="cgrey">Choose Input</label>' +
+                '</div>' +
+                '<div class="col-md-7">' +
+                '<input type="text" class="form-control input-abu" name="pilihan_input' + id + '">' +
+                '</div>' +
+                '<div class="col-md">' +
+                '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
+                '<i class="mdi mdi-delete"></i>' +
+                '</button>' +
+                '</div>' +
+                '</div>';
+
+            var row_baru = '<div class="newly"  id="row' + row + '">' +
+                '<hr>'+
+                '<div class="row">' +
+                '<div class="col-md-3">' +
+                '<div class="form-group">' +
+                '<small class="clight s13">Title</small>' +
+                '<input type="text"  name="set_judul' + id + '" class="form-control input-abu">' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-2">' +
+                '<div class="form-group">' +
+                '<small class="clight s13">Setting Type</small>' +
+                '<select class="form-control input-abu" name="set_tipe' + id + '">' +
+                '<option selected disabled> Choose </option>' +
+                '<option value="1"> Radio Button </option>' +
+                '<option value="2"> Inputan </option>' +
+                '</select>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-5">' +
+                '<div class="form-group">' +
+                '<small class="clight s13">Description</small>' +
+                '<textarea type="text" name="set_deskripsi' + id + '" ' +
+                'class="form-control input-abu" rows="1"></textarea>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-2">' +
+                '<div class=" form-group">' +
+                '<small class="clight s13">Value</small>' +
+                '<input type="text"  name="set_value' + id + '" class="form-control input-abu" required>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div class="col-md" style="margin-top: 0.5em;">' +
+                '<small class="clight s13">Tag Html</small>' +
+                '</div>' +
+                '<div class="col-md-10">' +
+                '<input type="text" name="set_tag_html' + id + '"' +
+                'class="form-control input-abu"></input> ' +
+                '</div>' +
+                '<div class="col-md">' +
+                '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
+                '<i class="mdi mdi-delete"></i>' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '<br></div>';
+
+            $('#isi_newrow').append(row_baru);
+            row++;
+            id++;
+            return false;
+        });
+
+        // Remove criterion
+        $(document).on("click", ".delete-row", function () {
+            //  alert("deleting row#"+row);
+            if (row > 1) {
+                $(this).closest('div .newly').remove();
+                row--;
+            }
+            return false;
+        });
+
+    }
 
 
 
@@ -856,7 +1034,7 @@
                 $("#edit_min_bulanan_pay").val(res.minimum_monthly_subscription);
                 $("#edit_min_tahunan_pay").val(res.minimum_annual_subscription);
 
-                // get_setting_subpayment_super(param[0]);
+
                 var jsnDt = res.payment_methods;
 
                 $('#tabel_sub_payment_super').dataTable({
@@ -963,6 +1141,8 @@
 
         var dtk = localStorage.getItem("data_subpay");
         var isi = JSON.parse(dtk);
+        console.log("id payment method = " + isi.id);
+        get_setting_subpayment_super(isi.id);
 
         var statusui = '';
         if (isi.status == 0) {
@@ -1010,29 +1190,31 @@
 
 
 
-    // function get_setting_subpayment_super(idnya) {
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-    //     $.ajax({
-    //         url: '/superadmin/get_setting_subpayment_super',
-    //         type: 'POST',
-    //         dataSrc: '',
-    //         timeout: 30000,
-    //         data: {
-    //             "payment_id": idnya,
-    //         },
-    //         success: function (result) {
-    //             console.log(result);
-    //         },
-    //         error: function (result) {
-    //             console.log(result);
-    //             console.log("Cant Show");
-    //         }
-    //     });
-    // }
+    function get_setting_subpayment_super(idnya) {
+        $(".set_id_paymethod").val(idnya);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/get_setting_subpayment_super',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "payment_method_id": idnya,
+            },
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (result) {
+                if (result == '404') {
+                    $("#ket_setting_subpay").html('No List Settings');
+                }
+            }
+        });
+    }
 
 
 

@@ -337,6 +337,7 @@ Route::get('/pricing_management', 'SuperadminController@PricingManageSuperView')
 Route::get('/report_management', 'SuperadminController@reportManagementSuperadmin')->name('/report_management');
 Route::get('/payment_management', 'SuperadminController@paymentManagementSuperadmin')->name('/payment_management');
 Route::get('/notification_management', 'SuperadminController@NotificationManagementSuperadmin')->name('/notification_management');
+Route::get('/inbox_management', 'SuperadminController@InboxManagementSuperadmin')->name('/inbox_management');
 
 
 //-------POST------
@@ -386,6 +387,7 @@ Route::post('tabel_generate_notification_super','SuperadminController@tabel_gene
 Route::post('get_list_user_notif_super','SuperadminController@get_list_user_notif_super')->name('get_list_user_notif_super');
 Route::post('send_notification_super','SuperadminController@send_notification_super')->name('send_notification_super');
 Route::post('detail_generate_notif_super','SuperadminController@detail_generate_notif_super')->name('detail_generate_notif_super');
+Route::post('add_setting_sub_payment','SuperadminController@add_setting_sub_payment')->name('add_setting_sub_payment');
 
 
 });

@@ -90,6 +90,13 @@ class SuperadminController extends Controller
     }
 
 
+    public function InboxManagementSuperadmin()
+    {
+        return view("superadmin/inbox_management_super");
+    }
+
+
+
 
     public function postAddUser(Request $request)
     {
@@ -1568,7 +1575,7 @@ class SuperadminController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            "payment_id" => $input['payment_id'],
+            "payment_method_id" => $input['payment_method_id'],
         ]);
 
         $datakirim = [
@@ -1586,7 +1593,10 @@ class SuperadminController extends Controller
                 return $json['data'];
             }
         } catch (ClientException $exception) {
-            return $exception;
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                return '404';
+            }
         }
     }
 
@@ -1937,6 +1947,60 @@ class SuperadminController extends Controller
             }
         } catch (ClientException $exception) {
             return $exception;
+        }
+    }
+
+
+
+    public function add_setting_sub_payment(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $datain = $request->except('_token', 'set_id_paymethod');
+        $dtin = array_chunk($datain, 5);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "payment_method_id" => $input['set_id_paymethod'],
+                "title" => $dt[0],
+                "setting_type" => $dt[1],
+                "description" => $dt[2],
+                "value" => $dt[3],
+                "html_tag" => $dt[4],
+            ];
+            array_push($data, $dataArray);
+        }
+        $fixdata = ["data_setting" => $data];
+        $url = env('SERVICE') . 'paymentmanagement/setting';
+
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(["data_setting" => $data]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add Data Setting Sub-Payment', 'Added!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
+            }
         }
     }
 } //endclas
