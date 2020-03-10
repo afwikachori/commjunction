@@ -450,7 +450,7 @@
         var tgl = tglq.split('-');
         var bulan = tgl[1];
         var tahun = tgl[0];
-        tabel_tes(bulan, tahun);
+        // tabel_tes(bulan, tahun);
         tabel_report_module_super(bulan, tahun);
     });
 

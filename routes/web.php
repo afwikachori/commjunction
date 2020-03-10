@@ -396,6 +396,7 @@ Route::post('delete_message_inbox_super','SuperadminController@delete_message_in
 Route::post('tabel_komunitas_report_super','SuperadminController@tabel_komunitas_report_super')->name('tabel_komunitas_report_super');
 Route::post('get_list_fitur_super','SuperadminController@get_list_fitur_super')->name('get_list_fitur_super');
 Route::post('tabel_module_report_super','SuperadminController@tabel_module_report_super')->name('tabel_module_report_super');
+Route::post('change_status_inbox_message_super','SuperadminController@change_status_inbox_message_super')->name('change_status_inbox_message_super');
 
 
 

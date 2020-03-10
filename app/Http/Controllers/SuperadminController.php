@@ -2311,5 +2311,44 @@ class SuperadminController extends Controller
     }
 
 
+    public function change_status_inbox_message_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $url = env('SERVICE') . 'inboxmanagement/changestatus';
+        $client = new \GuzzleHttp\Client();
+        // return $input;
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "id"     => $input['id_inbox'],
+            "status" => $input['list_status'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
 
 } //endclas

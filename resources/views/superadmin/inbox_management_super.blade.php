@@ -139,7 +139,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <form method="POST" id="form_send_inbox_super" action="{{route('send_inbox_message_super')}}">
-                {{ csrf_field() }}<div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                {{ csrf_field() }}
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Send Message</h4>
                 </div> <!-- end-header -->
 
@@ -243,7 +244,7 @@
                 padding-left: 5%; padding-right: 5%;">
                     <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
                     <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
-                        data-target="">Change Status</button>
+                        data-target="#modal_changestatus_inbox" data-dismiss="modal">Change Status</button>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
@@ -287,7 +288,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <small class="clight s13">Specific User</small>
-                                    <p class="cgrey s11" id="detail_user"></p>
+                                    <p class="cgrey" id="detail_user"></p>
                                 </div>
                             </div>
                         </div>
@@ -296,13 +297,27 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <small class="clight s13">Created Date</small>
-                                    <p class="cgrey s13" id="detail_date"></p>
+                                    <p class="cgrey s11" id="detail_date"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s10">Created By</small>
-                                    <p class="cgrey s11" id="detail_by"></p>
+                                    <small class="clight">Created By</small>
+                                    <p class="cgrey" id="detail_by"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Status Message</small>
+                                    <p class="cgrey" id="detail_statuspesan"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Sender Level</small>
+                                    <p class="cgrey" id="detail_senderlevel"></p>
                                 </div>
                             </div>
                         </div>
@@ -335,6 +350,52 @@
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
+<!-- MODAL CHANGE STATUS  -->
+<div class="modal fade" id="modal_changestatus_inbox" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="modal-header" style="border: none;">
+                <h4 class="modal-title">Change Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="form_change_status_inbox_super"
+            action="{{route('change_status_inbox_message_super')}}">
+                {{ csrf_field() }}
+            <div class="modal-body" style="min-height: 130px;">
+                <div class="row" style="margin-top: 1.5em;">
+                    <div class="col-md-3" style="padding-top: 0.6em;">
+                        <small class="clight s13"><b>Status</b></small>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control input-abu" name="list_status" id="list_status">
+                            <option selected disabled> Choose </option>
+                            <option value="1"> Active </option>
+                            <option value="2"> Deactive </option>
+                            <option value="3"> Not Pusblish </option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" id="id_inbox" name="id_inbox">
+            </div>
+            <div class="modal-footer"
+                style="border: none; margin-bottom: 0.5em;
+                            display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                    <i class="mdi mdi-close"></i> Cancel
+                </button>
+                &nbsp;
+                <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
+                    <i class="mdi mdi-check btn-icon-prepend">
+                    </i> Change </button>
+            </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -379,7 +440,7 @@
 
 
     $("#btn_generate_inbox_super").click(function () {
-        tabel_tes();
+        // tabel_tes();
         tabel_inbox_message_super();
     });
 
@@ -396,7 +457,7 @@
                 if (willDelete) {
                     delete_message_inbox_super(idpesan);
                 } else {
-                   swal.close();
+                    swal.close();
                 }
             });
     });
@@ -419,7 +480,7 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == true) {
-                   tabel_inbox_message_super();
+                    tabel_inbox_message_super();
                     $("#modal_detail_message_inbox").modal('hide');
                     swal("Poof! Your message has been deleted!", {
                         icon: "success",
@@ -605,7 +666,7 @@
     function detail_message_inbox_super(params) {
         // alert(params);
         var dtnya = params.split(',');
-        $("#modal_detail_message_inbox").modal('show');
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -621,18 +682,23 @@
                 "community_id": dtnya[2],
             },
             success: function (result) {
-                console.log(result);
-                var res = result;
+                console.log(result[0]);
+                var res = result[0];
+                $("#modal_detail_message_inbox").modal('show');
                 $("#detail_judul ").html(res.title);
                 $("#detail_dekripsi ").html(res.description);
                 $("#detail_komunitas ").html(res.community_name);
                 $("#detail_date ").html(res.created_at);
-                $("#detail_user ").html(res.user_id);
+                $("#detail_user ").html(res.user_title);
                 $("#detail_usertipe ").html(res.user_type_title);
                 $("#detail_tipepesan ").html(res.message_type_title);
-                $("#detail_by ").html(res.created_by);
-                $("#detail_status ").html(dtnya[3]);
+                $("#detail_by ").html(res.created_by_title);
+                $("#detail_status ").html(res.status);
                 $("#id_message_inbox").val(res.id);
+                $("#id_inbox").val(res.id);
+                $("#detail_statuspesan ").html(res.status_message);
+                $("#detail_senderlevel").html(res.sender_level_title);
+
 
             },
             error: function (result) {
