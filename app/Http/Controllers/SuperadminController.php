@@ -2178,5 +2178,40 @@ class SuperadminController extends Controller
 
 
 
+    public function delete_message_inbox_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/deletemessage';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "id" => $input['id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json;
+            }
+        } catch (ClientException $exception) {
+            return $exception->getCode();
+        }
+    }
+
+
 
 } //endclas

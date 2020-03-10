@@ -57,7 +57,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form>
+            <form id="form_generate_tabel_inbox">
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Generate Inbox</h4>
                 </div> <!-- end-header -->
@@ -238,12 +238,12 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form>
+            <form id="">
                 <div class="modal-header" style="border: none; padding-bottom: 0px;
                 padding-left: 5%; padding-right: 5%;">
                     <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
-                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;"
-                        data-toggle="modal" data-target="">Change Status</button>
+                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
+                        data-target="">Change Status</button>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
@@ -277,61 +277,62 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">User Type</small>
-                                        <p class="cgrey" id="detail_usertipe"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">Specific User</small>
-                                        <p class="cgrey s11" id="detail_user"></p>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">User Type</small>
+                                    <p class="cgrey" id="detail_usertipe"></p>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">Created Date</small>
-                                        <p class="cgrey s13" id="detail_date"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s10">Created By</small>
-                                        <p class="cgrey s11" id="detail_by"></p>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Specific User</small>
+                                    <p class="cgrey s11" id="detail_user"></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 0.5em;">
-                            <div class="col-6">
-                                <small class="clight s13"><b>Status</b></small>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Created Date</small>
+                                    <p class="cgrey s13" id="detail_date"></p>
+                                </div>
                             </div>
-                            <div class="col-6"  style="text-align: right;">
-                                <b><small class="cblue s13" id="detail_status">-</small></b>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s10">Created By</small>
+                                    <p class="cgrey s11" id="detail_by"></p>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row" style="margin-top: 0.5em;">
+                        <div class="col-6">
+                            <small class="clight s13"><b>Status</b></small>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <b><small class="cblue s13" id="detail_status">-</small></b>
+                        </div>
+                    </div>
+                    <input type="hidden" id="id_message_inbox" name="id_message_inbox">
 
 
 
 
-                    </div> <!-- end-body -->
+                </div> <!-- end-body -->
 
-                    <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
                     display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
-                        </button>
-                        &nbsp;
-                        <button type="button" id="btn_delete_message" class="btn btn-oren2 btn-sm">
-                            <i class="mdi mdi-delete btn-icon-prepend">
-                            </i> Delete </button>
-                    </div> <!-- end-footer     -->
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_delete_message" class="btn btn-oren2 btn-sm">
+                        <i class="mdi mdi-delete btn-icon-prepend">
+                        </i> Delete </button>
+                </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
     </div>
@@ -381,6 +382,57 @@
         // tabel_tes();
         tabel_inbox_message_super();
     });
+
+    $("#btn_delete_message").click(function () {
+        var idpesan = $("#id_message_inbox").val();
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this message!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    delete_message_inbox_super(idpesan);
+                } else {
+                   swal.close();
+                }
+            });
+    });
+
+
+    function delete_message_inbox_super(idpesan) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/delete_message_inbox_super',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "id": idpesan
+            },
+            success: function (result) {
+                // console.log(result);
+                if (result.success == true) {
+                   tabel_inbox_message_super();
+                    $("#modal_detail_message_inbox").modal('hide');
+                    swal("Poof! Your message has been deleted!", {
+                        icon: "success",
+                    });
+                }
+
+            },
+            error: function (result) {
+                console.log(result);
+                swal("Failed!", "Sorry failed to delete message, try again later!", "error");
+            }
+        });
+    }
 
 
     function tabel_inbox_message_super() {
@@ -551,7 +603,7 @@
 
 
     function detail_message_inbox_super(params) {
-        alert(params);
+        // alert(params);
         var dtnya = params.split(',');
         $("#modal_detail_message_inbox").modal('show');
         $.ajaxSetup({
@@ -579,7 +631,8 @@
                 $("#detail_usertipe ").html(res.user_type_title);
                 $("#detail_tipepesan ").html(res.message_type_title);
                 $("#detail_by ").html(res.created_by);
-                 $("#detail_status ").html(dtnya[3]);
+                $("#detail_status ").html(dtnya[3]);
+                $("#id_message_inbox").val(res.id);
 
             },
             error: function (result) {

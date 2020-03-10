@@ -392,6 +392,7 @@ Route::post('tabel_generate_inbox_super','SuperadminController@tabel_generate_in
 Route::post('send_inbox_message_super','SuperadminController@send_inbox_message_super')->name('send_inbox_message_super');
 Route::post('get_list_user_inbox_super','SuperadminController@get_list_user_inbox_super')->name('get_list_user_inbox_super');
 Route::post('detail_generate_message_inbox_super','SuperadminController@detail_generate_message_inbox_super')->name('detail_generate_message_inbox_super');
+Route::post('delete_message_inbox_super','SuperadminController@delete_message_inbox_super')->name('delete_message_inbox_super');
 
 
 });
