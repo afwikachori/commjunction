@@ -95,13 +95,41 @@
                         </div>
 
                         <div class="tab-pane" id="tab_default_3">
+                            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                                data-target="#modal_komunitas_transaksi" style="margin-bottom: 2em;">
+                                Generate Community Report</button>
                             <br>
-                            belum di set 3
+                            <table id="tabel_komunitas_report" class="table table-hover table-striped dt-responsive "
+                                style="width:100% ; display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>ID Activity</th>
+                                        <th>Module</th>
+                                        <th>Activity</th>
+                                        <th>Endpoint</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
 
                         <div class="tab-pane" id="tab_default_4">
+                            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                                data-target="#modal_module_transaksi" style="margin-bottom: 2em;">
+                                Generate Module Report</button>
                             <br>
-                            belum di set 4
+                            <table id="tabel_module_report" class="table table-hover table-striped dt-responsive "
+                                style="width:100% ; display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Community Name</th>
+                                        <th>Module</th>
+                                        <th>Activity</th>
+                                        <th>Endpoint</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
 
                     </div>
@@ -271,6 +299,99 @@
     </div>
 </div>
 
+<!-- MODAL FILTER COMMUNITY REPORT SUPER -->
+<div class="modal fade" id="modal_komunitas_transaksi" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form id="form_komunitas_report">
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <small class="modal-title cdarkgrey">Generate Report</small>
+                    <h4 class="cblue" style="margin-bottom: 1.5em;">Community Report</h4>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">Community Name</small>
+                                <select class="form-control input-abu" name="komuniti_trans3" id="komuniti_trans3">
+                                    <option selected disabled> Choose </option>
+                                </select>
+                            </div>
+                        </div> <!-- end-col-md -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">Month Year</small>
+                                <input type="month" id="tahun_komunitas" name="tahun_komunitas" value="2020-01"
+                                    class="form-control input-abu">
+                            </div>
+                        </div> <!-- end-col-md -->
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_generate_komunitas" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Generate </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
+
+<!-- MODAL FILTER MODULE REPORT SUPER -->
+<div class="modal fade" id="modal_module_transaksi" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form id="form_komunitas_report">
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <small class="modal-title cdarkgrey">Generate Report</small>
+                    <h4 class="cblue" style="margin-bottom: 1.5em;">Module Report</h4>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">Feature Name</small>
+                                <select class="form-control input-abu" name="list_fiture" id="list_fiture">
+                                    <option selected disabled> Choose </option>
+                                </select>
+                            </div>
+                        </div> <!-- end-col-md -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight s13">Month Year</small>
+                                <input type="month" id="tahun_module" name="tahun_module" value="2020-01"
+                                    class="form-control input-abu">
+                            </div>
+                        </div> <!-- end-col-md -->
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_generate_module" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Generate </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
+
+
 
 @endsection
 @section('script')
@@ -280,29 +401,25 @@
     $(document).ready(function () {
         get_list_transaction_type_super();
         get_list_komunitas();
+        get_list_fitur_super();
     });  //end
 
 
-    function tabel_tes() {
+    function tabel_tes(bulan, tahun) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/superadmin/tabel_report_transaksi_super',
+            url: '/superadmin/tabel_module_report_super',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
             data: {
-                "start_date": $("#tanggal_mulai").val(),
-                "end_date": $("#tanggal_selesai").val(),
-                "transaction_type_id": $("#jenis_transaksi").val(),
-                "transaction_status": $("#status_transaksi").val(),
-                "min_transaction": $("#min_trans").val(),
-                "max_transaction": $("#max_trans").val(),
-                "community_id": $("#komuniti_trans").val()
-
+                "feature_id": $("#list_fiture").val(),
+                "month": bulan,
+                "year": tahun
             },
             success: function (result) {
                 console.log(result);
@@ -325,102 +442,251 @@
         var tgl = tglq.split('-');
         var bulan = tgl[1];
         var tahun = tgl[0];
-        tabel_report_concile_super(bulan,tahun);
+        tabel_report_concile_super(bulan, tahun);
     });
 
+    $("#btn_generate_module").click(function () {
+        var tglq = $("#tahun_module").val();
+        var tgl = tglq.split('-');
+        var bulan = tgl[1];
+        var tahun = tgl[0];
+        tabel_tes(bulan, tahun);
+        tabel_report_module_super(bulan, tahun);
+    });
+
+
+
     //tabel generate concile
-        function tabel_report_concile_super(bulan,tahun) {
-            $('#tabel_concile_report').dataTable().fnClearTable();
-            $('#tabel_concile_report').dataTable().fnDestroy();
+    function tabel_report_concile_super(bulan, tahun) {
+        $('#tabel_concile_report').dataTable().fnClearTable();
+        $('#tabel_concile_report').dataTable().fnDestroy();
 
-            $("#modal_reconcile_transaksi").modal('hide');
-            $("#tabel_concile_report").show();
+        $("#modal_reconcile_transaksi").modal('hide');
+        $("#tabel_concile_report").show();
 
-            // $('#form_reconcile').removeData();
+        // $('#form_reconcile').removeData();
 
-            var tabel = $('#tabel_concile_report').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'csv', 'excel', 'pdf', 'print', {
-                        text: 'JSON',
-                        action: function (e, dt, button, config) {
-                            var data = dt.buttons.exportData();
+        var tabel = $('#tabel_concile_report').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
 
-                            $.fn.dataTable.fileSave(
-                                new Blob([JSON.stringify(data)]),
-                                'Export.json'
-                            );
-                        }
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
                     }
-                ],
-                responsive: true,
-                language: {
-                    paginate: {
-                        next: '<i class="mdi mdi-chevron-right"></i>',
-                        previous: '<i class="mdi mdi-chevron-left">'
-                    }
+                }
+            ],
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/superadmin/tabel_concile_report_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "transaction_type_id": $("#jenis_transaksi2").val(),
+                    "community_id": $("#komuniti_trans2").val(),
+                    "month": bulan,
+                    "year": tahun
                 },
-                ajax: {
-                    url: '/superadmin/tabel_concile_report_super',
-                    type: 'POST',
-                    dataSrc: '',
-                    timeout: 30000,
-                    data: {
-                        "transaction_type_id": $("#jenis_transaksi2").val(),
-                        "community_id": $("#komuniti_trans2").val(),
-                        "month" : bulan,
-                        "year" : tahun
-                    },
-                    error: function (jqXHR, ajaxOptions, thrownError) {
-                        var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                        $('#tabel_concile_report tbody').empty().append(nofound);
-                    },
-                },
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (request, status, errorThrown) {
-                    console.log(errorThrown);
+                error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_concile_report tbody').empty().append(nofound);
-
                 },
-                columns: [
-                    { mData: 'invoice_number' },
-                    { mData: 'transaction_date' },
-                    {
-                        mData: 'transaction_status',
-                        render: function (data, type, row, meta) {
-                            var ini = '';
-                            if (data == 1) {
-                                ini = '<small class="badge bg-abu melengkung10px cwhite">Pending</small>';
-                            } else if (data == 2) {
-                                ini = '<small class="badge bg-abu melengkung10px cwhite">Approved</small>';
-                            } else {
-                                ini = '<small class="badge bg-merah melengkung10px clight">Cancel</small>';
-                            }
-                            return ini;
+            },
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_concile_report tbody').empty().append(nofound);
+
+            },
+            columns: [
+                { mData: 'invoice_number' },
+                { mData: 'transaction_date' },
+                {
+                    mData: 'transaction_status',
+                    render: function (data, type, row, meta) {
+                        var ini = '';
+                        if (data == 1) {
+                            ini = '<small class="badge bg-abu melengkung10px cwhite">Pending</small>';
+                        } else if (data == 2) {
+                            ini = '<small class="badge bg-abu melengkung10px cwhite">Approved</small>';
+                        } else {
+                            ini = '<small class="badge bg-merah melengkung10px clight">Cancel</small>';
                         }
-                    },
-                    { mData: 'transaction_type' },
-                    { mData: 'name' },
-                    {
-                        mData: 'nominal',
-                        render: function (data, type, row, meta) {
-                            var rp = 'Rp. ' + rupiah(data);
-                            return rp;
-                        }
+                        return ini;
                     }
+                },
+                { mData: 'transaction_type' },
+                { mData: 'name' },
+                {
+                    mData: 'nominal',
+                    render: function (data, type, row, meta) {
+                        var rp = 'Rp. ' + rupiah(data);
+                        return rp;
+                    }
+                }
 
-                ],
+            ],
 
-            });
+        });
+    }
+
+    $("#btn_generate_komunitas").click(function () {
+        var tglq = $("#tahun_komunitas").val();
+        var tgl = tglq.split('-');
+        var bulan = tgl[1];
+        var tahun = tgl[0];
+        tabel_report_komunitas_super(bulan, tahun);
+    });
+
+    //tabel generate module
+    function tabel_report_module_super(bulan, tahun) {
+        $('#tabel_module_report').dataTable().fnClearTable();
+        $('#tabel_module_report').dataTable().fnDestroy();
+
+        $("#modal_module_transaksi").modal('hide');
+        $("#tabel_module_report").show();
+
+        // $('#form_reconcile').removeData();
+
+        var tabel = $('#tabel_module_report').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
+                    }
+                }
+            ],
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/superadmin/tabel_module_report_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "feature_id": $("#list_fiture").val(),
+                    "month": bulan,
+                    "year": tahun
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_module_report tbody').empty().append(nofound);
+                },
+            },
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_module_report tbody').empty().append(nofound);
+
+            },
+            columns: [
+                { mData: 'community_name' },
+                { mData: 'module' },
+                { mData: 'activity' },
+                { mData: 'endpoint' },
+                { mData: 'date' },
+            ],
+
+        });
+    }
 
 
-        }
+    //tabel generate komunitas
+    function tabel_report_komunitas_super(bulan, tahun) {
+        $('#tabel_komunitas_report').dataTable().fnClearTable();
+        $('#tabel_komunitas_report').dataTable().fnDestroy();
 
+        $("#modal_komunitas_transaksi").modal('hide');
+        $("#tabel_komunitas_report").show();
 
+        // $('#form_reconcile').removeData();
 
+        var tabel = $('#tabel_komunitas_report').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
+                    }
+                }
+            ],
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/superadmin/tabel_komunitas_report_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#komuniti_trans3").val(),
+                    "month": bulan,
+                    "year": tahun
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_komunitas_report tbody').empty().append(nofound);
+                },
+            },
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_komunitas_report tbody').empty().append(nofound);
+
+            },
+            columns: [
+                { mData: '_id' },
+                { mData: 'module' },
+                { mData: 'activity' },
+                { mData: 'endpoint' },
+                { mData: 'date' },
+            ],
+
+        });
+    }
 
     //tabel generate transaksi
     function tabel_report_transaksi_super() {
@@ -559,6 +825,7 @@
                 }));
 
                 $("#jenis_transaksi2").get(0).selectedIndex = 0;
+
             }
         });
     } //endfunction
@@ -606,9 +873,57 @@
                 $("#komuniti_trans2").get(0).selectedIndex = 0;
                 // _______________________________________________________________
 
+                $('#komuniti_trans3').empty();
+                $('#komuniti_trans3').append("<option value='0' disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komuniti_trans3').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komuniti_trans3").html($('#komuniti_trans3 option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#komuniti_trans3").get(0).selectedIndex = 0;
+                // _______________________________________________________________
+
             }
         });
     } //endfunction
+
+
+    //dropdown fitur list
+    function get_list_fitur_super() {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "/superadmin/get_list_fitur_super",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                // console.log(result);
+                $('#list_fiture').empty();
+                $('#list_fiture').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_fiture').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_fiture").html($('#list_fiture option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#list_fiture").get(0).selectedIndex = 0;
+
+
+            }
+        });
+    } //endfunction
+
 
 
 </script>
