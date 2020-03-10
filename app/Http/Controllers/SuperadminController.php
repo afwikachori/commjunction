@@ -2139,4 +2139,44 @@ class SuperadminController extends Controller
         }
     }
 
+    public function detail_generate_message_inbox_super(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/detailmessage';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "message_id" => $input['message_id'],
+            "level_status" => $input['level_status'],
+            "community_id" => $input['community_id']
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $$exception->getCode();;
+        }
+    }
+
+
+
+
 } //endclas

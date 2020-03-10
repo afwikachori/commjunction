@@ -404,6 +404,13 @@ select.form-control {
     border-radius: 10px;
 }
 
+.btn-oren2 {
+    background-color: #D96120;
+    color: white;
+    border-radius: 10px;
+}
+
+
 .tebal {
     font-weight: bold;
 }
@@ -536,6 +543,7 @@ color: #c97474 !important;
 .coren {
     color: #ff9a44;
 }
+
 .cgrey2 {
     color: #4d4c4c !important;
 }

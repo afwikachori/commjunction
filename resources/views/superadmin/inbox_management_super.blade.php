@@ -133,7 +133,6 @@
     </div>
 </div>
 
-
 <!-- MODAL ADD SEND MESSAGE INBOX-->
 <div class="modal fade" id="modal_send_inbox_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -234,6 +233,110 @@
     </div>
 </div>
 
+<!-- MODAL DETAIL INBOX MESSAGE -->
+<div class="modal fade" id="modal_detail_message_inbox" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <form>
+                <div class="modal-header" style="border: none; padding-bottom: 0px;
+                padding-left: 5%; padding-right: 5%;">
+                    <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
+                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;"
+                        data-toggle="modal" data-target="">Change Status</button>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Title</small>
+                                <p class="cgrey" id="detail_judul"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight s13">Description</small>
+                                <p class="cgrey" id="detail_dekripsi"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
+                             border-radius: 10px; width: 100%; margin-top: 0.5em;
+                            padding: 5%;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Message Type</small>
+                                    <p class="cgrey" id="detail_tipepesan"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Community Name</small>
+                                    <p class="cgrey" id="detail_komunitas"></p>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">User Type</small>
+                                        <p class="cgrey" id="detail_usertipe"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Specific User</small>
+                                        <p class="cgrey s11" id="detail_user"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Created Date</small>
+                                        <p class="cgrey s13" id="detail_date"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s10">Created By</small>
+                                        <p class="cgrey s11" id="detail_by"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 0.5em;">
+                            <div class="col-6">
+                                <small class="clight s13"><b>Status</b></small>
+                            </div>
+                            <div class="col-6"  style="text-align: right;">
+                                <b><small class="cblue s13" id="detail_status">-</small></b>
+                            </div>
+                        </div>
+
+
+
+
+                    </div> <!-- end-body -->
+
+                    <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                    display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="button" id="btn_delete_message" class="btn btn-oren2 btn-sm">
+                            <i class="mdi mdi-delete btn-icon-prepend">
+                            </i> Delete </button>
+                    </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
 
 @endsection
 @section('script')
@@ -275,7 +378,7 @@
 
 
     $("#btn_generate_inbox_super").click(function () {
-        tabel_tes();
+        // tabel_tes();
         tabel_inbox_message_super();
     });
 
@@ -325,7 +428,7 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        var inidt = [data, row.level_status, row.community_id];
+                        var inidt = [data, row.level_status, row.community_id, row.status];
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_message_inbox_super(\'' + inidt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
@@ -449,7 +552,40 @@
 
     function detail_message_inbox_super(params) {
         alert(params);
+        var dtnya = params.split(',');
+        $("#modal_detail_message_inbox").modal('show');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/detail_generate_message_inbox_super',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                "message_id": dtnya[0],
+                "level_status": dtnya[1],
+                "community_id": dtnya[2],
+            },
+            success: function (result) {
+                console.log(result);
+                var res = result;
+                $("#detail_judul ").html(res.title);
+                $("#detail_dekripsi ").html(res.description);
+                $("#detail_komunitas ").html(res.community_name);
+                $("#detail_date ").html(res.created_at);
+                $("#detail_user ").html(res.user_id);
+                $("#detail_usertipe ").html(res.user_type_title);
+                $("#detail_tipepesan ").html(res.message_type_title);
+                $("#detail_by ").html(res.created_by);
+                 $("#detail_status ").html(dtnya[3]);
 
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
     }
 
 
