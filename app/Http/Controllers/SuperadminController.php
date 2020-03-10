@@ -2037,7 +2037,7 @@ class SuperadminController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json;
+            return $json['data'];
         } catch (ClientException $exception) {
             $status_error = $exception->getCode();
             if ($status_error == 500) {
@@ -2067,7 +2067,6 @@ class SuperadminController extends Controller
             $user = "";
         }
 
-
         $bodyku = json_encode([
             "title" => $input['judul_inbox'],
             "description" => $input['deksripsi_inbox'],
@@ -2089,7 +2088,7 @@ class SuperadminController extends Controller
             $json = json_decode($response, true);
 
             if ($json['success'] == true) {
-                alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
+                alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
                 return back();
             }
         } catch (ClientException $exception) {

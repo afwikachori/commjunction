@@ -37,12 +37,11 @@
                     <thead>
                         <tr>
                             <th><b> ID </b></th>
-                            <th><b> Title </b></th>
-                            <th><b> Type Notif</b></th>
+                            <th><b> Title Message</b></th>
+                            <th><b> Inbox Type</b></th>
                             <th><b> User Type </b></th>
-                            <th><b> Community Type </b></th>
+                            <th><b> Community</b></th>
                             <th><b> Status</b></th>
-                            <th><b> Created By </b></th>
                             <th><b> Date </b></th>
                             <th><b> Action </b></th>
                         </tr>
@@ -100,8 +99,8 @@
                                     <option selected disabled> Choose </option>
                                     <option value="1"> System </option>
                                     <option value="2"> Module</option>
-                                    <option value="3"> Broadcast </option>
-                                    <option value="4"> Single send</option>
+                                    <option value="3"> Single Send </option>
+                                    <option value="4"> Broadcast</option>
                                 </select>
                             </div>
 
@@ -183,8 +182,8 @@
                                 <option selected disabled> Choose </option>
                                 <option value="1"> System </option>
                                 <option value="2"> Module </option>
-                                <option value="3"> Single </option>
-                                <option value="4"> Broadcast </option>
+                                <option value="3"> Single Send </option>
+                                <option value="4"> Broadcast</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -212,6 +211,7 @@
                             <div class="form-group" id="hide_user_notif" style="display: none;">
                                 <small class="clight s13">List User</small>
                                 <select class="form-control input-abu" name="list_user" id="list_user">
+                                    <option selected disabled> Choose Community </option>
                                 </select>
                             </div>
                         </div>
@@ -273,18 +273,80 @@
     }
 
 
+
     $("#btn_generate_inbox_super").click(function () {
         tabel_tes();
+        tabel_inbox_message_super();
     });
+
+
+    function tabel_inbox_message_super() {
+        $('#tabel_inbox_message_super').dataTable().fnClearTable();
+        $('#tabel_inbox_message_super').dataTable().fnDestroy();
+        $('#tabel_inbox_message_super').show();
+        $('#modal_generate_inbox_tabel').modal('hide');
+
+        var tabel = $('#tabel_inbox_message_super').DataTable({
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/superadmin/tabel_generate_inbox_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas_inbox").val(),
+                    "start_date": $("#tanggal_mulai2").val(),
+                    "end_date": $("#tanggal_selesai2").val(),
+                    "filter_title": $("#filter_judul").val(),
+                    "message_type": $("#tipe_pesan").val(),
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_inbox_message_super tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+            },
+            columns: [
+                { mData: 'id' },
+                { mData: 'title' },
+                { mData: 'message_type_title' },
+                { mData: 'user_type_title' },
+                { mData: 'community_name' },
+                { mData: 'status' },
+                { mData: 'created_at' },
+                {
+                    mData: 'id',
+                    render: function (data, type, row, meta) {
+                        var inidt = [data, row.level_status, row.community_id];
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_message_inbox_super(\'' + inidt + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
+                }
+            ],
+
+        });
+
+    }
+
 
 
     $('#bc_status').change(function () {
         var dipilih = this.value;
-    if(dipilih == 1){
-        $("#hide_user_notif").fadeIn("fast");
-    }else{
-          $("#hide_user_notif").fadeOut("fast");
-    }
+        if (dipilih == 1) {
+            $("#hide_user_notif").fadeIn("fast");
+        } else {
+            $("#hide_user_notif").fadeOut("fast");
+        }
 
     });
 
@@ -306,7 +368,7 @@
                 "community_id": itempilih,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
 
                 $('#list_user').empty();
                 $('#list_user').append("<option disabled value='0'> Choose</option>");
@@ -383,6 +445,12 @@
             }
         });
     } //endfunction
+
+
+    function detail_message_inbox_super(params) {
+        alert(params);
+
+    }
 
 
 </script>
