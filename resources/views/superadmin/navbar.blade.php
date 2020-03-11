@@ -38,7 +38,7 @@
                 <a class="dropdown-item" href="#">
                   <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/superadmin/logout">
+                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout_superadmin" data-dismiss="modal">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
               </div>
             </li>

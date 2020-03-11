@@ -106,32 +106,32 @@ body::-webkit-scrollbar-thumb {
     font-size: 12px;
 }
 
-.text-wrap{
-    white-space:normal !important;
+.text-wrap {
+    white-space: normal !important;
     word-break: break-word;
-  vertical-align: top;
+    vertical-align: top;
 }
-.width-500{
-    width:500px !important;
+.width-500 {
+    width: 500px !important;
 }
-.width-450{
-    width:450px !important;
+.width-450 {
+    width: 450px !important;
 }
-.width-400{
-    width:400px !important;
+.width-400 {
+    width: 400px !important;
 }
-.width-300{
-    width:300px !important;
+.width-300 {
+    width: 300px !important;
 }
-.width-200{
-    width:200px !important;
+.width-200 {
+    width: 200px !important;
 }
-.width-250{
-    width:250px !important;
+.width-250 {
+    width: 250px !important;
 }
 
-.width-100{
-    width:100px !important;
+.width-100 {
+    width: 100px !important;
 }
 .card .card-body.member {
     padding: 1rem 1rem !important;
@@ -250,7 +250,7 @@ body::-webkit-scrollbar-thumb {
     margin-left: 3px !important;
     margin-right: 3px !important;
 }
- div.dataTables_wrapper div.dataTables_filter input {
+div.dataTables_wrapper div.dataTables_filter input {
     border-radius: 8px !important;
 }
 
@@ -268,16 +268,13 @@ body::-webkit-scrollbar-thumb {
 
 /* //end-PGINATION DATATBLE */
 
-
-#modal_detail_payment_all_super tbody{
+#modal_detail_payment_all_super tbody {
     font-size: 10px !important;
 }
 
-
 /* TAB DETAIL PAYMENT MANAGEMENT */
-.tabbable-line.sub_pay_super{
+.tabbable-line.sub_pay_super {
     margin-top: -1.3em;
-
 }
 .tabbable-line.sub_pay_super > .nav-tabs.sub_pay_super {
     border: none;
@@ -286,21 +283,18 @@ body::-webkit-scrollbar-thumb {
     left: 62%;
 }
 
-
-#img_detail_payment_super{
-width:85px;
-height:85px;
- background-color: #a7a7a7a7;
- margin-bottom: 0.5em;
+#img_detail_payment_super {
+    width: 85px;
+    height: 85px;
+    background-color: #a7a7a7a7;
+    margin-bottom: 0.5em;
 }
 
-
-.div-info-payment{
+.div-info-payment {
     padding-left: 8%;
     padding-right: 8%;
     margin-top: 1em;
 }
-
 
 .tabbable-line.sub_pay_super > .nav-tabs.sub_pay_super > li.active {
     border-bottom: 3px solid #0e5f75;
@@ -405,11 +399,10 @@ select.form-control {
 }
 
 .btn-oren2 {
-    background-color: #D96120;
+    background-color: #d96120;
     color: white;
     border-radius: 10px;
 }
-
 
 .tebal {
     font-weight: bold;
@@ -434,6 +427,13 @@ select.form-control {
     outline: none !important;
 }
 
+#img_signout_superadmin {
+    width: 90px;
+    height: 90px;
+    margin-top: 2em;
+    margin-bottom: 1.5em;
+}
+
 select.form-control .input-abu {
     outline: none !important;
 }
@@ -442,20 +442,20 @@ select.form-control .input-abu {
     border-radius: 10px !important;
     background-color: #efefef !important;
     outline: none !important;
-        padding: 0.5rem 1.375rem;
+    padding: 0.5rem 1.375rem;
 }
 
 .dashboardcode-bsmultiselect button.close {
-font-size: 1.5em;
-line-height: 0.9em;
-float: none;
-margin-left: 3px !important;
-margin-right: 5px !important;
-color: #bdbdbd !important;
+    font-size: 1.5em;
+    line-height: 0.9em;
+    float: none;
+    margin-left: 3px !important;
+    margin-right: 5px !important;
+    color: #bdbdbd !important;
 }
 
 .dashboardcode-bsmultiselect button.close:hover {
-color: #c97474 !important;
+    color: #c97474 !important;
 }
 
 .dashboardcode-bsmultiselect li.badge span {
@@ -503,9 +503,6 @@ color: #c97474 !important;
     text-align: center !important;
 }
 /*END-NAV*/
-
-
-
 
 .sidebar .nav .nav-item.nav-profile .nav-link .nav-profile-text {
     margin-left: 0.2rem !important;
@@ -556,7 +553,7 @@ color: #c97474 !important;
     color: #8c8c8c;
 }
 
-.cgreyblue{
+.cgreyblue {
     color: #9bb4bb;
 }
 
@@ -632,9 +629,6 @@ color: #c97474 !important;
 /* /////////MULTI SELECT//////// */
 
 /* /////////MULTI SELECT//////// */
-
-
-
 
 /* btn datatble export  */
 button.dt-button,
@@ -721,7 +715,7 @@ a.dt-button {
     min-width: 90px;
 }
 
-.circle.subpay{
+.circle.subpay {
     position: relative !important;
     margin-bottom: 1em;
 }
@@ -793,7 +787,6 @@ a.dt-button {
     text-align: center;
     margin-bottom: 1em;
 }
-
 
 .circle {
     border-radius: 1000px !important;
@@ -997,3 +990,36 @@ input[type="checkbox"] {
     margin-bottom: 1em;
     margin-top: -1em;
 }
+
+/* SIDEBAR SUPERADMIN  */
+.sidebar .nav .nav-item .nav-link {
+    padding: 0.75rem 0 0.75rem 0 !important;
+    color: #a5a5a5 !important;
+}
+.sidebar .nav .nav-item .nav-link i.menu-icon {
+    color: #b5b5b5 !important;
+}
+.sidebar .nav .nav-item.active .nav-link i.menu-icon {
+    color: #0e5f75 !important;
+}
+
+.sidebar .nav .nav-item.active > .nav-link i {
+    color: #0e5f75 !important;
+}
+.sidebar .nav .nav-item.active > .nav-link .menu-title {
+    color: #0e5f75 !important;
+    font-weight: bold;
+}
+/* END- SIDEBAR SUPERADMIN  */
+
+/* FOOTER  */
+.footer {
+    background: #ffffff !important;
+    padding: 20px 1rem !important;
+    border: none;
+}
+.footer a {
+    color: #888888;
+    font-size: inherit;
+}
+/* END FOOTER */

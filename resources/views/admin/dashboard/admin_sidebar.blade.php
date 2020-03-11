@@ -7,7 +7,7 @@
           Community Name</span>
           <span class="text-secondary text-small" id="comm_status_admin">
           Status Community</span>
-              
+
               </center>
             </li>
             <li class="nav-item">
@@ -42,6 +42,49 @@
                 <span class="menu-title">Module Management</span>
                 <i class="mdi mdi-view-module menu-icon"></i>
               </a>
-            </li
-           
+            </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/usertype">
+            <span class="menu-title">User Type Management</span>
+            <i class="mdi mdi-account-convert menu-icon"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/transaction">
+            <span class="menu-title">Transaction Management</span>
+            <i class="mdi mdi-cart menu-icon"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/report_management">
+            <span class="menu-title">Report Management</span>
+            <i class="mdi mdi-buffer menu-icon"></i>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/payment_management">
+            <span class="menu-title">Payment Management</span>
+            <i class="mdi mdi-credit-card menu-icon"></i>
+        </a>
+    </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/notification_management">
+            <span class="menu-title">Notification Management</span>
+            <i class="mdi mdi-bell-ring menu-icon"></i>
+        </a>
+    </li>
+
+       <li class="nav-item">
+        <a class="nav-link" href="/admin/inbox_management">
+            <span class="menu-title">Inbox Management</span>
+            <i class="mdi mdi-message-text-outline menu-icon"></i>
+        </a>
+    </li>
+
           </ul>

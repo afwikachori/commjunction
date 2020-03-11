@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-9">
                         <small class="clight">Total Community</small>
-                        <h6 class="cgrey-mid dashone total_komunitas">0 Community</h4>
+                        <h4 class="cgrey-mid dashone total_komunitas">0 Community</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-chart-bubble mdi-24px float-right top-ico cteal"></i>
@@ -139,7 +139,7 @@
             <div class="card-body">
                 <h4 class="card-title">Chart Activity</h4>
 
-                <canvas id="myChart"></canvas>
+                <canvas id="myChartActivity_superadmin"></canvas>
 
             </div>
         </div>
@@ -198,16 +198,32 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result.chart_transaction);
+                console.log(result);
 
 
                 chart_transaction(result.chart_transaction);
+                chart_activity(result.chart_activity);
 
-                var jumlah_subs =0;
+                var sum_subs = 0;
                 $.each(result.total_subscriber, function (i, item) {
-                jumlah_subs++;
+                    sum_subs += item.total_subscriber;
                 });
-                $(".total_komunitas").html(jumlah_subs + " Communities")
+
+                var sum_trans_count = 0;
+                $.each(result.total_transaction_count, function (i, item) {
+                    sum_trans_count += item.count;
+                });
+
+                var sum_trans_num = 0;
+                $.each(result.total_transaction_number, function (i, item) {
+                    sum_trans_num += item.jumlah;
+                });
+
+
+                $(".total_komunitas").html(result.total_community + " Communities");
+                $(".total_subs").html(sum_subs + " Subscriber");
+                $(".total_transaction_count").html(sum_trans_count + " Transaction");
+                $(".total_trans_number").html(sum_trans_num + " Transaction");
 
 
 
@@ -219,22 +235,49 @@
     }
 
 
-
-
-    function chart_transaction(data) {
+    function chart_activity(data) {
         // console.log(data);
-        var ex =[];
+        var ex = [];
         var ye = [];
         var colr = [];
 
         $.each(data, function (i, item) {
-         ex.push(item.x);
-         ye.push(item.y);
-         colr.push(getRandomColor());
+            ex.push(item.x);
+            ye.push(item.y);
+            colr.push(getRandomColor());
         });
+        var ctx = document.getElementById('myChartActivity_superadmin').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: [ex],
+                datasets: [{
+                    label: 'Trasaction',
+                    backgroundColor: colr,
+                    borderColor: colr,
+                    data: [ye]
+                }]
+            },
 
-        console.log(colr);
+            // Configuration options go here
+            options: {}
+        });
+    }
 
+
+    function chart_transaction(data) {
+        // console.log(data);
+        var ex = [];
+        var ye = [];
+        var colr = [];
+
+        $.each(data, function (i, item) {
+            ex.push(item.x);
+            ye.push(item.y);
+            colr.push(getRandomColor());
+        });
         var ctx = document.getElementById('myChartTransaction_superadmin').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -256,13 +299,13 @@
     }
 
     function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
         }
+        return color;
+    }
 
 
 </script>

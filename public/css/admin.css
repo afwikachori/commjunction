@@ -756,12 +756,26 @@ padding-right: 3%;
   margin-bottom: 1.5em;
 }
 
-.btn-tosca{
-background: linear-gradient(125.96deg, #96DEDA 0%, #50C9C3 56.6%);
-color: white;
-min-width: 15%;
-border-radius: 10px;
-border: none;
+
+.btn-tosca {
+    background: linear-gradient(125.96deg, #96deda 0%, #50c9c3 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
+    border: none;
+}
+.btn-abu {
+    background: linear-gradient(125.96deg, #ded0d0 0%, #c3cdd6 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
+    border: none;
+}
+.btn-ijo {
+    background: linear-gradient(125.96deg, #0fb34e 0%, #90b466 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
 }
 
 .btn-oren{
@@ -1036,3 +1050,99 @@ height: auto;
     text-align: center !important;
 }
 /*END-NAV*/
+
+
+
+/* //PAGINATION DATATABLE */
+.pagination {
+    font-size: 11px !important;
+}
+
+.page-item.active .page-link {
+    z-index: 1 !important;
+    color: #fff !important;
+    background-color: #0e5f75 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    min-width: 30px !important;
+    text-align: center !important;
+}
+
+.paginate_button.page-item {
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+    border-radius: 10px !important;
+}
+
+.page-item:last-child .page-link {
+    background-color: #f3f2f7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.page-item.disabled .page-link {
+    background-color: #f3f2f7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+.page-item:first-child .page-link {
+    background-color: #f3f2f7 !important;
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.pagination a.page-link {
+    border: none !important;
+    color: rgb(88, 88, 88) !important;
+    font-weight: bold;
+}
+.pagination a.page-link {
+    border: none !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+}
+
+.paginate_button.page-item {
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    border-radius: 8px !important;
+}
+/* //end-PGINATION DATATBLE */
+
+
+
+/* SIDEBAR SUPERADMIN  */
+.sidebar .nav .nav-item .nav-link {
+    padding: 0.75rem 0 0.75rem 0 !important;
+    color: #a5a5a5 !important;
+}
+.sidebar .nav .nav-item .nav-link i.menu-icon {
+    color: #b5b5b5 !important;
+}
+.sidebar .nav .nav-item.active .nav-link i.menu-icon {
+    color: #0e5f75 !important;
+}
+
+.sidebar .nav .nav-item.active > .nav-link i {
+    color: #0e5f75 !important;
+}
+.sidebar .nav .nav-item.active > .nav-link .menu-title {
+    color: #0e5f75 !important;
+    font-weight: bold;
+}
+/* END- SIDEBAR SUPERADMIN  */
+
+/* FOOTER  */
+.footer {
+    background: #ffffff !important;
+    padding: 20px 1rem !important;
+    border: none;
+}
+.footer a {
+    color: #888888;
+    font-size: inherit;
+}
+/* END FOOTER */
+

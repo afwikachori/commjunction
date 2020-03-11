@@ -1,4 +1,4 @@
-@extends('layout.superadmin')
+@extends('layout.admin-dashboard')
 
 @section('title', 'Notification Management')
 
@@ -8,14 +8,23 @@
     <div class="col-md-2">
         <h3 class="page-title">Notification Management</h3>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <label class="cgrey">Manage your notification information<label>
     </div>
-    <div class="col-md-4" style="text-align: right;">
+    <div class="col-md-5" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
-                data-target="#modal_send_notif_super">
-                Broadcast Notification</button>
+            <div class="row">
+                <div class="col-md" style="text-align: right;">
+                    <button type="button" class="btn btn-abu btn-sm" style="min-width: 170px;" data-toggle="modal"
+                        data-target="#modal_setting_notification">
+                        Setting Notification</button>
+                </div>
+                <div class="col-md">
+                    <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
+                        data-target="#modal_send_notif_super">
+                        Broadcast Notification</button>
+                </div>
+            </div>
         </nav>
     </div>
 </div>
@@ -26,14 +35,15 @@
         <div class="card" style="min-height: 450px;">
             <div class="card-header putih">
                 Notification List
+
             </div>
 
             <div class="card-body">
                 <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
-                    data-toggle="modal" data-target="#modal_filter_notif_super">
+                    data-toggle="modal" data-target="#modal_filter_notif_admin">
                     Generate Notification</button>
 
-                <table id="tabel_generate_notif_super" class="table table-hover table-striped dt-responsive nowrap"
+                <table id="tabel_generate_notif_admin" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%; display: none;">
                     <thead>
                         <tr>
@@ -56,7 +66,7 @@
 
 
 <!-- MODAL GENERATED NOTIFICATION-->
-<div class="modal fade" id="modal_filter_notif_super" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal_filter_notif_admin" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
@@ -89,10 +99,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <select class="form-control input-abu" name="list_komunitas_notif"
-                                    id="list_komunitas_notif">
-
-                                </select>
+                                <input class="form-control input-abu" name="list_komunitas_notif"
+                                    id="list_komunitas_notif" value="104" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -128,7 +136,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="button" id="btn_generate_notif_super" class="btn btn-teal btn-sm">
+                    <button type="button" id="btn_generate_notif_admin" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Generate </button>
                 </div> <!-- end-footer     -->
@@ -142,7 +150,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form method="POST" id="form_send_notification_super" action="{{route('send_notification_super')}}">
+            <form method="POST" id="form_send_notification_super" action="{{route('send_notification_admin')}}">
                 {{ csrf_field() }}<div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Send Notification</h4>
                 </div> <!-- end-header -->
@@ -192,9 +200,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <select class="form-control input-abu" name="komunitas_notif" id="komunitas_notif">
-
-                                </select>
+                                <input name="komunitas_notif" id="komunitas_notif" class="form-control input-abu"
+                                    value="104" readonly>
                             </div>
                         </div>
                     </div>
@@ -259,7 +266,6 @@
 </div>
 
 
-
 <!-- MODAL DETAIL NOTIFICATION-->
 <div class="modal fade" id="modal_detail_notif" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -268,6 +274,7 @@
             <form>
                 <div class="modal-header" style="border: none; padding-bottom: 0px;">
                     <h4 class="modal-title cgrey">Detail Notification</h4>
+                    <small class="cblue" id="status_notif_admin" style="text-align: right;"></small>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="height: auto;">
@@ -338,6 +345,12 @@
                                 <div class="row" style="padding-bottom: 0px;">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <small class="clight s13">Status Notification</small>
+                                            <p class="cgrey s13" id="status_msg" style="margin-bottom: -0.5em;"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <small class="clight s13">Specific User</small>
                                             <p class="cgrey s13" id="detail_user" style="margin-bottom: -0.5em;"></p>
                                         </div>
@@ -369,6 +382,40 @@
 </div>
 
 
+<!-- MODAL SETTING  MODULE -->
+<div class="modal fade" id="modal_setting_notification" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+            style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
+            <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
+                <h3 class="modal-title cgrey">Setting Notification</h3>
+                <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>
+            </div> <!-- end-header -->
+
+            <div class="modal-body">
+             <form>
+                 <div class="isi_seting_notifadmin">
+
+                 </div>
+             </form>
+            </div> <!-- end-body -->
+
+            <div class="modal-footer" style="border: none;">
+                <center>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <a href="t" type="button" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i>Activate</a>
+                </center>
+            </div> <!-- end-footer     -->
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
 
 
 @endsection
@@ -376,8 +423,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        get_list_komunitas();
-
+        tabel_tes();
     });
 
 
@@ -388,20 +434,51 @@
             }
         });
         $.ajax({
-            url: '/superadmin/tabel_generate_notification_super',
+            url: '/admin/get_list_setting_notif_admin',
             type: 'POST',
             datatype: 'JSON',
-            data: {
-                "community_id": $("#list_komunitas_notif").val(),
-                "start_date": $("#tanggal_mulai2").val(),
-                "end_date": $("#tanggal_selesai2").val(),
-                "filter_title": $("#list_judul_notif").val(),
-                "notification_sub_type": $("#tipe_notif").val(),
-            },
             success: function (result) {
                 console.log(result);
+
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+
+                if(item.input_type == 1){
+                    inputipe = ' <input type="text" name="param" class="form-control input-abu param_setting">';
+                }else if(item.input_type == 2){
+                    inputipe = '<div class="form-group">' +
+                        '< div class="form-check" >' +
+                        '<label class="form-check-label">' +
+                        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="1">' +
+                        'True <i class="input-helper"></i></label>' +
+                        '</div>' +
+                        '<div class="form-check">' +
+                        '<label class="form-check-label">' +
+                        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="2">' +
+                        'False <i class="input-helper"></i></label>' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                    uiku += ' <div class="row">' +
+                        '<div class="col-8">' +
+                            '<div class="form-group">' +
+                                '<small class="cgrey1 tebal name_setting">'+item.title+'</small>' +
+                                '<p class="clight s13 deskripsi_setting">' + item.description +
+                                '</p>' +
+                            '</div>' +
+                        '</div >' +
+                        '<div class="col-4">' + inputipe +
+                        '<input type="hidden" id="id_set'+item.id+'" name="id_set' + item.id +'" value="' + item.id +'">'+
+                        '</div>' +
+                        '</div>';
+                });
+                $(".isi_seting_notifadmin").html(uiku);
             },
             error: function (result) {
+                console.log(result);
                 console.log("Cant Show");
             }
         });
@@ -411,9 +488,8 @@
 
 
 
-    $("#btn_generate_notif_super").click(function () {
-        tabel_generate_notif_super();
-        tabel_tes();
+    $("#btn_generate_notif_admin").click(function () {
+        tabel_generate_notif_admin();
     });
 
 
@@ -429,14 +505,13 @@
     }
 
 
+    function tabel_generate_notif_admin() {
+        $('#tabel_generate_notif_admin').dataTable().fnClearTable();
+        $('#tabel_generate_notif_admin').dataTable().fnDestroy();
+        $('#tabel_generate_notif_admin').show();
+        $('#modal_filter_notif_admin').modal('hide');
 
-    function tabel_generate_notif_super() {
-        $('#tabel_generate_notif_super').dataTable().fnClearTable();
-        $('#tabel_generate_notif_super').dataTable().fnDestroy();
-        $('#tabel_generate_notif_super').show();
-        $('#modal_filter_notif_super').modal('hide');
-
-        var tabel = $('#tabel_generate_notif_super').DataTable({
+        var tabel = $('#tabel_generate_notif_admin').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -445,7 +520,7 @@
                 }
             },
             ajax: {
-                url: '/superadmin/tabel_generate_notification_super',
+                url: '/admin/tabel_generate_notification_admin',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
@@ -458,7 +533,7 @@
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_generate_notif_super tbody').empty().append(nofound);
+                    $('#tabel_generate_notif_admin tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
@@ -471,14 +546,14 @@
                 { mData: 'user_type_title' },
                 { mData: 'community_name' },
                 { mData: 'notification_status' },
-                { mData: 'created_by' },
+                { mData: 'sender_level_title' },
                 { mData: 'created_at' },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
                         var inidt = [data, row.level_status, row.community_id];
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_notif_super(\'' + inidt + '\')">' +
+                            'onclick="detail_notif_admin(\'' + inidt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -506,56 +581,7 @@
         }
     });
 
-
-    //dropdown komunitas list
-    function get_list_komunitas() {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/list_komunitas_log",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                $('#list_komunitas_notif').empty();
-                $('#list_komunitas_notif').append("<option value='0' disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#list_komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#list_komunitas_notif").html($('#list_komunitas_notif option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
-
-                $("#list_komunitas_notif").get(0).selectedIndex = 0;
-                // _________________________________________________________________________
-
-                $('#komunitas_notif').empty();
-                $('#komunitas_notif').append("<option value='0' disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#komunitas_notif").html($('#komunitas_notif option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
-
-                $("#komunitas_notif").get(0).selectedIndex = 0;
-                Olddt = "{{old('usekomunitas_notifr_notif')}}";
-                if (Olddt !== '') {
-                    $('#komunitas_notif').val(Olddt);
-                }
-
-            }
-        });
-    } //endfunction
-
-    function detail_notif_super(dtku) {
+    function detail_notif_admin(dtku) {
         var dtnya = dtku.split(',');
         //   console.log(dtnya);
         $.ajaxSetup({
@@ -564,7 +590,7 @@
             }
         });
         $.ajax({
-            url: '/superadmin/detail_generate_notif_super',
+            url: '/admin/detail_generate_notif_admin',
             type: 'POST',
             datatype: 'JSON',
             data: {
@@ -573,17 +599,20 @@
                 "community_id": dtnya[2],
             },
             success: function (result) {
-                console.log(result);
-                var res = result[0];
+                // console.log(result);
+                var res = result;
                 $("#modal_detail_notif").modal('show');
                 $("#detail_judul ").html(res.title);
                 $("#detail_dekripsi ").html(res.description);
                 $("#detail_komunitas ").html(res.community_name);
                 $("#detail_tanggal ").html(res.created_at);
-                $("#detail_user ").html(res.user_id);
+                $("#detail_user").html(res.user_title);
                 $("#detail_usertipe ").html(res.user_type_title);
-                $("#detail_tipenotif ").html(res.notifcation_sub_type_title);
-                $("#dibuat_oleh ").html(res.created_by);
+                $("#detail_tipenotif ").html(res.message_type_title);
+                $("#dibuat_oleh ").html(res.created_by_title);
+                $("#status_notif_admin").html(res.status);
+                $("#status_msg").html(res.status_message);
+
 
             },
             error: function (result) {

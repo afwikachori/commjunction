@@ -41,15 +41,12 @@ Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/edit
 Route::get('/subs_management','AdminCommController@SubsManagementView')->name('/subs_management');
 Route::get('/membership_management','AdminCommController@MembershipManagementView')->name('/membership_management');
 Route::get('/user_management','AdminCommController@UserManagementView')->name('/user_management');
-
 Route::get('detail_subscriber/{id_subs}', 'AdminCommController@detailSubcriberManagementView')->name('detail_subscriber/{id_subs}');
 Route::get('edit_subscriber/{id_subs}', 'AdminCommController@editSubsManagementView')->name('edit_subscriber/{id_subs}');
-
 Route::get('detail_pendingsubs/{id_subs}', 'AdminCommController@detailPendingSubcriberView')->name('detail_pendingsubs/{id_subs}');
-
 Route::get('/module_management','AdminCommController@ModuleManagementView')->name('/module_management');
 Route::get('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
-
+Route::get('/notification_management', 'AdminCommController@NotificationManagementAdminCommunity')->name('/notification_management');
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -61,80 +58,51 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('get_list_setting_notif_admin','AdminCommController@get_list_setting_notif_admin')->name('get_list_setting_notif_admin');
+
+Route::post('send_notification_admin','AdminCommController@send_notification_admin')->name('send_notification_admin');
+Route::post('list_komunitas_notif','AdminCommController@list_komunitas_notif')->name('list_komunitas_notif');
+Route::post('detail_generate_notif_admin','AdminCommController@detail_generate_notif_admin')->name('detail_generate_notif_admin');
+
+Route::post('tabel_generate_notification_admin', 'AdminCommController@tabel_generate_notification_admin')->name('tabel_generate_notification_admin');
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');
 Route::post('get_dashboard_admin','AdminCommController@get_dashboard_admin')->name('get_dashboard_admin');
-
 Route::post('tabel_subs_management','AdminCommController@tabel_subs_management')->name('tabel_subs_management');
 Route::post('tabel_subs_pending','AdminCommController@tabel_subs_pending')->name('tabel_subs_pending');
-
 Route::post('edit_profil_community','AdminCommController@edit_profil_community')->name('edit_profil_community');
-
-
 Route::post('setting_loginresgis_comm','AdminCommController@setting_loginresgis_comm')->name('setting_loginresgis_comm');
-
 Route::post('setting_membership_comm','AdminCommController@setting_membership_comm')->name('setting_membership_comm');
-
 Route::post('tabel_list_regisdata','AdminCommController@tabel_list_regisdata')->name('tabel_list_regisdata');
-
 Route::post('setting_regisdata_comm','AdminCommController@setting_regisdata_comm')->name('setting_regisdata_comm');
-
 Route::post('get_list_membership_admin','AdminCommController@get_list_membership_admin')->name('get_list_membership_admin');
-
 Route::post('tabel_req_membership','AdminCommController@tabel_req_membership')->name('tabel_req_membership');
-
 Route::post('filter_membership_subs', 'AdminCommController@filter_membership_subs')->name('filter_membership_subs');
-
 Route::post('tabel_payment_community','AdminCommController@tabel_payment_community')->name('tabel_payment_community');
-
 Route::post('get_membership_subs', 'AdminCommController@get_membership_subs');
-
 Route::post('get_payment_tipe', 'AdminCommController@get_payment_tipe');
-
 Route::post('get_bank_pay','AdminCommController@get_bank_pay');
-
 Route::post('get_detail_membership_req', 'AdminCommController@get_detail_membership_req')->name('get_detail_membership_req');
-
 Route::post('edit_profile_admincom', 'AdminCommController@edit_profile_admincom')->name('edit_profile_admincom');
-
 Route::post('change_password_admincom', 'AdminCommController@change_password_admincom')->name('change_password_admincom');
-
 Route::post('tabel_user_management', 'AdminCommController@tabel_user_management')->name('tabel_user_management');
-
 Route::post('add_user_management', 'AdminCommController@add_user_management')->name('add_user_management');
-
 Route::post('get_user_tipe_manage', 'AdminCommController@get_user_tipe_manage')->name('get_user_tipe_manage');
-
 Route::post('nonaktif_status_subs', 'AdminCommController@nonaktif_status_subs')->name('nonaktif_status_subs');
-
 Route::post('approval_req_membership', 'AdminCommController@approval_req_membership')->name('approval_req_membership');
-
 Route::post('detail_user_management', 'AdminCommController@detail_user_management')->name('detail_user_management');
-
 Route::post('edit_user_management', 'AdminCommController@edit_user_management')->name('edit_user_management');
-
 Route::post('approval_pending_subs', 'AdminCommController@approval_pending_subs')->name('approval_pending_subs');
-
 Route::post('add_payment_subs', 'AdminCommController@add_payment_subs')->name('add_payment_subs');
-
 Route::post('delete_payment_subs', 'AdminCommController@delete_payment_subs')->name('delete_payment_subs');
-
 Route::post('get_active_module_list', 'AdminCommController@get_active_module_list')->name('get_active_module_list');
-
 Route::post('get_all_module_list', 'AdminCommController@get_all_module_list')->name('get_all_module_list');
-
 Route::post('detail_module_all', 'AdminCommController@detail_module_all')->name('detail_module_all');
-
 Route::post('aktifasi_module_admincomm', 'AdminCommController@aktifasi_module_admincomm')->name('aktifasi_module_admincomm');
-
 Route::post('cek_prepare_publish', 'AdminCommController@cek_prepare_publish')->name('cek_prepare_publish');
-
 /// report management/subscriber
 Route::post('tabel_subscriber_report_super','AdminCommController@tabel_subscriber_report_super')->name('tabel_subscriber_report_super');
 Route::post('get_list_subscriber_report_super','AdminCommController@get_list_subscriber_report_super')->name('get_list_subscriber_report_super');
-
-
-
 }); //ADMIN-COMMUNITY
 
 
