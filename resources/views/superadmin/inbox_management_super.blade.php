@@ -440,7 +440,7 @@
 
 
     $("#btn_generate_inbox_super").click(function () {
-        // tabel_tes();
+        tabel_tes();
         tabel_inbox_message_super();
     });
 
