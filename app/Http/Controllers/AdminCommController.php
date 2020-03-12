@@ -1700,4 +1700,58 @@ class AdminCommController extends Controller
         }
     }
 
+
+    public function setting_notification_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 2);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[1],
+                "value" => $dt[0],
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'notificationmanagement/setting';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(["data_Setting" => $data]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            // return $json;
+            if ($json['success'] == true) {
+                alert()->success('Successfully Setting Notification', 'Done!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+        }
+    }
+
 } //end-class

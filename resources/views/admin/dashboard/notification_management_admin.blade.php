@@ -390,15 +390,16 @@
             style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
             <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
                 <h3 class="modal-title cgrey">Setting Notification</h3>
-                <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>
+                <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label> -->
             </div> <!-- end-header -->
 
             <div class="modal-body">
-             <form>
-                 <div class="isi_seting_notifadmin">
+                <form method="POST" id="form_setting_notif_admin" action="{{route('setting_notification_admin')}}">
+                    {{ csrf_field() }}
+                    <div class="isi_seting_notifadmin">
 
-                 </div>
-             </form>
+                    </div>
+
             </div> <!-- end-body -->
 
             <div class="modal-footer" style="border: none;">
@@ -408,11 +409,12 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <a href="t" type="button" class="btn btn-teal btn-sm">
+                    <button type="submit" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i>Activate</a>
+                        </i>Setting</button>
                 </center>
             </div> <!-- end-footer     -->
+            </form>
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
@@ -445,33 +447,33 @@
 
                 $.each(result, function (i, item) {
 
-                if(item.input_type == 1){
-                    inputipe = ' <input type="text" name="param" class="form-control input-abu param_setting">';
-                }else if(item.input_type == 2){
-                    inputipe = '<div class="form-group">' +
-                        '< div class="form-check" >' +
-                        '<label class="form-check-label">' +
-                        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="1">' +
-                        'True <i class="input-helper"></i></label>' +
-                        '</div>' +
-                        '<div class="form-check">' +
-                        '<label class="form-check-label">' +
-                        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="2">' +
-                        'False <i class="input-helper"></i></label>' +
-                        '</div>' +
-                        '</div>';
-                }
+                    if (item.input_type == 1) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="'+item.value+'" class="form-control input-abu param_setting">';
+                    } else if (item.input_type == 2) {
+                        inputipe = '<div class="form-group">' +
+                            '< div class="form-check" >' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1">' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2">' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
 
                     uiku += ' <div class="row">' +
-                        '<div class="col-8">' +
-                            '<div class="form-group">' +
-                                '<small class="cgrey1 tebal name_setting">'+item.title+'</small>' +
-                                '<p class="clight s13 deskripsi_setting">' + item.description +
-                                '</p>' +
-                            '</div>' +
+                        '<div class="col-7">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
                         '</div >' +
-                        '<div class="col-4">' + inputipe +
-                        '<input type="hidden" id="id_set'+item.id+'" name="id_set' + item.id +'" value="' + item.id +'">'+
+                        '<div class="col-5">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
                         '</div>' +
                         '</div>';
                 });

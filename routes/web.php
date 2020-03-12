@@ -58,8 +58,9 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
-Route::post('get_list_setting_notif_admin','AdminCommController@get_list_setting_notif_admin')->name('get_list_setting_notif_admin');
+Route::post('setting_notification_admin','AdminCommController@setting_notification_admin')->name('setting_notification_admin');
 
+Route::post('get_list_setting_notif_admin','AdminCommController@get_list_setting_notif_admin')->name('get_list_setting_notif_admin');
 Route::post('send_notification_admin','AdminCommController@send_notification_admin')->name('send_notification_admin');
 Route::post('list_komunitas_notif','AdminCommController@list_komunitas_notif')->name('list_komunitas_notif');
 Route::post('detail_generate_notif_admin','AdminCommController@detail_generate_notif_admin')->name('detail_generate_notif_admin');
