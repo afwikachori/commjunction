@@ -91,6 +91,11 @@ class AdminCommController extends Controller
         return view("admin/dashboard/notification_management_admin");
     }
 
+    public function PaymentManagementAdminCommunity()
+    {
+        return view("admin/dashboard/payment_management_admin");
+    }
+
 
 
 
@@ -1619,17 +1624,17 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listsetting';
         $client = new \GuzzleHttp\Client();
 
-        try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             return $exception;
         }
@@ -1753,5 +1758,96 @@ class AdminCommController extends Controller
             }
         }
     }
+
+
+    public function tabel_payment_all_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'paymentmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+    public function tabel_payment_active_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'paymentmanagement/listallactive';
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+    public function detail_payment_all_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'paymentmanagement/detail';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "payment_id" => $input['payment_id'],
+            // "payment_title" => $input['payment_title'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+    }
+
+
+
 
 } //end-class

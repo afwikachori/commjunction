@@ -21,8 +21,8 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-      console.log(result);
-        console.log(result.access_token);
+    //   console.log(result);
+        console.log("admin komunitas = "+result.access_token);
       var user = result.user;
     if (result != ""){
       $(".username_komunitas").html(user.user_name);
@@ -83,6 +83,10 @@ $.ajax({
         console.log("Cant Reach Session Logged Admin Community Dashboard");
     }
 });
+}
+
+function errorImg() {
+    $('.rounded-circle').attr('src', '/img/noimg.jpg');
 }
 
 

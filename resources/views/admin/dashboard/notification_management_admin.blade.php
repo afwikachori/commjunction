@@ -425,11 +425,11 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        tabel_tes();
+        get_list_setting_notif_admin();
     });
 
 
-    function tabel_tes() {
+    function get_list_setting_notif_admin() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

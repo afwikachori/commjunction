@@ -1540,7 +1540,7 @@ class SuperadminController extends Controller
         ];
         $bodyku = json_encode([
             "payment_id" => $input['payment_id'],
-            "payment_title" => $input['payment_title'],
+            // "payment_title" => $input['payment_title'],
         ]);
 
         $datakirim = [
