@@ -208,7 +208,7 @@
                 </div>
               </div>
                <div class="col-md-3 grid-margin stretch-card">
-                <div class="card">
+                <div class="card" style="height:255px;">
                   <div class="card-body">
                     <h4 class="card-title">Top 5 Subsciber</h4>
                    <ul class="list-star" id="top-5-subs">

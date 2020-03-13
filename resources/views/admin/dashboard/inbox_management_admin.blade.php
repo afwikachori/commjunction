@@ -1,7 +1,5 @@
-@extends('layout.superadmin')
-
+@extends('layout.admin-dashboard')
 @section('title', 'Inbox Management')
-
 @section('content')
 <div class="row">
     <div class="col-md-2">
@@ -13,7 +11,7 @@
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
             <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
-                data-target="#modal_send_inbox_super">
+                data-target="#modal_send_inbox_admin">
                 Broadcast Message</button>
         </nav>
     </div>
@@ -32,7 +30,7 @@
                     data-toggle="modal" data-target="#modal_generate_inbox_tabel">
                     Generate Message</button>
 
-                <table id="tabel_inbox_message_super" class="table table-hover table-striped dt-responsive nowrap"
+                <table id="tabel_inbox_message_admin" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%; display: none;">
                     <thead>
                         <tr>
@@ -86,10 +84,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <select class="form-control input-abu" name="list_komunitas_inbox"
-                                    id="list_komunitas_inbox">
-
-                                </select>
+                            <input type="text" id="list_komunitas_inbox" name="list_komunitas_inbox"
+                            value="104" class="form-control input-abu" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -134,7 +130,7 @@
 </div>
 
 <!-- MODAL ADD SEND MESSAGE INBOX-->
-<div class="modal fade" id="modal_send_inbox_super" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal_send_inbox_admin" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
@@ -155,9 +151,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">User Type</small>
-                                <select class="form-control input-abu" name="usertipe_inbox" id="usertipe_inbox">
+                                <select class="form-control input-abu" name="usertipe_inbox1" id="usertipe_inbox1">
                                     <option selected disabled> Choose </option>
-                                    <option value="1"> Admin Commjuction </option>
+                                    <!-- <option value="1"> Admin Commjuction </option> -->
                                     <option value="2"> Admin Community </option>
                                     <option value="3"> Subscriber </option>
                                 </select>
@@ -189,16 +185,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <select class="form-control input-abu" name="komunitas_inbox" id="komunitas_inbox">
-
-                                </select>
+        <input type="text" id="komunitas_inbox" name="komunitas_inbox" value="104" class="form-control input-abu"
+            readonly>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
+                            <div class="form-group" id="hide_bcstatus">
                                 <small class="clight s13">Broadcast Status</small>
                                 <select class="form-control input-abu" name="bc_status" id="bc_status">
                                     <option selected disabled> Choose </option>
@@ -211,7 +206,7 @@
                             <div class="form-group" id="hide_user_notif" style="display: none;">
                                 <small class="clight s13">List User</small>
                                 <select class="form-control input-abu" name="list_user" id="list_user">
-                                    <option selected disabled> Choose Community </option>
+
                                 </select>
                             </div>
                         </div>
@@ -239,7 +234,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form id="">
+            <form>
                 <div class="modal-header" style="border: none; padding-bottom: 0px;
                 padding-left: 5%; padding-right: 5%;">
                     <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
@@ -365,35 +360,36 @@
                 </button>
             </div>
             <form method="POST" id="form_change_status_inbox_super"
-            action="{{route('change_status_inbox_message_super')}}">
+                action="{{route('change_status_inbox_message_super')}}">
                 {{ csrf_field() }}
-            <div class="modal-body" style="min-height: 130px;">
-                <div class="row" style="margin-top: 1.5em;">
-                    <div class="col-md-3" style="padding-top: 0.6em;">
-                        <small class="clight s13"><b>Status</b></small>
+                <div class="modal-body" style="min-height: 130px;">
+                    <div class="row" style="margin-top: 1.5em;">
+                        <div class="col-md-3" style="padding-top: 0.6em;">
+                            <small class="clight s13"><b>Status</b></small>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control input-abu" name="list_status" id="list_status">
+                                <option selected disabled> Choose </option>
+                                <option value="1"> Active </option>
+                                <option value="2"> Deactive </option>
+                                <option value="3"> Not Pusblish </option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <select class="form-control input-abu" name="list_status" id="list_status">
-                            <option selected disabled> Choose </option>
-                            <option value="1"> Active </option>
-                            <option value="2"> Deactive </option>
-                            <option value="3"> Not Pusblish </option>
-                        </select>
-                    </div>
+                    <input type="hidden" id="id_inbox" name="id_inbox">
                 </div>
-                <input type="hidden" id="id_inbox" name="id_inbox">
-            </div>
-            <div class="modal-footer"
-                style="border: none; margin-bottom: 0.5em;
+                <div class="modal-footer"
+                    style="border: none; margin-bottom: 0.5em;
                             display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                    <i class="mdi mdi-close"></i> Cancel
-                </button>
-                &nbsp;
-                <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
-                    <i class="mdi mdi-check btn-icon-prepend">
-                    </i> Change </button>
-            </div>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Change </button>
+                </div>
             </form>
         </div>
     </div>
@@ -405,8 +401,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        // tabel_tes();
-        get_list_komunitas();
+
     });
 
     function tabel_tes() {
@@ -441,7 +436,7 @@
 
     $("#btn_generate_inbox_super").click(function () {
         tabel_tes();
-        tabel_inbox_message_super();
+        tabel_inbox_message_admin();
     });
 
     $("#btn_delete_message").click(function () {
@@ -480,7 +475,7 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == true) {
-                    tabel_inbox_message_super();
+                    tabel_inbox_message_admin();
                     $("#modal_detail_message_inbox").modal('hide');
                     swal("Poof! Your message has been deleted!", {
                         icon: "success",
@@ -496,13 +491,13 @@
     }
 
 
-    function tabel_inbox_message_super() {
-        $('#tabel_inbox_message_super').dataTable().fnClearTable();
-        $('#tabel_inbox_message_super').dataTable().fnDestroy();
-        $('#tabel_inbox_message_super').show();
+    function tabel_inbox_message_admin() {
+        $('#tabel_inbox_message_admin').dataTable().fnClearTable();
+        $('#tabel_inbox_message_admin').dataTable().fnDestroy();
+        $('#tabel_inbox_message_admin').show();
         $('#modal_generate_inbox_tabel').modal('hide');
 
-        var tabel = $('#tabel_inbox_message_super').DataTable({
+        var tabel = $('#tabel_inbox_message_admin').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -511,7 +506,7 @@
                 }
             },
             ajax: {
-                url: '/superadmin/tabel_generate_inbox_super',
+                url: '/admin/tabel_generate_inbox_admin',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
@@ -524,7 +519,7 @@
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_inbox_message_super tbody').empty().append(nofound);
+                    $('#tabel_inbox_message_admin tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
@@ -560,6 +555,7 @@
         var dipilih = this.value;
         if (dipilih == 1) {
             $("#hide_user_notif").fadeIn("fast");
+             get_list_subscriber();
         } else {
             $("#hide_user_notif").fadeOut("fast");
         }
@@ -567,99 +563,50 @@
     });
 
 
-    //dropdown subs_name list
-    $('#komunitas_inbox').change(function () {
-        var itempilih = this.value;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/get_list_user_inbox_super",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "user_type": $("#usertipe_inbox").val(),
-                "community_id": itempilih,
-            },
-            success: function (result) {
-                // console.log(result);
 
-                $('#list_user').empty();
-                $('#list_user').append("<option disabled value='0'> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#list_user').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+    //dropdown subs list
+    function get_list_subscriber() {
+            var itempilih = $("#komunitas_inbox").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-                //Short Function Ascending//
-                $("#list_user").html($('#list_user option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
+            });
+            $.ajax({
+                url: "/admin/get_list_subscriber_inbox_admin",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "user_type": $("#usertipe_inbox").val(),
+                    "community_id": itempilih,
+                },
+                success: function (result) {
+                    // console.log(result);
 
-                $("#list_user").get(0).selectedIndex = 0; const
-                    OldSubf = "{{old('list_user')}}";
-                if (OldSubf !== '') {
-                    $('#list_user').val(OldSubf);
+                    $('#list_user').empty();
+                    $('#list_user').append("<option disabled value='0'> Choose</option>");
+
+                    for (var i = result.length - 1; i >= 0; i--) {
+                        $('#list_user').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+                    }
+                    //Short Function Ascending//
+                    $("#list_user").html($('#list_user option').sort(function (x, y) {
+                        return $(x).val() < $(y).val() ? -1 : 1;
+                    }));
+
+                    $("#list_user").get(0).selectedIndex = 0; const
+                        OldSubf = "{{old('list_user')}}";
+                    if (OldSubf !== '') {
+                        $('#list_user').val(OldSubf);
+                    }
+                },
+                error: function (result) {
+                    $('#hide_user_notif').fadeOut("fast");
+                    $('#list_user').empty();
+                    $('#list_user').append("<option disabled value='0'>No Related User</option>");
                 }
-            },
-            error: function (result) {
-                $('#hide_user_notif').fadeOut("fast");
-                $('#list_user').empty();
-                $('#list_user').append("<option disabled value='0'>No Related User</option>");
-            }
-        });
-    });
-    //end list subscriber
+            });
 
-
-
-    //dropdown komunitas list
-    function get_list_komunitas() {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/list_komunitas_log",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                $('#list_komunitas_inbox').empty();
-                $('#list_komunitas_inbox').append("<option value='0' disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#list_komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#list_komunitas_inbox").html($('#list_komunitas_inbox option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
-
-                $("#list_komunitas_inbox").get(0).selectedIndex = 0;
-                // _________________________________________________________________________
-
-                $('#komunitas_inbox').empty();
-                $('#komunitas_inbox').append("<option value='0' disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#komunitas_inbox").html($('#komunitas_inbox option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
-
-                $("#komunitas_inbox").get(0).selectedIndex = 0;
-                Olddt = "{{old('usekomunitas_notifr_notif')}}";
-                if (Olddt !== '') {
-                    $('#komunitas_inbox').val(Olddt);
-                }
-
-            }
-        });
     } //endfunction
 
 
@@ -673,7 +620,7 @@
             }
         });
         $.ajax({
-            url: '/superadmin/detail_generate_message_inbox_super',
+            url: '/admin/detail_generate_message_inbox_super_admin',
             type: 'POST',
             datatype: 'JSON',
             data: {
@@ -683,7 +630,7 @@
             },
             success: function (result) {
                 console.log(result);
-                var res = result[0];
+                var res = result;
                 $("#modal_detail_message_inbox").modal('show');
                 $("#detail_judul ").html(res.title);
                 $("#detail_dekripsi ").html(res.description);

@@ -117,11 +117,13 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (status, code, data) {
-    // console.log(status.data);
+    console.log(status.data);
     var html ='';
 
  $.each(status.data, function(i,item){
-  var id_fitur = item.feature_type.id;
+     console.log(item);
+//   var id_fitur = item.feature_type.id;
+    // var id_fitur = item.pricing_features.id;
   var idprice = item.id;
 
 html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1em;">'+
@@ -152,8 +154,8 @@ html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1em;">'+
           '<small class="clight"> /Year</small>'+
         '</div>'+
       '<label class="coren s15 ">or choose another pricing time</label>'+
-      '<form method="POST" action="{{route('pricingkefitur')}}"> {{ csrf_field() }}<input type="hidden" name="idprice" value="'+idprice+'">'+
-        '<input type="hidden" name="feature_type_id" value="'+id_fitur+'">'+
+      '<form method="POST" action="{{route('pricingkefitur')}}"> {{ csrf_field() }}'+
+      '<input type="hidden" name="idprice" value="'+idprice+'">'+
         '<input type="hidden" name="payment_time" class="isitime" value="">'+
       '<button type="submit" class="btn clr-oren klik-pricing" style="margin-top: 0.5em;">Get Now</button>'+
       '</form>'+

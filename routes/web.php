@@ -48,6 +48,7 @@ Route::get('/module_management','AdminCommController@ModuleManagementView')->nam
 Route::get('setting_publish_comm','AdminCommController@setting_publish_comm')->name('setting_publish_comm');
 Route::get('/notification_management', 'AdminCommController@NotificationManagementAdminCommunity')->name('/notification_management');
 Route::get('/payment_management', 'AdminCommController@PaymentManagementAdminCommunity')->name('/payment_management');
+Route::get('/inbox_management', 'AdminCommController@InboxMessageManagementAdmin')->name('/inbox_management');
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -59,17 +60,20 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
-Route::post('detail_payment_all_admin','AdminCommController@detail_payment_all_admin')->name('detail_payment_all_admin');
+Route::post('detail_generate_message_inbox_super_admin','AdminCommController@detail_generate_message_inbox_super_admin')->name('detail_generate_message_inbox_super_admin');
+Route::post('get_list_subscriber_inbox_admin','AdminCommController@get_list_subscriber_inbox_admin')->name('get_list_subscriber_inbox_admin');
 
+Route::post('tabel_generate_inbox_admin','AdminCommController@tabel_generate_inbox_admin')->name('tabel_generate_inbox_admin');
+Route::post('aktivasi_payment_admin','AdminCommController@aktivasi_payment_admin')->name('aktivasi_payment_admin');
+Route::post('get_setting_subpayment_admin','AdminCommController@get_setting_subpayment_admin')->name('get_setting_subpayment_admin');
+Route::post('detail_payment_all_admin','AdminCommController@detail_payment_all_admin')->name('detail_payment_all_admin');
 Route::post('tabel_payment_active_admin','AdminCommController@tabel_payment_active_admin')->name('tabel_payment_active_admin');
 Route::post('tabel_payment_all_admin','AdminCommController@tabel_payment_all_admin')->name('tabel_payment_all_admin');
-
 Route::post('setting_notification_admin','AdminCommController@setting_notification_admin')->name('setting_notification_admin');
 Route::post('get_list_setting_notif_admin','AdminCommController@get_list_setting_notif_admin')->name('get_list_setting_notif_admin');
 Route::post('send_notification_admin','AdminCommController@send_notification_admin')->name('send_notification_admin');
 Route::post('list_komunitas_notif','AdminCommController@list_komunitas_notif')->name('list_komunitas_notif');
 Route::post('detail_generate_notif_admin','AdminCommController@detail_generate_notif_admin')->name('detail_generate_notif_admin');
-
 Route::post('tabel_generate_notification_admin', 'AdminCommController@tabel_generate_notification_admin')->name('tabel_generate_notification_admin');
 Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
 Route::post('session_admin_logged','AdminCommController@session_admin_logged')->name('session_admin_logged');

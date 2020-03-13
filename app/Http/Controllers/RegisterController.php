@@ -10,81 +10,88 @@ use Session;
 use Alert;
 
 
-class RegisterController extends Controller{
+class RegisterController extends Controller
+{
 
-    public function test(){
+    public function test()
+    {
         return view('admin/testing');
     }
 
-    public function ReviewAdminView(){
+    public function ReviewAdminView()
+    {
         return view('admin/final_review_admin');
     }
 
-    public function cobaView(){
-            return view('admin/coba');
+    public function cobaView()
+    {
+        return view('admin/coba');
     }
 
-    public function logoutssoView(){
+    public function logoutssoView()
+    {
         return view('admin/logoutsso');
     }
 
-	
 
-    public function features_detail(){
+
+    public function features_detail()
+    {
         return view('admin/features_detail');
     }
 
 
-    public function detailFiturView($id_fitur){
-    $url = env('SERVICE').'registration/subfeature';
+    public function detailFiturView($id_fitur)
+    {
+        $url = env('SERVICE') . 'registration/subfeature';
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'feature_id' => $id_fitur
-        ]
-    ]);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'feature_id' => $id_fitur
+            ]
+        ]);
 
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    return $json['data'];
+        return $json['data'];
 
-    return view('admin/features_detail', ['data' => $json['data'], 'idfitur'=> $id_fitur ]);
-    }        
-
-
-// FORM REGISTRATION-1
-    public function registerAdminView(){
-        
-    if(Session::has('data_regis1show')){
-
-    $ses1 = Session::get('data_regis1show');
-    $jsx = json_decode($ses1, true);
-    $arr = [];
-
-    array_push($arr, $jsx);
-    return view('admin/register', ['regis1' => $arr]);
-
-    }else{
-        return view('admin/register');
-    }   
+        return view('admin/features_detail', ['data' => $json['data'], 'idfitur' => $id_fitur]);
     }
 
 
-    public function registerInputView(){
+    // FORM REGISTRATION-1
+    public function registerAdminView()
+    {
+
+        if (session()->has('data_regis1show')) {
+
+            $ses1 = session()->get('data_regis1show');
+            $jsx = json_decode($ses1, true);
+            $arr = [];
+
+            array_push($arr, $jsx);
+            return view('admin/register', ['regis1' => $arr]);
+        } else {
+            return view('admin/register');
+        }
+    }
+
+
+    public function registerInputView()
+    {
         return view('admin/registerinput');
-    }   
-
-    public function registerfirst(Request $request) {
-        // dd($request);
-    if (Session::has('data_regis1show')){
-    $validimg = '';
-
-    }else{
-    $validimg = 'required|dimensions:max_width=300,max_height=300';
-
     }
+
+    public function registerfirst(Request $request)
+    {
+        // dd($request);
+        if (session()->has('data_regis1show')) {
+            $validimg = '';
+        } else {
+            $validimg = 'required|dimensions:max_width=300,max_height=300';
+        }
 
         $validator = $request->validate([
             'name_com' => 'required|min:3',
@@ -95,23 +102,23 @@ class RegisterController extends Controller{
             'icon_com' => $validimg,
         ]);
 
-///UPLOAD IMAGE KE BACK-EN
-        $req = new RequestController; 
+        ///UPLOAD IMAGE KE BACK-EN
+        $req = new RequestController;
         $filelogo = "";
 
         if ($request->hasFile('icon_com')) {
             $imgku = file_get_contents($request->file('icon_com')->getRealPath());
             $filnam = $request->file('icon_com')->getClientOriginalName();
-                
+
             $imageRequest = [
                 "directory" => 'baru',
                 "image" => $imgku,
                 "filename" => $filnam
             ];
 
-            $url =env('SERVICE').'registration/uploadcomm';
+            $url = env('SERVICE') . 'registration/uploadcomm';
 
-            $responseImage = $req->sendImage($imageRequest,$url);
+            $responseImage = $req->sendImage($imageRequest, $url);
 
             // dd($responseImage);
             if ($responseImage['success'] != true) {
@@ -122,54 +129,57 @@ class RegisterController extends Controller{
                         'messages' => $responseImage['message']
                     ]
                 ]);
-            }else{
+            } else {
                 $reshasil = $responseImage['data'];
                 $filelogo = $reshasil['directory'];
             }
-        }else{
-            
-            $ses1 = Session::get('data_regis1');
+        } else {
+
+            $ses1 = session()->get('data_regis1');
             $filelogo = $ses1['logo'];
-        } //END  UPLOAD-IMAGE 
+        } //END  UPLOAD-IMAGE
 
 
         $input = $request->all(); // getdata form by name
         $data = [
-                "name"            => $input['name_com'],
-                "logo"            => $filelogo,
-                "description"     => $input['descrip_com'],
-                "jenis_comm_id"   => $input['type_com'],
-                "range_member"    => $input['range_member'],
-                "cust_jenis_comm" => $input['other_type_com']
+            "name"            => $input['name_com'],
+            "logo"            => $filelogo,
+            "description"     => $input['descrip_com'],
+            "jenis_comm_id"   => $input['type_com'],
+            "range_member"    => $input['range_member'],
+            "cust_jenis_comm" => $input['other_type_com']
         ];
 
         $dataSend = json_encode($data);
 
-        Session::put('data_regis1', $data);
-        Session::put('data_regis1show', $dataSend);
+        session()->put('data_regis1', $data);
+        session()->put('data_regis1show', $dataSend);
 
-      return redirect('admin/register2')->withErrors($validator, 'admin/register');
+        return redirect('admin/register2')->withErrors($validator, 'admin/register');
     }
 
 
-    public function get_jenis_com(){
-    $url = env('SERVICE').'registration/jeniscomm';
+    public function get_jenis_com()
+    {
+        $url = env('SERVICE') . 'registration/jeniscomm';
 
-    $client = new \GuzzleHttp\Client();
-    $request = $client->post($url);
-    $response = $request->getBody();
-    $json = json_decode($response, true);
-   
-    return($json);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->post($url);
+        $response = $request->getBody();
+        $json = json_decode($response, true);
+
+        return ($json);
     }
 
 
-// FORM REGISTRATION-2 
-    public function register2View(){
-    return view('admin/register2');
+    // FORM REGISTRATION-2
+    public function register2View()
+    {
+        return view('admin/register2');
     }
 
-    public function registersecond(Request $request) {
+    public function registersecond(Request $request)
+    {
 
         $validator = $request->validate([
             'name_admin' => 'required|min:3',
@@ -183,11 +193,11 @@ class RegisterController extends Controller{
 
         $input = $request->all(); // getdata form by name
         $data = [
-            'full_name' =>  $input['name_admin'], 
-            'notelp' => $input['phone_admin'], 
-            'email' => $input['email_admin'], 
-            'alamat' => $input['alamat_admin'], 
-            'user_name' => $input['username_admin'], 
+            'full_name' =>  $input['name_admin'],
+            'notelp' => $input['phone_admin'],
+            'email' => $input['email_admin'],
+            'alamat' => $input['alamat_admin'],
+            'user_name' => $input['username_admin'],
             'password' => $input['password_admin'],
             "sso_type"        => $input['sso_type'],
             "sso_token"       => $input['sso_token']
@@ -195,126 +205,150 @@ class RegisterController extends Controller{
 
         $dataSend = json_encode($data);
 
-        Session::put('data_regis2', $data);
+        session()->put('data_regis2', $data);
 
         return redirect('admin/pricing')->withErrors($validator, 'admin/register2');
     }
 
 
-     public function cekusername_admin(Request $request){
-     $in_username = $request['user_name'];
+    public function cekusername_admin(Request $request)
+    {
+        $in_username = $request['user_name'];
 
-    $url = env('SERVICE').'registration/cekusernameadm';
+        $url = env('SERVICE') . 'registration/cekusernameadm';
 
-    $client = new \GuzzleHttp\Client();
-    try {
-        $response = $client->request('POST',$url, [
-            'form_params' => [
-                'user_name' => $in_username
-            ]
-        ]);
-    } catch (RequestException $exception) {
-        $response = $exception->getResponse();
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'user_name' => $in_username
+                ]
+            ]);
+        } catch (RequestException $exception) {
+            $response = $exception->getResponse();
+        }
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json;
     }
-    
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json;
-    } 
 
-     public function cektelfon_admin(Request $request){
-     $in_username = $request['notelp'];
+    public function cektelfon_admin(Request $request)
+    {
+        $in_username = $request['notelp'];
 
-    $url = env('SERVICE').'registration/ceknotelpadm';
+        $url = env('SERVICE') . 'registration/ceknotelpadm';
 
-    $client = new \GuzzleHttp\Client();
-    try {
-        $response = $client->request('POST',$url, [
-            'form_params' => [
-                'notelp' => $in_username
-            ]
-        ]);
-    } catch (RequestException $exception) {
-        $response = $exception->getResponse();
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'notelp' => $in_username
+                ]
+            ]);
+        } catch (RequestException $exception) {
+            $response = $exception->getResponse();
+        }
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json;
     }
-    
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-   
-    return $json;
-    } 
 
 
-    public function cekemail_admin(Request $request){
-     $in = $request['email'];
+    public function cekemail_admin(Request $request)
+    {
+        $in = $request['email'];
 
-    $url = env('SERVICE').'registration/cekemailadm';
+        $url = env('SERVICE') . 'registration/cekemailadm';
 
-    $client = new \GuzzleHttp\Client();
-    try {
-        $response = $client->request('POST',$url, [
-            'form_params' => [
-                'email' => $in
-            ]
-        ]);
-    } catch (RequestException $exception) {
-        $response = $exception->getResponse();
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'email' => $in
+                ]
+            ]);
+        } catch (RequestException $exception) {
+            $response = $exception->getResponse();
+        }
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json;
     }
-    
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-   
-    return $json;
-    } 
 
 
     /// PRICING - REGISTRASION ADMIN COMMUNITY
-    public function pricingView(){
+    public function pricingView()
+    {
         return view('admin/pricing');
     }
 
 
-    public function get_pricing_com(){
-    $url = env('SERVICE').'registration/pricing';
+    public function get_pricing_com()
+    {
+        $url = env('SERVICE') . 'registration/pricing';
 
-    $client = new \GuzzleHttp\Client();
-    $request = $client->post($url);
-    $response = $request->getBody();
-    $json = json_decode($response, true);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->post($url);
+        $response = $request->getBody();
+        $json = json_decode($response, true);
 
-    return($json);
+        return ($json);
     }
 
 
 
-    public function pricingkefitur(Request $request){
-    $idfitur = $request['feature_type_id'];
-    $paytime = $request['payment_time'];
-    $idprice = $request['idprice'];
+    public function pricingkefitur(Request $request)
+    {
+        $input = $request->all();
+        $paytime = $input['payment_time'];
+        $idprice = $input['idprice'];
+        // dd($input);
 
-    $data = ['pricing_id'   => $idprice,
-             'payment_time' => $paytime];
+        $data = [
+            'pricing_id'   => $idprice,
+            'payment_time' => $paytime
+        ];
 
-    $arr = json_encode($data);
-    Session::put('data_pricing', $data);
-    Session::put('fiturpilih', $idfitur);
+        $arr = json_encode($data);
+        session()->put('data_pricing', $data);
+        session()->put('fiturpilih', $idprice); //wikajumat 13/03
 
-    //get data pricing untuk fitur
-    $url = env('SERVICE').'registration/feature';
+        //get data pricing untuk fitur
+        $url = env('SERVICE') . 'registration/feature';
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'pricing_id' => $idprice
+                ]
+            ]);
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'feature_type_id' => $idfitur
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    $isidata = $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            $isidata = $json['data'];
 
-    $count = count($isidata);
+            return $isidata;
 
-     return redirect('admin/features')->with(['datafitur'=>$isidata, 'sum'=>$count]);
+            $count = count($isidata);
+
+            return redirect('admin/features')->with(['datafitur' => $isidata, 'sum' => $count]);
+        } catch (ClientException $exception) {
+            // return $exception;
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return view('admin/pricing');
+            }
+            if ($code == 404) {
+                alert()->error('Data Features Not Found', 'Not Found!')->autoclose(4500);
+                return view('admin/pricing');
+            }
+        }
     }
 
 
@@ -328,8 +362,8 @@ class RegisterController extends Controller{
     //          'payment_time' => $paytime];
 
     // $arr = json_encode($data);
-    // Session::put('data_pricing', $data);
-    // Session::put('fiturpilih', $idfitur);
+    //  session()->put('data_pricing', $data);
+    //  session()->put('fiturpilih', $idfitur);
 
     // //get data pricing untuk fitur
     // $url = env('SERVICE').'registration/feature';
@@ -346,111 +380,116 @@ class RegisterController extends Controller{
     // }
 
 
-    public function getSelectedFitur(Request $request){
-    $idpilih = $request['id'];
-    // return $idpilih;
+    public function getSelectedFitur(Request $request)
+    {
+        $idpilih = $request['id'];
+        // return $idpilih;
 
-    $url = env('SERVICE').'registration/featureselected';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'id' => $idpilih
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $url = env('SERVICE') . 'registration/featureselected';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'id' => $idpilih
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    return $json;
+        return $json;
     }
 
 
-     public function session_register1(Request $request){
-    $idpilih = $request['id'];
+    public function session_register1(Request $request)
+    {
+        $idpilih = $request['id'];
 
-    $url = env('SERVICE').'registration/featureselected';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'id' => $idpilih
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $url = env('SERVICE') . 'registration/featureselected';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'id' => $idpilih
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    return $json;
+        return $json;
     }
 
 
-    public function getSelectedPrice(Request $request){
-    $idpilih = $request['id'];
+    public function getSelectedPrice(Request $request)
+    {
+        $idpilih = $request['id'];
 
-    $url = env('SERVICE').'registration/pricingbyid';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'id' => $idpilih
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $url = env('SERVICE') . 'registration/pricingbyid';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'id' => $idpilih
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    return $json;
-    }
-
-
-
-    public function getSelectedPayment(Request $request){
-    $idpilih = $request['id'];
-
-    $url = env('SERVICE').'registration/paymentmethodbyid';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'id' => $idpilih
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-
-    return $json;
+        return $json;
     }
 
 
 
-    /// FEATURES - REGISTRASION 
-    public function sendfeature(Request $request){
+    public function getSelectedPayment(Request $request)
+    {
+        $idpilih = $request['id'];
+
+        $url = env('SERVICE') . 'registration/paymentmethodbyid';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'id' => $idpilih
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json;
+    }
+
+
+
+    /// FEATURES - REGISTRASION
+    public function sendfeature(Request $request)
+    {
         $id = $request['feature_id'];
         $arry = [];
-        
+
         foreach ($id as $idk) {
-             $ar = array(
-                    'feature_id' =>  $idk
-                );
-             $data =  json_decode(json_encode($ar));
-             array_push($arry, $data);
+            $ar = array(
+                'feature_id' =>  $idk
+            );
+            $data =  json_decode(json_encode($ar));
+            array_push($arry, $data);
         }
 
         //session ambil data fitur multiple check
-        Session::put('data_fitur', $arry);
-        Session::put('listfitur', $id);
+        session()->put('data_fitur', $arry);
+        session()->put('listfitur', $id);
 
-         $url = env('SERVICE').'registration/paymenttype';
+        $url = env('SERVICE') . 'registration/paymenttype';
 
         $client = new \GuzzleHttp\Client();
         $request = $client->post($url);
         $response = $request->getBody();
         $json = json_decode($response, true);
-            // dd($json['data']);
+        // dd($json['data']);
 
-        Session::put('list_payment', $json['data']);
+        session()->put('list_payment', $json['data']);
 
-     return redirect('admin/payment')->with('pay_type', $json['data']);
+        return redirect('admin/payment')->with('pay_type', $json['data']);
     }
 
     //   public function sendfeature(Request $request){
     //     $id = $request['feature_id'];
     //     $arry = [];
-        
+
     //     foreach ($id as $idk) {
     //          $ar = array(
     //                 'feature_id' =>  $idk
@@ -460,390 +499,399 @@ class RegisterController extends Controller{
     //     }
 
     //     //session ambil data fitur multiple check
-    //     Session::put('data_fitur', $arry);
-    //     Session::put('listfitur', $id);
+    //      session()->put('data_fitur', $arry);
+    //      session()->put('listfitur', $id);
 
 
     //     return redirect('admin/payment')->with('fixfitur', $arry);
     // }
 
-     public function getsubfitur(Request $request){
-     $idku = $request['feature_id'];
+    public function getsubfitur(Request $request)
+    {
+        $idku = $request['feature_id'];
 
-    $url = env('SERVICE').'registration/subfeature';
+        $url = env('SERVICE') . 'registration/subfeature';
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'feature_id' => $idku
-        ]
-    ]);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'feature_id' => $idku
+            ]
+        ]);
 
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json;
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json;
     }
 
 
 
 
 
-    public function requestOTP(Request $request){
-    $data_lupapass =  [
-        'email'        => $request['emailforgetadmin'],
-        'community_id' => "104"
+    public function requestOTP(Request $request)
+    {
+        $data_lupapass =  [
+            'email'        => $request['emailforgetadmin'],
+            'community_id' => "104"
         ];
-    // dd($data_lupapass);
+        // dd($data_lupapass);
 
-    Session::put('data_forgetpass_admin', $data_lupapass);
+        session()->put('data_forgetpass_admin', $data_lupapass);
 
 
-    $request->validate([
+        $request->validate([
             'emailforgetadmin' => 'required|email'
-    ]);
+        ]);
 
-    try{  
-    $email = $request['emailforgetadmin'];
-    $url = env('SERVICE').'auth/sendotp';
-    
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params'  => [
-        'email'        => $email,
-        'community_id' => "104"
-        ]
-    ]);
+        try {
+            $email = $request['emailforgetadmin'];
+            $url = env('SERVICE') . 'auth/sendotp';
 
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', $url, [
+                'form_params'  => [
+                    'email'        => $email,
+                    'community_id' => "104"
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
 
-    if ($json['success'] == true) {
-    alert()->success('We have sent an authentication Code to your email, please check your authentication code.', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
-      return view('admin/otp_admin');
-    }
-    }
-    catch(ClientException $exception) {
+            if ($json['success'] == true) {
+                alert()->success('We have sent an authentication Code to your email, please check your authentication code.', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
+                return view('admin/otp_admin');
+            }
+        } catch (ClientException $exception) {
 
-    $status_error = $exception->getCode();
-    if( $status_error == 400){
-    alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
-    return back()->withInput();
-    }else{
-    alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
-    return back()->withInput();
-    }
-    
-    } //end-try catch
+            $status_error = $exception->getCode();
+            if ($status_error == 400) {
+                alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            } else {
+                alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            }
+        } //end-try catch
     } //end-function
 
 
 
-    public function NewPass_admin(Request $request){
-    //     dd($request);
-    
-    $request->validate([
-    'newpass_admin' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:confirm_newpass|same:confirm_newpass',
-    'confirm_newpass' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
-    'digit-1' => 'required|numeric', 
-    'digit-2' => 'required|numeric', 
-    'digit-3' => 'required|numeric', 
-    'digit-4' => 'required|numeric', 
-    'digit-5' => 'required|numeric', 
-    'digit-6' => 'required|numeric', 
-    ]);
+    public function NewPass_admin(Request $request)
+    {
+        //     dd($request);
 
-    try{ //try-cath
-    $otp_six = $request['digit-1'].$request['digit-2'].$request['digit-3'].$request['digit-4'].$request['digit-5'].$request['digit-6'];
+        $request->validate([
+            'newpass_admin' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:confirm_newpass|same:confirm_newpass',
+            'confirm_newpass' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
+            'digit-1' => 'required|numeric',
+            'digit-2' => 'required|numeric',
+            'digit-3' => 'required|numeric',
+            'digit-4' => 'required|numeric',
+            'digit-5' => 'required|numeric',
+            'digit-6' => 'required|numeric',
+        ]);
 
-    $url = env('SERVICE').'auth/forgotpassword';
+        try { //try-cath
+            $otp_six = $request['digit-1'] . $request['digit-2'] . $request['digit-3'] . $request['digit-4'] . $request['digit-5'] . $request['digit-6'];
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'otp' => $otp_six,
-        'password' => $request['newpass_admin'],
-        ]
-    ]);
+            $url = env('SERVICE') . 'auth/forgotpassword';
 
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'otp' => $otp_six,
+                    'password' => $request['newpass_admin'],
+                ]
+            ]);
 
-    if( $json['success'] == true){
-    alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
-    return view('admin/login');
-    }
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-     
-    }catch(ClientException $exception) {
-    $status_error = $exception->getCode();
+            if ($json['success'] == true) {
+                alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
+                return view('admin/login');
+            }
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
 
-    if( $status_error == 400){
-        // dd('back 400');
-    alert()->error('Use the resend feature to send a new OTP', 'Your OTP is no longer valid !')->autoclose(4500)->persistent('Done');
-    return view('admin/otp_admin');
-    } //end-if
-    } //end-catch
+            if ($status_error == 400) {
+                // dd('back 400');
+                alert()->error('Use the resend feature to send a new OTP', 'Your OTP is no longer valid !')->autoclose(4500)->persistent('Done');
+                return view('admin/otp_admin');
+            } //end-if
+        } //end-catch
     } //end-function
 
 
 
 
 
-  public function session_resendotp(){
-    if(Session::has('data_forgetpass_admin')){
-    $dt_resend = Session::get('data_forgetpass_admin');
-    // return $dt_resend;
-    // dd($dt_resend);
+    public function session_resendotp()
+    {
+        if (session()->has('data_forgetpass_admin')) {
+            $dt_resend = session()->get('data_forgetpass_admin');
+            // return $dt_resend;
+            // dd($dt_resend);
 
-     try{  
-    $url = env('SERVICE').'auth/sendotp';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params'  => [
-        'email'        => $dt_resend['email'],
-        'community_id' => $dt_resend['community_id']
-        ]
-    ]);
-
-
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+            try {
+                $url = env('SERVICE') . 'auth/sendotp';
+                $client = new \GuzzleHttp\Client();
+                $response = $client->request('POST', $url, [
+                    'form_params'  => [
+                        'email'        => $dt_resend['email'],
+                        'community_id' => $dt_resend['community_id']
+                    ]
+                ]);
 
 
-    if ($json['success'] == true) {
-    alert()->success('Re-send Success Please Check Your Latest Email from us', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
-      return view('admin/otp_admin');
+                $response = $response->getBody()->getContents();
+                $json = json_decode($response, true);
+
+
+                if ($json['success'] == true) {
+                    alert()->success('Re-send Success Please Check Your Latest Email from us', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
+                    return view('admin/otp_admin');
+                }
+            } catch (ClientException $exception) {
+
+                $status_error = $exception->getCode();
+                if ($status_error == 400) {
+                    alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
+                    return view('admin/otp_admin');
+                } else {
+                    alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
+                    return view('admin/otp_admin');
+                }
+            } //end-try catch
+
+        }
     }
-    }
-    catch(ClientException $exception) {
-
-    $status_error = $exception->getCode();
-    if( $status_error == 400){
-    alert()->warning('You have reached the maximum OTP sending limit, wait for 5 Minutes to send OTP again', 'You have sending OTP 3 Times!')->autoclose(4500)->persistent('Done');
-     return view('admin/otp_admin');
-    }else{
-    alert()->error('Please check your email address again or make sure you have registered on Comjuction !', 'Email Address Not Found')->autoclose(4500)->persistent('Done');
-    return view('admin/otp_admin');
-    }
-    
-    } //end-try catch
-
-    }
-   }
 
 
 
 
 
-    /// PAYMENT - ADMIN COMMUNITY REGISTRATION 
-    public function paymentView(){
+    /// PAYMENT - ADMIN COMMUNITY REGISTRATION
+    public function paymentView()
+    {
         return view('admin/payment');
     }
 
 
-    public function isi_payment(){
-    if(Session::has('list_payment')){
-    $ses_payment = Session::get('list_payment');
-    
-    return redirect('admin/payment')->with('pay_type', $ses_payment);
-    }
-    }
+    public function isi_payment()
+    {
+        if (session()->has('list_payment')) {
+            $ses_payment = session()->get('list_payment');
 
-
-    public function getpayment_method(Request $request){
-    $idpay = $request['payment_type_id'];
-
-    $url = env('SERVICE').'registration/paymentmethod';
-
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'payment_type_id' => $idpay
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json;
-    }
-
-    public function getDetailPay(Request $request){
-     $idpay = $request['payment_id'];
-
-    $url = env('SERVICE').'registration/paymentdetail';
-
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-        'payment_id' => $idpay
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    return $json;
+            return redirect('admin/payment')->with('pay_type', $ses_payment);
+        }
     }
 
 
+    public function getpayment_method(Request $request)
+    {
+        $idpay = $request['payment_type_id'];
+
+        $url = env('SERVICE') . 'registration/paymentmethod';
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'payment_type_id' => $idpay
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json;
+    }
+
+    public function getDetailPay(Request $request)
+    {
+        $idpay = $request['payment_id'];
+
+        $url = env('SERVICE') . 'registration/paymentdetail';
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'payment_id' => $idpay
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json;
+    }
 
 
-// FINAL REGISTRASION - ADMIN COMMUNITY
-    public function FinalAdminRegis(){
 
-    $idpay = Session::get('data_idpay');
-    $ses1  = Session::get('data_regis1');
-    $ses2  = Session::get('data_regis2');
-    $ses3  = Session::get('data_pricing');
-    $ses4  = Session::get('data_fitur');
 
-    $back_final = Session::get('sesback_finalregis_admin');
+    // FINAL REGISTRASION - ADMIN COMMUNITY
+    public function FinalAdminRegis()
+    {
 
-    $dtpay = [
-        'payment_title' => 'Pembayaran Pendaftaran Community',
-        'pricing_id'    => $ses3['pricing_id'],
-        'payment_time'  => $ses3['payment_time'],
-        'payment_id'    => $idpay
-    ];
+        $idpay = session()->get('data_idpay');
+        $ses1  = session()->get('data_regis1');
+        $ses2  = session()->get('data_regis2');
+        $ses3  = session()->get('data_pricing');
+        $ses4  = session()->get('data_fitur');
 
-    $datafinal = [
-            'community' => $ses1, 
-            'admin'     => $ses2, 
-            'feature'  => $ses4, 
-            'payment'  => $dtpay, 
-    ];
+        $back_final = session()->get('sesback_finalregis_admin');
+
+        $dtpay = [
+            'payment_title' => 'Pembayaran Pendaftaran Community',
+            'pricing_id'    => $ses3['pricing_id'],
+            'payment_time'  => $ses3['payment_time'],
+            'payment_id'    => $idpay
+        ];
+
+        $datafinal = [
+            'community' => $ses1,
+            'admin'     => $ses2,
+            'feature'  => $ses4,
+            'payment'  => $dtpay,
+        ];
 
         // dd($datafinal);
 
-    $url = env('SERVICE').'registration/adcommcreate';
-    $client = new \GuzzleHttp\Client();
+        $url = env('SERVICE') . 'registration/adcommcreate';
+        $client = new \GuzzleHttp\Client();
 
-    try {
-        $response = $client->request('POST',$url, [
-            'form_params' => $datafinal
-        ]);
-    } catch (RequestException $exception) {
-        $response = $exception->getResponse();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => $datafinal
+            ]);
+        } catch (RequestException $exception) {
+            $response = $exception->getResponse();
+        }
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        // dd($json);
+
+        if ($json['success'] == true) {
+            session()->forget('data_regis1');
+            session()->forget('data_regis1show');
+            session()->forget('data_idpay');
+            session()->forget('data_regis1');
+            session()->forget('data_regis2');
+            session()->forget('data_pricing');
+            session()->forget('listfitur');
+            session()->forget('fiturpilih');
+            session()->forget('data_idpay');
+            session()->forget('datafitur');
+            session()->forget('data_fitur');
+            session()->forget('sesback_finalregis_admin');
+            session()->forget('list_payment');
+            session()->forget('data_idpay');
+            session()->forget('id_pay_type');
+
+            // return view('admin/finish');
+            return view('admin/loading_creating');
+        } else {
+
+            if ($json['status'] == 500) {
+                alert()->error('Internal server error, try again by clicking finish button', 'Oh Sorry!');
+                return redirect('admin/finalreview')->with('fadmin', $back_final);
+            } else if ($json['status'] == 400) {
+                session()->forget('data_regis1');
+                session()->forget('data_regis1show');
+                session()->forget('data_idpay');
+                session()->forget('data_regis1');
+                session()->forget('data_regis2');
+                session()->forget('data_pricing');
+                session()->forget('listfitur');
+                session()->forget('fiturpilih');
+                session()->forget('data_idpay');
+                session()->forget('datafitur');
+                session()->forget('data_fitur');
+                session()->forget('sesback_finalregis_admin');
+                session()->forget('list_payment');
+                session()->forget('data_idpay');
+                session()->forget('id_pay_type');
+
+                alert()->error('Check your email, if you dont get message from us please Repeat your registration ', 'Process was interrupted !');
+                return view('admin/login');
+            } //end-else
+
+        } //end sukses = false
     }
-    
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-
-    // dd($json);
-
-    if ($json['success'] == true) {
-     Session::forget('data_regis1');
-     Session::forget('data_regis1show');
-     Session::forget('data_idpay');
-     Session::forget('data_regis1');
-     Session::forget('data_regis2');
-     Session::forget('data_pricing');
-     Session::forget('listfitur');
-     Session::forget('fiturpilih');
-     Session::forget('data_idpay');
-     Session::forget('datafitur');
-     Session::forget('data_fitur');
-     Session::forget('sesback_finalregis_admin');
-     Session::forget('list_payment');
-     Session::forget('data_idpay');
-     Session::forget('id_pay_type');
-
-      // return view('admin/finish');
-     return view('admin/loading_creating');
-    }else{
-        
-    if($json['status'] == 500){
-     alert()->error('Internal server error, try again by clicking finish button', 'Oh Sorry!');
-     return redirect('admin/finalreview')->with('fadmin',$back_final);  
-    }else if($json['status'] == 400){
-     Session::forget('data_regis1');
-     Session::forget('data_regis1show');
-     Session::forget('data_idpay');
-     Session::forget('data_regis1');
-     Session::forget('data_regis2');
-     Session::forget('data_pricing');
-     Session::forget('listfitur');
-     Session::forget('fiturpilih');
-     Session::forget('data_idpay');
-     Session::forget('datafitur');
-     Session::forget('data_fitur');
-     Session::forget('sesback_finalregis_admin');
-     Session::forget('list_payment');
-     Session::forget('data_idpay');
-     Session::forget('id_pay_type');
-
-    alert()->error('Check your email, if you dont get message from us please Repeat your registration ', 'Process was interrupted !');
-    return view('admin/login');            
-    } //end-else
-
-    } //end sukses = false
-}
 
 
 
 
 
-///CONFIRM PAYMENT INVOICE ADMIN
-    public function confirmView(){
+    ///CONFIRM PAYMENT INVOICE ADMIN
+    public function confirmView()
+    {
         return view('admin/confirmpay_invoice');
     }
 
 
     /// ######CONFIRM PAYMENT ADMIN
-     public function confirmpayView(){
+    public function confirmpayView()
+    {
         return view('admin/confirmpay');
     }
 
 
-    public function get_tipepay(){
-    $url = env('SERVICE').'paymentverification/paymenttype';
-    $client = new \GuzzleHttp\Client();
-    $request = $client->post($url);
-    $response = $request->getBody();
-    $jsonku = json_decode($response, true);
-    return($jsonku);
+    public function get_tipepay()
+    {
+        $url = env('SERVICE') . 'paymentverification/paymenttype';
+        $client = new \GuzzleHttp\Client();
+        $request = $client->post($url);
+        $response = $request->getBody();
+        $jsonku = json_decode($response, true);
+        return ($jsonku);
     }
 
 
-    public function get_carapay(Request $request){
-    $idpilih = $request['id'];
+    public function get_carapay(Request $request)
+    {
+        $idpilih = $request['id'];
 
-    $url = env('SERVICE').'paymentverification/paymentmethod';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'payment_type_id' => $idpilih
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $url = env('SERVICE') . 'paymentverification/paymentmethod';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'payment_type_id' => $idpilih
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    return $json;
+        return $json;
     }
 
 
-    public function get_invoice_num(Request $request){
-    $num = $request['invoice_number'];
+    public function get_invoice_num(Request $request)
+    {
+        $num = $request['invoice_number'];
 
-    $url = env('SERVICE').'paymentverification/getinvoice';
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'invoice_number' => $num
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
+        $url = env('SERVICE') . 'paymentverification/getinvoice';
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'invoice_number' => $num
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
 
-    Session::put('ses_invoice_pay', $json['data']);
+        session()->put('ses_invoice_pay', $json['data']);
 
-    return $json;
+        return $json;
     }
 
 
 
 
 
-    public function adminconfirmpay(Request $request) {
-        $inv_pay = Session::get('ses_invoice_pay');
+    public function adminconfirmpay(Request $request)
+    {
+        $inv_pay = session()->get('ses_invoice_pay');
         // dd($inv_pay);
 
         $validator = $request->validate([
@@ -853,7 +901,7 @@ class RegisterController extends Controller{
         ]);
 
         ///UPLOAD IMAGE KE BACK-EN
-        $req = new RequestController; 
+        $req = new RequestController;
         $fileimg = "";
 
         if ($request->hasFile('file_payment')) {
@@ -874,240 +922,249 @@ class RegisterController extends Controller{
                 "file"               => $imgku
             ];
 
-            $url =env('SERVICE').'paymentverification/create';
-            try{
-                $responseImage = $req->sendImagePayConfirm($imageRequest,$url);
-            // dd($responseImage);
+            $url = env('SERVICE') . 'paymentverification/create';
+            try {
+                $responseImage = $req->sendImagePayConfirm($imageRequest, $url);
+                // dd($responseImage);
 
-            if ($responseImage['success'] == true) {
-                $reshasil = $responseImage['data'];
-                alert()->success('Successfully Upload','System will confirm your payment max 24hours, then Login');
-            Session::forget('ses_invoice_pay');
-            return view('admin/login');
-            }else{
-            return back()->with('response', [
-                'status'   => 'error',
-                'messages' => [
-                'title'   => 'Insert Image',
-                'messages' => $responseImage['message']]
-                ]);
-               
-            }  
-        }catch(ClientException $exception) {
-                    $status_error = $exception->getCode();
+                if ($responseImage['success'] == true) {
+                    $reshasil = $responseImage['data'];
+                    alert()->success('Successfully Upload', 'System will confirm your payment max 24hours, then Login');
+                    session()->forget('ses_invoice_pay');
+                    return view('admin/login');
+                } else {
+                    return back()->with('response', [
+                        'status'   => 'error',
+                        'messages' => [
+                            'title'   => 'Insert Image',
+                            'messages' => $responseImage['message']
+                        ]
+                    ]);
+                }
+            } catch (ClientException $exception) {
+                $status_error = $exception->getCode();
 
-                    if( $status_error == 400){
-                    Session::forget('ses_invoice_pay');
+                if ($status_error == 400) {
+                    session()->forget('ses_invoice_pay');
                     alert()->warning('Anda sudah mengirim verifikasi lebih dari 3x hari ini, mohon bersabar dan tunggu', 'You have sending 3 Times!')->autoclose(4500)->persistent('Done');
                     return back();
-                    }
+                }
             }
-            
-        }//END-IF  UPLOAD-IMAGE 
+        } //END-IF  UPLOAD-IMAGE
 
-         // return redirect('admin/loading_payment')->withErrors($validator, 'admin/confirmpay');
-    } 
+        // return redirect('admin/loading_payment')->withErrors($validator, 'admin/confirmpay');
+    }
 
-///////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
 
 
-    
-    public function featuresView(){
+    //////////////////////////////////////////////////
+
+
+
+    public function featuresView()
+    {
         return view('admin/features');
     }
 
-    public function registerSixView(){
+    public function registerSixView()
+    {
         return view('admin/register6');
     }
-    
-    public function ReviewFinal(Request $request){
-    $idpay = $request['id_pay_method'];
-    $idtipepay = $request['id_pay_type'];
-    Session::put('data_idpay', $idpay);
-    Session::put('id_pay_type', $idtipepay);
 
-    $idpay = Session::get('data_idpay');
-    $ses1 = Session::get('data_regis1');
-    $ses2 = Session::get('data_regis2');
-    $ses3 = Session::get('data_pricing');
-    $ses4 = Session::get('listfitur');
-    $ses5 = Session::get('fiturpilih');
+    public function ReviewFinal(Request $request)
+    {
+        $idpay = $request['id_pay_method'];
+        $idtipepay = $request['id_pay_type'];
+        session()->put('data_idpay', $idpay);
+        session()->put('id_pay_type', $idtipepay);
 
-    $dtpay = [
-        'payment_title' => 'Pembayaran Pendaftaran Community',
-        'pricing_id'    => $ses3['pricing_id'],
-        'payment_time'  => $ses3['payment_time'],
-        'payment_id'    => $idpay
-    ];
+        $idpay = session()->get('data_idpay');
+        $ses1 = session()->get('data_regis1');
+        $ses2 = session()->get('data_regis2');
+        $ses3 = session()->get('data_pricing');
+        $ses4 = session()->get('listfitur');
+        $ses5 = session()->get('fiturpilih');
 
-    $datafinal = [
-            'community' => $ses1, 
-            'admin'     => $ses2, 
-            'feature'   => $ses4, 
-            'payment'   => $dtpay, 
+        $dtpay = [
+            'payment_title' => 'Pembayaran Pendaftaran Community',
+            'pricing_id'    => $ses3['pricing_id'],
+            'payment_time'  => $ses3['payment_time'],
+            'payment_id'    => $idpay
+        ];
+
+        $datafinal = [
+            'community' => $ses1,
+            'admin'     => $ses2,
+            'feature'   => $ses4,
+            'payment'   => $dtpay,
             'fiturid'   => $ses5
         ];
-    $arr = [];
+        $arr = [];
 
 
-    $dec = json_decode(json_encode($datafinal),true);
-    array_push($arr, $dec);
+        $dec = json_decode(json_encode($datafinal), true);
+        array_push($arr, $dec);
 
-    Session::put('sesback_finalregis_admin', $arr);
+        session()->put('sesback_finalregis_admin', $arr);
 
-    // dd($arr);
-    return redirect('admin/finalreview')->with('fadmin',$arr);
-     // return view('admin/register6',['fadmin'=> $arr]);
-   }
+        // dd($arr);
+        return redirect('admin/finalreview')->with('fadmin', $arr);
+        // return view('admin/register6',['fadmin'=> $arr]);
+    }
 
-    public function logout(){
-     Session::forget('data_regis1');
-     Session::forget('data_regis1show');
-     Session::forget('data_idpay');
-     Session::forget('data_regis1');
-     Session::forget('data_regis2');
-     Session::forget('data_pricing');
-     Session::forget('listfitur');
-     Session::forget('fiturpilih');
-     Session::forget('data_idpay');
-     Session::forget('datafitur');
-     Session::forget('data_fitur');
-     Session::forget('sesback_finalregis_admin');
-     Session::forget('list_payment');
-     Session::forget('data_idpay');
-     Session::forget('id_pay_type');
+    public function logout()
+    {
+        session()->forget('data_regis1');
+        session()->forget('data_regis1show');
+        session()->forget('data_idpay');
+        session()->forget('data_regis1');
+        session()->forget('data_regis2');
+        session()->forget('data_pricing');
+        session()->forget('listfitur');
+        session()->forget('fiturpilih');
+        session()->forget('data_idpay');
+        session()->forget('datafitur');
+        session()->forget('data_fitur');
+        session()->forget('sesback_finalregis_admin');
+        session()->forget('list_payment');
+        session()->forget('data_idpay');
+        session()->forget('id_pay_type');
 
-      if(!Session::has('data_regis1'))
-        {
-      return "signout";
+        if (!session()->has('data_regis1')) {
+            return "signout";
         }
     }
 
 
-    public function loadingcreatingView(){
+    public function loadingcreatingView()
+    {
         return view('admin/loading_creating');
     }
-    public function finishView(){
-        alert()->success('Done','Please Check Your Email');
-            return view('admin/finish');
+    public function finishView()
+    {
+        alert()->success('Done', 'Please Check Your Email');
+        return view('admin/finish');
     }
 
-    public function tesView(){
+    public function tesView()
+    {
         return view('admin/tes');
     }
-    public function loadingpaymentView(){
+    public function loadingpaymentView()
+    {
         return view('admin/loading_payment');
     }
-    public function finishpaymentView(){
+    public function finishpaymentView()
+    {
         return view('admin/finish_payment');
     }
 
-    public function forgetpassAdminView(){
+    public function forgetpassAdminView()
+    {
         return view('admin/forgetpass_admin');
     }
 
-    public function otpAdminView(){
+    public function otpAdminView()
+    {
         return view('admin/otp_admin');
     }
-    
-
-    public function session_regisOne(){
-    if(Session::has('data_regis1')){
-    $ses1 = Session::get('data_regis1');
-     return $ses1;
-    }else{
-        exit();
-    }
-    }
-
-    public function session_regisTwo(){
-    if(Session::has('data_regis2')){
-    $ses2 = Session::get('data_regis2');
-    return $ses2;
-    }
-    }
 
 
-    public function session_pricing(){
-    if(Session::has('data_pricing')){
-    $ses3 = Session::get('data_pricing');
-    return $ses3;
-    }
+    public function session_regisOne()
+    {
+        if (session()->has('data_regis1')) {
+            $ses1 = session()->get('data_regis1');
+            return $ses1;
+        } else {
+            exit();
+        }
     }
 
-    public function session_payadmin(){
-    if(Session::has('data_idpay') || Session::has('id_pay_type')){
-    $sespay = Session::get('data_idpay');
-    $sestipepay = Session::get('id_pay_type');
-
-    $paramku = [
-            'id_pay'  => $sespay, 
-            'id_tipe' => $sestipepay, 
-    ];
-    return $paramku;
-    }
+    public function session_regisTwo()
+    {
+        if (session()->has('data_regis2')) {
+            $ses2 = session()->get('data_regis2');
+            return $ses2;
+        }
     }
 
 
-
-    public function session_fitur(){
-    if(Session::has('listfitur')){
-    $ses4 = Session::get('listfitur');
-    return $ses4;
+    public function session_pricing()
+    {
+        if (session()->has('data_pricing')) {
+            $ses3 = session()->get('data_pricing');
+            return $ses3;
+        }
     }
-    }
 
-    public function session_backfitur(){
-    $ses_getfitur = Session::get('fiturpilih');
+    public function session_payadmin()
+    {
+        if (session()->has('data_idpay') || session()->has('id_pay_type')) {
+            $sespay = session()->get('data_idpay');
+            $sestipepay = session()->get('id_pay_type');
 
-
-    //get data pricing untuk fitur
-    $url = env('SERVICE').'registration/feature';
-
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'feature_type_id' => $ses_getfitur
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    $isidata = $json['data'];
-
-     return redirect('admin/features')->with('datafitur',$isidata);
+            $paramku = [
+                'id_pay'  => $sespay,
+                'id_tipe' => $sestipepay,
+            ];
+            return $paramku;
+        }
     }
 
 
 
+    public function session_fitur()
+    {
+        if (session()->has('listfitur')) {
+            $ses4 = session()->get('listfitur');
+            return $ses4;
+        }
+    }
 
-    public function addfromdetailFitur(Request $request){
-    $ses_getfitur = Session::get('fiturpilih');
-      $input = $request->all();  
-      $idaddfitur = $input['idfituradmin'];
-      
-    //get data pricing untuk fitur
-    $url = env('SERVICE').'registration/feature';
+    public function session_backfitur()
+    {
+        $ses_getfitur = session()->get('fiturpilih');
 
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('POST',$url, [
-        'form_params' => [
-            'feature_type_id' => $ses_getfitur
-        ]
-    ]);
-    $response = $response->getBody()->getContents();
-    $json = json_decode($response, true);
-    $isidata = $json['data'];
 
-     return redirect('admin/features')->with(['datafitur'=>$isidata, 'idaddfitur'=>$idaddfitur]);
+        //get data pricing untuk fitur
+        $url = env('SERVICE') . 'registration/feature';
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'pricing_id' => $ses_getfitur
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        $isidata = $json['data'];
+
+        return redirect('admin/features')->with('datafitur', $isidata);
     }
 
 
 
 
+    public function addfromdetailFitur(Request $request)
+    {
+        $ses_getfitur = session()->get('fiturpilih');
+        $input = $request->all();
+        $idaddfitur = $input['idfituradmin'];
 
+        //get data pricing untuk fitur
+        $url = env('SERVICE') . 'registration/feature';
 
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => [
+                'pricing_id' => $ses_getfitur
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        $isidata = $json['data'];
 
+        return redirect('admin/features')->with(['datafitur' => $isidata, 'idaddfitur' => $idaddfitur]);
+    }
 }

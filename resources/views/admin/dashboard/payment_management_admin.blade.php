@@ -154,9 +154,15 @@
                     </div>
 
                     <div class="col-md-8" style="padding-left: 25px;">
+
                         <div class="row">
-                            <div class="col-md-12 col-sm-12">
+                            <div class="col-md-6 col-sm-12">
                                 <h4 class="cdarkgrey s20">Sub Payment</h4>
+                            </div>
+                            <div class="col-md-6 col-sm-12" style="text-align: right;">
+                                <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                                    data-target="#modal_aktivasi_pay_admmin" data-dismiss="modal">
+                                    Activation</button>
                             </div>
                         </div>
                         <br>
@@ -215,7 +221,7 @@
 
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab_default_1_subpay" style="height: auto; min-height: 455px;">
+                        <div class="tab-pane active" id="tab_default_1_subpay" style="height: auto; min-height: 425px;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="circle" style="position: relative; margin-bottom: 1em; top: 0px;">
@@ -271,19 +277,11 @@
                                     style="border-radius: 10px;">
                                     <i class="mdi mdi-close"></i> Cancel
                                 </button>
-                                &nbsp;
-                                <button type="submit" id="klik_edit_subpay" class="btn btn-teal btn-sm"
-                                    data-toggle="modal" data-target="#modal_edit_subpayment_super" data-dismiss="modal">
-                                    <i class="mdi mdi-check btn-icon-prepend">
-                                    </i> Edit Subpayment </button>
+
                             </div> <!-- end-footer     -->
+                        </div> <!-- {{-- endtab --}} -->
 
-                        </div>
-                        <!-- {{-- endtab --}} -->
-
-                        <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 455px;">
-                            isis list setting
-
+                        <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 425px;">
                             <div class="isi_setting_subpay" style="margin-top: 1.5em;">
                             </div>
                         </div>
@@ -491,6 +489,56 @@
 </div>
 
 
+<!-- MODAL AKTIVASI STATUS  -->
+<div class="modal fade" id="modal_aktivasi_pay_admmin" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="modal-header" style="border: none;">
+                <h4 class="modal-title">Payment Activation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="form_change_status_inbox_super" action="{{route('aktivasi_payment_admin')}}">
+                {{ csrf_field() }}
+                <div class="modal-body" style="min-height: 130px;">
+                    <div class="row" style="margin-top: 1.5em;">
+                        <div class="col-md-4" style="padding-top: 0.6em;">
+                            <small class="clight s13"><b>Payment Time</b></small>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control input-abu" name="aktif_payment_time" id="aktif_payment_time">
+                                <option selected disabled> Choose </option>
+                                <option value="1"> Montly </option>
+                                <option value="2"> Annual </option>
+                            </select>
+                            <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
+                                name="aktif_id_payment">
+                            <input class="form-control input-abu" type="hidden" id="aktif_id_subpayment"
+                                name="aktif_id_subpayment">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"
+                    style="border: none; margin-bottom: 0.5em;
+                            display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" id="btn_aktivasi_payment" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Submit </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -635,6 +683,7 @@
     function detail_payment_all_admin(dtpay) {
         var param = dtpay.split('<>');
         // console.log(param);
+        $("#aktif_id_payment").val(param[0]);
 
         $.ajaxSetup({
             headers: {
@@ -700,6 +749,8 @@
                                         isine = '<small class="badge bg-abu melengkung10px cwhite">Deactive</small>';
                                     } else if (data == 1) {
                                         isine = '<small class="badge bg-biru melengkung10px cdarkgrey">Active</small>';
+                                    } else if (data == 2) {
+                                        isine = '<small class="badge bg-kuning melengkung10px cdarkgrey">Unpaid</small>';
                                     }
                                     return isine;
                                 }
@@ -732,6 +783,7 @@
                             {
                                 mData: 'id',
                                 render: function (data, type, row, meta) {
+                                    localStorage.removeItem('data_subpay');
                                     var datasubpay = {
                                         "id": row.id,
                                         "payment_title": row.payment_title,
@@ -755,8 +807,8 @@
                         ],
                     }); //end-datatable
                 } else {
-                        var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                        $('#tabel_sub_payment_super tbody').empty().append(nofound);
+                    var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_sub_payment_super tbody').empty().append(nofound);
                 }
 
             },
@@ -778,8 +830,10 @@
 
         var dtk = localStorage.getItem("data_subpay");
         var isi = JSON.parse(dtk);
-        console.log("id payment method = " + isi.id);
-        get_setting_subpayment_super(isi.id);
+        console.log(isi);
+        // console.log("id payment method = " + isi.id);
+        get_setting_subpayment_admin(params);
+        $("#aktif_id_subpayment").val(isi.id);
 
         var statusui = '';
         if (isi.status == 0) {
@@ -822,7 +876,7 @@
 
 
 
-    function get_setting_subpayment_super(idnya) {
+    function get_setting_subpayment_admin(idnya) {
         $(".set_id_paymethod").val(idnya);
         $.ajaxSetup({
             headers: {
@@ -830,7 +884,7 @@
             }
         });
         $.ajax({
-            url: '/superadmin/get_setting_subpayment_super',
+            url: '/admin/get_setting_subpayment_admin',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
