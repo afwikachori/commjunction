@@ -140,7 +140,7 @@
 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
 <div class="img-upload-profil editprofil">
      <div class="circle editprofil">
-       <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/focus.png">
+       <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/loading.gif" onerror="this.onerror=null;this.src='/img/default.png';">
      </div>
      <div class="p-image editprofil">
       <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" value="editprofil" style="width: 30px; height: 30px;">

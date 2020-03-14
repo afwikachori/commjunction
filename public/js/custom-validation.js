@@ -7,13 +7,19 @@
         });
 
 function rupiah(val){
-var   bilangan = val;    
+var   bilangan = val;
 var reverse = bilangan.toString().split('').reverse().join(''),
   ribuan  = reverse.match(/\d{1,3}/g);
   ribuan  = ribuan.join('.').split('').reverse().join('');
- 
+
 return ribuan;
 }
+
+//ON ERROR IMAGE
+function errorImg() {
+    $('.rounded-circle').attr('src', '/img/fitur.png');
+}
+
 
 /* Fungsi formatRupiah */
     function formatRupiah(angka, prefix){
@@ -51,7 +57,7 @@ if(this.value == ""){
 });
 
 $('#phone_admin').on('keyup', function () {
-	
+
 if(this.value == ""){
 	$("#phone_admin").removeClass( "is-valid" ).removeClass( "is-invalid" );
   $("#pesan_phone").hide();
@@ -93,7 +99,7 @@ function cektelfonadmin(input){
       },
       error: function (result) {
       	console.log("Cant not check unique phone number");
-       
+
       }
       });
 
@@ -145,7 +151,7 @@ function cekemailadmin(input){
       },
       error: function (result) {
         console.log("Cant not check unique phone number");
-       
+
       }
       });
 
@@ -166,7 +172,7 @@ if(this.value == ""){
 });
 
 $('#username_admin').on('keyup', function () {
- 
+
 
 	var alpanumeric = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/;
 if(this.value == ""){
@@ -213,7 +219,7 @@ function cekusername_admin(input){
       },
       error: function (result) {
       	console.log("Cant not check unique username");
-       
+
       }
       });
 
@@ -435,7 +441,7 @@ img.onclick = function(){
 var span = document.getElementsByClassName("closeq")[0];
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() { 
+span.onclick = function() {
   modal.style.display = "none";
 }
 }
@@ -443,7 +449,7 @@ span.onclick = function() {
 
 
 
-// SESSION LOGIN SUBSVRIBER 
+// SESSION LOGIN SUBSVRIBER
 function session_subscriber_logged(){
 $.ajaxSetup({
     headers: {

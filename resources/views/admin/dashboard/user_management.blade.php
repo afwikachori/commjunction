@@ -334,8 +334,6 @@ function tabel_user_management(){
 }
 
 function detail_user_manage(iduser){
-$("#modal_detail_user").modal("show");
-
 $.ajaxSetup({
     headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -351,6 +349,7 @@ $.ajax({
       success: function (result) {
         console.log(result[0]);
       var res = result[0];
+      $("#modal_detail_user").modal("show");
     // $("#foto_user").attr("src", server_cdn+res.foto);
       $("#detail_nama").html(res.full_name);
       $("#detail_username").html(res.user_name);

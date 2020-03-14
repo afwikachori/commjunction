@@ -186,7 +186,7 @@ $(".tabbable-line li a").click(function() {
 
 //ON ERROR IMAGE
 function errorImg() {
-    $('.rounded-circle').attr('src', '/img/fitur.png');
+    $('.rounded-circle').attr('src', '/img/default.png');
 }
 
 // function file_browser_profil(){

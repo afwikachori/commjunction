@@ -216,13 +216,13 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-
         get_jenis();
         get_selectedfitur();
         get_pricenyid();
         get_paybyid();
 
     });
+
 
     function showPass() {
         var a = document.getElementById("password_admin_review");

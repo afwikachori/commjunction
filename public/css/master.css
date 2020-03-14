@@ -528,6 +528,7 @@ font-size: 35px;
   transition: 0.3s;
 }
 
+
 .closeq:hover,
 .close:focus {
   color: #bbb;
@@ -536,10 +537,29 @@ font-size: 35px;
 }
 
 .vs-regis{
-    position: absolute;
-    width: 90%;
+  position: absolute;
+    width: 85%;
     left: 0px;
-    top: 27%;
+    top: 30%;
+}
+
+.img_confirm1{
+    position: absolute;
+    right: 0px;
+}
+
+.img_confirm2{
+    position: absolute;
+    right: 170px;
+    width: 30%;
+    top: 60px;
+}
+
+.img_confirm3{
+position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 250px;
 }
 
 .vs-regis1{

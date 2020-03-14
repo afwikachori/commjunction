@@ -1,6 +1,11 @@
 @extends('layout.app')
 
 @section('content')
+
+<img src="/visual/kananatas.png" class="img_confirm1">
+<img src="/visual/imgregis.png" class="img_confirm2">
+<img src="/visual/kiribawah.png" class="img_confirm3">
+
 <div class="container">
 <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Please Confirm your Regsitrasion !</h3>
 <br>
@@ -85,8 +90,8 @@ $(document).ready(function () {
   $("#file_payment").attr("disabled", 'disabled');
   $("#btn_confirmpay").css("display", "none");
   $("#hidein-img").css("display", "none");
-  
-  
+
+
 
 
 });
@@ -96,7 +101,7 @@ $(document).ready(function () {
 
 
 
-$('input#invoice_number').bind("change keyup input",function() { 
+$('input#invoice_number').bind("change keyup input",function() {
   var inin = $(this).val();
     // alert("num invoice = "+inin);
   get_invoice_num(inin);
@@ -129,11 +134,11 @@ function get_invoice_num(input){
          $("#bank_receiver").html(isi.payment_bank_name);
          $("#name_receiver").html(isi.payment_owner_name);
 
-      
+
       },
       error: function (result) {
         console.log("Cant invoice number");
-      
+
       }
       });
 

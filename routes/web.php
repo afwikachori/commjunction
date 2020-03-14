@@ -60,9 +60,12 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('change_status_inbox_message_admin','AdminCommController@change_status_inbox_message_admin')->name('change_status_inbox_message_admin');
+Route::post('delete_message_inbox_admin','AdminCommController@delete_message_inbox_admin')->name('delete_message_inbox_admin');
+
+Route::post('send_inbox_message_admin','AdminCommController@send_inbox_message_admin')->name('send_inbox_message_admin');
 Route::post('detail_generate_message_inbox_super_admin','AdminCommController@detail_generate_message_inbox_super_admin')->name('detail_generate_message_inbox_super_admin');
 Route::post('get_list_subscriber_inbox_admin','AdminCommController@get_list_subscriber_inbox_admin')->name('get_list_subscriber_inbox_admin');
-
 Route::post('tabel_generate_inbox_admin','AdminCommController@tabel_generate_inbox_admin')->name('tabel_generate_inbox_admin');
 Route::post('aktivasi_payment_admin','AdminCommController@aktivasi_payment_admin')->name('aktivasi_payment_admin');
 Route::post('get_setting_subpayment_admin','AdminCommController@get_setting_subpayment_admin')->name('get_setting_subpayment_admin');

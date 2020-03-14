@@ -2049,5 +2049,145 @@ class AdminCommController extends Controller
         }
     }
 
+    public function send_inbox_message_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        // return $input;
+
+        $url = env('SERVICE') . 'inboxmanagement/sendmessage';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        if (isset($input['list_user'])) {
+            $user = $input['list_user'];
+        } else {
+            $user = "";
+        }
+
+        $bodyku = json_encode([
+            "title" => $input['judul_inbox'],
+            "description" => $input['deksripsi_inbox'],
+            "user_type" => $input['usertipe_inbox1'],
+            "user_id" => $user,
+            "message_type" =>  $input['tipe_inbox'],
+            "community_id" => $input['komunitas_inbox'],
+            "broadcast_status" => $input['bc_status'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+        }
+    }
+
+    public function delete_message_inbox_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/deletemessage';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "id" => $input['id_message_inbox'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Delete Message Inbox', 'Deleted!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 400) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
+                return back();
+            }
+        }
+    }
+
+    public function change_status_inbox_message_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        $url = env('SERVICE') . 'inboxmanagement/changestatus';
+        $client = new \GuzzleHttp\Client();
+        // return $input;
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "id"     => $input['id_inbox'],
+            "status" => $input['list_status'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $code = $exception->getMessage();
+            if ($code == 404) {
+                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
 
 } //end-class
