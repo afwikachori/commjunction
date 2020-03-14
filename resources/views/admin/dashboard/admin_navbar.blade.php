@@ -23,7 +23,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img src="/img/default.png" alt="image" class="foto_profil_admin">
+                  <img src="/img/loading.gif" alt="image" class="foto_profil_admin" onerror="this.onerror=null;this.src='/img/default.png';">
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
@@ -32,7 +32,7 @@
                       {{ Session::get('nama_admin')}}
                     @endif
                   </p>
-                 
+
                 </div>
               </a>
 
@@ -110,7 +110,7 @@
                 Etc</a>
               </div>
             </li>
-            
+
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>

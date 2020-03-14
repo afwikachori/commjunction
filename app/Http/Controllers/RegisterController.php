@@ -332,11 +332,13 @@ class RegisterController extends Controller
             $json = json_decode($response, true);
             $isidata = $json['data'];
 
-            return $isidata;
-
+            $isini = [];
+            foreach ($isidata as $i => $dt) {
+                array_push($isini, $dt['feature']);
+            }
+            // return $isini;
             $count = count($isidata);
-
-            return redirect('admin/features')->with(['datafitur' => $isidata, 'sum' => $count]);
+            return redirect('admin/features')->with(['datafitur' => $isini, 'sum' => $count]);
         } catch (ClientException $exception) {
             // return $exception;
             $code = $exception->getMessage();

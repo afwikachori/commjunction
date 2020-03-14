@@ -24,7 +24,6 @@
 
                         @foreach(Session::get('datafitur') as $newdata)
 
-
                         <div class="col-sm-2">
                             <div class="card fiturcard">
                                 <div class="card-body" style="padding: 1em !important;">
@@ -35,7 +34,8 @@
                                     </div>
                                     <center>
                                         <img class="rounded-circle img-fluid" src="{{ env('CDN').$newdata['logo'] }}"
-                                            style="width: 45px; margin-bottom: 0.5em;">
+                                            style="width: 45px; margin-bottom: 0.5em;"
+                                            onerror="this.onerror=null;this.src='/img/fitur.png';">
                                         <h6 class="cgrey">{{ $newdata['title'] }}</h6>
                                         <small class="clight">{{ $newdata['description'] }}</small>
                                     </center>

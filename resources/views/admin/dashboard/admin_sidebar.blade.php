@@ -1,8 +1,8 @@
 <ul class="nav">
     <li class="nav-item nav-profile">
         <center>
-            <img src="/img/default.png" class="rounded-circle img-fluid dash-img-profil logo_komunitas"
-                style="margin-bottom: 3%;"  onerror="this.onerror=null;this.src='/img/noimg.jpg';" >
+            <img src="/img/loading.gif" class="rounded-circle img-fluid dash-img-profil logo_komunitas"
+                style="margin-bottom: 3%;" onerror="this.onerror=null;this.src='/img/default.png';">
             <div class="nav-profile-text d-flex flex-column">
                 <span class="font-weight-bold judul_komunitas">
                     Community Name</span>

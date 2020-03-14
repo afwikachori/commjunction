@@ -184,6 +184,10 @@ $(".tabbable-line li a").click(function() {
     $(this).parent().addClass('active');
 });
 
+//ON ERROR IMAGE
+function errorImg() {
+    $('.rounded-circle').attr('src', '/img/fitur.png');
+}
 
 // function file_browser_profil(){
 

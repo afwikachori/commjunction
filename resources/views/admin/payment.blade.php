@@ -17,7 +17,7 @@
 
 @foreach(Session::get('pay_type') as $dt)
 <button type="button" id="tipe{{ $dt['id']  }}" class="btn btn-orenline col-md-4 btn-sm btn-fluid" value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
-  <i class="fa fa-exchange "></i> 
+  <i class="fa fa-exchange "></i>
 &nbsp; {{ $dt['payment_title'] }}</button>
 &nbsp;
 @endforeach
@@ -26,7 +26,8 @@
 <div class="col-md-5" id="showhide_pay" style="display: none;">
 <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
 
-<form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">{{ csrf_field() }}
+<form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">
+    {{ csrf_field() }}
 
 <div class="collapse-accordion" id="list_paymentmethod" role="tablist" aria-multiselectable="true">
 <!-- isi card -->
@@ -140,7 +141,7 @@ $("#id_pay_type").val(val);
         });
         // console.log(i , isitext)
 
-        html += 
+        html +=
         '<div class="card border-oren" id="cardpay'+item.id+'">'+
     '<div class="card-header" role="tab">'+
       '<h6 class="mb-0 pdb1">'+
@@ -162,7 +163,7 @@ $("#id_pay_type").val(val);
       error: function (result) {
        console.log("Cant get data payment method");
        $('#mdl-loadingajax').modal('hide');
-      }, 
+      },
       complete: function(result){
          $('#mdl-loadingajax').modal('hide');
       }
@@ -195,7 +196,7 @@ $.ajax({
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
-        console.log(result);  
+        console.log(result);
         if(result.id_tipe != ""){
           $("#tipe"+result.id_tipe).trigger('click');
         }
