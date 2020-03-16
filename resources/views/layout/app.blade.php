@@ -39,6 +39,23 @@
             @yield('content')
             <div id="fb-root"></div>
 
+
+    <!-- MOdal Image Viewer-->
+<div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+        </button>
+      </div>
+      <center>
+      <img id="mdl-img-view">
+    </center>
+    </div>
+  </div>
+</div>
+
     <!--   Core JS Files   -->
     <script src="/js/jquery.3.2.1.min.js"></script>
     <!-- <script src="/js/jquery-3.4.1.slim.min.js"></script> -->

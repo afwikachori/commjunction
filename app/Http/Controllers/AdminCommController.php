@@ -113,8 +113,6 @@ class AdminCommController extends Controller
         ]);
         $input = $request->all();
 
-        // dd($input);
-
         if ($input['useradmin'] == 'afwika' && $input['passadmin'] == 'afwika') {
             return redirect('admin/dashboard');
         } else {
@@ -138,6 +136,9 @@ class AdminCommController extends Controller
                     return redirect('admin/dashboard')->with('nama_admin', $nameku);
                 }
             } catch (ClientException $exception) {
+                $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $errorq;
+
                 $code_error = $exception->getCode();
                 if ($code_error == 404) {
                     alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');

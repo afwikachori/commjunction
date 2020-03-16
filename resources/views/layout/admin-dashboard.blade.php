@@ -27,6 +27,9 @@
     <!-- tags -->
     <link rel="stylesheet" href="/css/tags/tagify.css">
 
+    <!-- toastr -->
+    <link rel="stylesheet" href="/css/toastr.min.css">
+
     <!-- chart -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
@@ -87,7 +90,7 @@
     <!-- container-scroller -->
 
 <!-- MODAL LOADING AJAX -->
-<div class="modal fade modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
     <div class="modal-content loading">
     <center>
@@ -314,6 +317,8 @@
     <script src="{{ asset('/js/admincom.js') }}"></script>
 
     <script src="/js/tags/tagify.min.js"></script>
+
+    <script src="/js/toastr.min.js"></script>
 
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

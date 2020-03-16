@@ -1,12 +1,42 @@
 
 var server_cdn = '{{ env("CDN") }}';
+var ui = {
+    popup: {
+        show: function show(type, message, tittle) {
+            toastr[type](message, tittle);
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": 0,
+                "onclick": null,
+                "onCloseClick": null,
+                "extendedTimeOut": 0,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false
+            };
+        },
+
+        showLoader: function showLoader() {
+            $("#modal_ajax").modal('show');
+        },
+        hideLoader: function hideLoader() {
+            $("#modal_ajax").modal('hide');
+        },
+    }
+};
 
 $(document).ready(function () {
 session_admin_logged();
-// file_browser_profil();
-
-
-
 });
 
 
@@ -14,6 +44,17 @@ function session_admin_logged(){
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    beforeSend: function beforeSend(jxqhr) {
+        ui.popup.showLoader();
+    },
+    timeout : 20000,
+    error: function error(event, jxqhr, status, _error) {
+        ui.popup.show('error', status, 'Error');
+        ui.popup.hideLoader();
+    },
+    complete: function complete() {
+        ui.popup.hideLoader();
     }
 });
 $.ajax({
@@ -87,6 +128,18 @@ $.ajax({
 
 function errorImg() {
     $('.rounded-circle').attr('src', '/img/noimg.jpg');
+}
+
+function  dateFormat(tgl) {
+    var d = new Date(tgl);
+
+        dformat = [d.getDate(), d.getMonth() + 1,
+        d.getFullYear()].join('/') + '<br>' +
+            [d.getHours(),
+            d.getMinutes(),
+            d.getSeconds()].join(':');
+
+    return dformat;
 }
 
 

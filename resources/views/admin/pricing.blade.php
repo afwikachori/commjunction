@@ -131,7 +131,7 @@ html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1em;">'+
           '<div class="card-body">'+
           '<center>'+
           '<h4 class="card-title h4" style="margin-top: 0.5em;">'+ item.title +'</h4>'+
-          '<img src="'+server_cdn+item.icon+'"  class="rounded-circle img-fluid imgprice">'+
+          '<img src="'+server_cdn+item.icon+'"  class="rounded-circle img-fluid imgprice" onerror="errorImg()">'+
         '<div class="hidetime1">'+
           '<sup class="cgrey" style="font-size: 30px;">'+
             '<small class="h6">IDR</small></sup>'+

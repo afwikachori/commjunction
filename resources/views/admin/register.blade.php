@@ -30,7 +30,7 @@
       <div class="pdregis1">
         <h3 lang="en" style="color: #4F4F4F; margin-right: -0.5em;">Register</h3>
         <label lang="en" class="clight s15" data-lang-token="info-regis1">Let’s us understand more about you, please fill your information to continue,  so you can using our app.</label>
-      
+
 
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -79,7 +79,8 @@
         @endif
     </div>
 
-    <img id="iconcom_view" class="img-fluid rounded float-left" src="" style="width: 15%; margin-top: 0.5em; height: auto;display: none; ">
+    <img id="iconcom_view" class="img-fluid rounded float-left" src="" onclick="clickImageView()"
+    style="width: 15%; margin-top: 0.5em; height: auto;display: none; ">
         <small style="color: grey; display: none;" id="text_dimensi" lang="en">Your Image</small>
         <small id="pixelicon" style="color: grey;"></small>
 </div>
@@ -109,11 +110,11 @@
 
         <div class="row other_type_com" style="display: none;">
             <div class="col">
-                <input type="text"  class="form-control @error('other_type_com') is-invalid @enderror" name="other_type_com" value="{{ old('other_type_com') }}" id="other_type_com" placeholder="Input Community Type" >       
+                <input type="text"  class="form-control @error('other_type_com') is-invalid @enderror" name="other_type_com" value="{{ old('other_type_com') }}" id="other_type_com" placeholder="Input Community Type" >
             </div>
             <div class="col-1">
             <button type="button" id="close_other" class="close" aria-label="Close">&times;
-                <span aria-hidden="true"></span>   
+                <span aria-hidden="true"></span>
             </button>
             </div>
         </div>
@@ -173,19 +174,19 @@ $.ajax({
       datatype: 'JSON',
       success: function (result) {
     if (result != ""){
-    $("#name_com").val(result.name); 
-    $("#descrip_com").val(result.description); 
+    $("#name_com").val(result.name);
+    $("#descrip_com").val(result.description);
     $('select[name="type_com"]').val(result.jenis_comm_id);
     $('#range_member').val(result.range_member).attr("selected", "selected");
     if(result.name != undefined){
     $("#iconcom_view").attr('src', server_cdn+result.logo).show();
     $(".custom-file-label").html("YOUR ICON COMMUNITY");
     }
-    
+
     $("#icon_com").removeAttr( 'required' );
 
     if(result.jenis_comm_id == 1){
-        $("#other_type_com").val(result.cust_jenis_comm); 
+        $("#other_type_com").val(result.cust_jenis_comm);
         $('.other_type_com').show();
         $('#type_com').hide();
     }else{
@@ -204,7 +205,7 @@ $.ajax({
 
 var _URL = window.URL || window.webkitURL; // image dimension
 
-// other - dropdown jenis community 
+// other - dropdown jenis community
     $("#type_com").change(function () {
         var pilih = $('#type_com :selected').val();
 
@@ -221,7 +222,7 @@ var _URL = window.URL || window.webkitURL; // image dimension
 
 
 //dropdown get jenis komunitas
-function get_jenis() {       
+function get_jenis() {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -233,14 +234,14 @@ $.ajax({
     dataType: "json",
     success: function (status, code, data) {
     if (status.success == true) {
-      var data = status.data; 
+      var data = status.data;
 
       $('#type_com').empty();
       $('#type_com').append("<option disabled> --- </option>");
 
       for (var i = data.length - 1; i >= 0; i--) {
         $('#type_com').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].jenis_comm, "</option>"));
-      } 
+      }
       //Short Function Ascending//
       $("#type_com").html($('#type_com option').sort(function (x, y) {
         return $(x).val() < $(y).val() ? -1 : 1;
@@ -249,7 +250,7 @@ $.ajax({
       $("#type_com").get(0).selectedIndex = 0; //e.preventDefault();
     }
      const OldValue = '{{old('type_com')}}';
-    
+
     if(OldValue !== '') {
       $('#type_com').val(OldValue);
     }

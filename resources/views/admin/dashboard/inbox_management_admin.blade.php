@@ -562,7 +562,11 @@
                 { mData: 'user_type_title' },
                 { mData: 'community_name' },
                 { mData: 'status' },
-                { mData: 'created_at' },
+                { mData: 'created_at',
+                    render: function (data) {
+                        return (dateFormat(data));
+                    }
+                },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {

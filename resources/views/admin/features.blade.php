@@ -19,11 +19,8 @@
                 <input type="hidden" name="idaddfitur" id="idaddfitur" value="{{ Session::get('idaddfitur') }}">
                 @endif
 
-                <div class="row">
-                    <div class="card-deck">
-
+                    <div class="row">
                         @foreach(Session::get('datafitur') as $newdata)
-
                         <div class="col-sm-2">
                             <div class="card fiturcard">
                                 <div class="card-body" style="padding: 1em !important;">
@@ -49,9 +46,7 @@
                             </div>
                         </div>
                         @endforeach
-                    </div> <!-- end-deck -->
-                </div> <!-- end-row -->
-
+                    </div>
 
             </div> <!-- end-col 10 -->
 

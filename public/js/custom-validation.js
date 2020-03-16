@@ -437,6 +437,17 @@ img.onclick = function(){
   captionText.innerHTML = this.alt;
 }
 
+    function clickImageView(img) {
+        var modal = document.getElementById("mdl-img-click");
+        var img = document.getElementById(img.id);
+        var modalImg = document.getElementById("mdl-img-view");
+
+        img.onclick = function () {
+            $('#mdl-img-click').modal('show');
+            modalImg.src = this.src;
+        }
+    }
+
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("closeq")[0];
 
