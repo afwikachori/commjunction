@@ -739,7 +739,7 @@
 
         var dtk = localStorage.getItem("data_subpay");
         var isi = JSON.parse(dtk);
-        console.log(isi);
+        // console.log(isi);
         // console.log("id payment method = " + isi.id);
         get_setting_subpayment_admin(params);
         $("#aktif_id_subpayment").val(isi.id);

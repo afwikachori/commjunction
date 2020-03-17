@@ -1622,3 +1622,16 @@ input[type="checkbox"] {
 }
 /* END-TREE CHECKBOX */
 /* END - NEW FROM SUPERADMIN  */
+
+
+.membershipbtn{
+background: #ffffff00;
+    border: none;
+    position: relative;
+    top: 35px;
+}
+
+.btn_bening{
+    background: #ffffff00;
+    border: none;
+}

@@ -331,6 +331,54 @@
 </div>
 
 
+<!-- MODAL DETAIL MEMBERSHIP ALL CARD -->
+<div class="modal fade" id="modal_detail_membership_card" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <form>
+                <div class="modal-header" style="border: none; padding-bottom: 0px;
+                padding-left: 5%; padding-right: 5%;">
+                    <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
+                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
+                        data-target="#modal_changestatus_inbox" data-dismiss="modal">Change Status</button>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Title</small>
+                                <p class="cgrey" id="detail_judul"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight s13">Description</small>
+                                <p class="cgrey" id="detail_dekripsi"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
+                             border-radius: 10px; width: 100%; margin-top: 0.5em;
+                            padding: 5%;">
+
+
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                    display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -339,29 +387,7 @@
     $(document).ready(function () {
         get_membership_admin();
         tabel_req_membership();
-        tabel_tes();
-
     });
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/tabel_req_membership',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant membership req DataTable");
-            }
-        });
-    }
 
 
     function get_membership_admin() {
@@ -375,10 +401,8 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
-
+                console.log(result);
                 var isimember = '';
-
                 $.each(result, function (i, item) {
                     var logo = server_cdn + item.image;
                     isimember += '<div class="col-md-4 stretch-card grid-margin card-member">' +
@@ -387,8 +411,16 @@
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
                         '<h4 class="font-weight-normal mb-3">' + item.membership + '<i class="mdi mdi-cube-outline mdi-24px float-right"></i>' +
                         '</h4>' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership">' +
-                        '<br><small class="card-text">' + item.description + '</small>' +
+                        '<div class="row">' +
+                        '<div class="col-7">' +
+                        '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership" onerror="errorImg()">' +
+                        '</div>' +
+                        '<div class="col-5" style="text-align:right;">' +
+                        '<button type="button" class="membershipbtn" onclick="detail_membership_card(' + i + ')">' +
+                        '<b><small class="cteal s12"><i class="mdi mdi-checkbox-blank-circle"></i>' +
+                        'Detail</small></b></button>' +
+                        '</div></div>' +
+                        '<small class="card-text">' + item.description + '</small>' +
                         '</div></div></div>';
                 });
 
@@ -402,6 +434,26 @@
     }
 
 
+function detail_membership_card(dtnya) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/admin/get_list_membership_admin',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            console.log(result[dtnya]);
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant membership req DataTable");
+        }
+    });
+$("#modal_detail_membership_card").modal('show');
+}
 
 
     function tabel_req_membership() {
@@ -423,7 +475,7 @@
                     $('#tabel_req_member tbody').empty().append(nofound);
                 },
             },
-               error: function (request, status, errorThrown) {
+            error: function (request, status, errorThrown) {
                 console.log(errorThrown);
             },
             columns: [
