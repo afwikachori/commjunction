@@ -1845,7 +1845,7 @@ class AdminCommController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            // return $json['data'];
+            return $json['data'];
 
             if ($json['success'] == true) {
                 return $json['data'];

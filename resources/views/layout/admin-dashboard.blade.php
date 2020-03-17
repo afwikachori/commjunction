@@ -123,9 +123,6 @@
 
 
 
-
-
-
 <!-- MODAL EDIT PROFILE-->
 <div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -200,8 +197,6 @@
   </div>
 </div>
 
-
-
 <!-- MODAL CHANGE PASSWORD-->
 <div class="modal fade" id="modal_changepass_admin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -249,10 +244,6 @@
 
   </div>
 </div>
-
-
-
-
 
 
 <!-- MODAL LOGOUT-->

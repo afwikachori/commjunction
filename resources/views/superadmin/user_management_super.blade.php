@@ -51,7 +51,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: #ffffff;">
 
-<form method="POST" id="form_edit_usermanage" action="{{route('edit_user_management')}}" enctype="multipart/form-data">
+<form method="POST" id="form_edit_usermanage" action="{{route('add_user_management_super')}}" enctype="multipart/form-data">
 {{ csrf_field() }}
 
 <div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">
@@ -221,7 +221,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: #ffffff;">
 
-<form method="POST" id="form_add_user_manage" action="{{route('edit_user_management')}}">
+<form method="POST" id="form_add_user_manage" action="{{route('edit_user_management_super')}}">
 {{ csrf_field() }}
 
 <div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">
@@ -283,7 +283,7 @@
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
     // session_logged_superadmin();
-    // get_user_tipe_manage();
+    get_user_tipe_manage();
     tabel_user_management();
 // tabel_tes();
 });
@@ -412,11 +412,11 @@ $.ajaxSetup({
     }
 });
 $.ajax({
-    url: "/admin/get_user_tipe_manage",
+    url: "/superadmin/get_user_tipe_manage",
     type: "POST",
     dataType: "json",
     success: function (result) {
-
+console.log(result);
       $('#user_tipe').empty();
       $('#user_tipe').append("<option disabled> Choose </option>");
 

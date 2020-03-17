@@ -384,8 +384,12 @@ Route::post('tabel_komunitas_report_super','SuperadminController@tabel_komunitas
 Route::post('get_list_fitur_super','SuperadminController@get_list_fitur_super')->name('get_list_fitur_super');
 Route::post('tabel_module_report_super','SuperadminController@tabel_module_report_super')->name('tabel_module_report_super');
 Route::post('change_status_inbox_message_super','SuperadminController@change_status_inbox_message_super')->name('change_status_inbox_message_super');
+Route::post('edit_profile_superadmin','SuperadminController@edit_profile_superadmin')->name('edit_profile_superadmin');
+Route::post('get_user_tipe_manage', 'SuperadminController@get_user_tipe_manage')->name('get_user_tipe_manage');
 
-
+Route::post('change_password_superadmin','SuperadminController@change_password_superadmin')->name('change_password_superadmin');
+Route::post('add_user_management_super', 'SuperadminController@add_user_management_super')->name('add_user_management_super');
+Route::post('edit_user_management_super', 'SuperadminController@edit_user_management_super')->name('edit_user_management_super');
 
 
 

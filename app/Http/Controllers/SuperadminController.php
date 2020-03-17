@@ -195,10 +195,11 @@ class SuperadminController extends Controller
     {
         $url = env('SERVICE') . 'registration/priviledge';
         $client = new \GuzzleHttp\Client();
+
         $request = $client->post($url);
         $response = $request->getBody();
         $jsonku = json_decode($response, true);
-        return ($jsonku);
+        return $jsonku;
     }
 
 
@@ -2350,5 +2351,274 @@ class SuperadminController extends Controller
             }
         }
     }
+
+
+
+    public function edit_profile_superadmin(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $token = $ses_login['access_token'];
+        $ses_user = $ses_login['user'];
+        $input = $request->all();
+// return $ses_user;
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($input['username_super'] != $ses_user['user_name']) {
+            $username = $input['username_super'];
+        }else{
+            $username = null;
+        }
+
+        if ($input['phone_super'] != $ses_user['notelp']) {
+            $hp = $input['phone_super'];
+        } else {
+            $hp = null;
+        }
+
+        if ($input['email_super'] != $ses_user['email']) {
+            $mail = $input['email_super'];
+        } else {
+            $mail = null;
+        }
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+
+            $imageRequest = [
+                "user_name" => $username,
+                "full_name" => $input['name_super'],
+                "notelp" => $hp,
+                "email" => $mail,
+                "alamat" => $input['alamat_super'],
+                "filename" => $filnam,
+                "file" => $imgku
+            ];
+
+            dd( $imageRequest);
+
+            $url = env('SERVICE') . 'profilemanagement/editprofile';
+            try {
+                $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
+                // return $resImg['data'];
+                if ($resImg['success'] == true) {
+                    session()->put('session_logged_superadmin.user', [
+                        "user_name" => $resImg['data']['user_name'],
+                        "full_name" => $resImg['data']['full_name'],
+                        "picture" => $resImg['data']['sso_picture'],
+                        "notelp" => $resImg['data']['notelp'],
+                        "email" => $resImg['data']['email'],
+                        "alamat" => $resImg['data']['alamat'],
+                        //////////////////////
+                        "user_id" => $ses_user['user_id'],
+                        "level" => $ses_user['level'],
+                    ]);
+
+                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $exception) {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                if ($error['success'] == false) {
+                    alert()->error($error['message'], 'Failed!')->autoclose(4000);
+                    return back();
+                }
+            }
+        } else { //END-IF  UPLOAD-IMAGE
+            $input = $request->all(); // getdata form by name
+            $imageRequest = [
+                "user_name" => $username,
+                "full_name" => $input['name_super'],
+                "notelp" => $hp,
+                "email" => $mail,
+                "alamat" => $input['alamat_super'],
+                "filename"    => "",
+                "file"        => ""
+            ];
+
+            $url = env('SERVICE') . 'profilemanagement/editprofile';
+            try {
+                $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
+
+                if ($resImg['success'] == true) {
+                    session()->put('session_logged_superadmin.user', [
+                        "user_name" => $resImg['data']['user_name'],
+                        "full_name" => $resImg['data']['full_name'],
+                        "notelp" => $resImg['data']['notelp'],
+                        "email" => $resImg['data']['email'],
+                        "alamat" => $resImg['data']['alamat'],
+                        //////////////////////
+                        "user_id" => $ses_user['user_id'],
+                        "level" => $ses_user['level'],
+                    ]);
+                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    return back();
+                } //end if sukses
+
+            } catch (ClientException $exception) {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                if ($error['success'] == false) {
+                    alert()->error($error['message'], 'Failed!')->autoclose(4000);
+                    return back();
+                }
+            }
+        } // endelse
+    } //endfunc
+
+
+    public function change_password_superadmin(Request $request)
+    {
+        // dd($request);
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'profilemanagement/changepassword';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'old_password' => $input['old_pass_super'],
+            'new_password' => $input['new_pass_super']
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            if ($error['success'] == false) {
+                alert()->error($error['message'], 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
+
+    public function get_user_tipe_manage()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+
+        $url = env('SERVICE') . 'usermanagement/listusertype';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+    public function add_user_management_super(Request $request)
+    {
+        // dd($request);
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'usermanagement/createuser';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            "full_name" => $input['name_user'],
+            "user_name" => $input['username_user'],
+            "notelp" => $input['phone_user'],
+            "email" => $input['email_user'],
+            "alamat" => $input['alamat_user'],
+            "usertype_id" => $input['user_tipe'],
+            "password" => $input['pass_user'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully to add new user', 'Added')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            if ($error['success'] == false) {
+                alert()->error($error['message'], 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
+
+
+    public function edit_user_management_super(Request $request)
+    {
+        // dd($request);
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'usermanagement/edituser';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "user_id" => $input['idnya_user'],
+            "notelp" => $input['edit_phone'],
+            "email" => $input['edit_email'],
+            "usertype_id" => $input['user_tipe_edit'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            if ($error['success'] == false) {
+                alert()->error($error['message'], 'Failed!')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
 
 } //endclas
