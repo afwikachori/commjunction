@@ -96,10 +96,14 @@ class AdminCommController extends Controller
         return view("admin/dashboard/payment_management_admin");
     }
 
-    public function InboxMessageManagementAdmin(){
+    public function InboxMessageManagementAdmin()
+    {
         return view("admin/dashboard/inbox_management_admin");
     }
 
+    public function usertypeManagementAdminView(){
+    return view("admin/dashboard/usertype_management_admin");
+    }
 
 
 
@@ -1830,7 +1834,6 @@ class AdminCommController extends Controller
         ];
         $bodyku = json_encode([
             "payment_id" => $input['payment_id'],
-            // "payment_title" => $input['payment_title'],
         ]);
 
         $datakirim = [
@@ -1842,7 +1845,7 @@ class AdminCommController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json['data'];
+            // return $json['data'];
 
             if ($json['success'] == true) {
                 return $json['data'];
@@ -1904,11 +1907,11 @@ class AdminCommController extends Controller
         ];
 
         $bodyku = json_encode([
-            "payment_method_id" => $input['aktif_id_subpayment'],
+            "payment_method_id" => $input['payment_method_id'],
             "payment_type_id" => $input['aktif_id_payment'],
             "payment_time" => $input['aktif_payment_time']
         ]);
-        return $bodyku;
+        // return $bodyku;
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -1918,7 +1921,7 @@ class AdminCommController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json['data'];
+            // return $json['data'];
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Activated Payment', 'Done!')->autoclose(4500);
@@ -2190,5 +2193,59 @@ class AdminCommController extends Controller
         }
     }
 
+
+    public function get_list_setting_module_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'get_list_setting_module_admin';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "subfeature_id" => $input['subfeature_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $exception) {
+            return $exception;
+        }
+    }
+
+
+    public function tabel_usertype_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'usertype/listusertype';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'][0];
+    }
 
 } //end-class

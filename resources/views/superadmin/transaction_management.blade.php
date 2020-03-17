@@ -10,9 +10,7 @@
         </span>Transaction Management</h3>
 
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-tosca btn-sm"
-        data-toggle="modal" data-target="#modal_generate_invoice_trans">
-        Generate Invoice</button>
+
     </nav>
 </div>
 

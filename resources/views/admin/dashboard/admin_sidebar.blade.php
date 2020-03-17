@@ -47,7 +47,7 @@
 
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="/admin/usertype_management">
             <span class="menu-title">User Type Management</span>
             <i class="mdi mdi-account-convert menu-icon"></i>
         </a>

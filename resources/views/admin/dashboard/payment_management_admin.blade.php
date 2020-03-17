@@ -33,13 +33,13 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_default_1">
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 0.5em;">
                                 <div class="col-md-8">
                                     <!-- <button type="button" id="btn-filter-subs" class="btn btn-tosca btn-sm"
                                         style="min-width: 120px; margin-bottom: 1em;">Filter</button> -->
                                 </div>
                                 <div class="col-md-4" style="text-align: right;">
-                                    <button type="button" id="reset_tbl_subsall"
+                                    <button type="button" id="reset_tbl_payment_all"
                                         class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable">
                                         <i class="mdi mdi-refresh"></i>
                                     </button>
@@ -296,115 +296,6 @@
 </div>
 
 
-<!-- MODAL EDIT SUB-PAYMENT MANAGEMENT-->
-<div class="modal fade" id="modal_edit_subpayment_super" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-            <div id="tampil_detail_pricing">
-                <form method="POST" id="form_edit_pricing" action="{{route('edit_subpayment_super')}}"
-                    enctype="multipart/form-data">
-                    {{ csrf_field() }}
-
-                    <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none;">
-                        <h4 class="modal-title cgrey">Edit Sub-Payment</h4>
-                        <div class="pricing_status" style="text-align: right;"></div>
-
-                    </div> <!-- end-header -->
-
-                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
-                        <input type="hidden" id="payment_method_id" name="payment_method_id">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
-                                    <div class="circle">
-                                        <img id="view_img_subpay_edit" class="profile-pic rounded-circle img-fluid"
-                                            src="/img/focus.png">
-                                    </div>
-                                    <div class="p-image">
-                                        <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
-                                            style="width: 30px; height: 30px;">
-                                            <i id="browse_img_subpay_edit" class="mdi mdi-camera upload-button"></i>
-                                        </button>
-                                        <input id="file_img_subpay_edit" class="file-upload file-upload-default"
-                                            type="file" name="fileup" accept="image/*" required />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <small class="clight s13">Pricing Name</small>
-                                    <input type="text" id="edit_sub_namapay" name="edit_sub_namapay"
-                                        class="form-control input-abu" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <small class="clight s13">Payment Time Limit</small>
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <input type="text" id="edit_sub_timelimit" name="edit_sub_timelimit"
-                                                class="form-control input-abu" required>
-                                        </div>
-                                        <div class="col-4" style="padding-left: 0px !important;">
-                                            <small class="cgrey" style="margin-top: 0.5em;"> Days </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="margin-top: -0.5em;">
-                                <div class="form-group">
-                                    <small class="clight s13">Description</small>
-                                    <textarea class="form-control input-abu" id="edit_sub_deskripsi"
-                                        name="edit_sub_deskripsi" rows="2" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <small class="clight s13"> Bank Name</small>
-                                    <select class="form-control input-abu" name="edit_sub_nama_bank"
-                                        id="edit_sub_nama_bank">
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <small class="clight s13"> Rekening Numbers</small>
-                                    <input type="text" id="edit_sub_rekening" name="edit_sub_rekening"
-                                        class="form-control input-abu" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <small class="clight s13"> Owner Bank Name</small>
-                                    <input type="text" id="edit_sub_owner_bank" name="edit_sub_owner_bank"
-                                        class="form-control input-abu" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- end-body -->
-
-                    <div class="modal-footer" style="border: none; margin-bottom: 1em;">
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
-                        </button>
-                        &nbsp;
-                        <button type="submit" id="edit_subpayment_super" class="btn btn-teal btn-sm">
-                            <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Edit </button>
-                    </div> <!-- end-footer     -->
-                </form>
-            </div>
-        </div> <!-- END-MDL CONTENT -->
-    </div>
-</div>
-
-
 <!-- MODAL SETTING  MODULE -->
 <div class="modal fade" id="modul_add_settings_subpay" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -503,7 +394,7 @@
             <form method="POST" id="form_change_status_inbox_super" action="{{route('aktivasi_payment_admin')}}">
                 {{ csrf_field() }}
                 <div class="modal-body" style="min-height: 130px;">
-                    <div class="row" style="margin-top: 1.5em;">
+                    <div class="row" style="margin-top: 0.5em;">
                         <div class="col-md-4" style="padding-top: 0.6em;">
                             <small class="clight s13"><b>Payment Time</b></small>
                         </div>
@@ -515,8 +406,18 @@
                             </select>
                             <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
                                 name="aktif_id_payment">
-                            <input class="form-control input-abu" type="hidden" id="aktif_id_subpayment"
-                                name="aktif_id_subpayment">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <small class="clight s13"><b>Payment Method</b></small>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control input-abu" name="payment_method_id" id="payment_method_id">
+                                <option selected disabled> Choose </option>
+                                <option value="5"> BCA Virtual Account </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -547,6 +448,7 @@
     $(document).ready(function () {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
+        // tabel_tes();
     });  //end
 
 
@@ -573,6 +475,9 @@
 
 
     function tabel_payment_all_admin() {
+        $('#tabel_payment_all_admin').dataTable().fnClearTable();
+        $('#tabel_payment_all_admin').dataTable().fnDestroy();
+
         var tabel = $('#tabel_payment_all_admin').DataTable({
             responsive: true,
             language: {
@@ -589,6 +494,7 @@
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_payment_all_admin tbody').empty().append(nofound);
+                    ui.popup.show('error', "Internal Server Error", 'Error');
                 },
             },
             success: function (result) {
@@ -667,9 +573,8 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        var dt = data + "<>" + row.payment_title;
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_payment_all_admin(\'' + dt + '\')">' +
+                            'onclick="detail_payment_all_admin(\'' + data + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -681,9 +586,8 @@
 
 
     function detail_payment_all_admin(dtpay) {
-        var param = dtpay.split('<>');
         // console.log(param);
-        $("#aktif_id_payment").val(param[0]);
+        $("#aktif_id_payment").val(dtpay);
 
         $.ajaxSetup({
             headers: {
@@ -696,18 +600,23 @@
             dataSrc: '',
             timeout: 30000,
             data: {
-                "payment_id": param[0],
-                "payment_title": param[1]
+                "payment_id": dtpay
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 $("#modal_detail_payment_all_admin").modal('show');
                 var res = result[0];
                 $('#tabel_sub_payment_super').dataTable().fnClearTable();
                 $('#tabel_sub_payment_super').dataTable().fnDestroy();
 
-                $("#detail_judul").html(res.payment_title);
-                $("#detail_deskripsi").html(res.description);
+                if (res.payment_title != null) {
+                    $("#detail_judul").html(res.payment_title);
+                }
+                if (res.description != null) {
+                    $("#detail_deskripsi").html(res.description);
+                }
+
+
                 if (res.price_monthly != null) {
                     $("#detail_pricebulan").html("Rp " + rupiah(res.price_monthly));
                     $("#detail_pricetahun").html("Rp " + rupiah(res.price_annual));
@@ -924,6 +833,9 @@
     }
 
 
+    $("#reset_tbl_payment_all").click(function () {
+        tabel_payment_all_admin();
+    });
 
 </script>
 

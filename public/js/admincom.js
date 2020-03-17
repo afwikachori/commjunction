@@ -13,7 +13,7 @@ var ui = {
                 "positionClass": "toast-bottom-right",
                 "preventDuplicates": true,
                 "showDuration": "300",
-                "hideDuration": "1000",
+                "hideDuration": "800",
                 "timeOut": 0,
                 "onclick": null,
                 "onCloseClick": null,

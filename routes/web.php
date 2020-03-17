@@ -49,6 +49,9 @@ Route::get('setting_publish_comm','AdminCommController@setting_publish_comm')->n
 Route::get('/notification_management', 'AdminCommController@NotificationManagementAdminCommunity')->name('/notification_management');
 Route::get('/payment_management', 'AdminCommController@PaymentManagementAdminCommunity')->name('/payment_management');
 Route::get('/inbox_management', 'AdminCommController@InboxMessageManagementAdmin')->name('/inbox_management');
+Route::get('/usertype_management', 'AdminCommController@usertypeManagementAdminView')->name('/usertype_management');
+
+
 
 // admin/settings
 Route::prefix('settings')->group(function(){
@@ -60,9 +63,12 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+
+Route::post('tabel_usertype_admin','AdminCommController@tabel_usertype_admin')->name('tabel_usertype_admin');
+
+Route::post('get_list_setting_module_admin','AdminCommController@get_list_setting_module_admin')->name('get_list_setting_module_admin');
 Route::post('change_status_inbox_message_admin','AdminCommController@change_status_inbox_message_admin')->name('change_status_inbox_message_admin');
 Route::post('delete_message_inbox_admin','AdminCommController@delete_message_inbox_admin')->name('delete_message_inbox_admin');
-
 Route::post('send_inbox_message_admin','AdminCommController@send_inbox_message_admin')->name('send_inbox_message_admin');
 Route::post('detail_generate_message_inbox_super_admin','AdminCommController@detail_generate_message_inbox_super_admin')->name('detail_generate_message_inbox_super_admin');
 Route::post('get_list_subscriber_inbox_admin','AdminCommController@get_list_subscriber_inbox_admin')->name('get_list_subscriber_inbox_admin');

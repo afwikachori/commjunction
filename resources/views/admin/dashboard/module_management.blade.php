@@ -358,11 +358,11 @@
                         '<h4>' + item.feature_type_title + '</h4>' +
                         '</div>' +
                         '<div class="col-md-12" style="text-align: right;">' +
-                        '<a href="" class="a_setmodule"' +
-                        'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
+                        '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                        'onclick="get_list_setting_module(' + item.feature_id + ')">' +
                         '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
                         ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                        '</small></a>' +
+                        '</small></button>' +
                         '</div>' +
                         '</div></div></div></div>';
                 });
@@ -376,6 +376,31 @@
         });
     }
 
+
+    function get_list_setting_module(idmod) {
+        alert(idmod);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_list_setting_module_admin',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                "subfeature_id": idmod
+            },
+            success: function (result) {
+                console.log(result);
+                $("#mdl_setting_module_active").modal('show');
+
+            },
+            error: function (result) {
+                ui.popup.show('error', 'Low Connection, Try again later', 'Error');
+            }
+        });
+    }
 
 
 
@@ -467,7 +492,7 @@
             },
             success: function (result) {
                 var dt = result[0];
-                console.log(dt);
+                // console.log(dt);
                 //form aktivasi
                 $("#id_modulefitur").val(dt.feature_id);
                 $("#payment_time").val();
@@ -534,7 +559,7 @@
                         '<div class="col-md-12" style="text-align: right;">' +
                         '<a href="" class="a_setmodule"' +
                         'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
-                        '<small lang="en" class="txt_detail_fitur h6 s12 clight"> Setting' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cteal"> Setting' +
                         ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
                         '</small></a>' +
                         '</div>' +
