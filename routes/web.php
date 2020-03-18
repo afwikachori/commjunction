@@ -63,6 +63,10 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+
+
+Route::post('add_new_usertype_management_admin','AdminCommController@add_new_usertype_management_admin')->name('add_new_usertype_management_admin');
+
 Route::post('get_list_fitur_membership_admin','AdminCommController@get_list_fitur_membership_admin')->name('get_list_fitur_membership_admin');
 
 Route::post('get_listfitur_usertype_ceklist', 'AdminCommController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');

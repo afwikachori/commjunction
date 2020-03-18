@@ -40,7 +40,7 @@
 <!-- MODAL ADD NEW USERTYPE-->
 <div class="modal fade" id="modal_add_usertype" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <form method="POST" id="form_add_usertype" action="{{route('add_new_usertype_management')}}">
+    <form method="POST" id="form_add_usertype" action="{{route('add_new_usertype_management_admin')}}">
         {{ csrf_field() }}
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -142,7 +142,6 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        tabel_tes();
         tabel_usertype_management_admin();
         get_listfitur_usertype_ceklist();
     });
@@ -166,9 +165,14 @@
         });
     }
 
-    function tabel_usertype_management_admin(){
+
+
+
+
+    function tabel_usertype_management_admin() {
         $('#tabel_usertype_manage_admin').dataTable().fnClearTable();
         $('#tabel_usertype_manage_admin').dataTable().fnDestroy();
+
 
         var tabel = $('#tabel_usertype_manage_admin').DataTable({
             responsive: true,
@@ -184,7 +188,7 @@
                 dataSrc: '',
                 timeout: 30000,
                 error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_usertype_manage_admin tbody').empty().append(nofound);
                 },
             },
@@ -192,23 +196,50 @@
                 console.log(errorThrown);
             },
             columns: [
-                { mData: 'id' },
-                { mData: 'title' },
-                { mData: 'description' },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_usertype_manage(\'' + data + '\')">' +
+                        return "<div class='text-wrap width-50'>" + data + "</div>";
+                    },
+                },
+                { mData: 'title' },
+                {
+                    mData: 'description',
+                    render: function (data, type, row, meta) {
+                        return "<div class='text-wrap width-400'>" + data + "</div>";
+                    },
+                },
+                {
+                    mData: null,
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
                 }
             ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ]
 
         });
 
+        $('#tabel_usertype_manage_admin tbody').on('click', 'button', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+            $("#modal_edit_usertype").modal("show");
+            $("#idfitur_usertype").val(data.id);
+            $("#nama_usertipe_edit").val(data.title);
+            $("#dekripsi_usertipe_edit").text(data.description);
+        });
+
     }
+
 
 
 
@@ -274,14 +305,15 @@
         });
     }
 
-    function detail_usertype_manage(idusertype) {
-        var result;
-        usertipe = idusertype.split(",");
+    function detail_usertype_manage(usertype) {
+        console.log(usertype);
+        // var result;
+        // usertipe = idusertype.split(",");
 
-        $("#modal_edit_usertype").modal("show");
-        $("#idfitur_usertype").val(usertipe[0]);
-        $("#nama_usertipe_edit").val(usertipe[1]);
-        $("#dekripsi_usertipe_edit").text(usertipe[2]);
+        // $("#modal_edit_usertype").modal("show");
+        // $("#idfitur_usertype").val(usertipe[0]);
+        // $("#nama_usertipe_edit").val(usertipe[1]);
+        // $("#dekripsi_usertipe_edit").text(usertipe[2]);
 
         // $.ajaxSetup({
         //     headers: {

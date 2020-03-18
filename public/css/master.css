@@ -161,6 +161,9 @@ overflow: visible;
 .width-90 {
     width: 90px !important;
 }
+.width-50 {
+    width: 50px !important;
+}
 
 #btn_register2{
 width: 174px;

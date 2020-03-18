@@ -2276,7 +2276,7 @@ try{
 
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
-        return $json['data'][0];
+        return $json['data'];
     }
 
 
@@ -2350,7 +2350,7 @@ try{
                     alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
                     return back();
                 }
-            }   catch (ClientException $errornya) {
+            } catch (ClientException $errornya) {
                 $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
@@ -2421,7 +2421,61 @@ try{
     }
 
 
+    public function add_new_usertype_management_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
 
+        $subftr = [];
+        foreach ($input['subfitur'] as $i => $dt) {
+            $dataArray = [
+                'subfeature_id'       => $dt
+            ];
+            array_push($subftr, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'usertype/create';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'title' => $input['nama_usertipe'],
+            'description' => $input['dekripsi_usertipe'],
+            'subfeature' => $subftr,
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add User Type', 'Added!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 
 
