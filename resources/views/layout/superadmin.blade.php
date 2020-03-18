@@ -299,6 +299,8 @@
     </div>
     <!-- END-MODAL -->
 
+<input type="hidden" id="server_cdn" value="{{ env("CDN") }}">
+
     @else
     <script>window.location = "/superadmin";</script>
     @endif
@@ -337,8 +339,9 @@
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
+
     <!-- js custum superadmin -->
-    <script src="/js/superadmin.js"></script>
+    <script src="{{asset('js/superadmin.js')}}"></script>
 
     <!-- js multiselect -->
     {{-- <script src="/js/BsMultiSelect.js"></script> --}}

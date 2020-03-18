@@ -55,7 +55,7 @@ class RegisterController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
-        return $json['data'];
+        // return $json['data'];
 
         return view('admin/features_detail', ['data' => $json['data'], 'idfitur' => $id_fitur]);
     }
@@ -1127,8 +1127,7 @@ class RegisterController extends Controller
     public function session_backfitur()
     {
         $ses_getfitur = session()->get('fiturpilih');
-
-
+// return $ses_getfitur;
         //get data pricing untuk fitur
         $url = env('SERVICE') . 'registration/feature';
 
@@ -1142,31 +1141,14 @@ class RegisterController extends Controller
         $json = json_decode($response, true);
         $isidata = $json['data'];
 
-        return redirect('admin/features')->with('datafitur', $isidata);
+        $isini = [];
+        foreach ($isidata as $i => $dt) {
+            array_push($isini, $dt['feature']);
+        }
+        $count = count($isidata);
+        return redirect('admin/features')->with(['datafitur' => $isini, 'sum' => $count]);
     }
 
 
 
-
-    public function addfromdetailFitur(Request $request)
-    {
-        $ses_getfitur = session()->get('fiturpilih');
-        $input = $request->all();
-        $idaddfitur = $input['idfituradmin'];
-
-        //get data pricing untuk fitur
-        $url = env('SERVICE') . 'registration/feature';
-
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $url, [
-            'form_params' => [
-                'pricing_id' => $ses_getfitur
-            ]
-        ]);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        $isidata = $json['data'];
-
-        return redirect('admin/features')->with(['datafitur' => $isidata, 'idaddfitur' => $idaddfitur]);
-    }
 }

@@ -112,6 +112,14 @@ class RequestController extends Controller
                     'contents' =>  $requestImage["password"]
                 ],
                 [
+                    'name'     => 'status',
+                    'contents' =>  $requestImage["status"]
+                ],
+                [
+                    'name'     => 'cancel_description',
+                    'contents' =>  $requestImage["cancel_description"]
+                ],
+                [
                     'name'      => 'file',
                     'contents'  => $requestImage["file"],
                     'filename'  => $requestImage["filename"]
@@ -533,6 +541,45 @@ class RequestController extends Controller
                 [
                     'name'     => 'payment_method_id',
                     'contents' =>  $requestImage["payment_method_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
+
+    public function create_membership_admin($requestImage, $url, $token)
+    {
+
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'membership_title',
+                    'contents' =>  $requestImage["membership_title"]
+                ],
+                [
+                    'name'     => 'feature_id',
+                    'contents' =>  $requestImage["feature_id"]
+                ],
+                [
+                    'name'     => 'pricing',
+                    'contents' =>  $requestImage["pricing"]
+                ],
+                [
+                    'name'     => 'description',
+                    'contents' =>  $requestImage["description"]
                 ],
                 [
                     'name'      => 'file',

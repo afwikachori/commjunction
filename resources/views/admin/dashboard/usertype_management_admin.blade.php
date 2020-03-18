@@ -144,8 +144,7 @@
     $(document).ready(function () {
         tabel_tes();
         tabel_usertype_management_admin();
-
-        // get_listfitur_usertype_ceklist();
+        get_listfitur_usertype_ceklist();
     });
 
     function tabel_tes() {
@@ -214,12 +213,13 @@
 
 
     function get_listfitur_usertype_ceklist() {
-        $.ajaxSetup({            headers: {
+        $.ajaxSetup({
+            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/superadmin/get_listfitur_usertype_ceklist',
+            url: '/admin/get_listfitur_usertype_ceklist',
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {

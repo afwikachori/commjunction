@@ -63,9 +63,11 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('get_list_fitur_membership_admin','AdminCommController@get_list_fitur_membership_admin')->name('get_list_fitur_membership_admin');
 
+Route::post('get_listfitur_usertype_ceklist', 'AdminCommController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
+Route::post('add_create_membership_admin','AdminCommController@add_create_membership_admin')->name('add_create_membership_admin');
 Route::post('tabel_usertype_admin','AdminCommController@tabel_usertype_admin')->name('tabel_usertype_admin');
-
 Route::post('get_list_setting_module_admin','AdminCommController@get_list_setting_module_admin')->name('get_list_setting_module_admin');
 Route::post('change_status_inbox_message_admin','AdminCommController@change_status_inbox_message_admin')->name('change_status_inbox_message_admin');
 Route::post('delete_message_inbox_admin','AdminCommController@delete_message_inbox_admin')->name('delete_message_inbox_admin');
@@ -212,9 +214,6 @@ Route::get('admin/features','RegisterController@featuresView')->name('admin/feat
 Route::post('sendfeature', 'RegisterController@sendfeature')->name('sendfeature');
 
 Route::get('session_backfitur', 'RegisterController@session_backfitur')->name('session_backfitur');
-
-Route::post('addfromdetailFitur', 'RegisterController@addfromdetailFitur')->name('addfromdetailFitur');
-
 // REGISTER ADMIN- DETAIL FITUR
 
 Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');

@@ -5,8 +5,7 @@
 //       lang.init({
 //           defaultLang: 'en'
 //       });
-
-var server_cdn = '{{ env("CDN") }}';
+var server_cdn = $("#server_cdn").val();
 var ui = {
     popup: {
         show: function show(type, message, tittle) {
@@ -128,6 +127,13 @@ function session_logged_superadmin() {
             $("#email_super").val(user.email);
             if (user.alamat != null) {
                 $("#alamat_super").text(user.alamat);
+            }
+
+            var imguser = server_cdn + user.picture;
+            // console.log(imguser);
+            if (user.picture != null) {
+                $("#foto_profil_superadmin").attr("src", imguser);
+                $("#view_edit_user").attr("src", imguser);
             }
 
 

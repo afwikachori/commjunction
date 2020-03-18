@@ -8,7 +8,8 @@
         </span> Membership Management</h3>
 
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-tosca btn-sm">Add Membership</button>
+        <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+            data-target="#modal_add_create_membership" data-dismiss="modal">Add Membership</button>
     </nav>
 </div>
 
@@ -64,7 +65,84 @@
 </div>
 
 
+<!-- MODAL ADD CREATE MEMBERSHIP-->
+<div class="modal fade" id="modal_add_create_membership" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
 
+            <form method="POST" id="form_add_membership" action="{{route('add_create_membership_admin')}}"
+                enctype="multipart/form-data">
+                {{ csrf_field() }}
+
+                <div class="modal-header" style="padding-bottom: 0em !important;">
+                    <h4 class="modal-title cgrey">Create Membership</h4>
+                </div>
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <div class="img-upload-profil editprofil">
+                        <div class="circle editprofil">
+                            <img id="view_img_membership" class="profile-pic rounded-circle img-fluid editprofil"
+                                src="/img/loading.gif" onerror="this.onerror=null;this.src='/img/default.png';">
+                        </div>
+                        <div class="p-image editprofil">
+                            <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
+                                value="editprofil" style="width: 30px; height: 30px;">
+                                <i id="browse_membership_admin" class="mdi mdi-camera upload-button editprofil"></i>
+                            </button>
+                            <input id="file_img_membership" class="file-upload file-upload-default editprofil"
+                                type="file" name="fileup" accept="image/*" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight">Membership Title</small>
+                                <input type="text" id="judul_member" name="judul_member" class="form-control input-abu">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight">Pricing</small>
+                                <input type="text" id="harga_member" name="harga_member" class="form-control input-abu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <small class="clight">Description</small>
+                            <textarea class="form-control input-abu" id="deskripsi_member" name="deskripsi_member"
+                                rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <small class="clight">Features</small>
+                        </div>
+                        <div class="col-12">
+                            <div id="isi_membership_admin">
+                                    <!-- isi fitur  -->
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" id="btn_add_membership" class="btn btn-tosca btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Create </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
 
 
 <!-- MODAL DETAIL REQ MEMBERSHIP-->
@@ -175,9 +253,6 @@
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
-
-
-
 
 
 <!-- MODAL DETAIL PAYMENT MEMBERSHIP-->
@@ -379,6 +454,7 @@
 </div>
 
 
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -387,7 +463,52 @@
     $(document).ready(function () {
         get_membership_admin();
         tabel_req_membership();
+        get_list_fitur_membership_admin();
     });
+
+
+    function get_list_fitur_membership_admin() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function error(event, jxqhr, status, _error) {
+                ui.popup.show('error', status, 'Error');
+            },
+        });
+        $.ajax({
+            url: '/admin/get_list_fitur_membership_admin',
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                // console.log(result);
+
+                if(result.status == 500){
+                     ui.popup.show('error',result.message, 'Failed');
+                }
+                var fitur = '';
+
+                $.each(result, function (i, item) {
+                    console.log(item);
+                    fitur += '<div class="custom-control custom-checkbox lismember">' +
+                        '<input type = "checkbox" class="custom-control-input" id="fitur' + item.feature_id + '"' +
+                        'name = "fitur_member[]" value = "'+item.feature_id+'">' +
+                        '<label class="custom-control-label" for="fitur' + item.feature_id + '">' + item.title + '</label><br>' +
+                        '<small class="clight s13 deskripsifitur">'+item.description+'</small>' +
+                        '</div>';
+                });
+
+                $("#isi_membership_admin").html(fitur);
+
+            },
+            error: function (error) {
+                   ui.popup.show('error', error.message, 'Failed');
+                console.log(result);
+            }
+        });
+    }
+
+
 
 
     function get_membership_admin() {
@@ -428,32 +549,33 @@
 
             },
             error: function (result) {
-                console.log("Cant Show Membership List");
+                 ui.popup.show('error', 'Cant Get Membership Features', 'Failed');
+                console.log(result);
             }
         });
     }
 
 
-function detail_membership_card(dtnya) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: '/admin/get_list_membership_admin',
-        type: 'POST',
-        datatype: 'JSON',
-        success: function (result) {
-            console.log(result[dtnya]);
-        },
-        error: function (result) {
-            console.log(result);
-            console.log("Cant membership req DataTable");
-        }
-    });
-$("#modal_detail_membership_card").modal('show');
-}
+    function detail_membership_card(dtnya) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_list_membership_admin',
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                console.log(result[dtnya]);
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant membership req DataTable");
+            }
+        });
+        $("#modal_detail_membership_card").modal('show');
+    }
 
 
     function tabel_req_membership() {
@@ -573,9 +695,31 @@ $("#modal_detail_membership_card").modal('show');
     $("#browse_acc_member").on('click', function () {
         $("#file_acc_member").click();
     });
+    // }
+
+    // function file_browser_profil(){
+
+    var readURLuser = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#view_img_membership').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    $("#file_img_membership").on('change', function () {
+        readURLuser(this);
+    });
+
+    $("#browse_membership_admin").on('click', function () {
+        $("#file_img_membership").click();
+    });
 // }
-
-
 
 </script>
 

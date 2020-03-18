@@ -23,7 +23,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img src="/img/default.png" alt="image">
+                  <img src="/img/loading.gif" alt="image"  id="foto_profil_superadmin" onerror="this.onerror=null;this.src='/img/default.png';">
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">

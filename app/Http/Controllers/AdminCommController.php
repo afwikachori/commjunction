@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ConnectException;
 use Session;
 use Alert;
+use Helper;
 
 class AdminCommController extends Controller
 {
@@ -101,8 +104,9 @@ class AdminCommController extends Controller
         return view("admin/dashboard/inbox_management_admin");
     }
 
-    public function usertypeManagementAdminView(){
-    return view("admin/dashboard/usertype_management_admin");
+    public function usertypeManagementAdminView()
+    {
+        return view("admin/dashboard/usertype_management_admin");
     }
 
 
@@ -141,14 +145,23 @@ class AdminCommController extends Controller
                 }
             } catch (ClientException $exception) {
                 $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-                return $errorq;
+                // return $errorq;
 
-                $code_error = $exception->getCode();
-                if ($code_error == 404) {
-                    alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
+                if ($errorq['success'] == false) {
+                    alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                     return back()->withInput();
                 }
-            } //end-catch
+            } catch (ConnectException $errornya) {
+
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['succes'] = false;
+
+                if ($error == 500) {
+                    alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            }
         } //end-if
     } //end-func
 
@@ -708,7 +721,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'membershipmanagement/listmembership';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -719,6 +732,17 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $exception) {
+            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            return $errorq;
+        } catch (ConnectException $errornya) {
+
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+
+            return $error;
+        }
     }
 
 
@@ -743,8 +767,15 @@ class AdminCommController extends Controller
             $json = json_decode($response, true);
             return $json;
         } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            return $exception;
+            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            return $errorq;
+        } catch (ConnectException $errornya) {
+
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+
+            return $error;
         }
     }
 
@@ -2247,5 +2278,151 @@ class AdminCommController extends Controller
         $json = json_decode($response, true);
         return $json['data'][0];
     }
+
+
+
+    public function add_create_membership_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $token = $ses_login['access_token'];
+        $input = $request->all();
+        // return $input;
+        $url = env('SERVICE') . 'membershipmanagement/createmembership';
+        $fitur = $input['fitur_member'];
+        $hasilfitur = implode(",", $fitur);
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+            $imageRequest = [
+                "membership_title"  => $input['judul_member'],
+                "feature_id"        => $hasilfitur,
+                "pricing"           => $input['harga_member'],
+                "description"       => $input['deskripsi_member'],
+                "filename"          => $filnam,
+                "file"              => $imgku
+            ];
+
+
+            $url = env('SERVICE') . 'commsetting/editcomm';
+            try {
+                $resImg = $req->create_membership_admin($imageRequest, $url, $token);
+                // return $resImg;
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
+                    return back();
+                }
+            }catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } else { //END-IF  UPLOAD-IMAGE
+            $imageRequest = [
+                "membership_title"  => $input['judul_member'],
+                "feature_id"        => $hasilfitur,
+                "pricing"           => $input['harga_member'],
+                "description"       => $input['deskripsi_member'],
+                "filename"    => "",
+                "file"        => ""
+            ];
+
+
+            $url = env('SERVICE') . 'commsetting/editcomm';
+            try {
+                $resImg = $req->create_membership_admin($imageRequest, $url, $token);
+                // return $resImg;
+
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
+                    return back();
+                }
+            }   catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } // endelse
+        }
+
+
+
+    public function get_listfitur_usertype_ceklist()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'usertype/listfeature';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+        return $json['data'];
+    }
+
+
+    public function get_list_fitur_membership_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'membershipmanagement/listfeature';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            return $errorq;
+        } catch (ConnectException $errornya) {
+
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+
+            return $error;
+        }
+    }
+
+
+
+
+
 
 } //end-class

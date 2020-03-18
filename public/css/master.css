@@ -270,10 +270,10 @@ bottom: 86.33%;
 
 #left-arrowregis{
 position: fixed;
-left: 10%;
-right: 94.24%;
-top: 10%;
-bottom: 86.33%;
+    left: 4%;
+    right: 94.24%;
+    top: 11.5%;
+    bottom: 86.33%;
 }
 
 #panah_pay{
@@ -341,7 +341,7 @@ opacity: 2.4;
 
 .mg-detailfitur{
   padding: 3em;
-  margin-top: 1.5em;
+  margin-top: 2em;
 }
 
 #jeniscom2{

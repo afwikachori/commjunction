@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ConnectException;
+
 use Session;
 use Alert;
 
@@ -169,11 +172,20 @@ class SuperadminController extends Controller
             // $user = $jsonlogin['user'];
             return redirect('superadmin/dashboard')->with('fullname', $user);
         } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 404) {
-                alert()->error('Password didnt match with your username', 'Invalid')->persistent('Done');
+            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+
+            if ($errorq['success'] == false) {
+                alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                 return back()->withInput();
             }
+        } catch (ConnectException $errornya) {
+
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+
+            alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+            return back()->withInput();
         }
     }
 
@@ -230,6 +242,8 @@ class SuperadminController extends Controller
 
     public function verify_admincom(Request $request)
     {
+        $input = $request->all(); // getdata form by name
+        // return $input;
         $validator = $request->validate([
             'invoice_num' => 'required',
             'pass_super' => 'required',
@@ -250,6 +264,8 @@ class SuperadminController extends Controller
             $imageRequest = [
                 "invoice"     => $input['invoice_num'],
                 "password"    => $input['pass_super'],
+                "status"      => $input['approval'],
+                "cancel_description"   =>  $input['alasan'],
                 "filename"    => $filnam,
                 "file"        => $imgku
             ];
@@ -265,14 +281,26 @@ class SuperadminController extends Controller
                     return back();
                 }
             } catch (ClientException $exception) {
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('Wrong Password!', 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
-            }
+                $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
 
-            return $resImg;
+                if ($errorq['success'] == false) {
+                    alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back()->withInput();
+                }
+            } catch (ConnectException $errornya) {
+
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['succes'] = false;
+
+                alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            } catch (ServerException $exception) {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            }
         } //END-IF  UPLOAD-IMAGE
     } //end-function
 
@@ -2360,27 +2388,9 @@ class SuperadminController extends Controller
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
         $input = $request->all();
-// return $ses_user;
+        // return $ses_user;
         $req = new RequestController;
         $fileimg = "";
-
-        if ($input['username_super'] != $ses_user['user_name']) {
-            $username = $input['username_super'];
-        }else{
-            $username = null;
-        }
-
-        if ($input['phone_super'] != $ses_user['notelp']) {
-            $hp = $input['phone_super'];
-        } else {
-            $hp = null;
-        }
-
-        if ($input['email_super'] != $ses_user['email']) {
-            $mail = $input['email_super'];
-        } else {
-            $mail = null;
-        }
 
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
@@ -2388,16 +2398,16 @@ class SuperadminController extends Controller
 
 
             $imageRequest = [
-                "user_name" => $username,
+                "user_name" => $input['username_super'],
                 "full_name" => $input['name_super'],
-                "notelp" => $hp,
-                "email" => $mail,
+                "notelp" => $input['phone_super'],
+                "email" => $input['email_super'],
                 "alamat" => $input['alamat_super'],
                 "filename" => $filnam,
                 "file" => $imgku
             ];
 
-            dd( $imageRequest);
+            // dd( $imageRequest);
 
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
@@ -2407,7 +2417,7 @@ class SuperadminController extends Controller
                     session()->put('session_logged_superadmin.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -2416,7 +2426,7 @@ class SuperadminController extends Controller
                         "level" => $ses_user['level'],
                     ]);
 
-                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    alert()->success($resImg['message'], 'Now Updated!')->persistent('Done');
                     return back();
                 }
             } catch (ClientException $exception) {
@@ -2429,10 +2439,10 @@ class SuperadminController extends Controller
         } else { //END-IF  UPLOAD-IMAGE
             $input = $request->all(); // getdata form by name
             $imageRequest = [
-                "user_name" => $username,
+                "user_name" => $input['username_super'],
                 "full_name" => $input['name_super'],
-                "notelp" => $hp,
-                "email" => $mail,
+                "notelp" => $input['phone_super'],
+                "email" => $input['email_super'],
                 "alamat" => $input['alamat_super'],
                 "filename"    => "",
                 "file"        => ""
@@ -2441,7 +2451,7 @@ class SuperadminController extends Controller
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
-
+                // return $resImg;
                 if ($resImg['success'] == true) {
                     session()->put('session_logged_superadmin.user', [
                         "user_name" => $resImg['data']['user_name'],
@@ -2450,10 +2460,11 @@ class SuperadminController extends Controller
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
                         //////////////////////
+                        "picture" => $ses_user['picture'],
                         "user_id" => $ses_user['user_id'],
                         "level" => $ses_user['level'],
                     ]);
-                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    alert()->success($resImg['message'], 'Now Updated!')->persistent('Done');
                     return back();
                 } //end if sukses
 
@@ -2619,6 +2630,4 @@ class SuperadminController extends Controller
             }
         }
     }
-
-
 } //endclas

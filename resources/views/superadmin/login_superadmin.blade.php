@@ -60,17 +60,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="rememberme_superadmin" onclick="remember_me_superadmin()">
                                     <label class="form-check-label cteal" for="gridCheck" style="color: rgba(255, 255, 255, 0.75);" lang="en">Remember
                                         me</label>
                                 </div>
-                            </div>
-
-                            <div class="col" style="text-align: right;">
-                                <label><a href="" style="color: rgba(255, 255, 255, 0.75);" lang="en">Forgot
-                                        password?</a></label>
                             </div>
                         </div>
 
@@ -139,7 +134,7 @@
 
 
     function remember_me_superadmin() {
-        alert('ceked');
+        // alert('ceked');
         var checkBox = document.getElementById("rememberme_superadmin");
 
         if (checkBox.checked == true) {
