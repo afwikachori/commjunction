@@ -122,13 +122,13 @@
                         </div>
                         <div class="col-12">
                             <div id="isi_membership_admin">
-                                    <!-- isi fitur  -->
+                                <!-- isi fitur  -->
                             </div>
                         </div>
                     </div>
                 </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none;">
+                <div class="modal-footer" style="border: none; margin-top: -1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
@@ -411,48 +411,54 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form>
-                <div class="modal-header" style="border: none; padding-bottom: 0px;
-                padding-left: 5%; padding-right: 5%;">
-                    <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
-                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
-                        data-target="#modal_changestatus_inbox" data-dismiss="modal">Change Status</button>
-                </div> <!-- end-header -->
 
-                <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">Title</small>
-                                <p class="cgrey" id="detail_judul"></p>
-                            </div>
-                            <div class="form-group">
-                                <small class="clight s13">Description</small>
-                                <p class="cgrey" id="detail_dekripsi"></p>
-                            </div>
+            <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                <h4 class="modal-title cgrey">Detail User</h4>
+            </div> <!-- end-header -->
+
+            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                <div class="bunder-ring" id="img_detail_member">
+                    <img class="profile-pic rounded-circle img-fluid" id="foto_membership" src="/img/noimg.jpg">
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <small class="clight">Membership Title</small>
+                            <p class="cgrey1 tebal" id="detail_judul_member"></p>
                         </div>
                     </div>
-
-                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
-                             border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%;">
-
+                    <div class="col-md">
+                        <div class="form-group">
+                            <small class="clight">Membership Pricing</small>
+                            <p class="cgrey1 tebal" id="detail_harga_member"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <small class="clight">Description</small>
+                        <p class="cgrey1 tebal s13" id="detail_deskripsi_member"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                       <small class="clight">Features : </small> &nbsp;
+                        <small class="ctosca s15" id="total_fitur_member"> 0</small>
+                    </div>
+                    <div class="card-deck" id="show_feature_member" style="margin-top: 0.5em;">
 
                     </div>
-                </div> <!-- end-body -->
+                </div>
+            </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
-                    display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                </div> <!-- end-footer     -->
-            </form>
+            <div class="modal-footer" style="border: none;">
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                    <i class="mdi mdi-close"></i> Cancel
+                </button>
+            </div> <!-- end-footer     -->
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
-
 
 
 @endsection
@@ -483,18 +489,18 @@
             success: function (result) {
                 // console.log(result);
 
-                if(result.status == 500){
-                     ui.popup.show('error',result.message, 'Failed');
+                if (result.status == 500) {
+                    ui.popup.show('error', result.message, 'Failed');
                 }
                 var fitur = '';
 
                 $.each(result, function (i, item) {
-                    console.log(item);
+                    // console.log(item);
                     fitur += '<div class="custom-control custom-checkbox lismember">' +
                         '<input type = "checkbox" class="custom-control-input" id="fitur' + item.feature_id + '"' +
-                        'name = "fitur_member[]" value = "'+item.feature_id+'">' +
+                        'name = "fitur_member[]" value = "' + item.feature_id + '">' +
                         '<label class="custom-control-label" for="fitur' + item.feature_id + '">' + item.title + '</label><br>' +
-                        '<small class="clight s13 deskripsifitur">'+item.description+'</small>' +
+                        '<small class="clight s13 deskripsifitur">' + item.description + '</small>' +
                         '</div>';
                 });
 
@@ -502,7 +508,7 @@
 
             },
             error: function (error) {
-                   ui.popup.show('error', error.message, 'Failed');
+                ui.popup.show('error', error.message, 'Failed');
                 console.log(result);
             }
         });
@@ -522,7 +528,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var isimember = '';
                 $.each(result, function (i, item) {
                     var logo = server_cdn + item.image;
@@ -549,7 +555,7 @@
 
             },
             error: function (result) {
-                 ui.popup.show('error', 'Cant Get Membership Features', 'Failed');
+                ui.popup.show('error', 'Cant Get Membership Features', 'Failed');
                 console.log(result);
             }
         });
@@ -567,14 +573,48 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result[dtnya]);
+                // console.log(result[dtnya]);
+                var result = result[dtnya];
+                $("#detail_judul_member").html(result.membership);
+                $("#detail_harga_member").html(result.pricing);
+                $("#detail_deskripsi_member").html(result.description);
+                $("#foto_membership").attr("src", server_cdn + result.image);
+                $("#modal_detail_membership_card").modal('show');
+
+                var subf = '';
+                var jum = 0;
+                $.each(result.feature, function (i, item) {
+                    jum++;
+                    subf += '<div class="col-md-6 stretch-card grid-margin' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                        'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                        '<div class="card bg-gradient-blue card-img-holder text-white">' +
+                        '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important;">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                        'alt="circle-image" /> ' +
+                        '<div class="row">' +
+                        '<div class="col-md-3" style="padding-right:4px;">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2"' +
+                        'onerror="errorImg()">' +
+                        '</div>' +
+                        '<div class="col-md-9">' +
+                        '<b><small>' + item.title + '</small></b>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+                $("#show_feature_member").html(subf);
+                $("#total_fitur_member").html(jum);
             },
             error: function (result) {
                 console.log(result);
-                console.log("Cant membership req DataTable");
+                $("#modal_detail_membership_card").modal('hide');
+                ui.popup.show('error', "Cant load detail", 'Internal Server Error');
             }
         });
-        $("#modal_detail_membership_card").modal('show');
+
     }
 
 
