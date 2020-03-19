@@ -117,7 +117,7 @@
 
                     <div class="form-group" style="margin-top: 0.5em;">
                         <small class="cgrey">Priviledge</small>
-                        <div class="isi_cek_priviledge">
+                        <div class="isi_cek_priviledge_edit">
 
                         </div>
                     </div>
@@ -143,10 +143,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        // session_logged_superadmin();
-        // tabel_tes();
         tabel_usertype_management();
-
         get_listfitur_usertype_ceklist();
     });
 
@@ -169,6 +166,69 @@
     //     });
     // }
 
+    // function get_listfitur_usertype_ceklist() {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //     $.ajax({
+    //         url: '/superadmin/get_listfitur_usertype_ceklist',
+    //         type: 'POST',
+    //         datatype: 'JSON',
+    //         success: function (result) {
+    //             // console.log(result);
+    //             var parent_ui = '';
+    //             $.each(result, function (i, item) {
+    //                 var child_ui = '';
+    //                 var parent = item.title;
+    //                 var jum = 0;
+    //                 var idfitur = '';
+
+    //                 $.each(item.module_endpoints, function (i, item) {
+    //                     // console.log(item.feature_id, parent, item.subfeature_id, item.sub_feature_title);
+    //                     idfitur = item.feature_id;
+    //                     child_ui += '<li class="">' +
+    //                         '<input type="checkbox" name="subfitur[]"' +
+    //                         'value="' + item.subfeature_id + '">' +
+    //                         '<label>' + item.sub_feature_title + '</label>' +
+    //                         '</li>';
+    //                     jum++;
+    //                 });
+
+    //                 if (jum == 0) {
+    //                     parent_ui += '<ul class="tree">' +
+    //                         '<li class="has">' +
+    //                         '<input type="checkbox" name="fitur_id[]" value=" ' + idfitur + '">' +
+    //                         '<label>' + parent + ' &nbsp;' +
+    //                         '</label>' +
+    //                         '</li>' +
+    //                         '</ul>';
+    //                 } else {
+    //                     parent_ui += '<ul class="tree">' +
+    //                         '<li class="has">' +
+    //                         '<input type="checkbox" name="fitur_id[]" value=" ' + item.feature_id + '">' +
+    //                         '<label>' + parent + ' &nbsp;' +
+    //                         '<small class="total"> &nbsp; (' + jum + ') </small>' +
+    //                         '<i class="mdi mdi-chevron-down clight"></i>' +
+    //                         '</label>' +
+    //                         '<ul>' + child_ui + '</ul>' +
+    //                         '</li>' +
+    //                         '</ul>';
+    //                 }
+
+
+    //             });
+    //             $(".isi_cek_priviledge").html(parent_ui);
+
+    //         },
+    //         error: function (result) {
+    //             console.log("Cant Show");
+    //         }
+    //     });
+    // }
+
+
     function get_listfitur_usertype_ceklist() {
         $.ajaxSetup({
             headers: {
@@ -176,7 +236,7 @@
             }
         });
         $.ajax({
-            url: '/superadmin/get_listfitur_usertype_ceklist',
+            url: '/admin/get_listfitur_usertype_ceklist',
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
@@ -189,10 +249,11 @@
                     var idfitur = '';
 
                     $.each(item.module_endpoints, function (i, item) {
-                        // console.log(item.feature_id, parent, item.subfeature_id, item.sub_feature_title);
+                        // console.log(item);
                         idfitur = item.feature_id;
                         child_ui += '<li class="">' +
                             '<input type="checkbox" name="subfitur[]"' +
+                            'id="subfitur_'+item.subfeature_id+'"'+
                             'value="' + item.subfeature_id + '">' +
                             '<label>' + item.sub_feature_title + '</label>' +
                             '</li>';
@@ -202,7 +263,7 @@
                     if (jum == 0) {
                         parent_ui += '<ul class="tree">' +
                             '<li class="has">' +
-                            '<input type="checkbox" name="fitur_id[]" value=" ' + idfitur + '">' +
+                            '<input type="checkbox" name="fitur_id[]" value="0">' +
                             '<label>' + parent + ' &nbsp;' +
                             '</label>' +
                             '</li>' +
@@ -210,7 +271,7 @@
                     } else {
                         parent_ui += '<ul class="tree">' +
                             '<li class="has">' +
-                            '<input type="checkbox" name="fitur_id[]" value=" ' + item.feature_id + '">' +
+                            '<input type="checkbox" name="fitur_id[]"  value="'+ idfitur +'">' +
                             '<label>' + parent + ' &nbsp;' +
                             '<small class="total"> &nbsp; (' + jum + ') </small>' +
                             '<i class="mdi mdi-chevron-down clight"></i>' +
@@ -223,6 +284,47 @@
 
                 });
                 $(".isi_cek_priviledge").html(parent_ui);
+            // ___________________________________________________________________________________
+                var parent_ui2 = '';
+                $.each(result, function (i, item) {
+                    var child_ui2 = '';
+                    var parent2 = item.title;
+                    var jum2 = 0;
+                    var idfitur_edit = '';
+
+                    $.each(item.module_endpoints, function (i, item) {
+                        idfitur_edit = item.feature_id;
+                        child_ui2 += '<li class="">' +
+                            '<input type="checkbox" name="edit_subfitur[]"' +
+                            'id="edit_subfitur_' + item.subfeature_id + '"' +
+                            'value="' + item.subfeature_id + '"> ' +
+                            '<label>' + item.sub_feature_title + '</label>' +
+                            '</li>';
+                        jum2++;
+                    });
+
+                    if (jum2 == 0) {
+                        parent_ui2 += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="0">' +
+                            '<label>' + parent2 + ' &nbsp;' +
+                            '</label>' +
+                            '</li>' +
+                            '</ul>';
+                    } else {
+                        parent_ui2 += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '">' +
+                            '<label>' + parent2 + ' &nbsp;' +
+                            '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
+                            '<i class="mdi mdi-chevron-down clight"></i>' +
+                            '</label>' +
+                            '<ul>' + child_ui2 + '</ul>' +
+                            '</li>' +
+                            '</ul>';
+                    }
+                });
+                $(".isi_cek_priviledge_edit").html(parent_ui2);
 
             },
             error: function (result) {
@@ -230,6 +332,8 @@
             }
         });
     }
+
+
 
 
     function tabel_usertype_management() {
@@ -240,57 +344,95 @@
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
+             error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_usertype_manage tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
             },
             columns: [
-                { mData: 'id' },
-                { mData: 'title' },
-                { mData: 'description' },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        var dt = [row.id, row.title, row.description];
-
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_usertype_manage(\'' + dt + '\')">' +
+                        return "<div class='text-wrap width-50'>" + data + "</div>";
+                    },
+                },
+                { mData: 'title' },
+                {
+                    mData: 'description',
+                    render: function (data, type, row, meta) {
+                        return "<div class='text-wrap width-400'>" + data + "</div>";
+                    },
+                },
+                {
+                    mData: null,
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
                 }
             ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
+        });
+        //DETAIL USERTYPE FROM DATATABLE
+        $('#tabel_usertype_manage tbody').on('click', 'button', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+            $("#modal_edit_usertype").modal("show");
+            $("#idfitur_usertype").val(data.id);
+            $("#nama_usertipe_edit").val(data.title);
+            $("#dekripsi_usertipe_edit").text(data.description);
+
+            var subfitur = data.subfeature;
+             $.each(subfitur[0], function (i, item) {
+                 console.log("#edit_subfitur_"+item.subfeature_id);
+                 $('#edit_subfitur_'+ item.subfeature_id).prop('checked', true);
+             });
+
 
         });
 
     }
 
-    function detail_usertype_manage(idusertype) {
-        var result;
-        usertipe = idusertype.split(",");
+    // function detail_usertype_manage(idusertype) {
+    //     var result;
+    //     usertipe = idusertype.split(",");
 
-        $("#modal_edit_usertype").modal("show");
-        $("#idfitur_usertype").val(usertipe[0]);
-        $("#nama_usertipe_edit").val(usertipe[1]);
-        $("#dekripsi_usertipe_edit").text(usertipe[2]);
+    //     $("#modal_edit_usertype").modal("show");
+    //     $("#idfitur_usertype").val(usertipe[0]);
+    //     $("#nama_usertipe_edit").val(usertipe[1]);
+    //     $("#dekripsi_usertipe_edit").text(usertipe[2]);
 
-        // $.ajaxSetup({
-        //     headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-        // $.ajax({
-        //       url: '/admin/detail_user_management',
-        //       type: 'POST',
-        //       datatype: 'JSON',
-        //       data: {
-        //       "user_id": iduser
-        //       },
-        //       success: function (result) {
+    //     // $.ajaxSetup({
+    //     //     headers: {
+    //     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     //     }
+    //     // });
+    //     // $.ajax({
+    //     //       url: '/admin/detail_user_management',
+    //     //       type: 'POST',
+    //     //       datatype: 'JSON',
+    //     //       data: {
+    //     //       "user_id": iduser
+    //     //       },
+    //     //       success: function (result) {
 
-        //       },
-        //       error: function (result) {
-        //         console.log("Cant Show Detail User");
-        //     }
-        // });
-    }
+    //     //       },
+    //     //       error: function (result) {
+    //     //         console.log("Cant Show Detail User");
+    //     //     }
+    //     // });
+    // }
 
     $(document).on('click', '.tree label', function (e) {
         $(this).next('ul').fadeToggle();

@@ -262,25 +262,7 @@
                         <small class="clight">Module Features</small>
                         <div class="row">
                             <div class="card-deck show_subfitur_module" style="width:100%;">
-                                <!-- mulai -->
-                                <!-- <div class="col-md-6 stretch-card grid-margin"
-                                    style="margin-right: -2em; margin-bottom: 0.5em;">
-                                    <div class="card bg-gradient-blue card-img-holder text-white">
-                                        <div class="card-body" style="padding: 1rem 0.5rem 1rem 0.5rem !important;">
-                                            <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"
-                                                alt="circle-image" />
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <img src="/img/cam.png" class="rounded-circle img-fluid img-card2">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <small>Judul Module</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- end -->
+
                             </div>
                         </div> <!-- end-row deck -->
                     </div>
@@ -352,7 +334,7 @@
                         '<button class="btn btn-sm badge btn-oren melengkung10px" style="position:absolute; margin-bottom:-1em; right:5%;"' +
                         'onclick="detail_module_all(\'' + item.feature_id + '\')">' +
                         '<small>Ready</small></button><br>' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror="errorImg()">' +
+                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                         '<div class="row">' +
                         '<div class="col-md-12">' +
                         '<h4>' + item.feature_type_title + '</h4>' +
@@ -550,8 +532,7 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2"' +
-                        'onerror="errorImg()">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2">' +
                         '</div>' +
                         '<div class="col-md-9">' +
                         '<b><small>' + item.title + '</small></b>' +

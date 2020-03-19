@@ -2307,7 +2307,6 @@ try{
             ];
 
 
-            $url = env('SERVICE') . 'commsetting/editcomm';
             try {
                 $resImg = $req->create_membership_admin($imageRequest, $url, $token);
                 // return $resImg;
