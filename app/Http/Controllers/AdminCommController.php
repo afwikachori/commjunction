@@ -2589,4 +2589,54 @@ class AdminCommController extends Controller
     }
 
 
+    public function edit_setting_regisdata_comm(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        $in = $request->except('_token', 'id_question');
+        $param_isi = array_values($in);
+
+        // return $param_isi;
+
+        $url = env('SERVICE') . 'commsetting/editregistrationdata';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'params' => $param_isi,
+            "id"     =>  $input['id_question']
+        ]);
+        $options = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $options);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success($json['message'], 'Question Updated!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    } //endfunc
+
+
+
 } //end-class

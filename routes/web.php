@@ -65,6 +65,8 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 
 //POST
 
+Route::post('edit_setting_regisdata_comm','AdminCommController@edit_setting_regisdata_comm')->name('edit_setting_regisdata_comm');
+
 Route::post('get_list_subcriber_name','AdminCommController@get_list_subcriber_name')->name('get_list_subcriber_name');
 
 Route::post('get_list_transaction_tipe','AdminCommController@get_list_transaction_tipe')->name('get_list_transaction_tipe');

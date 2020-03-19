@@ -133,8 +133,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="form_edit_dataregis" action="{{route('setting_regisdata_comm')}}">
+                <form method="POST" id="form_edit_dataregis" action="{{route('edit_setting_regisdata_comm')}}">
                     {{ csrf_field() }}
+                    <input type="hidden" class="form-control input-abu" name="id_question" id="id_question">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -307,35 +308,33 @@
         //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_list_regisdata tbody').on('click', 'button', function () {
             var pilih = tabel.row($(this).parents('tr')).data();
-            console.log(pilih);
+            $("#id_question").val(pilih.id);
             var isi = pilih.param_form_array;
             $("#edit_question").val(isi[0]);
             $("#edit_tipedata").val(isi[1]).attr("selected", "selected");
 
             var len = isi.length;
-             var cek = isi.slice(2, len);
-             var len_2 = cek.length;
-             addRowRegisData_edit(len_2);
-             var new_row2 ='';
-             $.each(cek, function (i, item) {
-                 console.log(item);
-                //  $("#value"+i).val(item);
-            new_row2 +='<div class="row form-group newly2" id="row' + i + '">' +
-                     '<div class="col-md-3" style="margin-top: 1em;">' +
-                     '<label class="cgrey">Choose Input</label>' +
-                     '</div>' +
-                     '<div class="col-md-7">' +
-                     '<input type="text" class="form-control input-abu" value="'+item+'" name="value' + i + '">' +
-                     '</div>' +
-                     '<div class="col-md">' +
-                     '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row2" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
-                     '<i class="mdi mdi-delete"></i>' +
-                     '</button>' +
-                     '</div>' +
-                     '</div>';
-             });
+            var cek = isi.slice(2, len);
+            var len_2 = cek.length;
+            addRowRegisData_edit(len_2);
+            var new_row2 = '';
+            $.each(cek, function (i, item) {
+                new_row2 += '<div class="row form-group newly2" id="row' + i + '">' +
+                    '<div class="col-md-3" style="margin-top: 1em;">' +
+                    '<label class="cgrey">Choose Input</label>' +
+                    '</div>' +
+                    '<div class="col-md-7">' +
+                    '<input type="text" class="form-control input-abu" value="' + item + '" name="value' + i + '">' +
+                    '</div>' +
+                    '<div class="col-md">' +
+                    '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row2" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
+                    '<i class="mdi mdi-delete"></i>' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>';
+            });
 
-            $('#isi_newrow_edit').html(new_row2+'<div id="isi_newrow_edit_new"></div>');
+            $('#isi_newrow_edit').html(new_row2 + '<div id="isi_newrow_edit_new"></div>');
             $("#modal_edit_question").modal('show');
 
         });
@@ -394,43 +393,42 @@
 
     }
 
-        function addRowRegisData_edit(last_id) {
-            console.log(last_id);
-            // var row = 1;
-            // var id = 3;
+    function addRowRegisData_edit(last_id) {
+        console.log(last_id);
+        // var row = 1;
+        // var id = 3;
 
-            $(document).on("click", "#addnewrow_edit", function () {
-                var new_row = '<div class="row form-group newly2" id="row' + last_id + '">' +
-                    '<div class="col-md-3" style="margin-top: 1em;">' +
-                    '<label class="cgrey">Choose Input</label>' +
-                    '</div>' +
-                    '<div class="col-md-7">' +
-                    '<input type="text" class="form-control input-abu" name="value' + last_id + '">' +
-                    '</div>' +
-                    '<div class="col-md">' +
-                    '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row2" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
-                    '<i class="mdi mdi-delete"></i>' +
-                    '</button>' +
-                    '</div>' +
-                    '</div>';
-                    last_id++;
+        $(document).on("click", "#addnewrow_edit", function () {
+            var new_row = '<div class="row form-group newly2" id="row' + last_id + '">' +
+                '<div class="col-md-3" style="margin-top: 1em;">' +
+                '<label class="cgrey">Choose Input</label>' +
+                '</div>' +
+                '<div class="col-md-7">' +
+                '<input type="text" class="form-control input-abu" name="value' + last_id + '">' +
+                '</div>' +
+                '<div class="col-md">' +
+                '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row2" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
+                '<i class="mdi mdi-delete"></i>' +
+                '</button>' +
+                '</div>' +
+                '</div>';
+            last_id++;
+            $('#isi_newrow_edit_new').append(new_row);
 
-                $('#isi_newrow_edit_new').append(new_row);
+            return false;
+        });
 
-                return false;
-            });
+        // Remove criterion
+        $(document).on("click", ".delete-row2", function () {
+            //  alert("deleting row#"+row);
+            // if (row > 1) {
+            $(this).closest('div .newly2').remove();
+            //     row--;
+            // }
+            return false;
+        });
 
-            // Remove criterion
-            $(document).on("click", ".delete-row2", function () {
-                //  alert("deleting row#"+row);
-                // if (row > 1) {
-                    $(this).closest('div .newly2').remove();
-                //     row--;
-                // }
-                return false;
-            });
-
-        }
+    }
 
 
 </script>
