@@ -109,6 +109,11 @@ class AdminCommController extends Controller
         return view("admin/dashboard/usertype_management_admin");
     }
 
+    public function TransactionManagementViewAdmin()
+    {
+        return view("admin/dashboard/transaction_management_admin");
+    }
+
 
 
 
@@ -721,17 +726,17 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'membershipmanagement/listmembership';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
             return $errorq;
@@ -2314,7 +2319,7 @@ try{
                     alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
                     return back();
                 }
-            }catch (ClientException $errornya) {
+            } catch (ClientException $errornya) {
                 $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
@@ -2365,7 +2370,7 @@ try{
                 return back();
             }
         } // endelse
-        }
+    }
 
 
 
@@ -2476,6 +2481,112 @@ try{
         }
     }
 
+    public function get_list_komunitas()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'transmanagement/listcommunity';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+    public function get_list_transaction_tipe()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+        $url = env('SERVICE') . 'transmanagement/listtransactiontype';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+    public function get_list_subcriber_name(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'transmanagement/listsubscriber';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $input['community_id']
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 } //end-class

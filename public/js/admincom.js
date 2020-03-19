@@ -1,4 +1,4 @@
-
+// onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 var server_cdn = '{{ env("CDN") }}';
 var ui = {
     popup: {

@@ -50,6 +50,7 @@ Route::get('/notification_management', 'AdminCommController@NotificationManageme
 Route::get('/payment_management', 'AdminCommController@PaymentManagementAdminCommunity')->name('/payment_management');
 Route::get('/inbox_management', 'AdminCommController@InboxMessageManagementAdmin')->name('/inbox_management');
 Route::get('/usertype_management', 'AdminCommController@usertypeManagementAdminView')->name('/usertype_management');
+Route::get('/transaction', 'AdminCommController@TransactionManagementViewAdmin')->name('/transaction');
 
 
 
@@ -64,6 +65,11 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 
 //POST
 
+Route::post('get_list_subcriber_name','AdminCommController@get_list_subcriber_name')->name('get_list_subcriber_name');
+
+Route::post('get_list_transaction_tipe','AdminCommController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
+
+Route::post('get_list_komunitas','AdminCommController@get_list_komunitas')->name('get_list_komunitas');
 
 Route::post('add_new_usertype_management_admin','AdminCommController@add_new_usertype_management_admin')->name('add_new_usertype_management_admin');
 

@@ -54,7 +54,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="/admin/transaction">
             <span class="menu-title">Transaction Management</span>
             <i class="mdi mdi-cart menu-icon"></i>
         </a>

@@ -413,12 +413,13 @@
         <div class="modal-content" style="background-color: #ffffff;">
 
             <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                <h4 class="modal-title cgrey">Detail User</h4>
+                <h4 class="modal-title cgrey">Detail Membership</h4>
             </div> <!-- end-header -->
 
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                 <div class="bunder-ring" id="img_detail_member">
-                    <img class="profile-pic rounded-circle img-fluid" id="foto_membership" src="/img/noimg.jpg">
+                    <img class="profile-pic rounded-circle img-fluid" id="foto_membership" src="/img/loading.gif"
+                    onerror = "this.onerror=null;this.src='/img/default.png';">
                 </div>
                 <div class="row">
                     <div class="col-md">
@@ -532,6 +533,7 @@
                 var isimember = '';
                 $.each(result, function (i, item) {
                     var logo = server_cdn + item.image;
+                    var noimg = '/img/fitur.png';
                     isimember += '<div class="col-md-4 stretch-card grid-margin card-member">' +
                         '<div class="card bg-gradient-success card-img-holder text-white member">' +
                         '<div class="card-body member">' +
@@ -540,7 +542,7 @@
                         '</h4>' +
                         '<div class="row">' +
                         '<div class="col-7">' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership" onerror="errorImg()">' +
+                        '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership" onerror="this.onerror=null;this.src=\'' + noimg + '\';" >' +
                         '</div>' +
                         '<div class="col-5" style="text-align:right;">' +
                         '<button type="button" class="membershipbtn" onclick="detail_membership_card(' + i + ')">' +
@@ -594,8 +596,7 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2"' +
-                        'onerror="errorImg()">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2">' +
                         '</div>' +
                         '<div class="col-md-9">' +
                         '<b><small>' + item.title + '</small></b>' +

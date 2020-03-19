@@ -1,4 +1,4 @@
-
+// onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 // LANG -EN-ID
 // var lang = new Lang();
 //       lang.dynamic('id', '/js/langpack/id.json');

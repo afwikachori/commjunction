@@ -229,21 +229,21 @@
 
         });
 
-//DETAIL USERTYPE FROM DATATABLE
+        //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_usertype_manage_admin tbody').on('click', 'button', function () {
             var data = tabel.row($(this).parents('tr')).data();
-            console.log(data);
+            // console.log(data);
             $("#modal_edit_usertype").modal("show");
             $("#idfitur_usertype").val(data.id);
             $("#nama_usertipe_edit").val(data.title);
             $("#dekripsi_usertipe_edit").text(data.description);
 
             var subfitur = data.subfeature;
-             $.each(subfitur[0], function (i, item) {
-                 console.log("#edit_subfitur_"+item.subfeature_id);
-                 $('#edit_subfitur_'+ item.subfeature_id).prop('checked', true);
-                //    $('#edit_subfitur_' + item.subfeature_id).attr('checked', 'checked');
-             });
+            var arr = [];
+            $.each(subfitur, function (i, item) {
+                $('#edit_fitur_id' + item.feature_id).prop('checked', true);
+                $('#edit_subfitur_' + item.subfeature_id).prop('checked', true);
+            });
 
 
         });
@@ -272,12 +272,12 @@
                     var jum = 0;
                     var idfitur = '';
 
-                    $.each(item.module_endpoints, function (i, item) {
+                    $.each(item.sub_features, function (i, item) {
                         // console.log(item);
                         idfitur = item.feature_id;
                         child_ui += '<li class="">' +
                             '<input type="checkbox" name="subfitur[]"' +
-                            'id="subfitur_'+item.subfeature_id+'"'+
+                            'id="subfitur_' + item.subfeature_id + '"' +
                             'value="' + item.subfeature_id + '">' +
                             '<label>' + item.sub_feature_title + '</label>' +
                             '</li>';
@@ -295,7 +295,7 @@
                     } else {
                         parent_ui += '<ul class="tree">' +
                             '<li class="has">' +
-                            '<input type="checkbox" name="fitur_id[]"  value="'+ idfitur +'">' +
+                            '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
                             '<label>' + parent + ' &nbsp;' +
                             '<small class="total"> &nbsp; (' + jum + ') </small>' +
                             '<i class="mdi mdi-chevron-down clight"></i>' +
@@ -308,7 +308,7 @@
 
                 });
                 $(".isi_cek_priviledge").html(parent_ui);
-            // ___________________________________________________________________________________
+                // ___________________________________________________________________________________
                 var parent_ui2 = '';
                 $.each(result, function (i, item) {
                     var child_ui2 = '';
@@ -316,7 +316,7 @@
                     var jum2 = 0;
                     var idfitur_edit = '';
 
-                    $.each(item.module_endpoints, function (i, item) {
+                    $.each(item.sub_features, function (i, item) {
                         idfitur_edit = item.feature_id;
                         child_ui2 += '<li class="">' +
                             '<input type="checkbox" name="edit_subfitur[]"' +
@@ -338,7 +338,7 @@
                     } else {
                         parent_ui2 += '<ul class="tree">' +
                             '<li class="has">' +
-                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
                             '<label>' + parent2 + ' &nbsp;' +
                             '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
                             '<i class="mdi mdi-chevron-down clight"></i>' +

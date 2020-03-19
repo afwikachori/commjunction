@@ -185,7 +185,7 @@
     //                 var jum = 0;
     //                 var idfitur = '';
 
-    //                 $.each(item.module_endpoints, function (i, item) {
+    //                 $.each(item.sub_features, function (i, item) {
     //                     // console.log(item.feature_id, parent, item.subfeature_id, item.sub_feature_title);
     //                     idfitur = item.feature_id;
     //                     child_ui += '<li class="">' +
@@ -248,7 +248,7 @@
                     var jum = 0;
                     var idfitur = '';
 
-                    $.each(item.module_endpoints, function (i, item) {
+                    $.each(item.sub_features, function (i, item) {
                         // console.log(item);
                         idfitur = item.feature_id;
                         child_ui += '<li class="">' +
@@ -292,7 +292,7 @@
                     var jum2 = 0;
                     var idfitur_edit = '';
 
-                    $.each(item.module_endpoints, function (i, item) {
+                    $.each(item.sub_features, function (i, item) {
                         idfitur_edit = item.feature_id;
                         child_ui2 += '<li class="">' +
                             '<input type="checkbox" name="edit_subfitur[]"' +
@@ -314,7 +314,7 @@
                     } else {
                         parent_ui2 += '<ul class="tree">' +
                             '<li class="has">' +
-                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
                             '<label>' + parent2 + ' &nbsp;' +
                             '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
                             '<i class="mdi mdi-chevron-down clight"></i>' +
@@ -386,18 +386,19 @@
         });
         //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_usertype_manage tbody').on('click', 'button', function () {
-            var data = tabel.row($(this).parents('tr')).data();
-            console.log(data);
+          var data = tabel.row($(this).parents('tr')).data();
+            // console.log(data);
             $("#modal_edit_usertype").modal("show");
             $("#idfitur_usertype").val(data.id);
             $("#nama_usertipe_edit").val(data.title);
             $("#dekripsi_usertipe_edit").text(data.description);
 
             var subfitur = data.subfeature;
-             $.each(subfitur[0], function (i, item) {
-                 console.log("#edit_subfitur_"+item.subfeature_id);
-                 $('#edit_subfitur_'+ item.subfeature_id).prop('checked', true);
-             });
+            var arr = [];
+            $.each(subfitur, function (i, item) {
+                $('#edit_fitur_id' + item.feature_id).prop('checked', true);
+                $('#edit_subfitur_' + item.subfeature_id).prop('checked', true);
+            });
 
 
         });
