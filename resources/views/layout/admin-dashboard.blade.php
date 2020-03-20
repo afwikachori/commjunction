@@ -330,6 +330,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
 
+    <!-- js pdf -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> -->
+
+
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>
     @include('sweet::alert')

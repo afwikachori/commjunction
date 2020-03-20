@@ -2,6 +2,7 @@
 @section('title', 'Transaction Management')
 
 @section('content')
+<div id="div_ignore">
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -48,8 +49,9 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <small class="clight">Community Name</small>
-                                                <select class="form-control input-abu" name="komunitas" id="komunitas">
-                                                </select>
+                                                <h5 class="nama_komunitas cgrey2" style="margin-top: 0.5em;"></h5>
+                                                <input type="hidden" class="form-control input-abu" name="komunitas"
+                                                    id="komunitas">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
@@ -93,7 +95,7 @@
                                             <div class="form-group subs_name">
                                                 <small class="clight">Subscriber</small>
                                                 <select class="form-control input-abu" name="subs_name" id="subs_name">
-                                                    <option selected disabled> Choose Community First</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -149,6 +151,12 @@
     </div>
 </div>
 
+<div id="convert_me_to_pdf">
+
+</div>
+
+</div>
+
 
 
 <!-- MODAL DETAIL TRASACTION-->
@@ -162,6 +170,7 @@
             </button>
 
             <div class="modal-body" style="padding:25px; min-height: 550px; height: auto; padding: 5px 25px 0px 25px;">
+                <div id="for_download">
                 <div class="row">
                     <div class="col-md-6 col-sm-12" style="border-right: 1px solid #E0E0E0; height: 100%;">
                         <h4 class="tebal cgrey2">Detail Transaction</h4>
@@ -223,7 +232,7 @@
                                 <i class="mdi mdi-close"></i> Cancel
                             </button>
                             &nbsp;
-                            <button type="button" class="btn btn-teal btn-sm">
+                            <button type="button" class="btn btn-teal btn-sm" id="btn_download_detail" style="display: none;">
                                 <i class="mdi mdi-check btn-icon-prepend"></i>
                                 Download</button>
                         </div>
@@ -243,7 +252,8 @@
                             <div class="col-md-12"
                                 style="height: 115px; background-color: lavender; border-radius: 10px;">
                                 <img src="" id="img_pay_confirm" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%;">
+                                    style="height: 115px; width: 100%;"
+                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
@@ -268,7 +278,8 @@
                             <div class="col-md-12"
                                 style="height: 115px; background-color: lavender; border-radius: 10px;">
                                 <img src="" id="img_pay_aprov" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%;">
+                                    style="height: 115px; width: 100%;"
+                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
@@ -284,6 +295,7 @@
 
                     </div>
                 </div>
+            </div><!-- dl -->
             </div><!-- end-body -->
 
         </div> <!-- END-MDL CONTENT -->
@@ -351,13 +363,13 @@
                         </div>
                         <div class="col-md">
                             <div class="form-group">
-                                <select class="form-control input-abu" name="komunitas2" id="komunitas2">
-                                </select>
+                                <h5 class="nama_komunitas cgrey2" style="margin-top: 0.5em;"></h5>
+                                <input type="hidden" class="form-control input-abu" name="komunitas2" id="komunitas2">
                             </div>
                         </div>
                     </div>
 
-                    <div class="row showinsubs2">
+                    <div class="row">
                         <div class="col-md">
                             <center>
                                 <label class="cgrey2" style="margin-top: 1.5em;">
@@ -399,39 +411,9 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        get_list_komunitas();
         get_list_transaction_tipe();
+        get_list_subscriber_admin();
     });
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/superadmin/tabel_transaksi_show',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            data: {
-                "komunitas": $("#komunitas").val(),
-                "tanggal_mulai": $("#tanggal_mulai").val(),
-                "tanggal_selesai": $("#tanggal_selesai").val(),
-                "tipe_trans": $("#tipe_trans").val(),
-                "status_trans": $("#status_trans").val(),
-                "subs_name": $("#subs_name").val()
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
-            }
-        });
-    }
-
 
     $("#reset_tbl_trans").click(function () {
         resetparam_trans();
@@ -445,64 +427,6 @@
         $("#status_trans").val("");
         $("#subs_name").val("");
     }
-
-
-    //dropdown komunitas list
-    function get_list_komunitas() {
-        // SUBSCRIBER DROPDOWN HIDE
-        $('.subs_name').hide();
-        $(".showinsubs2").hide();
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/admin/get_list_komunitas",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                $('#komunitas').empty();
-                $('#komunitas').append("<option disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#komunitas").html($('#komunitas option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#komunitas").get(0).selectedIndex = 0;
-
-                const OldKomunitas = "{{old('komunitas')}}";
-
-                if (OldKomunitas !== '') {
-                    $('#komunitas').val(OldKomunitas);
-                }
-                // _________________________________________________________________
-                $('#komunitas2').empty();
-                $('#komunitas2').append("<option disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#komunitas2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#komunitas2").html($('#komunitas2 option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#komunitas2").get(0).selectedIndex = 0;
-
-                const OldKomunitas2 = "{{old('komunitas2')}}";
-
-                if (OldKomunitas2 !== '') {
-                    $('#komunitas2').val(OldKomunitas2);
-                }
-            },
-        });
-    } //endfunction
 
     //dropdown tipe_trans list
     function get_list_transaction_tipe() {
@@ -558,10 +482,8 @@
         });
     } //endfunction
 
-
     //dropdown subs_name list
-    $('#komunitas').change(function () {
-        var itempilih = this.value;
+    function get_list_subscriber_admin() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -571,13 +493,8 @@
             url: "/admin/get_list_subcriber_name",
             type: "POST",
             dataType: "json",
-            data: {
-                "community_id": itempilih,
-            },
             success: function (result) {
-                console.log(result);
-                $('.subs_name').show();
-                $('#subs_name').show();
+                // console.log(result);
                 $('#subs_name').empty();
                 $('#subs_name').append("<option value='null'> Choose</option>");
 
@@ -590,40 +507,11 @@
                 }));
 
                 $("#subs_name").get(0).selectedIndex = 0; const
-                    OldSubs = "{{old('subs_name')}}";
-                if (OldSubs !== '') {
-                    $('#subs_name').val(OldSubs);
+                    OldSubs1 = "{{old('subs_name')}}";
+                if (OldSubs1 !== '') {
+                    $('#subs_name').val(OldSubs1);
                 }
-
-            },
-            error: function (result) {
-                $('#subs_name').fadeOut("fast");
-            }
-        });
-    });
-    //end list subscriber
-
-
-    //dropdown subs_name list
-    $('#komunitas2').change(function () {
-        // alert("dasdsadsadas");
-        var itempilih = this.value;
-        console.log(itempilih);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/get_list_subcriber_name",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "community_id": itempilih,
-            },
-            success: function (result) {
-
-                $('.showinsubs2').fadeIn("fast");
+                // _______________________________________________________________________________
                 $('#subs_name2').empty();
                 $('#subs_name2').append("<option value='null'> Choose</option>");
 
@@ -641,10 +529,10 @@
 
             },
             error: function (result) {
-                $('#subs_name2').fadeOut("fast");
+                ui.popup.show('Warning', 'Get list community', 'Warning');
             }
         });
-    });
+    }
     //end list subscriber
 
 
@@ -660,8 +548,79 @@
         $('#tabel_trans').dataTable().fnDestroy();
 
         $(".showin_table_trans").show();
-        // $("#collapseOne").removeClass('show');
         $("#tab_transaction_param").hide();
+
+        var tabel = $('#tabel_trans').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
+                    }
+                }
+            ],
+            responsive: true,
+            ajax: {
+                url: '/admin/tabel_transaksi_show',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "komunitas": $("#komunitas").val(),
+                    "tanggal_mulai": $("#tanggal_mulai").val(),
+                    "tanggal_selesai": $("#tanggal_selesai").val(),
+                    "tipe_trans": $("#tipe_trans").val(),
+                    "status_trans": $("#status_trans").val(),
+                    "subs_name": $("#subs_name").val()
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    // $('#tabel_subscriber tbody').;
+                    $('#tabel_trans tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                ui.popup.show('error', status, 'Error');
+            },
+            columns: [
+                { mData: 'invoice_number' },
+                { mData: 'created_at' },
+                { mData: 'name' },
+                { mData: 'transaction_type' },
+                { mData: 'status_title' },
+                {
+                    mData: 'id',
+                    render: function (data, type, row, meta) {
+                        var dt = [row.invoice_number, row.payment_level, row.community_id];
+                        // console.log(data);
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_transaksi_all(\'' + dt + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
+                }
+            ],
+
+        });
+    }
+
+
+    $("#btn_filter_transaksi").click(function (e) {
+        // alert("filter");
+        resetparam_trans();
+        $('#tabel_trans').dataTable().fnClearTable();
+        $('#tabel_trans').dataTable().fnDestroy();
+
+        $(".showin_table_trans").show();
+        $("#tab_transaction_param").hide();
+
+        $("#modal_trasaksi_filter").modal("hide");
 
 
         var tabel = $('#tabel_trans').DataTable({
@@ -681,17 +640,17 @@
             ],
             responsive: true,
             ajax: {
-                url: '/superadmin/tabel_transaksi_show',
+                url: '/admin/tabel_transaksi_show',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "komunitas": $("#komunitas").val(),
-                    "tanggal_mulai": $("#tanggal_mulai").val(),
-                    "tanggal_selesai": $("#tanggal_selesai").val(),
-                    "tipe_trans": $("#tipe_trans").val(),
-                    "status_trans": $("#status_trans").val(),
-                    "subs_name": $("#subs_name").val()
+                    "komunitas": $("#komunitas2").val(),
+                    "tanggal_mulai": $("#tanggal_mulai2").val(),
+                    "tanggal_selesai": $("#tanggal_selesai2").val(),
+                    "tipe_trans": $("#tipe_trans2").val(),
+                    "status_trans": $("#status_trans2").val(),
+                    "subs_name": $("#subs_name2").val()
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -722,68 +681,90 @@
             ],
 
         });
-    }
+    });
 
 
 
     function detail_transaksi_all(dt_trans) {
-        $("#modal_detail_trans").modal('show');
         var trans = dt_trans.split(',');
-        // console.log(trans);
+        console.log(trans);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            },
         });
         $.ajax({
-            url: '/superadmin/detail_transaksi_superadmin',
+            url: '/admin/detail_transaksi_superadmin',
             type: 'POST',
             datatype: 'JSON',
+            timeout: 20000,
             data: {
                 "invoice_number": trans[0],
                 "payment_level": trans[1],
                 "community_id": trans[2],
             },
             success: function (result) {
-                console.log(result);
-
-                $("#invoice_trans").html(result.invoice_number);
-                $("#date_trans").html(result.created_at);
-                $("#komunitas_trans").html(result.community_name);
-                $("#subscriber_trans").html(result.name);
-                $("#level_title_trans").html(result.level_title);
-                $("#nominal_trans").html(result.grand_total);
-                $("#jenis_trans").html(result.transaction_type);
-                $("#statusjudul_trans").html(result.status_title);
-                $("#transaksi_trans").html(result.transaction);
-
-                var uiku = '';
-                if (result.data_confirmation.file != "") {
-                    $("#img_pay_confirm").attr("src", server_cdn + result.data_confirmation.file);
-                    $("#nama_confirm_trans").html(result.data_confirmation.created_by);
-                    $("#date_confirm_trans").html(result.data_confirmation.created_at);
-
-                    uiku = '<button type="button" class="btn btn-tosca' +
-                        'melengkung10px btn-sm"> Paid</button >';
-                    $("#status_color").html(uiku);
+                if (result.success == false) {
+                    ui.popup.show('error', result.message, 'Error');
+                    $("#modal_detail_trans").modal('hide');
                 } else {
-                    $("#img_pay_confirm").attr("src", "");
-                    uiku = '<button type="button" class="btn btn-abu' +
-                        'melengkung10px btn-sm"> Not Yet</button >';
-                    $("#status_color").html(uiku);
+
+                    $("#modal_detail_trans").modal('show');
+                    console.log(result);
+                    $("#invoice_trans").html(result.invoice_number);
+                    $("#date_trans").html(result.created_at);
+                    $("#komunitas_trans").html(result.community_name);
+                    $("#subscriber_trans").html(result.name);
+                    $("#level_title_trans").html(result.level_title);
+                    $("#nominal_trans").html(result.grand_total);
+                    $("#jenis_trans").html(result.transaction_type);
+                    $("#statusjudul_trans").html(result.status_title);
+                    $("#transaksi_trans").html(result.transaction);
+
+                    var uiku = '';
+                    if (result.data_confirmation.file != "") {
+                        $("#img_pay_confirm").attr("src", server_cdn + result.data_confirmation.file);
+                        $("#nama_confirm_trans").html(result.data_confirmation.created_by);
+                        $("#date_confirm_trans").html(result.data_confirmation.created_at);
+
+                        uiku = '<button type="button" class="btn btn-tosca' +
+                            'melengkung10px btn-sm"> Paid</button >';
+                        $("#status_color").html(uiku);
+                    } else {
+                        $("#img_pay_confirm").attr("src", "");
+                        uiku = '<button type="button" class="btn btn-abu' +
+                            'melengkung10px btn-sm"> Not Yet</button >';
+                        $("#status_color").html(uiku);
+                    }
+
+
+                    if (result.data_verification.file != "") {
+                        $("#img_pay_aprov").attr("src", server_cdn + result.data_verification.file);
+                        $("#name_approv_trans").html(result.data_verification.verification_by);
+                        $("#date_approv_trans").html(result.data_verification.verification_at);
+                    }
+
+
+                    var doc = new jsPDF();
+                    var specialElementHandlers = {
+                        '#div_ignore': function (element, renderer) {
+                            return true;
+                        }
+                    };
+
+                    $("#btn_download_detail").click(function () {
+                        doc.fromHTML($('#for_download').html(), 15, 15, {
+                            'width': 190,
+                            'elementHandlers': specialElementHandlers
+                        });
+                        doc.save('detail transaction.pdf');
+                    });
+
+
+                    // $("#").html(result.);
+                    // $("#").html(result.);
+                    // $("#").html(result.);
                 }
-
-
-                if (result.data_verification.file != "") {
-                    $("#img_pay_aprov").attr("src", server_cdn + result.data_verification.file);
-                    $("#name_approv_trans").html(result.data_verification.verification_by);
-                    $("#date_approv_trans").html(result.data_verification.verification_at);
-                }
-
-
-                // $("#").html(result.);
-                // $("#").html(result.);
-                // $("#").html(result.);
 
             },
             error: function (result) {
@@ -793,82 +774,6 @@
         });
     }
 
-
-
-
-
-        $("#btn_filter_transaksi").click(function (e) {
-            // alert("filter");
-            resetparam_trans();
-            $('#tabel_trans').dataTable().fnClearTable();
-            $('#tabel_trans').dataTable().fnDestroy();
-
-            $(".showin_table_trans").show();
-            // $("#collapseOne").removeClass('show');
-            $("#tab_transaction_param").hide();
-
-            $("#modal_trasaksi_filter").modal("hide");
-
-
-            var tabel = $('#tabel_trans').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'csv', 'excel', 'pdf', 'print', {
-                        text: 'JSON',
-                        action: function (e, dt, button, config) {
-                            var data = dt.buttons.exportData();
-
-                            $.fn.dataTable.fileSave(
-                                new Blob([JSON.stringify(data)]),
-                                'Export.json'
-                            );
-                        }
-                    }
-                ],
-                responsive: true,
-                ajax: {
-                    url: '/superadmin/tabel_transaksi_show',
-                    type: 'POST',
-                    dataSrc: '',
-                    timeout: 30000,
-                    data: {
-                        "komunitas": $("#komunitas2").val(),
-                        "tanggal_mulai": $("#tanggal_mulai2").val(),
-                        "tanggal_selesai": $("#tanggal_selesai2").val(),
-                        "tipe_trans": $("#tipe_trans2").val(),
-                        "status_trans": $("#status_trans2").val(),
-                        "subs_name": $("#subs_name2").val()
-                    },
-                    error: function (jqXHR, ajaxOptions, thrownError) {
-                        var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                        // $('#tabel_subscriber tbody').;
-                        $('#tabel_trans tbody').empty().append(nofound);
-                    },
-                },
-                error: function (request, status, errorThrown) {
-                    console.log(errorThrown);
-                },
-                columns: [
-                    { mData: 'invoice_number' },
-                    { mData: 'created_at' },
-                    { mData: 'name' },
-                    { mData: 'transaction_type' },
-                    { mData: 'status_title' },
-                    {
-                        mData: 'id',
-                        render: function (data, type, row, meta) {
-                            var dt = [row.invoice_number, row.payment_level, row.community_id];
-                            // console.log(data);
-                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                                'onclick="detail_transaksi_all(\'' + dt + '\')">' +
-                                '<i class="mdi mdi-eye"></i>' +
-                                '</button>';
-                        }
-                    }
-                ],
-
-            });
-        });
 
 
 </script>

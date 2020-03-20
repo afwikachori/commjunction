@@ -42,7 +42,7 @@
       <div class="form-group">
         <small class="clight2 mgb-1">Community Icon</small><br>
       <img src="/img/default.png" class="rounded-circle img-fluid logo_komunitas" id="profil_admin_dash">
-      </div> 
+      </div>
 
       </div> <!-- end-col-md -->
       <div class="col-md-4">
@@ -158,6 +158,7 @@
 var server_cdn = '{{ env("CDN") }}';
 
 $(document).ready(function () {
+
 });
 
 

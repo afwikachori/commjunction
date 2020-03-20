@@ -579,8 +579,8 @@ margin-bottom: 0em !important;
 .circle {
     border-radius: 1000px !important;
     overflow: hidden;
-    width: 100px;
-    height: 100px;
+    width: 128px;
+    height: 128px;
     border: 8px solid #efefef;
     position: absolute;
     top: 72px;
@@ -772,7 +772,7 @@ padding-right: 3%;
     border: none;
 }
 .btn-ijo {
-    background: linear-gradient(125.96deg, #0fb34e 0%, #90b466 56.6%);
+    background: linear-gradient(125.96deg, #0fb34e 0%, #5cc377 56.6%);
     color: white;
     min-width: 15%;
     border-radius: 10px;
@@ -1362,7 +1362,7 @@ select.form-control {
     border: none;
 }
 .btn-ijo {
-    background: linear-gradient(125.96deg, #0fb34e 0%, #90b466 56.6%);
+    background: linear-gradient(125.96deg, #0fb34e 0%, #5cc377 56.6%);
     color: white;
     min-width: 15%;
     border-radius: 10px;

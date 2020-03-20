@@ -51,6 +51,7 @@ Route::get('/payment_management', 'AdminCommController@PaymentManagementAdminCom
 Route::get('/inbox_management', 'AdminCommController@InboxMessageManagementAdmin')->name('/inbox_management');
 Route::get('/usertype_management', 'AdminCommController@usertypeManagementAdminView')->name('/usertype_management');
 Route::get('/transaction', 'AdminCommController@TransactionManagementViewAdmin')->name('/transaction');
+Route::get('/module_report', 'AdminCommController@ModuleReportManagementView')->name('/module_report');
 
 
 
@@ -64,6 +65,10 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+
+Route::post('detail_transaksi_superadmin','AdminCommController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
+
+Route::post('tabel_transaksi_show','AdminCommController@tabel_transaksi_show')->name('tabel_transaksi_show');
 
 Route::post('edit_setting_regisdata_comm','AdminCommController@edit_setting_regisdata_comm')->name('edit_setting_regisdata_comm');
 

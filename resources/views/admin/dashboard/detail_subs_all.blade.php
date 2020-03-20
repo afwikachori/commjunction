@@ -32,12 +32,12 @@
          @else
          <button type="submit" class="btn btn-danger melengkung10px btn-sm">{{ $status }}</button>
         @endif
-       
+
       </form>
       </div>
     </div>
   </div>
-  
+
 <div class="card-body">
 <div class="bunder-ring">
   @if ($sso_picture == 0)
@@ -45,7 +45,7 @@
   @else
 <img class="profile-pic rounded-circle img-fluid" src="{{ $sso_picture }}">
   @endif
-       
+
 </div>
 
 <div class="row">
@@ -100,25 +100,25 @@ Paid
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
 
@@ -136,6 +136,8 @@ Paid
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
+// request.abort();
+//   jqXHR.abort();
 });
 
 

@@ -114,6 +114,10 @@ class AdminCommController extends Controller
         return view("admin/dashboard/transaction_management_admin");
     }
 
+    public function ModuleReportManagementView(){
+        return view("admin/dashboard/module_report_management_admin");
+    }
+
 
 
 
@@ -2549,6 +2553,8 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
+        $user = $ses_login['user'];
+        $comid = $user['community_id'];
 
         $url = env('SERVICE') . 'transmanagement/listsubscriber';
         $client = new \GuzzleHttp\Client();
@@ -2557,7 +2563,7 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            'community_id' => $input['community_id']
+            'community_id' => $comid
 
         ]);
 
@@ -2636,6 +2642,104 @@ class AdminCommController extends Controller
             return back();
         }
     } //endfunc
+
+
+    public function tabel_transaksi_show(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        // return $ses_login['access_token'];
+
+        $url = env('SERVICE') . 'transmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "start_date" => $input['tanggal_mulai'],
+            "end_date" => $input['tanggal_selesai'],
+            "community_id" => $input['komunitas'],
+            "transaction_type_id" => $input['tipe_trans'],
+            "subscriber_id" => $input['subs_name'],
+            "transaction_status" => $input['status_trans']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+    public function detail_transaksi_superadmin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'transmanagement/detail';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "invoice_number" => $input['invoice_number'],
+            "community_id" => $input['community_id'],
+            "payment_level" => $input['payment_level']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
 
 
 

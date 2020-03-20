@@ -1,5 +1,5 @@
 @extends('layout.admin-dashboard')
-
+@section('title', 'Community Setting')
 @section('content')
 <div class="page-header">
     <h3 class="page-title">
@@ -35,11 +35,11 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID Question</th>
-                            <th>Question Title</th>
-                            <th>Type</th>
-                            <th>Date Created</th>
-                            <th>Action</th>
+                            <th><b>ID Question</b></th>
+                            <th><b>Question Title</b></th>
+                            <th><b>Type</b></th>
+                            <th><b>Date Created</b></th>
+                            <th><b>Action</b></th>
                         </tr>
                     </thead>
                 </table>
