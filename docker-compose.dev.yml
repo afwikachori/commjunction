@@ -18,12 +18,11 @@ services:
     restart: always
     
     networks:
-      sita_web:
-          aliases:
-            - web_commj
+      - commj_web
+          
   
 networks:
-  sita_web:
-    name: sita_web
-    driver: bridge
+  commj_web:
+     driver: bridge
+
 
