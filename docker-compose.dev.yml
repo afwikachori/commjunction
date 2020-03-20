@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gitlab.vascomm.co.id:4567/commjunction/web-platform:latest_dev
+    volumes:
+      - ./:/var/www/html
+      - ./nginx-conf/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
+      - /var/www/html/vendor
+      - /home/apps/log:/var/log/nginx/access
+    container_name: dev-commjaweb
+    ports:
+      - 9899:80
+    tty: true
+    restart: always
+    
+    networks:
+      sita_web:
+          aliases:
+            - web_commj
+  
+networks:
+  sita_web:
+    name: sita_web
+    driver: bridge
+
