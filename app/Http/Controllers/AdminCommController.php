@@ -353,7 +353,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/publish';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -368,7 +368,21 @@ class AdminCommController extends Controller
             alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
             return back();
         }
-        // return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -741,15 +755,16 @@ class AdminCommController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json['data'];
-        } catch (ClientException $exception) {
-            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            return $errorq;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
         } catch (ConnectException $errornya) {
-
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
-
             return $error;
         }
     }
@@ -1123,13 +1138,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully to add new user', 'Added')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            // return $status_error;
-            if ($status_error == 400) {
-                alert()->error('Proccess might interrupted at the middle, try again', 'Opps')->persistent('Done');
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back()->withInput();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1469,11 +1491,24 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 

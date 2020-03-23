@@ -1,99 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>COMMJUCTION</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/purple/css/style.css">
+    <!-- ICON WEB -->
+    <link rel="icon" href="/img/commjuction_icoweb.ico"/>
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center text-center error-page" style="background: linear-gradient(97.28deg, #FC6076 -2.66%, #FF9A44 102.89%);
+">
+          <div class="row flex-grow">
+            <div class="col-lg-7 mx-auto text-white">
+              <div class="row align-items-center d-flex flex-row">
+                <div class="col-lg-6 text-lg-right pr-lg-4">
+                  <!-- <h1 class="display-1 mb-0">Hi !</h1> -->
+                   <img src="/visual/logo2.png">
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+                  <h2 class="display-1">WELCOME</h2>
+                  <h4 class="font-weight-light">Gathering data with a smart application that trusted and fastest.</h4>
+                  <br>
+                  <h3 class="font-weight-light"><a href="/admin" style="color:#2a4050; font-weight:bold;">Join Now !</a></h2>
                 </div>
+              </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+              <div class="row mt-5">
+     
+              </div>
             </div>
+          </div>
         </div>
-    </body>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/purple/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/purple/js/off-canvas.js"></script>
+    <script src="/purple/js/hoverable-collapse.js"></script>
+    <script src="/purple/js/misc.js"></script>
+    <!-- endinject -->
+  </body>
 </html>

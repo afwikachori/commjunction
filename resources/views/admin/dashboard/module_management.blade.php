@@ -261,7 +261,7 @@
                     <div class="col-md-6">
                         <small class="clight">Module Features</small>
                         <div class="row">
-                            <div class="card-deck show_subfitur_module" style="width:100%;">
+                            <div class="card-deck show_subfitur_module scrollfitur" style="width:100%;">
 
                             </div>
                         </div> <!-- end-row deck -->
@@ -331,9 +331,12 @@
                         '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                         '<div class="card-body member">' +
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<button class="btn btn-sm badge btn-oren melengkung10px" style="position:absolute; margin-bottom:-1em; right:5%;"' +
-                        'onclick="detail_module_all(\'' + item.feature_id + '\')">' +
-                        '<small>Ready</small></button><br>' +
+                        // '<button  class="btn btn-sm btn-gradient-ijo melengkung10px float-right" style="position:absolute; margin-bottom:-1em; right:5%; padding: 0.3rem 0.5rem;' +
+                        // 'onclick="detail_module_all(\'' + item.feature_id + '\')">' +
+                        // '<small>Ready</small></button><br>' +
+                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                        'style="padding: 0.3rem 0.5rem;"' +
+                        'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
                         '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                         '<div class="row">' +
                         '<div class="col-md-12">' +
@@ -411,7 +414,9 @@
                             '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                             '<div class="card-body member">' +
                             '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                            '<label class="badge btn-gradient-ijo melengkung10px float-right">Ready</label>' +
+                            '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                            'style="padding: 0.3rem 0.5rem;"' +
+                            'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
                             '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                             '<div class="row">' +
                             '<div class="col-md-12">' +
@@ -475,6 +480,10 @@
             success: function (result) {
                 var dt = result[0];
                 // console.log(dt);
+
+                if(result.success == false){
+                    ui.popup.show('warning', result.message, 'Warning');
+                }else{
                 //form aktivasi
                 $("#id_modulefitur").val(dt.feature_id);
                 $("#payment_time").val();
@@ -523,7 +532,7 @@
                     var colum;
                     jum++;
 
-                    subf += '<div class="col-md-6 stretch-card grid-margin' +
+                    subf += '<div class="col-md-6 stretch-card grid-margin" style="height:80px;"' +
                         'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
                         '<div class="card bg-gradient-blue card-img-holder text-white">' +
@@ -532,7 +541,7 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card3">' +
                         '</div>' +
                         '<div class="col-md-9">' +
                         '<b><small>' + item.title + '</small></b>' +
@@ -552,6 +561,7 @@
                 $(".show_subfitur_module").html(subf);
 
                 $("#md_all_aktifkan_module").modal("show");
+            }
             },
             error: function (result) {
                 console.log("Cant Show Detail Module");

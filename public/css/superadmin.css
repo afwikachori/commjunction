@@ -1097,3 +1097,8 @@ input[type="checkbox"] {
     height: 100%;
     display: block;
 }
+
+.float-right {
+    float: right !important;
+    position: relative !important;
+}

@@ -38,7 +38,7 @@
               </div>
             </li>
 
-
+<!--
             <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
@@ -85,7 +85,7 @@
                 <div class="dropdown-divider"></div>
                 <h6 class="p-3 mb-0 text-center">See all notifications</h6>
               </div>
-            </li>
+            </li> -->
 
 
             <li class="nav-item nav-logout dropdown">
@@ -97,8 +97,8 @@
                 <a class="dropdown-item" href="/admin/settings">
                  Community Setting</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="">
-                Etc</a>
+                <!-- <a class="dropdown-item" href="">
+                Etc</a> -->
               </div>
             </li>
 

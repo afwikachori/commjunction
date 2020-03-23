@@ -1390,6 +1390,7 @@ select.form-control {
     color: white;
 }
 
+
 .btn-birumuda {
     background: linear-gradient(117.13deg, #96deda 0%, #50c9c3 56.6%);
     border-radius: 6px;
@@ -1659,4 +1660,55 @@ background: #ffffff00;
     margin-right: auto;
     text-align: center;
     margin-bottom: 1em;
+}
+.float-right {
+    float: right !important;
+    position: relative !important;
+}
+
+
+div.scrollfitur {
+    overflow: auto;
+    white-space: nowrap;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+div.scrollfitur a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+}
+
+
+div.scrollfitur::-webkit-scrollbar {
+  /*height: 7px;  height of horizontal scrollbar ← You're missing this */
+  width: 7px;  /* width of vertical scrollbar */
+  background-color: #F5F5F5;
+}
+
+div.scrollfitur::-webkit-scrollbar-thumb
+{
+    background: linear-gradient(
+        to bottom,
+        #faf9da,
+        #e0fcfa,
+        #def0f3,
+        #c8cfd3,
+        #ded5e6
+    );
+}
+
+
+.show_subfitur_module .grid-margin {
+    margin-bottom: 1rem !important;
+}
+
+.img-card3{
+  width: 25px;
+  height: 25px;
+  margin: auto;
 }

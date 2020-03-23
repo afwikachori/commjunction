@@ -168,9 +168,9 @@
       <i class="mdi mdi-close"></i> Cancel
     </button>
     &nbsp;
-    <button class="btn btn-teal btn-sm">
+    <!-- <button class="btn btn-teal btn-sm">
     <i class="mdi mdi-check btn-icon-prepend">
-        </i> Approve </button>
+        </i> Approve </button> -->
   </div>
 
     </div>
@@ -238,16 +238,33 @@ function tabel_payment_community(){
             return ket;
             }
             },
-            {mData: 'id',
-            render: function ( data, type, row,meta ) {
-          return '<button type="button" class="btn btn-gradient-light btn-sm btn-rounded btn-icon" style="width:28px; height:28px; "  onclick="detail_subspay(\'' + data + '\')">'+
-          '<i class="mdi mdi-eye"></i>'+
-                '</button>';
-              }
-            }
-        ],
-
+                 {
+                    mData: null,
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
+                }
+            ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
     });
+
+    
+        //DETAIL USERTYPE FROM DATATABLE
+        $('#tabel_paysubs tbody').on('click', 'button', function () {
+            var dt = tabel.row($(this).parents('tr')).data();
+            console.log(dt);
+            $("#id_paymentsubs").val(dt.id);
+            $("#modal_detail_paymentsubs").modal("show");
+        });
 
 }
 
@@ -323,11 +340,6 @@ $.ajax({
 
 
 
-function detail_subspay(idpay){
-// alert(idpay);
-$("#id_paymentsubs").val(idpay);
-$("#modal_detail_paymentsubs").modal("show");
-}
 
 
 </script>

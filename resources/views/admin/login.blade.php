@@ -75,7 +75,7 @@
                 <button lang="en" type="submit" class="btn btn-primary" id="LoginComm">Login</button>
                 </div>
                 <br>
-                <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
+                <!-- <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
 
                 <center>
                 <div class="row" style="margin-bottom: 2em;">
@@ -85,7 +85,7 @@
                     <div class="col">
 
                     </div>
-                </div> </center>
+                </div> </center> -->
             </form>
     </div>
 </div>

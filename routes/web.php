@@ -32,7 +32,7 @@ Route::get('404','RequestController@NotFoundView')->name('404');
 // ADMIN COMMUNITY
 Route::prefix('admin')->group(function(){
 // GET
-Route::get('/','AdminCommController@login')->name('admin');
+Route::get('/','AdminCommController@login')->name('/');
 Route::get('/logout', 'AdminCommController@LogoutAdmin')->name('logout');
 Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashboard');
 Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');

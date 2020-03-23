@@ -578,7 +578,7 @@
                 // console.log(result[dtnya]);
                 var result = result[dtnya];
                 $("#detail_judul_member").html(result.membership);
-                $("#detail_harga_member").html(result.pricing);
+                $("#detail_harga_member").html(rupiah(result.pricing));
                 $("#detail_deskripsi_member").html(result.description);
                 $("#foto_membership").attr("src", server_cdn + result.image);
                 $("#modal_detail_membership_card").modal('show');
