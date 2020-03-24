@@ -1736,3 +1736,19 @@ div.scrollfitur::-webkit-scrollbar-thumb
 #accordion_reportsubs .btn{
     padding: 0px !important;
 }
+
+
+#accordion_reportsubs .card-header{
+    background-color: #fff0;
+border: none !important;
+}
+#accordion_reportsubs .card .card-body{
+    padding: 0.2rem 0rem 0.1rem !important;}
+
+#accordion_reportsubs .btn-link {
+    color: #797979;
+}
+
+#accordion_reportsubs .card{
+    background: #fff0;
+}
