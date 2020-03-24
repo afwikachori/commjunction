@@ -98,6 +98,9 @@ function session_logged_superadmin() {
         },
         beforeSend: function beforeSend(jxqhr) {
             ui.popup.showLoader();
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 10000);
         },
         timeout: 18000,
         error: function error(event, jxqhr, status, _error) {
@@ -113,6 +116,7 @@ function session_logged_superadmin() {
         type: 'POST',
         datatype: 'JSON',
         success: function (result) {
+
             console.log(result.access_token);
             console.log(result);
             if (result != "") {
@@ -136,7 +140,9 @@ function session_logged_superadmin() {
                 $("#view_edit_user").attr("src", imguser);
             }
 
-
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 4000);
 
         },
         error: function (result) {

@@ -135,7 +135,7 @@ background-color: #ffffff !important;
 
 .divbutton{
   margin-top: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
   text-align: right;
 }
 
@@ -151,6 +151,7 @@ background-color: #ffffff !important;
 
 .judulcomsetup{
   margin-bottom: 0.2em;
+  font-weight: bold;
 }
 
 .preper-publish{
@@ -264,8 +265,8 @@ background-color: #50b7b9;
 
 #profil_admin_dash{
   margin-top: 5%;
-  width: 120px;
-  height: 120px;
+  width: 95px;
+  height: 95px;
 }
 
 #mdl-footer-initialfitur{
@@ -280,6 +281,10 @@ background-color: #50b7b9;
   transform: scale(1.5);
 }
 
+.btncomset{
+    width: 125px;
+    border-radius: 20px !important;
+}
 
 #mdl-img-click .modal-header {
   border: none;
@@ -800,7 +805,7 @@ background: linear-gradient(108.22deg, #eca64e -2.66%, #efce5d 102.89%);
 }
 
 .cgrey{
-  color: #4F4F4F;
+  color: rgb(95, 95, 95);
 }
 
 .cputih{
@@ -893,9 +898,18 @@ color: #0FB1B5;
 .s20{
   font-size: 20px;
 }
+.s22{
+  font-size: 22px;
+}
+.s24{
+  font-size: 25px;
+}
 
 .s25{
   font-size: 25px;
+}
+.s27{
+  font-size: 27px;
 }
 
 .s30{
@@ -1245,7 +1259,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 .width-250 {
     width: 250px !important;
 }
-
+.width-150 {
+    width: 150px !important;
+}
 .width-100 {
     width: 100px !important;
 }
@@ -1328,7 +1344,7 @@ select.form-control {
     border: none;
     margin: 0px;
     position: relative;
-    left: 57% !important;
+    left: 68% !important;
 }
 
 .zoom:hover {
@@ -1711,4 +1727,12 @@ div.scrollfitur::-webkit-scrollbar-thumb
   width: 25px;
   height: 25px;
   margin: auto;
+}
+
+#accordion_reportsubs .card-header{
+    padding: 0px !important;
+}
+
+#accordion_reportsubs .btn{
+    padding: 0px !important;
 }

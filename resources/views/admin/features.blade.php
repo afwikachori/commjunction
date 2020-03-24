@@ -50,7 +50,7 @@
 
             </div> <!-- end-col 10 -->
 
-            <div class="col-3" id="div_popular" style="padding-left: 5%;">
+            <div class="col-3" id="div_popular" style="padding-left: 5%; display: none;">
                 <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Popular</h4>
                 <div class="row">
                     <div class="col-3">

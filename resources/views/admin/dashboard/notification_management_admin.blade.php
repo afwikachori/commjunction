@@ -198,10 +198,10 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <small class="clight s13">Community</small>
                                 <input name="komunitas_notif" id="komunitas_notif" class="form-control input-abu"
-                                    value="104" readonly>
+                                    readonly>
                             </div>
                         </div>
                     </div>
@@ -448,7 +448,7 @@
                 $.each(result, function (i, item) {
 
                     if (item.input_type == 1) {
-                        inputipe = ' <input type="text" name="param' + item.id + '" value="'+item.value+'" class="form-control input-abu param_setting">';
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
                     } else if (item.input_type == 2) {
                         inputipe = '<div class="form-group">' +
                             '< div class="form-check" >' +
@@ -633,16 +633,22 @@
         }
     });
 
+
+    $('#usertipe_notif').change(function () {
+        get_list_user_notif();
+    });
+
+
     //dropdown subs_name list
-    $('#komunitas_notif').change(function () {
-        var itempilih = this.value;
+    function get_list_user_notif() {
+        var itempilih = $('#komunitas_notif').val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: "/superadmin/get_list_user_notif_super",
+            url: "/admin/get_list_user_notif_super",
             type: "POST",
             dataType: "json",
             data: {
@@ -650,26 +656,27 @@
                 "community_id": itempilih,
             },
             success: function (result) {
-                console.log(result);
-                $('#user_notif').empty();
-                $('#user_notif').append("<option disabled value='0'> Choose</option>");
+                // console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    $('#user_notif').empty();
+                    $('#user_notif').append("<option disabled value='0'> Choose</option>");
 
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#user_notif').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+                    for (var i = result.length - 1; i >= 0; i--) {
+                        $('#user_notif').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+                    }
+                    //Short Function Ascending//
+                    $("#user_notif").html($('#user_notif option').sort(function (x, y) {
+                        return $(x).val() < $(y).val() ? -1 : 1;
+                    }));
+
+                    $("#user_notif").get(0).selectedIndex = 0; const
+                        OldSubf = "{{old('user_notif')}}";
+                    if (OldSubf !== '') {
+                        $('#user_notif').val(OldSubf);
+                    }
                 }
-                //Short Function Ascending//
-                $("#user_notif").html($('#user_notif option').sort(function (x, y) {
-                    return $(x).val() < $(y).val() ? -1 : 1;
-                }));
-
-                $("#user_notif").get(0).selectedIndex = 0; const
-                    OldSubf = "{{old('user_notif')}}";
-                if (OldSubf !== '') {
-                    $('#user_notif').val(OldSubf);
-                }
-
-
-
             },
             error: function (result) {
                 $('#hide_user_notif').fadeOut("fast");
@@ -677,7 +684,7 @@
                 $('#user_notif').append("<option disabled value='0'>No Related User</option>");
             }
         });
-    });
+    }
     //end list subscriber
 
 

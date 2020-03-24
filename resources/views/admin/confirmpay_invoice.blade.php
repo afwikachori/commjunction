@@ -21,7 +21,7 @@
       <small style="color: red;">{{ $errors->first('invoice_number')}}</small>
       @endif
     </div>
-
+<div id="isi_form" style="display: none;">
     <div class="form-group row">
       <label class="h6 cgrey">Full Name</label>
       <input id="name_userpay" type="text" class="form-control @error('name_userpay') is-invalid @enderror" name="name_userpay" value="{{ old('name_userpay') }}" required autocomplete="name_userpay" placeholder="Name">
@@ -42,7 +42,9 @@
    </div>
  </div>
 
+
  <button type="submit" id="btn_confirmpay" class="btn btn-oren" style="border-radius: 8px; margin-bottom: 0.5em; margin-top: 1em; margin-left: -15px;">Submit</button>
+</div>
 </form>
 </div> <!-- end  col-4 -->
 <div class="col-1">
@@ -122,6 +124,7 @@ function get_invoice_num(input){
       type: 'POST',
       datatype: 'JSON',
       success: function (result) {
+          $("#isi_form").show();
         var isi = result.data;
         // console.log(isi);
         $("#detil_pay").fadeIn();

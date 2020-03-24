@@ -51,6 +51,18 @@ top: 120px;
 	width: 263px;
 }
 
+#loading_adminregis{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    margin-left: -75px;
+    color: white;
+    margin-top: 28vh;
+}
+
+
 #login-left-commjuction{
 position: absolute;
 width: 50%;
@@ -90,7 +102,7 @@ margin-top: 10%;
 border-radius: 10px;
 background-image: url("/visual/card-pricing.png");
 background-repeat: no-repeat;
-background-position: center; 
+background-position: center;
 background-size: cover;
 }
 

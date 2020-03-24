@@ -15,7 +15,7 @@
     <div class="col-8">
     <small class="clight">Our Community Administrators are on their way to approve your account, please check our email!</small>
 
-    <button type="button" onclick="window.location.href='/admin'" class="btn btn-oren s14 btn-md btn-block" style="width: 150px; margin-top: 2em;">Done</button>
+    <button type="button" onclick="window.location.href='/admin/confirm'" class="btn btn-oren s14 btn-md btn-block" style="width: 150px; margin-top: 2em;">Done</button>
 	</div>
 <br>
 

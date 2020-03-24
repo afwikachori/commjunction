@@ -1628,6 +1628,18 @@ margin-bottom: 1em;
   font-size: 30px;
 }
 
+
+#loading_adminregis{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    margin-left: -75px;
+    color: white;
+    margin-top: 30vh;
+}
+
 }
 
 
@@ -1638,5 +1650,30 @@ margin-bottom: 1em;
   width: auto;
 }
 
+#loading_adminregis{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    margin-left: -75px;
+    color: white;
+    margin-top: 32vh;
+}
 
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+#loading_adminregis{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    margin-left: -75px;
+    color: white;
+    margin-top: 30vh;
+}
 }

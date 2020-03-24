@@ -9,7 +9,7 @@
 
  <nav aria-label="breadcrumb">
  	<ol class="breadcrumb">
- 		<li class="breadcrumb-item"><a href="/admin/settings">Community Settings</a></li> 
+ 		<li class="breadcrumb-item"><a href="/admin/settings">Community Settings</a></li>
  		<li class="breadcrumb-item active" aria-current="page">Edit</li>
     </ol>
 </nav>
@@ -21,7 +21,7 @@
  <div class="col-12">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Edit Community Profile</h4>  
+      <h4 class="card-title">Edit Community Profile</h4>
       <br>
 
 <form method="POST" id="form_edit_community" action="{{route('edit_profil_community')}}" enctype="multipart/form-data">{{ csrf_field() }}
@@ -66,9 +66,9 @@
 <br>
 
 <div style="text-align: right;">
-<button type="button" onclick="location.href ='/admin/settings'" class="btn btn-gradient-light btn-rounded btn-sm btn-fw">Cancel</button>
+<button type="button" onclick="location.href ='/admin/settings'" class="btn btn-gradient-light btn-sm btn-fw melengkung8px">Cancel</button>
         &nbsp;
-<button type="submit" class="btn btn-gradient-warning btn-rounded btn-sm btn-fw">Save Editing</button>
+<button type="submit" class="btn btn-tosca btn-sm btn-fw">Save Editing</button>
 </div>
 
 </form>
@@ -78,7 +78,7 @@
     </div>
  </div>
  </div>
-</div> 
+</div>
 
 
 @endsection
@@ -91,12 +91,12 @@ $(document).ready(function () {
 });
 
 
-    
+
 
 $("#file-upload-komunitas").on('change', function(){
         readURLini(this);
 });
-    
+
 $("#btn_up_logo_komunitas").on('click', function() {
        $("#file-upload-komunitas").click();
 });

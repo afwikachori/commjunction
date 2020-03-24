@@ -49,7 +49,7 @@ function session_admin_logged() {
             ui.popup.showLoader();
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 20000);
+            }, 10000);
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
@@ -64,10 +64,15 @@ function session_admin_logged() {
         url: '/admin/session_admin_logged',
         type: 'POST',
         datatype: 'JSON',
-        timeout: 30000,
+        timeout: 20000,
         success: function (result) {
-            //   console.log(result);
+              console.log(result);
             console.log("admin komunitas = " + result.access_token);
+
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
+
             var user = result.user;
             if (result != "") {
                 $(".username_komunitas").html(user.user_name);
@@ -82,6 +87,7 @@ function session_admin_logged() {
                 $(".foto_profil_admin").attr("src", server_cdn + user.picture);
                 $("#view_edit_user").attr("src", server_cdn + user.picture);
                 $(".user_admin_logged").html(user.full_name);
+                $(".jenis_komunitas_adminloged").html(user.community_type);
                 $(".judul_komunitas").html(user.community_name);
                 $(".deskripsi_komunitas").html(user.community_description);
                 $(".alamat_admin_komunitas").html(user.alamat);
@@ -99,6 +105,9 @@ function session_admin_logged() {
                 $("#komunitas").val(user.community_id);
                 $("#komunitas2").val(user.community_id);
                 $(".nama_komunitas").html(user.community_name);
+
+                //Notif management
+                $("#komunitas_notif").val(user.community_id);
 
                 //edit-profil comm
                 $("#edit_namacom").val(user.community_name);

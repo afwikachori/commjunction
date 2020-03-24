@@ -8,7 +8,7 @@
     </span>Publish Preparation</h3>
 
 <nav aria-label="breadcrumb">
-   <a href="{{ route('setting_publish_comm') }}" type="button" id="btn_publish_now" 
+   <a href="{{ route('setting_publish_comm') }}" type="button" id="btn_publish_now"
    class="btn btn-tosca btn-sm btn-fw">
    Publish Now</a>
 </nav>
@@ -61,7 +61,7 @@ $.ajax({
       console.log(result);
       var isinya = '';
       var sready;
-      
+
       $.each(result, function(i,item){
 
         if( item.ready == true){
@@ -95,27 +95,27 @@ $.ajax({
 
 
 function listsetting0(){
-  alert("0 ");
+//   alert("0 ");
 window.location = '/admin/settings/loginregis';
 }
 function listsetting1(){
-  alert("1 ");
+//   alert("1 ");
   window.location = '/admin/settings/loginregis';
 }
 function listsetting2(){
-  alert("2 ");
+//   alert("2 ");
   window.location = '/admin/settings/loginregis';
 }
 function listsetting3(){
-  alert("3 ");
+//   alert("3 ");
   window.location = '/admin/settings/membership';
 }
 function listsetting4(){
-  alert("4 ");
+//   alert("4 ");
   window.location = '/admin/settings/registrasion_data';
 }
 function listsetting5(){
-  alert("5 ");
+//   alert("5 ");
   window.location = '/admin/settings/payment';
 }
 

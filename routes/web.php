@@ -52,6 +52,7 @@ Route::get('/inbox_management', 'AdminCommController@InboxMessageManagementAdmin
 Route::get('/usertype_management', 'AdminCommController@usertypeManagementAdminView')->name('/usertype_management');
 Route::get('/transaction', 'AdminCommController@TransactionManagementViewAdmin')->name('/transaction');
 Route::get('/module_report', 'AdminCommController@ModuleReportManagementView')->name('/module_report');
+Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
 
 
 
@@ -65,6 +66,19 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('tabel_report_subscriber_admin','AdminCommController@tabel_report_subscriber_admin')->name('tabel_report_subscriber_admin');
+
+Route::post('get_list_subscriber_report','AdminCommController@get_list_subscriber_report')->name('get_list_subscriber_report');
+
+Route::post('get_list_transaction_type_admin','AdminCommController@get_list_transaction_type_admin')->name('get_list_transaction_type_admin');
+
+Route::post('tabel_concile_report_admin','AdminCommController@tabel_concile_report_admin')->name('tabel_concile_report_admin');
+
+Route::post('tabel_report_transaksi_admin','AdminCommController@tabel_report_transaksi_admin')->name('tabel_report_transaksi_admin');
+
+Route::post('edit_payment_subs','AdminCommController@edit_payment_subs')->name('edit_payment_subs');
+
+Route::post('get_list_user_notif_super','AdminCommController@get_list_user_notif_super')->name('get_list_user_notif_super');
 
 Route::post('detail_transaksi_superadmin','AdminCommController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
 

@@ -60,6 +60,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/report_management">
+            <span class="menu-title">Report Management</span>
+            <i class="mdi mdi-buffer menu-icon"></i>
+        </a>
+    </li>
+
 
     <li class="nav-item">
         <a class="nav-link" href="/admin/payment_management">
