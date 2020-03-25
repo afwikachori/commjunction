@@ -6,12 +6,12 @@
               </center>
       <a href="#" class="nav-link">
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2">Full Name</span>
-                   <span class="text-secondary text-small">Membership Status</span>
+                  <span class="font-weight-bold mb-2 nama_subs_login"></span>
+                   <span class="text-secondary text-small membership_status"></span>
                 </div>
               </a>
             </li>
-            
+
             <li class="nav-item">
               <a class="nav-link" href="">
                 <span class="menu-title">Dashboard</span>
@@ -29,9 +29,9 @@
             <li class="nav-item sidebar-actions">
               <span class="nav-link">
                 <div class="border-bottom">
-                <button class="btn btn-block btn-md btn-gradient-primary mt-4" onclick="">Menu</button> 
+                <button class="btn btn-block btn-md btn-gradient-primary mt-4" onclick="">Menu</button>
                 </div>
-                
+
               </span>
             </li>
           </ul>

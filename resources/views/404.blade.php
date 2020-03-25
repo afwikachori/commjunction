@@ -53,5 +53,10 @@
     <script src="/purple/js/hoverable-collapse.js"></script>
     <script src="/purple/js/misc.js"></script>
     <!-- endinject -->
+
+        <!-- Sweetalert -->
+    <script src="/js/sweetalert.min.js"></script>
+    @include('sweet::alert')
+
   </body>
 </html>

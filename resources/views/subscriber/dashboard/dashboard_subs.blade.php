@@ -247,8 +247,7 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
-  session_subscriber_logged();
-  // $("#initial1").modal('show');
+
 });
 
 

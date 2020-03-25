@@ -258,7 +258,6 @@ function errorImg() {
 }
 
 // function file_browser_profil(){
-
 var readURLuser = function (input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

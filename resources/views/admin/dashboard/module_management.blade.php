@@ -35,6 +35,13 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_module_1">
                             <div class="row">
+                                <div class="col-md-12">
+                                        <small class="text-muted"> Total : </small> &nbsp;
+                            <h4 class="card-title text-success" id="total_module_active"> 0 </h4>
+                                </div>
+                            </div>
+                            <div class="row">
+
                                 <div id="show_module_active" class="card-deck">
 
                                     <!--  <div class="col-md-4 stretch-card grid-margin card-member">
@@ -320,9 +327,11 @@
                 // console.log(result);
 
                 var isiui = '';
-
+                var num = 0;
                 $.each(result, function (i, item) {
                     // console.log(item);
+                    num++;
+                    var noimg = '/img/fitur.png';
                     var logo = server_cdn + item.logo;
                     isiui +=
                         '<div class="col-md-4 stretch-card ' +
@@ -337,7 +346,7 @@
                         '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
                         'style="padding: 0.3rem 0.5rem;"' +
                         'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
+                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '<div class="row">' +
                         '<div class="col-md-12">' +
                         '<h4>' + item.feature_type_title + '</h4>' +
@@ -353,6 +362,7 @@
                 });
 
                 $("#show_module_active").html(isiui);
+                 $("#total_module_active").html(num + " Modules");
 
             },
             error: function (result) {

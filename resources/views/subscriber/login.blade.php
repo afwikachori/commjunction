@@ -1,16 +1,24 @@
 @extends('layout.app')
-
+@section('title', 'Subscriber')
 @section('content')
+{{-- @foreach($subs_data as $dt)
+{{ $dt['cust_portal_login']['headline_text'] }}
+@endforeach --}}
 
-@if (Session::has('subs_data'))
-@foreach(Session::get('subs_data') as $dt)
+
+
+@if (Session::has('auth_subs'))
+@foreach($subs_data as $dt)
 <div class="row">
     <div class="col-sm biruq">
-      <img src="{{ env('CDN') }}{{ $dt['logo'] }}" id="login-left-commjuctioncdn" class="rounded-circle img-fluid">
+      <img src="{{ env('CDN') }}{{ $dt['logo'] }}"
+      id="login-left-commjuctioncdn" class="rounded-circle img-fluid"
+      onerror = "this.onerror=null;this.src='/visual/logo2.png';">
 
     <div class="container subs_judul">
-      <h2 lang="en">{{ $dt['name'] }}</h2>
-      <h5  lang="en">{{ $dt['description'] }}</h5>
+      <h2 class="cgrey">{{ $dt['name'] }}</h2>
+      <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5>
+      <p>{{ $dt['cust_portal_login']['description'] }}</p>
     </div>
 
       <img src="/visual/loginadmin.png" id="login-img-subs">
@@ -48,17 +56,22 @@
         @if( $dt['form_type'] == 1)
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="input_login" lang="en">Username</label>
-                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp"
+                    class="form-control @error('input_login') is-invalid @enderror" name="input_login"
+                    value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
                 </div>
         @elseif( $dt['form_type'] == 2)
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="input_login" lang="en">Phone Number</label>
-                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp"
+                    class="form-control @error('input_login') is-invalid @enderror" name="input_login"
+                     value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
                 </div>
         @else
                 <div class="form-group mb-3">
                     <label class="h6 cgrey" for="input_login" lang="en">Email</label>
-                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp" class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
+                    <input lang="en" type="text" class="form-control" id="input_login" aria-describedby="emailHelp"
+                     class="form-control @error('input_login') is-invalid @enderror" name="input_login" value="{{ old('input_login') }}" required autocomplete="input_login" autofocus>
                 </div>
         @endif
 
@@ -83,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col" style="text-align: right;">
-                    <label><a href="" class="h6" style="color: rgba(14, 95, 117, 0.4);" lang="en">Forgot password?</a></label>
+                    <label><a href="/admin/forgetpass_admin" class="h6" style="color: rgba(14, 95, 117, 0.4);" lang="en">Forgot password?</a></label>
                 </div>
                 </div>
 
@@ -91,6 +104,7 @@
                 <button lang="en" type="submit" class="btn btn-primary" id="LoginSubscriber">Login</button>
                 </div>
 
+                <!-- <div id="login_btn_google">
                 <div class='hr-or'><small class="clight" lang="en">or login with</small></div>
 
                 <center>
@@ -99,9 +113,10 @@
                         <div  id="signGoogle2" class="RegisterGoogle mgtop-1"></div>
                     </div>
                     <div class="col">
-                    
+
                     </div>
                 </div> </center>
+                </div> -->
             </form>
     </div>
 </div>
@@ -117,27 +132,50 @@
 <script type="text/javascript">
 
 $( document ).ready(function() {
-get_auth_subs();
+    checking_remember();
 });
 
-function get_auth_subs(){
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax({
-      url: '/subscriber/ses_auth_subs',
-      type: 'POST',
-      datatype: 'JSON',
-      success: function (result) {
-        console.log(result);
-      },
-      error: function (result) {
-        console.log("Cant Reach Session Auth Subscriber");
-    }
-});
+
+function remember_me_admin() {
+  var checkBox = document.getElementById("rememberme");
+
+  if (checkBox.checked == true){
+    var username = $('#input_login').val();
+    var password = $('#pass_subs').val();
+
+    $.cookie('input_login', username, { expires: 30 });
+    $.cookie('pass_subs', password, { expires: 30 });
+    $.cookie('rememberme', true, { expires: 30 });
+  }
+  else {
+    $.cookie('input_login', null);
+    $.cookie('pass_subs', null);
+    $.cookie('rememberme', null);
+  }
 }
+
+function checking_remember() {
+var remember = $.cookie('rememberme');
+
+if ( remember == 'true' ) {
+    var username = $.cookie('input_login');
+    var password = $.cookie('pass_subs');
+    if( username != null && password != null){
+        $('#input_login').val(username);
+        $('#pass_subs').val(password);
+        $('#rememberme').attr( "checked", "checked");
+    }else{
+        $('#input_login').val("");
+        $('#pass_subs').val("");
+        $('#rememberme').removeAttr( "checked", "checked");
+    }
+ }else{
+    $('#input_login').val("");
+    $('#pass_subs').val("");
+    $('#rememberme').removeAttr( "checked", "checked");
+ }
+}
+
 
  function showPass() {
   var a = document.getElementById("pass_subs");
@@ -149,38 +187,38 @@ $.ajax({
 }
 
 
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var id_token = googleUser.getAuthResponse().id_token;
+    // function onSignIn(googleUser) {
+    //     var profile = googleUser.getBasicProfile();
+    //     var id_token = googleUser.getAuthResponse().id_token;
 
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        console.log(id_token);
+    //     console.log('ID: ' + profile.getId());
+    //     console.log('Name: ' + profile.getName());
+    //     console.log('Image URL: ' + profile.getImageUrl());
+    //     console.log('Email: ' + profile.getEmail());
+    //     console.log(id_token);
 
-    }
+    // }
 
 
-    function onSuccess(googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    }
+    // function onSuccess(googleUser) {
+    //     console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    // }
 
-    function onFailure(error) {
-        console.log(error);
-    }
-    
-    function renderButton() {
-        gapi.signin2.render('signGoogle2', {
-            'scope': 'profile email',
-            'width': 200,
-            'height': 37,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-        });
-    }
+    // function onFailure(error) {
+    //     console.log(error);
+    // }
+
+    // function renderButton() {
+    //     gapi.signin2.render('signGoogle2', {
+    //         'scope': 'profile email',
+    //         'width': 200,
+    //         'height': 37,
+    //         'longtitle': true,
+    //         'theme': 'dark',
+    //         'onsuccess': onSuccess,
+    //         'onfailure': onFailure
+    //     });
+    // }
 
 </script>
 
