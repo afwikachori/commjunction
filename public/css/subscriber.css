@@ -788,3 +788,155 @@ a.dt-button {
 .bg-tosca {
     background-color: #50b7b9;
 }
+#img_signout_subs{
+  width: 90px;
+  height: 90px;
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+}
+
+
+
+/*//IMAGE UPLOAD BUNDER - FILE BROWSER*/
+.img-upload-profil{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  margin-top: 1em;
+  margin-bottom: 10%;
+}
+
+.profile-pic {
+    max-width: 128px;
+    max-height: 128px;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.file-upload {
+    display: none;
+}
+
+.detail_member{
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.bunder-ring {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 125px;
+    height: 125px;
+    border: 8px solid #efefef;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 1em;
+
+}
+
+.img_file_bayar_subs{
+    background: #f1f1f1;
+    border-radius: 10%;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border: none;
+    margin-bottom: 1em;
+}
+
+.icon-req-member{
+  width: 60px;
+  height: 60px;
+}
+
+.bunder-ring2 {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    border: 6px solid #efefef;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 1em;
+    margin-left: 5em;
+}
+
+.circle {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 128px;
+    height: 128px;
+    border: 8px solid #efefef;
+    position: absolute;
+    top: 72px;
+      margin-left: auto;
+  margin-right: auto;
+    text-align: center;
+}
+img .profile-pic {
+    max-width: 100%;
+    height: auto;
+}
+.p-image {
+margin-top: 3em;
+left: 60%;
+color: #666666;
+transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+position: relative;
+}
+
+/*//edit community profil*/
+.p-image.editcom {
+margin-top: 3.5em;
+left: 0%;
+color: #666666;
+transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+position: relative;
+}
+
+.p-image:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+.upload-button {
+  font-size: 1.2em;
+}
+
+.upload-button:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+  color: #999;
+}
+/*END-FILE IMAGE UPLOAD*/
+
+
+
+.circle.editprofil{
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    border: 6px solid #efefef;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    position: static;
+}
+
+.p-image.editprofil {
+    margin-top: -2em;
+    left: 70%;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    position: relative;
+}
+
+.img-upload-profil.editprofil {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    margin-bottom: 5%;
+}

@@ -77,10 +77,33 @@ function session_subscriber_logged() {
                 ui.popup.hideLoader();
             }, 5000);
             console.log(result);
-            var user = result;
+            console.log(result.access_token);
+            var user = result.user;
                 // $(".foto_profil_subs").attr("src", server_cdn + user.__);
+            // user_id: "SUBS-147428681295867620200323"
+            // user_name: "febri_12345"
+            // level: 3
+            // full_name: "Febri Al-Chori"
+            // notelp: "081234512345"
+            // email: "chunpika@yahoo.com"
+            // status: 1
+            // membership_id: 0
+            // membership: "Belum ada membership"
+            // community_id: "104"
+            // community_created: "2019-11-29T10:47:49.000Z"
+            // community_name: "Brian community"
+            // community_description: "Ini community adalah sebuah kelompok sosial yang berbagi lingkungan, umumnya memiliki ketertarikan dan habitat yang sama."
+            // community_logo: "public/community/edit761f85f9a28c38ba8a4335beeb7f589058dc4e135fbe71d0f4148726ecee3017.jpg"
+            // community_type: "PECINTA KUCING"
+            // membership_type: 2
+            // membership_features: "Belum ada membership"
+
             $(".nama_subs_login").html(user.full_name);
             $(".membership_status").html(user.membership);
+            $("#name_subs").val(user.full_name);
+            $("#phone_subs").val(user.notelp);
+            $("#username_subs").val(user.user_name);
+            $("#email_subs").val(user.email);
 
 
 
@@ -149,3 +172,25 @@ function clickImage(img) {
     }
 }
 
+// function FILE BROWSE PROFIL{
+var readURLuser = function (input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#view_edit_user').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+$("#file_edit_profil_user").on('change', function () {
+    readURLuser(this);
+});
+
+$("#browse_user_admin").on('click', function () {
+    $("#file_edit_profil_user").click();
+});
+// }

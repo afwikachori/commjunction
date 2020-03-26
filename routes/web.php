@@ -304,30 +304,28 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 // SUBSCRIBER - REGISTRASION
 Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
+Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
+Route::get('/logout','SubscriberController@LogoutSubsciberDashboard')->name('/logout');
+
+// DASHBOARD SUBS
 Route::prefix('dashboard')->group(function(){
-Route::get('/','SubscriberController@DashboardSubsView')->name('dashboard');
+Route::get('/','SubscriberController@DashboardSubsView')->name('/dashboard');
 Route::get('/membership','SubscriberController@MembershipSubsView')->name('membership');
 });
+//POST
 
-Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
+Route::post('edit_profile_subs', 'SubscriberController@edit_profile_subs')->name('edit_profile_subs');
+
 Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
 Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
 Route::post('session_subscriber_logged', 'SubscriberController@session_subscriber_logged')->name('session_subscriber_logged');
 });
 
-
 //GET
-
-
-
 Route::get('subscriber/register','SubscriberController@registerSubsView')->name('subscriber/register');
-
 Route::get('subscriber/subs_community','SubscriberController@registerCommView')->name('subscriber/subs_community');
-
 Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
-
 //POST
-
 Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->name('registerSubscriber');
 
 

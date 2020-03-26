@@ -89,7 +89,7 @@ class SubscriberController extends Controller
                 return back();
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
-                $error['message'] = "Server bermasalah";
+                $error['message'] = "Internal Server Error";
                 $error['succes'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
@@ -103,7 +103,7 @@ class SubscriberController extends Controller
     {
         if (session()->has('session_subscriber_logged')) {
             $ses_loggeduser = session()->get('session_subscriber_logged');
-            return $ses_loggeduser['user'];
+            return $ses_loggeduser;
         }
         // else{
         //     return view("/superadmin");
@@ -186,7 +186,7 @@ class SubscriberController extends Controller
             array_push($arr_auth, $json['data']);
             // return $arr_auth;
 
-            session()->put('auth_subs', $json['data']);
+            session()->put('auth_subs', $arr_auth);
             // return redirect('subscriber')->with('subs_data', $arr_auth);
             return view('subscriber/login')->with('subs_data', $arr_auth);
         } catch (ClientException $errornya) {
@@ -199,7 +199,7 @@ class SubscriberController extends Controller
             return back();
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
+            $error['message'] = "Internal Server Error";
             $error['succes'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
@@ -217,4 +217,168 @@ class SubscriberController extends Controller
             return view('404');
         }
     }
+
+
+    public function LogoutSubsciberDashboard()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+
+        $url = env('SERVICE') . 'profilemanagement/logout';
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $ses_login['access_token']
+            ]
+        ]);
+
+        try {
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            session()->forget('session_subscriber_logged');
+            $auth_subs = session()->get('auth_subs');
+            // return $auth_subs[0]['name'];
+            $url_login = '/subscriber/url/' . $auth_subs[0]['name'];
+
+            if ($json['success'] == true) {
+                return redirect($url_login);
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    } //enfunc
+
+
+    public function edit_profile_subs(Request $request)
+    {
+        // dd($request);
+        $ses_login = session()->get('session_subscriber_logged');
+        $token = $ses_login['access_token'];
+        $ses_user = $ses_login['user'];
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+            $input = $request->all(); // getdata form by name
+            $imageRequest = [
+                "user_name" => $input['username_subs'],
+                "full_name" => $input['name_subs'],
+                "notelp" => $input['phone_subs'],
+                "email" => $input['email_subs'],
+                "alamat" => $input['alamat_subs'],
+                "filename" => $filnam,
+                "file" => $imgku
+            ];
+
+            $url = env('SERVICE') . 'profilemanagement/editprofile';
+            try {
+                $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
+                return $resImg;
+                if ($resImg['success'] == true) {
+                    session()->put('session_admin_logged.user', [
+                        "user_name" => $resImg['data']['user_name'],
+                        "full_name" => $resImg['data']['full_name'],
+                        "picture" => $resImg['data']['sso_picture'],
+                        "notelp" => $resImg['data']['notelp'],
+                        "email" => $resImg['data']['email'],
+                        "alamat" => $resImg['data']['alamat'],
+                        //////////////////////
+                        "community_name" => $ses_user['community_name'],
+                        "community_description" => $ses_user['community_description'],
+                        "community_logo" => $ses_user['community_logo'],
+                        /////////////////////
+                        "user_id" => $ses_user['user_id'],
+                        "level" => $ses_user['level'],
+                        "status" => $ses_user['status'],
+                        "community_created" => $ses_user['community_created'],
+                        "community_type" => $ses_user['community_type'],
+                        "community_membership_type" => $ses_user['community_membership_type'],
+                    ]);
+
+                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(3500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } else { //END-IF  UPLOAD-IMAGE
+            $input = $request->all(); // getdata form by name
+            $imageRequest = [
+                "user_name" => $input['username_subs'],
+                "full_name" => $input['name_subs'],
+                "notelp" => $input['phone_subs'],
+                "email" => $input['email_subs'],
+                "alamat" => $input['alamat_subs'],
+                "filename"    => "",
+                "file"        => ""
+            ];
+
+            $url = env('SERVICE') . 'profilemanagement/editprofile';
+            try {
+                $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
+return $resImg;
+                if ($resImg['success'] == true) {
+                    session()->put('session_admin_logged.user', [
+                        "user_name" => $resImg['data']['user_name'],
+                        "full_name" => $resImg['data']['full_name'],
+                        "picture" => $resImg['data']['sso_picture'],
+                        "notelp" => $resImg['data']['notelp'],
+                        "email" => $resImg['data']['email'],
+                        "alamat" => $resImg['data']['alamat'],
+                        //////////////////////
+                        "community_name" => $ses_user['community_name'],
+                        "community_description" => $ses_user['community_description'],
+                        "community_logo" => $ses_user['community_logo'],
+                        /////////////////////
+                        "user_id" => $ses_user['user_id'],
+                        "level" => $ses_user['level'],
+                        "status" => $ses_user['status'],
+                        "community_created" => $ses_user['community_created'],
+                        "community_type" => $ses_user['community_type'],
+                        "community_membership_type" => $ses_user['community_membership_type'],
+                    ]);
+                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    return back();
+                } //end if sukses
+
+            } catch (ClientException $exception) {
+                alert()->error('Try again later', 'Get Something Wrong')->persistent('Done');
+                return back();
+                // dd($exception);
+            }
+        } // endelse
+    } //endfunc
+
+
+
+
 } //end-class

@@ -1,7 +1,7 @@
  <ul class="nav">
             <li class="nav-item nav-profile">
                 <center>
-                <img src="/img/imgtester.jpg" class="rounded-circle img-fluid dash-img-profil" style="height: 50%; width: 50%;">
+                <img src="/img/imgtester.jpg" class="rounded-circle img-fluid dash-img-profil" style="height: 80px; width: 80px;">
                 <br>
               </center>
       <a href="#" class="nav-link">
