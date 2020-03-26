@@ -313,9 +313,9 @@ Route::get('/','SubscriberController@DashboardSubsView')->name('/dashboard');
 Route::get('/membership','SubscriberController@MembershipSubsView')->name('membership');
 });
 //POST
+Route::post('change_password_subs', 'SubscriberController@change_password_subs')->name('change_password_subs');
 
 Route::post('edit_profile_subs', 'SubscriberController@edit_profile_subs')->name('edit_profile_subs');
-
 Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
 Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
 Route::post('session_subscriber_logged', 'SubscriberController@session_subscriber_logged')->name('session_subscriber_logged');

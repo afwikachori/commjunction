@@ -290,9 +290,9 @@ class SubscriberController extends Controller
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
-                return $resImg;
+                // return $resImg;
                 if ($resImg['success'] == true) {
-                    session()->put('session_admin_logged.user', [
+                    session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
                         "picture" => $resImg['data']['sso_picture'],
@@ -300,19 +300,23 @@ class SubscriberController extends Controller
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
                         //////////////////////
+                        "community_id" => $ses_user['community_id'],
                         "community_name" => $ses_user['community_name'],
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
-                        /////////////////////
                         "user_id" => $ses_user['user_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
                         "community_type" => $ses_user['community_type'],
-                        "community_membership_type" => $ses_user['community_membership_type'],
+                        //////////////////////
+                        "membership_id" => $ses_user['membership_id'],
+                        "membership" => $ses_user['membership'],
+                        "membership_features" => $ses_user['membership_features'],
+
                     ]);
 
-                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    alert()->success('Successfully update your profile', 'Now Updated!')->persistent('Done');
                     return back();
                 }
             } catch (ClientException $errornya) {
@@ -345,9 +349,9 @@ class SubscriberController extends Controller
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
-return $resImg;
+                // return $resImg;
                 if ($resImg['success'] == true) {
-                    session()->put('session_admin_logged.user', [
+                    session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
                         "picture" => $resImg['data']['sso_picture'],
@@ -355,30 +359,89 @@ return $resImg;
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
                         //////////////////////
+                        "community_id" => $ses_user['community_id'],
                         "community_name" => $ses_user['community_name'],
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
-                        /////////////////////
                         "user_id" => $ses_user['user_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
                         "community_type" => $ses_user['community_type'],
-                        "community_membership_type" => $ses_user['community_membership_type'],
+                        //////////////////////
+                        "membership_id" => $ses_user['membership_id'],
+                        "membership" => $ses_user['membership'],
+                        "membership_features" => $ses_user['membership_features'],
                     ]);
-                    alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
+                    alert()->success('Successfully update your profile', 'Now Updated!')->persistent('Done');
                     return back();
                 } //end if sukses
-
-            } catch (ClientException $exception) {
-                alert()->error('Try again later', 'Get Something Wrong')->persistent('Done');
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(3500);
                 return back();
-                // dd($exception);
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } // endelse
     } //endfunc
 
 
+    public function change_password_subs(Request $request)
+    {
+        // dd($request);
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'profilemanagement/changepassword';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'old_password' => $input['old_pass_subs'],
+            'new_password' => $input['new_pass_subs']
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 
 } //end-class

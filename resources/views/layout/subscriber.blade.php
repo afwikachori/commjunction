@@ -67,62 +67,58 @@
                 </footer>
             </div>
         </div>
-
-
-        <!-- Modal INITIAL-3-->
-        <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1"
-            role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="font-size: 50px;">&times;</span>
-                        </button>
-                    </div>
-                    <center>
-                        <img id="mdl-img-view">
-                    </center>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- MODAL LOADING AJAX -->
-        <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-                <div class="modal-content loading">
-                    <center>
-                        <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
-                            role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <p class="h6 iniloading">Loading . . .</p>
-                        <center>
-                </div>
-            </div>
-        </div>
-        <!-- END-MODAL -->
-
-
-        <!-- MOdal Image Viewer-->
-        <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1"
-            role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="font-size: 50px;">&times;</span>
-                        </button>
-                    </div>
-                    <center>
-                        <img id="mdl-img-view">
-                    </center>
-                </div>
-            </div>
-        </div>
     </div> <!-- container-scroller -->
+    <input type="hidden" id="server_cdn" value="{{ env("CDN") }}">
 
 
+    <!-- Modal INITIAL-3-->
+    <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+                    </button>
+                </div>
+                <center>
+                    <img id="mdl-img-view">
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOADING AJAX -->
+    <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content loading">
+                <center>
+                    <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
+                        role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="h6 iniloading">Loading . . .</p>
+                    <center>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOdal Image Viewer-->
+    <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+                    </button>
+                </div>
+                <center>
+                    <img id="mdl-img-view">
+                </center>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL LOGOUT-->
     <div class="modal fade" id="modal_logout_subscriber" data-backdrop="static" tabindex="-1" role="dialog"
@@ -153,90 +149,153 @@
         </div>
     </div>
 
+    <!-- MODAL EDIT PROFILE-->
+    <div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #ffffff;">
 
-<!-- MODAL EDIT PROFILE-->
-<div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
+                <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
 
-            <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}"
-                enctype="multipart/form-data">
-                {{ csrf_field() }}
+                    <div class="modal-header" style="padding-bottom: 0em !important;">
+                        <h4 class="modal-title cgrey">Edit Profile</h4>
 
-                <div class="modal-header" style="padding-bottom: 0em !important;">
-                    <h4 class="modal-title cgrey">Edit Profile</h4>
+                        <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
+                            style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_subs"
+                            data-dismiss="modal">Change Password</button>
+                    </div> <!-- end-header -->
 
-                    <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
-                        style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_admin"
-                        data-dismiss="modal">Change Password</button>
-                </div> <!-- end-header -->
-
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <div class="img-upload-profil editprofil">
-                        <div class="circle editprofil">
-                            <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil"
-                                src="/img/loading.gif" onerror="this.onerror=null;this.src='/img/default.png';">
-                        </div>
-                        <div class="p-image editprofil">
-                            <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
-                                value="editprofil" style="width: 30px; height: 30px;">
-                                <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
-                            </button>
-                            <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil"
-                                type="file" name="fileup" accept="image/*" />
-                        </div>
-                    </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight">Fullname</small>
-                                <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
+                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                        <div class="img-upload-profil editprofil">
+                            <div class="circle editprofil">
+                                <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil"
+                                    src="/img/loading.gif" onerror="this.onerror=null;this.src='/img/default.png';">
                             </div>
-                            <div class="form-group">
-                                <small class="clight">Username</small>
-                                <input type="text" id="username_subs" name="username_subs"
-                                    class="form-control input-abu">
+                            <div class="p-image editprofil">
+                                <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
+                                    value="editprofil" style="width: 30px; height: 30px;">
+                                    <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
+                                </button>
+                                <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil"
+                                    type="file" name="fileup" accept="image/*" />
                             </div>
                         </div>
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight">Phone Number</small>
-                                <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
+
+
+
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <small class="clight">Fullname</small>
+                                    <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
+                                </div>
+                                <div class="form-group">
+                                    <small class="clight">Username</small>
+                                    <input type="text" id="username_subs" name="username_subs"
+                                        class="form-control input-abu">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <small class="clight">Email</small>
-                                <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <small class="clight">Phone Number</small>
+                                    <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
+                                </div>
+                                <div class="form-group">
+                                    <small class="clight">Email</small>
+                                    <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <small class="clight">Alamat</small>
-                            <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs"
-                                rows="3"></textarea>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <small class="clight">Alamat</small>
+                                <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs"
+                                    rows="3"></textarea>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- end-body -->
+                    </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-tosca btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Edit </button>
-                </div> <!-- end-footer     -->
-            </form>
-        </div> <!-- END-MDL CONTENT -->
+                    <div class="modal-footer" style="border: none;">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-tosca btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> Edit </button>
+                    </div> <!-- end-footer     -->
+                </form>
+            </div> <!-- END-MDL CONTENT -->
 
+        </div>
     </div>
-</div>
+
+    <!-- MODAL CHANGE PASSWORD-->
+    <div class="modal fade" id="modal_changepass_subs" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #ffffff; width: 400px;
+    min-height: 350px;">
+
+                <form method="POST" id="form_changepass_admin" action="{{route('change_password_subs')}}"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
+
+                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                        <center>
+                            <img src="/img/key.png" id="img_changepass">
+                        </center>
+                        <div class="form-group">
+                            <small class="clight">Old Password</small>
+                            <input type="password" id="old_pass_subs" name="old_pass_subs"
+                                class="form-control input-abu">
+                        </div>
+
+                        <div class="form-group">
+                            <small class="clight">New Password</small>
+                            <div class="input-group">
+                                <input class="form-control input-abu" id="new_pass_subs" type="password"
+                                    name="new_pass_subs" required="" autocomplete="passadmin"
+                                    aria-describedby="btn_newshowpass">
+                                <div class="input-group-append">
+                                    <a class="btn btn-outline-light" type="button" id="btn_newshowpass"
+                                        onclick="showPassNew()"
+                                        style="background-color: #efefef; border-radius: 0px 10px 10px 0px;">
+                                        <span class="mdi mdi-eye s16" aria-hidden="true" style="color: grey;"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end-body -->
+
+                    <div class="modal-footer changepass" style="border: none;">
+                        <center>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                style="border-radius: 10px;">
+                                <i class="mdi mdi-close"></i> No, Im Doubt
+                            </button>
+                            &nbsp;
+                            <button type="submit" class="btn btn-tosca btn-sm">
+                                <i class="mdi mdi-check btn-icon-prepend">
+                                </i> Yeah, Im Sure </button>
+                        </center>
+                    </div> <!-- end-footer     -->
+                </form>
+            </div> <!-- END-MDL CONTENT -->
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
 
     @else
     @foreach(Session::get('auth_subs') as $newdata)

@@ -940,3 +940,9 @@ position: relative;
     width: 25%;
     margin-bottom: 5%;
 }
+#img_changepass{
+  width: 70px;
+  height: 70px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}

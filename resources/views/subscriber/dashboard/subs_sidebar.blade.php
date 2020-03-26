@@ -1,7 +1,8 @@
  <ul class="nav">
             <li class="nav-item nav-profile">
                 <center>
-                <img src="/img/imgtester.jpg" class="rounded-circle img-fluid dash-img-profil" style="height: 80px; width: 80px;">
+                <img src="/img/loading2.gif" class="rounded-circle img-fluid dash-img-profil foto_profil_subs"
+                 style="height: 80px; width: 80px;" onerror = "this.onerror=null;this.src='/img/cam.png';">
                 <br>
               </center>
       <a href="#" class="nav-link">

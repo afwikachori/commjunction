@@ -60,10 +60,8 @@
 
                         </div>
                     </nav>
-
-                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                        <form method="POST" id="form_regispersonal_subs"
-                        action="{{route('registerSubscriber')}}">
+                    <form method="POST" id="form_regispersonal_subs" action="{{route('registerSubscriber')}}">
+                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                             {{ csrf_field() }}
                             <div class="tab-pane fade show active" id="nav-personal" role="tabpanel"
                                 aria-labelledby="nav-personal-tab">
@@ -78,7 +76,7 @@
                                         <div class="col">
                                             <input type="hidden" class="form-control" name="name_community"
                                                 id="name_community">
-                                            <div class="form-group row">
+                                            <div class="form-group row" style="display: none;">
                                                 <label lang="en" class="h6 cgrey s14">Connect With</label>
                                                 <br>
                                                 <div id="my-signin3"></div>
@@ -152,10 +150,10 @@
                                         </div> <!-- end-col kiri -->
                                         <div class="col-1"></div>
                                         <div class="col">
-                                            <div class="form-group row">
+                                            <div class="form-group row" style="display: none;">
                                                 <label class="h6 clight s14" for="community_id" lang="en">Id
                                                     Community</label>
-                                                <input type="text" readonly class="form-control-plaintext"
+                                                <input type="hidden" readonly class="form-control-plaintext"
                                                     id="community_id" name="community_id">
                                             </div>
 
@@ -234,21 +232,18 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group row">
-                                                <img src="" id="icon_comm_subs" class="rounded-circle img-fluid"
-                                                    style="width: 70%; height: auto;">
+                                                <center>
+                                                    <img src="/img/loading1.gif" id="icon_comm_subs"
+                                                        class="rounded-circle img-fluid"
+                                                        style="width: 50%; height: auto;"
+                                                        onerror="this.onerror=null;this.src='/visual/logo2.png';">
+                                                </center>
                                             </div>
                                         </div>
 
                                         <div class="col-8">
-                                            <h3 class="display-4 s35" id="judul_comm_subs">
-                                                Vespa Lovers Malang</h3>
-                                            <p class="cgrey" id="deskripsi_comm">
-                                                Lorem ipsum dolor sit amet
-                                                Consectetur adipiscing elit
-                                                Integer molestie lorem at massa
-                                                Facilisis in pretium nisl aliquet
-                                                Nulla volutpat aliquam velit
-                                            </p>
+                                            <h3 class="display-4 s35" id="judul_comm_subs">-</h3>
+                                            <p class="cgrey" id="deskripsi_comm">-</p>
                                         </div>
                                     </div> <!-- end-row -->
 
@@ -260,9 +255,8 @@
                                 </div> <!-- end-container -->
 
                             </div>
-                        </form>
-                    </div> <!-- tab content -->
-
+                        </div> <!-- tab content -->
+                    </form>
                 </div>
             </div>
         </div>
@@ -291,6 +285,7 @@
 
     $(document).ready(function () {
         ses_auth_subs(); //custom-validation.js
+        // alert('halo');
     });
 
     function next_submit() {
@@ -309,7 +304,9 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
+                // alert('sukses');
                 console.log(result);
+                var result = result[0];
                 if (result != "") {
                     $("#community_id").val(result.id);
                     $("#icon_comm_subs").attr("src", cdn + result.logo);
