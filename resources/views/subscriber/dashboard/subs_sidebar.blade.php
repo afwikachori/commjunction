@@ -14,25 +14,18 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="/subscriber/dashboard">
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/subscriber/dashboard/membership">
+              <a class="nav-link" href="/subscriber/membership">
                 <span class="menu-title">Membership Type</span>
                 <i class="mdi mdi-wallet-membership menu-icon"></i>
               </a>
             </li>
 
-            <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                <button class="btn btn-block btn-md btn-gradient-primary mt-4" onclick="">Menu</button>
-                </div>
 
-              </span>
-            </li>
           </ul>

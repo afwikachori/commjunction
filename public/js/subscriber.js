@@ -58,7 +58,7 @@ function session_subscriber_logged() {
             ui.popup.showLoader();
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 10000);
+            }, 15000);
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
@@ -76,7 +76,7 @@ function session_subscriber_logged() {
         success: function (result) {
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 5000);
+            }, 8000);
             console.log(result);
             console.log(result.access_token);
             var user = result.user;

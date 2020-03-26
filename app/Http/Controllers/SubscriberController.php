@@ -222,6 +222,8 @@ class SubscriberController extends Controller
     public function LogoutSubsciberDashboard()
     {
         $ses_login = session()->get('session_subscriber_logged');
+        $auth_subs = session()->get('auth_subs');
+        $url_login = '/subscriber/url/' . $auth_subs[0]['name'];
 
         $url = env('SERVICE') . 'profilemanagement/logout';
         $client = new \GuzzleHttp\Client();
@@ -237,17 +239,18 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             session()->forget('session_subscriber_logged');
-            $auth_subs = session()->get('auth_subs');
-            // return $auth_subs[0]['name'];
-            $url_login = '/subscriber/url/' . $auth_subs[0]['name'];
-
             if ($json['success'] == true) {
                 return redirect($url_login);
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if($error['message'] == 'Unauthorized'){
+                alert()->error($error['message'], 'Failed!')->autoclose(3500);
+                return redirect($url_login);
+            }else{
             alert()->error($error['message'], 'Failed!')->autoclose(3500);
             return back();
+            }
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -444,4 +447,34 @@ class SubscriberController extends Controller
     }
 
 
+    public function get_dashboard_subscriber()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+
+        $url = env('SERVICE') . 'dashboard/subscriber';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 } //end-class

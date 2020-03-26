@@ -145,9 +145,9 @@
             </a>
 
             <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
-                <a class="dropdown-item" href="/admin/settings">
+                <!-- <a class="dropdown-item" href="/admin/settings">
                     Community Setting</a>
-                <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div> -->
                 <a class="dropdown-item" href="">
                     Etc</a>
             </div>

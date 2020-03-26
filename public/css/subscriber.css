@@ -278,6 +278,9 @@ color: #0FB1B5;
 .s20{
   font-size: 20px;
 }
+.s21{
+  font-size: 21px;
+}
 .s22{
   font-size: 22px;
 }
@@ -469,6 +472,13 @@ margin-bottom: 1.5em;
   background-color: #0E5F75;
   border-radius: 6px;
   color: white;
+}
+
+.btn-white{
+  background-color: #fff;
+  border-radius: 6px;
+  color: #656565;
+  min-width: 150px;
 }
 
 .btn-birumuda{
@@ -945,4 +955,36 @@ position: relative;
   height: 70px;
   margin-top: 0.5em;
   margin-bottom: 1em;
+}
+
+
+.bg-gradient-purple{
+    background: linear-gradient(283.62deg, #667EEA 0.64%, #764BA2 100.72%);
+}
+
+#img-dash2{
+    width: 225px;
+    position: absolute;
+    top: -38px;
+    right: 10px;
+}
+
+.card .card-body.card-dashsub {
+ padding: 0.5rem 1rem 0rem 1rem!important;
+
+}
+
+.card-footer.card-dashsub{
+    padding: 0rem 1rem 0.5rem 1rem;
+    background-color: #fff;
+    border: none;
+}
+
+img.card-dashsub{
+    height: 110px;
+}
+
+
+.card .card-body.color {
+    padding: 1rem 1.5rem !important;
 }

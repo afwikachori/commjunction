@@ -306,15 +306,13 @@ Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
 Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
 Route::get('/logout','SubscriberController@LogoutSubsciberDashboard')->name('/logout');
+Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('/dashboard');
+Route::get('/membership','SubscriberController@MembershipSubsView')->name('/membership');
 
-// DASHBOARD SUBS
-Route::prefix('dashboard')->group(function(){
-Route::get('/','SubscriberController@DashboardSubsView')->name('/dashboard');
-Route::get('/membership','SubscriberController@MembershipSubsView')->name('membership');
-});
 //POST
-Route::post('change_password_subs', 'SubscriberController@change_password_subs')->name('change_password_subs');
+Route::post('get_dashboard_subscriber', 'SubscriberController@get_dashboard_subscriber')->name('get_dashboard_subscriber');
 
+Route::post('change_password_subs', 'SubscriberController@change_password_subs')->name('change_password_subs');
 Route::post('edit_profile_subs', 'SubscriberController@edit_profile_subs')->name('edit_profile_subs');
 Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
 Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
