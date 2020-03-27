@@ -9,7 +9,7 @@
         <span class="mdi mdi-menu"></span>
     </button>
 
-    <ul class="navbar-nav navbar-menu-wrapper d-flex align-items-stretch" id="nav_web_help">
+    <!-- <ul class="navbar-nav navbar-menu-wrapper d-flex align-items-stretch" id="nav_web_help">
         <li class="nav-item">
             <div class="d-none d-md-block">
                 <a class="nav-link" href="">
@@ -35,7 +35,7 @@
         </li>
 
 
-    </ul>
+    </ul> -->
 
     <!--   <ul class="navbar-nav" id="nav_mobile_help">
     <li class="nav-item nav-logout dropdown">

@@ -94,6 +94,11 @@ function session_subscriber_logged() {
                 $("#view_edit_user").attr("src", server_cdn + picsubs);
             }
 
+            $(".nama_komunitas").html(user.community_name);
+            $("#komunitas").val(user.community_id);
+            $("#komunitas2").val(user.community_id);
+            $("#komunitas_inbox").val(user.community_id);
+
 
             $(".nama_subs_login").html(user.full_name);
             $(".membership_status").html(user.membership);

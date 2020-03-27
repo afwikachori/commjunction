@@ -27,5 +27,19 @@
               </a>
             </li>
 
+               <li class="nav-item">
+        <a class="nav-link" href="/subscriber/transaction_management">
+            <span class="menu-title">Transaction Management</span>
+            <i class="mdi mdi-cart menu-icon"></i>
+        </a>
+    </li>
+
+     <li class="nav-item">
+        <a class="nav-link" href="/subscriber/inbox_management">
+            <span class="menu-title">Inbox Management</span>
+            <i class="mdi mdi-message-text-outline menu-icon"></i>
+        </a>
+    </li>
+
 
           </ul>

@@ -1,4 +1,4 @@
-@extends('layout.admin-dashboard')
+@extends('layout.subscriber')
 @section('title', 'Inbox Management')
 @section('content')
 <div class="row">
@@ -11,7 +11,7 @@
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
             <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
-                data-target="#modal_send_inbox_admin">
+                data-target="#modal_send_inbox_susbcriber">
                 Broadcast Message</button>
         </nav>
     </div>
@@ -26,12 +26,12 @@
             </div>
 
             <div class="card-body">
-                <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
+                {{-- <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
                     data-toggle="modal" data-target="#modal_generate_inbox_tabel">
-                    Generate Message</button>
+                    Generate Message</button> --}}
 
-                <table id="tabel_inbox_message_admin" class="table table-hover table-striped dt-responsive nowrap"
-                    style="width:100%; display: none;">
+                <table id="tabel_inbox_message_subs" class="table table-hover table-striped dt-responsive nowrap"
+                    style="width:100%;">
                     <thead>
                         <tr>
                             <th><b> ID </b></th>
@@ -84,7 +84,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <input type="text" id="list_komunitas_inbox" name="list_komunitas_inbox" value="104"
+                                <h5 class="nama_komunitas cgrey2" style="margin-top: 0.5em;"></h5>
+                                <input type="hidden" id="list_komunitas_inbox" name="list_komunitas_inbox" value="104"
                                     class="form-control input-abu" readonly>
                             </div>
                         </div>
@@ -120,7 +121,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="button" id="btn_generate_inbox_super" class="btn btn-teal btn-sm">
+                    <button type="button" id="btn_generate_inbox" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Generate </button>
                 </div> <!-- end-footer     -->
@@ -130,11 +131,11 @@
 </div>
 
 <!-- MODAL ADD SEND MESSAGE INBOX-->
-<div class="modal fade" id="modal_send_inbox_admin" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal_send_inbox_susbcriber" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form method="POST" id="form_send_inbox_super" action="{{route('send_inbox_message_admin')}}">
+            <form method="POST" id="form_send_inbox_super" action="{{route('send_inbox_message_subs')}}">
                 {{ csrf_field() }}
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Send Message</h4>
@@ -183,17 +184,7 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight s13">Community</small>
-                                <input type="text" id="komunitas_inbox" name="komunitas_inbox" value="104"
-                                    class="form-control input-abu" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
+                               <div class="form-group">
                                 <small class="clight s13">Broadcast Status</small>
                                 <select class="form-control input-abu" name="bc_status" id="bc_status">
                                     <option selected disabled> Choose </option>
@@ -202,12 +193,22 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group" id="hide_user_notif" style="display: none;">
                                 <small class="clight s13">List User</small>
                                 <select class="form-control input-abu" name="list_user" id="list_user">
 
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" style="display: none">
+                                <small class="clight s13">Community</small>
+                                <input type="text" id="komunitas_inbox" name="komunitas_inbox" value="104"
+                                    class="form-control input-abu" readonly>
                             </div>
                         </div>
                     </div>
@@ -251,16 +252,14 @@
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Description</small>
-                                <div style="width: 100%; height: 50px; overflow-y: scroll;">
                                 <p class="cgrey" id="detail_dekripsi"></p>
-                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
                              border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%; padding-bottom: 0;">
+                            padding: 5%;">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -394,7 +393,7 @@
 </div>
 
 
-<!-- MODAL DELETE INBOX-->
+<!-- MODAL LOGOUT-->
 <div class="modal fade" id="modal_delete_pesan_inbox" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -433,7 +432,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-
+tabel_inbox_message_subs();
     });
 
     function tabel_tes() {
@@ -443,7 +442,7 @@
             }
         });
         $.ajax({
-            url: '/superadmin/tabel_generate_inbox_super',
+            url: '/subscriber/tabel_generate_inbox_subs',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
@@ -466,18 +465,20 @@
 
 
 
-    $("#btn_generate_inbox_super").click(function () {
-        tabel_tes();
-        tabel_inbox_message_admin();
-    });
+    // $("#btn_generate_inbox").click(function () {
+    //     tabel_tes();
+    //     tabel_inbox_message_subs();
+    // });
 
-    function tabel_inbox_message_admin() {
-        $('#tabel_inbox_message_admin').dataTable().fnClearTable();
-        $('#tabel_inbox_message_admin').dataTable().fnDestroy();
-        $('#tabel_inbox_message_admin').show();
-        $('#modal_generate_inbox_tabel').modal('hide');
 
-        var tabel = $('#tabel_inbox_message_admin').DataTable({
+
+    function tabel_inbox_message_subs() {
+        $('#tabel_inbox_message_subs').dataTable().fnClearTable();
+        $('#tabel_inbox_message_subs').dataTable().fnDestroy();
+        $('#tabel_inbox_message_subs').show();
+        // $('#modal_generate_inbox_tabel').modal('hide');
+
+        var tabel = $('#tabel_inbox_message_subs').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -486,20 +487,13 @@
                 }
             },
             ajax: {
-                url: '/admin/tabel_generate_inbox_admin',
+                url: '/subscriber/tabel_generate_inbox_subs',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
-                data: {
-                    "community_id": $("#list_komunitas_inbox").val(),
-                    "start_date": $("#tanggal_mulai2").val(),
-                    "end_date": $("#tanggal_selesai2").val(),
-                    "filter_title": $("#filter_judul").val(),
-                    "message_type": $("#tipe_pesan").val(),
-                },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_inbox_message_admin tbody').empty().append(nofound);
+                    $('#tabel_inbox_message_subs tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
@@ -559,7 +553,7 @@
             }
         });
         $.ajax({
-            url: "/admin/get_list_subscriber_inbox_admin",
+            url: "/subscriber/get_list_subscriber_inbox",
             type: "POST",
             dataType: "json",
             data: {

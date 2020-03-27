@@ -45,6 +45,16 @@ class SubscriberController extends Controller
         return view('subscriber/dashboard/membership_type');
     }
 
+    public function TransactionSubsView()
+    {
+        return view('subscriber/dashboard/transaction_management_subs');
+    }
+
+    public function InboxManagementSubsView()
+    {
+        return view('subscriber/dashboard/inbox_management_subs');
+    }
+
 
     public function LoginSubscriber(Request $request)
     {
@@ -477,4 +487,322 @@ class SubscriberController extends Controller
             return $error;
         }
     }
+
+    public function get_list_subcriber_name(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+        $user = $ses_login['user'];
+        $comid = $user['community_id'];
+
+        $url = env('SERVICE') . 'transmanagement/listsubscriber';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $comid
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+    public function get_list_transaction_tipe()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+
+        $url = env('SERVICE') . 'transmanagement/listtransactiontype';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+    public function tabel_transaksi_show(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+        // return $ses_login['access_token'];
+
+        $url = env('SERVICE') . 'transmanagement/listall';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "start_date" => $input['tanggal_mulai'],
+            "end_date" => $input['tanggal_selesai'],
+            "community_id" => $input['komunitas'],
+            "transaction_type_id" => $input['tipe_trans'],
+            "subscriber_id" => $input['subs_name'],
+            "transaction_status" => $input['status_trans']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+
+    public function detail_transaksi_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'transmanagement/detail';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "invoice_number" => $input['invoice_number'],
+            "community_id" => $input['community_id'],
+            "payment_level" => $input['payment_level']
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+
+    public function tabel_generate_inbox_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        // return $input;
+
+        $url = env('SERVICE') . 'inboxmanagement/listmessage';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        $bodyku = json_encode([
+            'status' => "1",
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function get_list_subscriber_inbox(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/listusers';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "user_type" => $input['user_type'],
+            "community_id" => $input['community_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            }
+        }
+    }
+
+
+    public function send_inbox_message_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'inboxmanagement/sendmessage';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        if (isset($input['list_user'])) {
+            $user = $input['list_user'];
+        } else {
+            $user = "";
+        }
+
+        $bodyku = json_encode([
+            "title" => $input['judul_inbox'],
+            "description" => $input['deksripsi_inbox'],
+            "user_type" => $input['usertipe_inbox1'],
+            "user_id" => $user,
+            "message_type" =>  $input['tipe_inbox'],
+            "community_id" => $input['komunitas_inbox'],
+            "broadcast_status" => $input['bc_status'],
+        ]);
+        // return $bodyku;
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+return $json;
+            if ($json['success'] == true) {
+                alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
+
+
+
+
+
+
+
+
 } //end-class

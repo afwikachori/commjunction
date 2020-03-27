@@ -2174,16 +2174,20 @@ try{
                 alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 

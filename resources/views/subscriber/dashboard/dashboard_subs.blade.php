@@ -20,7 +20,7 @@
                         class="mdi mdi-book-open-page-variant mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5 total_news"></h2>
-                <h6 class="card-text">Increased by 0%</h6>
+                <h6 class="card-text">Read by 0 Person</h6>
             </div>
         </div>
     </div>

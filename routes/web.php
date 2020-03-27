@@ -301,17 +301,27 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 
 
 
-// SUBSCRIBER - REGISTRASION
+// SUBSCRIBER -
 Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
 Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
 Route::get('/logout','SubscriberController@LogoutSubsciberDashboard')->name('/logout');
 Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('/dashboard');
 Route::get('/membership','SubscriberController@MembershipSubsView')->name('/membership');
+Route::get('/inbox_management', 'SubscriberController@InboxManagementSubsView')->name('/inbox_management');
+Route::get('/transaction_management', 'SubscriberController@TransactionSubsView')->name('/transaction_management');
+
 
 //POST
-Route::post('get_dashboard_subscriber', 'SubscriberController@get_dashboard_subscriber')->name('get_dashboard_subscriber');
+Route::post('send_inbox_message_subs', 'SubscriberController@send_inbox_message_subs')->name('send_inbox_message_subs');
 
+Route::post('get_list_subscriber_inbox', 'SubscriberController@get_list_subscriber_inbox')->name('get_list_subscriber_inbox');
+Route::post('tabel_generate_inbox_subs', 'SubscriberController@tabel_generate_inbox_subs')->name('tabel_generate_inbox_subs');
+Route::post('detail_transaksi_subs', 'SubscriberController@detail_transaksi_subs')->name('detail_transaksi_subs');
+Route::post('tabel_transaksi_show', 'SubscriberController@tabel_transaksi_show')->name('tabel_transaksi_show');
+Route::post('get_list_transaction_tipe', 'SubscriberController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
+Route::post('get_list_subcriber_name', 'SubscriberController@get_list_subcriber_name')->name('get_list_subcriber_name');
+Route::post('get_dashboard_subscriber', 'SubscriberController@get_dashboard_subscriber')->name('get_dashboard_subscriber');
 Route::post('change_password_subs', 'SubscriberController@change_password_subs')->name('change_password_subs');
 Route::post('edit_profile_subs', 'SubscriberController@edit_profile_subs')->name('edit_profile_subs');
 Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
@@ -328,11 +338,8 @@ Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->na
 
 
 
-
-
 //SUPERADMIN
 Route::prefix('superadmin')->group(function(){
-
 Route::get('/','SuperadminController@loginSuperadminView')->name('superadmin');
 Route::get('/dashboard','SuperadminController@dashboarSuperView')->name('/dashboard');
 Route::get('/add_user','SuperadminController@UserSuperView')->name('/add_user');
@@ -340,7 +347,6 @@ Route::get('/payment','SuperadminController@paymentSuperView')->name('/payment')
 Route::get('/module','SuperadminController@ModuleManagementView')->name('/module');
 Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
 Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
-Route::get('/transaction', 'SuperadminController@TransactionManagementView')->name('/transaction');
 Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
 Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
 Route::get('/log_management', 'SuperadminController@LogManagementSuperView')->name('/log_management');
@@ -350,6 +356,7 @@ Route::get('/report_management', 'SuperadminController@reportManagementSuperadmi
 Route::get('/payment_management', 'SuperadminController@paymentManagementSuperadmin')->name('/payment_management');
 Route::get('/notification_management', 'SuperadminController@NotificationManagementSuperadmin')->name('/notification_management');
 Route::get('/inbox_management', 'SuperadminController@InboxManagementSuperadmin')->name('/inbox_management');
+Route::get('/transaction', 'SuperadminController@TransactionManagementView')->name('/transaction');
 
 
 //-------POST------
