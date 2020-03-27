@@ -278,7 +278,7 @@
                                 <i class="mdi mdi-close"></i> No, Im Doubt
                             </button>
                             &nbsp;
-                            <button type="submit" class="btn btn-tosca btn-sm">
+                            <button type="submit" class="btn btn-tosca btn-sm btn-center">
                                 <i class="mdi mdi-check btn-icon-prepend">
                                 </i> Yeah, Im Sure </button>
                         </center>

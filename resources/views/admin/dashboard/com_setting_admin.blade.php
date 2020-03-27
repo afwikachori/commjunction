@@ -78,62 +78,62 @@
 
 
                     <div id="community_setting_link" style="margin-top: 2em; padding-left: 10%;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="col-md-8"></div>
-                            <h6 class="cdgrey judulcomsetup">
-                                Login & Registrasion</h6>
-                            <small class="clight">Setting description & information</small>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="col-md-8"></div>
+                                <h6 class="cdgrey judulcomsetup">
+                                    Login & Registrasion</h6>
+                                <small class="clight">Setting description & information</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="location.href ='/admin/settings/loginregis'"
+                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" onclick="location.href ='/admin/settings/loginregis'"
-                                class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
-                        </div>
-                    </div>
-                    <br>
+                        <br>
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h6 class="cdgrey judulcomsetup">
-                                Membership Type</h6>
-                            <small class="clight">Setting description & information</small>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="cdgrey judulcomsetup">
+                                    Membership Type</h6>
+                                <small class="clight">Setting description & information</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="location.href ='/admin/settings/membership'"
+                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" onclick="location.href ='/admin/settings/membership'"
-                                class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
-                        </div>
-                    </div>
-                    <br>
+                        <br>
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h6 class="cdgrey judulcomsetup">
-                                Registrasion Data</h6>
-                            <small class="clight">Setting description & information</small>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="cdgrey judulcomsetup">
+                                    Registrasion Data</h6>
+                                <small class="clight">Setting description & information</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="location.href ='/admin/settings/registrasion_data'"
+                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" onclick="location.href ='/admin/settings/registrasion_data'"
-                                class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
-                        </div>
-                    </div>
-                    <br>
+                        <br>
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h6 class="cdgrey judulcomsetup">
-                                Subscriber Payment</h6>
-                            <small class="clight">Setting description & information</small>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="cdgrey judulcomsetup">
+                                    Subscriber Payment</h6>
+                                <small class="clight">Setting description & information</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="location.href ='/admin/settings/payment'"
+                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" onclick="location.href ='/admin/settings/payment'"
-                                class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
-                        </div>
+                        <br>
                     </div>
-                    <br>
                 </div>
-            </div>
-        </div> <!-- end-col-12 -->
-    </div>
+            </div> <!-- end-col-12 -->
+        </div>
     </div>
 
 
@@ -150,8 +150,31 @@
         setTimeout(function () {
             ui.popup.hideLoader();
         }, 8000);
+        tabel_tes();
+
     });
 
+
+    function tabel_tes() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_result_setup_comsetting',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
 
 
 </script>

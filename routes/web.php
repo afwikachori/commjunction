@@ -55,7 +55,6 @@ Route::get('/module_report', 'AdminCommController@ModuleReportManagementView')->
 Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
 
 
-
 // admin/settings
 Route::prefix('settings')->group(function(){
 Route::get('/','AdminCommController@comSettingView')->name('settings');
@@ -66,36 +65,23 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+
+Route::post('get_result_setup_comsetting', 'AdminCommController@get_result_setup_comsetting')->name('get_result_setup_comsetting');
 Route::post('tabel_report_subscriber_admin','AdminCommController@tabel_report_subscriber_admin')->name('tabel_report_subscriber_admin');
-
 Route::post('get_list_subscriber_report','AdminCommController@get_list_subscriber_report')->name('get_list_subscriber_report');
-
 Route::post('get_list_transaction_type_admin','AdminCommController@get_list_transaction_type_admin')->name('get_list_transaction_type_admin');
-
 Route::post('tabel_concile_report_admin','AdminCommController@tabel_concile_report_admin')->name('tabel_concile_report_admin');
-
 Route::post('tabel_report_transaksi_admin','AdminCommController@tabel_report_transaksi_admin')->name('tabel_report_transaksi_admin');
-
 Route::post('edit_payment_subs','AdminCommController@edit_payment_subs')->name('edit_payment_subs');
-
 Route::post('get_list_user_notif_super','AdminCommController@get_list_user_notif_super')->name('get_list_user_notif_super');
-
 Route::post('detail_transaksi_superadmin','AdminCommController@detail_transaksi_superadmin')->name('detail_transaksi_superadmin');
-
 Route::post('tabel_transaksi_show','AdminCommController@tabel_transaksi_show')->name('tabel_transaksi_show');
-
 Route::post('edit_setting_regisdata_comm','AdminCommController@edit_setting_regisdata_comm')->name('edit_setting_regisdata_comm');
-
 Route::post('get_list_subcriber_name','AdminCommController@get_list_subcriber_name')->name('get_list_subcriber_name');
-
 Route::post('get_list_transaction_tipe','AdminCommController@get_list_transaction_tipe')->name('get_list_transaction_tipe');
-
 Route::post('get_list_komunitas','AdminCommController@get_list_komunitas')->name('get_list_komunitas');
-
 Route::post('add_new_usertype_management_admin','AdminCommController@add_new_usertype_management_admin')->name('add_new_usertype_management_admin');
-
 Route::post('get_list_fitur_membership_admin','AdminCommController@get_list_fitur_membership_admin')->name('get_list_fitur_membership_admin');
-
 Route::post('get_listfitur_usertype_ceklist', 'AdminCommController@get_listfitur_usertype_ceklist')->name('get_listfitur_usertype_ceklist');
 Route::post('add_create_membership_admin','AdminCommController@add_create_membership_admin')->name('add_create_membership_admin');
 Route::post('tabel_usertype_admin','AdminCommController@tabel_usertype_admin')->name('tabel_usertype_admin');
@@ -313,8 +299,9 @@ Route::get('/transaction_management', 'SubscriberController@TransactionSubsView'
 
 
 //POST
-Route::post('send_inbox_message_subs', 'SubscriberController@send_inbox_message_subs')->name('send_inbox_message_subs');
 
+Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
+Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');
 Route::post('get_list_subscriber_inbox', 'SubscriberController@get_list_subscriber_inbox')->name('get_list_subscriber_inbox');
 Route::post('tabel_generate_inbox_subs', 'SubscriberController@tabel_generate_inbox_subs')->name('tabel_generate_inbox_subs');
 Route::post('detail_transaksi_subs', 'SubscriberController@detail_transaksi_subs')->name('detail_transaksi_subs');
