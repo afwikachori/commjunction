@@ -1,27 +1,37 @@
 @extends('layout.admin-dashboard')
 
 @section('content')
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                  <i class="mdi mdi-settings"></i>
-                </span> Community Settings</h3>
-
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Community Settings</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Login & Registrasion</li>
-                </ol>
-              </nav>
-            </div>
-
 <div class="row">
- <div class="col-12">
-  <div class="card">
+    <div class="col-md-3">
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
+    </div>
+    <div class="col-md-9">
+        <label class="cgrey">Publish Community to Live<label>
+    </div>
+</div>
+
+<div class="row" style="padding-left: 20%; padding-right: 20%; margin-top: 1em;">
+    <div class="col-12">
+        <h4 class="cgrey" style="font-weight: bold; margin-top: 1em;margin-bottom: 1em;"> Membership Type</h4>
+        <div class="card">
     <div class="card-body">
     <h4 class="card-title">Setting Login & Registrasion</h4>
-
-    <br><br>
+    <br>
+     <div class="row" style="margin-top: 2em;">
+                            <div class="col-md-7">
+                                <h6 class="cgrey2 judulcomsetup">
+                                    Setting Membership Type</h6>
+                                <small class="clight">Set membership type for your subscriber </small>
+                            </div>
+                            <div class="col-md-5">
+                                <select class="form-control input-abu" name="membership" id="membership">
+                                    <option selected disabled> Choose </option>
+                                    <option value="1"> Free Membership </option>
+                                    <option value="2"> Paid Membership </option>
+                                </select>
+                            </div>
+                        </div>
+    <hr>
     <form method="POST" id="form_setting_loginregis" action="{{route('setting_loginresgis_comm')}}" enctype="multipart/form-data">{{ csrf_field() }}
     <div class="row">
       <div class="col-md-5">
@@ -61,7 +71,7 @@
           <small><i class="cgrey tebal">smartcomm.id</i></small>
         </div>
       </div>
-  
+
     </div> <!-- end-col-6 -->
 
       <div class="col-md-7">

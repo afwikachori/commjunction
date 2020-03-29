@@ -282,8 +282,8 @@ background-color: #50b7b9;
 }
 
 .btncomset{
-    width: 125px;
-    border-radius: 20px !important;
+    width: 100px;
+    border-radius: 40px !important;
 }
 
 #mdl-img-click .modal-header {
@@ -1563,7 +1563,7 @@ a.dt-button {
 }
 
 .bg-ijo {
-    background: linear-gradient(106deg, #43b95f -2.66%, #b3e273 102.89%);
+    background: linear-gradient(106deg, #43b95f -2.66%, #63d87c 102.89%);
     border: none;
 }
 

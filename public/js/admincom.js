@@ -73,6 +73,8 @@ function session_admin_logged() {
                 ui.popup.hideLoader();
             }, 5000);
 
+            get_result_setup_comsetting();
+
             var user = result.user;
             if (result != "") {
                 $(".username_komunitas").html(user.user_name);
@@ -140,6 +142,38 @@ function session_admin_logged() {
         }
     });
 }
+
+
+//COMMUNITY SETTING DATA
+function get_result_setup_comsetting() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/admin/get_result_setup_comsetting',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            console.log(result);
+
+            var membership = result[3];
+            // $('select[name="type_com"]').val(result.jenis_comm_id);
+            $('#membership').val(membership.data).attr("selected", "selected");
+            // $("#").
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+
+
+
 
 function errorImg() {
     $('.rounded-circle').attr('src', '/img/noimg.jpg');

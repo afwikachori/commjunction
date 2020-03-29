@@ -3,14 +3,14 @@
 @section('content')
 <div class="row">
     <div class="col-md-3">
-        <h3 class="page-title s22">Community Setting</h3>
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
     </div>
     <div class="col-md-5">
         <label class="cgrey">Set up your community preparation<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
-        <span class="cgrey">Community Status</span> &nbsp; &nbsp;
-        <span class="badge statuscomm">Status</span>
+        <label class="cgrey2 s14">Community Status</label> &nbsp; &nbsp;
+        <span class="badge statuscomm bg-ijo melengkung6px" style="width: 80px;">Status</span>
     </div>
 </div>
 <br>
@@ -18,10 +18,10 @@
 <div style="padding-left: 20%; padding-right: 20%;">
     <div class="divbutton">
         <button type="button" onclick="location.href ='/admin/editprofil'"
-            class="btn btn-tosca btn-sm btn-fw btncomset">Edit</button>
+         class="btn btn-tosca btn-sm" style="width: 120px;">Edit</button>
         &nbsp;
         <button type="button" onclick="location.href ='/admin/publish'"
-            class="btn btn-tosca btn-sm btn-fw btncomset">Publish</button>
+        class="btn btn-tosca btn-sm" style="width: 120px;">Publish</button>
     </div>
 
 
@@ -85,9 +85,9 @@
                                     Login & Registrasion</h6>
                                 <small class="clight">Setting description & information</small>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/loginregis'"
-                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                                    class="btn btn-tosca btn-sm btncomset"><small>Go Setting</small></button>
                             </div>
                         </div>
                         <br>
@@ -98,9 +98,9 @@
                                     Membership Type</h6>
                                 <small class="clight">Setting description & information</small>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/membership'"
-                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                                    class="btn btn-tosca btn-sm btncomset"><small>Go Setting</small></button>
                             </div>
                         </div>
                         <br>
@@ -111,9 +111,9 @@
                                     Registrasion Data</h6>
                                 <small class="clight">Setting description & information</small>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/registrasion_data'"
-                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                                    class="btn btn-tosca btn-sm btncomset"><small>Go Setting</small></button>
                             </div>
                         </div>
                         <br>
@@ -124,9 +124,9 @@
                                     Subscriber Payment</h6>
                                 <small class="clight">Setting description & information</small>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/payment'"
-                                    class="btn btn-tosca btn-sm melengkung10px">Go Setting</button>
+                                    class="btn btn-tosca btn-sm btncomset"><small>Go Setting</small></button>
                             </div>
                         </div>
                         <br>
@@ -150,31 +150,9 @@
         setTimeout(function () {
             ui.popup.hideLoader();
         }, 8000);
-        tabel_tes();
+
 
     });
-
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/get_result_setup_comsetting',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
-            }
-        });
-    }
 
 
 </script>
