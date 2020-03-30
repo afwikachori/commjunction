@@ -51,22 +51,17 @@
         @include('admin.dashboard.admin_navbar')
       </nav>
 
-
-      <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
          @include('admin.dashboard.admin_sidebar')
         </nav>
 
-
-        <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
           @yield('content')
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
+
            <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
@@ -81,13 +76,11 @@
                         </span>
                     </div>
                 </footer>
-          <!-- partial -->
         </div>
-        <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
+
+<input type="hidden" class="server_cdn" value="{{ env('CDN') }}">
     </div>
-    <!-- container-scroller -->
 
 <!-- MODAL LOADING AJAX -->
 <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
@@ -111,7 +104,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+          <span aria-hidden="true" style="font-size: 50px; color:red;">&times;</span>
         </button>
       </div>
       <center>

@@ -66,7 +66,7 @@
                       <label class="h6 form-check-label cteal" for="gridCheck" style="color: rgba(14, 95, 117, 0.75);" lang="en">Remember me</label>
                     </div>
                 </div>
-                <div class="col" style="text-align: right;">
+                <div class="col" style="text-align: right; display: none;">
                     <label><a href="/admin/forgetpass_admin" class="h6" style="color: rgba(14, 95, 117, 0.4);" lang="en">Forgot password?</a></label>
                 </div>
                 </div>

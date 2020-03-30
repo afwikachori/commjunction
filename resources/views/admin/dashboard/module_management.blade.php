@@ -266,8 +266,9 @@
 
                     </div>
                     <div class="col-md-6">
-                        <small class="clight">Module Features</small>
-                        <div class="row">
+                        <h5 class="cblue" id="jum_submodule"></h5><small class="clight">Module Features</small>
+
+                        <div class="row" style="margin-top:0.5em;">
                             <div class="card-deck show_subfitur_module scrollfitur" style="width:100%;">
 
                             </div>
@@ -340,24 +341,22 @@
                         '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                         '<div class="card-body member">' +
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        // '<button  class="btn btn-sm btn-gradient-ijo melengkung10px float-right" style="position:absolute; margin-bottom:-1em; right:5%; padding: 0.3rem 0.5rem;' +
-                        // 'onclick="detail_module_all(\'' + item.feature_id + '\')">' +
-                        // '<small>Ready</small></button><br>' +
                         '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
                         'style="padding: 0.3rem 0.5rem;"' +
                         'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
                         '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '<div class="row">' +
                         '<div class="col-md-12">' +
-                        '<h4>' + item.feature_type_title + '</h4>' +
+                        '<small class="cteal">' + item.feature_type_title + '</small>' +
+                            '<h4>' + item.title + '</h4>' +
                         '</div>' +
-                        '<div class="col-md-12" style="text-align: right;">' +
-                        '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
-                        'onclick="get_list_setting_module(' + item.feature_id + ')">' +
-                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                        '</small></button>' +
-                        '</div>' +
+                        // '<div class="col-md-12" style="text-align: right;">' +
+                        // '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                        // 'onclick="get_list_setting_module(' + item.feature_id + ')">' +
+                        // '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                        // ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                        // '</small></button>' +
+                        // '</div>' +
                         '</div></div></div></div>';
                 });
 
@@ -410,7 +409,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-
+console.log(result);
                 var isiui = '';
                 var nomer = 0;
                 $.each(result, function (i, item) {
@@ -430,14 +429,15 @@
                             '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                             '<div class="row">' +
                             '<div class="col-md-12">' +
-                            '<h4>' + item.feature_type_title + '</h4>' +
+                            '<small class="cteal">' + item.feature_type_title + '</small>' +
+                            '<h4>' + item.title + '</h4>' +
                             '</div>' +
                             '<div class="col-md-12" style="text-align: right;">' +
                             '<a href="" class="a_setmodule"' +
                             'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
-                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                            ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                            '</small></a>' +
+                            // '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                            // ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                            // '</small></a>' +
                             '</div>' +
                             '</div></div></div></div>';
                     } else {
@@ -450,7 +450,8 @@
                             '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
                             '<div class="row">' +
                             '<div class="col-md-7">' +
-                            '<h4>' + item.feature_type_title + '</h4>' +
+                            '<small class="cteal">' + item.feature_type_title + '</small>' +
+                            '<h4>' + item.title + '</h4>' +
                             '</div>' +
                             '<div class="col-md-5" style="text-align: right;">' +
                             '<button class="btn btn-sm btn-ready-card"' +
@@ -465,7 +466,8 @@
 
             },
             error: function (result) {
-                console.log("Cant Show Module List");
+                console.log(result);
+                console.log("Cant Show Module List All");
             }
         });
     }
@@ -538,11 +540,11 @@
                 var subf = '';
                 var jum = 0;
                 $.each(dt.subfeature, function (i, item) {
-                    console.log(item);
+                    // console.log(item);
                     var colum;
                     jum++;
 
-                    subf += '<div class="col-md-6 stretch-card grid-margin" style="height:80px;"' +
+                    subf += '<div class="col-md-6 stretch-card grid-margin" style="min-height:85px; padding-left: 5px; padding-bottom:10px;"' +
                         'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
                         '<div class="card bg-gradient-blue card-img-holder text-white">' +
@@ -551,9 +553,10 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card3">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card3"'+
+                        'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
                         '</div>' +
-                        '<div class="col-md-9">' +
+                        '<div class="col-md-9" style="padding-left:5px;">' +
                         '<b><small>' + item.title + '</small></b>' +
                         '</div>' +
                         '<div class="col-md-12" style="text-align: right;">' +
@@ -569,12 +572,13 @@
                         '</div>';
                 });
                 $(".show_subfitur_module").html(subf);
+                $("#jum_submodule").html(jum);
 
                 $("#md_all_aktifkan_module").modal("show");
             }
             },
             error: function (result) {
-                console.log("Cant Show Detail Module");
+                console.log(result);
             }
         });
     }

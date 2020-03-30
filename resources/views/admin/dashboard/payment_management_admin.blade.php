@@ -497,9 +497,6 @@
                     ui.popup.show('error', "Internal Server Error", 'Error');
                 },
             },
-            success: function (result) {
-                console.log(result);
-            },
             error: function (request, status, errorThrown) {
                 console.log(errorThrown);
                 var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';

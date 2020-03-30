@@ -17,7 +17,7 @@
 <div class="row" style="padding-top:2%; padding-right:20%; padding-left:20%;">
  <div class="col-12">
   <div class="card">
-    <div class="card-body">
+    <div class="card-body" style="min-height: 420px; height: auto;">
     <div  id="isi_list_setting">
 
     </div>

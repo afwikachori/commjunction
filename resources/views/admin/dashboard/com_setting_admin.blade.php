@@ -1,5 +1,5 @@
 @extends('layout.admin-dashboard')
-
+@section('title', 'Community Setting')
 @section('content')
 <div class="row">
     <div class="col-md-3">
@@ -144,7 +144,6 @@
 
 @section('script')
 <script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
         setTimeout(function () {

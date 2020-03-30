@@ -1,5 +1,5 @@
 // onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
-var server_cdn = '{{ env("CDN") }}';
+var server_cdn = $(".server_cdn").val();
 var ui = {
     popup: {
         show: function show(type, message, tittle) {
@@ -66,12 +66,12 @@ function session_admin_logged() {
         datatype: 'JSON',
         timeout: 20000,
         success: function (result) {
-              console.log(result);
+            console.log(result);
             console.log("admin komunitas = " + result.access_token);
 
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 5000);
+            }, 8000);
 
             get_result_setup_comsetting();
 
@@ -81,13 +81,32 @@ function session_admin_logged() {
                 $(".phone_komunitas").html(user.notelp);
                 $(".email_komunitas").html(user.email);
 
-                $(".logo_komunitas").attr("src", server_cdn + user.community_logo);
-                if (user.picture != "0") {
-                    $(".foto_profil_admin").attr("src", server_cdn + user.picture);
-                    $("#view_edit_user").attr("src", server_cdn + user.picture);
+                if (user.community_logo != undefined || user.community_logo != null) {
+                    var oic = user.community_logo;
+                    var cekone = oic.slice(0, 1);
+                    var imgkom = '';
+                    if (cekone != "/") {
+                        imgkom = "/" + user.community_logo;
+                    } else {
+                        imgkom = user.community_logo;
+                    }
+                    $(".logo_komunitas").attr("src", server_cdn + imgkom);
                 }
-                $(".foto_profil_admin").attr("src", server_cdn + user.picture);
-                $("#view_edit_user").attr("src", server_cdn + user.picture);
+
+                if (user.picture != undefined || user.picture != null) {
+                    var oic = user.picture;
+                    var cekone = oic.slice(0, 1);
+                    var picsubs = '';
+                    if (cekone != "/") {
+                        picsubs = "/" + user.picture;
+                    } else {
+                        picsubs = user.picture;
+                    }
+
+                    $(".foto_profil_admin").attr("src", server_cdn + picsubs);
+                    $("#view_edit_user").attr("src", server_cdn + picsubs);
+                }
+
                 $(".user_admin_logged").html(user.full_name);
                 $(".jenis_komunitas_adminloged").html(user.community_type);
                 $(".judul_komunitas").html(user.community_name);
@@ -146,6 +165,7 @@ function session_admin_logged() {
 
 //COMMUNITY SETTING DATA
 function get_result_setup_comsetting() {
+    $(".sidebar .nav .nav-item").removeClass("active"); 
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,10 +179,49 @@ function get_result_setup_comsetting() {
         success: function (result) {
             console.log(result);
 
+            var tipeform = result[0];
+            $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
+            if (tipeform.ready == true) {
+                $('#optionsRadios').attr("disabled", "disabled");
+            }
+
+            var portal = result[1];
+            $("#headline").val(portal.data.headline_text);
+            $("#description_custom").val(portal.data.description);
+
+            if (portal.data.image != undefined || portal.data.image != null) {
+                var oic = portal.data.image
+                var cekone = oic.slice(0, 1);
+                var imgportal = '';
+                if (cekone != "/") {
+                    imgportal = "/" + portal.data.image;
+                } else {
+                    imgportal = portal.data.image;
+                }
+                $(".img_portal").attr("src", server_cdn + imgportal);
+            }
+            if (portal.ready == true) {
+                $('#headline').attr("disabled", "disabled");
+                $('#description_custom').attr("disabled", "disabled");
+                $("#up_img_portal").hide();
+                $(".img_portal").show();
+                // $('#headline').attr("disabled", "disabled");
+                // $('#headline').attr("disabled", "disabled");
+            }
+
+            var domain = result[2];
+            $('#subdomain').val(domain.data.subdomain);
+            if (domain.ready == true) {
+                $('#subdomain').attr("disabled", "disabled");
+            }
+
+            if(tipeform.ready == true && portal.ready == true && domain.ready == true){
+                 $("#btn_commset_login").attr("disabled", "disabled");
+                $("#btn_commset_login").hide();
+            }
+
             var membership = result[3];
-            // $('select[name="type_com"]').val(result.jenis_comm_id);
             $('#membership').val(membership.data).attr("selected", "selected");
-            // $("#").
         },
         error: function (result) {
             console.log(result);

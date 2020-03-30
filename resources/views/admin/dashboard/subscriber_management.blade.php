@@ -267,6 +267,12 @@
         });
         var tabel = $('#tabel_subscriber').DataTable({
             responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/admin/tabel_subs_management',
                 type: 'POST',
@@ -355,6 +361,12 @@
     function tabel_subscriber_pending() {
         var tabel = $('#tabel_subs_pending').DataTable({
             responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/admin/tabel_subs_pending',
                 type: 'POST',
