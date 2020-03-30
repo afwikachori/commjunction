@@ -604,14 +604,7 @@ transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 position: relative;
 }
 
-/*//edit community profil*/
-.p-image.editcom {
-margin-top: 3.5em;
-left: 0%;
-color: #666666;
-transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-position: relative;
-}
+
 
 .p-image:hover {
   transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
@@ -1782,4 +1775,21 @@ div::-webkit-scrollbar-thumb {
      display: flex;
      align-items: center;
      justify-content: center;
+}
+
+/* //EDIY PROFIL ADMIN */
+.img-upload-profil.editprof{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60;
+}
+
+/*//edit community profil*/
+.p-imageditprof {
+margin-top: 9rem;
+    left: 110px;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    position: relative;
 }

@@ -266,8 +266,9 @@
 
                     </div>
                     <div class="col-md-6">
-                        <h5 class="cblue" id="jum_submodule"></h5><small class="clight">Module Features</small>
-
+                       <small class="clight">Module Sub-Features</small>
+                       <br>
+                       
                         <div class="row" style="margin-top:0.5em;">
                             <div class="card-deck show_subfitur_module scrollfitur" style="width:100%;">
 
@@ -325,7 +326,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
 
                 var isiui = '';
                 var num = 0;
@@ -350,13 +351,13 @@
                         '<small class="cteal">' + item.feature_type_title + '</small>' +
                             '<h4>' + item.title + '</h4>' +
                         '</div>' +
-                        // '<div class="col-md-12" style="text-align: right;">' +
-                        // '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
-                        // 'onclick="get_list_setting_module(' + item.feature_id + ')">' +
-                        // '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                        // ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                        // '</small></button>' +
-                        // '</div>' +
+                        '<div class="col-md-12" style="text-align: right;">' +
+                        '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                        'onclick="get_list_setting_module(' + item.feature_id + ')">' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                        '</small></button>' +
+                        '</div>' +
                         '</div></div></div></div>';
                 });
 
@@ -383,7 +384,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {
-                "subfeature_id": idmod
+                "feature_id": idmod
             },
             success: function (result) {
                 console.log(result);
@@ -391,7 +392,8 @@
 
             },
             error: function (result) {
-                ui.popup.show('error', 'Low Connection, Try again later', 'Error');
+                console.log(result);
+                ui.popup.show('warning', 'Bad Connection, Try again later', 'Warning');
             }
         });
     }
@@ -409,7 +411,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-console.log(result);
+// console.log(result);
                 var isiui = '';
                 var nomer = 0;
                 $.each(result, function (i, item) {
@@ -435,9 +437,9 @@ console.log(result);
                             '<div class="col-md-12" style="text-align: right;">' +
                             '<a href="" class="a_setmodule"' +
                             'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
-                            // '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                            // ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                            // '</small></a>' +
+                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                            ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                            '</small></a>' +
                             '</div>' +
                             '</div></div></div></div>';
                     } else {
@@ -544,7 +546,7 @@ console.log(result);
                     var colum;
                     jum++;
 
-                    subf += '<div class="col-md-6 stretch-card grid-margin" style="min-height:85px; padding-left: 5px; padding-bottom:10px;"' +
+                    subf += '<div class="col-md-6 stretch-card grid-margin" style="height:85px; padding-left: 5px; padding-bottom:10px;"' +
                         'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
                         '<div class="card bg-gradient-blue card-img-holder text-white">' +
@@ -572,7 +574,6 @@ console.log(result);
                         '</div>';
                 });
                 $(".show_subfitur_module").html(subf);
-                $("#jum_submodule").html(jum);
 
                 $("#md_all_aktifkan_module").modal("show");
             }

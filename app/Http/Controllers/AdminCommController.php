@@ -2442,14 +2442,14 @@ try{
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
-        $url = env('SERVICE') . 'get_list_setting_module_admin';
+        $url = env('SERVICE') . 'modulemanagement/listsetting';
         $client = new \GuzzleHttp\Client();
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            "subfeature_id" => $input['subfeature_id'],
+            "feature_id" => $input['feature_id'],
         ]);
 
         $datakirim = [
@@ -2461,13 +2461,21 @@ try{
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json['data'];
-
+           
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 

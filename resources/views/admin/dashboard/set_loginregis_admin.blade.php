@@ -12,13 +12,13 @@
 
 <div class="row" style="padding-left: 18%; padding-right: 18%; padding-bottom: 0; margin-top: 1em;">
     <div class="col-12">
-        <h4 class="cgrey" style="font-weight: bold; margin-top: 1em;margin-bottom: 1em;"> Membership Type</h4>
+        <h4 class="cgrey" style="font-weight: bold; margin-top: 1em;margin-bottom: 1em;">
+            Setting Login & Registrasion</h4>
         <div class="card">
                <form method="POST" id="form_setting_loginregis" action="{{route('setting_loginresgis_comm')}}"
                 enctype="multipart/form-data">{{ csrf_field() }}
 
                     <div class="card-body">
-                        <h4 class="card-title" style="margin-bottom: 1em;">Setting Login & Registrasion</h4>
 
                         <div class="row" style="margin-bottom: 1em;">
                             <div class="col-md-7">

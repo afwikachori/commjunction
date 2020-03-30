@@ -448,7 +448,7 @@
     $(document).ready(function () {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
-        // tabel_tes();
+        tabel_tes();
     });  //end
 
 
@@ -459,10 +459,10 @@
             }
         });
         $.ajax({
-            url: '/admin/tabel_payment_all_admin',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
+                url: '/admin/tabel_payment_active_admin',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
             success: function (result) {
                 console.log(result);
             },
@@ -547,9 +547,6 @@
                     var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_payment_active_admin tbody').empty().append(nofound);
                 },
-            },
-            success: function (result) {
-                console.log(result);
             },
             error: function (request, status, errorThrown) {
                 console.log(errorThrown);
