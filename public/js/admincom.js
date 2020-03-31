@@ -165,7 +165,7 @@ function session_admin_logged() {
 
 //COMMUNITY SETTING DATA
 function get_result_setup_comsetting() {
-    $(".sidebar .nav .nav-item").removeClass("active"); 
+    $(".sidebar .nav .nav-item").removeClass("active");
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,8 +177,7 @@ function get_result_setup_comsetting() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            console.log(result);
-
+            // console.log(result);
             var tipeform = result[0];
             $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
             if (tipeform.ready == true) {

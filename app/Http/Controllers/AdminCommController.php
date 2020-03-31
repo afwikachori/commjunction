@@ -2064,6 +2064,8 @@ try{
         ];
         $bodyku = json_encode([
             "payment_id" => $input['payment_id'],
+            "level_status" => $input['level_status'],
+            "status" => $input['status']
         ]);
 
         $datakirim = [
@@ -2461,7 +2463,7 @@ try{
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-           
+
             if ($json['success'] == true) {
                 return $json['data'];
             }

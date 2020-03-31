@@ -103,7 +103,7 @@
                         <div id="infor_pay_admin" style="margin-top: 7%;">
                             <center>
                                 <img src="" class="rounded-circle img-fluid" id="img_detail_payment_super"
-                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
+                                    onerror="this.onerror=null;this.src='/img/default.png';">
                                 <br>
                                 <small class="cblue">Payment Name</small>
                                 <h6 class="cgrey tebal" id="detail_judul">-</h6>
@@ -116,7 +116,9 @@
                                 </div>
                                 <div class="form-group">
                                     <small class="cblue">Description</small>
+                                    <div  style="overflow-y: scroll; height: 60px;">
                                     <p class="cgrey2 s14" id="detail_deskripsi">-</p>
+                                    </div>
                                 </div>
                                 <div class="row hideku" style="display: none;">
                                     <div class="col-md-6">
@@ -159,7 +161,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h4 class="cdarkgrey s20">Sub Payment</h4>
                             </div>
-                            <div class="col-md-6 col-sm-12" style="text-align: right;">
+                            <div class="col-md-6 col-sm-12" style="text-align: right; display: none;" id="hide_btn_aktivasi">
                                 <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
                                     data-target="#modal_aktivasi_pay_admmin" data-dismiss="modal">
                                     Activation</button>
@@ -225,7 +227,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="circle" style="position: relative; margin-bottom: 1em; top: 0px;">
-                                        <img src="" id="img_subpay" class="profile-pic rounded-circle img-fluid">
+                                        <img src="" id="img_subpay" class="profile-pic rounded-circle img-fluid"
+                                        onerror = "this.onerror=null;this.src=\'/img/fitur.png'\';">
                                     </div>
                                 </div>
                             </div>
@@ -448,7 +451,6 @@
     $(document).ready(function () {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
-        tabel_tes();
     });  //end
 
 
@@ -459,10 +461,10 @@
             }
         });
         $.ajax({
-                url: '/admin/tabel_payment_active_admin',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
+            url: '/admin/tabel_payment_active_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
             success: function (result) {
                 console.log(result);
             },
@@ -516,7 +518,7 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        var dt = data + "<>" + row.payment_title;
+                        var dt = data + "<>" + row.level_status + "<>" + row.status;
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_payment_all_admin(\'' + dt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
@@ -567,8 +569,9 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
+                             var dtaktif = data + "<>" + row.level_status + "<>" + row.status;
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_payment_all_admin(\'' + data + '\')">' +
+                            'onclick="detail_payment_all_admin(\'' + dtaktif + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
@@ -580,8 +583,10 @@
 
 
     function detail_payment_all_admin(dtpay) {
-        // console.log(param);
-        $("#aktif_id_payment").val(dtpay);
+        var split = dtpay.split('<>');
+        console.log(split);
+
+        $("#aktif_id_payment").val(split[0]);
 
         $.ajaxSetup({
             headers: {
@@ -594,12 +599,22 @@
             dataSrc: '',
             timeout: 30000,
             data: {
-                "payment_id": dtpay
+                "payment_id": split[0],
+                "level_status": split[1],
+                "status": split[2]
+
             },
             success: function (result) {
                 console.log(result);
-                $("#modal_detail_payment_all_admin").modal('show');
                 var res = result[0];
+                if(res.status == false){
+                    $("#hide_btn_aktivasi").show();
+                }else{
+                    $("#hide_btn_aktivasi").hide();
+                }
+
+                $("#modal_detail_payment_all_admin").modal('show');
+
                 $('#tabel_sub_payment_super').dataTable().fnClearTable();
                 $('#tabel_sub_payment_super').dataTable().fnDestroy();
 
@@ -621,8 +636,8 @@
                     $(".hideku").fadeOut("fast");
                 }
 
-                if (res.comm_payment_methods != "") {
-                    var jsnDt = res.comm_payment_methods;
+                if (res.payment_methods != "") {
+                    var jsnDt = res.payment_methods;
                     $('#tabel_sub_payment_super').dataTable({
                         responsive: true,
                         language: {
@@ -639,7 +654,8 @@
                                 mData: 'icon',
                                 render: function (data, type, row, meta) {
                                     var dtimg = server_cdn + data;
-                                    return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid" onclick="clickImage(this)" onerror="errorImg()">';
+                                    var noimg = '/img/fitur.png';
+                                    return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
                                 }
                             },
                             { mData: 'payment_bank_name' },
@@ -658,31 +674,6 @@
                                     return isine;
                                 }
                             },
-                            // {
-                            //     mData: 'payment_time_limit',
-                            //     render: function (data, type, row, meta) {
-                            //         var inin = '';
-                            //         if (data == 0) {
-                            //             inin = data;
-                            //         } else if (data == 1) {
-                            //             inin = '<small class="clight"> ' + data + '  Day</small>';
-                            //         } else {
-                            //             inin = '<small class="clight"> ' + data + '  Days</small>';
-                            //         }
-                            //         return inin;
-                            //     }
-                            // },
-                            // { mData: 'payment_account' },
-                            // {
-                            //     mData: 'description',
-                            //     render: function (data, type, row, meta) {
-                            //         var uiku = '';
-                            //         $.each(data, function (i, item) {
-                            //             uiku += '<li>' + item + '</li>';
-                            //         });
-                            //         return "<div class='text-wrap width-300'><ul>" + uiku + "</ul></div>";
-                            //     },
-                            // },
                             {
                                 mData: 'id',
                                 render: function (data, type, row, meta) {
