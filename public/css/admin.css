@@ -1509,6 +1509,10 @@ a.dt-button {
     background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
 }
 
+.bg-gradient-yellow {
+    background: linear-gradient(106.53deg, #ffbc77 0%, #f7e26c 56.6%);
+}
+
 .melengkung15px {
     border-radius: 15px !important;
 }
