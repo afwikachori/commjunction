@@ -611,6 +611,13 @@
 
                             <div class="isi_setting_subpay" style="margin-top: 1.5em;">
                             </div>
+
+                            <div class="modal-footer kananbawah">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    style="border-radius: 10px;">
+                                    <i class="mdi mdi-close"></i> Cancel
+                                </button>
+                            </div> <!-- end-footer     -->
                         </div>
                         <!-- {{-- endtab --}} -->
                     </div>
@@ -981,7 +988,7 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                        var dt = data + "<>" + row.payment_title;
+                       var dt = data + "<>" + row.level_status + "<>" + row.status;
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_payment_all_super(\'' + dt + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
@@ -993,9 +1000,10 @@
 
     }
 
-
+//DETAIL PAYMENT
     function detail_payment_all_super(dtpay) {
         var param = dtpay.split('<>');
+
         $("#modal_detail_payment_all_super").modal('show');
         $.ajaxSetup({
             headers: {
@@ -1009,7 +1017,8 @@
             timeout: 30000,
             data: {
                 "payment_id": param[0],
-                "payment_title": param[1]
+                "level_status": param[1],
+                "status": param[2]
             },
             success: function (result) {
                 // console.log(result[0]);

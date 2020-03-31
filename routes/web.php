@@ -65,6 +65,7 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('send_setting_module_admin', 'AdminCommController@send_setting_module_admin')->name('send_setting_module_admin');
 
 Route::post('get_result_setup_comsetting', 'AdminCommController@get_result_setup_comsetting')->name('get_result_setup_comsetting');
 Route::post('tabel_report_subscriber_admin','AdminCommController@tabel_report_subscriber_admin')->name('tabel_report_subscriber_admin');

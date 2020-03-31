@@ -1797,3 +1797,34 @@ margin-top: 9rem;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
     position: relative;
 }
+
+
+.modal-footer.kananbawah{
+    border: none;
+    position: absolute;
+    margin-bottom: 1.5em;
+    margin-right: 1em;
+    bottom: 0;
+    right: 0;
+}
+
+
+
+/* RADIO  BUTTON SETTING MODULE */
+.form-check.set_mod {
+    position: relative;
+    display: block;
+    margin-top: 3px !important;
+    margin-bottom: 0px !important;
+    padding-left: 0;
+}
+
+.form-check.set_mod .form-check-label input[type="radio"]:checked + .input-helper:before {
+    background: -webkit-gradient(linear, left top, right top, from(#9bd7ff), to(#91caff));
+    background: linear-gradient(to right, #42cdcf, #0e97cc) !important;
+    border-width: 0;
+}
+
+.form-check.set_mod .form-check-label input[type="radio"] + .input-helper:before {
+    border: solid #95e4e1 !important;
+}

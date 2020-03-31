@@ -114,11 +114,13 @@ class AdminCommController extends Controller
         return view("admin/dashboard/transaction_management_admin");
     }
 
-    public function ModuleReportManagementView(){
+    public function ModuleReportManagementView()
+    {
         return view("admin/dashboard/module_report_management_admin");
     }
 
-    public function ReportManagementViewAdmin(){
+    public function ReportManagementViewAdmin()
+    {
         return view("admin/dashboard/report_management_admin");
     }
 
@@ -355,21 +357,21 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/publish';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
-            return back();
-        }
+            if ($json['success'] == true) {
+                alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
+                return back();
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -408,36 +410,36 @@ try{
             'headers' => $headers,
         ];
 
-        try{
-        $response = $client->post($urlx, $options);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        $in = $json['data'];
+        try {
+            $response = $client->post($urlx, $options);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            $in = $json['data'];
 
-        //status
-        if ($in['status'] == 4) {
-            $status = 'Deactive';
-        } else if ($in['status'] == 3) {
-            $status = 'Active';
-        } else if ($in['status'] == 2) {
-            $status = 'Pending Membership';
-        } else if ($in['status'] == 1) {
-            $status = 'Newly';
-        } else {
-            $status = 'Pending';
-        }
+            //status
+            if ($in['status'] == 4) {
+                $status = 'Deactive';
+            } else if ($in['status'] == 3) {
+                $status = 'Active';
+            } else if ($in['status'] == 2) {
+                $status = 'Pending Membership';
+            } else if ($in['status'] == 1) {
+                $status = 'Newly';
+            } else {
+                $status = 'Pending';
+            }
 
-        $dtaku = [
-            "user_id"       => $in['user_id'],
-            "full_name"     => $in['full_name'],
-            "created_at"    => $in['created_at'],
-            "status"        => $status,
-            "status_id"     => $in['status'],
-            "membership_id" => $in['membership_id'],
-            "sso_picture"   => $in['sso_picture'],
-        ];
-        // dd($dtaku);
-        return view('admin/dashboard/detail_subs_all')->with($dtaku);
+            $dtaku = [
+                "user_id"       => $in['user_id'],
+                "full_name"     => $in['full_name'],
+                "created_at"    => $in['created_at'],
+                "status"        => $status,
+                "status_id"     => $in['status'],
+                "membership_id" => $in['membership_id'],
+                "sso_picture"   => $in['sso_picture'],
+            ];
+            // dd($dtaku);
+            return view('admin/dashboard/detail_subs_all')->with($dtaku);
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -482,37 +484,37 @@ try{
             'headers' => $headers,
         ];
 
-        try{
-        $response = $client->post($urlx, $options);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        $in = $json['data'];
+        try {
+            $response = $client->post($urlx, $options);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            $in = $json['data'];
 
-        //status
-        if ($in['status'] == 4) {
-            $status = 'Deactive';
-        } else if ($in['status'] == 3) {
-            $status = 'Active';
-        } else if ($in['status'] == 2) {
-            $status = 'Pending Membership';
-        } else if ($in['status'] == 1) {
-            $status = 'Newly';
-        } else {
-            $status = 'Pending';
-        }
+            //status
+            if ($in['status'] == 4) {
+                $status = 'Deactive';
+            } else if ($in['status'] == 3) {
+                $status = 'Active';
+            } else if ($in['status'] == 2) {
+                $status = 'Pending Membership';
+            } else if ($in['status'] == 1) {
+                $status = 'Newly';
+            } else {
+                $status = 'Pending';
+            }
 
-        $dtaku = [
-            "user_id"       => $in['user_id'],
-            "full_name"     => $in['full_name'],
-            "created_at"    => $in['created_at'],
-            "status"        => $status,
-            "status_id"     => $in['status'],
-            "membership_id" => $in['membership_id'],
-            "sso_picture"   => $in['sso_picture'],
-        ];
-        // dd($dtaku);
+            $dtaku = [
+                "user_id"       => $in['user_id'],
+                "full_name"     => $in['full_name'],
+                "created_at"    => $in['created_at'],
+                "status"        => $status,
+                "status_id"     => $in['status'],
+                "membership_id" => $in['membership_id'],
+                "sso_picture"   => $in['sso_picture'],
+            ];
+            // dd($dtaku);
 
-        return view('admin/dashboard/detail_subs_pending')->with($dtaku);
+            return view('admin/dashboard/detail_subs_pending')->with($dtaku);
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -583,20 +585,20 @@ try{
                     return back();
                 }
             } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        }
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
         } else { //END-IF  UPLOAD-IMAGE
             $input = $request->all(); // getdata form by name
             $imageRequest = [
@@ -768,15 +770,15 @@ try{
             'headers' => $headers,
         ];
 
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
-            return redirect('/admin/settings/membership');
-        }
+            if ($json['success'] == true) {
+                alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
+                return redirect('/admin/settings/membership');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -836,15 +838,15 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-try{
-        $response = $client->post($url, $options);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $options);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Succcessflly adding new question', 'Question Added !')->persistent('Done');
-            return redirect('/admin/settings/registrasion_data');
-        }
+            if ($json['success'] == true) {
+                alert()->success('Succcessflly adding new question', 'Question Added !')->persistent('Done');
+                return redirect('/admin/settings/registrasion_data');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -1569,18 +1571,18 @@ try{
 
         $url = env('SERVICE') . 'modulemanagement/activemodule';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
-         } catch (ClientException $errornya) {
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
         } catch (ServerException $errornya) {
@@ -1602,18 +1604,18 @@ try{
 
         $url = env('SERVICE') . 'modulemanagement/allmodule';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
-          } catch (ClientException $errornya) {
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
         } catch (ServerException $errornya) {
@@ -1646,12 +1648,12 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -2082,7 +2084,7 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-         } catch (ClientException $errornya) {
+        } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
         } catch (ServerException $errornya) {
@@ -2126,11 +2128,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                return '404';
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -3149,17 +3157,17 @@ try{
 
         $url = env('SERVICE') . 'reportmanagement/transactiontype';
         $client = new \GuzzleHttp\Client();
-    try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -3281,5 +3289,74 @@ try{
             return $error;
         }
     }
+
+
+    public function send_setting_module_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 2);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[0],
+                "value" => $dt[1],
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'modulemanagement/settingmodule';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode(["data_setting" => $data]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Setting up Module', 'Succesfully')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 } //end-class

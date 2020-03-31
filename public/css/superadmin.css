@@ -1102,3 +1102,11 @@ input[type="checkbox"] {
     float: right !important;
     position: relative !important;
 }
+.modal-footer.kananbawah{
+    border: none;
+    position: absolute;
+    margin-bottom: 1.5em;
+    margin-right: 1.5em;
+    bottom: 0;
+    right: 0;
+}

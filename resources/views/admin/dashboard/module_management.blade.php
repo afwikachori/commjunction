@@ -36,8 +36,8 @@
                         <div class="tab-pane active" id="tab_module_1">
                             <div class="row">
                                 <div class="col-md-12">
-                                        <small class="text-muted"> Total : </small> &nbsp;
-                            <h4 class="card-title text-success" id="total_module_active"> 0 </h4>
+                                    <small class="text-muted"> Total : </small> &nbsp;
+                                    <h4 class="card-title text-success" id="total_module_active"> 0 </h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -97,69 +97,31 @@
             style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
             <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
                 <h3 class="modal-title cgrey">Setting Module</h3>
-                <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>
             </div> <!-- end-header -->
-
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="form-group">
-                                <small class="cgrey1 tebal name_setting">Setting Name</small>
-                                <p class="clight s13 deskripsi_setting">
-                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
-                        </div>
+            <form id="form_setting_module_admin" method="POST" action="{{route('send_setting_module_admin')}}">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <div id="isi_setting_module">
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div> <!-- end-body -->
 
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="form-group">
-                                <small class="cgrey1 tebal name_setting">Setting Name</small>
-                                <p class="clight s13 deskripsi_setting">
-                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="form-group">
-                                <small class="cgrey1 tebal name_setting">Setting Name</small>
-                                <p class="clight s13 deskripsi_setting">
-                                    Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <input type="text" name="param_setting" class="form-control input-abu param_setting">
-                        </div>
-                    </div>
-
-
-                </form>
-            </div> <!-- end-body -->
-
-            <div class="modal-footer" style="border: none;">
-                <center>
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <a href="t" type="button" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i>Activate</a>
-                </center>
-            </div> <!-- end-footer     -->
+                <div class="modal-footer kananbawah">
+                    <center>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-teal btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i>Submit</button>
+                    </center>
+                </div> <!-- end-footer     -->
+            </form>
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
@@ -266,9 +228,9 @@
 
                     </div>
                     <div class="col-md-6">
-                       <small class="clight">Module Sub-Features</small>
-                       <br>
-                       
+                        <small class="clight">Module Sub-Features</small>
+                        <br>
+
                         <div class="row" style="margin-top:0.5em;">
                             <div class="card-deck show_subfitur_module scrollfitur" style="width:100%;">
 
@@ -326,7 +288,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
 
                 var isiui = '';
                 var num = 0;
@@ -349,7 +311,7 @@
                         '<div class="row">' +
                         '<div class="col-md-12">' +
                         '<small class="cteal">' + item.feature_type_title + '</small>' +
-                            '<h4>' + item.title + '</h4>' +
+                        '<h4>' + item.title + '</h4>' +
                         '</div>' +
                         '<div class="col-md-12" style="text-align: right;">' +
                         '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
@@ -362,7 +324,7 @@
                 });
 
                 $("#show_module_active").html(isiui);
-                 $("#total_module_active").html(num + " Modules");
+                $("#total_module_active").html(num + " Modules");
 
             },
             error: function (result) {
@@ -373,7 +335,7 @@
 
 
     function get_list_setting_module(idmod) {
-        alert(idmod);
+        // alert(idmod);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -388,7 +350,56 @@
             },
             success: function (result) {
                 console.log(result);
-                $("#mdl_setting_module_active").modal('show');
+                if (result.success == false) {
+                    swal('No Setting', 'The setting does not exist in this module', 'warning');
+                } else {
+                    var uiku = '';
+                    $.each(result, function (i, item) {
+                        var htmltag = '';
+                        if (item.setting_type == 1) {
+                            var tipe = 'Input Text';
+                            htmltag = '<input type="text" name="input_' + item.id + '" id="input_' + item.id + '" value="' + item.value + '"' +
+                                'class="form-control input-abu param_setting">';
+                        } else {
+                            var tipe = 'Radio Button';
+                            if (item.value == "true") {
+                                htmltag = '<div class="form-group">' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                                    '</div>' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                                    '</div>';
+                            } else {
+                                htmltag = '<div class="form-group">' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                                    '</div>' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                                    '</div>';
+                            }
+                        }
+
+                        uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                            '<div class="col-8"><div class="form-group">' +
+                            '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                            '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                            '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                            '</p>' +
+                            '<input type="hidden" value="' + item.id + '" name="idsub_' + item.id + '">' +
+                            '</div>' +
+                            '</div >' +
+                            '<div class="col-4">' + htmltag +
+                            '</div></div></div>';
+                    });
+                    $("#isi_setting_module").html(uiku);
+                    $("#mdl_setting_module_active").modal('show');
+                }
 
             },
             error: function (result) {
@@ -411,10 +422,11 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-// console.log(result);
+                // console.log(result);
                 var isiui = '';
                 var nomer = 0;
                 $.each(result, function (i, item) {
+                    var noimg = '/img/fitur.png';
                     nomer++;
                     var logo = server_cdn + item.logo;
                     if (item.status == true) {
@@ -428,18 +440,18 @@
                             '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
                             'style="padding: 0.3rem 0.5rem;"' +
                             'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
-                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
+                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                             '<div class="row">' +
                             '<div class="col-md-12">' +
                             '<small class="cteal">' + item.feature_type_title + '</small>' +
                             '<h4>' + item.title + '</h4>' +
                             '</div>' +
                             '<div class="col-md-12" style="text-align: right;">' +
-                            '<a href="" class="a_setmodule"' +
-                            'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
+                            '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                            'onclick="get_list_setting_module(' + item.feature_id + ')">' +
                             '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
                             ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                            '</small></a>' +
+                            '</small></button>' +
                             '</div>' +
                             '</div></div></div></div>';
                     } else {
@@ -449,7 +461,7 @@
                             '<div class="card bg-gradient-blue card-img-holder text-white member">' +
                             '<div class="card-body member">' +
                             '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card">' +
+                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                             '<div class="row">' +
                             '<div class="col-md-7">' +
                             '<small class="cteal">' + item.feature_type_title + '</small>' +
@@ -493,90 +505,83 @@
             },
             success: function (result) {
                 var dt = result[0];
-                // console.log(dt);
+                console.log(dt);
 
-                if(result.success == false){
+                if (result.success == false) {
                     ui.popup.show('warning', result.message, 'Warning');
-                }else{
-                //form aktivasi
-                $("#id_modulefitur").val(dt.feature_id);
-                $("#payment_time").val();
-                $("#payment_method_id").val();
-
-                $("#logo_fitur_module").attr("src", server_cdn + dt.logo);
-                $("#module_name").html(dt.title);
-                $("#module_name1").html(dt.title);
-                $("#module_deskripsi").html(dt.description);
-                $("#module_tipe").html(dt.feature_type_title);
-
-                //status aktif
-                var isistatus = '';
-                if (dt.status == false) {
-                    isistatus = '<label class="badge melengkung10px bg-abu cputih" ' +
-                        'style="min-width:100px;"> Not Active</label >';
                 } else {
-                    isistatus = '<label class="badge melengkung10px bg-ijo cputih" ' +
-                        'style="min-width:100px;"> Active</label >';
+                    //form aktivasi
+                    $("#id_modulefitur").val(dt.feature_id);
+                    $("#payment_time").val();
+                    $("#payment_method_id").val();
+
+                    $("#logo_fitur_module").attr("src", server_cdn + dt.logo);
+                    $("#module_name").html(dt.title);
+                    $("#module_name1").html(dt.title);
+                    $("#module_deskripsi").html(dt.description);
+                    $("#module_tipe").html(dt.feature_type_title);
+
+                    //status aktif
+                    var isistatus = '';
+                    if (dt.status == false) {
+                        isistatus = '<label class="badge melengkung10px bg-abu cputih" ' +
+                            'style="min-width:100px;"> Not Active</label >';
+                    } else {
+                        isistatus = '<label class="badge melengkung10px bg-ijo cputih" ' +
+                            'style="min-width:100px;"> Active</label >';
+                    }
+                    $(".status_aktif").html(isistatus);
+
+                    //pricing
+                    if (dt.price_annual != 0) {
+                        $("#harga_tahunan").html("Rp " + rupiah(dt.price_annual));
+                    } else {
+                        $("#harga_tahunan").html('<center class="tebal cgrey">Free');
+                    }
+
+                    if (dt.price_monthly != 0) {
+                        $("#harga_bulanan").html("Rp " + rupiah(dt.price_monthly));
+                    } else {
+                        $("#harga_bulanan").html('<center class="tebal cgrey">Free');
+                    }
+
+                    if (dt.grand_pricing != 0) {
+                        $("#harga_grand").html("Rp " + rupiah(dt.grand_pricing));
+                    } else {
+                        $("#harga_grand").html('<center class="tebal cgrey">Free');
+                    }
+
+                    var subf = '';
+                    var jum = 0;
+                    $.each(dt.subfeature, function (i, item) {
+                        // console.log(item);
+                        var colum;
+                        jum++;
+
+                        subf += '<div class="col-md-6 stretch-card grid-margin" style="height:85px; padding-left: 5px; padding-bottom:10px;"' +
+                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                            'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                            '<div class="card bg-gradient-blue card-img-holder text-white">' +
+                            '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important;">' +
+                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                            'alt="circle-image" /> ' +
+                            '<div class="row">' +
+                            '<div class="col-md-3" style="padding-right:4px;">' +
+                            '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card3"' +
+                            'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
+                            '</div>' +
+                            '<div class="col-md-9" style="padding-left:5px;">' +
+                            '<b><small>' + item.title + '</small></b>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $(".show_subfitur_module").html(subf);
+
+                    $("#md_all_aktifkan_module").modal("show");
                 }
-                $(".status_aktif").html(isistatus);
-
-                //pricing
-                if (dt.price_annual != 0) {
-                    $("#harga_tahunan").html("Rp " + rupiah(dt.price_annual));
-                } else {
-                    $("#harga_tahunan").html('<center class="tebal cgrey">Free');
-                }
-
-                if (dt.price_monthly != 0) {
-                    $("#harga_bulanan").html("Rp " + rupiah(dt.price_monthly));
-                } else {
-                    $("#harga_bulanan").html('<center class="tebal cgrey">Free');
-                }
-
-                if (dt.grand_pricing != 0) {
-                    $("#harga_grand").html("Rp " + rupiah(dt.grand_pricing));
-                } else {
-                    $("#harga_grand").html('<center class="tebal cgrey">Free');
-                }
-
-                var subf = '';
-                var jum = 0;
-                $.each(dt.subfeature, function (i, item) {
-                    // console.log(item);
-                    var colum;
-                    jum++;
-
-                    subf += '<div class="col-md-6 stretch-card grid-margin" style="height:85px; padding-left: 5px; padding-bottom:10px;"' +
-                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
-                        'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
-                        '<div class="card bg-gradient-blue card-img-holder text-white">' +
-                        '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important;">' +
-                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
-                        'alt="circle-image" /> ' +
-                        '<div class="row">' +
-                        '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card3"'+
-                        'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
-                        '</div>' +
-                        '<div class="col-md-9" style="padding-left:5px;">' +
-                        '<b><small>' + item.title + '</small></b>' +
-                        '</div>' +
-                        '<div class="col-md-12" style="text-align: right;">' +
-                        '<a href="" class="a_setmodule"' +
-                        'data-toggle="modal" data-target="#mdl_setting_module_active" data-dismiss="modal">' +
-                        '<small lang="en" class="txt_detail_fitur h6 s12 cteal"> Setting' +
-                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                        '</small></a>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                });
-                $(".show_subfitur_module").html(subf);
-
-                $("#md_all_aktifkan_module").modal("show");
-            }
             },
             error: function (result) {
                 console.log(result);

@@ -116,8 +116,8 @@
                                 </div>
                                 <div class="form-group">
                                     <small class="cblue">Description</small>
-                                    <div  style="overflow-y: scroll; height: 60px;">
-                                    <p class="cgrey2 s14" id="detail_deskripsi">-</p>
+                                    <div style="overflow-y: scroll; height: 60px;">
+                                        <p class="cgrey2 s14" id="detail_deskripsi">-</p>
                                     </div>
                                 </div>
                                 <div class="row hideku" style="display: none;">
@@ -161,7 +161,8 @@
                             <div class="col-md-6 col-sm-12">
                                 <h4 class="cdarkgrey s20">Sub Payment</h4>
                             </div>
-                            <div class="col-md-6 col-sm-12" style="text-align: right; display: none;" id="hide_btn_aktivasi">
+                            <div class="col-md-6 col-sm-12" style="text-align: right; display: none;"
+                                id="hide_btn_aktivasi">
                                 <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
                                     data-target="#modal_aktivasi_pay_admmin" data-dismiss="modal">
                                     Activation</button>
@@ -227,8 +228,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="circle" style="position: relative; margin-bottom: 1em; top: 0px;">
-                                        <img src="" id="img_subpay" class="profile-pic rounded-circle img-fluid"
-                                        onerror = "this.onerror=null;this.src=\'/img/fitur.png'\';">
+                                        <img src="/img/kosong.png" id="img_subpay" class="profile-pic rounded-circle img-fluid" onerror="this.onerror=null;this.src='/img/kosong.png';">
                                     </div>
                                 </div>
                             </div>
@@ -287,6 +287,11 @@
                         <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 425px;">
                             <div class="isi_setting_subpay" style="margin-top: 1.5em;">
                             </div>
+                                <div class="modal-footer kananbawah">
+                                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                                        <i class="mdi mdi-close"></i> Cancel
+                                    </button>
+                                </div> <!-- end-footer     -->
                         </div>
                         <!-- {{-- endtab --}} -->
                     </div>
@@ -451,6 +456,7 @@
     $(document).ready(function () {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
+
     });  //end
 
 
@@ -569,7 +575,7 @@
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
-                             var dtaktif = data + "<>" + row.level_status + "<>" + row.status;
+                        var dtaktif = data + "<>" + row.level_status + "<>" + row.status;
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_payment_all_admin(\'' + dtaktif + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
@@ -584,7 +590,7 @@
 
     function detail_payment_all_admin(dtpay) {
         var split = dtpay.split('<>');
-        console.log(split);
+        // console.log(split);
 
         $("#aktif_id_payment").val(split[0]);
 
@@ -607,9 +613,9 @@
             success: function (result) {
                 console.log(result);
                 var res = result[0];
-                if(res.status == false){
+                if (res.status === "false") {
                     $("#hide_btn_aktivasi").show();
-                }else{
+                } else {
                     $("#hide_btn_aktivasi").hide();
                 }
 
@@ -638,7 +644,8 @@
 
                 if (res.payment_methods != "") {
                     var jsnDt = res.payment_methods;
-                    $('#tabel_sub_payment_super').dataTable({
+
+                    var tabelku = $('#tabel_sub_payment_super').DataTable({
                         responsive: true,
                         language: {
                             paginate: {
@@ -675,31 +682,68 @@
                                 }
                             },
                             {
-                                mData: 'id',
+                                mData: null,
                                 render: function (data, type, row, meta) {
-                                    localStorage.removeItem('data_subpay');
-                                    var datasubpay = {
-                                        "id": row.id,
-                                        "payment_title": row.payment_title,
-                                        "icon": row.icon,
-                                        "payment_bank_name": row.payment_bank_name,
-                                        "payment_owner_name": row.payment_owner_name,
-                                        "payment_time_limit": row.payment_time_limit,
-                                        "payment_account": row.payment_account,
-                                        "status": row.status,
-                                        "description": row.description,
-                                    };
-                                    var ini = JSON.stringify(datasubpay);
-                                    localStorage.setItem("data_subpay", ini);
-
-                                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                                        'onclick="mdl_detail_subpayment_all(\'' + data + '\')">' +
+                                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                                         '<i class="mdi mdi-eye"></i>' +
                                         '</button>';
                                 }
                             }
                         ],
+                        columnDefs:
+                            [
+                                {
+                                    "data": null,
+                                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon"><i class="mdi mdi-eye"></i></button>',
+                                    "targets": -1
+                                }
+                            ],
                     }); //end-datatable
+
+                    $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
+                        var isi = tabelku.row($(this).parents('tr')).data();
+                        console.log(isi);
+
+                        $("#modal_detail_payment_all_admin").modal("hide");
+                        $("#modal_detail_subpayment_super").modal("show");
+
+
+                        get_setting_subpayment_admin(isi.id);
+                        $("#aktif_id_subpayment").val(isi.id);
+
+                        var statusui = '';
+                        if (isi.status == 0) {
+                            statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
+                        } else {
+                            statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
+                        }
+                        $("#subpay_status").html(statusui);
+
+                            var icn = isi.icon;
+                            var cekimg = icn.slice(0, 1);
+
+                            if (cekimg == "/") {
+                                var isiimg = icn.slice(1);
+                            } else {
+                                var isiimg = isi.icon;
+                            }
+                            imglogo = server_cdn + isiimg;
+
+
+                        $('#img_subpay').attr('src', imglogo);
+                        $("#detail_nama_pay").html(isi.payment_title);
+                        $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+                        var uiku2 = '';
+                        $.each(isi.description, function (i, item) {
+                            uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+                        });
+                        $("#detail_deskripsi_pay").html(uiku2);
+                        $("#detail_bank_pay").html(isi.payment_bank_name);
+                        $("#detail_rekening").html(isi.payment_account);
+                        $("#detail_bankname").html(isi.payment_owner_name);
+
+                    });
+
                 } else {
                     var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_sub_payment_super tbody').empty().append(nofound);
@@ -711,6 +755,8 @@
                 console.log("Cant Show");
             }
         });
+
+
 
     }
 
@@ -771,6 +817,7 @@
 
 
     function get_setting_subpayment_admin(idnya) {
+        alert(idnya);
         $(".set_id_paymethod").val(idnya);
         $.ajaxSetup({
             headers: {
