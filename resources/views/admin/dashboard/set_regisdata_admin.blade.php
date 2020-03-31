@@ -52,7 +52,7 @@
 
 
 
-<!-- //MODAL ADD QUESTION REGIS -->
+<!-- //MODAL ADD QUESTION -->
 <div class="modal fade" id="modal_add_question" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
@@ -62,8 +62,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form method="POST" id="form_add_dataregis" action="{{route('setting_regisdata_comm')}}">
+            <div class="modal-body" style="min-height: 280px; height: auto;">
+                <form method="POST" id="form_add_dataregis" action="{{route('add_regisdata_comm')}}">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-6">
@@ -86,33 +86,33 @@
                         </div>
                     </div>
 
-                    <div class="row form-group">
-                        <div class="col-md-3" style="margin-top: 1em;">
-                            <label class="cgrey">Choose Input</label>
+                    <div id="input_pilihan" style="display: none;">
+                        <div class="row form-group">
+                            <div class="col-md-3" style="margin-top: 1em;">
+                                <label class="cgrey">Choose Input</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control input-abu" name="pilihan_input1">
+                            </div>
                         </div>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control input-abu" name="pilihan_input1">
+
+                        <div class="row form-group">
+                            <div class="col-md-3" style="margin-top: 1em;">
+                                <label class="cgrey">Choose Input</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control input-abu" name="pilihan_input2">
+                            </div>
                         </div>
+                        <div id="isi_newrow"></div>
+                        <center>
+                            <button type="button" class="btn btn-icon-text" id="addnewrow">
+                                <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
+                                <small>Add New Row</small> </button>
+                        </center>
                     </div>
-
-                    <div class="row form-group">
-                        <div class="col-md-3" style="margin-top: 1em;">
-                            <label class="cgrey">Choose Input</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control input-abu" name="pilihan_input2">
-                        </div>
-                    </div>
-
-                    <div id="isi_newrow"></div>
-
-                    <center>
-                        <button type="button" class="btn btn-icon-text" id="addnewrow">
-                            <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                            <small>Add New Row</small> </button>
-                    </center>
             </div>
-            <div class="modal-footer putih">
+            <div class="modal-footer putih" style="margin-bottom: 1em;">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
                     style="border-radius: 6px;">Cancel</button>
                 <button type="submit" class="btn btn-teal btn-sm">Submit</button>
@@ -132,7 +132,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="min-height: 280px; height: auto;">
                 <form method="POST" id="form_edit_dataregis" action="{{route('edit_setting_regisdata_comm')}}">
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control input-abu" name="id_question" id="id_question">
@@ -157,34 +157,16 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="row form-group">
-                        <div class="col-md-3" style="margin-top: 1em;">
-                            <label class="cgrey">Choose Input</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control input-abu" name="value0" id="value0">
-                        </div>
+                    <div id="edit_input_pilihan" style="display: none;">
+                        <div id="isi_newrow_edit"></div>
+                        <center>
+                            <button type="button" class="btn btn-icon-text" id="addnewrow_edit">
+                                <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
+                                <small>Add New Row</small> </button>
+                        </center>
                     </div>
-
-                    <div class="row form-group">
-                        <div class="col-md-3" style="margin-top: 1em;">
-                            <label class="cgrey">Choose Input</label>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control input-abu" name="value1" id="value1">
-                        </div>
-                    </div> -->
-
-                    <div id="isi_newrow_edit"></div>
-
-                    <center>
-                        <button type="button" class="btn btn-icon-text" id="addnewrow_edit">
-                            <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                            <small>Add New Row</small> </button>
-                    </center>
             </div>
-            <div class="modal-footer putih">
+            <div class="modal-footer putih" style="margin-bottom: 1em;">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
                     style="border-radius: 6px;">Cancel</button>
                 <button type="submit" class="btn btn-teal btn-sm">Submit</button>
@@ -202,6 +184,26 @@
     $(document).ready(function () {
         tabel_list_regisdata();
         addRowRegisData();
+    });
+
+    $("#tipedata_regis").change(function () {
+        var val = this.value;
+        console.log(val);
+        if (val == 1 || val == 2) {
+            $("#input_pilihan").fadeOut("slow").hide();
+        } else {
+            $("#input_pilihan").fadeIn("slow").show();
+        }
+    });
+
+    $("#edit_tipedata").change(function () {
+        var val = this.value;
+        console.log(val);
+        if (val == 1 || val == 2) {
+            $("#edit_input_pilihan").fadeOut("slow").hide();
+        } else {
+            $("#edit_input_pilihan").fadeIn("slow").show();
+        }
     });
 
     function tagsInput() {
@@ -305,14 +307,18 @@
                 ],
         });
 
-        //DETAIL USERTYPE FROM DATATABLE
+        //DETAIL QUESTIONs FROM DATATABLE
         $('#tabel_list_regisdata tbody').on('click', 'button', function () {
             var pilih = tabel.row($(this).parents('tr')).data();
             $("#id_question").val(pilih.id);
             var isi = pilih.param_form_array;
             $("#edit_question").val(isi[0]);
             $("#edit_tipedata").val(isi[1]).attr("selected", "selected");
-
+            if (isi[1] == 1 || isi[1] == 2) {
+                $("#edit_input_pilihan").fadeOut("slow").hide();
+            } else {
+                $("#edit_input_pilihan").fadeIn("slow").show();
+            }
             var len = isi.length;
             var cek = isi.slice(2, len);
             var len_2 = cek.length;

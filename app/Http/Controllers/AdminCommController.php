@@ -820,12 +820,17 @@ class AdminCommController extends Controller
 
 
 
-    public function setting_regisdata_comm(Request $request)
+    public function add_regisdata_comm(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
+        $input = $request->all();
         $in = $request->except('_token');
-        $param_isi = array_values($in);
+
+        if ($input['tipedata_regis'] == "1" || $input['tipedata_regis'] == "2") {
+            $param_isi = [$input['question_regis'], $input['tipedata_regis']];
+        } else {
+            $param_isi = array_values($in);
+        }
 
         $url = env('SERVICE') . 'commsetting/addregistrationdata';
         $client = new \GuzzleHttp\Client();
@@ -834,6 +839,7 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode(['params' => $param_isi]);
+
         $options = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -2821,9 +2827,12 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
         $in = $request->except('_token', 'id_question');
-        $param_isi = array_values($in);
 
-        // return $param_isi;
+        if ($input['edit_tipedata'] == "1" || $input['edit_tipedata'] == "2") {
+            $param_isi = [$input['edit_question'], $input['edit_tipedata']];
+        } else {
+            $param_isi = array_values($in);
+        }
 
         $url = env('SERVICE') . 'commsetting/editregistrationdata';
         $client = new \GuzzleHttp\Client();
@@ -2835,6 +2844,7 @@ class AdminCommController extends Controller
             'params' => $param_isi,
             "id"     =>  $input['id_question']
         ]);
+        // return $bodyku;
         $options = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -3345,18 +3355,4 @@ class AdminCommController extends Controller
             return back();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } //end-class

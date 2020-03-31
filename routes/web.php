@@ -113,7 +113,7 @@ Route::post('edit_profil_community','AdminCommController@edit_profil_community')
 Route::post('setting_loginresgis_comm','AdminCommController@setting_loginresgis_comm')->name('setting_loginresgis_comm');
 Route::post('setting_membership_comm','AdminCommController@setting_membership_comm')->name('setting_membership_comm');
 Route::post('tabel_list_regisdata','AdminCommController@tabel_list_regisdata')->name('tabel_list_regisdata');
-Route::post('setting_regisdata_comm','AdminCommController@setting_regisdata_comm')->name('setting_regisdata_comm');
+Route::post('add_regisdata_comm','AdminCommController@add_regisdata_comm')->name('add_regisdata_comm');
 Route::post('get_list_membership_admin','AdminCommController@get_list_membership_admin')->name('get_list_membership_admin');
 Route::post('tabel_req_membership','AdminCommController@tabel_req_membership')->name('tabel_req_membership');
 Route::post('filter_membership_subs', 'AdminCommController@filter_membership_subs')->name('filter_membership_subs');
