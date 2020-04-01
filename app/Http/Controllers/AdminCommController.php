@@ -2999,7 +2999,7 @@ class AdminCommController extends Controller
 
     public function get_list_user_notif_super(Request $request)
     {
-        $ses_login = session()->get('session_logged_superadmin');
+        $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
         $url = env('SERVICE') . 'notificationmanagement/listusers';

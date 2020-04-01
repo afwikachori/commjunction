@@ -179,57 +179,65 @@ function get_result_setup_comsetting() {
         timeout: 30000,
         success: function (result) {
             console.log(result);
-            var tipeform = result[0];
-            if (result.status == 401 || result.message) {
-                ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                setTimeout(function () {
-                    location.href = '/admin';
-                }, 6000);
-            }
 
-            $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
-            if (tipeform.ready == true) {
-                $('#optionsRadios').attr("disabled", "disabled");
-            }
-
-            var portal = result[1];
-            $("#headline").val(portal.data.headline_text);
-            $("#description_custom").val(portal.data.description);
-
-            if (portal.data.image != undefined || portal.data.image != null) {
-                var oic = portal.data.image
-                var cekone = oic.slice(0, 1);
-                var imgportal = '';
-                if (cekone != "/") {
-                    imgportal = "/" + portal.data.image;
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
                 } else {
-                    imgportal = portal.data.image;
+                    ui.popup.show('warning', result.message, 'Warning');
                 }
-                $(".img_portal").attr("src", server_cdn + imgportal);
-            }
-            if (portal.ready == true) {
-                $('#headline').attr("disabled", "disabled");
-                $('#description_custom').attr("disabled", "disabled");
-                $("#up_img_portal").hide();
-                $(".img_portal").show();
-                // $('#headline').attr("disabled", "disabled");
-                // $('#headline').attr("disabled", "disabled");
-            }
+            } else {
+                var tipeform = result[0];
+                $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
+                if (tipeform.ready == true) {
+                    $('#optionsRadios').attr("disabled", "disabled");
+                }
 
-            var domain = result[2];
-            $('#subdomain').val(domain.data.subdomain);
-            if (domain.ready == true) {
-                $('#subdomain').attr("disabled", "disabled");
+                var portal = result[1];
+                $("#headline").val(portal.data.headline_text);
+                $("#description_custom").val(portal.data.description);
+
+                if (portal.data.image != undefined || portal.data.image != null) {
+                    var oic = portal.data.image
+                    var cekone = oic.slice(0, 1);
+                    var imgportal = '';
+                    if (cekone != "/") {
+                        imgportal = "/" + portal.data.image;
+                    } else {
+                        imgportal = portal.data.image;
+                    }
+                    $(".img_portal").attr("src", server_cdn + imgportal);
+                }
+                if (portal.ready == true) {
+                    $('#headline').attr("disabled", "disabled");
+                    $('#description_custom').attr("disabled", "disabled");
+                    $("#up_img_portal").hide();
+                    $(".img_portal").show();
+                    // $('#headline').attr("disabled", "disabled");
+                    // $('#headline').attr("disabled", "disabled");
+                }
+
+                var domain = result[2];
+                $('#subdomain').val(domain.data.subdomain);
+                if (domain.ready == true) {
+                    $('#subdomain').attr("disabled", "disabled");
+                }
+
+                if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
+                    $("#btn_commset_login").attr("disabled", "disabled");
+                    $("#btn_commset_login").hide();
+                }
+
+                var membership = result[3];
+                $('#membership').val(membership.data).attr("selected", "selected");
+                if (membership.ready == true) {
+                    $("#membership").attr("disabled", "disabled");
+                    $("#btn_submit_memberset").hide();
+                }
             }
-
-            if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
-                $("#btn_commset_login").attr("disabled", "disabled");
-                $("#btn_commset_login").hide();
-            }
-
-            var membership = result[3];
-            $('#membership').val(membership.data).attr("selected", "selected");
-
         },
         error: function (result) {
             console.log(result);
