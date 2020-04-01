@@ -312,7 +312,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.status == 401 || result.message) {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
@@ -345,6 +345,7 @@
             },
             error: function (result) {
                 console.log("Cant Get Data For Dashboard");
+                console.log(result);
             }
         });
     }
