@@ -260,12 +260,13 @@
       <i class="mdi mdi-close"></i> No, Im Doubt
     </button>
     &nbsp;
-    <a href="/admin/logout" type="button"class="btn btn-tosca btn-sm">
-    <i class="mdi mdi-check btn-icon-prepend">
-        </i> Yeah, Im Sure </a>
-     {{-- <button onclick="logout_admin_community()" type="button"class="btn btn-tosca btn-sm">
-    <i class="mdi mdi-check btn-icon-prepend">
-        </i> Yeah, Im Sure </button> --}}
+    <button onclick="LogoutAdmin()" id="btn_logout_all" type="button"class="btn btn-tosca btn-sm">
+    <i class="mdi mdi-check btn-icon-prepend"></i>
+    <div class="hide_load_log" style="display: none;">
+<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <span class="sr-only">Loading...</span>
+    </div>
+   <div id="text_logout">Yeah, Im Sure</div> </button>
 
   </center>
   </div>  <!-- end-footer     -->

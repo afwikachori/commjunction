@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\BadResponseException;
 use Session;
 use Alert;
 use Helper;
@@ -207,17 +208,26 @@ class AdminCommController extends Controller
         try {
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+            // return $json;
             session()->forget('session_admin_logged');
 
             if ($json['success'] == true) {
-                return redirect('admin');
+                return 'sukses';
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 401) {
-                alert()->error('Over limit time, please do login again', 'Unauthorized')->persistent('Done');
-                return redirect('admin');
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        } catch (BadResponseException  $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
         }
     } //enfunc
 
@@ -230,7 +240,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'dashboard/admincommunity';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -241,6 +251,22 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        } catch (BadResponseException  $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        }
     }
 
 
@@ -2119,6 +2145,7 @@ class AdminCommController extends Controller
         ];
         $bodyku = json_encode([
             "payment_method_id" => $input['payment_method_id'],
+            // "payment_method_id" => "5",
         ]);
 
         $datakirim = [

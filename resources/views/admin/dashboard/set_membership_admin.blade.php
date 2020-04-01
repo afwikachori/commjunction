@@ -53,6 +53,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
+        get_result_setup_comsetting();
     });
 
 

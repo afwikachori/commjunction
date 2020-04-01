@@ -149,8 +149,8 @@
         setTimeout(function () {
             ui.popup.hideLoader();
         }, 8000);
-
-
+   $(".sidebar .nav .nav-item").removeClass("active");
+get_result_setup_comsetting();
     });
 
 

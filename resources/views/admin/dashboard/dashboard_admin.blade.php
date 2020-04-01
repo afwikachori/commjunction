@@ -305,14 +305,20 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            },
         });
         $.ajax({
             url: '/admin/get_dashboard_admin',
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
+                if (result.status == 401 || result.message) {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 6000);
+                }
                 var pending_subs = result.pending_subscriber[0];
 
                 tabel_pending_subscriber(pending_subs);

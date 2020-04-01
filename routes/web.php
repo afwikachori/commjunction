@@ -33,7 +33,7 @@ Route::get('404','RequestController@NotFoundView')->name('404');
 Route::prefix('admin')->group(function(){
 // GET
 Route::get('/','AdminCommController@login')->name('/');
-Route::get('/logout', 'AdminCommController@LogoutAdmin')->name('logout');
+// Route::get('/logout', 'AdminCommController@LogoutAdmin')->name('/logout');
 Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashboard');
 Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
@@ -65,6 +65,7 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('LogoutAdmin', 'AdminCommController@LogoutAdmin')->name('LogoutAdmin');
 Route::post('send_setting_module_admin', 'AdminCommController@send_setting_module_admin')->name('send_setting_module_admin');
 
 Route::post('get_result_setup_comsetting', 'AdminCommController@get_result_setup_comsetting')->name('get_result_setup_comsetting');

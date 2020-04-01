@@ -1,32 +1,41 @@
 @extends('layout.admin-dashboard')
 
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span> Community Settings</h3>
-
-    <nav aria-label="breadcrumb">
-        <button type="button" id="btn_add_payment" class="btn btn-tosca btn-sm" style="margin-top: 0.5em;">Add
-            Payment</button>
-    </nav>
-</div>
-
 <div class="row">
+    <div class="col-md-3">
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
+    </div>
+    <div class="col-md-9">
+        <label class="cgrey">Publish Community to Live<label>
+    </div>
+</div>
+<br>
+<div class="row" style="margin-top: 1em;">
     <div class="col-12">
         <div class="card">
+            <div class="card-header putih">
+                <div class="row">
+                    <div class="col-md-8" style="margin-top: 0.5em;">
+                    <h4 class="cgrey tebal"> Subscriber Payment</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                        <button type="button" id="btn_add_payment" class="btn btn-tosca btn-sm"
+                            style="margin-top: 0.5em;">Add
+                            Payment</button>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <!-- tabel all susbcriber -->
                 <table id="tabel_paysubs" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID Pay</th>
-                            <th>Payment Title</th>
-                            <th>Bank Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th><b>ID Pay</b></th>
+                            <th><b>Payment Title</b></th>
+                            <th><b>Bank Name</b></th>
+                            <th><b>Status</b></th>
+                            <th><b>Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -306,7 +315,8 @@
                                                 name="edit_pay_time_limit" value="{{old('edit_pay_time_limit')}}">
                                         </div>
                                         <div class="col-6" style="text-align: left; padding-top: 10px;">
-                                            <small class="clight" style="margin-top: 1em; margin-left: -1em;">Days</small>
+                                            <small class="clight"
+                                                style="margin-top: 1em; margin-left: -1em;">Days</small>
                                         </div>
                                     </div>
 
@@ -347,6 +357,7 @@
     <script type="text/javascript">
         var server_cdn = '{{ env("CDN") }}';
         $(document).ready(function () {
+            get_result_setup_comsetting();
             tabel_payment_community();
             tabel_tes();
             get_payment_tipe();
@@ -444,7 +455,7 @@
                 $("#detail_no_rekening").html(dt.payment_account);
                 $("#detail_deskripsi").html(dt.description[0]);
                 $("#detail_bank").html(dt.payment_bank_name);
-                 $("#detail_timelimit").html(dt.payment_time_limit + " Days");
+                $("#detail_timelimit").html(dt.payment_time_limit + " Days");
                 if (dt.status == 0) {
                     var isista = "Deactive";
                 } else {

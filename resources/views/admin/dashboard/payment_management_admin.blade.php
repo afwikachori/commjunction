@@ -228,7 +228,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="circle" style="position: relative; margin-bottom: 1em; top: 0px;">
-                                        <img src="/img/kosong.png" id="img_subpay" class="profile-pic rounded-circle img-fluid" onerror="this.onerror=null;this.src='/img/kosong.png';">
+                                        <img src="/img/kosong.png" id="img_subpay"
+                                            class="profile-pic rounded-circle img-fluid"
+                                            onerror="this.onerror=null;this.src='/img/kosong.png';">
                                     </div>
                                 </div>
                             </div>
@@ -285,13 +287,15 @@
                         </div> <!-- {{-- endtab --}} -->
 
                         <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 425px;">
+                            <input type="text" id="id_sub_metod">
                             <div class="isi_setting_subpay" style="margin-top: 1.5em;">
                             </div>
-                                <div class="modal-footer kananbawah">
-                                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                                        <i class="mdi mdi-close"></i> Cancel
-                                    </button>
-                                </div> <!-- end-footer     -->
+                            <div class="modal-footer kananbawah">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                    style="border-radius: 10px;">
+                                    <i class="mdi mdi-close"></i> Cancel
+                                </button>
+                            </div> <!-- end-footer     -->
                         </div>
                         <!-- {{-- endtab --}} -->
                     </div>
@@ -457,7 +461,8 @@
         tabel_payment_all_admin();
         tabel_payment_active_admin();
 
-    });  //end
+
+    });  //end ready
 
 
     function tabel_tes() {
@@ -611,7 +616,7 @@
 
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var res = result[0];
                 if (res.status === "false") {
                     $("#hide_btn_aktivasi").show();
@@ -619,18 +624,12 @@
                     $("#hide_btn_aktivasi").hide();
                 }
 
-                $("#modal_detail_payment_all_admin").modal('show');
-
-                $('#tabel_sub_payment_super').dataTable().fnClearTable();
-                $('#tabel_sub_payment_super').dataTable().fnDestroy();
-
                 if (res.payment_title != null) {
                     $("#detail_judul").html(res.payment_title);
                 }
                 if (res.description != null) {
                     $("#detail_deskripsi").html(res.description);
                 }
-
 
                 if (res.price_monthly != null) {
                     $("#detail_pricebulan").html("Rp " + rupiah(res.price_monthly));
@@ -644,6 +643,10 @@
 
                 if (res.payment_methods != "") {
                     var jsnDt = res.payment_methods;
+
+                    $('#tabel_sub_payment_super').DataTable().clear();
+                    $('#tabel_sub_payment_super').DataTable().destroy();
+                    $('#tabel_sub_payment_super tbody').empty();
 
                     var tabelku = $('#tabel_sub_payment_super').DataTable({
                         responsive: true,
@@ -700,54 +703,16 @@
                             ],
                     }); //end-datatable
 
+
                     $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
                         var isi = tabelku.row($(this).parents('tr')).data();
-                        console.log(isi);
-
-                        $("#modal_detail_payment_all_admin").modal("hide");
-                        $("#modal_detail_subpayment_super").modal("show");
-
-
-                        get_setting_subpayment_admin(isi.id);
-                        $("#aktif_id_subpayment").val(isi.id);
-
-                        var statusui = '';
-                        if (isi.status == 0) {
-                            statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
-                        } else {
-                            statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
-                        }
-                        $("#subpay_status").html(statusui);
-
-                            var icn = isi.icon;
-                            var cekimg = icn.slice(0, 1);
-
-                            if (cekimg == "/") {
-                                var isiimg = icn.slice(1);
-                            } else {
-                                var isiimg = isi.icon;
-                            }
-                            imglogo = server_cdn + isiimg;
-
-
-                        $('#img_subpay').attr('src', imglogo);
-                        $("#detail_nama_pay").html(isi.payment_title);
-                        $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
-                        var uiku2 = '';
-                        $.each(isi.description, function (i, item) {
-                            uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
-                        });
-                        $("#detail_deskripsi_pay").html(uiku2);
-                        $("#detail_bank_pay").html(isi.payment_bank_name);
-                        $("#detail_rekening").html(isi.payment_account);
-                        $("#detail_bankname").html(isi.payment_owner_name);
-
+                        alert(isi);
                     });
-
                 } else {
                     var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_sub_payment_super tbody').empty().append(nofound);
                 }
+                  $("#modal_detail_payment_all_admin").modal('show');
 
             },
             error: function (result) {
@@ -761,63 +726,125 @@
     }
 
 
+function tabel_sub_payment(jsnDt) {
+// console.log(jsnDt);
 
-    //MODAL DETAIL SUB_PAYMENT
-    function mdl_detail_subpayment_all(params) {
-        sessionStorage.removeItem('data_subpay');
-        $("#modal_detail_payment_all_admin").modal("hide");
-        $("#modal_detail_subpayment_super").modal("show");
+var tabelku = $('#tabel_sub_payment_super').DataTable();
+    // var  = res.payment_methods;
+    $('#tabel_sub_payment_super').DataTable().clear();
+    $('#tabel_sub_payment_super').DataTable().destroy();
+    $('#tabel_sub_payment_super tbody').empty();
 
-        var dtk = localStorage.getItem("data_subpay");
-        var isi = JSON.parse(dtk);
-        // console.log(isi);
-        // console.log("id payment method = " + isi.id);
-        get_setting_subpayment_admin(params);
-        $("#aktif_id_subpayment").val(isi.id);
-
-        var statusui = '';
-        if (isi.status == 0) {
-            statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
-        } else {
-            statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
-        }
-        $("#subpay_status").html(statusui);
-        var imglogo;
-        if (isi.icon == null) {
-            imglogo = "/img/noimg.jpg";
-        } else {
-            var icn = isi.icon;
-            var cekimg = icn.slice(0, 1);
-
-            if (cekimg == "/") {
-                var isiimg = icn.slice(1);
-            } else {
-                var isiimg = isi.icon;
+    $('#tabel_sub_payment_super').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
             }
-            imglogo = server_cdn + isiimg;
-        }
+        },
+        data: jsnDt,
+        columns: [
+            { mData: 'id' },
+            { mData: 'payment_title' },
+            {
+                mData: 'icon',
+                render: function (data, type, row, meta) {
+                    var dtimg = server_cdn + data;
+                    var noimg = '/img/fitur.png';
+                    return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
+                }
+            },
+            { mData: 'payment_bank_name' },
+            { mData: 'payment_owner_name' },
+            {
+                mData: 'status',
+                render: function (data, type, row, meta) {
+                    var isine = '';
+                    if (data == 0) {
+                        isine = '<small class="badge bg-abu melengkung10px cwhite">Deactive</small>';
+                    } else if (data == 1) {
+                        isine = '<small class="badge bg-biru melengkung10px cdarkgrey">Active</small>';
+                    } else if (data == 2) {
+                        isine = '<small class="badge bg-kuning melengkung10px cdarkgrey">Unpaid</small>';
+                    }
+                    return isine;
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon"><i class="mdi mdi-eye"></i></button>',
+                    "targets": -1
+                }
+            ],
+    }); //end-datatable
 
 
+     $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
+          var isi = tabelku.row($(this).parents('tr')).data();
+        console.log(isi);
+     });
 
-        $('#img_subpay').attr('src', imglogo);
-        $("#detail_nama_pay").html(isi.payment_title);
-        $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
-        var uiku2 = '';
-        $.each(isi.description, function (i, item) {
-            uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
-        });
-        $("#detail_deskripsi_pay").html(uiku2);
-        $("#detail_bank_pay").html(isi.payment_bank_name);
-        $("#detail_rekening").html(isi.payment_account);
-        $("#detail_bankname").html(isi.payment_owner_name);
+    // var tabelku = $('#tabel_sub_payment_super').DataTable();
+    // $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
+    //     var isi = tabelku.row($(this).parents('tr')).data();
+    //     alert(isi.id);
 
-    }
+    //     $("#modal_detail_payment_all_admin").modal("hide");
+    //     $("#modal_detail_subpayment_super").modal("show");
+
+    //     $("#id_sub_metod").val(isi.id);
+    //     // get_setting_subpayment_admin();
+    //     $("#aktif_id_subpayment").val(isi.id);
+
+    //     var statusui = '';
+    //     if (isi.status == 0) {
+    //         statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
+    //     } else {
+    //         statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
+    //     }
+    //     $("#subpay_status").html(statusui);
+
+    //     var icn = isi.icon;
+    //     var cekimg = icn.slice(0, 1);
+
+    //     if (cekimg == "/") {
+    //         var isiimg = icn.slice(1);
+    //     } else {
+    //         var isiimg = isi.icon;
+    //     }
+    //     imglogo = server_cdn + isiimg;
 
 
+    //     $('#img_subpay').attr('src', imglogo);
+    //     $("#detail_nama_pay").html(isi.payment_title);
+    //     $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+    //     var uiku2 = '';
+    //     $.each(isi.description, function (i, item) {
+    //         uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+    //     });
+    //     $("#detail_deskripsi_pay").html(uiku2);
+    //     $("#detail_bank_pay").html(isi.payment_bank_name);
+    //     $("#detail_rekening").html(isi.payment_account);
+    //     $("#detail_bankname").html(isi.payment_owner_name);
 
+    // });
 
-    function get_setting_subpayment_admin(idnya) {
-        alert(idnya);
+}
+
+    function get_setting_subpayment_admin() {
+        var idnya = $("#id_sub_metod").val();
         $(".set_id_paymethod").val(idnya);
         $.ajaxSetup({
             headers: {
@@ -835,26 +862,35 @@
             success: function (result) {
                 console.log(result);
                 var uiku = '';
-                $.each(result, function (i, item) {
-                    if (item.setting_type == 1) {
-                        var tipe = 'Input Text';
-                    } else {
-                        var tipe = 'Radio Button';
-                    }
-                    uiku += '<div class="row" style="margin-bottom:0.5em;">' +
-                        '<div class="col-9"><div class="form-group">' +
-                        '<h6 class="cgrey1 tebal name_setting">' + item.title +
-                        '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
-                        '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
-                        '</p>' +
-                        '</div>' +
-                        '</div >' +
-                        '<div class="col-3">' +
-                        '<input type="text" value="' + item.value + '"' +
-                        'class="form-control input-abu param_setting" disabled>' +
-                        '</div></div></div>';
-                });
-                $(".isi_setting_subpay").html(uiku);
+
+                if (result.success == false) {
+                    uiku = '<br><br><center><h1 class="clight">No Setting Payment</h1></center>';
+                    $(".isi_setting_subpay").html(uiku);
+                } else {
+
+                }
+
+
+                // $.each(result, function (i, item) {
+                //     if (item.setting_type == 1) {
+                //         var tipe = 'Input Text';
+                //     } else {
+                //         var tipe = 'Radio Button';
+                //     }
+                //     uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                //         '<div class="col-9"><div class="form-group">' +
+                //         '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                //         '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                //         '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                //         '</p>' +
+                //         '</div>' +
+                //         '</div >' +
+                //         '<div class="col-3">' +
+                //         '<input type="text" value="' + item.value + '"' +
+                //         'class="form-control input-abu param_setting" disabled>' +
+                //         '</div></div></div>';
+                // });
+                // $(".isi_setting_subpay").html(uiku);
             },
             error: function (result) {
                 if (result == '404') {

@@ -67,7 +67,7 @@
                             </div>
                             <div class="col-md-5">
                                 <img src="" class="img_portal rounded-circle img-fluid zoom" id="img_portal_admin"
-                                style="display: none; width: 70px; height:70px;" 
+                                style="display: none; width: 70px; height:70px;"
                                 data-toggle="tooltip" data-placement="right" title="Double Click to View Image"
                                 onclick="clickImage(this)"
                                 onerror="this.onerror=null;this.src='/img/default.png';">
@@ -121,6 +121,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
+        get_result_setup_comsetting();
     });
 
 

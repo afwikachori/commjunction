@@ -53,6 +53,7 @@ function session_admin_logged() {
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
+            console.log();
             ui.popup.show('error', status, 'Error');
             ui.popup.hideLoader();
         },
@@ -73,7 +74,7 @@ function session_admin_logged() {
                 ui.popup.hideLoader();
             }, 8000);
 
-            get_result_setup_comsetting();
+            // get_result_setup_comsetting();
 
             var user = result.user;
             if (result != "") {
@@ -165,7 +166,7 @@ function session_admin_logged() {
 
 //COMMUNITY SETTING DATA
 function get_result_setup_comsetting() {
-    $(".sidebar .nav .nav-item").removeClass("active");
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,8 +178,15 @@ function get_result_setup_comsetting() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             var tipeform = result[0];
+            if (result.status == 401 || result.message) {
+                ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                setTimeout(function () {
+                    location.href = '/admin';
+                }, 6000);
+            }
+
             $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
             if (tipeform.ready == true) {
                 $('#optionsRadios').attr("disabled", "disabled");
@@ -214,13 +222,14 @@ function get_result_setup_comsetting() {
                 $('#subdomain').attr("disabled", "disabled");
             }
 
-            if(tipeform.ready == true && portal.ready == true && domain.ready == true){
-                 $("#btn_commset_login").attr("disabled", "disabled");
+            if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
+                $("#btn_commset_login").attr("disabled", "disabled");
                 $("#btn_commset_login").hide();
             }
 
             var membership = result[3];
             $('#membership').val(membership.data).attr("selected", "selected");
+
         },
         error: function (result) {
             console.log(result);
@@ -229,7 +238,39 @@ function get_result_setup_comsetting() {
     });
 }
 
+function LogoutAdmin() {
+    // $("#btn_logout_all").click(function () {
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function beforeSend(jxqhr) {
+            $(".hide_load_log").show();
+            $("#text_logout").hide();
+        },
+        timeout: 20000,
+    });
+    $.ajax({
+        url: '/admin/LogoutAdmin',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            if (result == "sukses") {
+                location.href = '/admin';
+            }
+        },
+        error: function (result) {
+            ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+
+            setTimeout(function () {
+                location.href = '/admin';
+            }, 6000);
+        }
+    });
+    // });
+}
 
 
 

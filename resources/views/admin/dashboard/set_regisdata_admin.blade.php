@@ -1,27 +1,22 @@
 @extends('layout.admin-dashboard')
 @section('title', 'Community Setting')
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span> Community Settings</h3>
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Community Settings</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Registrasion Data</li>
-        </ol>
-    </nav>
-</div>
-
 <div class="row">
+    <div class="col-md-3">
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
+    </div>
+    <div class="col-md-9">
+        <label class="cgrey">Publish Community to Live<label>
+    </div>
+</div>
+<br>
+<div class="row" style="margin-top: 1em;">
     <div class="col-12">
         <div class="card">
             <div class="card-header putih">
                 <div class="row">
-                    <div class="col-md-8 cgrey" style="margin-top: 0.5em;">
-                        Registrasion Data
+                    <div class="col-md-8" style="margin-top: 0.5em;">
+                       <h4 class="cgrey tebal"> Registrasion Data</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
                         <button class="btn btn-birumuda btn-sm" id="btn-add-question"> Add Question</button>
@@ -182,6 +177,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
+        get_result_setup_comsetting();
         tabel_list_regisdata();
         addRowRegisData();
     });
@@ -249,6 +245,12 @@
     function tabel_list_regisdata() {
         var tabel = $('#tabel_list_regisdata').DataTable({
             responsive: true,
+             language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/admin/tabel_list_regisdata',
                 type: 'POST',
