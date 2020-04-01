@@ -209,8 +209,11 @@
                     <h3 class="cgrey" style="margin-bottom: 0.5em;">Congratulations !!!</h3>
                     <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
-
-                    <button type="button" id="btn-initial1" class="btn btn-primary btn-sm">Take a tour</button>
+<br>
+                    <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a Tour</button>
+                    <br>
+                    <br>
+                     <br>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -229,76 +232,14 @@
                     <h4 class="cgrey" style="margin-bottom: 1em;">Features Overiew</h4>
                 </center>
 
-                <div class="row">
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mgku-1">
-                        <div class="media">
-                            <img src="/img/default.png" class="align-self-center mr-3 rounded-circle"
-                                style="width: 10%; height: auto;">
-                            <div class="media-body">
-                                <h6 class="s13 cgrey" style="margin-bottom: 0em;">Judul Fitur</h6>
-                                <small class="card-text clight s12">Cras sit amet nibh libero, in gravida nulla. Nulla
-                                    vel metus scelerisque.</small>
-                            </div>
-                        </div>
+                <div class="row" style="padding-left: 7%; padding-right:6.6%; margin-bottom:1.5em;">
+                    <div id="show_initial_fitur" class="card-deck show_subfitur_module scrollfitur" style="width:100%;">
+
                     </div>
                 </div>
                 <center>
-                    <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;">Got it</button>
+                    <br>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -318,8 +259,9 @@
                     <h3 class="cgrey" style="margin-bottom: 0.5em;">Ready For Action ?</h3>
                     <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
-
-                    <button type="button" id="btn-initial3" class="btn btn-primary btn-sm">Finish</button>
+<br>
+                    <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm" style="width:100px;">Finish</button>
+                    <br><br>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -332,6 +274,7 @@
 
     $(document).ready(function () {
         get_dashboard_subscriber();
+        $("#initial1").modal('show');
 
     });
 

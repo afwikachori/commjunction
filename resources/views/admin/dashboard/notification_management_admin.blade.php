@@ -440,7 +440,16 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
+                } else {
                 var uiku = '';
                 var inputipe = '';
 
@@ -477,6 +486,7 @@
                         '</div>';
                 });
                 $(".isi_seting_notifadmin").html(uiku);
+            }
             },
             error: function (result) {
                 console.log(result);

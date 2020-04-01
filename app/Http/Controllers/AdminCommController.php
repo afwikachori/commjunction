@@ -954,15 +954,16 @@ class AdminCommController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json;
-        } catch (ClientException $exception) {
-            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            return $errorq;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
         } catch (ConnectException $errornya) {
-
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
-
             return $error;
         }
     }
@@ -974,7 +975,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'subsmanagement/membership';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -985,6 +986,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -995,7 +1008,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/listpaymenttype';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1006,6 +1019,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1015,7 +1040,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/listbank';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1026,6 +1051,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1066,11 +1103,24 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1127,9 +1177,21 @@ class AdminCommController extends Controller
                     alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                dd($exception);
-            }
+             } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
         } else { //END-IF  UPLOAD-IMAGE
             $input = $request->all(); // getdata form by name
             $imageRequest = [
@@ -1170,10 +1232,20 @@ class AdminCommController extends Controller
                     return back();
                 } //end if sukses
 
-            } catch (ClientException $exception) {
-                alert()->error('Try again later', 'Get Something Wrong')->persistent('Done');
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
-                // dd($exception);
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } // endelse
     } //endfunc
@@ -1211,13 +1283,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            // return $status_error;
-            if ($status_error == 400) {
-                alert()->error('Your Old Password didnt match', 'Wrong Password')->persistent('Done');
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1252,6 +1331,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usermanagement/listusertype';
         $client = new \GuzzleHttp\Client();
 
+        try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1262,6 +1342,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1340,14 +1432,26 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
-
         if ($json['success'] == true) {
             alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
             return redirect('admin/subs_management');
+        }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1391,12 +1495,20 @@ class AdminCommController extends Controller
                     alert()->success('Successfully give membership approval', $paystatusjudul)->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('Your password didnt match, please check again', 'Wrong Password!')->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } //endif
     }
@@ -1431,6 +1543,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
@@ -1438,6 +1551,21 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             alert()->success('Successfully give a approval', $textatus)->persistent('Done');
             return redirect('admin/subs_management');
+        }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1463,11 +1591,24 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1507,13 +1648,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            // return $status_error;
-            if ($status_error == 400) {
-                alert()->error('Proccess might interrupted at the middle, try again', 'Opps')->persistent('Done');
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1556,12 +1704,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully to add new payment method', 'Added')->persistent('Done');
                 return redirect('admin/settings/payment');
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 400) {
-                alert()->error('Data Bank tidak boleh sama dengan list yang sudah ada', 'Sorry')->persistent('Done');
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1584,6 +1740,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
@@ -1591,6 +1748,21 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
             return redirect('admin/settings/payment');
+        }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1721,6 +1893,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        try{
         $response = $client->post($url, $datakirim);
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
@@ -1728,6 +1901,21 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             alert()->success('Successfully Add Module Feature', 'Module Added')->persistent('Done');
             return redirect('admin/module_management');
+        }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1740,7 +1928,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/listsettingcomm';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1751,6 +1939,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1761,7 +1961,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'reportmanagement/listsubscriber';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1772,6 +1972,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function tabel_subscriber_report_super(Request $request)
@@ -1868,7 +2080,7 @@ class AdminCommController extends Controller
             "level_status" => $input['level_status'],
             "community_id" => $input['community_id']
         ]);
-
+        // return $bodyku;
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -1916,8 +2128,17 @@ class AdminCommController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json['data'];
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1973,16 +2194,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2026,17 +2251,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully Setting Notification', 'Done!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            return $exception;
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2217,17 +2445,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully Activated Payment', 'Done!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            return $exception;
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2338,8 +2569,17 @@ class AdminCommController extends Controller
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $$exception->getCode();;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2434,18 +2674,23 @@ class AdminCommController extends Controller
                 alert()->success('Successfully Delete Message Inbox', 'Deleted!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
+
 
     public function change_status_inbox_message_admin(Request $request)
     {
@@ -2478,12 +2723,20 @@ class AdminCommController extends Controller
                 alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2646,7 +2899,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'usertype/listfeature';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -2657,6 +2910,18 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -2677,15 +2942,16 @@ class AdminCommController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json['data'];
-        } catch (ClientException $exception) {
-            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            return $errorq;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
         } catch (ConnectException $errornya) {
-
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
-
             return $error;
         }
     }

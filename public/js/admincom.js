@@ -137,6 +137,7 @@ function session_admin_logged() {
                 $("#edit_idcom").val(user.user_id);
                 $(".logo_komunitas").attr("src", server_cdn + user.community_logo);
 
+                //initial login
                 if (user.status == 1) { //first-login
                     get_initial_feature(result.feature); //isi data
                     $("#initial1").modal('show');
@@ -311,7 +312,7 @@ function get_initial_feature(datafitur) {
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-            '<img src="' + server_cdn + item.logo + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
+        '<img src="' + server_cdn + item.logo + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
             item.title + '</h6>' +

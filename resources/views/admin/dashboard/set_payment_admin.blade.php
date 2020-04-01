@@ -16,7 +16,7 @@
             <div class="card-header putih">
                 <div class="row">
                     <div class="col-md-8" style="margin-top: 0.5em;">
-                    <h4 class="cgrey tebal"> Subscriber Payment</h4>
+                        <h4 class="cgrey tebal"> Subscriber Payment</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
                         <button type="button" id="btn_add_payment" class="btn btn-tosca btn-sm"
@@ -359,7 +359,7 @@
         $(document).ready(function () {
             get_result_setup_comsetting();
             tabel_payment_community();
-            tabel_tes();
+            // tabel_tes();
             get_payment_tipe();
             get_bank_pay();
         });
@@ -469,7 +469,12 @@
                 $("#edit_rekening_number").val(dt.payment_account);
                 $("#edit_rekening_name").val(dt.payment_owner_name);
                 $("#edit_bank_name").val(dt.payment_bank_name);
-                $("#edit_payment_tipe").val(pay.payment_title);
+                // $("#edit_payment_tipe").text(pay.payment_title);
+                $("#edit_payment_tipe option").each(function () {
+                    if ($(this).text() == pay.payment_title) {
+                        $(this).attr('selected', 'selected');
+                    }
+                });
                 // alert(pay.payment_title);
                 $("#edit_payment_status").val(dt.status).attr("selected", "selected");
                 $("#edit_pay_time_limit").val(dt.payment_time_limit);

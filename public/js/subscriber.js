@@ -76,18 +76,18 @@ function session_subscriber_logged() {
         success: function (result) {
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 8000);
+            }, 6000);
             console.log(result);
             console.log(result.access_token);
-            var user = result.user;
 
+            var user = result.user;
             if (user.picture != undefined || user.picture != null) {
                 var oic = user.picture;
                 var cekone = oic.slice(0, 1);
-                var picsubs ='';
-                if(cekone != "/"){
-                    picsubs = "/"+user.picture;
-                }else{
+                var picsubs = '';
+                if (cekone != "/") {
+                    picsubs = "/" + user.picture;
+                } else {
                     picsubs = user.picture;
                 }
                 $(".foto_profil_subs").attr("src", server_cdn + picsubs);
@@ -99,7 +99,7 @@ function session_subscriber_logged() {
             $("#komunitas2").val(user.community_id);
             $("#komunitas_inbox").val(user.community_id);
 
-
+            // Profil user
             $(".nama_subs_login").html(user.full_name);
             $(".membership_status").html(user.membership);
             $("#name_subs").val(user.full_name);
@@ -107,6 +107,26 @@ function session_subscriber_logged() {
             $("#username_subs").val(user.user_name);
             $("#email_subs").val(user.email);
             $("#alamat_subs").val(user.alamat);
+
+
+            //initial login
+            if (user.status == 1) { //first-login
+                get_initial_feature(result.community_feature); //isi data
+                $("#initial1").modal('show');
+            }
+            if (user.status == 1) {
+                $('#show_toltip').prop('First Login');
+            } else if (user.status == 2) {
+                $('#show_toltip').prop('Waiting Membership Approval');
+            } else if (user.status == 3) {
+                $('#show_toltip').prop('Waiting Membership Approval');
+                $("#label_user_aktif").show().fadeIn('slow');
+            } else if (user.status == 4) {
+                $('#show_toltip').prop('Non-Active');
+            } else { //status=0 belum aktif
+                swal("Your account not verified, please wait system or call Commjuction's Administrator", "Inactive", "error");
+                window.location.href = "/subscriber/url/" + community_name;
+            }
 
 
 
@@ -117,6 +137,39 @@ function session_subscriber_logged() {
         }
     });
 }
+
+
+// INITIAL LOGIN 2 - FITUR
+function get_initial_feature(datafitur) {
+    var showui = '';
+    var jum = 0;
+    $.each(datafitur, function (i, item) {
+
+        jum++;
+        showui += '<div class="col-md-6 stretch-card grid-margin" style="height:75px; padding-left: 5px; padding-right:4px; padding-bottom:0px; margin-bottom:0.5em;"' +
+            'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+            'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+            '<div class="card bg-gradient-blue card-img-holder text-white">' +
+            '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important;">' +
+            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+            'alt="circle-image" /> ' +
+            '<div class="row">' +
+            '<div class="col-md-3" style="padding-right:4px;">' +
+            '<img src="' + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
+            'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
+            '</div>' +
+            '<div class="col-md-9" style="padding-left:5px;">' +
+            '<b><small>' + item.titile + '</small></b>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+    });
+    $('#show_initial_fitur').html(showui);
+}
+
+
 
 // FORMAT PISAH UANG RUPIAH
 function rupiah(val) {
@@ -206,4 +259,16 @@ function showPassNew() {
     } else {
         a.type = "password";
     }
+}
+
+function cekimage_cdn(img) {
+    var cekone = img.slice(0, 1);
+    var foto = '';
+    if (cekone != "/") {
+        foto = "/" + img;
+    } else {
+        foto = img;
+    }
+
+    return foto;
 }
