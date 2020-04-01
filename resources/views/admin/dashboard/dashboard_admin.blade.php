@@ -344,7 +344,7 @@
 
             },
             error: function (result) {
-                console.log("Cant Get Data For Dashboard");
+                ui.popup.show('warning', 'Couldnt get any respond for dashboard', 'Timeout');
                 console.log(result);
             }
         });

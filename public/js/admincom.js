@@ -236,6 +236,8 @@ function get_result_setup_comsetting() {
                 if (membership.ready == true) {
                     $("#membership").attr("disabled", "disabled");
                     $("#btn_submit_memberset").hide();
+                }else{
+                    $("#btn_submit_memberset").show();
                 }
             }
         },

@@ -37,7 +37,7 @@
                         <i class="mdi mdi-close"></i> Back
                     </button>
                     &nbsp;
-                    <button type="submit" id="btn_submit_memberset" class="btn btn-teal btn-sm melengkung10px">
+                    <button type="submit" id="btn_submit_memberset" class="btn btn-teal btn-sm melengkung10px" style="display: none; margin-right: 1em;">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Submit </button>
                 </div> <!-- end-footer     -->

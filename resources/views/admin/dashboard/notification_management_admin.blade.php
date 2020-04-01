@@ -440,8 +440,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
-
+                // console.log(result);
                 var uiku = '';
                 var inputipe = '';
 
@@ -601,7 +600,7 @@
                 "community_id": dtnya[2],
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 var res = result;
                 $("#modal_detail_notif").modal('show');
                 $("#detail_judul ").html(res.title);
@@ -618,7 +617,8 @@
 
             },
             error: function (result) {
-                console.log("Cant Show");
+                console.log(result);
+                console.log("Cant Show Detail");
             }
         });
     }
