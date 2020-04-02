@@ -84,8 +84,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <input type="text" id="list_komunitas_inbox" name="list_komunitas_inbox" value="104"
-                                    class="form-control input-abu" readonly>
+                                <h6 class="cgrey2 nama_komunitas" style="margin-top: 1em;"></h6>
+                                <input type="text" id="list_komunitas_inbox" name="list_komunitas_inbox"
+                                    class="form-control input-abu id_komunitas_login" readonly style="display: none;">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -185,8 +186,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <input type="text" id="komunitas_inbox" name="komunitas_inbox" value="104"
-                                    class="form-control input-abu" readonly>
+                                <h6 class="cgrey2 nama_komunitas" style="margin-top: 1em;"></h6>
+                                <input type="text" id="komunitas_inbox" name="komunitas_inbox"
+                                    class="form-control input-abu id_komunitas_login" readonly style="display: none;">
                             </div>
                         </div>
                     </div>
@@ -252,7 +254,7 @@
                             <div class="form-group">
                                 <small class="clight s13">Description</small>
                                 <div style="width: 100%; height: 50px; overflow-y: scroll;">
-                                <p class="cgrey" id="detail_dekripsi"></p>
+                                    <p class="cgrey" id="detail_dekripsi"></p>
                                 </div>
                             </div>
                         </div>
@@ -360,21 +362,36 @@
             <form method="POST" id="form_change_status_inbox_super"
                 action="{{route('change_status_inbox_message_admin')}}">
                 {{ csrf_field() }}
-                <div class="modal-body" style="min-height: 130px;">
-                    <div class="row" style="margin-top: 1.5em;">
+                <div class="modal-body" style="min-height: 130px; padding: 3%;">
+
+                    <div class="row" style="margin-top: 1em;">
+                        <div class="col-md-3" style="padding-top: 0.6em;">
+                            <small class="clight s13"><b>Status Type</b></small>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control input-abu" name="status_tipe" id="status_tipe">
+                                <option selected disabled> Choose </option>
+                                <option value="1"> Sender </option>
+                                <option value="2"> Receiver </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 1em;">
                         <div class="col-md-3" style="padding-top: 0.6em;">
                             <small class="clight s13"><b>Status</b></small>
                         </div>
                         <div class="col-md-9">
                             <select class="form-control input-abu" name="list_status" id="list_status">
                                 <option selected disabled> Choose </option>
-                                <option value="1"> Active </option>
-                                <option value="2"> Not Active </option>
-                                <option value="3"> Not Publish </option>
+                                <option value="1" class="tipe1"> Active </option>
+                                <option value="2" class="tipe1"> Not Publish </option>
+                                <option value="1" class="tipe2"> Show </option>
+                                <option value="2" class="tipe2"> Not Show </option>
                             </select>
                         </div>
                     </div>
                     <input type="hidden" id="id_inbox" name="id_inbox">
+                    <input type="hidden" id="level_status" name="level_status">
                 </div>
                 <div class="modal-footer"
                     style="border: none; margin-bottom: 0.5em;
@@ -400,30 +417,29 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="background-color: #ffffff; width: 80%;
     min-height: 350px;">
-<form method="POST" id="form_delete_inbox_admin"
- action="{{route('delete_message_inbox_admin')}}">
+            <form method="POST" id="form_delete_inbox_admin" action="{{route('delete_message_inbox_admin')}}">
                 {{ csrf_field() }}
-            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                <input type="hidden" id="id_message_inbox" name="id_message_inbox">
-                <center>
-                    <img src="/visual/warning.png" class="img_mdl_centerin">
-                    <h3 class="cgrey">Are you Sure ?</h3>
-                    <small class="clight">This message will be deleted permanently from system</small>
-                </center>
-            </div> <!-- end-body -->
-            <div class="modal-footer deleteinbox" style="border: none;">
-                <center>
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Submit </button>
-                </center>
-            </div> <!-- end-footer     -->
-        </form>
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <input type="hidden" id="id_message_inbox" name="id_message_inbox">
+                    <center>
+                        <img src="/visual/warning.png" class="img_mdl_centerin">
+                        <h3 class="cgrey">Are you Sure ?</h3>
+                        <small class="clight">This message will be deleted permanently from system</small>
+                    </center>
+                </div> <!-- end-body -->
+                <div class="modal-footer deleteinbox" style="border: none;">
+                    <center>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-teal btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> Submit </button>
+                    </center>
+                </div> <!-- end-footer     -->
+            </form>
         </div>
     </div>
 </div>
@@ -448,11 +464,11 @@
             dataSrc: '',
             timeout: 30000,
             data: {
-               "community_id": $("#list_komunitas_inbox").val(),
-                    "start_date": $("#tanggal_mulai2").val(),
-                    "end_date": $("#tanggal_selesai2").val(),
-                    "filter_title": $("#filter_judul").val(),
-                    "message_type": $("#tipe_pesan").val(),
+                "community_id": $("#list_komunitas_inbox").val(),
+                "start_date": $("#tanggal_mulai2").val(),
+                "end_date": $("#tanggal_selesai2").val(),
+                "filter_title": $("#filter_judul").val(),
+                "message_type": $("#tipe_pesan").val(),
             },
             success: function (result) {
                 console.log(result);
@@ -464,7 +480,16 @@
         });
     }
 
-
+    $("#status_tipe").change(function () {
+        if (this.value == 1) {
+            $(".tipe1").show();
+            $(".tipe2").hide();
+        } else {
+            $(".tipe2").show();
+            $(".tipe1").hide();
+        }
+        $("#status_tipe").val("");
+    });
 
     $("#btn_generate_inbox_super").click(function () {
         tabel_tes();
@@ -512,7 +537,8 @@
                 { mData: 'user_type_title' },
                 { mData: 'community_name' },
                 { mData: 'status' },
-                { mData: 'created_at',
+                {
+                    mData: 'created_at',
                     render: function (data) {
                         return (dateFormat(data));
                     }
@@ -628,13 +654,21 @@
                 $("#detail_status ").html(res.status);
                 $("#id_message_inbox").val(res.id);
                 $("#id_inbox").val(res.id);
+                $("#level_status").val(res.level_status);
+
+                status_message: "Send"
+                if(res.status_message == "Send"){
+                    $("#status_tipe").val("1");
+                }else{
+                    $("#status_tipe").val("2");
+                }
 
                 var nil = res.status;
-                if(nil == "Active"){
+                if (nil == "Active") {
                     $("#list_status").val("1");
-                }else if(nil == "Not Active"){
-                     $("#list_status").val("2");
-                }else{
+                } else if (nil == "Not Active") {
+                    $("#list_status").val("2");
+                } else {
                     $("#list_status").val("3");
                 }
 

@@ -1828,3 +1828,12 @@ margin-top: 9rem;
 .form-check.set_mod .form-check-label input[type="radio"] + .input-helper:before {
     border: solid #95e4e1 !important;
 }
+
+
+/* hide change status inbox-management */
+.tipe1{
+    display: none;
+}
+.tipe2{
+    display: none;
+}

@@ -2483,6 +2483,8 @@ try{
             'message_type' => $input['message_type'],
         ]);
 
+        // return $bodyku;
+
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -2702,7 +2704,7 @@ try{
         $input = $request->all();
         $url = env('SERVICE') . 'inboxmanagement/changestatus';
         $client = new \GuzzleHttp\Client();
-        // return $input;
+        return $input;
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
