@@ -68,6 +68,11 @@
                     <br>
                     <div class="form-group">
                         <small class="cgrey">Priviledge</small>
+                        <div class="text-center loading_tree" style="display: none;">
+                            <div class="spinner-border" role="status" style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <div class="isi_cek_priviledge">
 
                         </div>
@@ -120,7 +125,7 @@
 
                     <div class="form-group" style="margin-top: 0.5em;">
                         <small class="cgrey">Priviledge</small>
-                        <div class="isi_cek_priviledge_edit">
+                        <div class="isi_cek_priviledge_edit" class="loading_tree">
 
                         </div>
                     </div>
@@ -236,11 +241,15 @@
 
 
     function get_listfitur_usertype_ceklist() {
+
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             beforeSend: function beforeSend(jxqhr) {
+                $(".loading_tree").show();
                 $(".btnsubmit").attr("disabled", "disabled");
             },
             complete: function complete() {
@@ -253,6 +262,7 @@
             datatype: 'JSON',
             success: function (result) {
                 $(".btnsubmit").removeAttr("disabled", "disabled");
+                   $(".loading_tree").hide();
 
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
@@ -356,6 +366,8 @@
             },
             error: function (result) {
                 // console.log(result);
+                 $(".loading_tree").hide();
+                $(".btnsubmit").attr("disabled", "disabled");
                 ui.popup.show('warning', 'Cant get any response', 'Timeout');
             }
         });

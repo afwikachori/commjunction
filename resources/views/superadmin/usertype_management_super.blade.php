@@ -65,6 +65,11 @@
                     <br>
                     <div class="form-group">
                         <small class="cgrey">Priviledge</small>
+                         <div class="text-center loading_tree" style="display: none;">
+                            <div class="spinner-border" role="status" style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <div class="isi_cek_priviledge">
 
                         </div>
@@ -117,6 +122,11 @@
 
                     <div class="form-group" style="margin-top: 0.5em;">
                         <small class="cgrey">Priviledge</small>
+                         <div class="text-center loading_tree" style="display: none;">
+                            <div class="spinner-border" role="status" style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <div class="isi_cek_priviledge_edit">
 
                         </div>
@@ -153,6 +163,13 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function beforeSend(jxqhr) {
+                $(".loading_tree").show();
+                $(".btnsubmit").attr("disabled", "disabled");
+            },
+            complete: function complete() {
+                $(".btnsubmit").removeAttr("disabled", "disabled");
             }
         });
         $.ajax({
@@ -160,7 +177,9 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                $(".btnsubmit").removeAttr("disabled", "disabled");
+                   $(".loading_tree").hide();
+
                 var parent_ui = '';
                 $.each(result, function (i, item) {
                     var child_ui = '';
@@ -249,8 +268,9 @@
 
             },
             error: function (result) {
-                console.log(result);
-                 ui.popup.show('warning', 'Cant get any response', 'Timeout');
+                  $(".loading_tree").hide();
+                $(".btnsubmit").attr("disabled", "disabled");
+                ui.popup.show('warning', 'Cant get any response', 'Timeout');
             }
         });
     }
