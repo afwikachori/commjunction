@@ -358,10 +358,6 @@
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
-                    &nbsp;
-                    <button type="button" id="btn_list_setting_notif" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> List Setting </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -413,7 +409,7 @@
 
     $("#btn_generate_notif_super").click(function () {
         tabel_generate_notif_super();
-        tabel_tes();
+        // tabel_tes();
     });
 
 
@@ -472,7 +468,12 @@
                 { mData: 'community_name' },
                 { mData: 'notification_status' },
                 { mData: 'created_by' },
-                { mData: 'created_at' },
+                  {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
@@ -573,18 +574,38 @@
                 "community_id": dtnya[2],
             },
             success: function (result) {
-                console.log(result);
+                  if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                  if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
                 var res = result[0];
                 $("#modal_detail_notif").modal('show');
-                $("#detail_judul ").html(res.title);
-                $("#detail_dekripsi ").html(res.description);
-                $("#detail_komunitas ").html(res.community_name);
-                $("#detail_tanggal ").html(res.created_at);
-                $("#detail_user ").html(res.user_id);
-                $("#detail_usertipe ").html(res.user_type_title);
-                $("#detail_tipenotif ").html(res.notifcation_sub_type_title);
-                $("#dibuat_oleh ").html(res.created_by);
-
+                $("#detail_judul").html(res.title);
+                $("#detail_dekripsi").html(res.description);
+                $("#detail_komunitas").html(res.community_name);
+                $("#detail_tanggal").html(dateFormat(res.created_at));
+                $("#detail_user").html(res.user_id);
+                $("#detail_usertipe").html(res.user_type_title);
+                $("#detail_tipenotif").html(res.notifcation_sub_type_title);
+                $("#dibuat_oleh").html(res.created_by);
+            }
+        }
             },
             error: function (result) {
                 console.log("Cant Show");

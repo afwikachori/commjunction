@@ -371,10 +371,6 @@
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
-                    &nbsp;
-                    <button type="button" id="btn_list_setting_notif" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> List Setting </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -450,43 +446,43 @@
                         ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
-                var uiku = '';
-                var inputipe = '';
+                    var uiku = '';
+                    var inputipe = '';
 
-                $.each(result, function (i, item) {
+                    $.each(result, function (i, item) {
 
-                    if (item.input_type == 1) {
-                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
-                    } else if (item.input_type == 2) {
-                        inputipe = '<div class="form-group">' +
-                            '< div class="form-check" >' +
-                            '<label class="form-check-label">' +
-                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1">' +
-                            'True <i class="input-helper"></i></label>' +
+                        if (item.input_type == 1) {
+                            inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                        } else if (item.input_type == 2) {
+                            inputipe = '<div class="form-group">' +
+                                '< div class="form-check" >' +
+                                '<label class="form-check-label">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1">' +
+                                'True <i class="input-helper"></i></label>' +
+                                '</div>' +
+                                '<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2">' +
+                                'False <i class="input-helper"></i></label>' +
+                                '</div>' +
+                                '</div>';
+                        }
+
+                        uiku += ' <div class="row">' +
+                            '<div class="col-7">' +
+                            '<div class="form-group">' +
+                            '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                            '<p class="clight s13 deskripsi_setting">' + item.description +
+                            '</p>' +
                             '</div>' +
-                            '<div class="form-check">' +
-                            '<label class="form-check-label">' +
-                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2">' +
-                            'False <i class="input-helper"></i></label>' +
+                            '</div >' +
+                            '<div class="col-5">' + inputipe +
+                            '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
                             '</div>' +
                             '</div>';
-                    }
-
-                    uiku += ' <div class="row">' +
-                        '<div class="col-7">' +
-                        '<div class="form-group">' +
-                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
-                        '<p class="clight s13 deskripsi_setting">' + item.description +
-                        '</p>' +
-                        '</div>' +
-                        '</div >' +
-                        '<div class="col-5">' + inputipe +
-                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
-                        '</div>' +
-                        '</div>';
-                });
-                $(".isi_seting_notifadmin").html(uiku);
-            }
+                    });
+                    $(".isi_seting_notifadmin").html(uiku);
+                }
             },
             error: function (result) {
                 console.log(result);
@@ -558,7 +554,12 @@
                 { mData: 'community_name' },
                 { mData: 'notification_status' },
                 { mData: 'sender_level_title' },
-                { mData: 'created_at' },
+                {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
@@ -613,14 +614,14 @@
                 console.log(result);
                 var res = result;
                 $("#modal_detail_notif").modal('show');
-                $("#detail_judul ").html(res.title);
-                $("#detail_dekripsi ").html(res.description);
-                $("#detail_komunitas ").html(res.community_name);
-                $("#detail_tanggal ").html(res.created_at);
+                $("#detail_judul").html(res.title);
+                $("#detail_dekripsi").html(res.description);
+                $("#detail_komunitas").html(res.community_name);
+                $("#detail_tanggal").html(dateFormat(res.created_at));
                 $("#detail_user").html(res.user_title);
-                $("#detail_usertipe ").html(res.user_type_title);
-                $("#detail_tipenotif ").html(res.message_type_title);
-                $("#dibuat_oleh ").html(res.created_by_title);
+                $("#detail_usertipe").html(res.user_type_title);
+                $("#detail_tipenotif").html(res.message_type_title);
+                $("#dibuat_oleh").html(res.created_by_title);
                 $("#status_notif_admin").html(res.status);
                 $("#status_msg").html(res.status_message);
 
@@ -673,8 +674,8 @@
                         setTimeout(function () {
                             location.href = '/admin';
                         }, 5000);
-                    }else{
-                          ui.popup.show('warning', result.message, 'Warning');
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
                     $('#user_notif').empty();
