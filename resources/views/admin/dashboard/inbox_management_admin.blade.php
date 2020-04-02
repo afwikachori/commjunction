@@ -443,16 +443,16 @@
             }
         });
         $.ajax({
-            url: '/superadmin/tabel_generate_inbox_super',
+            url: '/admin/tabel_generate_inbox_admin',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
             data: {
-                "community_id": $("#list_komunitas_inbox").val(),
-                "start_date": $("#tanggal_mulai2").val(),
-                "end_date": $("#tanggal_selesai2").val(),
-                "filter_title": $("#filter_judul").val(),
-                "message_type": $("#tipe_pesan").val(),
+               "community_id": $("#list_komunitas_inbox").val(),
+                    "start_date": $("#tanggal_mulai2").val(),
+                    "end_date": $("#tanggal_selesai2").val(),
+                    "filter_title": $("#filter_judul").val(),
+                    "message_type": $("#tipe_pesan").val(),
             },
             success: function (result) {
                 console.log(result);
