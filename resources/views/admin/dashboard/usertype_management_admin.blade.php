@@ -2,19 +2,23 @@
 @section('title', 'User Type Management')
 
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span>User Type Management</h3>
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title">Usertype Management</h3>
+    </div>
+    <div class="col-md-6">
+        <label class="cgrey">Manage your usertype information<label>
+    </div>
+    <div class="col-md-4" style="text-align: right;">
+        <nav aria-label="breadcrumb">
 
-    <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_usertype">Add
-            User Type</button>
-    </nav>
+            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_usertype">Add
+                User Type</button>
+        </nav>
+    </div>
 </div>
 
-
+<br>
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
@@ -76,7 +80,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
+                    <button type="submit" class="btn btn-teal btn-sm btnsubmit">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Add </button>
                 </div>
@@ -90,7 +94,7 @@
 <!-- MODAL EDIT USERTYPE-->
 <div class="modal fade" id="modal_edit_usertype" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <form method="POST" id="form_edit_usertype" action="{{route('edit_usertype_management')}}">
+    <form method="POST" id="form_edit_usertype" action="{{route('edit_usertype_management_admin')}}">
         {{ csrf_field() }}
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -128,7 +132,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
+                    <button type="submit" class="btn btn-teal btn-sm btnsubmit">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Edit </button>
                 </div>
@@ -145,27 +149,6 @@
         tabel_usertype_management_admin();
         get_listfitur_usertype_ceklist();
     });
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/tabel_usertype_admin',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log("Cant Show");
-            }
-        });
-    }
-
-
 
 
 
@@ -241,6 +224,7 @@
             var subfitur = data.subfeature;
             var arr = [];
             $.each(subfitur, function (i, item) {
+                console.log(item);
                 $('#edit_fitur_id' + item.feature_id).prop('checked', true);
                 $('#edit_subfitur_' + item.subfeature_id).prop('checked', true);
             });
@@ -251,12 +235,16 @@
     }
 
 
-
-
     function get_listfitur_usertype_ceklist() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function beforeSend(jxqhr) {
+                $(".btnsubmit").attr("disabled", "disabled");
+            },
+            complete: function complete() {
+                $(".btnsubmit").removeAttr("disabled", "disabled");
             }
         });
         $.ajax({
@@ -264,98 +252,125 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
-                var parent_ui = '';
-                $.each(result, function (i, item) {
-                    var child_ui = '';
-                    var parent = item.title;
-                    var jum = 0;
-                    var idfitur = '';
+                $(".btnsubmit").removeAttr("disabled", "disabled");
 
-                    $.each(item.sub_features, function (i, item) {
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
+                } else {
+                    var parent_ui = '';
+                    $.each(result, function (i, item) {
                         // console.log(item);
-                        idfitur = item.feature_id;
-                        child_ui += '<li class="">' +
-                            '<input type="checkbox" name="subfitur[]"' +
-                            'id="subfitur_' + item.subfeature_id + '"' +
-                            'value="' + item.subfeature_id + '">' +
-                            '<label>' + item.sub_feature_title + '</label>' +
-                            '</li>';
-                        jum++;
+
+                        var child_ui = '';
+                        var parent = item.title;
+                        var jum = 0;
+                        var idfitur = '';
+
+                        $.each(item.sub_features, function (i, item) {
+                            // console.log(item);
+                            idfitur = item.feature_id;
+                            child_ui += '<li class="">' +
+                                '<input type="checkbox" name="subfitur[]"' +
+                                'id="subfitur_' + item.subfeature_id + '"' +
+                                'value="' + item.subfeature_id + '">' +
+                                '<label>' + item.sub_feature_title + '</label>' +
+                                '</li>';
+                            jum++;
+                        });
+
+                        if (jum == 0) {
+                            parent_ui += '<ul class="tree">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="fitur_id[]" value="0" onclick="cek_nofitur(' + item.feature_id + ')" id="id_' + item.feature_id + '">' +
+                                '<label>' + parent + ' &nbsp;' +
+                                '</label>' +
+                                '</li>' +
+                                '</ul>';
+                        } else {
+                            parent_ui += '<ul class="tree">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
+                                '<label>' + parent + ' &nbsp;' +
+                                '<small class="total"> &nbsp; (' + jum + ') </small>' +
+                                '<i class="mdi mdi-chevron-down clight"></i>' +
+                                '</label>' +
+                                '<ul>' + child_ui + '</ul>' +
+                                '</li>' +
+                                '</ul>';
+                        }
+
+
                     });
+                    $(".isi_cek_priviledge").html(parent_ui);
+                    // ___________________________________________________________________________________
+                    var parent_ui2 = '';
+                    $.each(result, function (i, item) {
+                        var child_ui2 = '';
+                        var parent2 = item.title;
+                        var jum2 = 0;
+                        var idfitur_edit = '';
 
-                    if (jum == 0) {
-                        parent_ui += '<ul class="tree">' +
-                            '<li class="has">' +
-                            '<input type="checkbox" name="fitur_id[]" value="0">' +
-                            '<label>' + parent + ' &nbsp;' +
-                            '</label>' +
-                            '</li>' +
-                            '</ul>';
-                    } else {
-                        parent_ui += '<ul class="tree">' +
-                            '<li class="has">' +
-                            '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
-                            '<label>' + parent + ' &nbsp;' +
-                            '<small class="total"> &nbsp; (' + jum + ') </small>' +
-                            '<i class="mdi mdi-chevron-down clight"></i>' +
-                            '</label>' +
-                            '<ul>' + child_ui + '</ul>' +
-                            '</li>' +
-                            '</ul>';
-                    }
+                        $.each(item.sub_features, function (i, item) {
+                            idfitur_edit = item.feature_id;
+                            child_ui2 += '<li class="">' +
+                                '<input type="checkbox" name="edit_subfitur[]"' +
+                                'id="edit_subfitur_' + item.subfeature_id + '"' +
+                                'value="' + item.subfeature_id + '"> ' +
+                                '<label>' + item.sub_feature_title + '</label>' +
+                                '</li>';
+                            jum2++;
+                        });
 
+                        if (jum2 == 0) {
+                            var idno = 111 + item.feature_id;
+                            parent_ui2 += '<ul class="tree">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="edit_fitur_id[]" value="0" onclick="cek_nofitur(' + idno + ')" id="id_' + idno + '">' +
+                                '<label>' + parent2 + ' &nbsp;' +
+                                '</label>' +
+                                '</li>' +
+                                '</ul>';
+                        } else {
 
-                });
-                $(".isi_cek_priviledge").html(parent_ui);
-                // ___________________________________________________________________________________
-                var parent_ui2 = '';
-                $.each(result, function (i, item) {
-                    var child_ui2 = '';
-                    var parent2 = item.title;
-                    var jum2 = 0;
-                    var idfitur_edit = '';
-
-                    $.each(item.sub_features, function (i, item) {
-                        idfitur_edit = item.feature_id;
-                        child_ui2 += '<li class="">' +
-                            '<input type="checkbox" name="edit_subfitur[]"' +
-                            'id="edit_subfitur_' + item.subfeature_id + '"' +
-                            'value="' + item.subfeature_id + '"> ' +
-                            '<label>' + item.sub_feature_title + '</label>' +
-                            '</li>';
-                        jum2++;
+                            parent_ui2 += '<ul class="tree">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
+                                '<label>' + parent2 + ' &nbsp;' +
+                                '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
+                                '<i class="mdi mdi-chevron-down clight"></i>' +
+                                '</label>' +
+                                '<ul>' + child_ui2 + '</ul>' +
+                                '</li>' +
+                                '</ul>';
+                        }
                     });
-
-                    if (jum2 == 0) {
-                        parent_ui2 += '<ul class="tree">' +
-                            '<li class="has">' +
-                            '<input type="checkbox" name="edit_fitur_id[]" value="0">' +
-                            '<label>' + parent2 + ' &nbsp;' +
-                            '</label>' +
-                            '</li>' +
-                            '</ul>';
-                    } else {
-                        parent_ui2 += '<ul class="tree">' +
-                            '<li class="has">' +
-                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
-                            '<label>' + parent2 + ' &nbsp;' +
-                            '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
-                            '<i class="mdi mdi-chevron-down clight"></i>' +
-                            '</label>' +
-                            '<ul>' + child_ui2 + '</ul>' +
-                            '</li>' +
-                            '</ul>';
-                    }
-                });
-                $(".isi_cek_priviledge_edit").html(parent_ui2);
-
+                    $(".isi_cek_priviledge_edit").html(parent_ui2);
+                }
             },
             error: function (result) {
-                console.log("Cant Show");
+                // console.log(result);
+                ui.popup.show('warning', 'Cant get any response', 'Timeout');
             }
         });
     }
+
+    function cek_nofitur(idf) {
+        var checkid = $('#id_' + idf);
+        checkid.prop("checked", false);
+        checkid.attr("disabled", "disabled");
+        ui.popup.show('error', 'Cant Choose this feature', 'No Access');
+    }
+
+
+
+
 
 
 

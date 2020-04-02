@@ -65,6 +65,8 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('edit_usertype_management_admin', 'AdminCommController@edit_usertype_management_admin')->name('edit_usertype_management_admin');
+
 Route::post('LogoutAdmin', 'AdminCommController@LogoutAdmin')->name('LogoutAdmin');
 Route::post('send_setting_module_admin', 'AdminCommController@send_setting_module_admin')->name('send_setting_module_admin');
 

@@ -3656,4 +3656,68 @@ try{
             return back();
         }
     }
+
+
+    public function edit_usertype_management_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+// return $input;
+        $subftr = [];
+        foreach ($input['edit_subfitur'] as $i => $dt) {
+            $dataArray = [
+                'subfeature_id'       => $dt
+            ];
+            array_push($subftr, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'usertype/edit';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'usertype_id' => $input['idfitur_usertype_edit'],
+            'title' => $input['nama_usertipe_edit'],
+            'description' => $input['dekripsi_usertipe_edit'],
+            'subfeature' => $subftr,
+
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized"){
+                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+                return redirect('admin');
+            }else{
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
 } //end-class
