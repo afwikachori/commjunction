@@ -193,9 +193,19 @@ function get_result_setup_comsetting() {
             } else {
                 var tipeform = result[0];
                 if (tipeform.data != null || tipeform.data != "" || tipeform.data != 0) {
-                    $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
+                    $('#form_tipe').val(tipeform.data).attr("selected", "selected");
+
                     if (tipeform.ready == true) {
-                        $('#optionsRadios').attr("disabled", "disabled");
+                        $('#form_tipe').hide();
+                        var tip = '';
+                        if(tipeform.data == 1){
+                            tip = 'Username & Password';
+                        } else if (tipeform.data == 2){
+                            tip = 'Phone Number & Password';
+                        }else{
+                            tip = 'Email & Password';
+                        }
+                        $("#showtipeform").val(tip).show();
                     }
                 }
 

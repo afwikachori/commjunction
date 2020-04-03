@@ -27,12 +27,14 @@
                                 <small class="clight">Choose form type for subscriber login</small>
                             </div>
                             <div class="col-md-5">
-                                <select class="form-control input-abu" name="optionsRadios" id="optionsRadios">
+                                <select class="form-control input-abu" name="form_tipe" id="form_tipe">
                                     <option selected disabled> Choose </option>
                                     <option value="1"> Username & Password </option>
                                     <option value="2"> Phone Number & Password </option>
                                     <option value="3"> Email & Password </option>
                                 </select>
+                                 <input type="text" id="showtipeform" class="form-control input-abu"
+                                 style="display: none;" disabled>
                             </div>
                         </div>
 

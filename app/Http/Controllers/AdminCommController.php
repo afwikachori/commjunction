@@ -684,10 +684,10 @@ class AdminCommController extends Controller
 
     public function setting_loginresgis_comm(Request $request)
     {
-        // dd($request);
-
+        $input = $request->all();
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
+        // return $input;
 
         $req = new RequestController;
         $fileimg = "";
@@ -698,7 +698,7 @@ class AdminCommController extends Controller
 
             $input = $request->all(); // getdata form by name
             $imageRequest = [
-                "form_type"     => $input['optionsRadios'],
+                "form_type"     => $input['form_tipe'],
                 "headline_text" => $input['headline'],
                 "description"   => $input['description_custom'],
                 "subdomain"     => $input['subdomain'],
