@@ -58,7 +58,7 @@ function session_subscriber_logged() {
             ui.popup.showLoader();
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 15000);
+            }, 10000);
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
@@ -111,8 +111,7 @@ function session_subscriber_logged() {
 
             //initial login
             if (user.status == 1) { //first-login
-                get_initial_feature(result.community_feature); //isi data
-                $("#initial1").modal('show');
+                get_initial_feature(result.community_feature);
             }
             if (user.status == 1) {
                 $('#show_toltip').prop('First Login');
@@ -167,6 +166,8 @@ function get_initial_feature(datafitur) {
             '</div>';
     });
     $('#show_initial_fitur').html(showui);
+    $("#initial1").modal('show');
+
 }
 
 

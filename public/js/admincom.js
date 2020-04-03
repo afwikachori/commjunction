@@ -192,17 +192,27 @@ function get_result_setup_comsetting() {
                 }
             } else {
                 var tipeform = result[0];
-                $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
-                if (tipeform.ready == true) {
-                    $('#optionsRadios').attr("disabled", "disabled");
+                if (tipeform.data != null || tipeform.data != "" || tipeform.data != 0) {
+                    $('#optionsRadios').val(tipeform.data).attr("selected", "selected");
+                    if (tipeform.ready == true) {
+                        $('#optionsRadios').attr("disabled", "disabled");
+                    }
                 }
 
-                var portal = result[1];
-                $("#headline").val(portal.data.headline_text);
-                $("#description_custom").val(portal.data.description);
 
-                if (portal.data.image != undefined || portal.data.image != null) {
-                    var oic = portal.data.image
+                var portal = result[1];
+                if (portal.data.headline_text != null || portal.data.headline_text != "" || portal.data.headline_text != 0) {
+                    $("#headline").val(portal.data.headline_text);
+                    $("#description_custom").val(portal.data.description);
+
+                }
+
+                if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
+                    if (oic == undefined || oic == "undefined"){
+                      oic = "";
+                    }else{
+                        var oic = portal.data.image;
+                    }
                     var cekone = oic.slice(0, 1);
                     var imgportal = '';
                     if (cekone != "/") {
@@ -217,15 +227,16 @@ function get_result_setup_comsetting() {
                     $('#description_custom').attr("disabled", "disabled");
                     $("#up_img_portal").hide();
                     $(".img_portal").show();
-                    // $('#headline').attr("disabled", "disabled");
-                    // $('#headline').attr("disabled", "disabled");
                 }
 
                 var domain = result[2];
-                $('#subdomain').val(domain.data.subdomain);
-                if (domain.ready == true) {
-                    $('#subdomain').attr("disabled", "disabled");
+                if (domain.data.subdomain != null || domain.data.subdomain == "") {
+                    $('#subdomain').val(domain.data.subdomain);
+                    if (domain.ready == true) {
+                        $('#subdomain').attr("disabled", "disabled");
+                    }
                 }
+
 
                 if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
                     $("#btn_commset_login").attr("disabled", "disabled");
@@ -237,7 +248,7 @@ function get_result_setup_comsetting() {
                 if (membership.ready == true) {
                     $("#membership").attr("disabled", "disabled");
                     $("#btn_submit_memberset").hide();
-                }else{
+                } else {
                     $("#btn_submit_memberset").show();
                 }
             }
@@ -312,7 +323,7 @@ function get_initial_feature(datafitur) {
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-        '<img src="' + server_cdn + item.logo + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
+            '<img src="' + server_cdn + item.logo + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
             item.title + '</h6>' +
