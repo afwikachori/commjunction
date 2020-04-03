@@ -353,6 +353,8 @@
     </div>
 </div>
 
+
+
 <!-- MODAL CHANGE STATUS  -->
 <div class="modal fade" id="modal_changestatus_inbox" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -365,35 +367,39 @@
                 </button>
             </div>
             <form method="POST" id="form_change_status_inbox_super"
-            action="{{route('change_status_inbox_message_super')}}">
+                action="{{route('change_status_inbox_message_super')}}">
                 {{ csrf_field() }}
-            <div class="modal-body" style="min-height: 130px;">
-                <div class="row" style="margin-top: 1.5em;">
-                    <div class="col-md-3" style="padding-top: 0.6em;">
-                        <small class="clight s13"><b>Status</b></small>
+                <div class="modal-body" style="min-height: 130px;">
+                    <div class="row" style="margin-top: 1em;">
+                        <div class="col-md-3" style="padding-top: 0.6em;">
+                            <small class="clight s13"><b>Status</b></small>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control input-abu" name="list_status" id="list_status">
+                                <option selected disabled> Choose </option>
+                                <option value="1" class="tipe1" id="id1"> Active </option>
+                                <option value="2" class="tipe1" id="id2"> Not Publish </option>
+                                <option value="1" class="tipe2" id="id3"> Show </option>
+                                <option value="2" class="tipe2" id="id4"> Not Show </option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <select class="form-control input-abu" name="list_status" id="list_status">
-                            <option selected disabled> Choose </option>
-                            <option value="1"> Active </option>
-                            <option value="2"> Deactive </option>
-                            <option value="3"> Not Pusblish </option>
-                        </select>
-                    </div>
+                    <input type="hidden" class="form-control input-abu" name="status_tipe" id="status_tipe">
+                    <input type="hidden" id="id_inbox" name="id_inbox">
+                    <input type="hidden" id="level_status" name="level_status">
                 </div>
-                <input type="hidden" id="id_inbox" name="id_inbox">
-            </div>
-            <div class="modal-footer"
-                style="border: none; margin-bottom: 0.5em;
+                <div class="modal-footer"
+                    style="border: none; margin-bottom: 0.5em;
                             display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                    <i class="mdi mdi-close"></i> Cancel
-                </button>
-                &nbsp;
-                <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
-                    <i class="mdi mdi-check btn-icon-prepend">
-                    </i> Change </button>
-            </div>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Change </button>
+                </div>
             </form>
         </div>
     </div>
@@ -537,7 +543,12 @@
                 { mData: 'user_type_title' },
                 { mData: 'community_name' },
                 { mData: 'status' },
-                { mData: 'created_at' },
+                {
+                    mData: 'created_at',
+                    render: function (data) {
+                        return (dateFormat(data));
+                    }
+                },
                 {
                     mData: 'id',
                     render: function (data, type, row, meta) {
@@ -683,22 +694,45 @@
             },
             success: function (result) {
                 console.log(result);
-                var res = result[0];
+                var res = result;
                 $("#modal_detail_message_inbox").modal('show');
-                $("#detail_judul ").html(res.title);
-                $("#detail_dekripsi ").html(res.description);
-                $("#detail_komunitas ").html(res.community_name);
-                $("#detail_date ").html(res.created_at);
-                $("#detail_user ").html(res.user_title);
-                $("#detail_usertipe ").html(res.user_type_title);
-                $("#detail_tipepesan ").html(res.message_type_title);
-                $("#detail_by ").html(res.created_by_title);
-                $("#detail_status ").html(res.status);
+                $("#detail_judul").html(res.title);
+                $("#detail_dekripsi").html(res.description);
+                $("#detail_komunitas").html(res.community_name);
+                $("#detail_date").html(dateFormat(res.created_at));
+                $("#detail_user").html(res.user_title);
+                $("#detail_usertipe").html(res.user_type_title);
+                $("#detail_tipepesan").html(res.message_type_title);
+                $("#detail_by").html(res.created_by_title);
+                $("#detail_status").html(res.status);
                 $("#id_message_inbox").val(res.id);
                 $("#id_inbox").val(res.id);
-                $("#detail_statuspesan ").html(res.status_message);
+                $("#detail_statuspesan").html(res.status_message);
                 $("#detail_senderlevel").html(res.sender_level_title);
+                $("#level_status").val(res.level_status);
 
+                if (res.status == "Active" && res.status_message == "Send") {
+                    $("#status_tipe").val("1");
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id1"]').attr("selected", true);
+
+                } else if (res.status == "Not Publish" && res.status_message == "Send") {
+                    $("#status_tipe").val("1");
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id2"]').attr("selected", true);
+                } else if (res.show_status == "Ditampilkan" && res.status_message == "Receive") {
+                    $("#status_tipe").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id3"]').attr("selected", true);
+                } else {
+                    $("#status_tipe").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id4"]').attr("selected", true);
+                }
 
             },
             error: function (result) {

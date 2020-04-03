@@ -2379,6 +2379,8 @@ try{
         $bodyku = json_encode([
             "id"     => $input['id_inbox'],
             "status" => $input['list_status'],
+            "status_type"     => $input['status_tipe'],
+            "level_status" => $input['level_status'],
         ]);
 
         $datakirim = [

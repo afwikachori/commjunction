@@ -405,6 +405,10 @@
                     dataSrc: '',
                     timeout: 30000,
                 },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_paysubs tbody').empty().append(nofound);
+                },
                 columns: [
                     { mData: 'id' },
                     { mData: 'payment_title' },

@@ -205,6 +205,18 @@ function formatDate(date) {
     return [day, month, year].join('/');
 }
 
+function dateFormat(tgl) {
+    var d = new Date(tgl);
+
+    dformat = [d.getDate(), d.getMonth() + 1,
+    d.getFullYear()].join('/') + '<br>' +
+        [d.getHours(),
+        d.getMinutes(),
+        d.getSeconds()].join(':');
+
+    return dformat;
+}
+
 
 // VALIDASI FORM SUPERADMIN - ADD User
 $('#name_superadmin').on('keyup', function () {

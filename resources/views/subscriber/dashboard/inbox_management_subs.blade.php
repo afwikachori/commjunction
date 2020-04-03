@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <small class="clight s13">Description</small>
                                 <div style="width: 100%; height: 50px; overflow-y: scroll;">
-                                <p class="cgrey" id="detail_dekripsi"></p>
+                                    <p class="cgrey" id="detail_dekripsi"></p>
                                 </div>
                             </div>
                         </div>
@@ -160,6 +160,8 @@
     </div>
 </div>
 
+
+
 <!-- MODAL CHANGE STATUS  -->
 <div class="modal fade" id="modal_changestatus_inbox" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -175,20 +177,23 @@
                 action="{{route('change_status_inbox_message_subs')}}">
                 {{ csrf_field() }}
                 <div class="modal-body" style="min-height: 130px;">
-                    <div class="row" style="margin-top: 1.5em;">
+                    <div class="row" style="margin-top: 2em;">
                         <div class="col-md-3" style="padding-top: 0.6em;">
                             <small class="clight s13"><b>Status</b></small>
                         </div>
                         <div class="col-md-9">
                             <select class="form-control input-abu" name="list_status" id="list_status">
                                 <option selected disabled> Choose </option>
-                                <option value="1"> Active </option>
-                                <option value="2"> Not Active </option>
-                                <option value="3"> Not Publish </option>
+                                <option value="1" class="tipe1" id="id1"> Active </option>
+                                <option value="2" class="tipe1" id="id2"> Not Publish </option>
+                                <option value="1" class="tipe2" id="id3"> Show </option>
+                                <option value="2" class="tipe2" id="id4"> Not Show </option>
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control input-abu" name="status_tipe" id="status_tipe">
                     <input type="hidden" id="id_inbox" name="id_inbox">
+                    <input type="hidden" id="level_status" name="level_status">
                 </div>
                 <div class="modal-footer"
                     style="border: none; margin-bottom: 0.5em;
@@ -213,7 +218,7 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-tabel_inbox_message_subs();
+        tabel_inbox_message_subs();
     });
 
     function tabel_tes() {
@@ -287,7 +292,8 @@ tabel_inbox_message_subs();
                 { mData: 'user_type_title' },
                 { mData: 'community_name' },
                 { mData: 'status' },
-                { mData: 'created_at',
+                {
+                    mData: 'created_at',
                     render: function (data) {
                         return (dateFormat(data));
                     }
@@ -371,7 +377,6 @@ tabel_inbox_message_subs();
 
 
     function detail_message_inbox_admin(params) {
-        // alert(params);
         var dtnya = params.split(',');
 
         $.ajaxSetup({
@@ -389,6 +394,7 @@ tabel_inbox_message_subs();
                 "community_id": dtnya[2],
             },
             success: function (result) {
+                console.log(result);
                 var res = result;
                 $("#modal_detail_message_inbox").modal('show');
                 $("#detail_judul ").html(res.title);
@@ -402,19 +408,32 @@ tabel_inbox_message_subs();
                 $("#detail_status ").html(res.status);
                 $("#id_message_inbox").val(res.id);
                 $("#id_inbox").val(res.id);
-
-                var nil = res.status;
-                if(nil == "Active"){
-                    $("#list_status").val("1");
-                }else if(nil == "Not Active"){
-                     $("#list_status").val("2");
-                }else{
-                    $("#list_status").val("3");
-                }
-
                 $("#detail_statuspesan ").html(res.status_message);
                 $("#detail_senderlevel").html(res.sender_level_title);
+                $("#level_status").val(res.level_status);
 
+                if (res.status == "Active" && res.status_message == "Send") {
+                    $("#status_tipe").val("1");
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id1"]').attr("selected", true);
+
+                } else if (res.status == "Not Publish" && res.status_message == "Send") {
+                    $("#status_tipe").val("1");
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id2"]').attr("selected", true);
+                } else if (res.show_status == "Ditampilkan" && res.status_message == "Receive") {
+                    $("#status_tipe").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id3"]').attr("selected", true);
+                } else {
+                    $("#status_tipe").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id4"]').attr("selected", true);
+                }
 
             },
             error: function (result) {

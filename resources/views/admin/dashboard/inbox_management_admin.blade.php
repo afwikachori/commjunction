@@ -364,32 +364,22 @@
                 {{ csrf_field() }}
                 <div class="modal-body" style="min-height: 130px; padding: 3%;">
 
-                    <div class="row" style="margin-top: 1em;">
-                        <div class="col-md-3" style="padding-top: 0.6em;">
-                            <small class="clight s13"><b>Status Type</b></small>
-                        </div>
-                        <div class="col-md-9">
-                            <select class="form-control input-abu" name="status_tipe" id="status_tipe">
-                                <option selected disabled> Choose </option>
-                                <option value="1"> Sender </option>
-                                <option value="2"> Receiver </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 1em;">
+
+                    <div class="row" style="margin-top: 2em;">
                         <div class="col-md-3" style="padding-top: 0.6em;">
                             <small class="clight s13"><b>Status</b></small>
                         </div>
                         <div class="col-md-9">
                             <select class="form-control input-abu" name="list_status" id="list_status">
                                 <option selected disabled> Choose </option>
-                                <option value="1" class="tipe1"> Active </option>
-                                <option value="2" class="tipe1"> Not Publish </option>
-                                <option value="1" class="tipe2"> Show </option>
-                                <option value="2" class="tipe2"> Not Show </option>
+                                <option value="1" class="tipe1" id="id1"> Active </option>
+                                <option value="2" class="tipe1" id="id2"> Not Publish </option>
+                                <option value="1" class="tipe2" id="id3"> Show </option>
+                                <option value="2" class="tipe2" id="id4"> Not Show </option>
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control input-abu" name="status_tipe" id="status_tipe">
                     <input type="hidden" id="id_inbox" name="id_inbox">
                     <input type="hidden" id="level_status" name="level_status">
                 </div>
@@ -480,16 +470,6 @@
         });
     }
 
-    $("#status_tipe").change(function () {
-        if (this.value == 1) {
-            $(".tipe1").show();
-            $(".tipe2").hide();
-        } else {
-            $(".tipe2").show();
-            $(".tipe1").hide();
-        }
-        $("#status_tipe").val("");
-    });
 
     $("#btn_generate_inbox_super").click(function () {
         tabel_tes();
@@ -621,6 +601,7 @@
     } //endfunction
 
 
+    // DETAIL
     function detail_message_inbox_admin(params) {
         // alert(params);
         var dtnya = params.split(',');
@@ -640,7 +621,7 @@
                 "community_id": dtnya[2],
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var res = result;
                 $("#modal_detail_message_inbox").modal('show');
                 $("#detail_judul ").html(res.title);
@@ -653,29 +634,33 @@
                 $("#detail_by ").html(res.created_by_title);
                 $("#detail_status ").html(res.status);
                 $("#id_message_inbox").val(res.id);
+                $("#detail_statuspesan ").html(res.status_message);
+                $("#detail_senderlevel").html(res.sender_level_title);
                 $("#id_inbox").val(res.id);
                 $("#level_status").val(res.level_status);
 
-                status_message: "Send"
-                if(res.status_message == "Send"){
+                if (res.status == "Active" && res.status_message == "Send") {
                     $("#status_tipe").val("1");
-                }else{
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id1"]').attr("selected", true);
+
+                } else if (res.status == "Not Publish" && res.status_message == "Send") {
+                    $("#status_tipe").val("1");
+                    $(".tipe1").show();
+                    $(".tipe2").hide();
+                    $('#list_status option[id="id2"]').attr("selected", true);
+                } else if (res.show_status == "Ditampilkan" && res.status_message == "Receive") {
                     $("#status_tipe").val("2");
-                }
-
-                var nil = res.status;
-                if (nil == "Active") {
-                    $("#list_status").val("1");
-                } else if (nil == "Not Active") {
-                    $("#list_status").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id3"]').attr("selected", true);
                 } else {
-                    $("#list_status").val("3");
+                    $("#status_tipe").val("2");
+                    $(".tipe2").show();
+                    $(".tipe1").hide();
+                    $('#list_status option[id="id4"]').attr("selected", true);
                 }
-
-                $("#detail_statuspesan ").html(res.status_message);
-                $("#detail_senderlevel").html(res.sender_level_title);
-
-
             },
             error: function (result) {
                 console.log(result);

@@ -310,10 +310,21 @@ class AdminCommController extends Controller
                 return $json['data'];
             } //end-else
         } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     } //end-func
 
@@ -362,7 +373,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'subsmanagement/listsubspending';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -373,6 +384,23 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -829,7 +857,7 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'commsetting/listregistrationdata';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -840,6 +868,23 @@ class AdminCommController extends Controller
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -954,9 +999,14 @@ class AdminCommController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json;
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                return $error;
+            }
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1071,7 +1121,7 @@ try{
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'commsetting/listpayment';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1082,6 +1132,23 @@ try{
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1308,7 +1375,7 @@ try{
 
         $url = env('SERVICE') . 'usermanagement/listuser';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -1319,6 +1386,18 @@ try{
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -2016,10 +2095,21 @@ try{
             $json = json_decode($response, true);
             return $json['data'];
         } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            }else{
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2055,10 +2145,21 @@ try{
             $json = json_decode($response, true);
             return $json['data'];
         } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2288,10 +2389,21 @@ try{
             $json = json_decode($response, true);
             return $json['data'];
         } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2314,10 +2426,21 @@ try{
             $json = json_decode($response, true);
             return $json['data'];
         } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2704,7 +2827,7 @@ try{
         $input = $request->all();
         $url = env('SERVICE') . 'inboxmanagement/changestatus';
         $client = new \GuzzleHttp\Client();
-        return $input;
+        // return $input;
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
@@ -2713,6 +2836,8 @@ try{
         $bodyku = json_encode([
             "id"     => $input['id_inbox'],
             "status" => $input['list_status'],
+            "status_type"     => $input['status_tipe'],
+            "level_status" => $input['level_status'],
         ]);
 
         $datakirim = [
@@ -2726,7 +2851,7 @@ try{
             $json = json_decode($response, true);
 
             if ($json['success'] == true) {
-                alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);
+                alert()->success('Successfully Change Status Message Inbox', 'Changed!')->autoclose(4000);
                 return back();
             }
         } catch (ClientException $errornya) {
@@ -2796,7 +2921,7 @@ try{
 
         $url = env('SERVICE') . 'usertype/listusertype';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -2807,6 +2932,23 @@ try{
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $exception) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
