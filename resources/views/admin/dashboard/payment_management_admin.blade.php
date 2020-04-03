@@ -616,7 +616,7 @@
 
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 var res = result[0];
                 if (res.status === "false") {
                     $("#hide_btn_aktivasi").show();
@@ -685,34 +685,23 @@
                                 }
                             },
                             {
-                                mData: null,
+                                mData: 'id',
                                 render: function (data, type, row, meta) {
-                                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                                    var dtaktif = data + "<>" + res.level_status + "<>" + res.status;
+                                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                                        'onclick="detail_subpayment(\'' + dtaktif + '\')">' +
                                         '<i class="mdi mdi-eye"></i>' +
                                         '</button>';
                                 }
                             }
                         ],
-                        columnDefs:
-                            [
-                                {
-                                    "data": null,
-                                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon"><i class="mdi mdi-eye"></i></button>',
-                                    "targets": -1
-                                }
-                            ],
                     }); //end-datatable
 
-
-                    $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
-                        var isi = tabelku.row($(this).parents('tr')).data();
-                        alert(isi);
-                    });
                 } else {
                     var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_sub_payment_super tbody').empty().append(nofound);
                 }
-                  $("#modal_detail_payment_all_admin").modal('show');
+                $("#modal_detail_payment_all_admin").modal('show');
 
             },
             error: function (result) {
@@ -725,123 +714,73 @@
 
     }
 
-
-function tabel_sub_payment(jsnDt) {
-// console.log(jsnDt);
-
-var tabelku = $('#tabel_sub_payment_super').DataTable();
-    // var  = res.payment_methods;
-    $('#tabel_sub_payment_super').DataTable().clear();
-    $('#tabel_sub_payment_super').DataTable().destroy();
-    $('#tabel_sub_payment_super tbody').empty();
-
-    $('#tabel_sub_payment_super').DataTable({
-        responsive: true,
-        language: {
-            paginate: {
-                next: '<i class="mdi mdi-chevron-right"></i>',
-                previous: '<i class="mdi mdi-chevron-left">'
+    function detail_subpayment(subdata) {
+        var split = subdata.split('<>');
+        alert(subdata);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        },
-        data: jsnDt,
-        columns: [
-            { mData: 'id' },
-            { mData: 'payment_title' },
-            {
-                mData: 'icon',
-                render: function (data, type, row, meta) {
-                    var dtimg = server_cdn + data;
-                    var noimg = '/img/fitur.png';
-                    return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
-                }
+        });
+        $.ajax({
+            url: '/admin/detail_tabel_subpayment',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+             data: {
+                "subpayment_id": split[0],
+                "level_status": split[1],
+                "status": split[2]
             },
-            { mData: 'payment_bank_name' },
-            { mData: 'payment_owner_name' },
-            {
-                mData: 'status',
-                render: function (data, type, row, meta) {
-                    var isine = '';
-                    if (data == 0) {
-                        isine = '<small class="badge bg-abu melengkung10px cwhite">Deactive</small>';
-                    } else if (data == 1) {
-                        isine = '<small class="badge bg-biru melengkung10px cdarkgrey">Active</small>';
-                    } else if (data == 2) {
-                        isine = '<small class="badge bg-kuning melengkung10px cdarkgrey">Unpaid</small>';
-                    }
-                    return isine;
-                }
+            success: function (result) {
+                console.log(result);
+                // var isi = result;
+                // $("#modal_detail_payment_all_admin").modal("hide");
+                // $("#modal_detail_subpayment_super").modal("show");
+
+                // $("#id_sub_metod").val(isi.id);
+                // // get_setting_subpayment_admin();
+                // $("#aktif_id_subpayment").val(isi.id);
+
+                // var statusui = '';
+                // if (isi.status == 0) {
+                //     statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
+                // } else {
+                //     statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
+                // }
+                // $("#subpay_status").html(statusui);
+
+                // // var icn = isi.icon;
+                // // var cekimg = icn.slice(0, 1);
+
+                // // if (cekimg == "/") {
+                // //     var isiimg = icn.slice(1);
+                // // } else {
+                // //     var isiimg = isi.icon;
+                // // }
+                // // imglogo = server_cdn + isiimg;
+
+
+                // $('#img_subpay').attr('src', imglogo);
+                // $("#detail_nama_pay").html(isi.payment_title);
+                // $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+                // var uiku2 = '';
+                // $.each(isi.description, function (i, item) {
+                //     uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+                // });
+                // $("#detail_deskripsi_pay").html(uiku2);
+                // $("#detail_bank_pay").html(isi.payment_bank_name);
+                // $("#detail_rekening").html(isi.payment_account);
+                // $("#detail_bankname").html(isi.payment_owner_name);
+
             },
-            {
-                mData: null,
-                render: function (data, type, row, meta) {
-                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                        '<i class="mdi mdi-eye"></i>' +
-                        '</button>';
-                }
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
             }
-        ],
-        columnDefs:
-            [
-                {
-                    "data": null,
-                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon"><i class="mdi mdi-eye"></i></button>',
-                    "targets": -1
-                }
-            ],
-    }); //end-datatable
+        });
 
-
-     $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
-          var isi = tabelku.row($(this).parents('tr')).data();
-        console.log(isi);
-     });
-
-    // var tabelku = $('#tabel_sub_payment_super').DataTable();
-    // $('#tabel_sub_payment_super tbody').on('click', 'button', function () {
-    //     var isi = tabelku.row($(this).parents('tr')).data();
-    //     alert(isi.id);
-
-    //     $("#modal_detail_payment_all_admin").modal("hide");
-    //     $("#modal_detail_subpayment_super").modal("show");
-
-    //     $("#id_sub_metod").val(isi.id);
-    //     // get_setting_subpayment_admin();
-    //     $("#aktif_id_subpayment").val(isi.id);
-
-    //     var statusui = '';
-    //     if (isi.status == 0) {
-    //         statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
-    //     } else {
-    //         statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
-    //     }
-    //     $("#subpay_status").html(statusui);
-
-    //     var icn = isi.icon;
-    //     var cekimg = icn.slice(0, 1);
-
-    //     if (cekimg == "/") {
-    //         var isiimg = icn.slice(1);
-    //     } else {
-    //         var isiimg = isi.icon;
-    //     }
-    //     imglogo = server_cdn + isiimg;
-
-
-    //     $('#img_subpay').attr('src', imglogo);
-    //     $("#detail_nama_pay").html(isi.payment_title);
-    //     $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
-    //     var uiku2 = '';
-    //     $.each(isi.description, function (i, item) {
-    //         uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
-    //     });
-    //     $("#detail_deskripsi_pay").html(uiku2);
-    //     $("#detail_bank_pay").html(isi.payment_bank_name);
-    //     $("#detail_rekening").html(isi.payment_account);
-    //     $("#detail_bankname").html(isi.payment_owner_name);
-
-    // });
-
-}
+    }
 
     function get_setting_subpayment_admin() {
         var idnya = $("#id_sub_metod").val();

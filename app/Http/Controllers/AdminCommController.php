@@ -373,17 +373,17 @@ class AdminCommController extends Controller
 
         $url = env('SERVICE') . 'subsmanagement/listsubspending';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
@@ -857,17 +857,17 @@ try{
 
         $url = env('SERVICE') . 'commsetting/listregistrationdata';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
@@ -1025,17 +1025,17 @@ try{
 
         $url = env('SERVICE') . 'subsmanagement/membership';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1058,17 +1058,17 @@ try{
 
         $url = env('SERVICE') . 'commsetting/listpaymenttype';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1090,17 +1090,17 @@ try{
 
         $url = env('SERVICE') . 'commsetting/listbank';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1121,17 +1121,17 @@ try{
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'commsetting/listpayment';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
@@ -1170,12 +1170,12 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1244,21 +1244,21 @@ try{
                     alert()->success('Successfully to update your community information', 'Now Updated!')->persistent('Done');
                     return back();
                 }
-             } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
         } else { //END-IF  UPLOAD-IMAGE
             $input = $request->all(); // getdata form by name
             $imageRequest = [
@@ -1375,17 +1375,17 @@ try{
 
         $url = env('SERVICE') . 'usermanagement/listuser';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1410,17 +1410,17 @@ try{
         $url = env('SERVICE') . 'usermanagement/listusertype';
         $client = new \GuzzleHttp\Client();
 
-        try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1511,15 +1511,15 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
-            return redirect('admin/subs_management');
-        }
+            if ($json['success'] == true) {
+                alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
+                return redirect('admin/subs_management');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1622,15 +1622,15 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Successfully give a approval', $textatus)->persistent('Done');
-            return redirect('admin/subs_management');
-        }
+            if ($json['success'] == true) {
+                alert()->success('Successfully give a approval', $textatus)->persistent('Done');
+                return redirect('admin/subs_management');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -1670,12 +1670,12 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1819,15 +1819,15 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        // return $json;
-        if ($json['success'] == true) {
-            alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
-            return redirect('admin/settings/payment');
-        }
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            // return $json;
+            if ($json['success'] == true) {
+                alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
+                return redirect('admin/settings/payment');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -1972,15 +1972,15 @@ try{
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try{
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        if ($json['success'] == true) {
-            alert()->success('Successfully Add Module Feature', 'Module Added')->persistent('Done');
-            return redirect('admin/module_management');
-        }
+            if ($json['success'] == true) {
+                alert()->success('Successfully Add Module Feature', 'Module Added')->persistent('Done');
+                return redirect('admin/module_management');
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
@@ -2007,17 +2007,17 @@ try{
 
         $url = env('SERVICE') . 'commsetting/listsettingcomm';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -2040,17 +2040,17 @@ try{
 
         $url = env('SERVICE') . 'reportmanagement/listsubscriber';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -2099,7 +2099,7 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
-            }else{
+            } else {
                 return $error;
             }
         } catch (ServerException $errornya) {
@@ -2921,17 +2921,17 @@ try{
 
         $url = env('SERVICE') . 'usertype/listusertype';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $exception) {
             $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
@@ -3047,17 +3047,17 @@ try{
 
         $url = env('SERVICE') . 'usertype/listfeature';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -3810,7 +3810,7 @@ try{
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
-// return $input;
+        // return $input;
         $subftr = [];
         foreach ($input['edit_subfitur'] as $i => $dt) {
             $dataArray = [
@@ -3848,12 +3848,12 @@ try{
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            if ($error["status"] == 401 || $error["message"] == "Unauthorized"){
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
                 alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
                 return redirect('admin');
-            }else{
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            } else {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -3867,5 +3867,102 @@ try{
             return back();
         }
     }
+
+
+    public function detail_tabel_subpayment(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        // return $input;
+
+        $url = env('SERVICE') . 'paymentmanagement/detailsubpayment';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        if ($input['status'] == "true") {
+            $stat = true;
+        } else {
+            $stat = false;
+        }
+
+        $bodyku = json_encode([
+            "subpayment_id" => (int) $input['subpayment_id'],
+            "level_status" => (int) $input['level_status'],
+            "status" => $stat
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+    public function get_payment_module()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        // return $input;
+        $url = env('SERVICE') . 'modulemanagement/paymenttype';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 } //end-class

@@ -1837,3 +1837,41 @@ margin-top: 9rem;
 .tipe2{
     display: none;
 }
+
+
+/* choose paymnet module management */
+#modal_pay_module .modal-dialog{
+    width: 100% !important;
+}
+
+
+
+/* //modal paymet module */
+.btn-blueline{
+  margin-top: 2%;
+  border: 1px solid #b9dbde;
+box-sizing: border-box;
+border-radius: 6px;
+color: #777777;
+width: 400px;
+margin-right: 1em;
+}
+
+#btn_pay_next{
+  width: 30%;
+  height: auto;
+  margin-top: 5%;
+}
+
+
+.btn-blueline:hover{
+background: linear-gradient(106.53deg, #cefffd 0%, #aacefd 56.6%);
+}
+
+.active.btn-blueline{
+    margin-top: 1em;
+  border:4px solid #2e93af;
+box-sizing: border-box;
+border-radius: 6px;
+color: #384049;
+}

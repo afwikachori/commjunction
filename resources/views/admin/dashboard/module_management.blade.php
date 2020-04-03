@@ -8,7 +8,10 @@
         </span> Module Management</h3>
 
     <nav aria-label="breadcrumb">
-        <!-- <button type="button" class="btn btn-tosca btn-sm">Add New Module</button> -->
+        <button type="button" id="btn_show_payment" class="btn btn-teal btn-sm" data-toggle="modal"
+            data-target="#modal_pay_module" data-dismiss="modal">
+            <i class="mdi mdi-check btn-icon-prepend">
+            </i> Pay </button>
     </nav>
 </div>
 
@@ -43,25 +46,6 @@
                             <div class="row">
 
                                 <div id="show_module_active" class="card-deck">
-
-                                    <!--  <div class="col-md-4 stretch-card grid-margin card-member">
-                <div class="card bg-gradient-success card-img-holder text-white member">
-                  <div class="card-body member">
-                  <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <label class="badge label-oren float-right">Active</label>
-                    <img src="'+logo+'" class="rounded-circle img-fluid img-card">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h4>Judul Module</h4>
-                    </div>
-                    <div class="col-md-12" style="text-align: right;">
-                      <a href="/admin" class="a_setmodule">
-                        <small lang="en" class="txt_detail_fitur h6 s11 cputih"> Setting
-                        <i class="mdi mdi-circle" aria-hidden="true"></i>
-                      </small></a>
-                    </div>
-                  </div>
-              </div></div></div> -->
 
                                 </div>
                             </div><!-- endrow -->
@@ -125,11 +109,6 @@
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
-
-
-
-
-
 
 <!-- MODAL ALL - aktifkan dan Detail-->
 <div class="modal fade" id="md_all_aktifkan_module" data-backdrop="static" tabindex="-1" role="dialog"
@@ -229,6 +208,10 @@
                     </div>
                     <div class="col-md-6">
                         <small class="clight">Module Sub-Features</small>
+                        <div id="nosubfitur"
+                            style="display: none; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;">
+                            <h2 class="clight" style="text-align: center;">No Subfeature</h2>
+                        </div>
                         <br>
 
                         <div class="row" style="margin-top:0.5em;">
@@ -254,7 +237,8 @@
                             <i class="mdi mdi-close"></i> Cancel
                         </button>
                         &nbsp;
-                        <button type="submit" class="btn btn-teal btn-sm">
+                        <button type="submit" id="btn_aktivasi_showhide" class="btn btn-teal btn-sm"
+                            style="display: none;">
                             <i class="mdi mdi-check btn-icon-prepend"></i>
                             Activate</button>
                     </center>
@@ -263,6 +247,41 @@
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
+
+<!-- MODAL PAYMENT MODULE -->
+<div id="modal_pay_module" class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+    aria-labelledby="modal_pay_module" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: 65%; margin: auto;">
+
+            <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
+                <h3 class="cgrey" style="margin-top: 1em;">Payment Method</h3>
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <h6 class="h5 clight" style="margin-bottom: 1.5em;">Choose Payment Method</h6>
+                        <div class="row" style="padding-left: 5%;">
+                            <div id="isi_method_pay">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-teal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 @endsection
@@ -273,7 +292,7 @@
     $(document).ready(function () {
         get_module_active();
         get_module_all();
-
+        get_payment_module();
     });
 
 
@@ -332,7 +351,6 @@
             }
         });
     }
-
 
     function get_list_setting_module(idmod) {
         // alert(idmod);
@@ -409,8 +427,6 @@
         });
     }
 
-
-
     function get_module_all() {
         $.ajaxSetup({
             headers: {
@@ -486,9 +502,6 @@
         });
     }
 
-
-
-
     function detail_module_all(idsubfitur) {
         // alert(idsubfitur);
         $.ajaxSetup({
@@ -526,9 +539,11 @@
                     if (dt.status == false) {
                         isistatus = '<label class="badge melengkung10px bg-abu cputih" ' +
                             'style="min-width:100px;"> Not Active</label >';
+                        $("#btn_aktivasi_showhide").show();
                     } else {
                         isistatus = '<label class="badge melengkung10px bg-ijo cputih" ' +
                             'style="min-width:100px;"> Active</label >';
+                        $("#btn_aktivasi_showhide").hide();
                     }
                     $(".status_aktif").html(isistatus);
 
@@ -551,6 +566,11 @@
                         $("#harga_grand").html('<center class="tebal cgrey">Free');
                     }
 
+                    if (dt.subfeature == 0) {
+                        $("#nosubfitur").show();
+                    } else {
+                        $("#nosubfitur").hide();
+                    }
                     var subf = '';
                     var jum = 0;
                     $.each(dt.subfeature, function (i, item) {
@@ -579,8 +599,8 @@
                             '</div>';
                     });
                     $(".show_subfitur_module").html(subf);
-
                     $("#md_all_aktifkan_module").modal("show");
+
                 }
             },
             error: function (result) {
@@ -589,9 +609,39 @@
         });
     }
 
+    function get_payment_module() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_payment_module',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+                var text = '';
+                $.each(result, function (i, item) {
+                    text += '<button type="button" id="method'+item.id+'" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
+                            'onclick="pilih_pay_bank(this)">'+item.payment_title+'</button >';
+                });
+                $("#isi_method_pay").html(text);
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
 
 
-
+function pilih_pay_bank(ini) {
+    $('.btn-blueline').removeClass('active');
+    $("#"+ini.id).addClass('active');
+alert('hi');
+}
 </script>
 
 @endsection

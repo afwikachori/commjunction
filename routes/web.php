@@ -65,11 +65,12 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
-Route::post('edit_usertype_management_admin', 'AdminCommController@edit_usertype_management_admin')->name('edit_usertype_management_admin');
+Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
 
+Route::post('detail_tabel_subpayment', 'AdminCommController@detail_tabel_subpayment')->name('detail_tabel_subpayment');
+Route::post('edit_usertype_management_admin', 'AdminCommController@edit_usertype_management_admin')->name('edit_usertype_management_admin');
 Route::post('LogoutAdmin', 'AdminCommController@LogoutAdmin')->name('LogoutAdmin');
 Route::post('send_setting_module_admin', 'AdminCommController@send_setting_module_admin')->name('send_setting_module_admin');
-
 Route::post('get_result_setup_comsetting', 'AdminCommController@get_result_setup_comsetting')->name('get_result_setup_comsetting');
 Route::post('tabel_report_subscriber_admin','AdminCommController@tabel_report_subscriber_admin')->name('tabel_report_subscriber_admin');
 Route::post('get_list_subscriber_report','AdminCommController@get_list_subscriber_report')->name('get_list_subscriber_report');
