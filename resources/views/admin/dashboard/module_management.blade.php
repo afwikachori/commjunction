@@ -8,10 +8,10 @@
         </span> Module Management</h3>
 
     <nav aria-label="breadcrumb">
-        <button type="button" id="btn_show_payment" class="btn btn-teal btn-sm" data-toggle="modal"
+        <!-- <button type="button" id="btn_show_payment" class="btn btn-teal btn-sm" data-toggle="modal"
             data-target="#modal_pay_module" data-dismiss="modal">
             <i class="mdi mdi-check btn-icon-prepend">
-            </i> Pay </button>
+            </i> Pay </button> -->
     </nav>
 </div>
 
@@ -210,7 +210,7 @@
                         <small class="clight">Module Sub-Features</small>
                         <div id="nosubfitur"
                             style="display: none; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;">
-                            <h2 class="clight" style="text-align: center;">No Subfeature</h2>
+                            <h2 class="clight" style="text-align: center; margin-top: 3em;">No Subfeature</h2>
                         </div>
                         <br>
 
@@ -225,19 +225,19 @@
             </div><!-- end-body -->
 
 
-                <div class="modal-footer" style="border: none;">
-                    <center>
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
-                        </button>
-                        &nbsp;
-                        <button type="button" id="btn_aktivasi_showhide" class="btn btn-teal btn-sm"
-                            style="display: none;">
-                            <i class="mdi mdi-check btn-icon-prepend"></i>
-                            Activate</button>
-                    </center>
-                </div> <!-- end-footer     -->
+            <div class="modal-footer" style="border: none;">
+                <center>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_aktivasi_showhide" onclick="cek_pay_module(this)"
+                    data-dismiss="modal" class="btn btn-teal btn-sm" style="display: none;">
+                        <i class="mdi mdi-check btn-icon-prepend"></i>
+                        Activate</button>
+                </center>
+            </div> <!-- end-footer     -->
 
         </div> <!-- END-MDL CONTENT -->
     </div>
@@ -245,55 +245,59 @@
 
 
 <!-- MODAL PAYMENT M\ODULE -->
-<div id="modal_pay_module" class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="modal_pay_module" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width: 65%; margin: auto;">
-<form method="POST" id="form_aktivasi_module" action="{{route('aktifasi_module_admincomm')}}">
-    {{ csrf_field() }}
-    <input type="hidden" name="id_modulefitur" id="id_modulefitur">
+            <form method="POST" id="form_aktivasi_module" action="{{route('aktifasi_module_admincomm')}}">
+                {{ csrf_field() }}
+                <input type="hidden" name="id_modulefitur" id="id_modulefitur">
 
-            <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
-                <h3 class="cgrey" style="margin-bottom: 1em;">Choose Payment</h3>
-                <div class="row">
-                    <div class="col-md-4">
-<h6 class="h6 clight">Choose Payment Time</h6>
-                        <select id="payment_time_module" class="form-control input-abu" name="payment_time_module" required>
-                            <option disabled selected>Choose</option>
-                            <option value="1">Onetime</option>
-                            <option value="2">Monthly</option>
-                            <option value="3">Annual</option>
-                        </select>
+                <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
+                    <h3 class="cgrey" style="margin-bottom: 1em;">Choose Payment</h3>
+                    <div class="row" style="margin-bottom: 0.5em;">
+                        <div class="col-md-4">
+                            <h6 class="h6 clight">Choose Payment Time</h6>
+                            <select id="payment_time_module" class="form-control input-abu" name="payment_time_module"
+                                required>
+                                <option disabled selected>Choose</option>
+                                <option value="1">Onetime</option>
+                                <option value="2">Monthly</option>
+                                <option value="3">Annual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8" style="margin-top: auto; margin-bottom: auto;">
+                        <span class="h5 cblue" id="text_sekali" style="display: none;"> </span>
+                        <span class="h5 cblue" id="text_bulanan" style="display: none;"> </span>
+                        <span class="h5 cblue" id="text_tahunan" style="display: none;"> </span>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <div id="isi_pay_time"></div>
-                    </div>
-                </div>
-<br>
-                <div class="row">
-                    <div class="col-md-7">
-                        <h6 class="h6 clight" style="margin-bottom:0.5em;">Choose Payment Method</h6>
-                        <div class="row" style="padding-left: 5%;">
-                            <div id="isi_method_pay">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h6 class="h6 clight">Choose Payment Method</h6>
+                            <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
+                                <div id="isi_method_pay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <h6 class="h6 clight" style="margin-bottom:1em;">Bank Transfer</h6>
+                            <div id="isi_show_bank" class="collapse-accordion" role="tablist"
+                                aria-multiselectable="true">
 
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-5">
-                    <h6 class="h6 clight" style="margin-bottom:1em;">Bank Transfer</h6>
-                        <div id="isi_show_bank" class="collapse-accordion" role="tablist" aria-multiselectable="true">
-
-                        </div>
-                    </div>
                 </div>
-            </div>
 
-                <input type="text" name="id_pay_method_module" id="id_pay_method_module">
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
-            </div>
+                <input type="hidden" name="id_pay_method_module" id="id_pay_method_module">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                </div>
             </form>
         </div>
     </div>
@@ -565,20 +569,24 @@
                     $(".status_aktif").html(isistatus);
 
                     //pricing
+                    $("#btn_aktivasi_showhide").val(dt.price_annual);
                     if (dt.price_annual != 0) {
                         $("#harga_tahunan").html("Rp " + rupiah(dt.price_annual));
+                        $("#text_tahunan").html(rupiah(dt.price_annual) + '&nbsp; <small class="clight"> / Year</small>');
                     } else {
                         $("#harga_tahunan").html('<center class="tebal cgrey">Free');
                     }
 
                     if (dt.price_monthly != 0) {
                         $("#harga_bulanan").html("Rp " + rupiah(dt.price_monthly));
+                         $("#text_bulanan").html(rupiah(dt.price_monthly)+ '&nbsp; <small class="clight"> / Month</small>');
                     } else {
                         $("#harga_bulanan").html('<center class="tebal cgrey">Free');
                     }
 
                     if (dt.grand_pricing != 0) {
                         $("#harga_grand").html("Rp " + rupiah(dt.grand_pricing));
+                         $("#text_sekali").html(rupiah(dt.grand_pricing) + '&nbsp; <small class="clight"> / Once</small>');
                     } else {
                         $("#harga_grand").html('<center class="tebal cgrey">Free');
                     }
@@ -704,18 +712,68 @@
 
     $('#payment_time_module').change(function () {
         var dipilih = this.value;
-        var showin = '';
-        if(dipilih == 1){
-            showin = '<span class="h6 cblue">Rp 25.500 </span> &nbsp; <small class="clight"> / Once</small>';
-        }else if(dipilih == 2){
-            showin = '<span class="h6 cblue">Rp 3.000 </span> &nbsp; <small class="clight"> / Once</small>';
-        }else{
-            showin = '<span class="h6 cblue">Rp 17.500 </span> &nbsp; <small class="clight"> / Once</small>';
+
+        if (dipilih == 1) {
+           $("#text_sekali").show();
+            $("#text_bulanan").hide();
+             $("#text_tahunan").hide();
+        } else if (dipilih == 2) {
+            $("#text_sekali").hide();
+            $("#text_bulanan").show();
+            $("#text_tahunan").hide();
+        } else {
+            $("#text_sekali").hide();
+            $("#text_bulanan").hide();
+            $("#text_tahunan").show();
         }
-        $("#isi_pay_time").html(showin);
     });
 
 
+    function cek_pay_module(hrg) {
+        if(hrg.value != 0){
+            $("#modal_pay_module").modal('show');
+        }else{
+             $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/admin/aktifasi_module_admincomm',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "id_modulefitur": $("#id_modulefitur").val(),
+                    "payment_time_module": "0",
+                    "id_pay_method_module": "0",
+                },
+                success: function (result) {
+                    console.log(result);
+                      if (result.success == false) {
+                        if (result.status == 401 || result.message == "Unauthorized") {
+                            ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                            setTimeout(function () {
+                                location.href = '/admin';
+                            }, 5000);
+                        } else {
+                            ui.popup.show('warning', result.message, 'Warning');
+                        }
+                    } else {
+                        swal("Activated Free Module!","Successfully Add Module Feature", "success");
+                        setTimeout(function () {
+                            window.location.reload();
+                          }, 2000);
+                    }
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show");
+                }
+            });
+
+        }
+    }
 
 </script>
 

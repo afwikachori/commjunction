@@ -1967,7 +1967,7 @@ class AdminCommController extends Controller
             'payment_time' => $input['payment_time_module'],
             'payment_method_id' => $input['id_pay_method_module']
         ]);
-
+        // return $bodyku;
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -1978,7 +1978,7 @@ class AdminCommController extends Controller
             $json = json_decode($response, true);
 
             if ($json['success'] == true) {
-                alert()->success('Successfully Add Module Feature', 'Module Added')->persistent('Done');
+                alert()->success('Successfully Add Module Feature', 'Activated')->persistent('Done');
                 return redirect('admin/module_management');
             }
         } catch (ClientException $errornya) {
