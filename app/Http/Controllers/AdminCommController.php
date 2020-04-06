@@ -4013,6 +4013,45 @@ class AdminCommController extends Controller
     }
 
 
+    public function get_list_notif_navbar(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        $input = $request->all();
+
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'community_id' => $input['community_id'],
+            'start_date' => $input['start_date'],
+            'end_date' => $input['end_date'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 

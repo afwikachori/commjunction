@@ -835,6 +835,38 @@ class SubscriberController extends Controller
     }
 
 
+    public function get_pricing_membership()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+
+        $url = env('SERVICE') . 'dashboard/membership';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if($json['success'] == true){
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 

@@ -1922,3 +1922,13 @@ color: #384049;
 .hidendulu.dipilih{
 display: block;
 }
+
+
+/* NAVBAR NOTIF */
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
+    margin-bottom: 0;
+    padding: 6px 15px !important;
+    cursor: pointer;
+}
+
+

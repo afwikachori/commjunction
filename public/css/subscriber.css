@@ -1017,3 +1017,78 @@ div::-webkit-scrollbar-thumb {
      align-items: center;
      justify-content: center;
 }
+
+
+.navbar.nav-biru{
+  background: linear-gradient(159.95deg, #bce3ec 0%, #50C9C3 56.6%) !important;
+  height: 40px !important;
+}
+
+.card .card-body.member {
+    padding: 1.5rem 2rem !important;
+}
+
+
+/* //CARD MEMBRSIP */
+
+.bg-cardpricing{
+position: absolute;
+margin-left: 3.2em;
+top: -21px;
+height: 399px;
+width: 320px;
+left: -76px;
+}
+
+.fiturcard{
+width: 9.5rem;
+height: auto;
+min-height: 11.5rem;
+margin-top: 5%;
+}
+
+
+.cd-pricing {
+width: 55%;
+min-width: 235px;
+min-height: 335px;
+height: auto;
+margin-top: 7%;
+border-radius: 10px;
+background-image: url("/visual/card-pricing2.png");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+}
+
+.clr-blue{
+  background:  linear-gradient(159.95deg, #bce3ec 0%, #50C9C3 56.6%) !important;
+  border-radius: 40px;
+  color: white;
+  width: 130px;
+  text-align: center;
+  padding: 0.5rem 0.5rem !important;
+  border: none;
+  outline: none;
+}
+
+.card.cd-pricing:hover{
+ border-style: solid;
+height: auto;
+margin-top: 3%;
+ border-width: 3px;
+ border-color: rgb(39, 208, 250);
+ margin-top: 0em;
+ border-radius: 10px;
+}
+
+.card-harga{
+font-size: 25px;
+}
+
+
+.imgprice{
+width: 70px;
+height: auto;
+margin-bottom: 0.5em;
+}

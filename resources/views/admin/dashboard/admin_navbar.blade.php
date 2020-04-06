@@ -38,7 +38,7 @@
               </div>
             </li>
 
-<!--
+
             <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
@@ -54,8 +54,9 @@
                     </div>
                   </div>
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                    <small class="preview-subject font-weight-normal mb-1 s14">Event today</small>
+                    <small class="text-gray ellipsis mb-0">
+                        Just a reminder that you have an event today </small>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
@@ -66,8 +67,8 @@
                     </div>
                   </div>
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                    <small class="preview-subject font-weight-normal mb-1 s14">Settings</small>
+                    <small class="text-gray ellipsis mb-0"> Update dashboard </small>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
@@ -78,14 +79,14 @@
                     </div>
                   </div>
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                    <small class="preview-subject font-weight-normal mb-1 s14">Launch Admin</small>
+                    <small class="text-gray ellipsis mb-0"> New admin wow! </small>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+                <a href="#"><h6 class="p-3 mb-0 text-center">See all notifications</h6></a>
               </div>
-            </li> -->
+            </li>
 
 
             <li class="nav-item nav-logout dropdown">

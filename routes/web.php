@@ -65,6 +65,7 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
+Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');
 
 Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
 Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
@@ -305,6 +306,7 @@ Route::get('/transaction_management', 'SubscriberController@TransactionSubsView'
 
 
 //POST
+Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
 
 Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
 Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');
