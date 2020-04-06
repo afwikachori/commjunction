@@ -1881,7 +1881,7 @@ color: #384049;
 
 .card.border-oren{
    border: 1.2px solid #b9dbde;
-   width: 89%;
+   width: 100%;
    border-radius: 8px;
    margin-bottom: 1em;
 }
@@ -1912,7 +1912,7 @@ color: #384049;
 }
 
 .collapse-accordion .card-block{
-    padding: 6.5%;
+    padding: 5%;
 }
 
 .hidendulu{

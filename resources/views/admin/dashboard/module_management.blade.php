@@ -224,11 +224,6 @@
                 </div>
             </div><!-- end-body -->
 
-            <form method="POST" id="form_aktivasi_module" action="{{route('aktifasi_module_admincomm')}}">
-                {{ csrf_field() }}
-                <input type="hidden" name="id_modulefitur" id="id_modulefitur">
-                <input type="hidden" name="payment_time" id="payment_time">
-                <input type="hidden" name="payment_method_id" id="payment_method_id">
 
                 <div class="modal-footer" style="border: none;">
                     <center>
@@ -237,29 +232,47 @@
                             <i class="mdi mdi-close"></i> Cancel
                         </button>
                         &nbsp;
-                        <button type="submit" id="btn_aktivasi_showhide" class="btn btn-teal btn-sm"
+                        <button type="button" id="btn_aktivasi_showhide" class="btn btn-teal btn-sm"
                             style="display: none;">
                             <i class="mdi mdi-check btn-icon-prepend"></i>
                             Activate</button>
                     </center>
                 </div> <!-- end-footer     -->
-            </form>
+
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
 
-<!-- MODAL PAYMENT MODULE -->
+
+<!-- MODAL PAYMENT M\ODULE -->
 <div id="modal_pay_module" class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
     aria-labelledby="modal_pay_module" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width: 65%; margin: auto;">
+<form method="POST" id="form_aktivasi_module" action="{{route('aktifasi_module_admincomm')}}">
+    {{ csrf_field() }}
+    <input type="hidden" name="id_modulefitur" id="id_modulefitur">
 
             <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
-                <h3 class="cgrey" style="margin-top: 1em;">Payment Method</h3>
-
+                <h3 class="cgrey" style="margin-bottom: 1em;">Choose Payment</h3>
+                <div class="row">
+                    <div class="col-md-4">
+<h6 class="h6 clight">Choose Payment Time</h6>
+                        <select id="payment_time_module" class="form-control input-abu" name="payment_time_module" required>
+                            <option disabled selected>Choose</option>
+                            <option value="1">Onetime</option>
+                            <option value="2">Monthly</option>
+                            <option value="3">Annual</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="isi_pay_time"></div>
+                    </div>
+                </div>
+<br>
                 <div class="row">
                     <div class="col-md-7">
-                        <h6 class="h5 clight" style="margin-bottom: 1em;">Choose Payment Method</h6>
+                        <h6 class="h6 clight" style="margin-bottom:0.5em;">Choose Payment Method</h6>
                         <div class="row" style="padding-left: 5%;">
                             <div id="isi_method_pay">
 
@@ -268,18 +281,18 @@
                     </div>
 
                     <div class="col-md-5">
-                        <h6 class="h6 cgrey1" id="txt_paymethod" style="margin-bottom: 1.5em;">Bank Transfer</h6>
+                    <h6 class="h6 clight" style="margin-bottom:1em;">Bank Transfer</h6>
                         <div id="isi_show_bank" class="collapse-accordion" role="tablist" aria-multiselectable="true">
 
                         </div>
                     </div>
                 </div>
             </div>
-            <form>
+
                 <input type="text" name="id_pay_method_module" id="id_pay_method_module">
             <div class="modal-footer">
                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
             </div>
             </form>
         </div>
@@ -614,7 +627,7 @@
     }
 
     function get_payment_module() {
-        $("#id_pay_method_module").attr("disabled", "disabled");
+        $("#btn_submit_paymethod").attr("disabled", "disabled");
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -671,10 +684,12 @@
 
 
     function pilih_pay_bank(ini) {
+        $("#btn_submit_paymethod").attr("disabled", "disabled");
         $(".hidendulu").removeClass('dipilih');
         $('.btn-blueline').removeClass('active');
         $("#" + ini.id).addClass('active');
         $("." + ini.id).addClass('dipilih');
+        $("." + ini.id).removeClass('active');
     }
 
 
@@ -683,8 +698,24 @@
         $(".border-oren").removeClass("active");
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
-        $("#id_pay_method_module").removeAttr("disabled", "disabled");
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
     }
+
+
+    $('#payment_time_module').change(function () {
+        var dipilih = this.value;
+        var showin = '';
+        if(dipilih == 1){
+            showin = '<span class="h6 cblue">Rp 25.500 </span> &nbsp; <small class="clight"> / Once</small>';
+        }else if(dipilih == 2){
+            showin = '<span class="h6 cblue">Rp 3.000 </span> &nbsp; <small class="clight"> / Once</small>';
+        }else{
+            showin = '<span class="h6 cblue">Rp 17.500 </span> &nbsp; <small class="clight"> / Once</small>';
+        }
+        $("#isi_pay_time").html(showin);
+    });
+
+
 
 </script>
 
