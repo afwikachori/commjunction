@@ -1,5 +1,5 @@
 @extends('layout.admin-dashboard')
-
+@section('title', 'Module Management')
 @section('content')
 <div class="page-header">
     <h3 class="page-title">
@@ -259,7 +259,7 @@
 
                 <div class="row">
                     <div class="col-md-7">
-                        <h6 class="h5 clight" style="margin-bottom: 1.5em;">Choose Payment Method</h6>
+                        <h6 class="h5 clight" style="margin-bottom: 1em;">Choose Payment Method</h6>
                         <div class="row" style="padding-left: 5%;">
                             <div id="isi_method_pay">
 
@@ -268,16 +268,20 @@
                     </div>
 
                     <div class="col-md-5">
-                        <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
+                        <h6 class="h6 cgrey1" id="txt_paymethod" style="margin-bottom: 1.5em;">Bank Transfer</h6>
+                        <div id="isi_show_bank" class="collapse-accordion" role="tablist" aria-multiselectable="true">
 
-
+                        </div>
                     </div>
                 </div>
             </div>
+            <form>
+                <input type="text" name="id_pay_method_module" id="id_pay_method_module">
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-teal">Save changes</button>
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -610,6 +614,7 @@
     }
 
     function get_payment_module() {
+        $("#id_pay_method_module").attr("disabled", "disabled");
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -623,11 +628,39 @@
             success: function (result) {
                 console.log(result);
                 var text = '';
+                var isibank = '';
+
+                var noimg = '/img/fitur.png';
+
                 $.each(result, function (i, item) {
-                    text += '<button type="button" id="method'+item.id+'" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
-                            'onclick="pilih_pay_bank(this)">'+item.payment_title+'</button >';
+                    text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
+                        'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+                    var deskrip = '';
+                    $.each(item.payment_methods, function (i, itm) {
+                        $.each(itm.description, function (x, isides) {
+                            deskrip += '<li sytle="background-color:#fff;">' + isides + '</li>';
+                        });
+                        isibank +=
+                            '<div class="card border-oren hidendulu method' + item.id + '" id="cardpay' + itm.id + '">' +
+                            '<div class="card-header" role="tab" sytle="background-color:#fff;">' +
+                            '<h6 class="mb-0 pdb1">' +
+                            '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
+                            'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
+                            'aria-controls="collapseOne' + itm.id + '">' +
+                            '<img src="' + server_cdn + itm.icon + '" class="imgepay" style="width: 10%; height: auto;"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
+                            '<span class="float-right">' +
+                            '<i class="fa fa-chevron-right"></i>' +
+                            '</span>' +
+                            '</a></h6></div>' +
+                            '<div id="collapseOne' + itm.id + '" class="collapse" role="tabpanel">' +
+                            '<div class="card-block"><ul>' + deskrip +
+                            '</ul></div></div></div>';
+                    });
                 });
                 $("#isi_method_pay").html(text);
+                $("#isi_show_bank").html(isibank);
+
             },
             error: function (result) {
                 console.log(result);
@@ -637,11 +670,22 @@
     }
 
 
-function pilih_pay_bank(ini) {
-    $('.btn-blueline').removeClass('active');
-    $("#"+ini.id).addClass('active');
-alert('hi');
-}
+    function pilih_pay_bank(ini) {
+        $(".hidendulu").removeClass('dipilih');
+        $('.btn-blueline').removeClass('active');
+        $("#" + ini.id).addClass('active');
+        $("." + ini.id).addClass('dipilih');
+    }
+
+
+    function pilihpay(idpay) {
+        $("#id_pay_method_module").val(idpay);
+        $(".border-oren").removeClass("active");
+        $("#cardpay" + idpay).addClass("active");
+        $("#btn_pay_next").removeAttr("disabled");
+        $("#id_pay_method_module").removeAttr("disabled", "disabled");
+    }
+
 </script>
 
 @endsection

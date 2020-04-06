@@ -2455,11 +2455,20 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
+
+        if($input['status'] == "true"){
+            $tat = true;
+        }else{
+            $tat = false;
+        }
+
         $bodyku = json_encode([
-            "payment_id" => $input['payment_id'],
-            "level_status" => $input['level_status'],
-            "status" => $input['status']
+            "payment_id" => (int)$input['payment_id'],
+            "level_status" => (int)$input['level_status'],
+            "status" => $tat
         ]);
+
+        // return $bodyku;
 
         $datakirim = [
             'body' => $bodyku,
@@ -3958,6 +3967,50 @@ class AdminCommController extends Controller
 
 
 
+
+    public function setting_subpayment_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        return $input;
+
+        $url = env('SERVICE') . 'paymentmanagement/setting';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "feature_id" => $input['feature_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 

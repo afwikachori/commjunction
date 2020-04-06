@@ -282,28 +282,32 @@
                                     style="border-radius: 10px;">
                                     <i class="mdi mdi-close"></i> Cancel
                                 </button>
-
-                            </div> <!-- end-footer     -->
-                        </div> <!-- {{-- endtab --}} -->
+                            </div>
+                        </div>
 
                         <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 425px;">
-                            <input type="text" id="id_sub_metod">
-                            <div class="isi_setting_subpay" style="margin-top: 1.5em;">
-                            </div>
-                            <div class="modal-footer kananbawah">
-                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                    style="border-radius: 10px;">
-                                    <i class="mdi mdi-close"></i> Cancel
-                                </button>
-                            </div> <!-- end-footer     -->
+                            <form method="POST" id="form_setting_subpayment"
+                                action="{{route('setting_subpayment_admin')}}">
+                                {{ csrf_field() }}
+                                <input type="hidden" id="id_sub_metod" name="id_sub_metod">
+                                <div class="isi_setting_subpay" style="margin-top: 1.5em;">
+                                </div>
+                                <div class="modal-footer kananbawah">
+                                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                        style="border-radius: 10px;">
+                                        <i class="mdi mdi-close"></i> Cancel
+                                    </button>
+                                    &nbsp;
+                                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_setpay">
+                                        <i class="mdi mdi-check btn-icon-prepend">
+                                        </i>Submit</button>
+                                </div>
+                        </form>
                         </div>
-                        <!-- {{-- endtab --}} -->
                     </div>
                 </div>
-            </div> <!-- end-body -->
-
-
-        </div> <!-- END-MDL CONTENT -->
+            </div>
+        </div>
     </div>
 </div>
 
@@ -617,92 +621,103 @@
             },
             success: function (result) {
                 console.log(result);
-                var res = result[0];
-                if (res.status === "false") {
-                    $("#hide_btn_aktivasi").show();
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 } else {
-                    $("#hide_btn_aktivasi").hide();
-                }
+                    var res = result[0];
+                    if (res.status === false) {
+                        $("#hide_btn_aktivasi").show();
+                    } else {
+                        $("#hide_btn_aktivasi").hide();
+                    }
 
-                if (res.payment_title != null) {
-                    $("#detail_judul").html(res.payment_title);
-                }
-                if (res.description != null) {
-                    $("#detail_deskripsi").html(res.description);
-                }
+                    if (res.payment_title != null) {
+                        $("#detail_judul").html(res.payment_title);
+                    }
+                    if (res.description != null) {
+                        $("#detail_deskripsi").html(res.description);
+                    }
 
-                if (res.price_monthly != null) {
-                    $("#detail_pricebulan").html("Rp " + rupiah(res.price_monthly));
-                    $("#detail_pricetahun").html("Rp " + rupiah(res.price_annual));
-                    $("#detail_minbulan").html(res.minimum_monthly_subscription);
-                    $("#detail_mintahun").html(res.minimum_annual_subscription);
-                    $(".hideku").fadeIn("fast");
-                } else {
-                    $(".hideku").fadeOut("fast");
-                }
+                    if (res.price_monthly != null) {
+                        $("#detail_pricebulan").html("Rp " + rupiah(res.price_monthly));
+                        $("#detail_pricetahun").html("Rp " + rupiah(res.price_annual));
+                        $("#detail_minbulan").html(res.minimum_monthly_subscription);
+                        $("#detail_mintahun").html(res.minimum_annual_subscription);
+                        $(".hideku").fadeIn("fast");
+                    } else {
+                        $(".hideku").fadeOut("fast");
+                    }
 
-                if (res.payment_methods != "") {
-                    var jsnDt = res.payment_methods;
+                    if (res.payment_methods != "") {
+                        var jsnDt = res.payment_methods;
 
-                    $('#tabel_sub_payment_super').DataTable().clear();
-                    $('#tabel_sub_payment_super').DataTable().destroy();
-                    $('#tabel_sub_payment_super tbody').empty();
+                        $('#tabel_sub_payment_super').DataTable().clear();
+                        $('#tabel_sub_payment_super').DataTable().destroy();
+                        $('#tabel_sub_payment_super tbody').empty();
 
-                    var tabelku = $('#tabel_sub_payment_super').DataTable({
-                        responsive: true,
-                        language: {
-                            paginate: {
-                                next: '<i class="mdi mdi-chevron-right"></i>',
-                                previous: '<i class="mdi mdi-chevron-left">'
-                            }
-                        },
-                        data: jsnDt,
-                        columns: [
-                            { mData: 'id' },
-                            { mData: 'payment_title' },
-                            {
-                                mData: 'icon',
-                                render: function (data, type, row, meta) {
-                                    var dtimg = server_cdn + data;
-                                    var noimg = '/img/fitur.png';
-                                    return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
+                        var tabelku = $('#tabel_sub_payment_super').DataTable({
+                            responsive: true,
+                            emptyTable: "No Data Available",
+                            language: {
+                                paginate: {
+                                    next: '<i class="mdi mdi-chevron-right"></i>',
+                                    previous: '<i class="mdi mdi-chevron-left">'
                                 }
                             },
-                            { mData: 'payment_bank_name' },
-                            { mData: 'payment_owner_name' },
-                            {
-                                mData: 'status',
-                                render: function (data, type, row, meta) {
-                                    var isine = '';
-                                    if (data == 0) {
-                                        isine = '<small class="badge bg-abu melengkung10px cwhite">Deactive</small>';
-                                    } else if (data == 1) {
-                                        isine = '<small class="badge bg-biru melengkung10px cdarkgrey">Active</small>';
-                                    } else if (data == 2) {
-                                        isine = '<small class="badge bg-kuning melengkung10px cdarkgrey">Unpaid</small>';
+                            data: jsnDt,
+                            columns: [
+                                { mData: 'id' },
+                                { mData: 'payment_title' },
+                                {
+                                    mData: 'icon',
+                                    render: function (data, type, row, meta) {
+                                        var dtimg = server_cdn + data;
+                                        var noimg = '/img/fitur.png';
+                                        return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
                                     }
-                                    return isine;
+                                },
+                                { mData: 'payment_bank_name' },
+                                { mData: 'payment_owner_name' },
+                                {
+                                    mData: 'status',
+                                    render: function (data, type, row, meta) {
+                                        var isine = '';
+                                        if (data == 0) {
+                                            isine = '<small class="badge bg-abu melengkung10px cwhite">Deactive</small>';
+                                        } else if (data == 1) {
+                                            isine = '<small class="badge bg-biru melengkung10px cdarkgrey">Active</small>';
+                                        } else if (data == 2) {
+                                            isine = '<small class="badge bg-kuning melengkung10px cdarkgrey">Unpaid</small>';
+                                        }
+                                        return isine;
+                                    }
+                                },
+                                {
+                                    mData: 'id',
+                                    render: function (data, type, row, meta) {
+                                        var dtaktif = data + "<>" + res.level_status + "<>" + res.status;
+                                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                                            'onclick="detail_subpayment(\'' + dtaktif + '\')">' +
+                                            '<i class="mdi mdi-eye"></i>' +
+                                            '</button>';
+                                    }
                                 }
-                            },
-                            {
-                                mData: 'id',
-                                render: function (data, type, row, meta) {
-                                    var dtaktif = data + "<>" + res.level_status + "<>" + res.status;
-                                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                                        'onclick="detail_subpayment(\'' + dtaktif + '\')">' +
-                                        '<i class="mdi mdi-eye"></i>' +
-                                        '</button>';
-                                }
-                            }
-                        ],
-                    }); //end-datatable
+                            ],
+                        }); //end-datatable
 
-                } else {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_sub_payment_super tbody').empty().append(nofound);
+                    } else {
+                        var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                        $('#tabel_sub_payment_super tbody').empty().append(nofound);
+                    }
+                    $("#modal_detail_payment_all_admin").modal('show');
                 }
-                $("#modal_detail_payment_all_admin").modal('show');
-
             },
             error: function (result) {
                 console.log(result);
@@ -716,7 +731,7 @@
 
     function detail_subpayment(subdata) {
         var split = subdata.split('<>');
-        alert(subdata);
+        // alert(subdata);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -727,51 +742,55 @@
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
-             data: {
+            data: {
                 "subpayment_id": split[0],
                 "level_status": split[1],
                 "status": split[2]
             },
             success: function (result) {
-                console.log(result);
-                // var isi = result;
-                // $("#modal_detail_payment_all_admin").modal("hide");
-                // $("#modal_detail_subpayment_super").modal("show");
-
-                // $("#id_sub_metod").val(isi.id);
-                // // get_setting_subpayment_admin();
-                // $("#aktif_id_subpayment").val(isi.id);
-
-                // var statusui = '';
-                // if (isi.status == 0) {
-                //     statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
-                // } else {
-                //     statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
-                // }
-                // $("#subpay_status").html(statusui);
-
-                // // var icn = isi.icon;
-                // // var cekimg = icn.slice(0, 1);
-
-                // // if (cekimg == "/") {
-                // //     var isiimg = icn.slice(1);
-                // // } else {
-                // //     var isiimg = isi.icon;
-                // // }
-                // // imglogo = server_cdn + isiimg;
+                // console.log(result);
+                var isi = result[0];
+                $("#modal_detail_payment_all_admin").modal("hide");
+                $("#modal_detail_subpayment_super").modal("show");
 
 
-                // $('#img_subpay').attr('src', imglogo);
-                // $("#detail_nama_pay").html(isi.payment_title);
-                // $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
-                // var uiku2 = '';
-                // $.each(isi.description, function (i, item) {
-                //     uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
-                // });
-                // $("#detail_deskripsi_pay").html(uiku2);
-                // $("#detail_bank_pay").html(isi.payment_bank_name);
-                // $("#detail_rekening").html(isi.payment_account);
-                // $("#detail_bankname").html(isi.payment_owner_name);
+                $("#id_sub_metod").val(isi.id);
+                get_setting_subpayment_admin();
+                $("#aktif_id_subpayment").val(isi.id);
+
+                var statusui = '';
+                if (isi.status == 0) {
+                    statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
+                } else {
+                    statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
+                }
+                $("#subpay_status").html(statusui);
+
+                if (isi.icon != null) {
+                    var icn = isi.icon;
+                    var cekimg = icn.slice(0, 1);
+
+                    if (cekimg == "/") {
+                        var isiimg = icn.slice(1);
+                    } else {
+                        var isiimg = isi.icon;
+                    }
+                    imglogo = server_cdn + isiimg;
+                    $('#img_subpay').attr('src', imglogo);
+                }
+
+                $("#detail_nama_pay").html(isi.payment_title);
+                $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+
+                var uiku2 = '';
+                $.each(isi.description, function (i, item) {
+                    uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+                });
+                $("#detail_deskripsi_pay").html(uiku2);
+
+                $("#detail_bank_pay").html(isi.payment_bank_name);
+                $("#detail_rekening").html(isi.payment_account);
+                $("#detail_bankname").html(isi.payment_owner_name);
 
             },
             error: function (result) {
@@ -803,33 +822,61 @@
                 var uiku = '';
 
                 if (result.success == false) {
-                    uiku = '<br><br><center><h1 class="clight">No Setting Payment</h1></center>';
-                    $(".isi_setting_subpay").html(uiku);
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                       ui.popup.show('error', result.message, 'Warning');
+                    }
                 } else {
+                    var uiku = '';
+                    $.each(result, function (i, item) {
+                        var htmltag = '';
+                        if (item.setting_type == 1) {
+                            var tipe = 'Input Text';
+                            htmltag = '<input type="text" name="input_' + item.id + '" id="input_' + item.id + '" value="' + item.value + '"' +
+                                'class="form-control input-abu param_setting">';
+                        } else {
+                            var tipe = 'Radio Button';
+                            if (item.value == "true") {
+                                htmltag = '<div class="form-group">' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                                    '</div>' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                                    '</div>';
+                            } else {
+                                htmltag = '<div class="form-group">' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                                    '</div>' +
+                                    '<div class="form-check set_mod">' +
+                                    '<label class="form-check-label">' +
+                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                                    '</div>';
+                            }
+                        }
 
+                        uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                            '<div class="col-8"><div class="form-group">' +
+                            '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                            '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                            '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                            '</p>' +
+                            '<input type="hidden" value="' + item.id + '" name="idsub_' + item.id + '">' +
+                            '</div>' +
+                            '</div >' +
+                            '<div class="col-4">' + htmltag +
+                            '</div></div></div>';
+                    });
+                    $(".isi_setting_subpay").html(uiku);
                 }
-
-
-                // $.each(result, function (i, item) {
-                //     if (item.setting_type == 1) {
-                //         var tipe = 'Input Text';
-                //     } else {
-                //         var tipe = 'Radio Button';
-                //     }
-                //     uiku += '<div class="row" style="margin-bottom:0.5em;">' +
-                //         '<div class="col-9"><div class="form-group">' +
-                //         '<h6 class="cgrey1 tebal name_setting">' + item.title +
-                //         '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
-                //         '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
-                //         '</p>' +
-                //         '</div>' +
-                //         '</div >' +
-                //         '<div class="col-3">' +
-                //         '<input type="text" value="' + item.value + '"' +
-                //         'class="form-control input-abu param_setting" disabled>' +
-                //         '</div></div></div>';
-                // });
-                // $(".isi_setting_subpay").html(uiku);
             },
             error: function (result) {
                 if (result == '404') {

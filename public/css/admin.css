@@ -1849,7 +1849,7 @@ margin-top: 9rem;
 /* //modal paymet module */
 .btn-blueline{
   margin-top: 2%;
-  border: 1px solid #b9dbde;
+  border: 1.2px solid #b9dbde;
 box-sizing: border-box;
 border-radius: 6px;
 color: #777777;
@@ -1870,8 +1870,55 @@ background: linear-gradient(106.53deg, #cefffd 0%, #aacefd 56.6%);
 
 .active.btn-blueline{
     margin-top: 1em;
-  border:4px solid #2e93af;
+  border:3.5px solid #2e93af;
 box-sizing: border-box;
 border-radius: 6px;
 color: #384049;
+}
+
+
+/* //acordion payment module */
+
+.card.border-oren{
+   border: 1.2px solid #b9dbde;
+   width: 89%;
+   border-radius: 8px;
+   margin-bottom: 1em;
+}
+
+.card.border-oren.active{
+  border: 3.5px solid #2e93af !important;
+}
+
+.collapse-accordion .card-header {
+  background-color: white !important;
+  color: rgb(75, 75, 75);
+  padding:0;
+  border-bottom: none;
+  border-radius: 8px;
+}
+
+.collapse-accordion .card-header:hover {
+    background: linear-gradient(106.53deg, #f7fafa 0%, #f5f9ff 56.6%);
+}
+
+.collapse-accordion .card a[data-toggle=collapse] {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: grey;
+}
+.collapse-accordion .tree .active, .active li {
+    background: #fff !important;
+}
+
+.collapse-accordion .card-block{
+    padding: 6.5%;
+}
+
+.hidendulu{
+    display: none;
+}
+
+.hidendulu.dipilih{
+display: block;
 }

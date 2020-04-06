@@ -65,8 +65,9 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 }); //end-admin
 
 //POST
-Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
 
+Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
+Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
 Route::post('detail_tabel_subpayment', 'AdminCommController@detail_tabel_subpayment')->name('detail_tabel_subpayment');
 Route::post('edit_usertype_management_admin', 'AdminCommController@edit_usertype_management_admin')->name('edit_usertype_management_admin');
 Route::post('LogoutAdmin', 'AdminCommController@LogoutAdmin')->name('LogoutAdmin');
