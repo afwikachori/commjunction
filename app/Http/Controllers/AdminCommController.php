@@ -3971,9 +3971,18 @@ class AdminCommController extends Controller
     public function setting_subpayment_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
+        $datain = $request->except('_token');
+        // return $datain;
+        $dtin = array_chunk($datain, 2);
 
-        return $input;
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[0],
+                "value" => $dt[1],
+            ];
+            array_push($data, $dataArray);
+        }
 
         $url = env('SERVICE') . 'paymentmanagement/setting';
         $client = new \GuzzleHttp\Client();
@@ -3981,9 +3990,8 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode([
-            "feature_id" => $input['feature_id'],
-        ]);
+        $bodyku = json_encode(["data_setting" => $data]);
+        // return $bodyku;
 
         $datakirim = [
             'body' => $bodyku,
@@ -3996,19 +4004,23 @@ class AdminCommController extends Controller
             $json = json_decode($response, true);
 
             if ($json['success'] == true) {
-                return $json['data'];
+                alert()->success('Successfully Setting up Payment', 'Succesfully')->autoclose(4500);
+                return back();
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
+            $error['message'] = "Server bermasalah";
             $error['succes'] = false;
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -4057,7 +4069,6 @@ class AdminCommController extends Controller
             return $error;
         }
     }
-
 
 
 

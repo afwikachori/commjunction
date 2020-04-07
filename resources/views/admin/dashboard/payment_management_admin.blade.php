@@ -169,6 +169,7 @@
                             </div>
                         </div>
                         <br>
+
                         <table id="tabel_sub_payment_super"
                             class="table table-hover table-sm table-striped dt-responsive" style="width:100%;">
                             <thead>
@@ -186,6 +187,12 @@
                                 </tr>
                             </thead>
                         </table>
+                        <div id="notabel" style="display: none">
+                            <center>
+                                <br><br><br><br>
+                                <h1 class="clight">Data Not Found</h1>
+                            </center>
+                        </div>
                     </div>
                 </div>
 
@@ -197,7 +204,7 @@
 </div>
 
 
-<!-- MODAL DETAIL SUB-PAYMENT MANAGEMENT-->
+<!-- MODAL DETAIL SUB-PAYMENT MANAGEMENT & SETTTING PAYMENT-->
 <div class="modal fade" id="modal_detail_subpayment_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -286,10 +293,16 @@
                         </div>
 
                         <div class="tab-pane" id="tab_default_2_subpay" style="height: auto; min-height: 425px;">
+                            <div id="nosetting_pay" style="display: none">
+                                <center>
+                                    <br><br><br><br>
+                                    <h2 class="clight">No Setting Payment</h2>
+                                </center>
+                            </div>
                             <form method="POST" id="form_setting_subpayment"
                                 action="{{route('setting_subpayment_admin')}}">
                                 {{ csrf_field() }}
-                                <input type="hidden" id="id_sub_metod" name="id_sub_metod">
+                                <!-- <input type="hidden" id="id_sub_metod" name="id_sub_metod"> -->
                                 <div class="isi_setting_subpay" style="margin-top: 1.5em;">
                                 </div>
                                 <div class="modal-footer kananbawah">
@@ -298,11 +311,12 @@
                                         <i class="mdi mdi-close"></i> Cancel
                                     </button>
                                     &nbsp;
-                                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_setpay">
+                                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_setpay"
+                                        style="display: none;">
                                         <i class="mdi mdi-check btn-icon-prepend">
                                         </i>Submit</button>
                                 </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -312,93 +326,11 @@
 </div>
 
 
-<!-- MODAL SETTING  MODULE -->
-<div class="modal fade" id="modul_add_settings_subpay" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <form method="POST" id="form_add_settings_subpay" action="{{route('add_setting_sub_payment')}}">
-        {{ csrf_field() }}
-        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-            <div class="modal-content"
-                style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
-                <div class="modal-header" style="padding-bottom: 0.5em !important; border:none;">
-                    <h3 class="modal-title cgrey">Add Setting Sub-Payment</h3>
-                    <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label>  -->
-                </div> <!-- end-header -->
-
-                <div class="modal-body">
-                    <div class="row-input">
-                        <input type="hidden" class="set_id_paymethod" name="set_id_paymethod">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <small class="clight s13">Title</small>
-                                    <input type="text" id="set_judul" name="set_judul" class="form-control input-abu"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <small class="clight s13">Setting Type</small>
-                                    <select class="form-control input-abu" name="set_tipe" id="set_tipe">
-                                        <option selected disabled> Choose </option>
-                                        <option value="1"> Radio Button </option>
-                                        <option value="2"> Inputan </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <small class="clight s13">Description</small>
-                                <textarea type="text" id="set_deskripsi" name="set_deskripsi"
-                                    class="form-control input-abu" rows="1"></textarea>
-                            </div>
-                            <div class="col-md-2">
-                                <div class=" form-group">
-                                    <small class="clight s13">Value</small>
-                                    <input type="text" id="set_value" name="set_value" class="form-control input-abu"
-                                        required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md" style="margin-top: 0.5em;">
-                                <small class="clight s13">Tag Html</small>
-                            </div>
-                            <div class="col-md-11">
-                                <input type="text" id="set_tag_html" name="set_tag_html"
-                                    class="form-control input-abu"></input>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div id="isi_newrow"></div>
-
-                    <center>
-                        <button type="button" class="btn btn-icon-text" id="addnewrow">
-                            <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                            <small>Add New Input</small> </button>
-                    </center>
-                </div> <!-- end-body -->
-
-                <div class="modal-footer" style="border: none;">
-                    <center>
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
-                        </button>
-                        &nbsp;
-                        <button type="submit" class="btn btn-teal btn-sm">Add Settings</button>
-                    </center>
-                </div> <!-- end-footer     -->
-            </div> <!-- END-MDL CONTENT -->
-        </div>
-    </form>
-</div>
 
 
 <!-- MODAL AKTIVASI PAYMENT MODULE -->
-<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modal_pay_module" aria-hidden="true">
+<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_pay_module"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width: 65%; margin: auto;">
             <form method="POST" id="form_aktivasi_payment_admin" action="{{route('aktivasi_payment_admin')}}">
@@ -418,13 +350,12 @@
                             <select id="payment_time_module" class="form-control input-abu" name="payment_time_module"
                                 required>
                                 <option disabled selected>Choose</option>
-                                <option value="1">Onetime</option>
-                                <option value="2">Monthly</option>
-                                <option value="3">Annual</option>
+                                <option value="1">Monthly</option>
+                                <option value="2">Annual</option>
                             </select>
                         </div>
                         <div class="col-md-8" style="margin-top: auto; margin-bottom: auto;">
-                             <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
+                            <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
                                 name="aktif_id_payment">
                         </div>
                     </div>
@@ -452,7 +383,7 @@
                 <input type="hidden" name="id_pay_method_module" id="id_pay_method_module">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod" disabled>Submit</button>
                 </div>
             </form>
         </div>
@@ -470,7 +401,7 @@
         tabel_payment_all_admin();
         tabel_payment_active_admin();
         get_payment_module();
-
+        tabel_tes();
     });  //end ready
 
 
@@ -605,9 +536,8 @@
     function detail_payment_all_admin(dtpay) {
         var split = dtpay.split('<>');
         // console.log(split);
-
         $("#aktif_id_payment").val(split[0]);
-
+        // $("#notabel").hide();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -625,7 +555,7 @@
 
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -641,6 +571,7 @@
                         $("#hide_btn_aktivasi").show();
                     } else {
                         $("#hide_btn_aktivasi").hide();
+
                     }
 
                     if (res.payment_title != null) {
@@ -666,6 +597,8 @@
                         $('#tabel_sub_payment_super').DataTable().clear();
                         $('#tabel_sub_payment_super').DataTable().destroy();
                         $('#tabel_sub_payment_super tbody').empty();
+                        // $("#notabel").hide();
+                        $('#tabel_sub_payment_super').show();
 
                         var tabelku = $('#tabel_sub_payment_super').DataTable({
                             responsive: true,
@@ -719,7 +652,9 @@
 
                     } else {
                         var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                        $('#tabel_sub_payment_super tbody').empty().append(nofound);
+                        $('#tabel_sub_payment_super tbody').html(nofound);
+                        // $("#tabel_sub_payment_super").hide();
+                        // $("#notabel").show();
                     }
                     $("#modal_detail_payment_all_admin").modal('show');
                 }
@@ -753,14 +688,9 @@
                 "status": split[2]
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 var isi = result[0];
-                $("#modal_detail_payment_all_admin").modal("hide");
-                $("#modal_detail_subpayment_super").modal("show");
-
-
-                $("#id_sub_metod").val(isi.id);
-                get_setting_subpayment_admin();
+                // $("#id_sub_metod").val(isi.id);
                 $("#aktif_id_subpayment").val(isi.id);
 
                 var statusui = '';
@@ -797,6 +727,14 @@
                 $("#detail_rekening").html(isi.payment_account);
                 $("#detail_bankname").html(isi.payment_owner_name);
 
+                if(isi.level_status != 2 ){
+                    $(".isi_setting_subpay").html('<center><br><br><br><h2 class=clight>Please Activate this payment first, to setting up</h2></center');
+                }else{
+                     get_setting_subpayment_admin(isi.id);
+                }
+
+                $("#modal_detail_payment_all_admin").modal("hide");
+                $("#modal_detail_subpayment_super").modal("show");
             },
             error: function (result) {
                 console.log(result);
@@ -806,8 +744,9 @@
 
     }
 
-    function get_setting_subpayment_admin() {
-        var idnya = $("#id_sub_metod").val();
+    function get_setting_subpayment_admin(idnya) {
+        // alert(idnya);
+        $(".isi_setting_subpay").html("");
         $(".set_id_paymethod").val(idnya);
         $.ajaxSetup({
             headers: {
@@ -824,7 +763,6 @@
             },
             success: function (result) {
                 console.log(result);
-                var uiku = '';
 
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
@@ -833,7 +771,13 @@
                             location.href = '/admin';
                         }, 5000);
                     } else {
-                       ui.popup.show('error', result.message, 'Warning');
+                        if (result.message === "Data Tidak ditemukan" || result.code === "PLQ97") {
+                            $("#nosetting_pay").show();
+                            $(".isi_setting_subpay").hide();
+                            $("#btn_submit_setpay").hide();
+                        } else {
+                            ui.popup.show('warning', result.message, 'Warning');
+                        }
                     }
                 } else {
                     var uiku = '';
@@ -880,12 +824,14 @@
                             '<div class="col-4">' + htmltag +
                             '</div></div></div>';
                     });
+                    $("#nosetting_pay").hide();
+                    $("#btn_submit_setpay").show();
                     $(".isi_setting_subpay").html(uiku);
                 }
             },
             error: function (result) {
                 console.log(result);
-                    console.log('data not found');
+                console.log('data not found');
             }
         });
     }
@@ -896,7 +842,7 @@
     });
 
 
-        function get_payment_module() {
+    function get_payment_module() {
         // $("#btn_submit_paymethod").attr("disabled", "disabled");
         $.ajaxSetup({
             headers: {
@@ -909,7 +855,7 @@
             dataSrc: '',
             timeout: 30000,
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var text = '';
                 var isibank = '';
 
@@ -952,8 +898,7 @@
         });
     }
 
-        function pilih_pay_bank(ini) {
-        $("#btn_submit_paymethod").attr("disabled", "disabled");
+    function pilih_pay_bank(ini) {
         $(".hidendulu").removeClass('dipilih');
         $('.btn-blueline').removeClass('active');
         $("#" + ini.id).addClass('active');
@@ -967,7 +912,9 @@
         $(".border-oren").removeClass("active");
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
-        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+        if($("#payment_time_module").val() !=""){
+            $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+        }
     }
 
 
