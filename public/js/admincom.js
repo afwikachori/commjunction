@@ -347,9 +347,6 @@ function get_list_notif_navbar(idkom) {
     });
 }
 
-
-
-
 function LogoutAdmin() {
     // $("#btn_logout_all").click(function () {
 

@@ -304,11 +304,17 @@ Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('/dashbo
 Route::get('/membership','SubscriberController@MembershipSubsView')->name('/membership');
 Route::get('/inbox_management', 'SubscriberController@InboxManagementSubsView')->name('/inbox_management');
 Route::get('/transaction_management', 'SubscriberController@TransactionSubsView')->name('/transaction_management');
+Route::get('/notification_management', 'SubscriberController@NotificationManagementViewSubs')->name('/notification_management');
 
 
 //POST
-Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
+Route::post('get_list_notif_navbar', 'SubscriberController@get_list_notif_navbar')->name('get_list_notif_navbar');
 
+Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
+
+Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
+
+Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
 Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
 Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');
 Route::post('get_list_subscriber_inbox', 'SubscriberController@get_list_subscriber_inbox')->name('get_list_subscriber_inbox');

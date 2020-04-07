@@ -1050,15 +1050,16 @@ margin-top: 5%;
 
 .cd-pricing {
 width: 55%;
-min-width: 235px;
-min-height: 335px;
+min-width: 230px;
+min-height: 310px;
 height: auto;
-margin-top: 7%;
+margin-top: 10%;
 border-radius: 10px;
 background-image: url("/visual/card-pricing2.png");
 background-repeat: no-repeat;
 background-position: center;
 background-size: cover;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .clr-blue{
@@ -1094,11 +1095,134 @@ margin-bottom: 1em;
 }
 
 
+
+
+/* choose paymnet module management */
+#modal_pay_initial .modal-dialog{
+    width: 100% !important;
+}
+
+
+
+
+
+/* choose paymnet module management */
+#modal_pay_module .modal-dialog{
+    width: 100% !important;
+}
+
+
+
+/* //modal paymet module */
+.btn-blueline{
+  margin-top: 2%;
+  border: 1.2px solid #b9dbde;
+box-sizing: border-box;
+border-radius: 6px;
+color: #777777;
+width: 400px;
+margin-right: 1em;
+}
+
+#btn_pay_next{
+  width: 30%;
+  height: auto;
+  margin-top: 5%;
+}
+
+
+.btn-blueline:hover{
+background: linear-gradient(106.53deg, #cefffd 0%, #aacefd 56.6%);
+}
+
+.active.btn-blueline{
+    margin-top: 1em;
+  border:3.5px solid #2e93af;
+box-sizing: border-box;
+border-radius: 6px;
+color: #384049;
+}
+
+
+/* //acordion payment module */
+
+.card.border-oren{
+   border: 1.2px solid #b9dbde;
+   width: 100%;
+   border-radius: 8px;
+   margin-bottom: 1em;
+}
+
+.card.border-oren.active{
+  border: 3.5px solid #2e93af !important;
+}
+
+.collapse-accordion .card-header {
+  background-color: white !important;
+  color: rgb(75, 75, 75);
+  padding:0;
+  border-bottom: none;
+  border-radius: 8px;
+}
+
+.collapse-accordion .card-header:hover {
+    background: linear-gradient(106.53deg, #f7fafa 0%, #f5f9ff 56.6%);
+}
+
+.collapse-accordion .card a[data-toggle=collapse] {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: grey;
+}
+.collapse-accordion .tree .active, .active li {
+    background: #fff !important;
+}
+
+.collapse-accordion .card-block{
+    padding: 5%;
+}
+
+.hidenlah{
+    display: none;
+    padding: 10px;
+}
+
+
+.hidendulu{
+    display: none;
+}
+
+.hidendulu.dipilih{
+display: block;
+}
+
+
 /* NAVBAR NOTIF */
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
     margin-bottom: 0;
-    padding: 6px 15px !important;
+    padding: 10px 15px !important;
     cursor: pointer;
 }
 
 
+.preview-list .preview-item .preview-thumbnail.medium img, .preview-list .preview-item .preview-thumbnail .preview-icon {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 100%;
+}
+
+.dropdown-item.preview-item.notif{
+width: 265px !important;
+}
+
+
+/* .modal_ajax .modal-content.membership{
+  background-color: rgba(0, 0, 0, 0.192) !important;
+  border: none;
+  color: white;
+} */
+
+#modal_initial_membership .modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+    overflow-x: hidden !important;
+}

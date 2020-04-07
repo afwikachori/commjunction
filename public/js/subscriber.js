@@ -81,6 +81,7 @@ function session_subscriber_logged() {
             console.log(result.access_token);
 
             var user = result.user;
+            get_list_notif_navbar(user.community_id);
             if (user.picture != undefined || user.picture != null) {
                 var oic = user.picture;
                 var cekone = oic.slice(0, 1);
@@ -272,4 +273,242 @@ function cekimage_cdn(img) {
     }
 
     return foto;
+}
+
+
+
+
+function get_pricing_membership() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_pricing_membership",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            // console.log(result);
+            var html = '';
+            var noimg = '/img/fitur.png';
+            $.each(result, function (i, item) {
+                // console.log(item);
+                var idprice = item.id;
+
+                html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1.5em;">' +
+                    '<div class="card cd-pricing pricing' + idprice + '">' +
+                    '<div class="card-body">' +
+                    '<center>' +
+                    '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
+                    '<img src="' + server_cdn + item.icon + '"  class="rounded-circle img-fluid imgprice"' +
+                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                    '<div class="hidetime1">' +
+                    '<sup class="cgrey" style="font-size: 30px;">' +
+                    '<small class="h6">IDR</small></sup>' +
+                    '<label class="card-harga cgrey">' +
+                    '<strong>' + rupiah(item.pricing) + '</strong></label>' +
+                    '<small class="clight"> /Once</small>' +
+                    '</div>' +
+                    '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
+                    'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')">Get Now</button>' +
+                    '</center>' +
+                    '</div></div></div>';
+            });
+            $('.price_member').html(html);
+
+        }
+    });
+}
+
+function get_payment_initial() {
+    $("#btn_submit_paymethod").attr("disabled", "disabled");
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_payment_initial',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            console.log(result);
+            var text = '';
+            var isibank = '';
+
+            $.each(result, function (i, item) {
+                text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value="' + item.id + '"' +
+                    'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+
+                var des = item.comm_payment_type;
+                isibank = '<div class="hidenlah">' +
+                    '<h6 class="cgrey">' + des.payment_title + '</h6>' +
+                    '<p class="clight">' + des.description + '</p>' +
+                    '</div>';
+            });
+            $(".isi_method_pay").html(text);
+            $(".isi_show_bank").html(isibank);
+
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+function pilih_payment_initial(dtmember) {
+    $("#id_membertype").val("");
+    var dt = dtmember.split('<>');
+    $("#modal_initial_membership").modal('hide');
+
+    if (dt[1] != 0) {
+        $("#modal_pay_initial").modal('show');
+        $("#harga_member").html(rupiah(dt[1]));
+        $("#id_membertype").val(dt[0]);
+    } else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/set_initial_membership_pay',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "id_membertype": dt[0],
+                "id_pay_initial": "0",
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
+                } else {
+                    swal("Successfully", "Waiting your membership confirmation from Administrator", "success");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3500);
+                }
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+
+    }
+}
+
+function pilih_pay_bank(ini) {
+    console.log(ini.value);
+    $("#id_pay_initial").val("");
+    $(".hidendulu").removeClass('dipilih');
+    $('.btn-blueline').removeClass('active');
+    $("#" + ini.id).addClass('active');
+    $(".hidenlah").show();
+    $("#id_pay_initial").val(ini.value);
+    if ($("#id_pay_initial").val() != "") {
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
+}
+
+
+//GET LAST NOTIFICATION
+function get_list_notif_navbar(idkom) {
+    // alert(idkom);
+    var tday = new Date();
+    var d = new Date();
+    var today = formatDate(d.toLocaleDateString());
+    // console.log(today);
+    d.setMonth(d.getMonth() - 1);
+    var ago = formatDate(d.toLocaleDateString());
+    // console.log(ago);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_notif_navbar',
+        type: 'POST',
+        dataSrc: '',
+        data: {
+            "community_id": idkom,
+            "start_date": ago,
+            "end_date": today,
+            "read_status": "1", //1:notread 2:read
+            "notification_status": "receive", //send/receive
+            "limit": 5
+        },
+        timeout: 30000,
+        success: function (result) {
+            console.log(result);
+
+            var isiku = '';
+            $.each(result, function (i, item) {
+
+                var d = new Date(item.created_at);
+                dformat = [d.getDate(), d.getMonth() + 1,
+                d.getFullYear()].join('/') + ' ' +
+                    [d.getHours(),
+                    d.getMinutes(),
+                    d.getSeconds()].join(':');
+
+                var textArray = [
+                    'bg-success',
+                    'bg-info',
+                    'bg-danger',
+                    'bg-warning'
+                ];
+                var acak = Math.floor(Math.random() * textArray.length);
+
+
+                isiku += '<a class="dropdown-item preview-item notif">' +
+                    '<div class="preview-thumbnail medium">' +
+                    '<div class="preview-icon ' + textArray[acak] + '">' +
+                    '<i class="mdi mdi-bell-outline"></i>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                    '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
+                    '</label> ' +
+                    '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+                    '<small class="cbiru  mb-0">' + dformat + '</small > ' +
+                    '</div> ' +
+                    '</a> ' +
+                    '<div class="dropdown-divider"></div>';
+            });
+            $("#isi_notif_navbar").html(isiku);
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }

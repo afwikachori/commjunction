@@ -401,7 +401,7 @@
         tabel_payment_all_admin();
         tabel_payment_active_admin();
         get_payment_module();
-        tabel_tes();
+        // tabel_tes();
     });  //end ready
 
 
@@ -688,7 +688,7 @@
                 "status": split[2]
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var isi = result[0];
                 // $("#id_sub_metod").val(isi.id);
                 $("#aktif_id_subpayment").val(isi.id);
@@ -730,6 +730,7 @@
                 if(isi.level_status != 2 ){
                     $(".isi_setting_subpay").html('<center><br><br><br><h4 class=clight>To setting up, Please Activate this payment first or see Active Payment Table</h4></center');
                 }else{
+                    alert('level stat : 2');
                      get_setting_subpayment_admin(isi.id);
                 }
 

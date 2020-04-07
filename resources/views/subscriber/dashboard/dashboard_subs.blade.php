@@ -209,11 +209,12 @@
                     <h3 class="cgrey" style="margin-bottom: 0.5em;">Congratulations !!!</h3>
                     <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
-<br>
-                    <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a Tour</button>
+                    <br>
+                    <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
+                        Tour</button>
                     <br>
                     <br>
-                     <br>
+                    <br>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -238,7 +239,8 @@
                     </div>
                 </div>
                 <center>
-                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;">Got it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;">Got
+                        it</button>
                     <br>
                 </center>
             </div> <!-- end-modal body -->
@@ -259,8 +261,9 @@
                     <h3 class="cgrey" style="margin-bottom: 0.5em;">Ready For Action ?</h3>
                     <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
-<br>
-                    <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm" style="width:100px;">Finish</button>
+                    <br>
+                    <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm"
+                        style="width:100px;">Finish</button>
                     <br><br>
                 </center>
             </div> <!-- end-modal body -->
@@ -268,12 +271,81 @@
     </div>
 </div>
 
+
+<!-- MODAL MEMBERSHIP TYPE PAYMENT -->
+<div class="modal fade modal_ajax" id="modal_initial_membership" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content membership">
+            <div class="modal-body">
+                <div class="row justify-content-center" style="text-align: center;">
+                    <div class="card-deck price_member" style="padding-left: 6%; padding-right: 3%;">
+
+                    </div>
+                    <br>
+                </div> <!-- end-row -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PAYMENT MODULE -->
+<div id="modal_pay_initial" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_pay_initial"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width: 65%; margin: auto;">
+            <form method="POST" id="form_initial_member" action="{{route('set_initial_membership_pay')}}">
+                {{ csrf_field() }}
+
+                <div class="modal-body" style="min-height: 355px; height: auto; padding-left: 5%; padding-right: 5%;">
+                    <h3 class="cgrey" style="margin-bottom: 1.5em; margin-top:1em;">Choose Payment Method</h3>
+                    <div class="row" style="margin-bottom: 0.5em;">
+                        <div class="col-md-12">
+                            <h5 class="h5 clight">Membership Price</h5>
+                            <small class="cgrey2">Rp &nbsp;</small>
+                            <span class="h6 cblue" id="harga_member"></span>&nbsp;
+                            <small class="cgrey2"> ,-</small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h6 class="h6 clight">Choose Payment Method</h6>
+                            <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
+                                <div class="isi_method_pay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="isi_show_bank" class="collapse-accordion" role="tablist"
+                                aria-multiselectable="true">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id_pay_initial" id="id_pay_initial">
+                <input type="hidden" name="id_membertype" id="id_membertype">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
 
     $(document).ready(function () {
-        get_dashboard_subscriber();
+        // get_dashboard_subscriber();
+        get_pricing_membership();
+        get_payment_initial();
         $("#initial1").modal('show');
 
     });
@@ -358,6 +430,7 @@
         $("#initial1").modal('hide');
         $("#initial2").modal('hide');
         $("#initial3").modal('hide');
+        $("#modal_initial_membership").modal('show');
     });
 
 
