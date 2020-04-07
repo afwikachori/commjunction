@@ -799,7 +799,7 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 $('#jenis_transaksi').empty();
                 $('#jenis_transaksi').append("<option disabled> Choose</option>");
 
@@ -826,7 +826,11 @@
 
                 $("#jenis_transaksi2").get(0).selectedIndex = 0;
 
-            }
+            },
+             error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
         });
     } //endfunction
 
