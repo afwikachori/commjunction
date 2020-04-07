@@ -330,7 +330,7 @@ function get_list_notif_navbar(idkom) {
                     '</div>' +
                     '</div>' +
                     '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-                    '<label class="preview-subject font-weight-normal mb-1 s15"> From : ' + item.created_by_title +
+                    '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
                     '</label> ' +
                     '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
                     '<small class="cbiru  mb-0">' + dformat + '</small > ' +
