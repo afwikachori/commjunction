@@ -844,6 +844,11 @@ background: linear-gradient(108.22deg, #eca64e -2.66%, #efce5d 102.89%);
 color: #0FB1B5;
 }
 
+.cbiru{
+color: #719ca9;
+}
+
+
 .cred{
   color: red;
 }
@@ -1936,4 +1941,8 @@ display: block;
     width: 30px !important;
     height: 30px !important;
     border-radius: 100%;
+}
+
+.dropdown-item.preview-item.notif{
+width: 255px !important;
 }

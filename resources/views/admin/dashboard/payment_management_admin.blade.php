@@ -396,8 +396,7 @@
 </div>
 
 
-
-<!-- MODAL PAYMENT MODULE -->
+<!-- MODAL AKTIVASI PAYMENT MODULE -->
 <div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="modal_pay_module" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -825,69 +824,68 @@
             },
             success: function (result) {
                 console.log(result);
-                var uiku = '';
+                // var uiku = '';
 
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/admin';
-                        }, 5000);
-                    } else {
-                       ui.popup.show('error', result.message, 'Warning');
-                    }
-                } else {
-                    var uiku = '';
-                    $.each(result, function (i, item) {
-                        var htmltag = '';
-                        if (item.setting_type == 1) {
-                            var tipe = 'Input Text';
-                            htmltag = '<input type="text" name="input_' + item.id + '" id="input_' + item.id + '" value="' + item.value + '"' +
-                                'class="form-control input-abu param_setting">';
-                        } else {
-                            var tipe = 'Radio Button';
-                            if (item.value == "true") {
-                                htmltag = '<div class="form-group">' +
-                                    '<div class="form-check set_mod">' +
-                                    '<label class="form-check-label">' +
-                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
-                                    '</div>' +
-                                    '<div class="form-check set_mod">' +
-                                    '<label class="form-check-label">' +
-                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
-                                    '</div>';
-                            } else {
-                                htmltag = '<div class="form-group">' +
-                                    '<div class="form-check set_mod">' +
-                                    '<label class="form-check-label">' +
-                                    '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
-                                    '</div>' +
-                                    '<div class="form-check set_mod">' +
-                                    '<label class="form-check-label">' +
-                                    '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
-                                    '</div>';
-                            }
-                        }
+                // if (result.success == false) {
+                //     if (result.status == 401 || result.message == "Unauthorized") {
+                //         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                //         setTimeout(function () {
+                //             location.href = '/admin';
+                //         }, 5000);
+                //     } else {
+                //        ui.popup.show('error', result.message, 'Warning');
+                //     }
+                // } else {
+                //     var uiku = '';
+                //     $.each(result, function (i, item) {
+                //         var htmltag = '';
+                //         if (item.setting_type == 1) {
+                //             var tipe = 'Input Text';
+                //             htmltag = '<input type="text" name="input_' + item.id + '" id="input_' + item.id + '" value="' + item.value + '"' +
+                //                 'class="form-control input-abu param_setting">';
+                //         } else {
+                //             var tipe = 'Radio Button';
+                //             if (item.value == "true") {
+                //                 htmltag = '<div class="form-group">' +
+                //                     '<div class="form-check set_mod">' +
+                //                     '<label class="form-check-label">' +
+                //                     '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                //                     '</div>' +
+                //                     '<div class="form-check set_mod">' +
+                //                     '<label class="form-check-label">' +
+                //                     '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                //                     '</div>';
+                //             } else {
+                //                 htmltag = '<div class="form-group">' +
+                //                     '<div class="form-check set_mod">' +
+                //                     '<label class="form-check-label">' +
+                //                     '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                //                     '</div>' +
+                //                     '<div class="form-check set_mod">' +
+                //                     '<label class="form-check-label">' +
+                //                     '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                //                     '</div>';
+                //             }
+                //         }
 
-                        uiku += '<div class="row" style="margin-bottom:0.5em;">' +
-                            '<div class="col-8"><div class="form-group">' +
-                            '<h6 class="cgrey1 tebal name_setting">' + item.title +
-                            '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
-                            '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
-                            '</p>' +
-                            '<input type="hidden" value="' + item.id + '" name="idsub_' + item.id + '">' +
-                            '</div>' +
-                            '</div >' +
-                            '<div class="col-4">' + htmltag +
-                            '</div></div></div>';
-                    });
-                    $(".isi_setting_subpay").html(uiku);
+                //         uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                //             '<div class="col-8"><div class="form-group">' +
+                //             '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                //             '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                //             '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                //             '</p>' +
+                //             '<input type="hidden" value="' + item.id + '" name="idsub_' + item.id + '">' +
+                //             '</div>' +
+                //             '</div >' +
+                //             '<div class="col-4">' + htmltag +
+                //             '</div></div></div>';
+                //     });
+                //     $(".isi_setting_subpay").html(uiku);
                 }
             },
             error: function (result) {
-                if (result == '404') {
+                console.log(result);
                     console.log('data not found');
-                }
             }
         });
     }

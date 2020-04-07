@@ -199,11 +199,11 @@ function get_result_setup_comsetting() {
                     if (tipeform.ready == true) {
                         $('#form_tipe').hide();
                         var tip = '';
-                        if(tipeform.data == 1){
+                        if (tipeform.data == 1) {
                             tip = 'Username & Password';
-                        } else if (tipeform.data == 2){
+                        } else if (tipeform.data == 2) {
                             tip = 'Phone Number & Password';
-                        }else{
+                        } else {
                             tip = 'Email & Password';
                         }
                         $("#showtipeform").val(tip).show();
@@ -219,9 +219,9 @@ function get_result_setup_comsetting() {
                 }
 
                 if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
-                    if (oic == undefined || oic == "undefined"){
-                      oic = "";
-                    }else{
+                    if (oic == undefined || oic == "undefined") {
+                        oic = "";
+                    } else {
                         var oic = portal.data.image;
                     }
                     var cekone = oic.slice(0, 1);
@@ -279,7 +279,7 @@ function get_list_notif_navbar(idkom) {
     var d = new Date();
     var today = formatDate(d.toLocaleDateString());
     // console.log(today);
-     d.setMonth(d.getMonth() - 1);
+    d.setMonth(d.getMonth() - 1);
     var ago = formatDate(d.toLocaleDateString());
     // console.log(ago);
 
@@ -304,6 +304,41 @@ function get_list_notif_navbar(idkom) {
         success: function (result) {
             console.log(result);
 
+            var isiku = '';
+            $.each(result, function (i, item) {
+
+                var d = new Date(item.created_at);
+                dformat = [d.getDate(), d.getMonth() + 1,
+                d.getFullYear()].join('/') + ' ' +
+                    [d.getHours(),
+                    d.getMinutes(),
+                    d.getSeconds()].join(':');
+
+                var textArray = [
+                    'bg-success',
+                    'bg-info',
+                    'bg-danger',
+                    'bg-warning'
+                ];
+                var acak = Math.floor(Math.random() * textArray.length);
+
+
+                isiku += '<a class="dropdown-item preview-item notif">' +
+                    '<div class="preview-thumbnail medium">' +
+                    '<div class="preview-icon ' + textArray[acak] +'">' +
+                    '<i class="mdi mdi-bell-outline"></i>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                    '<label class="preview-subject font-weight-normal mb-1 s15"> From : ' + item.created_by_title +
+                    '</label> ' +
+                    '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+                    '<small class="cbiru  mb-0">' + dformat + '</small > ' +
+                    '</div> ' +
+                    '</a> ' +
+                    '<div class="dropdown-divider"></div>';
+            });
+            $("#isi_notif_navbar").html(isiku);
         },
         error: function (result) {
             console.log(result);
@@ -311,7 +346,6 @@ function get_list_notif_navbar(idkom) {
         }
     });
 }
-
 
 
 

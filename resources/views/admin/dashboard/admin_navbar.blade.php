@@ -47,45 +47,9 @@
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
                 <h6 class="p-3 mb-0">Notifications</h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail medium">
-                    <div class="preview-icon bg-success">
-                      <i class="mdi mdi-bell-outline"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <label class="preview-subject font-weight-normal mb-1 s15">
-                        Event today
-                    </label>
-                    <small class="ctosca  mb-1">07/04/2020 04:37</small>
-                     <small class="text-gray ellipsis mb-0">
-                        Just a reminder that you have an event today </small>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="mdi mdi-settings"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <small class="preview-subject font-weight-normal mb-1 s14">Settings</small>
-                    <small class="text-gray ellipsis mb-0"> Update dashboard </small>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="mdi mdi-link-variant"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <small class="preview-subject font-weight-normal mb-1 s14">Launch Admin</small>
-                    <small class="text-gray ellipsis mb-0"> New admin wow! </small>
-                  </div>
-                </a>
+                <div id="isi_notif_navbar">
+
+                </div>
                 <div class="dropdown-divider"></div>
                 <a href="#"><h6 class="p-3 mb-0 text-center">See all notifications</h6></a>
               </div>
