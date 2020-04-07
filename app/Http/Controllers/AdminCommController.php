@@ -2557,9 +2557,9 @@ class AdminCommController extends Controller
         ];
 
         $bodyku = json_encode([
-            "payment_method_id" => $input['payment_method_id'],
+            "payment_method_id" => $input['id_pay_method_module'],
             "payment_type_id" => $input['aktif_id_payment'],
-            "payment_time" => $input['aktif_payment_time']
+            "payment_time" => $input['payment_time_module']
         ]);
         // return $bodyku;
         $datakirim = [

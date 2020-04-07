@@ -244,7 +244,7 @@
 </div>
 
 
-<!-- MODAL PAYMENT M\ODULE -->
+<!-- MODAL PAYMENT MODULE -->
 <div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="modal_pay_module" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

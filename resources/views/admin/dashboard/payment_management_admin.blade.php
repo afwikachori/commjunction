@@ -164,7 +164,7 @@
                             <div class="col-md-6 col-sm-12" style="text-align: right; display: none;"
                                 id="hide_btn_aktivasi">
                                 <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                                    data-target="#modal_aktivasi_pay_admmin" data-dismiss="modal">
+                                    data-target="#modal_pay_module" data-dismiss="modal">
                                     Activation</button>
                             </div>
                         </div>
@@ -396,58 +396,64 @@
 </div>
 
 
-<!-- MODAL AKTIVASI STATUS  -->
-<div class="modal fade" id="modal_aktivasi_pay_admmin" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-            <div class="modal-header" style="border: none;">
-                <h4 class="modal-title">Payment Activation</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" id="form_change_status_inbox_super" action="{{route('aktivasi_payment_admin')}}">
+
+<!-- MODAL PAYMENT MODULE -->
+<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modal_pay_module" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width: 65%; margin: auto;">
+            <form method="POST" id="form_aktivasi_payment_admin" action="{{route('aktivasi_payment_admin')}}">
                 {{ csrf_field() }}
-                <div class="modal-body" style="min-height: 130px;">
-                    <div class="row" style="margin-top: 0.5em;">
-                        <div class="col-md-4" style="padding-top: 0.6em;">
-                            <small class="clight s13"><b>Payment Time</b></small>
-                        </div>
-                        <div class="col-md-8">
-                            <select class="form-control input-abu" name="aktif_payment_time" id="aktif_payment_time">
-                                <option selected disabled> Choose </option>
-                                <option value="1"> Montly </option>
-                                <option value="2"> Annual </option>
+                <input type="hidden" name="id_modulefitur" id="id_modulefitur">
+
+                <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
+                    <h3 class="cgrey" style="margin-bottom :0em;">Activation Payment</h3>
+                    <small class="clight">
+                        This feature is paid, to activate please choose the payment method below
+                    </small>
+                    <br>
+                    <br>
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-4">
+                            <h6 class="h6 cgrey2">Choose Payment Time</h6>
+                            <select id="payment_time_module" class="form-control input-abu" name="payment_time_module"
+                                required>
+                                <option disabled selected>Choose</option>
+                                <option value="1">Onetime</option>
+                                <option value="2">Monthly</option>
+                                <option value="3">Annual</option>
                             </select>
-                            <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
+                        </div>
+                        <div class="col-md-8" style="margin-top: auto; margin-bottom: auto;">
+                             <input class="form-control input-abu" type="hidden" id="aktif_id_payment"
                                 name="aktif_id_payment">
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-4">
-                            <small class="clight s13"><b>Payment Method</b></small>
+                        <div class="col-md-7">
+                            <h6 class="h6 cgrey2">Choose Payment Method</h6>
+                            <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
+                                <div id="isi_method_pay">
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <select class="form-control input-abu" name="payment_method_id" id="payment_method_id">
-                                <option selected disabled> Choose </option>
-                                <option value="5"> BCA Virtual Account </option>
-                            </select>
+
+                        <div class="col-md-5">
+                            <h6 class="h6 cgrey2" style="margin-bottom:1em;">Bank Transfer</h6>
+                            <div id="isi_show_bank" class="collapse-accordion" role="tablist"
+                                aria-multiselectable="true">
+
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer"
-                    style="border: none; margin-bottom: 0.5em;
-                            display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" id="btn_aktivasi_payment" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Submit </button>
+
+                <input type="hidden" name="id_pay_method_module" id="id_pay_method_module">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
                 </div>
             </form>
         </div>
@@ -464,7 +470,7 @@
     $(document).ready(function () {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
-
+        get_payment_module();
 
     });  //end ready
 
@@ -890,6 +896,82 @@
     $("#reset_tbl_payment_all").click(function () {
         tabel_payment_all_admin();
     });
+
+
+        function get_payment_module() {
+        // $("#btn_submit_paymethod").attr("disabled", "disabled");
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_payment_module',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+                var text = '';
+                var isibank = '';
+
+                var noimg = '/img/fitur.png';
+
+                $.each(result, function (i, item) {
+                    text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
+                        'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+                    var deskrip = '';
+                    $.each(item.payment_methods, function (i, itm) {
+                        $.each(itm.description, function (x, isides) {
+                            deskrip += '<li sytle="background-color:#fff;">' + isides + '</li>';
+                        });
+                        isibank +=
+                            '<div class="card border-oren hidendulu method' + item.id + '" id="cardpay' + itm.id + '">' +
+                            '<div class="card-header" role="tab" sytle="background-color:#fff;">' +
+                            '<h6 class="mb-0 pdb1">' +
+                            '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
+                            'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
+                            'aria-controls="collapseOne' + itm.id + '">' +
+                            '<img src="' + server_cdn + itm.icon + '" class="imgepay" style="width: 10%; height: auto;"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
+                            '<span class="float-right">' +
+                            '<i class="fa fa-chevron-right"></i>' +
+                            '</span>' +
+                            '</a></h6></div>' +
+                            '<div id="collapseOne' + itm.id + '" class="collapse" role="tabpanel">' +
+                            '<div class="card-block"><ul>' + deskrip +
+                            '</ul></div></div></div>';
+                    });
+                });
+                $("#isi_method_pay").html(text);
+                $("#isi_show_bank").html(isibank);
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
+
+        function pilih_pay_bank(ini) {
+        $("#btn_submit_paymethod").attr("disabled", "disabled");
+        $(".hidendulu").removeClass('dipilih');
+        $('.btn-blueline').removeClass('active');
+        $("#" + ini.id).addClass('active');
+        $("." + ini.id).addClass('dipilih');
+        $("." + ini.id).removeClass('active');
+    }
+
+
+    function pilihpay(idpay) {
+        $("#id_pay_method_module").val(idpay);
+        $(".border-oren").removeClass("active");
+        $("#cardpay" + idpay).addClass("active");
+        $("#btn_pay_next").removeAttr("disabled");
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
+
 
 </script>
 
