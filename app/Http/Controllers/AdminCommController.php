@@ -2335,7 +2335,7 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode(["data_Setting" => $data]);
+        $bodyku = json_encode(["data_setting" => $data]);
         // return $bodyku;
 
         $datakirim = [
@@ -4025,10 +4025,15 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            'community_id' => $input['community_id'],
-            'start_date' => $input['start_date'],
-            'end_date' => $input['end_date'],
+            'community_id'  => $input['community_id'],
+            'start_date'    => $input['start_date'],
+            'end_date'      => $input['end_date'],
+            "read_status"   => $input['read_status'],
+            "notification_status" => $input['notification_status'],
+            "limit"         => $input['limit'],
         ]);
+
+        // return $bodyku;
 
         $datakirim = [
             'body' => $bodyku,

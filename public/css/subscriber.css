@@ -1083,12 +1083,22 @@ margin-top: 3%;
 }
 
 .card-harga{
-font-size: 25px;
+font-size: 23px;
 }
 
 
 .imgprice{
-width: 70px;
+width: 60px;
 height: auto;
-margin-bottom: 0.5em;
+margin-bottom: 1em;
 }
+
+
+/* NAVBAR NOTIF */
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
+    margin-bottom: 0;
+    padding: 6px 15px !important;
+    cursor: pointer;
+}
+
+

@@ -99,8 +99,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <input class="form-control input-abu" name="list_komunitas_notif"
-                                    id="list_komunitas_notif" value="104" readonly>
+                                <h5 class="nama_komunitas cgrey2" style="margin-top: 1em;"></h5>
+                                <input type="hidden" class="form-control input-abu" name="list_komunitas_notif"
+                                    id="list_komunitas_notif" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -469,14 +470,14 @@
                         }
 
                         uiku += ' <div class="row">' +
-                            '<div class="col-7">' +
+                            '<div class="col-6">' +
                             '<div class="form-group">' +
                             '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
                             '<p class="clight s13 deskripsi_setting">' + item.description +
                             '</p>' +
                             '</div>' +
                             '</div >' +
-                            '<div class="col-5">' + inputipe +
+                            '<div class="col-6">' + inputipe +
                             '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
                             '</div>' +
                             '</div>';

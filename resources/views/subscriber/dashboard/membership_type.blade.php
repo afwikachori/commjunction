@@ -78,7 +78,7 @@ $(document).ready(function () {
                         '<strong>' + rupiah(item.pricing) + '</strong></label>' +
                         '<small class="clight"> /Once</small>' +
                         '</div>' +
-                        '<form style="margin-top:0.3em;">' +
+                        '<form style="margin-top:1em;">' +
                             '<input type="hidden" name="idprice" value="' + idprice + '">' +
                             '<input type="hidden" name="payment_time" class="isitime" value="">' +
                             '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;">Get Now</button>' +

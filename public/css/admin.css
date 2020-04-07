@@ -1927,8 +1927,13 @@ display: block;
 /* NAVBAR NOTIF */
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
     margin-bottom: 0;
-    padding: 6px 15px !important;
+    padding: 10px 15px !important;
     cursor: pointer;
 }
 
 
+.preview-list .preview-item .preview-thumbnail.medium img, .preview-list .preview-item .preview-thumbnail .preview-icon {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 100%;
+}

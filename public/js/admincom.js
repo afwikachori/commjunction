@@ -126,6 +126,7 @@ function session_admin_logged() {
                 $(".id_komunitas_login").val(user.community_id);
                 $("#komunitas").val(user.community_id);
                 $("#komunitas2").val(user.community_id);
+                $("#list_komunitas_notif").val(user.community_id);
                 $(".nama_komunitas").html(user.community_name);
 
                 //Notif management
@@ -293,12 +294,16 @@ function get_list_notif_navbar(idkom) {
         dataSrc: '',
         data: {
             "community_id": idkom,
-            "start_date": today,
-            "end_date": ago
+            "start_date": ago,
+            "end_date": today,
+            "read_status": "1", //1:notread 2:read
+            "notification_status": "receive", //send/receive
+            "limit": 5
         },
         timeout: 30000,
         success: function (result) {
             console.log(result);
+
         },
         error: function (result) {
             console.log(result);
@@ -447,7 +452,7 @@ function formatDate(date) {
     if (day.length < 2)
         day = '0' + day;
 
-    return [day, month, year].join('-');
+    return [year, month, day].join('-');
 }
 
 
