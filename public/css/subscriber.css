@@ -1226,3 +1226,28 @@ width: 265px !important;
     overflow-y: auto;
     overflow-x: hidden !important;
 }
+
+
+/* MEMBERSHIP PAY CONFIRM */
+.img_confirm1 {
+    width: 35%;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    border-radius: 0px 4px 0px;
+}
+
+.img_confirm2 {
+    position: absolute;
+    right: 35px;
+    width: 27%;
+    top: 85px;
+}
+
+.img_confirm3{
+position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 190px;
+    border-radius: 0px 0px 0px 4px;
+}

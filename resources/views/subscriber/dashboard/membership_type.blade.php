@@ -10,7 +10,9 @@
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
-
+            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
+                data-target="#modal_confirmpay_membership">
+                Payment Confirmation</button>
         </nav>
     </div>
 </div>
@@ -22,7 +24,8 @@
             </nav>
             <div class="card-body member">
                 <h4 class="tebal">Choose your plan</h4>
-                <p class="cgrey2" style="margin-bottom: 0.5em;">Our Community Administrators are on their way to approve your account, please check
+                <p class="cgrey2" style="margin-bottom: 0.5em;">Our Community Administrators are on their way to approve
+                    your account, please check
                     our
                     email!</p>
                 <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
@@ -87,14 +90,181 @@
 
 
 
+<!-- MODAL MEMBERSHIP PAY CONFIRMATION -->
+<div id="modal_confirmpay_membership" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modal_confirmpay_membership" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width: 65%; margin: auto;">
+            <form method="POST" id="form_confirm_membership_subs" action="{{route('confirm_pay_membership_subs')}}"
+             enctype="multipart/form-data"> {{ csrf_field() }}
+                <div class="modal-body" style="min-height: 365px; height: auto; padding-right: 10%; padding-left: 10%;">
+
+                    <img src="/visual/kananatas.png" class="img_confirm1">
+                    <img src="/visual/imgregis.png" class="img_confirm2">
+
+                        <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Confirm your
+                            Membership Payment !</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                    <div class="form-group row">
+                                        <label class="h6 cgrey">Invoice Number</label>
+                                        <input id="invoice_number" type="text"
+                                            class="form-control @error('invoice_number') is-invalid @enderror"
+                                            name="invoice_number" value="{{ old('invoice_number') }}" required
+                                            autocomplete="invoice_number" placeholder="Paste Invoice Number"
+                                            style="background-color: #e9ecef; border-radius: 6px;">
+                                        @if($errors->has('invoice_number'))
+                                        <small style="color: red;">{{ $errors->first('invoice_number')}}</small>
+                                        @endif
+                                    </div>
+                                    <br>
+                                    <div id="isi_form" style="display: none;">
+                                        <div class="form-group row">
+                                            <label class="h6 cgrey">Image Of Payment</label>
+                                            <div class="custom-file">
+                                                <input type="file"
+                                                    class="custom-file-input form-control @error('fileup') is-invalid @enderror"
+                                                    name="fileup" value="{{ old('fileup') }}" required
+                                                    autocomplete="fileup" id="fileup" required>
+                                                <label class="custom-file-label" for="fileup"
+                                                    style="text-align: left;">Choose file</label>
+
+                                                @if($errors->has('fileup'))
+                                                <small style="color: red;">Extension is <i>.jpg / .jpeg /
+                                                        .PDF</i></small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div> <!-- end  col-4 -->
+                            <div class="col-1">
+                            </div>
+
+                            <div class="col-4" id="detil_pay">
+                                <div class="form-group" style="margin-top: 0.5em;">
+                                    <small class="clight2 mgb-05">Total Payment</small>
+                                    <h6 class="cgrey1" id="nominal_payment1"></h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <small class="clight2 mgb-05">Bank Name</small>
+                                    <h6 class="cgrey1" id="bank_receiver"></h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <small class="clight2 mgb-05">Name Receiver</small>
+                                    <h6 class="cgrey1" id="name_receiver"></h6>
+                                </div>
+
+                                <div class="form-group" id="hidein-img">
+                                    <small class="clight2 mgb-05">Your Image Payment</small>
+                                    <br>
+                                    <img id="show_imgpay" class="img-fluid rounded float-left" src=""
+                                     data-toggle="tooltip" data-placement="right" title="Double Click to Preview"
+                                        style="width: 20%; margin-top: 0.3em; height: auto;display: none;"
+                                        onclick="clickImage(this)">
+                                </div>
+                            </div> <!-- end detail-pay -->
+                        </div> <!-- end row -->
+                </div>
+                <div class="modal-footer">
+                    <img src="/visual/kiribawah.png" class="img_confirm3">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="width: 110px;">Close</button>
+                    <button type="submit" id="btn_confirmpay" class="btn btn-teal btn-sm" style="width: 110px;">Submit</button>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('script')
 <script type="text/javascript">
     var server_cdn = $(".server_cdn").val();
     $(document).ready(function () {
+        hidenlah_confirm_member();
+
         get_pricing_membership();
         get_payment_initial();
+
     });
+
+    function hidenlah_confirm_member() {
+         $("#detil_pay").css("display", "none");
+        $("#name_userpay").attr("disabled", 'disabled');
+        $("#fileup").attr("disabled", 'disabled');
+        $("#btn_confirmpay").css("display", "none");
+        $("#hidein-img").css("display", "none");
+    }
+
+
+
+
+        $('input#invoice_number').bind("change keyup input", function () {
+            var inin = $(this).val();
+            get_invoice_num(inin);
+        });
+
+
+
+
+        function get_invoice_num(input) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/get_invoice_num',
+                data: { 'invoice_number': input },
+                type: 'POST',
+                datatype: 'JSON',
+                success: function (result) {
+                      console.log(result);
+                    $("#isi_form").show();
+                    var isi = result.data;
+                    // console.log(isi);
+                    $("#detil_pay").fadeIn();
+                    // swal(result.message);
+                    $("#name_userpay").removeAttr("disabled", 'disabled');
+                    $("#fileup").removeAttr("disabled", 'disabled');
+                    $("#btn_confirmpay").fadeIn();
+
+                    $("#nominal_payment1").html("Rp &nbsp;&nbsp;"+rupiah(isi.payment_total));
+                    $("#bank_receiver").html(isi.payment_bank_name);
+                    $("#name_receiver").html(isi.payment_owner_name);
+
+
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant invoice number");
+
+                }
+            });
+
+        }
+
+
+
+        var idku = $('#id_pop_payment').val();
+        //showfile name upload icon
+        $('#fileup').on('change', function () {
+            // menampilkan img
+            previewImgUpload("show_imgpay", this);
+            $("#hidein-img").fadeIn();
+
+            var fileName = $(this).val();
+            if (fileName.length > 30) {
+                var fileNameFst = fileName.substring(0, 30);
+                $(this).next('.custom-file-label').html(fileNameFst + "...");
+            } else {
+                $(this).next('.custom-file-label').html(fileName);
+            }
+        });
+
 
     // function get_pricing_membership() {
     //     $.ajaxSetup({

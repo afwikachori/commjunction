@@ -210,9 +210,14 @@
                     <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
                     <br>
+                    <div>
                     <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
                         Tour</button>
-                    <br>
+                        <br>
+                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm" style="width:100px;">Skip</button>
+                         <br>
+                    </div>
+                         <br>
                     <br>
                     <br>
                 </center>

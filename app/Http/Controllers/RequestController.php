@@ -594,4 +594,32 @@ class RequestController extends Controller
         return $dataku;
     }
 
+
+    public function ConfirmPayMembership_subs($requestImage, $url, $token)
+    {
+        $client = new \GuzzleHttp\Client();
+        // dd($requestImage);
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'invoice_number',
+                    'contents' =>  $requestImage["invoice_number"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
+
 } //END_CLASS

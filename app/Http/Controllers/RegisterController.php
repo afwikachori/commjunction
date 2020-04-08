@@ -890,6 +890,7 @@ class RegisterController extends Controller
 
         $url = env('SERVICE') . 'paymentverification/getinvoice';
         $client = new \GuzzleHttp\Client();
+        try{
         $response = $client->request('POST', $url, [
             'form_params' => [
                 'invoice_number' => $num
@@ -901,6 +902,18 @@ class RegisterController extends Controller
         session()->put('ses_invoice_pay', $json['data']);
 
         return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 

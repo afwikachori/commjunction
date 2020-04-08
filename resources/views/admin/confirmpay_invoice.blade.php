@@ -79,9 +79,6 @@
 </div> <!-- end-container -->
 
 
-</center>
-</div>
-
 @endsection
 
 @section('script')

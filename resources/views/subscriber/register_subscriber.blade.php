@@ -63,7 +63,7 @@
                     <form method="POST" id="form_regispersonal_subs" action="{{route('registerSubscriber')}}">
                         <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                             {{ csrf_field() }}
-                            <div class="tab-pane fade show active" id="nav-personal" role="tabpanel"
+                            <div class="tab-pane fade show registersubs active" id="nav-personal" role="tabpanel"
                                 aria-labelledby="nav-personal-tab">
                                 <div class="row">
                                     <div class="col"></div>

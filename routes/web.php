@@ -308,12 +308,10 @@ Route::get('/notification_management', 'SubscriberController@NotificationManagem
 
 
 //POST
+Route::post('confirm_pay_membership_subs', 'SubscriberController@confirm_pay_membership_subs')->name('confirm_pay_membership_subs');
 Route::post('get_list_notif_navbar', 'SubscriberController@get_list_notif_navbar')->name('get_list_notif_navbar');
-
 Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
-
 Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
-
 Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
 Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
 Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');

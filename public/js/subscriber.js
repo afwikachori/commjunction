@@ -512,3 +512,20 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
+
+
+//show icon preview
+function previewImgUpload(idhtml, input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#' + idhtml).show().attr('src', e.target.result);
+
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+

@@ -1004,6 +1004,61 @@ class SubscriberController extends Controller
 
 
 
+    public function confirm_pay_membership_subs(Request $request)
+    {
+        $input = $request->all(); // getdata form by name
+// dd($request);
+        $validator = $request->validate([
+            'invoice_number' => 'required',
+            'fileup'     => 'required',
+        ]);
+        $user_logged = session()->get('session_subscriber_logged');
+        $token = $user_logged['access_token'];
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+            $imageRequest = [
+                "invoice_number"     => $input['invoice_number'],
+                "filename"    => $filnam,
+                "file"        => $imgku
+            ];
+// dd($imageRequest);
+            $url = env('SERVICE').'membershipmanagement/subsupload';
+            try {
+                $resImg = $req->ConfirmPayMembership_subs($imageRequest, $url, $token);
+
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully upload payment confirmation', 'Sent!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $exception) {
+                $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+
+                if ($errorq['success'] == false) {
+                    alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                    return back();
+                }
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['succes'] = false;
+
+                alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back();
+            } catch (ServerException $exception) {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back();
+            }
+        } //END-IF  UPLOAD-IMAGE
+    } //end-function
+
 
 
 
