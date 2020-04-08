@@ -334,7 +334,7 @@ function get_payment_initial() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             var text = '';
             var isibank = '';
 
@@ -384,7 +384,7 @@ function pilih_payment_initial(dtmember) {
                 "id_pay_initial": "0",
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -411,7 +411,7 @@ function pilih_payment_initial(dtmember) {
 }
 
 function pilih_pay_bank(ini) {
-    console.log(ini.value);
+    // console.log(ini.value);
     $("#id_pay_initial").val("");
     $(".hidendulu").removeClass('dipilih');
     $('.btn-blueline').removeClass('active');
