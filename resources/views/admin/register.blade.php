@@ -232,7 +232,6 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (result) {
-        alert("masuk get jenis");
       var data = result;
       console.log(data);
 

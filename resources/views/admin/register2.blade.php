@@ -134,10 +134,10 @@
                         <div class="col">
                             <div class="form-group row" style="height: 60px;">
                                 <!-- <label lang="en" class="h6 cgrey s14">Connect With</label>
-        <div class="g-signin2" data-onsuccess="onSignIn" style="margin-top: 1.7em; margin-left: -5.3em;"></div>
+        <div class="g-signin2" data-onsuccess="onSignIn" style="margin-top: 1.7em; margin-left: -5.3em;"></div> -->
 
         <input type="hidden" id="sso_type" name="sso_type" value="1">
-        <input type="hidden" id="sso_token" name="sso_token"> -->
+        <input type="hidden" id="sso_token" name="sso_token">
                             </div>
 
                             <div class="form-group row">
