@@ -196,6 +196,13 @@ function IsEmail_valid(email) {
     }
 }
 
+//TAB MENU LINE
+
+$(".tabbable-line li a").click(function () {
+    $(".tabbable-line li").removeClass('active');
+    $(this).parent().addClass('active');
+});
+
 
 //IMAGE FILENAME INPUT
 function filenameImg(input) {

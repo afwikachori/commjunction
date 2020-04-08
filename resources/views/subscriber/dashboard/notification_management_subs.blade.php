@@ -22,38 +22,76 @@
 </div>
 <!-- </div> -->
 <br>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card" style="min-height: 450px;">
-            <div class="card-header putih">
-                Notification List
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body memberku">
+                    <h4 class="cgrey" style="margin-bottom: -0.5em;">Module List</h4>
 
-            <div class="card-body">
-                <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
-                    data-toggle="modal" data-target="#modal_filter_notif_admin">
-                    Filter Notification</button>
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs">
+                            <li class="tab-subs" id="tab_generate">
+                                <a href="#tab_module_1" data-toggle="tab">
+                                    Filter
+                                </a>
+                            </li>
+                            <li class="tab-subs active" id="tab_unread">
+                                <a href="#tab_module_2" data-toggle="tab">
+                                    Unread
+                                </a>
+                            </li>
+                        </ul>
 
-                <table id="tabel_generate_notif_admin" class="table table-hover table-striped dt-responsive nowrap"
-                    style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th><b> ID </b></th>
-                            <th><b> Title </b></th>
-                            <th><b> Type Notif</b></th>
-                            <th><b> User Type </b></th>
-                            <th><b> Read Status </b></th>
-                            <th><b> Status</b></th>
-                            <th><b> Created By </b></th>
-                            <th><b> Date </b></th>
-                            <th><b> Action </b></th>
-                        </tr>
-                    </thead>
-                </table>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab_module_1">
+                                <button type="button" class="btn btn-tosca btn-sm"
+                                    style="margin-top: 0.5em; margin-bottom: 2em;" data-toggle="modal"
+                                    data-target="#modal_filter_notif_admin">
+                                    Filter Notification</button>
+
+                                <table id="tabel_generate_notif"
+                                    class="table table-hover table-striped dt-responsive nowrap" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th><b> ID </b></th>
+                                            <th><b> Title </b></th>
+                                            <th><b> Type Notif</b></th>
+                                            <th><b> User Type </b></th>
+                                            <th><b> Read Status </b></th>
+                                            <th><b> Status</b></th>
+                                            <th><b> Created By </b></th>
+                                            <th><b> Date </b></th>
+                                            <th><b> Action </b></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div> <!-- end-tab 1  -->
+
+
+                            <div class="tab-pane active" id="tab_module_2">
+                                <table id="tabel_unread_notif" class="table table-hover table-striped dt-responsive nowrap"
+                                    style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th><b> ID </b></th>
+                                            <th><b> Title </b></th>
+                                            <th><b> Type Notif</b></th>
+                                            <th><b> User Type </b></th>
+                                            <th><b> Read Status </b></th>
+                                            <th><b> Status</b></th>
+                                            <th><b> Created By </b></th>
+                                            <th><b> Date </b></th>
+                                            <th><b> Action </b></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div> <!-- end-tab2 -->
+                        </div> <!-- end-content -->
+                    </div> <!-- end-tab line -->
+                </div>
             </div>
         </div>
     </div>
-</div> <!-- endrow -->
 
 
 <!-- MODAL GENERATED NOTIFICATION-->
@@ -91,8 +129,7 @@
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
                                 <h5 class="nama_komunitas cgrey2" style="margin-top: 1em;"></h5>
-                                <input type="hidden" class="form-control input-abu" name="list_komunitas_notif"
-                                    id="list_komunitas_notif" readonly>
+                                <input type="hidden" class="form-control input-abu id_komunitas" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -254,13 +291,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content"
             style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
-            <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
+            <div class="modal-header" style="padding-bottom: 1.5em !important; border:none;">
                 <h3 class="modal-title cgrey">Setting Notification</h3>
                 <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label> -->
             </div> <!-- end-header -->
 
             <div class="modal-body">
-                <form method="POST" id="form_setting_notif_admin" action="{{route('setting_notification_admin')}}">
+                <form method="POST" id="form_setting_notif_admin" action="{{route('setting_notification_subs')}}">
                     {{ csrf_field() }}
                     <div class="isi_seting_notifadmin">
 
@@ -291,97 +328,130 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        get_list_setting_notif_admin();
+        get_list_setting_notif_subs();
         tabel_notif_unread();
     });
 
-      function tabel_notif_unread() {
-           var tday = new Date();
-          var d = new Date();
-          var today = formatDate(d.toLocaleDateString());
-          d.setMonth(d.getMonth() - 1);
-          var ago = formatDate(d.toLocaleDateString());
 
-            $('#tabel_generate_notif_admin').dataTable().fnClearTable();
-          $('#tabel_generate_notif_admin').dataTable().fnDestroy();
-            // $('#modal_generate_inbox_tabel').modal('hide');
-
-            var tabel = $('#tabel_generate_notif_admin').DataTable({
-                responsive: true,
-                language: {
-                    paginate: {
-                        next: '<i class="mdi mdi-chevron-right"></i>',
-                        previous: '<i class="mdi mdi-chevron-left">'
-                    }
-                },
-                ajax: {
-                   url: '/subscriber/get_list_notif_navbar',
-                    type: 'POST',
-                    dataSrc: '',
-                    data: {
-                        "community_id": $("#list_komunitas_notif").val(),
-                        "start_date": ago,
-                        "end_date": today,
-                        "read_status": "1", //1:notread 2:read
-                        "notification_status": "receive", //send/receive
-                        "limit": 10
-                    },
-                    timeout: 30000,
-                    error: function (jqXHR, ajaxOptions, thrownError) {
-                        var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                        $('#tabel_generate_notif_admin tbody').empty().append(nofound);
-                    },
-                },
-                error: function (request, status, errorThrown) {
-                    console.log(errorThrown);
-                },
-              columns: [
-                    { mData: 'id' },
-                    { mData: 'title' },
-                    { mData: 'notification_sub_type_title' },
-                    { mData: 'user_type_title' },
-                    { mData: 'read_status_title' },
-                    { mData: 'notification_status' },
-                    { mData: 'sender_level_title' },
-                    {
-                        mData: 'created_at',
-                        render: function (data, type, row, meta) {
-                            return dateFormat(data);
-                        }
-                    },
-                    {
-                        mData: 'id',
-                        render: function (data, type, row, meta) {
-                            var inidt = [data, row.level_status, row.community_id];
-                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                                'onclick="detail_notif_admin(\'' + inidt + '\')">' +
-                                '<i class="mdi mdi-eye"></i>' +
-                                '</button>';
-                        }
-                    }
-                ],
-
+       function tabel_tes() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-
+            $.ajax({
+                url: '/subscriber/tabel_generate_notification_subs',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $(".id_komunitas").val(),
+                    "start_date": $("#tanggal_mulai2").val(),
+                    "end_date": $("#tanggal_selesai2").val(),
+                    "filter_title": $("#list_judul_notif").val(),
+                    "notification_sub_type": $("#tipe_notif").val(),
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show");
+                }
+            });
         }
 
 
-    function get_list_setting_notif_admin() {
+    function tabel_notif_unread() {
+        var tday = new Date();
+        var d = new Date();
+        var today = formatDate(d.toLocaleDateString());
+        d.setMonth(d.getMonth() - 1);
+        var ago = formatDate(d.toLocaleDateString());
+
+        $('#tabel_unread_notif').dataTable().fnClearTable();
+        $('#tabel_unread_notif').dataTable().fnDestroy();
+        // $('#modal_generate_inbox_tabel').modal('hide');
+
+        var tabel = $('#tabel_unread_notif').DataTable({
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/subscriber/get_list_notif_navbar',
+                type: 'POST',
+                dataSrc: '',
+                data: {
+                    "community_id": $(".id_komunitas").val(),
+                    "start_date": ago,
+                    "end_date": today,
+                    "read_status": "1", //1:notread 2:read
+                    "notification_status": "receive", //send/receive
+                    "limit": 10
+                },
+                timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_unread_notif tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+            },
+            columns: [
+                { mData: 'id' },
+                { mData: 'title' },
+                { mData: 'notification_sub_type_title' },
+                { mData: 'user_type_title' },
+                { mData: 'read_status_title' },
+                { mData: 'notification_status' },
+                { mData: 'sender_level_title' },
+                {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
+                {
+                    mData: 'id',
+                    render: function (data, type, row, meta) {
+                        var inidt = [data, row.level_status, row.community_id];
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_notif_admin(\'' + inidt + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
+                }
+            ],
+
+        });
+
+    }
+
+
+
+    function get_list_setting_notif_subs() {
+        var namakom = $(".community_name").val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/admin/get_list_setting_notif_admin',
+            url: '/subscriber/get_list_setting_notif_subs',
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
+                console.log(result);
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                         setTimeout(function () {
-                            location.href = '/admin';
+                            location.href = '/subscriber/url/' + namakom;
                         }, 5000);
                     } else {
                         ui.popup.show('warning', result.message, 'Warning');
@@ -395,21 +465,32 @@
                         if (item.input_type == 1) {
                             inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
                         } else if (item.input_type == 2) {
+                            if(item.value == 1){
+                                var one = 'checked';
+                                var two = '';
+                            }else if(item.value == 2){
+                                  var one = '';
+                                var two = 'checked';
+                            }else{
+                                   var one = '';
+                                var two = '';
+                            }
+
                             inputipe = '<div class="form-group">' +
-                                '< div class="form-check" >' +
+                                '<div class="form-check set_mod" >' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" '+one+'>' +
                                 'True <i class="input-helper"></i></label>' +
                                 '</div>' +
-                                '<div class="form-check">' +
+                                '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" '+two+'>' +
                                 'False <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '</div>';
                         }
 
-                        uiku += ' <div class="row">' +
+                        uiku += ' <div class="row style="margin-bottom:1.5em;">' +
                             '<div class="col-6">' +
                             '<div class="form-group">' +
                             '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
@@ -434,7 +515,8 @@
 
 
     $("#btn_generate_notif_admin").click(function () {
-        tabel_generate_notif_admin();
+        // tabel_generate_notif();
+        tabel_tes();
     });
 
 
@@ -450,13 +532,13 @@
     }
 
 
-    function tabel_generate_notif_admin() {
-        $('#tabel_generate_notif_admin').dataTable().fnClearTable();
-        $('#tabel_generate_notif_admin').dataTable().fnDestroy();
-        $('#tabel_generate_notif_admin').show();
+    function tabel_generate_notif() {
+        $('#tabel_generate_notif').dataTable().fnClearTable();
+        $('#tabel_generate_notif').dataTable().fnDestroy();
+        $('#tabel_generate_notif').show();
         $('#modal_filter_notif_admin').modal('hide');
 
-        var tabel = $('#tabel_generate_notif_admin').DataTable({
+        var tabel = $('#tabel_generate_notif').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -465,12 +547,12 @@
                 }
             },
             ajax: {
-                url: '/admin/tabel_generate_notification_admin',
+                url: '/subscriber/tabel_generate_notification_subs',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas_notif").val(),
+                    "community_id": $(".id_komunitas").val(),
                     "start_date": $("#tanggal_mulai2").val(),
                     "end_date": $("#tanggal_selesai2").val(),
                     "filter_title": $("#list_judul_notif").val(),
@@ -478,7 +560,7 @@
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_generate_notif_admin tbody').empty().append(nofound);
+                    $('#tabel_generate_notif tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
