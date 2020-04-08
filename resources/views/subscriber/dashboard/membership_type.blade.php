@@ -99,7 +99,7 @@
              enctype="multipart/form-data"> {{ csrf_field() }}
                 <div class="modal-body" style="min-height: 365px; height: auto; padding-right: 10%; padding-left: 10%;">
 
-                    <img src="/visual/kananatas.png" class="img_confirm1">
+                    <img src="/visual/kananatas2.png" class="img_confirm1">
                     <img src="/visual/imgregis.png" class="img_confirm2">
 
                         <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Confirm your
@@ -168,11 +168,10 @@
                             </div> <!-- end detail-pay -->
                         </div> <!-- end row -->
                 </div>
-                <div class="modal-footer">
-                    <img src="/visual/kiribawah.png" class="img_confirm3">
+                <div class="modal-footer" style="border: none; margin-bottom:1.5em;">
+                    <img src="/visual/kiribawah2.png" class="img_confirm3">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="width: 110px;">Close</button>
                     <button type="submit" id="btn_confirmpay" class="btn btn-teal btn-sm" style="width: 110px;">Submit</button>
-                    <br>
                 </div>
             </form>
         </div>
