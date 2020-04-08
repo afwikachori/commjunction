@@ -68,7 +68,9 @@
             </div>
         </div>
     </div> <!-- container-scroller -->
-    <input type="hidden" id="server_cdn" value="{{ env("CDN") }}">
+    <input type="text" id="server_cdn" value="{{ env("CDN") }}">
+    <input type="text" class="id_komunitas">
+    <input type="text" class="community_name">
 
 
 
@@ -95,7 +97,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+                        <span aria-hidden="true" style="font-size: 50px;color: red;">&times;</span>
                     </button>
                 </div>
                 <center>
@@ -125,9 +127,15 @@
                             <i class="mdi mdi-close"></i> No, Im Doubt
                         </button>
                         &nbsp;
-                        <a href="/subscriber/logout" type="button" class="btn btn-tosca btn-sm">
-                            <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Yeah, Im Sure </a>
+                        <button onclick="LogoutSubscriber()" id="btn_logout_all" type="button" class="btn btn-tosca btn-sm">
+
+                            <span class="hide_load_log" style="display: none;">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="sr-only">Loading...</span>
+                            </span>
+                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i>Yeah, Im Sure</div>
+                        </button>
+
                     </center>
                 </div> <!-- end-footer     -->
             </div> <!-- END-MDL CONTENT -->

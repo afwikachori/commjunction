@@ -1239,7 +1239,7 @@ width: 265px !important;
 
 .img_confirm2 {
     position: absolute;
-    right: 35px;
+    right: 20px;
     width: 27%;
     top: 85px;
 }
@@ -1250,4 +1250,10 @@ position: absolute;
     left: 0px;
     width: 245px;
     border-radius: 0px 0px 0px 4px;
+}
+
+
+#mdl-img-view{
+max-height: 515px;
+width: auto;
 }

@@ -8,6 +8,8 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\BadResponseException;
+
 use Session;
 use Alert;
 
@@ -233,48 +235,37 @@ class SubscriberController extends Controller
     }
 
 
-    public function LogoutSubsciberDashboard()
+    public function LogoutSubscriber()
     {
         $ses_login = session()->get('session_subscriber_logged');
-        $auth_subs = session()->get('auth_subs');
-        $url_login = '/subscriber/url/' . $auth_subs[0]['name'];
-
         $url = env('SERVICE') . 'profilemanagement/logout';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
         try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            session()->forget('session_subscriber_logged');
             if ($json['success'] == true) {
-                return redirect($url_login);
+                session()->forget('session_subscriber_logged');
+                return 'sukses';
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            if($error['message'] == 'Unauthorized'){
-                alert()->error($error['message'], 'Failed!')->autoclose(3500);
-                return redirect($url_login);
-            }else{
-            alert()->error($error['message'], 'Failed!')->autoclose(3500);
-            return back();
-            }
+            return $error;
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return $error;
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return $error;
         }
     } //enfunc
 
@@ -801,7 +792,7 @@ class SubscriberController extends Controller
         ];
 
         $bodyku = json_encode([
-             "id"     => $input['id_inbox'],
+            "id"     => $input['id_inbox'],
             "status" => $input['list_status'],
             "status_type"     => $input['status_tipe'],
             "level_status" => $input['level_status'],
@@ -855,7 +846,7 @@ class SubscriberController extends Controller
 
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            if($json['success'] == true){
+            if ($json['success'] == true) {
                 return $json['data'];
             }
         } catch (ClientException $errornya) {
@@ -920,7 +911,7 @@ class SubscriberController extends Controller
         ];
 
         $bodyku = json_encode([
-             "membership_id"     => $input['id_membertype'],
+            "membership_id"     => $input['id_membertype'],
             "payment_id" => $input['id_pay_initial'],
         ]);
 
@@ -1007,7 +998,7 @@ class SubscriberController extends Controller
     public function confirm_pay_membership_subs(Request $request)
     {
         $input = $request->all(); // getdata form by name
-// dd($request);
+        // dd($request);
         $validator = $request->validate([
             'invoice_number' => 'required',
             'fileup'     => 'required',
@@ -1027,8 +1018,8 @@ class SubscriberController extends Controller
                 "filename"    => $filnam,
                 "file"        => $imgku
             ];
-// dd($imageRequest);
-            $url = env('SERVICE').'membershipmanagement/subsupload';
+            // dd($imageRequest);
+            $url = env('SERVICE') . 'membershipmanagement/subsupload';
             try {
                 $resImg = $req->ConfirmPayMembership_subs($imageRequest, $url, $token);
 
@@ -1062,11 +1053,43 @@ class SubscriberController extends Controller
 
 
 
+    public function get_invoice_num_membership(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'transmanagement/findinvoice';
+        $input = $request->all();
+        // return $input;
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'invoice_number'  => $input['invoice_number'],
+            'transaction_type_id'    => $input['transaction_type_id'],
+            'community_id'      => $input['community_id'],
+        ]);
 
-
-
-
-
-
-
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 } //end-class

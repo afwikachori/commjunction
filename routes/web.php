@@ -299,7 +299,6 @@ Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name(
 Route::prefix('subscriber')->group(function(){
 Route::get('/','SubscriberController@loginView')->name('subscriber');
 Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
-Route::get('/logout','SubscriberController@LogoutSubsciberDashboard')->name('/logout');
 Route::get('/dashboard','SubscriberController@DashboardSubsView')->name('/dashboard');
 Route::get('/membership','SubscriberController@MembershipSubsView')->name('/membership');
 Route::get('/inbox_management', 'SubscriberController@InboxManagementSubsView')->name('/inbox_management');
@@ -308,6 +307,8 @@ Route::get('/notification_management', 'SubscriberController@NotificationManagem
 
 
 //POST
+Route::post('get_invoice_num_membership', 'SubscriberController@get_invoice_num_membership')->name('get_invoice_num_membership');
+Route::post('LogoutSubscriber','SubscriberController@LogoutSubscriber')->name('LogoutSubscriber');
 Route::post('confirm_pay_membership_subs', 'SubscriberController@confirm_pay_membership_subs')->name('confirm_pay_membership_subs');
 Route::post('get_list_notif_navbar', 'SubscriberController@get_list_notif_navbar')->name('get_list_notif_navbar');
 Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');

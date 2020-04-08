@@ -213,8 +213,9 @@
                     <div>
                     <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
                         Tour</button>
-                        <br>
-                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm" style="width:100px;">Skip</button>
+                        &nbsp;
+                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm"
+                         style="width:100px; margin-top: 1em;">Skip</button>
                          <br>
                     </div>
                          <br>

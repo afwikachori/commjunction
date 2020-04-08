@@ -96,6 +96,8 @@ function session_subscriber_logged() {
             }
 
             $(".nama_komunitas").html(user.community_name);
+            $(".community_name").val(user.community_name);
+            $(".id_komunitas").val(user.community_id);
             $("#komunitas").val(user.community_id);
             $("#komunitas2").val(user.community_id);
             $("#komunitas_inbox").val(user.community_id);
@@ -290,33 +292,42 @@ function get_pricing_membership() {
         dataType: "json",
         success: function (result) {
             // console.log(result);
-            var html = '';
-            var noimg = '/img/fitur.png';
-            $.each(result, function (i, item) {
-                // console.log(item);
-                var idprice = item.id;
-
-                html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1.5em;">' +
-                    '<div class="card cd-pricing pricing' + idprice + '">' +
-                    '<div class="card-body">' +
-                    '<center>' +
-                    '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
-                    '<img src="' + server_cdn + item.icon + '"  class="rounded-circle img-fluid imgprice"' +
-                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-                    '<div class="hidetime1">' +
-                    '<sup class="cgrey" style="font-size: 30px;">' +
-                    '<small class="h6">IDR</small></sup>' +
-                    '<label class="card-harga cgrey">' +
-                    '<strong>' + rupiah(item.pricing) + '</strong></label>' +
-                    '<small class="clight"> /Once</small>' +
-                    '</div>' +
-                    '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-                    'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')">Get Now</button>' +
-                    '</center>' +
-                    '</div></div></div>';
-            });
-            $('.price_member').html(html);
-
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                var html = '';
+                var noimg = '/img/fitur.png';
+                $.each(result, function (i, item) {
+                    // console.log(item);
+                    var idprice = item.id;
+                    html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1.5em;">' +
+                        '<div class="card cd-pricing pricing' + idprice + '">' +
+                        '<div class="card-body">' +
+                        '<center>' +
+                        '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
+                        '<img src="' + server_cdn + item.icon + '"  class="rounded-circle img-fluid imgprice"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        '<div class="hidetime1">' +
+                        '<sup class="cgrey" style="font-size: 30px;">' +
+                        '<small class="h6">IDR</small></sup>' +
+                        '<label class="card-harga cgrey">' +
+                        '<strong>' + rupiah(item.pricing) + '</strong></label>' +
+                        '<small class="clight"> /Once</small>' +
+                        '</div>' +
+                        '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
+                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')">Get Now</button>' +
+                        '</center>' +
+                        '</div></div></div>';
+                });
+                $('.price_member').html(html);
+            }
         }
     });
 }
@@ -528,4 +539,46 @@ function previewImgUpload(idhtml, input) {
     }
 }
 
+
+// LOGOUT SUBSCRIBER DASHBOARD
+function LogoutSubscriber() {
+    var namakom = $(".community_name").val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function beforeSend(jxqhr) {
+            $(".hide_load_log").show();
+            $("#text_logout").hide();
+        },
+        timeout: 20000,
+    });
+    $.ajax({
+        url: '/subscriber/LogoutSubscriber',
+        type: "POST",
+        dataType: "json",
+        timeout: 30000,
+        success: function (result) {
+            console.log(result);
+
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + namakom;
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                location.href = '/subscriber/url/' + namakom;
+            }
+        },
+        error: function (result) {
+            console.log(result);
+                location.href = '/subscriber/url/' + namakom;
+        }
+    });
+    // });
+}
 

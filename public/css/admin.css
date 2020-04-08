@@ -1946,3 +1946,11 @@ display: block;
 .dropdown-item.preview-item.notif{
 width: 265px !important;
 }
+
+
+/* //IMAGE KLIK MODAL */
+
+#mdl-img-view{
+max-height: 515px;
+width: auto;
+}
