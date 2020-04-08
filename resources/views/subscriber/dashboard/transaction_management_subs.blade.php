@@ -249,12 +249,10 @@
                         <br>
                         <h5 class="cgrey tebal">Payment Confirmation</h5>
                         <div class="row" style="padding: 0 5% 0 5%;">
-                            <div class="col-md-12"
-                                style="height: 115px; background-color: lavender; border-radius: 10px;">
-                                <img src="" id="img_pay_confirm" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%;"
-                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
-                            </div>
+                                <img src="/img/noimg2.jpg" id="img_pay_confirm" onclick="clickImage(this)"
+                                     style="height: 115px; width: 100%; border-radius: 10px;"
+                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';"
+                                     data-toggle="tooltip" data-placement="right" title="Double Click to Preview Image">
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
                             <div class="col-md-4">
@@ -275,12 +273,10 @@
 
                         <h5 class="cgrey tebal">Payment Confirmation</h5>
                         <div class="row" style="padding: 0 5% 0 5%;">
-                            <div class="col-md-12"
-                                style="height: 115px; background-color: lavender; border-radius: 10px;">
-                                <img src="" id="img_pay_aprov" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%;"
-                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
-                            </div>
+                                <img src="/img/noimg2.jpg" id="img_pay_aprov" onclick="clickImage(this)"
+                                     style="height: 115px; width: 100%; border-radius: 10px;"
+                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';"
+                                     data-toggle="tooltip" data-placement="right" title="Double Click to Preview Image">
                         </div>
                         <div class="row" style="margin-top: 0.5em;">
                             <div class="col-md-4">
@@ -564,6 +560,12 @@
                 }
             ],
             responsive: true,
+             language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/subscriber/tabel_transaksi_show',
                 type: 'POST',
@@ -588,7 +590,11 @@
             },
             columns: [
                 { mData: 'invoice_number' },
-                { mData: 'created_at' },
+                { mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
                 { mData: 'name' },
                 { mData: 'transaction_type' },
                 { mData: 'status_title' },
@@ -637,6 +643,12 @@
                 }
             ],
             responsive: true,
+             language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/subscriber/tabel_transaksi_show',
                 type: 'POST',
@@ -661,7 +673,12 @@
             },
             columns: [
                 { mData: 'invoice_number' },
-                { mData: 'created_at' },
+                {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
                 { mData: 'name' },
                 { mData: 'transaction_type' },
                 { mData: 'status_title' },
@@ -721,7 +738,7 @@
 
                     var uiku = '';
                     if (result.data_confirmation.file != "") {
-                        $("#img_pay_confirm").attr("src", server_cdn + result.data_confirmation.file);
+                        $("#img_pay_confirm").attr("src", "http://"+server_cdn + result.data_confirmation.file);
                         $("#nama_confirm_trans").html(result.data_confirmation.created_by);
                         $("#date_confirm_trans").html(result.data_confirmation.created_at);
 
