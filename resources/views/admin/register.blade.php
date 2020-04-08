@@ -156,7 +156,6 @@
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 $(document).ready(function () {
-
 get_jenis();
 });
 
@@ -232,9 +231,9 @@ $.ajax({
     url: "/get_jenis_com",
     type: "POST",
     dataType: "json",
-    success: function (status, code, data) {
-    if (status.success == true) {
-      var data = status.data;
+    success: function (result) {
+      var data = result;
+      console.log(data);
 
       $('#type_com').empty();
       $('#type_com').append("<option disabled> --- </option>");
@@ -248,7 +247,7 @@ $.ajax({
       }));
 
       $("#type_com").get(0).selectedIndex = 0; //e.preventDefault();
-    }
+
      const OldValue = '{{old('type_com')}}';
 
     if(OldValue !== '') {

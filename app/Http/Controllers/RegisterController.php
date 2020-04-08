@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ConnectException;
 use Session;
 use Alert;
 
@@ -164,11 +166,25 @@ class RegisterController extends Controller
         $url = env('SERVICE') . 'registration/jeniscomm';
 
         $client = new \GuzzleHttp\Client();
+        try{
         $request = $client->post($url);
         $response = $request->getBody();
         $json = json_decode($response, true);
-
-        return ($json);
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
