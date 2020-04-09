@@ -953,26 +953,38 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
         $input = $request->all();
 
+        if ($input['limit'] == 000) {
+            $dtnotif = [
+                "read_status"   => $input['read_status'],
+            ];
+        } else {
+            $dtnotif = [
+                "read_status"   => $input['read_status'],
+                "limit"         => $input['limit'],
+            ];
+        }
+
         $client = new \GuzzleHttp\Client();
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode([
-            'community_id'  => $input['community_id'],
-            'start_date'    => $input['start_date'],
-            'end_date'      => $input['end_date'],
-            "read_status"   => $input['read_status'],
-            "notification_status" => $input['notification_status'],
-            "limit"         => $input['limit'],
-        ]);
 
-        // return $bodyku;
+        $bodyku = json_encode($dtnotif);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
+        if ($input['read_status'] == "3") {
+            $datakirim = [
+                'headers' => $headers,
+            ];
+        } else {
+            $datakirim = [
+                'body' => $bodyku,
+                'headers' => $headers,
+            ];
+        }
+
+
+
         try {
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
@@ -1244,10 +1256,49 @@ class SubscriberController extends Controller
     }
 
 
+    public function detail_notif_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
 
+        $url = env('SERVICE') . 'notificationmanagement/detailnotification';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "notification_id" => $input['notification_id'],
+            "level_status" => $input['level_status'],
+            "community_id" => $input['community_id']
+        ]);
+        return $bodyku;
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
 
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 

@@ -308,10 +308,10 @@ Route::get('/notification_management', 'SubscriberController@NotificationManagem
 
 //POST
 
+Route::post('detail_notif_subs', 'SubscriberController@detail_notif_subs')->name('detail_notif_subs');
+
 Route::post('setting_notification_subs', 'SubscriberController@setting_notification_subs')->name('setting_notification_subs');
-
 Route::post('tabel_generate_notification_subs', 'SubscriberController@tabel_generate_notification_subs')->name('tabel_generate_notification_subs');
-
 Route::post('get_list_setting_notif_subs', 'SubscriberController@get_list_setting_notif_subs')->name('get_list_setting_notif_subs');
 Route::post('get_invoice_num_membership', 'SubscriberController@get_invoice_num_membership')->name('get_invoice_num_membership');
 Route::post('LogoutSubscriber','SubscriberController@LogoutSubscriber')->name('LogoutSubscriber');

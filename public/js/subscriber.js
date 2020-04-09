@@ -116,6 +116,8 @@ function session_subscriber_logged() {
             if (user.status == 1) { //first-login
                 get_initial_feature(result.community_feature);
             }
+
+
             if (user.status == 1) {
                 $('#show_toltip').prop('First Login');
             } else if (user.status == 2) {
@@ -143,10 +145,11 @@ function session_subscriber_logged() {
 
 // INITIAL LOGIN 2 - FITUR
 function get_initial_feature(datafitur) {
+    // console.log(datafitur);
     var showui = '';
     var jum = 0;
     $.each(datafitur, function (i, item) {
-
+        console.log(item);
         jum++;
         showui += '<div class="col-md-6 stretch-card grid-margin" style="height:75px; padding-left: 5px; padding-right:4px; padding-bottom:0px; margin-bottom:0.5em;"' +
             'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +

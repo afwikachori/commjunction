@@ -147,7 +147,7 @@
                                 <h6 class="cgrey1" id="nominal_payment1"></h6>
                             </div>
 
-                             <div class="form-group">
+                            <div class="form-group">
                                 <small class="clight2 mgb-05">Account Number</small>
                                 <h6 class="cgrey1" id="bank_num"></h6>
                             </div>
@@ -195,6 +195,8 @@
         get_pricing_membership();
         get_payment_initial();
 
+
+
     });
 
     function hidenlah_confirm_member() {
@@ -203,7 +205,9 @@
         $("#fileup").attr("disabled", 'disabled');
         $("#btn_confirmpay").css("display", "none");
         $("#hidein-img").css("display", "none");
+
     }
+
 
 
 
@@ -233,7 +237,7 @@
             datatype: 'JSON',
             success: function (result) {
                 // console.log(result);
-                 if (result.success == false) {
+                if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                         setTimeout(function () {
@@ -243,17 +247,17 @@
                         ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
-                $("#isi_form").show();
-                var isi = result[0];
-                $("#detil_pay").fadeIn();
-                $("#name_userpay").removeAttr("disabled", 'disabled');
-                $("#fileup").removeAttr("disabled", 'disabled');
-                $("#btn_confirmpay").fadeIn();
-                var tf = isi.comm_payment_method;
-                $("#nominal_payment1").html("Rp &nbsp;&nbsp;" + rupiah(isi.grand_total));
-                $("#bank_receiver").html(tf.payment_bank_name);
-                $("#name_receiver").html(tf.payment_owner_name);
-                $("#bank_num").html(tf.payment_account);
+                    $("#isi_form").show();
+                    var isi = result[0];
+                    $("#detil_pay").fadeIn();
+                    $("#name_userpay").removeAttr("disabled", 'disabled');
+                    $("#fileup").removeAttr("disabled", 'disabled');
+                    $("#btn_confirmpay").fadeIn();
+                    var tf = isi.comm_payment_method;
+                    $("#nominal_payment1").html("Rp &nbsp;&nbsp;" + rupiah(isi.grand_total));
+                    $("#bank_receiver").html(tf.payment_bank_name);
+                    $("#name_receiver").html(tf.payment_owner_name);
+                    $("#bank_num").html(tf.payment_account);
 
                 }
             },

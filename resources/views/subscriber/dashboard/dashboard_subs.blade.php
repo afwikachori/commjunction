@@ -352,7 +352,7 @@
         // get_dashboard_subscriber();
         get_pricing_membership();
         get_payment_initial();
-        $("#initial1").modal('show');
+
 
     });
 
