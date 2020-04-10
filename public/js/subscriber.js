@@ -235,7 +235,7 @@ function dateTime(tgl) {
     var d = new Date(tgl);
 
     dformat = [d.getDate(), d.getMonth() + 1,
-    d.getFullYear()].join('/') + ' ' +
+        d.getFullYear()].join('/') + ' &nbsp; ' +
         [d.getHours(),
         d.getMinutes(),
         d.getSeconds()].join(':');

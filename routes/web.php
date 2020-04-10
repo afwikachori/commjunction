@@ -237,8 +237,11 @@ Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->
 
 
 //POST
-Route::post('get_list_setting_module_subs', 'SubscriberController@get_list_setting_module_subs')->name('get_list_setting_module_subs');
+Route::post('get_friends_sugestion', 'SubscriberController@get_friends_sugestion')->name('get_friends_sugestion');
 
+Route::post('get_friends_total', 'SubscriberController@get_friends_total')->name('get_friends_total');
+
+Route::post('get_list_setting_module_subs', 'SubscriberController@get_list_setting_module_subs')->name('get_list_setting_module_subs');
 Route::post('detail_notif_subs', 'SubscriberController@detail_notif_subs')->name('detail_notif_subs');
 Route::post('setting_notification_subs', 'SubscriberController@setting_notification_subs')->name('setting_notification_subs');
 Route::post('tabel_generate_notification_subs', 'SubscriberController@tabel_generate_notification_subs')->name('tabel_generate_notification_subs');

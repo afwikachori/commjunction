@@ -250,14 +250,6 @@
     }
 
 
-
-    // $("#btn_generate_inbox").click(function () {
-    //     tabel_tes();
-    //     tabel_inbox_message_subs();
-    // });
-
-
-
     function tabel_inbox_message_subs() {
         $('#tabel_inbox_message_subs').dataTable().fnClearTable();
         $('#tabel_inbox_message_subs').dataTable().fnDestroy();
