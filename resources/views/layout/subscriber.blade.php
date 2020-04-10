@@ -291,9 +291,13 @@
 
 
     @else
-    @foreach(Session::get('auth_subs') as $newdata)
-    <script>window.location = "/subscriber/url/{{ $newdata['name'] }}";</script>
-    @endforeach
+      @if (Session::has('auth_subs'))
+            @foreach(Session::get('auth_subs') as $newdata)
+            <script>window.location = "/subscriber/url/{{ $newdata['name'] }}";</script>
+            @endforeach
+        @else 
+         <script>window.location = "/";</script>
+        @endif
     @endif
 
     <!-- plugins:js -->

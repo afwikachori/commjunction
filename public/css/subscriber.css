@@ -971,11 +971,12 @@ position: relative;
 
 .card .card-body.card-dashsub {
  padding: 0.5rem 1rem 0rem 1rem!important;
-
+min-height: 70px;
+height: auto;
 }
 
 .card-footer.card-dashsub{
-    padding: 0rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     background-color: #fff;
     border: none;
 }
@@ -1293,6 +1294,15 @@ border: none;
     left: 78%;
 }
 
+
+/* dashboard setting */
+.tabbable-line > .nav-tabs.dashsetting {
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 68%;
+}
+
 /*//member*/
 .tabbable-line > .nav-tabs.member{
 border: none;
@@ -1382,4 +1392,21 @@ border-bottom: 3px solid #0E5F75;
 }
 .portlet .tabbable-line > .tab-content {
   padding-bottom: 0;
+}
+
+
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+
+
+
+/*XL Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+
 }

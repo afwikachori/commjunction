@@ -1,5 +1,5 @@
 @extends('layout.subscriber')
-
+@section('title', 'Membership Type')
 @section('content')
 <div class="row">
     <div class="col-md-2">

@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="row" style="margin-bottom: 1em;">
-    <div class="col-2">
+    <div class="col-md-2">
         <h3 class="cgrey">Dashboard</h3>
     </div>
-    <div class="col-10">
+    <div class="col-md-10">
         <p class="clight">Summary your apps performance<p>
     </div>
 </div>
@@ -33,80 +33,54 @@
                 <p class="s16 mb-3" style="width: 400px;">You can get notification realtime to your application with a
                     this feature,
                     smart application with low cost .</p>
-                <button type="button" id="btn_getnow" class="btn btn-white btn-sm" style="position: relative;">
-                    Get Now </button>
+                <a href="/subscriber/dashboard_setting" type="button" id="btn_getnow" class="btn btn-white btn-sm"
+                    style="position: relative;">
+                    Get Now </a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-info card-img-holder text-white">
-            <div class="card-body">
-                <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Total Friends <i
-                        class="mdi mdi-human-handsup mdi-24px float-right"></i>
-                </h4>
-                <h2 class="mb-5 total_friend"></h2>
-                <h6 class="card-text">Decreased by 0%</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card">
-            <img src="/img/car1.png" class="card-img-top card-dashsub">
-            <div class="card-body card-dashsub">
-                <small class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the
-                    card's content.
-                </small>
-            </div>
-            <div class="card-footer card-dashsub">
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="card-text"><small class="text-muted">26/03/2020 19:03</small></p>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white" style="height: auto; min-height: 217px;">
+                    <div class="card-body">
+                        <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                        <h4 class="font-weight-normal mb-3">Total Friends <i
+                                class="mdi mdi-human-handsup mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5 total_friend"></h2>
+                        <h6 class="card-text">Decreased by 0%</h6>
                     </div>
-                    <div class="col-md-4" style="text-align: right;">
-                        <p class="card-text"><small class="text-muted">Otomotif</small></p>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white"
+                    style="height: auto; min-height: 217px;">
+                    <div class="card-body">
+                        <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                        <h4 class="font-weight-normal mb-3">Total Event<i
+                                class="mdi mdi-theater mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5 total_event"></h2>
+                        <h6 class="card-text">Increased by 0%</h6>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card">
-            <img src="/img/car2.png" class="card-img-top card-dashsub">
-            <div class="card-body card-dashsub">
-                <small class="card-text">
-                    In addition to styling the content within cards, Bootstrap includes a few options.
-                </small>
-            </div>
-            <div class="card-footer card-dashsub">
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="card-text"><small class="text-muted">26/03/2020 11:27</small></p>
-                    </div>
-                    <div class="col-md-4" style="text-align: right;">
-                        <p class="card-text"><small class="text-muted">Otomotif</small></p>
-                    </div>
-                </div>
-            </div>
+    <div class="col-md-8">
+        <div class="row" id="idashbord_news">
+
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-success card-img-holder text-white">
-            <div class="card-body">
-                <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Total Event<i class="mdi mdi-theater mdi-24px float-right"></i>
-                </h4>
-                <h2 class="mb-5 total_event"></h2>
-                <h6 class="card-text">Increased by 0%</h6>
-            </div>
-        </div>
+    <div class="col-md-4 stretch-card grid-margin" style="height: 217px;">
+
     </div>
     <div class="col-md-8 stretch-card grid-margin">
         <div class="card">
@@ -211,14 +185,14 @@
                         of community . Let’s look what do you can explore !</p>
                     <br>
                     <div>
-                    <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
-                        Tour</button>
+                        <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
+                            Tour</button>
                         &nbsp;
-                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm"
-                         style="width:100px; margin-top: 1em;">Skip</button>
-                         <br>
+                        <button type="button" data-dismiss="modal" class="btn btn-light btn-sm"
+                            style="width:100px; margin-top: 1em;">Skip</button>
+                        <br>
                     </div>
-                         <br>
+                    <br>
                     <br>
                     <br>
                 </center>
@@ -349,69 +323,92 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        // get_dashboard_subscriber();
         get_pricing_membership();
         get_payment_initial();
 
-
+        get_dashboard_news();
     });
 
-    $("#btn_getnow").click(function () {
-        alert("Handler for .click() called.");
-    });
+        function tabel_tes() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/subscriber/tabel_generate_inbox_subs',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "limit": 4,
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == false) {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    } else {
+                    }
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show");
+                }
+            });
+        }
 
 
-    function get_dashboard_subscriber() {
+    function get_dashboard_news() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/subscriber/get_dashboard_subscriber',
+            url: '/subscriber/get_dashboard_news',
             type: 'POST',
             datatype: 'JSON',
+            timeout: 30000,
+            data: {
+                "limit": 4,
+            },
             success: function (result) {
                 console.log(result);
-                var bsmenu = result.community_base_menu[0];
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    var berita = '';
+                    $.each(result, function (i, item) {
+                        var imge = cekimage_cdn(item.image);
+                        var noimgnews = '/img/car1.png';
 
-                var basic = result.basic_menu;
-                $(".menu_inbox").html(basic[0].inbox + " Items");
-                $(".menu_about").html(basic[1].about_community);
-                $(".menu_help").html(basic[2].help);
-
-
-                var total_news = 0;
-                var ui_news = '';
-                $.each(bsmenu.news, function (i, item) {
-                    total_news++;
-                    ui_news += '<li>' + item.news + '</li>';
-                });
-                $("#list_news").html(ui_news);
-                $(".total_news").html(total_news + " News");
-
-                var total_friend = 0;
-                var ui_friend = '';
-                $.each(bsmenu.friend, function (i, item) {
-                    total_friend++;
-                    ui_friend += '<li>' + item.news + '</li>';
-                });
-                $("#list_friend").html(ui_friend);
-                $(".total_friend").html(total_friend + " Friends");
-
-                var total_event = 0;
-                var ui_event = '';
-                $.each(bsmenu.event, function (i, item) {
-                    total_event++;
-                    ui_event += '<li>' + item.news + '</li>';
-                });
-                $("#list_event").html(ui_event);
-                $(".total_event").html(total_event + " Events");
-
+                        berita += '<div class="col-md-6 stretch-card grid-margin">' +
+                            '<div class="card" style="height:217px;">' +
+                            '<img src="http://' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';">' +
+                            '<div class="card-body card-dashsub">' +
+                            '<small class="card-text">' + item.title +
+                            '</small>' +
+                            '</div>' +
+                            '<div class="card-footer card-dashsub">' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">' +
+                            '<p class="card-text"><small class="text-muted">' +
+                            dateTime(item.createdAt) + '</small></p>' +
+                            '</div>' +
+                            '<div class="col-md-4" style="text-align: right;">' +
+                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small></p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div></div></div>';
+                    });
+                    $("#idashbord_news").html(berita);
+                }
 
             },
             error: function (result) {
-                console.log("Cant Get Data For Dashboard");
+                console.log(result);
+                console.log("Cant Get News");
             }
         });
     }
