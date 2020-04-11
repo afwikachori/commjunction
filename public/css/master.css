@@ -10,7 +10,7 @@
 html, body {
   margin: 0;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   overflow-y: auto;
 }
 
@@ -780,6 +780,13 @@ top: 28px;
   border-radius: 25px;
 }
 
+#btn_showpass_regis{
+    border: none;
+    border-radius: 25px;
+    width: 30px;
+    height: 30px;
+}
+
 #password_admin_review{
   margin-top: -0.5em;
 }
@@ -801,7 +808,7 @@ top: 28px;
 }
 
 .clight2{
-  color: #aba2a2 !important;
+  color: #868484 !important;
 }
 
 .cteal{
@@ -1354,6 +1361,18 @@ width: 20%; height: auto;
   height: auto;
 }
 
+/* __MODAL AJAX LOADING _ */
+.modal.modal_ajax{
+  background: radial-gradient(#ffffff7a, #caf7ff45);
+}
+
+.modal_ajax .modal-content{
+  background-color: #fff0 !important;
+  border: none;
+  color: white;
+}
+
+
 .editk{
   margin-bottom: 1.5rem !important;
 }
@@ -1526,6 +1545,7 @@ margin-top: 18%;
   top: 0;
 
 }
+
 
 .roundcheck2 label:after {
   border: 2px solid #fff;

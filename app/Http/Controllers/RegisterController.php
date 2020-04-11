@@ -166,10 +166,10 @@ class RegisterController extends Controller
         $url = env('SERVICE') . 'registration/jeniscomm';
 
         $client = new \GuzzleHttp\Client();
-        try{
-        $request = $client->post($url);
-        $response = $request->getBody();
-        $json = json_decode($response, true);
+        try {
+            $request = $client->post($url);
+            $response = $request->getBody();
+            $json = json_decode($response, true);
             if ($json['success'] == true) {
                 return $json['data'];
             }
@@ -890,18 +890,18 @@ class RegisterController extends Controller
 
         $url = env('SERVICE') . 'paymentverification/getinvoice';
         $client = new \GuzzleHttp\Client();
-        try{
-        $response = $client->request('POST', $url, [
-            'form_params' => [
-                'invoice_number' => $num
-            ]
-        ]);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'invoice_number' => $num
+                ]
+            ]);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        session()->put('ses_invoice_pay', $json['data']);
+            session()->put('ses_invoice_pay', $json['data']);
 
-        return $json;
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1149,7 +1149,7 @@ class RegisterController extends Controller
     public function session_backfitur()
     {
         $ses_getfitur = session()->get('fiturpilih');
-// return $ses_getfitur;
+        // return $ses_getfitur;
         //get data pricing untuk fitur
         $url = env('SERVICE') . 'registration/feature';
 
@@ -1174,26 +1174,114 @@ class RegisterController extends Controller
 
     public function cek_valid_email_subs(Request $request)
     {
-        $in = $request['email'];
-
-        $url = env('SERVICE') . 'registration/cekemailadm';
+        $input = $request->all();
+        $url = env('SERVICE') . 'registration/cekemailsubs';
 
         $client = new \GuzzleHttp\Client();
         try {
             $response = $client->request('POST', $url, [
                 'form_params' => [
-                    'email' => $in
+                    'email' => $input['email'],
+                    'community_id' => $input['community_id']
                 ]
             ]);
-        } catch (RequestException $exception) {
-            $response = $exception->getResponse();
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+             return $json;
+
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
+    }
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+    public function cek_valid_phone_subs(Request $request)
+    {
+        $input = $request->all();
+        $url = env('SERVICE') . 'registration/ceknotelpsubs';
 
-        return $json;
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'notelp' => $input['notelp'],
+                    'community_id' => $input['community_id']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+                return $json;
+
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
-}
+    public function cek_valid_username_subs(Request $request)
+    {
+        $input = $request->all();
+        $url = env('SERVICE') . 'registration/cekusernamesubs';
+
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'user_name' => $input['user_name'],
+                    'community_id' => $input['community_id']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+} // END-CLASS

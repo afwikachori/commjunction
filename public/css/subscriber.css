@@ -1449,11 +1449,11 @@ height: 70px;
 
 .divkonco{
     height: 200px;
-    width: 100%
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin-bottom: 2.5em;
+    width: 100%;
+    overflow-x : auto;
+    overflow-y : hidden;
+    white-space : nowrap;
+    margin-bottom : 2.5em;
 }
 
 

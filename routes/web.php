@@ -15,16 +15,6 @@ Route::get('admin/logoutsso','RegisterController@logoutssoView');
 
 Route::get('logout','RegisterController@logout');
 
-
-
-// ADMIN LOGIN COMMUNITY
-// Route::get('admin','AdminCommController@login')->name('admin');
-// Route::post('auth_adminlogin', 'AdminCommController@auth_adminlogin')->name('auth_adminlogin');
-
-//ADMIN-COMMUNITY (DASHBOARD)
-// Route::get('admin/dashboard','AdminCommController@adminDashboardView')->name('admin/dashboard');
-
-//404
 Route::get('404','RequestController@NotFoundView')->name('404');
 
 
@@ -216,9 +206,6 @@ Route::get('admin/finish','RegisterController@finishView')->name('finishView');
 // confirm - payment
 Route::get('admin/loading_payment','RegisterController@loadingpaymentView')->name('loadingpaymentView');
 Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name('finishpaymentView');
-// REGISTER SUBSCRIBER
-Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->name('cek_valid_email_subs');
-
 
 
 
@@ -276,6 +263,10 @@ Route::get('subscriber/subs_community','SubscriberController@registerCommView')-
 Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
 //POST
 Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->name('registerSubscriber');
+Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->name('cek_valid_email_subs');
+Route::post('cek_valid_phone_subs', 'RegisterController@cek_valid_phone_subs')->name('cek_valid_phone_subs');
+Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_subs')->name('cek_valid_username_subs');
+
 
 
 

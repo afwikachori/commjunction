@@ -19,7 +19,7 @@
                 understand more about you</h5>
         </center>
     </div>
-    <div class="col-lg-8">
+    <div class="col-md-8">
         <div class="row">
             <div class="col langimgq">
                 <a href="" onclick="window.lang.change('en'); return false;">
@@ -41,28 +41,28 @@
         <div class="pdregis2">
             <div class="col-9 inforegis_subs">
                 <h2 lang="en" style="color: #4F4F4F;">Register</h3>
-                    <label lang="en" class="clight s15" data-lang-token="info-regis1">Let’s us understand more about
+                    <label lang="en" class="clight2 s15" data-lang-token="info-regis1">Let’s us understand more about
                         you, please fill your information to continue,  so you can using our app.</label>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <nav>
-                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <form method="POST" id="form_regispersonal_subs" action="{{route('registerSubscriber')}}">{{ csrf_field() }}
+                <div class="row" id="form_regis_subs">
+                    <div class="col-md-12">
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
-                            <a class="nav-item cus-a nav-link active" id="nav-personal-tab" data-toggle="tab"
-                                href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="true"
-                                lang="en">Personal Information</a>
+                                <a class="nav-item cus-a nav-link active" id="nav-personal-tab" data-toggle="tab"
+                                    href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="true"
+                                    lang="en">Personal Information</a>
 
-                            <a class="nav-item cus-a nav-link" id="nav-community-tab" data-toggle="tab"
-                                href="#nav-community" role="tab" aria-controls="nav-community" aria-selected="false"
-                                lang="en">Community Information</a>
+                                <a class="nav-item cus-a nav-link" id="nav-community-tab" data-toggle="tab"
+                                    href="#nav-community" role="tab" aria-controls="nav-community" aria-selected="false"
+                                    lang="en">Community Information</a>
 
-                        </div>
-                    </nav>
-                    <form method="POST" id="form_regispersonal_subs" action="{{route('registerSubscriber')}}">
+                            </div>
+                        </nav>
+
                         <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                            {{ csrf_field() }}
                             <div class="tab-pane fade show registersubs active" id="nav-personal" role="tabpanel"
                                 aria-labelledby="nav-personal-tab">
                                 <div class="row">
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label class="h6 cgrey s14" for="fullname_subs" lang="en">
                                                     Full Name</label>
@@ -81,17 +81,18 @@
                                                 <input id="fullname_subs" type="text"
                                                     class="form-control @error('fullname_subs') is-invalid @enderror"
                                                     name="fullname_subs" value="{{ old('fullname_subs') }}" required>
-                                                <small id="pesan_name1" class="redhide" lang="en">At least 3
-                                                    character!</small>
+                                                <small lang="en" id="pesan_fullname" class="redhide">At least 3
+                                                    character and Only
+                                                    Letters!</small>
 
                                                 @if($errors->has('fullname_subs'))
-                                                <small class="error_name1" style="color: red;">
+                                                <small class="error_fullname" style="color: red;">
                                                     {{ $errors->first('fullname_subs')}}</small>
                                                 @endif
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label class="h6 cgrey s14" for="notlp_subs" lang="en">
                                                     Phone Number
@@ -100,11 +101,13 @@
                                                 <input id="notlp_subs" type="text"
                                                     class="form-control @error('notlp_subs') is-invalid @enderror"
                                                     name="notlp_subs" value="{{ old('notlp_subs') }}" required>
-                                                <small id="pesan_notlpsubs" class="redhide" lang="en">At least 3
-                                                    character!</small>
-
+                                                <small id="pesan_phoneformat" class="redhide" lang="en">At least
+                                                    contains 10 Numbers!</small>
+                                                <small id="pesan_phone" class="redhide" lang="en">Number phone has
+                                                    registered! Try
+                                                    another</small>
                                                 @if($errors->has('notlp_subs'))
-                                                <small class="error_notlpsubs" style="color: red;">
+                                                <small class="error_phone" style="color: red;">
                                                     {{ $errors->first('notlp_subs')}}</small>
                                                 @endif
                                             </div>
@@ -112,7 +115,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label for="email_subs" class="h6 cgrey s14" lang="en">
                                                     Email Address</label>
@@ -120,31 +123,33 @@
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     name="email_subs" value="{{ old('email_subs') }}" required
                                                     autocomplete="email_subs">
-                                                    <small id="pesan_formatemail" class="redhide" lang="en">
+                                                <small id="pesan_formatemail" class="redhide" lang="en">
                                                     Include '@' in format email address!</small>
                                                 <small id="pesan_email" class="redhide" lang="en">
                                                     Email has been registered! Try another</small>
 
-                                                    @if($errors->has('email_subs'))
+                                                @if($errors->has('email_subs'))
                                                 <small class="error_email"
                                                     style="color: red;">{{ $errors->first('email_subs')}}</small>
                                                 @endif
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label class="h6 cgrey s14" for="username_subs"
                                                     lang="en">Username</label>
-
                                                 <input id="username_subs" type="text"
                                                     class="form-control @error('username_subs') is-invalid @enderror"
                                                     name="username_subs" value="{{ old('username_subs') }}" required>
-                                                <small id="pesan_usernamesubs" class="redhide" lang="en">At least 3
-                                                    character!</small>
-
+                                                <small id="pesan_usernameformat" lang="en" class="redhide">Mininum 6
+                                                    character contain
+                                                    Numbers and Letters!</small>
+                                                <small id="pesan_username" lang="en" class="redhide">Username already
+                                                    taken! Try
+                                                    another!</small>
                                                 @if($errors->has('username_subs'))
-                                                <small class="error_usernamesubs" style="color: red;">
+                                                <small class="error_username" style="color: red;">
                                                     {{ $errors->first('username_subs')}}</small>
                                                 @endif
                                             </div>
@@ -152,7 +157,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label for="password_subs" class="h6 cgrey s14"
                                                     lang="en">Password</label>
@@ -172,11 +177,13 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <small id="pesan_passwordsubs" lang="en" class="redhide">Mininum 8
+                                                <small id="pesan_passformat" lang="en" class="redhide">Mininum 8
                                                     character contain Numbers and Letters!</small>
+
                                                 @if($errors->has('password_subs'))
-                                                <small class="error_passwordsubs"
-                                                    style="color: red;">{{ $errors->first('password_subs')}} Must
+                                                <small class="error_password"
+                                                    style="color: red;">{{ $errors->first('password_subs')}}
+                                                    Must
                                                     contain numbers and letters
                                                 </small>
                                                 @endif
@@ -185,7 +192,7 @@
                                         <div class="col-md-1">
 
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div class="form-group row">
                                                 <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm
                                                     Password</label>
@@ -194,18 +201,18 @@
                                                     value="{{ old('passconfirm_subs') }}"
                                                     class="form-control @error('passconfirm_subs') is-invalid @enderror"
                                                     name="passconfirm_subs" required autocomplete="passconfirm_subs">
-
-                                                <small id="pesan_passconfirmsubs" lang="en" class="redhide">Password &
+                                                <small id="pesan_passconfirm" lang="en" class="redhide">Password &
                                                     Confirm Password didnt match!</small>
+
                                                 @if($errors->has('passconfirm_subs'))
-                                                <small class="error_passconfirmsubs"
+                                                <small class="error_passconfirm"
                                                     style="color: red;">{{ $errors->first('passconfirm_subs')}}</small>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="display: none;">
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <input type="hidden" class="form-control" name="name_community"
                                                 id="name_community">
                                             <div class="form-group row" style="display: none;">
@@ -217,7 +224,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
-                                        <div class="col-md-5">
+                                        <div class="col">
                                             <div>
                                                 <div class="form-group row" style="display: none;">
                                                     <label class="h6 clight s14" for="community_id" lang="en">Id
@@ -266,35 +273,85 @@
                                     </div> <!-- end-row -->
 
                                     <div class="row" style="margin-top: 2em;">
-                                        <button type="button" class="btn btn-backregis1" lang="en">Go Back</button>
+                                        <button type="button" class="btn btn-backregis1" lang="en"
+                                            onclick="back_pesonal()">Go
+                                            Back</button>
                                         &nbsp;&nbsp;&nbsp;
-                                        <button type="submit" class="btn btn-regissubs1" lang="en">Finish</button>
+                                        <button type="button" class="btn btn-regissubs1" lang="en"
+                                            id="btn_ke_review">Next</button>
                                     </div>
                                 </div> <!-- end-container -->
 
                             </div>
                         </div> <!-- tab content -->
-                    </form>
+
+                    </div>
                 </div>
-            </div>
+
+                <div id="review_regis_subs" style="display: none; margin-top: 2.5em;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <small class="clight s13">Full Name</small>
+                                <p class="cgrey2 tebal" id="review_fullname"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight s13">Email</small>
+                                <p class="cgrey2 tebal" id="review_email"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight s13">Password</small>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <input type="password" id="review_password" readonly
+                                            class="form-control-plaintext cgrey1 h6">
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" id="btn_showpass_regis" onclick="showPassReview()">
+                                            <span class="fa fa-eye" id="ico-mata" aria-hidden="true"
+                                                style="color: grey;"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <small class="clight s13">Phone Number</small>
+                                <p class="cgrey2 tebal" id="review_phone"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight s13">Username</small>
+                                <p class="cgrey2 tebal" id="review_username"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row" style="margin-top: 2em;">
+                        <button type="button" class="btn btn-backregis1" lang="en" onclick="back_show_form()">Go
+                            Back</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-regissubs1" lang="en" id="btn_ke_submit">Finish</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+
 <!-- MODAL LOADING AJAX -->
-<div class="modal fade bd-example-modal-sm" id="mdl-loadingajax" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content loading">
-            <center>
-                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <p class="h6 iniloading">Loading . . .</p>
-                <center>
+            <div id="comjuction_loading">
+                @include('loading')
+            </div>
         </div>
     </div>
 </div>
-<!-- END-MODAL -->
 
 @section('script')
 <script type="text/javascript">
@@ -303,12 +360,41 @@
 
     $(document).ready(function () {
         ses_auth_subs(); //custom-validation.js
-        // alert('halo');
+
     });
 
     function next_submit() {
         $("#nav-community-tab").trigger("click");
     }
+
+
+    function back_pesonal() {
+        $("#nav-personal-tab").trigger("click");
+    }
+
+    function back_show_form() {
+        $("#review_regis_subs").hide();
+        $("#nav-community-tab").trigger("click");
+        $("#form_regis_subs").show();
+    }
+
+    $("#btn_ke_review").click(function () {
+        $("#form_regis_subs").hide();
+        $("#review_regis_subs").show();
+
+        var fullname = $("#fullname_subs").val();
+        var email = $("#email_subs").val();
+        var username = $("#username_subs").val();
+        var phone = $("#notlp_subs").val();
+        var pass = $("#password_subs").val();
+
+        $("#review_fullname").html(fullname);
+        $("#review_email").html(email);
+        $("#review_username").html(username);
+        $("#review_phone").html(phone);
+        $("#review_password").val(pass);
+    });
+
 
     // SESSION LOGIN SUBSVRIBER
     function ses_auth_subs() {
@@ -322,8 +408,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // alert('sukses');
-                console.log(result);
+                // console.log(result);
                 var result = result[0];
                 if (result != "") {
                     $("#community_id").val(result.id);
@@ -342,50 +427,46 @@
         });
     }
 
+    // function onSignIn(googleUser) {
+    //     var profile = googleUser.getBasicProfile();
+    //     var id_token = googleUser.getAuthResponse().id_token;
+
+    //     // console.log('ID: ' + profile.getId());
+    //     // console.log('Name: ' + profile.getName());
+    //     // console.log('Image URL: ' + profile.getImageUrl());
+    //     // console.log('Email: ' + profile.getEmail());
+    //     // console.log('id_token: '+id_token);
 
 
+    //     var isinama = profile.getName();
+    //     var isiemail = profile.getEmail();
 
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var id_token = googleUser.getAuthResponse().id_token;
+    //     $("#fullname_subs").val(isinama);
+    //     $("#email_subs").val(isiemail);
+    //     $("#sso_type").val(2);
+    //     $("#sso_token").val(id_token);
+    // }
 
-        // console.log('ID: ' + profile.getId());
-        // console.log('Name: ' + profile.getName());
-        // console.log('Image URL: ' + profile.getImageUrl());
-        // console.log('Email: ' + profile.getEmail());
-        // console.log('id_token: '+id_token);
+    // function onSuccess(googleUser) {
+    //     console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    //     onSignIn(googleUser);
+    // }
 
+    // function onFailure(error) {
+    //     console.log(error);
+    // }
 
-        var isinama = profile.getName();
-        var isiemail = profile.getEmail();
-
-        $("#fullname_subs").val(isinama);
-        $("#email_subs").val(isiemail);
-        $("#sso_type").val(2);
-        $("#sso_token").val(id_token);
-    }
-
-
-    function onSuccess(googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-        onSignIn(googleUser);
-    }
-
-    function onFailure(error) {
-        console.log(error);
-    }
-
-    function renderButton() {
-        gapi.signin2.render('my-signin3', {
-            'scope': 'profile email',
-            'width': 150,
-            'height': 38,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-        });
-    }
+    // function renderButton() {
+    //     gapi.signin2.render('my-signin3', {
+    //         'scope': 'profile email',
+    //         'width': 150,
+    //         'height': 38,
+    //         'longtitle': true,
+    //         'theme': 'dark',
+    //         'onsuccess': onSuccess,
+    //         'onfailure': onFailure
+    //     });
+    // }
 
     function showPass() {
         var a = document.getElementById("password_subs");
@@ -399,67 +480,238 @@
         }
     }
 
+    function showPassReview() {
+        var a = document.getElementById("review_password");
+        if (a.type == "password") {
+            a.type = "text";
+        } else {
+            a.type = "password";
+        }
+    }
 
-
-    <small id="pesan_formatemail" class="redhide" lang="en">
-            Include '@' in format email address!</small>
-
-    <small id="pesan_email" class="redhide" lang="en">
-                Email has been registered! Try another</small>
-
-    <small class="error_email"
+    $('#fullname_subs').on('keyup', function () {
+        var letters = /^[a-zA-Z\s]*$/;
+        if (this.value == "") {
+            $("#fullname_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_fullname").hide();
+            $(".error_fullname").hide();
+        } else if (this.value.match(letters) && this.value.length >= 3) {
+            $("#fullname_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_fullname").hide();
+            $(".error_fullname").hide();
+        } else {
+            $("#pesan_fullname").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_fullname").show();
+            $(".error_fullname").hide();
+        }
+    });
 
     $('#email_subs').on('keyup', function () {
         if (this.value == "") {
             $("#email_subs").removeClass("is-valid").removeClass("is-invalid");
             $("#pesan_formatemail").hide();
-            $("#pesan_emailsubs").hide();
-            $(".error_regis2").hide();
+            $("#pesan_email").hide();
+            $(".error_email").hide();
         } else if (IsEmail(this.value)) {
             $("#email_subs").removeClass("is-invalid").addClass("is-valid");
-            $("#pesan_emailadmin").hide();
-            $("#pesan_emailadmin2").hide();
-            $(".error_regis2").hide();
-            cekemailadmin(this.value); //cek ajax to backend
-        } else {
+            $("#pesan_formatemail").hide();
+            $("#pesan_email").hide();
+            $(".error_email").hide();
+            cek_valid_email_subs(this.value); //cek ajax to backend
+        } else { //if tidak seseuai format email
             $("#email_subs").removeClass("is-valid").addClass("is-invalid");
-            $("#pesan_emailadmin").show();
-            $("#pesan_emailadmin2").hide();
+            $("#pesan_formatemail").show();
+            $("#pesan_email").hide();
+            $(".error_email").hide();
         }
     });
 
-    function cekemailadmin(input) {
+    function cek_valid_email_subs(input) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/cekemail_subs',
-            data: { 'email': input },
+            url: '/cek_valid_email_subs',
+            data: {
+                'email': input,
+                'community_id': $("#community_id").val()
+            },
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result.success + " - " + result.message);
-                if (result.success == true) {
-                    $("#email_subs").removeClass("is-invalid").addClass("is-valid");
-                    $("#pesan_emailadmin").hide();
-                    $("#pesan_emailadmin2").hide();
-                    $(".error_regis2").hide();
-                } else {
+                // console.log(result);
+                if (result.success == false) {
                     $("#email_subs").removeClass("is-valid").addClass("is-invalid");
-                    $("#pesan_emailadmin").hide();
-                    $("#pesan_emailadmin2").show();
+                    $("#pesan_formatemail").hide();
+                    $("#pesan_email").show();
+                    $(".error_email").hide();
+
+                } else {
+                    $("#email_subs").removeClass("is-invalid").addClass("is-valid");
+                    $("#pesan_formatemail").hide();
+                    $("#pesan_email").hide();
+                    $(".error_email").hide();
                 }
             },
             error: function (result) {
-                console.log("Cant not check unique phone number");
+                console.log("Cant Get Check Email");
+                console.log(result);
+            }
+        });
+
+    }
+
+    $('#notlp_subs').on('keyup', function () {
+
+        if (this.value == "") {
+            $("#notlp_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_phoneformat").hide();
+            $("#pesan_phone").hide();
+            $(".error_phone").hide();
+        } else if (!isNaN(this.value) && this.value.length >= 10) {
+            $("#notlp_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_phoneformat").hide();
+            $("#pesan_phone").hide();
+            $(".error_phone").hide();
+            cek_valid_phone_subs(this.value); //cek ajax to backend
+        } else {
+            $("#notlp_subs").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_phoneformat").show();
+            $("#pesan_phone").hide();
+            $(".error_phone").hide();
+        }
+    });
+
+    function cek_valid_phone_subs(input) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/cek_valid_phone_subs',
+            data: {
+                'notelp': input,
+                'community_id': $("#community_id").val()
+            },
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                // console.log(result);
+                if (result.success == true) {
+                    $("#notlp_subs").removeClass("is-invalid").addClass("is-valid");
+                    $("#pesan_phoneformat").hide();
+                    $("#pesan_phone").hide();
+                    $(".error_phone").hide();
+                } else {
+                    $("#notlp_subs").removeClass("is-valid").addClass("is-invalid");
+                    $("#pesan_phoneformat").hide();
+                    $("#pesan_phone").show();
+                    $(".error_phone").hide();
+                }
+            },
+            error: function (result) {
+                console.log("Cant Check Phone Number");
+                console.log(result);
+            }
+        });
+
+    }
+
+    $('#username_subs').on('keyup', function () {
+        var alpanumeric = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/;
+        if (this.value == "") {
+            $("#username_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_usernameformat").hide();
+            $("#pesan_username").hide();
+            $(".error_username").hide();
+        } else if (this.value.match(alpanumeric) && this.value.length >= 6) {
+            $("#username_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_usernameformat").hide();
+            $("#pesan_username").hide();
+            $(".error_username").hide();
+            cek_valid_username_subs(this.value); //cek ajax to backend
+        } else {
+            $("#username_subs").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_usernameformat").show();
+            $("#pesan_username").hide();
+            $(".error_username").hide();
+        }
+    });
+
+    function cek_valid_username_subs(input) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/cek_valid_username_subs',
+            data: {
+                'user_name': input,
+                'community_id': $("#community_id").val()
+            },
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                // console.log(result);
+                if (result.success == true) {
+                    $("#username_subs").removeClass("is-invalid").addClass("is-valid");
+                    $("#pesan_usernameformat").hide();
+                    $("#pesan_username").hide();
+                    $(".error_username").hide();
+                } else {
+                    $("#username_subs").removeClass("is-valid").addClass("is-invalid");
+                    $("#pesan_usernameformat").hide();
+                    $("#pesan_username").show();
+                    $(".error_username").hide();
+                }
+            },
+            error: function (result) {
+                console.log("Cant not check unique username");
 
             }
         });
 
     }
 
+
+    $('#password_subs').on('keyup', function () {
+        var alpanumeric = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if (this.value == "") {
+            $("#password_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_passformat").hide();
+            $(".error_password").hide();
+        } else if (this.value.match(alpanumeric) && this.value.length >= 8) {
+            $("#password_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_passformat").hide();
+            $(".error_password").hide();
+        } else {
+            $("#password_subs").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_passformat").show();
+            $(".error_password").hide();
+        }
+    });
+
+
+    $('#passconfirm_subs').on('keyup', function () {
+        var pass = $('#password_subs').val();
+        if (this.value == "") {
+            $("#passconfirm_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_passconfirm").hide();
+            $(".error_passconfirm").hide();
+        } else if (this.value == pass) {
+            $("#passconfirm_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_passconfirm").hide();
+            $(".error_passconfirm").hide();
+        } else {
+            $("#passconfirm_subs").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_passconfirm").show();
+            $(".error_passconfirm").hide();
+        }
+    });
 
 
 

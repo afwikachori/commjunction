@@ -60,7 +60,9 @@
                                     class="form-control @error('name_admin') is-invalid @enderror" name="name_admin"
                                     value="{{ old('name_admin') }}" required autocomplete="name_admin" autofocus>
                                 <small lang="en" id="pesan_nameadmin" class="redhide">At least 3 character and Only
-                                    Letters!</small>@if($errors->has('name_admin'))
+                                    Letters!</small>
+
+                                    @if($errors->has('name_admin'))
                                 <small class="error_regis2" style="color: red;"
                                     lang="en">{{ $errors->first('name_admin')}}</small>
                                 @endif
