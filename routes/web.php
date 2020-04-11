@@ -216,6 +216,8 @@ Route::get('admin/finish','RegisterController@finishView')->name('finishView');
 // confirm - payment
 Route::get('admin/loading_payment','RegisterController@loadingpaymentView')->name('loadingpaymentView');
 Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name('finishpaymentView');
+// REGISTER SUBSCRIBER
+Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->name('cek_valid_email_subs');
 
 
 

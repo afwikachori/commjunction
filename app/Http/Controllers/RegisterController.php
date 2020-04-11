@@ -981,15 +981,8 @@ class RegisterController extends Controller
                     return back();
                 }
             }
-        } //END-IF  UPLOAD-IMAGE
-
-        // return redirect('admin/loading_payment')->withErrors($validator, 'admin/confirmpay');
+        }
     }
-
-    ///////////////////////////////////////////////////
-
-
-    //////////////////////////////////////////////////
 
 
 
@@ -1178,6 +1171,29 @@ class RegisterController extends Controller
         return redirect('admin/features')->with(['datafitur' => $isini, 'sum' => $count]);
     }
 
+
+    public function cek_valid_email_subs(Request $request)
+    {
+        $in = $request['email'];
+
+        $url = env('SERVICE') . 'registration/cekemailadm';
+
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'email' => $in
+                ]
+            ]);
+        } catch (RequestException $exception) {
+            $response = $exception->getResponse();
+        }
+
+        $response = $response->getBody()->getContents();
+        $json = json_decode($response, true);
+
+        return $json;
+    }
 
 
 }

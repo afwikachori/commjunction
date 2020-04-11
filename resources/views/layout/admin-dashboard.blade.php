@@ -87,13 +87,9 @@
     <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content loading">
-                <center>
-                    <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
-                        role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <p class="h6 iniloading">Loading . . .</p>
-                    <center>
+                 <div id="comjuction_loading">
+                      @include('loading')
+                </div>
             </div>
         </div>
     </div>

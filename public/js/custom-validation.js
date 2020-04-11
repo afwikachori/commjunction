@@ -132,7 +132,7 @@ function cekemailadmin(input){
     }
 });
      $.ajax({
-      url: '/cekemail_admin',
+         url: '/cek_valid_email_subs',
       data: {'email': input},
       type: 'POST',
       datatype: 'JSON',

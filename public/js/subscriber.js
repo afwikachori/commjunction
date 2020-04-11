@@ -37,9 +37,11 @@ var ui = {
 
         showLoader: function showLoader() {
             $("#modal_ajax").modal('show');
+            // $("#lottie").show();
         },
         hideLoader: function hideLoader() {
             $("#modal_ajax").modal('hide');
+            // $("#lottie").hide();
         },
     }
 };
@@ -58,7 +60,7 @@ function session_subscriber_logged() {
             ui.popup.showLoader();
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 10000);
+            }, 15000);
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
@@ -76,7 +78,7 @@ function session_subscriber_logged() {
         success: function (result) {
             setTimeout(function () {
                 ui.popup.hideLoader();
-            }, 6000);
+            }, 8000);
             console.log(result);
             console.log(result.access_token);
 
@@ -110,7 +112,6 @@ function session_subscriber_logged() {
             $("#username_subs").val(user.user_name);
             $("#email_subs").val(user.email);
             $("#alamat_subs").val(user.alamat);
-
 
             //initial login
             if (user.status == 1) { //first-login

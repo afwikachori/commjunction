@@ -79,13 +79,9 @@
     <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content loading">
-                <center>
-                    <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
-                        role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <p class="h6 iniloading">Loading . . .</p>
-                    <center>
+                <div id="comjuction_loading">
+                    @include('loading')
+                </div>
             </div>
         </div>
     </div>
@@ -127,7 +123,8 @@
                             <i class="mdi mdi-close"></i> No, Im Doubt
                         </button>
                         &nbsp;
-                        <button onclick="LogoutSubscriber()" id="btn_logout_all" type="button" class="btn btn-tosca btn-sm">
+                        <button onclick="LogoutSubscriber()" id="btn_logout_all" type="button"
+                            class="btn btn-tosca btn-sm">
 
                             <span class="hide_load_log" style="display: none;">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -291,13 +288,13 @@
 
 
     @else
-      @if (Session::has('auth_subs'))
-            @foreach(Session::get('auth_subs') as $newdata)
-            <script>window.location = "/subscriber/url/{{ $newdata['name'] }}";</script>
-            @endforeach
-        @else 
-         <script>window.location = "/";</script>
-        @endif
+    @if (Session::has('auth_subs'))
+    @foreach(Session::get('auth_subs') as $newdata)
+    <script>window.location = "/subscriber/url/{{ $newdata['name'] }}";</script>
+    @endforeach
+    @else
+    <script>window.location = "/";</script>
+    @endif
     @endif
 
     <!-- plugins:js -->

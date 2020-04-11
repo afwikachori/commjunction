@@ -73,20 +73,10 @@
                                 </div>
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col">
-                                            <input type="hidden" class="form-control" name="name_community"
-                                                id="name_community">
-                                            <div class="form-group row" style="display: none;">
-                                                <label lang="en" class="h6 cgrey s14">Connect With</label>
-                                                <br>
-                                                <div id="my-signin3"></div>
-                                                <input type="hidden" id="sso_type" name="sso_type" value="1">
-                                                <input type="hidden" id="sso_token" name="sso_token">
-                                            </div>
-
+                                        <div class="col-md-5">
                                             <div class="form-group row">
-                                                <label class="h6 cgrey s14" for="fullname_subs" lang="en">Full
-                                                    Name</label>
+                                                <label class="h6 cgrey s14" for="fullname_subs" lang="en">
+                                                    Full Name</label>
 
                                                 <input id="fullname_subs" type="text"
                                                     class="form-control @error('fullname_subs') is-invalid @enderror"
@@ -99,24 +89,70 @@
                                                     {{ $errors->first('fullname_subs')}}</small>
                                                 @endif
                                             </div>
-
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
                                             <div class="form-group row">
-                                                <label for="email_subs" class="h6 cgrey s14" lang="en">Email
-                                                    Address</label>
+                                                <label class="h6 cgrey s14" for="notlp_subs" lang="en">
+                                                    Phone Number
+                                                </label>
+
+                                                <input id="notlp_subs" type="text"
+                                                    class="form-control @error('notlp_subs') is-invalid @enderror"
+                                                    name="notlp_subs" value="{{ old('notlp_subs') }}" required>
+                                                <small id="pesan_notlpsubs" class="redhide" lang="en">At least 3
+                                                    character!</small>
+
+                                                @if($errors->has('notlp_subs'))
+                                                <small class="error_notlpsubs" style="color: red;">
+                                                    {{ $errors->first('notlp_subs')}}</small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group row">
+                                                <label for="email_subs" class="h6 cgrey s14" lang="en">
+                                                    Email Address</label>
                                                 <input id="email_subs" type="email"
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     name="email_subs" value="{{ old('email_subs') }}" required
-                                                    autocomplete="email_subs"><small id="pesan_emailadmin"
-                                                    class="redhide" lang="en">Include '@' in format email
-                                                    address!</small>
-                                                <small id="pesan_emailsubs" class="redhide" lang="en">Email has been
-                                                    registered! Try another</small>
-                                                @if($errors->has('email_subs'))
-                                                <small class="error_emailsubs"
+                                                    autocomplete="email_subs">
+                                                    <small id="pesan_formatemail" class="redhide" lang="en">
+                                                    Include '@' in format email address!</small>
+                                                <small id="pesan_email" class="redhide" lang="en">
+                                                    Email has been registered! Try another</small>
+
+                                                    @if($errors->has('email_subs'))
+                                                <small class="error_email"
                                                     style="color: red;">{{ $errors->first('email_subs')}}</small>
                                                 @endif
                                             </div>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
+                                            <div class="form-group row">
+                                                <label class="h6 cgrey s14" for="username_subs"
+                                                    lang="en">Username</label>
 
+                                                <input id="username_subs" type="text"
+                                                    class="form-control @error('username_subs') is-invalid @enderror"
+                                                    name="username_subs" value="{{ old('username_subs') }}" required>
+                                                <small id="pesan_usernamesubs" class="redhide" lang="en">At least 3
+                                                    character!</small>
+
+                                                @if($errors->has('username_subs'))
+                                                <small class="error_usernamesubs" style="color: red;">
+                                                    {{ $errors->first('username_subs')}}</small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
                                             <div class="form-group row">
                                                 <label for="password_subs" class="h6 cgrey s14"
                                                     lang="en">Password</label>
@@ -145,51 +181,11 @@
                                                 </small>
                                                 @endif
                                             </div>
+                                        </div>
+                                        <div class="col-md-1">
 
-
-                                        </div> <!-- end-col kiri -->
-                                        <div class="col-1"></div>
-                                        <div class="col">
-                                            <div class="form-group row" style="display: none;">
-                                                <label class="h6 clight s14" for="community_id" lang="en">Id
-                                                    Community</label>
-                                                <input type="hidden" readonly class="form-control-plaintext"
-                                                    id="community_id" name="community_id">
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="h6 cgrey s14" for="notlp_subs" lang="en">
-                                                    Phone Number
-                                                </label>
-
-                                                <input id="notlp_subs" type="text"
-                                                    class="form-control @error('notlp_subs') is-invalid @enderror"
-                                                    name="notlp_subs" value="{{ old('notlp_subs') }}" required>
-                                                <small id="pesan_notlpsubs" class="redhide" lang="en">At least 3
-                                                    character!</small>
-
-                                                @if($errors->has('notlp_subs'))
-                                                <small class="error_notlpsubs" style="color: red;">
-                                                    {{ $errors->first('notlp_subs')}}</small>
-                                                @endif
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="h6 cgrey s14" for="username_subs"
-                                                    lang="en">Username</label>
-
-                                                <input id="username_subs" type="text"
-                                                    class="form-control @error('username_subs') is-invalid @enderror"
-                                                    name="username_subs" value="{{ old('username_subs') }}" required>
-                                                <small id="pesan_usernamesubs" class="redhide" lang="en">At least 3
-                                                    character!</small>
-
-                                                @if($errors->has('username_subs'))
-                                                <small class="error_usernamesubs" style="color: red;">
-                                                    {{ $errors->first('username_subs')}}</small>
-                                                @endif
-                                            </div>
-
+                                        </div>
+                                        <div class="col-md-5">
                                             <div class="form-group row">
                                                 <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm
                                                     Password</label>
@@ -206,12 +202,34 @@
                                                     style="color: red;">{{ $errors->first('passconfirm_subs')}}</small>
                                                 @endif
                                             </div>
-
-                                        </div> <!-- end-col kanan -->
-                                    </div> <!-- end-row -->
+                                        </div>
+                                    </div>
+                                    <div class="row" style="display: none;">
+                                        <div class="col-md-5">
+                                            <input type="hidden" class="form-control" name="name_community"
+                                                id="name_community">
+                                            <div class="form-group row" style="display: none;">
+                                                <label lang="en" class="h6 cgrey s14">Connect With</label>
+                                                <br>
+                                                <div id="my-signin3"></div>
+                                                <input type="hidden" id="sso_type" name="sso_type" value="1">
+                                                <input type="hidden" id="sso_token" name="sso_token">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
+                                            <div>
+                                                <div class="form-group row" style="display: none;">
+                                                    <label class="h6 clight s14" for="community_id" lang="en">Id
+                                                        Community</label>
+                                                    <input type="hidden" readonly class="form-control-plaintext"
+                                                        id="community_id" name="community_id">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group row">
-
                                         <button type="button" class="btn btn-regissubs1" onclick="next_submit();"
                                             id="submit_personalsubs" lang="en">
                                             Next</button>
@@ -380,6 +398,68 @@
             b.class = "fa fa-eye";
         }
     }
+
+
+
+    <small id="pesan_formatemail" class="redhide" lang="en">
+            Include '@' in format email address!</small>
+
+    <small id="pesan_email" class="redhide" lang="en">
+                Email has been registered! Try another</small>
+
+    <small class="error_email"
+
+    $('#email_subs').on('keyup', function () {
+        if (this.value == "") {
+            $("#email_subs").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_formatemail").hide();
+            $("#pesan_emailsubs").hide();
+            $(".error_regis2").hide();
+        } else if (IsEmail(this.value)) {
+            $("#email_subs").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_emailadmin").hide();
+            $("#pesan_emailadmin2").hide();
+            $(".error_regis2").hide();
+            cekemailadmin(this.value); //cek ajax to backend
+        } else {
+            $("#email_subs").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_emailadmin").show();
+            $("#pesan_emailadmin2").hide();
+        }
+    });
+
+    function cekemailadmin(input) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/cekemail_subs',
+            data: { 'email': input },
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                console.log(result.success + " - " + result.message);
+                if (result.success == true) {
+                    $("#email_subs").removeClass("is-invalid").addClass("is-valid");
+                    $("#pesan_emailadmin").hide();
+                    $("#pesan_emailadmin2").hide();
+                    $(".error_regis2").hide();
+                } else {
+                    $("#email_subs").removeClass("is-valid").addClass("is-invalid");
+                    $("#pesan_emailadmin").hide();
+                    $("#pesan_emailadmin2").show();
+                }
+            },
+            error: function (result) {
+                console.log("Cant not check unique phone number");
+
+            }
+        });
+
+    }
+
 
 
 

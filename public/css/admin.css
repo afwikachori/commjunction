@@ -245,6 +245,10 @@ background-color: #beebe9;
 background-color: #50b7b9;
 }
 
+.modal.modal_ajax{
+  background: radial-gradient(#ffffff7a, #caf7ff45);
+}
+
 .modal_ajax .modal-content{
   background-color: #fff0 !important;
   border: none;
