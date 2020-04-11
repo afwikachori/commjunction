@@ -62,7 +62,7 @@ class SubscriberController extends Controller
         return view('subscriber/dashboard/notification_management_subs');
     }
 
-   public function ModuleSettingSubsView()
+    public function ModuleSettingSubsView()
     {
         return view('subscriber/dashboard/module_setting_subs');
     }
@@ -491,7 +491,7 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             if ($json['success'] == true) {
-               return $json['data'];
+                return $json['data'];
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1413,17 +1413,131 @@ class SubscriberController extends Controller
     }
 
 
+    public function get_last_news(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'module/news/lastnews';
+        $client = new \GuzzleHttp\Client();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'limit' => $input['limit'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
+    public function get_love_news(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
 
+        $url = env('SERVICE') . 'module/news/toplovenews';
+        $client = new \GuzzleHttp\Client();
 
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'limit' => $input['limit'],
+        ]);
 
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
 
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
+    public function get_topvisit_news(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
 
+        $url = env('SERVICE') . 'module/news/visitnews';
+        $client = new \GuzzleHttp\Client();
 
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'limit' => $input['limit'],
+        ]);
 
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
 
-
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 } //end-class

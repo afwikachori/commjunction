@@ -58,9 +58,9 @@ function session_subscriber_logged() {
         },
         beforeSend: function beforeSend(jxqhr) {
             ui.popup.showLoader();
-            setTimeout(function () {
-                ui.popup.hideLoader();
-            }, 15000);
+            // setTimeout(function () {
+            //     ui.popup.hideLoader();
+            // }, 15000);
         },
         timeout: 20000,
         error: function error(event, jxqhr, status, _error) {

@@ -206,6 +206,11 @@ Route::get('admin/finish','RegisterController@finishView')->name('finishView');
 // confirm - payment
 Route::get('admin/loading_payment','RegisterController@loadingpaymentView')->name('loadingpaymentView');
 Route::get('admin/finish_payment','RegisterController@finishpaymentView')->name('finishpaymentView');
+// CEK VALIDASI REGIS
+Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->name('cek_valid_email_subs');
+Route::post('cek_valid_phone_subs', 'RegisterController@cek_valid_phone_subs')->name('cek_valid_phone_subs');
+Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_subs')->name('cek_valid_username_subs');
+
 
 
 
@@ -226,10 +231,13 @@ Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->
 
 
 //POST
+Route::post('get_topvisit_news', 'SubscriberController@get_topvisit_news')->name('get_topvisit_news');
+
+Route::post('get_love_news', 'SubscriberController@get_love_news')->name('get_love_news');
+
+Route::post('get_last_news', 'SubscriberController@get_last_news')->name('get_last_news');
 Route::post('get_friends_sugestion', 'SubscriberController@get_friends_sugestion')->name('get_friends_sugestion');
-
 Route::post('get_friends_total', 'SubscriberController@get_friends_total')->name('get_friends_total');
-
 Route::post('get_list_setting_module_subs', 'SubscriberController@get_list_setting_module_subs')->name('get_list_setting_module_subs');
 Route::post('detail_notif_subs', 'SubscriberController@detail_notif_subs')->name('detail_notif_subs');
 Route::post('setting_notification_subs', 'SubscriberController@setting_notification_subs')->name('setting_notification_subs');
@@ -263,9 +271,7 @@ Route::get('subscriber/subs_community','SubscriberController@registerCommView')-
 Route::get('subscriber/subs_payment','SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
 //POST
 Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->name('registerSubscriber');
-Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->name('cek_valid_email_subs');
-Route::post('cek_valid_phone_subs', 'RegisterController@cek_valid_phone_subs')->name('cek_valid_phone_subs');
-Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_subs')->name('cek_valid_username_subs');
+
 
 
 

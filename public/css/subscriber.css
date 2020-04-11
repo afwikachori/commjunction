@@ -172,12 +172,29 @@ background-color: #ffffff !important;
 /*dashboard subscriber*/
 .card .card-body.sumari {
     padding: 1rem 1rem !important;
+    border: none;
 }
 
+.card-header.sumari {
+    border: none;
+}
 
+.top-ico-right{
+position: absolute;
+right: 0;
+top: 0;
+}
 
+.col.icon-atas{
+position: absolute;
+right: 20px;
+top: 10px;
+font-size: 25px;
+}
 
-
+.bg-pastel-red{
+    background: linear-gradient(to right, #ffcea4, #fdd8e1) !important;
+}
 
 
 .cdgrey{
@@ -1458,10 +1475,16 @@ height: 70px;
 
 
 
+/* /top love news */
+img.lovenews{
+width: 32px;
+height: 32px;
+margin: auto;
+}
 
-
-
-
+.pd-5px{
+    padding: 5px;
+}
 
 
 

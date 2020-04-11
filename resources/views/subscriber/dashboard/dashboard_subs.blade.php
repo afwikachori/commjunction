@@ -81,28 +81,30 @@
     </div>
 </div>
 
+
+
 <h4 class="cgrey" style="margin-bottom: 1em;">Friend Sugestion</h4>
 <div class="divkonco">
     <!-- <div class="stretch-card grid-margin konco"> -->
-        <div class="card konco">
-            <div class="card-body color">
-                <div class="close_konco">
-                    <button type="button" class="close cgrey2" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form>
-                    <center>
-                        <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                        <h6 class="cgrey2">Jihane Almira</h6>
-                        <input type="hidden" value="" name="frend_suges">
-                        <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
-                            <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                        </button>
-                        <center>
-                </form>
+    <div class="card konco">
+        <div class="card-body color">
+            <div class="close_konco">
+                <button type="button" class="close cgrey2" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form>
+                <center>
+                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
+                    <h6 class="cgrey2">Jihane Almira</h6>
+                    <input type="hidden" value="" name="frend_suges">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
+                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
+                    </button>
+                    <center>
+            </form>
         </div>
+    </div>
     <!-- </div> -->
     <div class="card konco">
         <div class="card-body color">
@@ -116,7 +118,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Tan Suhiko</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -135,7 +137,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Biboy Lion Alfaris</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -154,7 +156,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Ahmad Al Zayn</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -173,7 +175,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Cinciryn Lee</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -192,7 +194,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Veskov Broklyn</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -211,13 +213,14 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Salsa Normanov</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
             </form>
         </div>
     </div>
+
     <div class="card konco">
         <div class="card-body color">
             <div class="close_konco">
@@ -230,7 +233,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Huha Syarifudin</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -249,7 +252,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Gemina Hutapea</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -268,7 +271,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Fahris Vexora Actar</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -287,7 +290,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Tamara Bilqies Asyasha</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -306,7 +309,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Mei Meilina Rubi</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -325,7 +328,7 @@
                     <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
                     <h6 class="cgrey2">Gema Briliant Buana</h6>
                     <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco" id="btn_submit_paymethod">
+                    <button type="button" class="btn btn-tosca btn-sm konco">
                         <i class="mdi mdi-account-plus"></i> &nbsp; Add
                     </button>
                     <center>
@@ -334,6 +337,72 @@
     </div>
 
 </div>
+
+
+
+<div class="row" id="row_news_list">
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card sumari" style="border-radius: 35px;">
+            <div class="card-header bg-pastel-red sumari>
+                <div class=" row">
+                <div class="col-9">
+                    <h4 class="cteal">Last News</h4>
+                </div>
+                <div class="col icon-atas">
+                    <i class="mdi mdi-newspaper top-ico-right cteal"></i>
+                </div>
+            </div>
+
+            <div class="card-body sumari">
+                <ul class="list-arrow" id="isi_last_news" style="padding-left: 5px;">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card sumari" style="border-radius: 35px;">
+            <div class="card-header bg-pastel-red sumari>
+                        <div class=" row">
+                <div class="col-9">
+                    <h4 class="cteal">Most Love News</h4>
+                </div>
+                <div class="col icon-atas">
+                    <i class="mdi mdi-heart-outline top-ico-right cteal"></i>
+                </div>
+            </div>
+
+            <div class="card-body sumari">
+                <div id="isi_love_news" style="padding-left: 10px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card sumari" style="border-radius: 35px;">
+            <div class="card-header bg-pastel-red sumari>
+                    <div class=" row">
+                <div class="col-9">
+                    <h4 class="cteal">Top Visit News</h4>
+                </div>
+                <div class="col icon-atas">
+                    <i class="mdi mdi-auto-upload top-ico-right cteal"></i>
+                </div>
+            </div>
+
+            <div class="card-body sumari">
+                <ul class="list-star" id="isi_topvisit_news" style="padding-left: 5px;">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 
@@ -539,7 +608,7 @@
                 <input type="hidden" name="id_membertype" id="id_membertype">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                    <button type="submit" class="btn btn-teal btn-sm">Submit</button>
                 </div>
             </form>
         </div>
@@ -557,6 +626,9 @@
 
         get_dashboard_news();
         get_friends_total();
+        get_last_news();
+        get_love_news();
+        get_topvisit_news();
         // get_friends_sugestion();   // DATABASE BERMASALAH
     });
 
@@ -702,7 +774,118 @@
         });
     }
 
+    function get_last_news() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/get_last_news',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "limit": 5,
+            },
+            success: function (result) {
+                // console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+                var newsui = '';
+                $.each(result, function (i, item) {
+                    newsui += '<li>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
+                        '<small class="cgrey">' + item.title + '</small><br>' +
+                        '</li>';
+                });
+                $("#isi_last_news").html(newsui);
 
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
+
+    function get_love_news() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/get_love_news',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "limit": 5,
+            },
+            success: function (result) {
+                // console.log(result);
+                var noimg = '/img/fitur.png';
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+                var loveui = '';
+                $.each(result, function (i, item) {
+                    loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
+                        '<center><img src="http://' + server_cdn + cekimage_cdn(item.image) + '" class="rounded-circle img-fluid mb-2 lovenews"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
+                        '</div>' +
+                        '<div class="col-md-10 pd-5px">' +
+                        '<small class="cblue s12">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
+                        '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
+                        '</div></div>';
+                });
+                $("#isi_love_news").html(loveui);
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
+
+    function get_topvisit_news() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/get_topvisit_news',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "limit": 5,
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+                var newsui = '';
+                $.each(result, function (i, item) {
+                    newsui += '<li>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
+                        '<small class="cgrey">' + item.title + '</small><br>' +
+                        '</li>';
+                });
+                $("#isi_topvisit_news").html(newsui);
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
 
 
     $("#btn-initial1").click(function () {
