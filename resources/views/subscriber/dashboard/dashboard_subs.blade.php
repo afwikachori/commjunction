@@ -29,7 +29,7 @@
         <div class="card bg-gradient-purple card-img-holder text-white">
             <img src="/visual/dash2.png" id="img-dash2" />
             <img src="/visual/dash1.png" class="card-img-absolute" style="width: 100%; position: absolute;" />
-            <div class="card-body">
+            <div class="card-body setnotifdash">
                 <h4 class="mb-3 s21">Get your notification realtime with a new feature</h4>
                 <p class="s16 mb-3" style="width: 400px;">You can get notification realtime to your application with a
                     this feature,
@@ -82,262 +82,30 @@
 </div>
 
 
-
-<h4 class="cgrey" style="margin-bottom: 1em;">Friend Sugestion</h4>
 <div class="divkonco">
-    <!-- <div class="stretch-card grid-margin konco"> -->
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Jihane Almira</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
+    <h4 class="cgrey" style="margin-bottom: 1em;">Friend Sugestion</h4>
+    <div id="div_friendsugest">
+        <!-- <div class="card konco">
+            <div class="card-body color">
+                <div class="close_konco">
+                    <button type="button" class="close cgrey2" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <form>
                     <center>
-            </form>
-        </div>
-    </div>
-    <!-- </div> -->
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                        <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
+                        <h6 class="cgrey2">Jihane Almira</h6>
+                        <input type="hidden" value="" name="frend_suges">
+                        <button type="button" class="btn btn-tosca btn-sm konco">
+                            <i class="mdi mdi-account-plus"></i> &nbsp; Add
+                        </button>
+                        <center>
+                </form>
             </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Tan Suhiko</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
+        </div> -->
     </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Biboy Lion Alfaris</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Ahmad Al Zayn</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Cinciryn Lee</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Veskov Broklyn</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Salsa Normanov</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Huha Syarifudin</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Gemina Hutapea</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Fahris Vexora Actar</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Tamara Bilqies Asyasha</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Mei Meilina Rubi</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-    <div class="card konco">
-        <div class="card-body color">
-            <div class="close_konco">
-                <button type="button" class="close cgrey2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <center>
-                    <img src="/img/kosong.png" class="rounded-circle img-fluid mb-2 konco">
-                    <h6 class="cgrey2">Gema Briliant Buana</h6>
-                    <input type="hidden" value="" name="frend_suges">
-                    <button type="button" class="btn btn-tosca btn-sm konco">
-                        <i class="mdi mdi-account-plus"></i> &nbsp; Add
-                    </button>
-                    <center>
-            </form>
-        </div>
-    </div>
-
 </div>
-
 
 
 <div class="row" id="row_news_list">
@@ -401,6 +169,44 @@
 </div>
 
 
+<div class="row" style="padding: 0rem 20px 0rem 20px;">
+    <div class="col-md-6 stretch-card grid-margin">
+        <div class="card">
+            <div class="row" style="min-height: 150px;">
+                <div class="col-2 mpad-0" style="background-color: #b7e778;">
+                    <center>
+                        <br><br>
+                        <i class="mdi mdi-package-variant cwhite" style="font-size: 35px;"></i>
+                    </center>
+                </div>
+                <div class="col-10">
+                    <div class="pad-1em">
+                        <h4 class="cteal">Top Visit Club</h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 stretch-card grid-margin" style="padding-right: 0em;">
+        <div class="card">
+            <div class="row" style="min-height: 150px;">
+                <div class="col-2 mpad-0" style="background-color: #7ecfc0;">
+                    <center>
+                        <br><br>
+                        <i class="mdi mdi-package-variant cwhite" style="font-size: 35px;"></i>
+                    </center>
+                </div>
+                <div class="col-10">
+                    <div class="pad-1em">
+                        <h4 class="cteal">Top Visit Player</h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -621,15 +427,15 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        get_pricing_membership();
-        get_payment_initial();
+        // get_pricing_membership();
+        // get_payment_initial();
 
-        get_dashboard_news();
-        get_friends_total();
-        get_last_news();
-        get_love_news();
-        get_topvisit_news();
-        // get_friends_sugestion();   // DATABASE BERMASALAH
+        // get_dashboard_news();
+        // get_friends_total();
+        // get_last_news();
+        // get_love_news();
+        // get_topvisit_news();
+        // get_friends_sugestion();
     });
 
     function tabel_tes() {
@@ -650,8 +456,10 @@
                 console.log(result);
                 if (result.success == false) {
                     ui.popup.show('warning', result.message, 'Warning');
-                } else {
                 }
+                // $.each(result, function (i, item) {
+
+                // });
             },
             error: function (result) {
                 console.log(result);
@@ -659,7 +467,6 @@
             }
         });
     }
-
 
     function get_dashboard_news() {
         $.ajaxSetup({
@@ -758,20 +565,58 @@
             dataSrc: '',
             timeout: 30000,
             data: {
-                "limit": 4,
+                "limit": 10,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     ui.popup.show('warning', result.message, 'Warning');
-                } else {
                 }
+
+                var nofoto = '/img/kosong.png';
+                var isiui = '';
+                var jumlah = 0;
+                $.each(result, function (i, item) {
+                    jumlah++;
+                    isiui += '<div class="card konco" id="' + item.user_id + '">' +
+                        '<div class="card-body color">' +
+                        '<div class="close_konco">' +
+                        '<button type="button" class="close cgrey2" aria-label="Close"' +
+                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>' +
+                        '<form>' +
+                        '<center>' +
+                        '<img src="' + server_cdn + item.picture + '" class="rounded-circle img-fluid mb-2 konco"' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                        '<h6 class="cgrey2">' + item.full_name + '</h6>' +
+                        '<input type="hidden" value="" name="frend_suges">' +
+                        '<button type="button" class="btn btn-tosca btn-sm konco">' +
+                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                        '</button>' +
+                        '<center>' +
+                        '</form>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+                $("#div_friendsugest").html(isiui);
+
             },
             error: function (result) {
                 console.log(result);
                 console.log("Cant Show");
             }
         });
+    }
+
+    function hide_friendsugest(dtcard) {
+        var dt = dtcard.split('<>');
+        $("#" + dt[0]).hide();
+        if (dt[1] == 1) {
+            $(".divkonco").fadeOut("slow").hide();
+        }
     }
 
     function get_last_news() {
@@ -866,7 +711,7 @@
                 "limit": 5,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
@@ -879,6 +724,36 @@
                 });
                 $("#isi_topvisit_news").html(newsui);
 
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
+
+    function tabel_tes() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/tabel_generate_inbox_subs',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "limit": 4,
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+                // $.each(result, function (i, item) {
+
+                // });
             },
             error: function (result) {
                 console.log(result);

@@ -1487,7 +1487,10 @@ margin: auto;
 }
 
 
-
+.pad-1em{
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
 
 
 
@@ -1505,9 +1508,30 @@ margin: auto;
 
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
+@media only screen and (max-width: 600px) {
+#img-dash2 {
+    width: 145px;
+    position: absolute;
+    top: -33px;
+    right: 10px;
+}
+.card-body.setnotifdash{
+    margin-top: 3em;
+}
+
+.mpad-0{
+    padding: 0em;
+    font-size: 20px;
+}
+
 
 }
+/* END - MEDIA 600PX */
+
+
+
+
+
 
 
 /*XL Extra large devices (large laptops and desktops, 1200px and up) */

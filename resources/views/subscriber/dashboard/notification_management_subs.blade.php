@@ -454,7 +454,7 @@
     });
 
     function detail_notif_subs(dtku) {
-        alert(dtku);
+        // alert(dtku);
         var dtnya = dtku.split(',');
         //   console.log(dtnya);
         $.ajaxSetup({
