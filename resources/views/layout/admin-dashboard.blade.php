@@ -80,15 +80,15 @@
             </div>
         </div>
 
-        <input type="hidden" class="server_cdn" value="{{ env('CDN') }}">
+        <input type="text" class="server_cdn" value="{{ env('CDN') }}">
     </div>
 
     <!-- MODAL LOADING AJAX -->
     <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content loading">
-                 <div id="comjuction_loading">
-                      @include('loading')
+                <div id="comjuction_loading">
+                    @include('loading')
                 </div>
             </div>
         </div>

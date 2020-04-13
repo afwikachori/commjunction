@@ -22,14 +22,14 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
-                   
+
                     <div class="row">
                         <div class="col-md-4" style="padding-right: 8rem;">
                             <center>
                                 <div class="img-upload-profil editprof">
                                     <div class="circle">
                                         <img class="profile-pic rounded-circle img-fluid logo_komunitas editcom"
-                                            id="view_profil_com" src="/img/focus.png">
+                                            id="view_profil_com" src="/img/focus.png" onerror = "this.onerror=null;this.src='/img/focus.png';">
                                     </div>
                                     <div class="p-imageditprof">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"

@@ -68,11 +68,11 @@
                                 <small class="clight">This image will be the icon for subscriber login portal</small>
                             </div>
                             <div class="col-md-5">
-                                <img src="" class="img_portal rounded-circle img-fluid zoom" id="img_portal_admin"
-                                style="display: none; width: 70px; height:70px;"
-                                data-toggle="tooltip" data-placement="right" title="Double Click to View Image"
+                                <img src="/img/kosong.png" class="img_portal rounded-circle img-fluid zoom" id="img_portal_admin"
+                                style="display: none; width: 50px; height:50px;"
                                 onclick="clickImage(this)"
-                                onerror="this.onerror=null;this.src='/img/default.png';">
+                                data-toggle="tooltip" data-placement="right" title="Double Click to View Image"
+                                onerror="this.onerror=null;this.src='/img/kosong.png';">
                                 <div class="form-group" id="up_img_portal">
                                 <input type="file" id="fileup" name="fileup" class="file-upload-default">
                                 <div class="input-group col-xs-12">
