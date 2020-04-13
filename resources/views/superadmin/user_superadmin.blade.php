@@ -168,13 +168,12 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (hasil) {
-      // console.log(hasil.data);
+      console.log(hasil);
 
       $('#pilih_priv').empty();
       $('#pilih_priv').append("<option disabled>Choose Priviledge</option>");
 
-    if (hasil.success == true) {
-      var data = hasil.data;
+      var data = hasil;
 
       for (var i = data.length - 1; i >= 0; i--) {
         $('#pilih_priv').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].priviledge, "</option>"));
@@ -185,7 +184,7 @@ $.ajax({
         return $(y).val() < $(x).val() ? -1 : 1;
       }));
       $("#pilih_priv").get(0).selectedIndex = 0;
-    }
+
 
     const OldValue = '{{old('pilih_priv')}}';
     if(OldValue !== '') {

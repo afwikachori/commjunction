@@ -8,9 +8,11 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\BadResponseException;
 
 use Session;
 use Alert;
+use Helper;
 
 class SuperadminController extends Controller
 {
@@ -118,32 +120,51 @@ class SuperadminController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'registration/admcreate';
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $url, [
-            'form_params'   => [
-                'full_name'     => $input['name_superadmin'],
-                'notelp'        => $input['phone_super'],
-                'email'         => $input['email_super'],
-                'divisi'        => $input['division_super'],
-                'user_name'     => $input['username_super'],
-                'password'      => $input['password_super'],
-                'priviledge_id' => $input['pilih_priv']
-            ]
-        ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params'   => [
+                    'full_name'     => $input['name_superadmin'],
+                    'notelp'        => $input['phone_super'],
+                    'email'         => $input['email_super'],
+                    'divisi'        => $input['division_super'],
+                    'user_name'     => $input['username_super'],
+                    'password'      => $input['password_super'],
+                    'priviledge_id' => $input['pilih_priv']
+                ]
+            ]);
 
-        alert()->success('New User Has Been Added!', 'Successfully')->autoclose(4500)->persistent('Done');
-        return back();
-        // dd($json);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            alert()->success('New User Has Been Added!', 'Successfully')->autoclose(4500)->persistent('Done');
+            return back();
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
+                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+                return redirect('superadmin');
+            } else {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     }
 
 
     //LOGIN SUPERADMIN
     public function loginSuperadmin(Request $request)
     {
-        // dd($request);
-
         $validator = $request->validate([
             'username_superadmin'   => 'required',
             'pass_superadmin' => 'required',
@@ -171,21 +192,25 @@ class SuperadminController extends Controller
             $user = $user_logged['user']['full_name'];
             // $user = $jsonlogin['user'];
             return redirect('superadmin/dashboard')->with('fullname', $user);
-        } catch (ClientException $exception) {
-            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-
-            if ($errorq['success'] == false) {
-                alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
-                return back()->withInput();
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
+                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+                return redirect('superadmin');
+            } else {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         } catch (ConnectException $errornya) {
-
             $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
+            $error['message'] = "Server bermasalah";
             $error['succes'] = false;
-
-            alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
-            return back()->withInput();
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -208,10 +233,23 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'registration/priviledge';
         $client = new \GuzzleHttp\Client();
 
-        $request = $client->post($url);
-        $response = $request->getBody();
-        $jsonku = json_decode($response, true);
-        return $jsonku;
+        try {
+            $request = $client->post($url);
+            $response = $request->getBody();
+            $jsonku = json_decode($response, true);
+            return $jsonku['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -219,23 +257,33 @@ class SuperadminController extends Controller
     public function list_req_admincomm_func()
     {
         $user_logged = session()->get('session_logged_superadmin');
-        // return $user_logged['access_token'];
-        // return  env('SERVICE');
-
 
         $url = env('SERVICE') . 'paymentverification/datapaymentconfirmation';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $user_logged['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $user_logged['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -312,15 +360,15 @@ class SuperadminController extends Controller
 
         $url = env('SERVICE') . 'profilemanagement/logout';
         $client = new \GuzzleHttp\Client();
-
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
         try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             session()->forget('session_logged_superadmin');
@@ -328,12 +376,25 @@ class SuperadminController extends Controller
             if ($json['success'] == true) {
                 return redirect('superadmin');
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 401) {
-                alert()->error('Over limit time, please do login again', 'Unauthorized')->persistent('Done');
-                return redirect('superadmin');
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
+                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+                return redirect('admin');
+            } else {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -343,17 +404,29 @@ class SuperadminController extends Controller
 
         $url = env('SERVICE') . 'dashboard/commjunction';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -365,16 +438,29 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulemanagement/allmodule';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -396,11 +482,24 @@ class SuperadminController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -493,17 +592,29 @@ class SuperadminController extends Controller
 
         $url = env('SERVICE') . 'usertype/listusertype';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function get_listfitur_usertype_ceklist()
@@ -512,17 +623,17 @@ class SuperadminController extends Controller
 
         $url = env('SERVICE') . 'usertype/listfeature';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -541,6 +652,11 @@ try{
 
     public function add_new_usertype_management(Request $request)
     {
+        $request->validate([
+            'nama_usertipe' => 'required',
+            'dekripsi_usertipe' => 'required',
+            'subfitur' => 'required',
+        ]);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -593,6 +709,11 @@ try{
 
     public function edit_usertype_management(Request $request)
     {
+        $request->validate([
+            'nama_usertipe_edit' => 'required',
+            'dekripsi_usertipe_edit' => 'required',
+            'edit_subfitur' => 'required',
+        ]);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
@@ -659,17 +780,29 @@ try{
 
         $url = env('SERVICE') . 'transmanagement/listall';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -732,16 +865,29 @@ try{
         $url = env('SERVICE') . 'transmanagement/listcommunity';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -751,17 +897,29 @@ try{
 
         $url = env('SERVICE') . 'transmanagement/listtransactiontype';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -796,10 +954,21 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
+
+
 
     public function tabel_transaksi_show(Request $request)
     {
@@ -837,8 +1006,19 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            alert()->error('Low Connection try again later ', 'Failed!')->autoclose(3500);
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -847,8 +1027,6 @@ try{
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
-        // return $ses_login['access_token'];
-
         $url = env('SERVICE') . 'transmanagement/detail';
         $client = new \GuzzleHttp\Client();
         $headers = [
@@ -876,8 +1054,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -902,7 +1089,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     } //end-func
 
@@ -1002,16 +1200,29 @@ try{
         $url = env('SERVICE') . 'usermanagement/listuser';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function detail_user_management_super(Request $request)
@@ -1033,11 +1244,24 @@ try{
             'headers' => $headers,
         ];
 
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1074,7 +1298,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1084,17 +1319,29 @@ try{
 
         $url = env('SERVICE') . 'logmanagement/listcommunity';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1105,17 +1352,29 @@ try{
 
         $url = env('SERVICE') . 'modulereport/listcommunity';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1126,17 +1385,29 @@ try{
 
         $url = env('SERVICE') . 'modulereport/listfeature';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function get_subfitur_modulereport(Request $request)
@@ -1168,7 +1439,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1208,7 +1490,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1221,16 +1514,29 @@ try{
         $url = env('SERVICE') . 'pricingmanagement/listpricing';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1253,11 +1559,24 @@ try{
             'headers' => $headers,
         ];
 
-        $response = $client->post($url, $datakirim);
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json['data'];
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1268,16 +1587,29 @@ try{
         $url = env('SERVICE') . 'pricingmanagement/feature';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1325,13 +1657,20 @@ try{
                     alert()->success('Successfully add new pricing type', 'Added!')->autoclose(4500)->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                return $exception;
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('So sorry cant add new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } //END-IF  UPLOAD-IMAGE
     }
@@ -1405,13 +1744,20 @@ try{
                 alert()->success('Successfully Edit pricing type', 'Updated!')->autoclose(4500)->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            return $exception;
-            $status_error = $exception->getCode();
-            if ($status_error == 400) {
-                alert()->error('So sorry cant edit new pricing type!', 'Failed!')->autoclose(4500)->persistent('Done');
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1421,17 +1767,17 @@ try{
 
         $url = env('SERVICE') . 'reportmanagement/transactiontype';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1487,7 +1833,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1526,7 +1883,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1538,16 +1906,34 @@ try{
         $url = env('SERVICE') . 'paymentmanagement/listall';
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1558,17 +1944,34 @@ try{
 
         $url = env('SERVICE') . 'paymentmanagement/listallactive';
         $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $exception) {
+            $status_error = $exception->getCode();
+            if ($status_error == 500) {
+                return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1611,12 +2014,20 @@ try{
                 alert()->success('Successfully Add New Payment', 'Added!')->autoclose(4000);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1653,8 +2064,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1688,11 +2108,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                return '404';
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1735,12 +2161,20 @@ try{
                 alert()->success('Successfully Edit Payment', 'Edited!')->autoclose(4000);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1754,16 +2188,29 @@ try{
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -1805,13 +2252,20 @@ try{
                     alert()->success('Successfully add new sub-payment', 'Added!')->autoclose(4500)->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                // return $exception;
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('So sorry cant add new sub-payment!', 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } //END-IF  UPLOAD-IMAGE
     }
@@ -1855,13 +2309,20 @@ try{
                     alert()->success('Successfully Edit sub-payment', 'Sub-Payment Edited!')->autoclose(4500)->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                // return $exception;
-                $status_error = $exception->getCode();
-                if ($status_error == 400) {
-                    alert()->error('So sorry cant Edit sub-payment!', 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } //END-IF  UPLOAD-IMAGE
     }
@@ -1902,7 +2363,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1937,7 +2409,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            } else {
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -1995,16 +2478,20 @@ try{
                 alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2041,8 +2528,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $exception;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2091,12 +2587,20 @@ try{
                 alert()->success('Successfully Add Data Setting Sub-Payment', 'Added!')->autoclose(4000);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2138,7 +2642,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            }else{
+                $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2187,16 +2702,20 @@ try{
                 alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2227,11 +2746,17 @@ try{
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json['data'];
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2267,8 +2792,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return $$exception->getCode();;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2303,8 +2837,17 @@ try{
             if ($json['success'] == true) {
                 return $json;
             }
-        } catch (ClientException $exception) {
-            return $exception->getCode();
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2342,7 +2885,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            }else{
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2354,7 +2908,7 @@ try{
         $url = env('SERVICE') . 'reportmanagement/listfeature';
 
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -2365,6 +2919,18 @@ try{
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -2402,7 +2968,18 @@ try{
             $status_error = $exception->getCode();
             if ($status_error == 500) {
                 return json_encode('Data Not Found');
+            }else{
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
             }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -2440,12 +3017,20 @@ try{
                 alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);
                 return back();
             }
-        } catch (ClientException $exception) {
-            $code = $exception->getMessage();
-            if ($code == 404) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2504,7 +3089,18 @@ try{
                     alert()->error($error['message'], 'Failed!')->autoclose(4000);
                     return back();
                 }
-            }
+            }catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+
         } else { //END-IF  UPLOAD-IMAGE
             $input = $request->all(); // getdata form by name
             $imageRequest = [
@@ -2543,7 +3139,17 @@ try{
                     alert()->error($error['message'], 'Failed!')->autoclose(4000);
                     return back();
                 }
-            }
+            } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
         } // endelse
     } //endfunc
 
@@ -2579,12 +3185,20 @@ try{
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            if ($error['success'] == false) {
-                alert()->error($error['message'], 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2596,6 +3210,7 @@ try{
         $url = env('SERVICE') . 'usermanagement/listusertype';
         $client = new \GuzzleHttp\Client();
 
+        try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -2606,6 +3221,18 @@ try{
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -2646,12 +3273,20 @@ try{
                 alert()->success('Successfully to add new user', 'Added')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            if ($error['success'] == false) {
-                alert()->error($error['message'], 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2691,12 +3326,20 @@ try{
                 alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
                 return back();
             }
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            if ($error['success'] == false) {
-                alert()->error($error['message'], 'Failed!')->autoclose(4000);
-                return back();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 } //endclas

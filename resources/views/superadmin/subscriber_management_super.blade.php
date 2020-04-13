@@ -225,38 +225,38 @@
 
                 <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
                     <br>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">Full Name</small>
-                                        <p class="cgrey" id="detail_fullname"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">User ID</small>
-                                        <p class="cgrey" id="detail_userid"></p>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight s13">Full Name</small>
+                                <p class="cgrey" id="detail_fullname"></p>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">Status Subcriber</small>
-                                        <p class="cgrey" id="detail_status"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <small class="clight s13">Created Date</small>
-                                        <p class="cgrey" id="detail_date"></p>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight s13">User ID</small>
+                                <p class="cgrey" id="detail_userid"></p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight s13">Status Subcriber</small>
+                                <p class="cgrey" id="detail_status"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight s13">Created Date</small>
+                                <p class="cgrey" id="detail_date"></p>
+                            </div>
+                        </div>
+                    </div>
 
                     <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
                              border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%;">
+                            padding: 5%;" id="div_membrship">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -310,38 +310,38 @@
                     <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
                     border-radius: 10px; width: 100%; margin-top: 0.5em;
                     padding: 8%;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">Full Name</small>
-                                <p class="cgrey" id="detail_fullname2"></p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">Full Name</small>
+                                    <p class="cgrey" id="detail_fullname2"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">User ID</small>
+                                    <p class="cgrey" id="detail_userid2"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">Status Subcriber</small>
+                                    <p class="cgrey" id="detail_status2"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">Created Date</small>
+                                    <p class="cgrey" id="detail_date2"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">Membership</small>
+                                    <p class="cgrey"> Tidak Ada</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">User ID</small>
-                                <p class="cgrey" id="detail_userid2"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">Status Subcriber</small>
-                                <p class="cgrey" id="detail_status2"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">Created Date</small>
-                                <p class="cgrey" id="detail_date2"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight s13">Membership</small>
-                                <p class="cgrey"> Tidak Ada</p>
-                            </div>
-                        </div>
-                    </div>
                     </div>
                 </div> <!-- end-body -->
 
@@ -476,7 +476,12 @@
                 {
                     mData: 'membership',
                     render: function (data, type, row, meta) {
-                    return data.membership;
+                        if(data == null){
+                            return '<span class="clight">Tidak Ada<span>';
+                        }else{
+                            return data.membership;
+                        }
+
                     }
                 },
                 {
@@ -504,7 +509,7 @@
 
                     }
                 },
-           {
+                {
                     mData: null,
                     render: function (data, type, row, meta) {
                         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
@@ -531,7 +536,7 @@
             console.log(data);
 
             // sso_picture: "public/subscriber/editab91e5ab0cecf999987c560963857ff7809741e49c70f8a46cfb974308771d33.png"
-             var stat = '';
+            var stat = '';
             if (data.status == 0) {
                 var stat = 'Waiting Approval';
             } else if (data.status == 1) {
@@ -549,11 +554,14 @@
             $("#detail_date").html(dateTime(data.created_at));
             $("#detail_status").html(stat);
 
+            if(data.membership != null){
             var member = data.membership;
             $("#detail_membership").html(member.membership);
-            $("#detail_pricing").html("Rp "+rupiah(member.pricing));
+            $("#detail_pricing").html("Rp " + rupiah(member.pricing));
             $("#detail_deskripsi").html(member.description);
-
+            }else{
+                $("#div_membrship").hide();
+            }
             $("#modal_detail_subs_active").modal("show");
         });
 
@@ -603,7 +611,7 @@
                     mData: 'membership',
                     render: function (data, type, row, meta) {
                         if (data == null) {
-                            var shw = 'Tidak Ada';
+                            var shw = '<span class="clight">Tidak Ada<span>';
                         } else {
                             var shw = data;
                         }

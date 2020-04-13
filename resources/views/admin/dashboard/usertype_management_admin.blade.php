@@ -69,9 +69,6 @@
                     <br>
                     <div class="form-group">
                         <small class="cgrey">Priviledge</small>
-                        @if($errors->has('subfitur'))
-                        <small class="error_subfitur" style="color: red;">{{ $errors->first('subfitur')}}</small>
-                        @endif
                         <div class="text-center loading_tree" style="display: none;">
                             <div class="spinner-border" role="status"
                                 style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
@@ -79,7 +76,8 @@
                             </div>
                         </div>
                         @if($errors->has('subfitur'))
-                        <small class="error_subfitur" style="color: red;">{{ $errors->first('edit_subfitur')}}</small>
+                        <input type="hidden" value="error" id="error_priv">
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('subfitur')}}</small>
                         @endif
                         <div class="isi_cek_priviledge">
 
@@ -135,6 +133,10 @@
 
                     <div class="form-group" style="margin-top: 0.5em;">
                         <small class="cgrey">Priviledge</small>
+                          @if($errors->has('edit_subfitur'))
+                        <input type="hidden" value="error" id="error_priv2">
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('edit_subfitur')}}</small>
+                        @endif
                         <div class="isi_cek_priviledge_edit" class="loading_tree">
 
                         </div>
@@ -163,9 +165,24 @@
     $(document).ready(function () {
         tabel_usertype_management_admin();
         get_listfitur_usertype_ceklist();
+        cek_error_usertype();
     });
 
+    function cek_error_usertype() {
+        var err_add = $("#error_priv").val();
+        if(err_add != "" && err_add != undefined){
+            swal("Cant Null !","Please Fill and Check All Fields","error").then((value) => {
+               $("#modal_add_usertype").modal('show');
+            });
+        }
 
+          var err_edit = $("#error_priv2").val();
+        if (err_edit != "" && err_edit != undefined) {
+            swal("Cant Null !", "Please Fill and Check All Fields", "error").then((value) => {
+                $("#modal_edit_usertype").modal('show');
+            });
+        }
+    }
 
     function tabel_usertype_management_admin() {
         $('#tabel_usertype_manage_admin').dataTable().fnClearTable();

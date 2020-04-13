@@ -55,12 +55,12 @@
                 <div class="modal-body" style="padding-left: 10%;padding-right: 10%; min-height: 300px;">
                     <div class="form-group">
                         <small class="cgrey">User Type Name</small>
-                        <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu">
+                        <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu" value="{{ old('nama_usertipe') }}">
                     </div>
                     <div class="form-group">
                         <small class="cgrey">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe" name="dekripsi_usertipe"
-                            rows="2"></textarea>
+                            rows="2">{{ old('dekripsi_usertipe') }}</textarea>
                     </div>
                     <br>
                     <div class="form-group">
@@ -70,6 +70,10 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
+                              @if($errors->has('subfitur'))
+                              <input type="hidden" id="error_priv" value="error">
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('subfitur')}}</small>
+                        @endif
                         <div class="isi_cek_priviledge">
 
                         </div>
@@ -111,12 +115,12 @@
                     <div class="form-group">
                         <small class="cgrey">User Type Name</small>
                         <input type="text" id="nama_usertipe_edit" name="nama_usertipe_edit"
-                            class="form-control input-abu">
+                            class="form-control input-abu" value="{{ old('nama_usertipe_edit') }}">
                     </div>
                     <div class="form-group">
                         <small class="cgrey">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe_edit"
-                            name="dekripsi_usertipe_edit" rows="2"></textarea>
+                            name="dekripsi_usertipe_edit" rows="2">{{ old('dekripsi_usertipe_edit') }}</textarea>
                     </div>
                     <input type="hidden" name="idfitur_usertype_edit" id="idfitur_usertype">
 
@@ -127,6 +131,10 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
+                           @if($errors->has('edit_subfitur'))
+                            <input type="hidden" id="error_priv2" value="error">
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('edit_subfitur')}}</small>
+                        @endif
                         <div class="isi_cek_priviledge_edit">
 
                         </div>
@@ -155,8 +163,24 @@
     $(document).ready(function () {
         tabel_usertype_management();
         get_listfitur_usertype_ceklist();
+        cek_error_addusertype();
     });
 
+    function cek_error_addusertype() {
+        var err_add = $("#error_priv").val();
+        if(err_add != "" && err_add != undefined){
+            swal("Cant Null !","Please Fill All Fields","error").then((value) => {
+               $("#modal_add_usertype").modal('show');
+            });
+        }
+
+          var err_edit = $("#error_priv2").val();
+        if (err_edit != "" && err_edit != undefined) {
+            swal("Cant Null !", "Please Fill All Fields", "error").then((value) => {
+                $("#modal_edit_usertype").modal('show');
+            });
+        }
+    }
 
 
     function get_listfitur_usertype_ceklist() {
