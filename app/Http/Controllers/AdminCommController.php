@@ -3116,6 +3116,12 @@ class AdminCommController extends Controller
 
     public function add_new_usertype_management_admin(Request $request)
     {
+        $request->validate([
+            'nama_usertipe' => 'required',
+            'dekripsi_usertipe' => 'required',
+            'subfitur' => 'required',
+        ]);
+
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
@@ -3817,6 +3823,11 @@ class AdminCommController extends Controller
 
     public function edit_usertype_management_admin(Request $request)
     {
+         $request->validate([
+            'nama_usertipe_edit' => 'required',
+            'dekripsi_usertipe_edit' => 'required',
+            'edit_subfitur' => 'required',
+        ]);
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
         // return $input;

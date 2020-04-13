@@ -58,24 +58,33 @@
                 <div class="modal-body" style="padding-left: 10%;padding-right: 10%; min-height: 300px;">
                     <div class="form-group">
                         <small class="cgrey">User Type Name</small>
-                        <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu">
+                        <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu"
+                        value="{{ old('nama_usertipe') }}" required>
                     </div>
                     <div class="form-group">
                         <small class="cgrey">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe" name="dekripsi_usertipe"
-                            rows="2"></textarea>
+                            rows="2" required>{{ old('dekripsi_usertipe') }}</textarea>
                     </div>
                     <br>
                     <div class="form-group">
                         <small class="cgrey">Priviledge</small>
+                        @if($errors->has('subfitur'))
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('subfitur')}}</small>
+                        @endif
                         <div class="text-center loading_tree" style="display: none;">
-                            <div class="spinner-border" role="status" style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
+                            <div class="spinner-border" role="status"
+                                style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
+                        @if($errors->has('subfitur'))
+                        <small class="error_subfitur" style="color: red;">{{ $errors->first('edit_subfitur')}}</small>
+                        @endif
                         <div class="isi_cek_priviledge">
 
                         </div>
+
                     </div>
                 </div> <!-- end-body -->
 
@@ -114,12 +123,13 @@
                     <div class="form-group">
                         <small class="cgrey">User Type Name</small>
                         <input type="text" id="nama_usertipe_edit" name="nama_usertipe_edit"
+                        value="{{ old('nama_usertipe_edit') }}"
                             class="form-control input-abu">
                     </div>
                     <div class="form-group">
                         <small class="cgrey">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe_edit"
-                            name="dekripsi_usertipe_edit" rows="2"></textarea>
+                            name="dekripsi_usertipe_edit" rows="2">{{ old('dekripsi_usertipe_edit') }}</textarea>
                     </div>
                     <input type="hidden" name="idfitur_usertype_edit" id="idfitur_usertype">
 
@@ -262,7 +272,7 @@
             datatype: 'JSON',
             success: function (result) {
                 $(".btnsubmit").removeAttr("disabled", "disabled");
-                   $(".loading_tree").hide();
+                $(".loading_tree").hide();
 
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
@@ -366,7 +376,7 @@
             },
             error: function (result) {
                 // console.log(result);
-                 $(".loading_tree").hide();
+                $(".loading_tree").hide();
                 $(".btnsubmit").attr("disabled", "disabled");
                 ui.popup.show('warning', 'Cant get any response', 'Timeout');
             }
