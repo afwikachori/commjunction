@@ -906,25 +906,47 @@ try{
         }
     } //end-func
 
-    public function tabel_subs_pending_super()
+    public function tabel_subs_pending_super(Request $request)
     {
         $ses_login = session()->get('session_logged_superadmin');
-
-        // return $ses_login['access_token'];
+        $input = $request->all();
 
         $url = env('SERVICE') . 'subsmanagement/listsubspendingbycomm';
         $client = new \GuzzleHttp\Client();
-
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            "community_id" => $input['community_id']
         ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json['data'];
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                return $json['data'];
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -959,8 +981,17 @@ try{
             if ($json['success'] == true) {
                 return $json['data'];
             }
-        } catch (ClientException $exception) {
-            return 'error';
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 

@@ -42,66 +42,68 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <button type="button" id="btn-filter-subs" class="btn btn-tosca btn-sm"
-                                        style="min-width: 120px; margin-bottom: 1em;">Filter</button>
+                                        style="min-width: 120px; margin-bottom: 1em;" data-toggle="modal"
+                                        data-target="#modal_generate_komunitas" data-dismiss="modal">Generate</button>
                                 </div>
                                 <div class="col-md-4" style="text-align: right;">
-                                    <button type="button" id="reset_tbl_subsall"
-                                        class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable">
+                                    <button type="button" class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable"
+                                        onclick="reset_subs_all()">
                                         <i class="mdi mdi-refresh"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- tabel all susbcriber -->
-                            <table id="tabel_komunitas_subs"
-                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID Community</th>
-                                        <th>Community Name</th>
-                                        <th>Register Date</th>
-                                        <th>Range Member</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <!-- end tabel all  -->
 
-                                   <!-- tabel all susbcriber -->
-                            <table id="tabel_show_subs"
-                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%; display: none;">
-                                <thead>
-                                    <tr>
-                                        <th>ID Subscriber</th>
-                                        <th>Subscriber Name</th>
-                                        <th>Join Date</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <!-- tabel all susbcriber -->
+                            <div id="tabel_show_subs_hide" style="display: none;">
+                                <table id="tabel_show_subs" class="table table-hover table-striped dt-responsive nowrap"
+                                    style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Subscriber</th>
+                                            <th>Subscriber Name</th>
+                                            <th>Membership</th>
+                                            <th>Join Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                             <!-- end tabel all  -->
                         </div>
 
 
                         <div class="tab-pane" id="tab_default_2">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button type="button" id="btn-filter-subs" class="btn btn-tosca btn-sm"
+                                        style="min-width: 120px; margin-bottom: 1em;" data-toggle="modal"
+                                        data-target="#modal_generate_pending" data-dismiss="modal">Generate</button>
+                                </div>
+                                <div class="col-md-4" style="text-align: right;">
+                                    <!-- <button type="button" class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable" onclick="reset_subs_all()">
+                                        <i class="mdi mdi-refresh"></i>
+                                    </button> -->
+                                </div>
+                            </div>
                             <!-- tabel all susbcriber -->
-                            <table id="tabel_subs_pending" class="table table-hover table-striped dt-responsive nowrap"
-                                style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID Subscriber</th>
-                                        <th>Membership</th>
-                                        <th>Subcriber Name</th>
-                                        <th>Status</th>
-                                        <th>Created Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div id="tabel_subs_pending_hide" style="display: none;">
+                                <table id="tabel_subs_pending"
+                                    class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Subscriber</th>
+                                            <th>Membership</th>
+                                            <th>Subcriber Name</th>
+                                            <th>Status</th>
+                                            <th>Created Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                             <!-- end tabel all  -->
-
-
                         </div>
 
 
@@ -115,6 +117,99 @@
 
 
 
+<!-- MODAL GENERATE  FILTER SUBSCRIBER -->
+<div class="modal fade" id="modal_generate_komunitas" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form>
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey">Generate Subcriber Management</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <div class="row" style="margin-top: 2em; margin-bottom: 1em;">
+                        <div class="col-md-4">
+                            <center>
+                                <label class="cgrey2" style="margin-top: 1em;">
+                                    Community
+                                </label>
+                            </center>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <select class="form-control input-abu" name="komunitas_list" id="komunitas_list">
+                                    <option selected disabled> Choose </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    <!-- &nbsp;
+                    <button type="button" id="btn_filter_transaksi" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Filter </button> -->
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
+
+<!-- MODAL GENERATE  FILTER SUBSCRIBER -->
+<div class="modal fade" id="modal_generate_pending" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form>
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey">Generate Subcriber Management</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <div class="row" style="margin-top: 2em; margin-bottom: 1em;">
+                        <div class="col-md-4">
+                            <center>
+                                <label class="cgrey2" style="margin-top: 1em;">
+                                    Community
+                                </label>
+                            </center>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <select class="form-control input-abu" name="komunitas_list2" id="komunitas_list2">
+                                    <option selected disabled> Choose </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 1em;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    <!-- &nbsp;
+                    <button type="button" id="btn_filter_transaksi" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Filter </button> -->
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
 
 
 @endsection
@@ -123,106 +218,105 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-        // session_logged_superadmin();
 
-        tabel_subs_komunitas_super();
+        get_list_komunitas_superadmin();
 
-
-    });  //end- document ready
+    }); //end
 
 
-        // function tabel_tes() {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '/superadmin/tabel_subs_komunitas_super',
-        //         type: 'POST',
-        //         dataSrc: '',
-        //         timeout: 30000,
-        //         success: function (result) {
-        //             console.log(result);
-        //         },
-        //         error: function (result) {
-        //             console.log(result);
-        //             console.log("Cant Show");
-        //         }
-        //     });
-        // }
-
-
-
-
-    function tabel_subs_komunitas_super() {
-        var tabel = $('#tabel_komunitas_subs').DataTable({
-            responsive: true,
-            ajax: {
-                url: '/superadmin/tabel_subs_komunitas_super',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-            },
-            columns: [
-                { mData: 'id' },
-                { mData: 'name' },
-                { mData: 'created_at' },
-                { mData: 'range_member' },
-                { mData: 'id',
-                    render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-abu btn-sm s9" onclick="tabel_subscriber_commjuction('+data+')">Subscriber</button>';
-                    }
-                }
-            ],
-
+    //dropdown komunitas_list list
+    function get_list_komunitas_superadmin() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+        $.ajax({
+            url: '/superadmin/tabel_subs_komunitas_super',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                // console.log(result);
+                $('#komunitas_list').empty();
+                $('#komunitas_list').append("<option value='null'> Choose</option>");
 
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_list').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas_list").html($('#komunitas_list option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#komunitas_list").get(0).selectedIndex = 0;
+                const OldSubs1 = "{{old('komunitas_list')}}";
+                if (OldSubs1 !== '') {
+                    $('#komunitas_list').val(OldSubs1);
+                }
+                // ______________________________
+                $('#komunitas_list2').empty();
+                $('#komunitas_list2').append("<option value='null'> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_list2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas_list2").html($('#komunitas_list2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#komunitas_list2").get(0).selectedIndex = 0;
+                const OldSubs2 = "{{old('komunitas_list2')}}";
+                if (OldSubs2 !== '') {
+                    $('#komunitas_list2').val(OldSubs2);
+                }
+
+            },
+            error: function (result) {
+                ui.popup.show('Warning', 'Get list community', 'Warning');
+            }
+        });
     }
+
+    $('#komunitas_list').change(function () {
+        var item = $(this);
+        var idkom = item.val();
+        tabel_subscriber_commjuction(idkom);
+    });
+
+    $('#komunitas_list2').change(function () {
+        var item = $(this);
+        var idkom = item.val();
+        tabel_subs_pending_super(idkom);
+    });
+
 
 
     function tabel_subscriber_commjuction(idkomunitas) {
-        // alert(idkomunitas);
-        //   $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '/superadmin/tabel_subscriber_comm_super',
-        //         type: 'POST',
-        //         dataSrc: '',
-        //         timeout: 30000,
-        //         data: {
-        //         "community_id": idkomunitas,
-        //         },
-        //         success: function (result) {
-        //             console.log(result);
-        //         },
-        //         error: function (result) {
+        $('#tabel_show_subs_hide').show();
+        $('#tabel_show_subs').dataTable().fnClearTable();
+        $('#tabel_show_subs').dataTable().fnDestroy();
 
-        //             console.log("Cant Show");
-        //         }
-        //     });
-
-$("#tabel_komunitas_subs").hide();
- $('#tabel_show_subs').show();
- $('#tabel_komunitas_subs').dataTable().fnClearTable();
-$('#tabel_komunitas_subs').dataTable().fnDestroy();
-
-    var tabel = $('#tabel_show_subs').DataTable({
+        var tabel = $('#tabel_show_subs').DataTable({
             responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
             ajax: {
                 url: '/superadmin/tabel_subscriber_comm_super',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                "community_id": idkomunitas,
-            },timeout: 30000,
+                    "community_id": idkomunitas,
+                }, timeout: 30000,
                 error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_module_report_superadmin tbody').empty().append(nofound);
+                    var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_show_subs tbody').empty().append(nofound);
                 },
             },
             error: function (request, status, errorThrown) {
@@ -232,11 +326,41 @@ $('#tabel_komunitas_subs').dataTable().fnDestroy();
             columns: [
                 { mData: 'user_id' },
                 { mData: 'full_name' },
-                { mData: 'created_at' },
-                { mData: 'status' },
-                { mData: 'id',
+                {
+                    mData: 'membership',
                     render: function (data, type, row, meta) {
-                       return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                    return data.membership;
+                    }
+                },
+                {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
+                {
+                    mData: 'status',
+                    render: function (data, type, row, meta) {
+                        var stat = '';
+                        if (data == 0) {
+                            var stat = 'Waiting Approval';
+                        } else if (data == 1) {
+                            stat = 'Approved';
+                        } else if (data == 2) {
+                            stat = 'Pending Membership';
+                        } else if (data == 3) {
+                            stat = 'Active';
+                        } else {
+                            stat = 'Nonactive';
+                        }
+                        return stat;
+
+                    }
+                },
+                {
+                    mData: 'id',
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                             'onclick="detail_subs_super(\'' + data + '\')">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
@@ -245,8 +369,102 @@ $('#tabel_komunitas_subs').dataTable().fnDestroy();
             ],
 
         });
+        $("#modal_generate_komunitas").modal('hide');
 
     }
+
+    function reset_subs_all() {
+        $('#tabel_show_subs_hide').hide();
+        $('#tabel_show_subs').dataTable().fnClearTable();
+        $('#tabel_show_subs').dataTable().fnDestroy();
+        $("#komunitas_list").val("");
+    }
+
+
+    function tabel_subs_pending_super(idkomunitas) {
+        $('#tabel_subs_pending_hide').show();
+        $('#tabel_subs_pending').dataTable().fnClearTable();
+        $('#tabel_subs_pending').dataTable().fnDestroy();
+
+        var tabel = $('#tabel_subs_pending').DataTable({
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/superadmin/tabel_subs_pending_super',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": idkomunitas,
+                }, timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_subs_pending tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                console.log(errorThrown);
+            },
+
+            columns: [
+                { mData: 'user_id' },
+                {
+                    mData: 'membership',
+                    render: function (data, type, row, meta) {
+                        if (data == null) {
+                            var shw = 'Tidak Ada';
+                        } else {
+                            var shw = data;
+                        }
+                        return shw;
+                    }
+                },
+                { mData: 'full_name' },
+                {
+                    mData: 'status',
+                    render: function (data, type, row, meta) {
+                        var stat = '';
+                        if (data == 0) {
+                            var stat = 'Waiting Approval';
+                        } else if (data == 1) {
+                            stat = 'Approved';
+                        } else if (data == 2) {
+                            stat = 'Pending Membership';
+                        } else if (data == 3) {
+                            stat = 'Active';
+                        } else {
+                            stat = 'Nonactive';
+                        }
+                        return stat;
+                    }
+                },
+                {
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
+                {
+                    mData: 'id',
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_subs_super(\'' + data + '\')">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
+                    }
+                }
+            ],
+
+        });
+        $("#modal_generate_pending").modal('hide');
+
+    }
+
 
 
 </script>

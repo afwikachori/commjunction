@@ -271,7 +271,9 @@
 
             <div class="modal-body detail_member">
                 <center>
-                    <img src="/img/noimg.jpg" class="img_file_bayar_subs">
+                    <img src="/img/noimg.jpg" class="img_file_bayar_subs"
+                    onclick="clickImage(this)"
+                     onerror = "this.onerror=null;this.src='/img/noimg.jpg';">
 
                     <div class="row">
                         <div class="col-md-6">
@@ -419,7 +421,7 @@
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                 <div class="bunder-ring" id="img_detail_member">
                     <img class="profile-pic rounded-circle img-fluid" id="foto_membership" src="/img/loading.gif"
-                    onerror = "this.onerror=null;this.src='/img/default.png';">
+                        onerror="this.onerror=null;this.src='/img/default.png';">
                 </div>
                 <div class="row">
                     <div class="col-md">
@@ -443,7 +445,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                       <small class="clight">Features : </small> &nbsp;
+                        <small class="clight">Features : </small> &nbsp;
                         <small class="ctosca s15" id="total_fitur_member"> 0</small>
                     </div>
                     <div class="card-deck" id="show_feature_member" style="margin-top: 0.5em;">
@@ -471,7 +473,37 @@
         get_membership_admin();
         tabel_req_membership();
         get_list_fitur_membership_admin();
+        tabel_tes();
     });
+
+
+
+    function tabel_tes() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/tabel_req_membership',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+                // $.each(result, function (i, item) {
+
+                // });
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show Tes");
+            }
+        });
+    }
 
 
     function get_list_fitur_membership_admin() {
@@ -514,7 +546,6 @@
             }
         });
     }
-
 
 
 
@@ -678,7 +709,7 @@
             },
             success: function (result) {
                 var isipaid = '';
-                console.log(result[0]);
+                console.log(result);
                 var dt = result[0];
                 $("#isi_date").html(formatDate(dt.request_date));
                 $("#isi_invoice").html(dt.invoice_number);
@@ -697,8 +728,7 @@
                 if (dt.file_subscriber == null) {
                     $(".img_file_bayar_subs").attr("src", "/img/noimg.jpg");
                 } else {
-                    $(".img_file_bayar_subs").attr("src", server_cdn + dt.file_subscriber);
-                    $('.img_file_bayar_subs').attr('onClick', 'clickImage(this)');
+                    $(".img_file_bayar_subs").attr("src", server_cdn + cekimage_cdn(dt.file_subscriber));
                 }
 
                 if (dt.already_paid == true) {

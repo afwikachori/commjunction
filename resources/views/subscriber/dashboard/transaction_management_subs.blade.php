@@ -726,6 +726,9 @@
                 "community_id": trans[2],
             },
             success: function (result) {
+                 setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
                 console.log(result);
                 if (result.success == false) {
                     ui.popup.show('error', result.message, 'Error');
@@ -746,7 +749,7 @@
                     var uiku = '';
                     if (result.data_confirmation != "") {
                         if(result.data_confirmation.file != null){
-                            $("#img_pay_confirm").attr("src", + server_cdn + result.data_confirmation.file);
+                            $("#img_pay_confirm").attr("src",  server_cdn + cekimage_cdn(result.data_confirmation.file));
                         }
                         $("#nama_confirm_trans").html(result.data_confirmation.created_by);
                         $("#date_confirm_trans").html(dateFormat(result.data_confirmation.created_at));
@@ -764,7 +767,7 @@
 
                     if (result.data_verification.length != 0) {
                         if (result.data_verification.file != undefined) {
-                            $("#img_pay_aprov").attr("src", "src", "http://" + server_cdn + result.data_verification.file);
+                            $("#img_pay_aprov").attr("src", server_cdn +  cekimage_cdn(rresult.data_verification.file));
                         }
                             $("#name_approv_trans").html(result.data_verification.verification_by);
                             $("#date_approv_trans").html(dateFormat(result.data_verification.verification_at));

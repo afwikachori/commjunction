@@ -998,7 +998,7 @@ class AdminCommController extends Controller
 
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json;
+            return $json['data'];
         } catch (ClientException $exception) {
             $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
             $status_error = $exception->getCode();
@@ -1165,7 +1165,7 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode(['invoice_number' => $input['invoice_number']]);
-
+// return $bodyku;
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
