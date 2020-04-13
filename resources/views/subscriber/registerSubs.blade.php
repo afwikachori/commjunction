@@ -47,7 +47,7 @@
              <a class="nav-item cus-a nav-link disabled" id="nav-payment-tab" data-toggle="tab" href="#nav-payment" role="tab" aria-controls="nav-payment" aria-selected="false" aria-disabled="disabled" lang="en">Payment</a>
           </div>
         </nav>
-        
+
         <form method="POST" id="form_regispersonal_subs" action="">{{ csrf_field() }}
 
 <div class="container">
@@ -56,7 +56,7 @@
 
     <div class="form-group row">
         <label lang="en" class="h6 cgrey s14">Connect With</label>
-        <div id="my-signin3"></div> 
+        <div id="my-signin3"></div>
         <input type="hidden" id="sso_type" name="sso_type" value="1">
         <input type="hidden" id="sso_token" name="sso_token">
     </div>
@@ -156,7 +156,7 @@
 </div> <!-- end-container -->
 
 </form>
-      
+
       </div>
     </div>
  </div>

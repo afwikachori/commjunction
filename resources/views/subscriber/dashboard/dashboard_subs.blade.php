@@ -176,13 +176,20 @@
                 <div class="col-2 mpad-0" style="background-color: #b7e778;">
                     <center>
                         <br><br>
-                        <i class="mdi mdi-package-variant cwhite" style="font-size: 35px;"></i>
+                        <i class="mdi mdi-shield cwhite" style="font-size: 35px;"></i>
                     </center>
                 </div>
                 <div class="col-10">
                     <div class="pad-1em">
                         <h4 class="cteal">Top Visit Club</h4>
+                        <div id="topclubvisit_nodata" style="display: none;">
+                            <center>
+                                <h3 class="clight mgt-1half">No Available Data</h3>
+                            </center>
+                        </div>
+                        <div id="isi_top_visit_club" class="row">
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,6 +207,11 @@
                 <div class="col-10">
                     <div class="pad-1em">
                         <h4 class="cteal" style="margin-bottom: 1em;">Top Visit Player</h4>
+                        <div id="topplayer_nodata" style="display: none;">
+                            <center>
+                                <h3 class="clight mgt-1half">No Available Data</h3>
+                            </center>
+                        </div>
                         <div id="isi_top_player" class="row">
 
                         </div>
@@ -429,16 +441,17 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        // get_pricing_membership();
-        // get_payment_initial();
+        get_pricing_membership();
+        get_payment_initial();
 
-        // get_dashboard_news();
-        // get_friends_total();
-        // get_last_news();
-        // get_love_news();
-        // get_topvisit_news();
-        // get_friends_sugestion();
+        get_dashboard_news();
+        get_friends_total();
+        get_last_news();
+        get_love_news();
+        get_topvisit_news();
+        get_friends_sugestion();
         get_top_player();
+        get_top_visit_club(); //no data - ui wait data
     });
 
     function tabel_tes() {
@@ -755,32 +768,71 @@
                     ui.popup.show('warning', result.message, 'Warning');
                 }
 
-                var iuplyr = '';
-                var nopic = '';
-                var gen = '';
-                $.each(result, function (i, item) {
-                    if(item.gender == "putri"){
-                        nopic = '/img/pl-girl.png';
-                        gen = 'Putri';
-                    }else{
-                        nopic = '/img/pl-boy.png';
-                        gen = 'Putra';
-                    }
-                    iuplyr += '<div class="col-md-6 mgt-half">' +
-                        '<div class="row pad-5px">' +
-                        '<div class="col-md-2 pad-5px dikanan">' +
-                        '<img src="'+server_cdn+item.photo+'" class="rounded-circle img-fluid wd-25px"' +
-                        'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
+                if (result.length == 0) {
+                    $("#topplayer_nodata").show();
+                } else {
+                    var iuplyr = '';
+                    var nopic = '';
+                    var gen = '';
+                    $.each(result, function (i, item) {
+                        if (item.gender == "putri") {
+                            nopic = '/img/pl-girl.png';
+                            gen = 'Putri';
+                        } else {
+                            nopic = '/img/pl-boy.png';
+                            gen = 'Putra';
+                        }
+                        iuplyr += '<div class="col-md-6 mgt-half">' +
+                            '<div class="row pad-5px">' +
+                            '<div class="col-md-2 pad-5px dikanan">' +
+                            '<img src="' + server_cdn + item.photo + '" class="rounded-circle img-fluid wd-25px"' +
+                            'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
                             '</div>' +
                             '<div class="col-md-10 pad-5px">' +
-                            '<small class="cgrey2">'+ item.name +'</small>' +
-                            '<small class="cblue"> &nbsp; ('+ gen +')</small><br>' +
-                            '<small class="clight">Club : '+ item.club.name+'</small>' +
+                            '<small class="cgrey2">' + item.name + '</small>' +
+                            '<small class="cblue"> &nbsp; (' + gen + ')</small><br>' +
+                            '<small class="clight">Club : ' + item.club.name + '</small>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
-                });
-                $("#isi_top_player").html(iuplyr);
+                    });
+                    $("#isi_top_player").html(iuplyr);
+                }
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show");
+            }
+        });
+    }
+
+    function get_top_visit_club() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/get_top_visit_club',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "limit": 4,
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success == false) {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+
+                if (result.length == 0) {
+                    $("#topclubvisit_nodata").show();
+                }
+                // $.each(result, function (i, item) {
+
+                // });
+
             },
             error: function (result) {
                 console.log(result);

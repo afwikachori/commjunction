@@ -18,7 +18,7 @@
 <div class="card col-6" id="card-forgetadmin2">
   <div class="card-body">
     <h4 class="cgrey" lang="en">OTP Verification</h4>
-   
+
 
 <form method="POST" id="form-otp-fogetpass" style="margin-top: 1em;" action="{{route('NewPass_admin')}}">{{ csrf_field() }}
  <small class="cgrey2">Enter OTP Code Bellow</small>
@@ -37,13 +37,16 @@
 <div class="form-group" style="text-align: left;">
     <label for="newpass_admin" class="h6 cgrey2 s15" lang="en">New Password</label>
     <div class="input-group">
-      <input class="form-control" id="newpass_admin" type="password" class="form-control @error('newpass_admin') is-invalid @enderror" name="newpass_admin" required aria-describedby="btn_showpaswot" autocomplete="off">
+      <input class="form-control" id="newpass_admin" type="password" class="form-control @error('newpass_admin') is-invalid @enderror"
+       name="newpass_admin" required aria-describedby="btn_showpaswot" autocomplete="off">
       <div class="input-group-append">
         <button class="btn btn-outline-light" type="button" id="btn_showpaswot" onclick="showPass()" style="border-color: #ced4da;">
       <span class="fa fa-eye" id="ico-mata" aria-hidden="true" style="color: grey;"></span>
         </button>
       </div>
     </div>
+      <small id="pesan_passformat" lang="en" class="redhide">
+          Mininum 8 character contain Numbers and Letters!</small>
   </div>
 </div>
 
@@ -51,7 +54,9 @@
  <div class="form-group" style="text-align: left;">
   <label for="confirm_newpass" class="h6 cgrey2 s15" lang="en">Confirm Password</label>
   <input type="password" class="form-control" id="confirm_newpass" class="form-control @error('confirm_newpass') is-invalid @enderror" name="confirm_newpass" required autocomplete="off">
-  </div>
+<small id="pesan_passconfirm" lang="en" class="redhide">
+         Password & Confirm Password didnt match!</small>
+</div>
 </div>
 </div>
 
@@ -60,9 +65,9 @@
   <div class="row">
   <div class="col-8" style="text-align: left;">
     <h6 class="clight s15" style="margin-top: 1em;">Don't recieve OTP Code ?
-    <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend</a></h6> 
+    <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend</a></h6>
   </div>
-  
+
   <div class="col" style="text-align: right;">
    <button type="submit" class="btn btn-oren" style="width: 120px;" lang="en">
    Send</button>
@@ -104,10 +109,41 @@
 <script type="text/javascript">
 var server_cdn = '{{ env("CDN") }}';
 
-$(document).ready(function () { 
+$(document).ready(function () {
 
 
 });
+
+
+    $('#newpass_admin').on('keyup', function () {
+        var alpanumeric = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if (this.value == "") {
+            $("#newpass_admin").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_passformat").hide();
+        } else if (this.value.match(alpanumeric) && this.value.length >= 8) {
+            $("#newpass_admin").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_passformat").hide();
+        } else {
+            $("#newpass_admin").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_passformat").show();
+        }
+    });
+
+
+    $('#confirm_newpass').on('keyup', function () {
+        var pass = $('#newpass_admin').val();
+        if (this.value == "") {
+            $("#confirm_newpass").removeClass("is-valid").removeClass("is-invalid");
+            $("#pesan_passconfirm").hide();
+        } else if (this.value == pass) {
+            $("#confirm_newpass").removeClass("is-invalid").addClass("is-valid");
+            $("#pesan_passconfirm").hide();
+        } else {
+            $("#confirm_newpass").removeClass("is-valid").addClass("is-invalid");
+            $("#pesan_passconfirm").show();
+        }
+    });
+
 
 
 
@@ -131,16 +167,16 @@ $('.digit-group').find('input').each(function() {
   $(this).attr('maxlength', 1);
   $(this).on('keyup', function(e) {
     var parent = $($(this).parent());
-    
+
     if(e.keyCode === 8 || e.keyCode === 37) {
       var prev = parent.find('input#' + $(this).data('previous'));
-      
+
       if(prev.length) {
         $(prev).select();
       }
     } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
       var next = parent.find('input#' + $(this).data('next'));
-      
+
       if(next.length) {
         $(next).select();
       } else {
@@ -149,7 +185,7 @@ $('.digit-group').find('input').each(function() {
         }
       }
     }
-    
+
     console.log($(this).val());
   });
 });

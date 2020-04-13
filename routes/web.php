@@ -231,10 +231,10 @@ Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->
 
 
 //POST
+Route::post('get_top_visit_club', 'SubscriberController@get_top_visit_club')->name('get_top_visit_club');
+
 Route::post('get_top_player', 'SubscriberController@get_top_player')->name('get_top_player');
-
 Route::post('get_topvisit_news', 'SubscriberController@get_topvisit_news')->name('get_topvisit_news');
-
 Route::post('get_love_news', 'SubscriberController@get_love_news')->name('get_love_news');
 Route::post('get_last_news', 'SubscriberController@get_last_news')->name('get_last_news');
 Route::post('get_friends_sugestion', 'SubscriberController@get_friends_sugestion')->name('get_friends_sugestion');

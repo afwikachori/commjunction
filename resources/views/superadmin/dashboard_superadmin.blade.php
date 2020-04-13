@@ -98,11 +98,12 @@
         <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Top Subscriber <i
+                <h4 class="font-weight-normal mb-3">Top Community <i
                         class="mdi mdi-chart-line mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Increased by 60%</h6>
+                <span id="isi_top_comm"  class="s32"> 0 </span> <small> Subscriber </small>
+                <br><br><br>
+                <h6 class="card-text" id="isi_nama_top_comm"></h6>
             </div>
         </div>
     </div>
@@ -110,11 +111,12 @@
         <div class="card bg-gradient-info card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Weekly Transation <i
+                <h4 class="font-weight-normal mb-3">Top Transation Count <i
                         class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Decreased by 0%</h6>
+                <span id="isi_top_trans_count" class="s32"> 0 </span> <small> / Count </small>
+                <br><br><br>
+                <h6 class="card-text" id="isi_top_trans_comm"></h6>
             </div>
         </div>
     </div>
@@ -122,10 +124,11 @@
         <div class="card bg-gradient-success card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3">Pending Registrasion<i class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Increased by 0%</h6>
+                <span id="isi_pending_regis" class="s32"> 0 </span> <small> Community </small>
+                <br><br><br>
+                <h6 class="card-text">Waiting Payment Confirmation</h6>
             </div>
         </div>
     </div>
@@ -155,22 +158,48 @@
     </div>
 </div>
 
-
-<!-- MODAL LOADING AJAX -->
-<div class="modal fade bd-example-modal-sm" id="mdl-loadingajax_admin" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content loading">
-            <center>
-                <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
-                    role="status">
-                    <span class="sr-only">Loading...</span>
+<div class="row" id="row_news_list">
+    <div class="col-md-6 stretch-card grid-margin">
+        <div class="card sumari" style="border-radius: 35px;">
+            <div class="card-header bg-pastel-yellow sumari>
+                <div class=" row">
+                <div class="col-9">
+                    <h4 class="cteal">Top Community</h4>
                 </div>
-                <p class="h6 iniloading">Loading . . .</p>
-                <center>
+                <div class="col icon-atas">
+                    <i class="mdi mdi-newspaper top-ico-right cteal"></i>
+                </div>
+            </div>
+
+            <div class="card-body sumari">
+                <ul class="list-arrow" id="isi_listop_community" style="padding-left: 5px;">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 stretch-card grid-margin">
+        <div class="card sumari" style="border-radius: 35px;">
+            <div class="card-header bg-pastel-yellow sumari>
+                    <div class=" row">
+                <div class="col-9">
+                    <h4 class="cteal">Top Transaction</h4>
+                </div>
+                <div class="col icon-atas">
+                    <i class="mdi mdi-auto-upload top-ico-right cteal"></i>
+                </div>
+            </div>
+
+            <div class="card-body sumari">
+                <ul class="list-star" id="isi_listop_trans" style="padding-left: 5px;">
+
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-<!-- END-MODAL -->
+
 
 @endsection
 
@@ -224,9 +253,33 @@
                 $(".total_subs").html(sum_subs + " Subscriber");
                 $(".total_transaction_count").html(sum_trans_count + " Transaction");
                 $(".total_trans_number").html(sum_trans_num + " Transaction");
+                $("#isi_pending_regis").html(result.pending_registration[0].length);
+                var topcom = result.top_community[0];
+                $("#isi_top_comm").html(topcom[0].total_subscriber);
+                $("#isi_nama_top_comm").html("Community Name : &nbsp;" +topcom[0].community);
+
+                var toptrans = result.top_transaction[0];
+                $("#isi_top_trans_count").html(toptrans[0].count);
+                $("#isi_top_trans_comm").html("Community Name : &nbsp;" + toptrans[0].community);
+
+                 var topkom = '';
+                $.each(result.top_community[0], function (i, item) {
+                    topkom += '<li>' +
+                        '<span class="cgrey s14">' + item.community+ '</span>&nbsp;<i class="mdi mdi-arrow-right clight"></i>&nbsp;' +
+                        '<span class="cblue s18">' + item.total_subscriber + '</span> <small class="cblue"> Subscriber</small><br>' +
+                        '</li>';
+                });
+                $("#isi_listop_community").html(topkom);
 
 
-
+                var toptrans = '';
+                $.each(result.top_transaction[0], function (i, item) {
+                    toptrans += '<li>' +
+                        '<span class="cgrey s14">' + item.community + '</span>&nbsp; : &nbsp;' +
+                        '<span class="cblue s18">' + item.count + '</span> <small class="cblue"> / Count</small><br>' +
+                        '</li>';
+                });
+                $("#isi_listop_trans").html(toptrans);
             },
             error: function (result) {
                 console.log("Cant Show Dashboard Admin Commjuction");

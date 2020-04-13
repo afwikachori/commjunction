@@ -78,35 +78,29 @@
                         </span>
                     </div>
                 </footer>
-                <!-- partial -->
-            </div>
-            <!-- main-panel ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
-
-
-        <!-- MOdal Image Viewer-->
-        <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1"
-            role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="font-size: 50px;">&times;</span>
-                        </button>
-                    </div>
-                    <center>
-                        <img id="mdl-img-view">
-                    </center>
-                </div>
             </div>
         </div>
-
-
     </div>
+    <input type="hidden" id="server_cdn" value="{{ env("CDN") }}">
     <!-- container-scroller -->
 
 
+    <!-- MOdal Image Viewer-->
+    <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+                    </button>
+                </div>
+                <center>
+                    <img id="mdl-img-view">
+                </center>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL LOGOUT-->
     <div class="modal fade" id="modal_logout_superadmin" data-backdrop="static" tabindex="-1" role="dialog"
@@ -249,10 +243,8 @@
                         <div class="form-group">
                             <small class="clight">New Password</small>
                             <div class="input-group">
-                                <input class="form-control" id="new_pass_super" type="password"
-                                    name="new_pass_super" required="" autocomplete="passadmin"
-                                    aria-describedby="btn_newshowpass"
-                                    style="border-radius: 10px 0px 0px 10px !important; background-color: #efefef !important;
+                                <input class="form-control" id="new_pass_super" type="password" name="new_pass_super"
+                                    required="" autocomplete="passadmin" aria-describedby="btn_newshowpass" style="border-radius: 10px 0px 0px 10px !important; background-color: #efefef !important;
     outline: none !important;">
                                 <div class="input-group-append">
                                     <a class="btn btn-outline-light" type="button" id="btn_newshowpass"
@@ -283,23 +275,18 @@
         </div>
     </div>
 
+
     <!-- MODAL LOADING AJAX -->
     <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content loading">
-                <center>
-                    <div class="spinner-border text-light" style="width: 5rem; height: 5rem; margin-bottom: 1em;"
-                        role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <p class="h6 iniloading">Loading . . .</p>
-                    <center>
+                <div id="comjuction_loading">
+                    @include('loading')
+                </div>
             </div>
         </div>
     </div>
-    <!-- END-MODAL -->
 
-<input type="hidden" id="server_cdn" value="{{ env("CDN") }}">
 
     @else
     <script>window.location = "/superadmin";</script>

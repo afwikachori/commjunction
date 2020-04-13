@@ -513,6 +513,27 @@ select.form-control .input-abu {
     width: 100%;
 }
 
+.bg-pastel-red{
+    background: linear-gradient(to right, #ffcea4, #fdd8e1) !important;
+}
+.bg-pastel-yellow{
+    background: linear-gradient(to right, #fbeb7c, #ffbe5b) !important;
+}
+
+
+.top-ico-right{
+position: absolute;
+right: 0;
+top: 0;
+}
+.col.icon-atas{
+position: absolute;
+right: 20px;
+top: 10px;
+font-size: 25px;
+}
+
+
 .cputih {
     color: rgb(102, 98, 98);
 }
@@ -1039,6 +1060,10 @@ input[type="checkbox"] {
   height: 70px;
   margin-top: 0.5em;
   margin-bottom: 1em;
+}
+
+.modal.modal_ajax{
+  background: radial-gradient(#ffffff7a, #caf7ff45);
 }
 
 .modal_ajax .modal-content{

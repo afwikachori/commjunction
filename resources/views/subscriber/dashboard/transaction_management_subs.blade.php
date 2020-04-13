@@ -255,8 +255,9 @@
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_confirm" onclick="clickImage(this)"
                                     style="height: 115px; width: 100%; border-radius: 10px;"
-                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';" data-toggle="tooltip"
-                                    data-placement="right" title="Double Click to Preview Image">
+                                    data-toggle="tooltip"
+                                    data-placement="right" title="Double Click to Preview Image"
+                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';">
                             </div>
                             <div class="row" style="margin-top: 0.5em;">
                                 <div class="col-md-4">
@@ -279,8 +280,9 @@
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_aprov" onclick="clickImage(this)"
                                     style="height: 115px; width: 100%; border-radius: 10px;"
-                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';" data-toggle="tooltip"
-                                    data-placement="right" title="Double Click to Preview Image">
+                                    data-toggle="tooltip"
+                                    data-placement="right" title="Double Click to Preview Image"
+                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';" >
                             </div>
                             <div class="row" style="margin-top: 0.5em;">
                                 <div class="col-md-4">
@@ -732,7 +734,7 @@
 
                     $("#modal_detail_trans").modal('show');
                     $("#invoice_trans").html(result.invoice_number);
-                    $("#date_trans").html(result.created_at);
+                    $("#date_trans").html(dateTime(result.created_at));
                     $("#komunitas_trans").html(result.community_name);
                     $("#subscriber_trans").html(result.name);
                     $("#level_title_trans").html(result.level_title);
@@ -742,8 +744,10 @@
                     $("#transaksi_trans").html(result.transaction);
 
                     var uiku = '';
-                    if (result.data_confirmation.file != "") {
-                        $("#img_pay_confirm").attr("src", "http://" + server_cdn + result.data_confirmation.file);
+                    if (result.data_confirmation != "") {
+                        if(result.data_confirmation.file != null){
+                            $("#img_pay_confirm").attr("src", + server_cdn + result.data_confirmation.file);
+                        }
                         $("#nama_confirm_trans").html(result.data_confirmation.created_by);
                         $("#date_confirm_trans").html(dateFormat(result.data_confirmation.created_at));
 
