@@ -194,13 +194,15 @@
                 <div class="col-2 mpad-0" style="background-color: #7ecfc0;">
                     <center>
                         <br><br>
-                        <i class="mdi mdi-package-variant cwhite" style="font-size: 35px;"></i>
+                        <i class="mdi mdi-human-greeting cwhite" style="font-size: 35px;"></i>
                     </center>
                 </div>
                 <div class="col-10">
                     <div class="pad-1em">
-                        <h4 class="cteal">Top Visit Player</h4>
+                        <h4 class="cteal" style="margin-bottom: 1em;">Top Visit Player</h4>
+                        <div id="isi_top_player" class="row">
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -436,6 +438,7 @@
         // get_love_news();
         // get_topvisit_news();
         // get_friends_sugestion();
+        get_top_player();
     });
 
     function tabel_tes() {
@@ -732,14 +735,14 @@
         });
     }
 
-    function tabel_tes() {
+    function get_top_player() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/subscriber/tabel_generate_inbox_subs',
+            url: '/subscriber/get_top_player',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
@@ -747,13 +750,37 @@
                 "limit": 4,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
-                // $.each(result, function (i, item) {
 
-                // });
+                var iuplyr = '';
+                var nopic = '';
+                var gen = '';
+                $.each(result, function (i, item) {
+                    if(item.gender == "putri"){
+                        nopic = '/img/pl-girl.png';
+                        gen = 'Putri';
+                    }else{
+                        nopic = '/img/pl-boy.png';
+                        gen = 'Putra';
+                    }
+                    iuplyr += '<div class="col-md-6 mgt-half">' +
+                        '<div class="row pad-5px">' +
+                        '<div class="col-md-2 pad-5px dikanan">' +
+                        '<img src="'+server_cdn+item.photo+'" class="rounded-circle img-fluid wd-25px"' +
+                        'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
+                            '</div>' +
+                            '<div class="col-md-10 pad-5px">' +
+                            '<small class="cgrey2">'+ item.name +'</small>' +
+                            '<small class="cblue"> &nbsp; ('+ gen +')</small><br>' +
+                            '<small class="clight">Club : '+ item.club.name+'</small>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                });
+                $("#isi_top_player").html(iuplyr);
             },
             error: function (result) {
                 console.log(result);
