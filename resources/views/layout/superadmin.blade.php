@@ -71,9 +71,9 @@
                             <a class="cdarkgrey" href="" style="padding-right: 2em;">Privacy Policy</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;">
+                            <a class="cdarkgrey" href="#" style="padding-left: 2em;">
                                 Documentation &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;">
+                            <a class="cdarkgrey" href="#" style="padding-left: 2em;">
                                 Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>

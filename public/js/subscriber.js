@@ -93,6 +93,7 @@ function session_subscriber_logged() {
                 } else {
                     picsubs = user.picture;
                 }
+                // alert(server_cdn + picsubs);
                 $(".foto_profil_subs").attr("src", server_cdn + picsubs);
                 $("#view_edit_user").attr("src", server_cdn + picsubs);
             }
