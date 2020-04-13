@@ -212,6 +212,153 @@
 </div>
 
 
+<!-- MODAL DETAIL SUBS ACTIVE -->
+<div class="modal fade" id="modal_detail_subs_active" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <form>
+                <div class="modal-header" style="border: none; padding-bottom: 0px;
+                padding-left: 5%; padding-right: 5%;">
+                    <h4 class="modal-title cdarkgrey">Detail Subcriber Active</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
+                    <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Full Name</small>
+                                        <p class="cgrey" id="detail_fullname"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">User ID</small>
+                                        <p class="cgrey" id="detail_userid"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Status Subcriber</small>
+                                        <p class="cgrey" id="detail_status"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Created Date</small>
+                                        <p class="cgrey" id="detail_date"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
+                             border-radius: 10px; width: 100%; margin-top: 0.5em;
+                            padding: 5%;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13"> Membership Type</small>
+                                    <p class="cgrey" id="detail_membership"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <small class="clight s13">Pricing</small>
+                                    <p class="cgrey" id="detail_pricing"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight s13">Description</small>
+                                    <p class="cgrey" id="detail_deskripsi"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                   padding-left: 5%; padding-right: 5%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DETAIL SUBS PENDING -->
+<div class="modal fade" id="modal_detail_subs_pending" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <form>
+                <div class="modal-header" style="border: none; padding-bottom: 0px;
+                padding-left: 5%; padding-right: 5%;">
+                    <h4 class="modal-title cdarkgrey">Detail Pending Subcriber</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
+                    <br>
+
+                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
+                    border-radius: 10px; width: 100%; margin-top: 0.5em;
+                    padding: 8%;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Full Name</small>
+                                <p class="cgrey" id="detail_fullname2"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">User ID</small>
+                                <p class="cgrey" id="detail_userid2"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Status Subcriber</small>
+                                <p class="cgrey" id="detail_status2"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Created Date</small>
+                                <p class="cgrey" id="detail_date2"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight s13">Membership</small>
+                                <p class="cgrey"> Tidak Ada</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                   padding-left: 5%; padding-right: 5%;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -357,19 +504,58 @@
 
                     }
                 },
-                {
-                    mData: 'id',
+           {
+                    mData: null,
                     render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_subs_super(\'' + data + '\')">' +
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
                 }
             ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
 
         });
         $("#modal_generate_komunitas").modal('hide');
+
+        //DETAIL USERTYPE FROM DATATABLE
+        $('#tabel_show_subs tbody').on('click', 'button', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+
+            // sso_picture: "public/subscriber/editab91e5ab0cecf999987c560963857ff7809741e49c70f8a46cfb974308771d33.png"
+             var stat = '';
+            if (data.status == 0) {
+                var stat = 'Waiting Approval';
+            } else if (data.status == 1) {
+                stat = 'Approved';
+            } else if (data.status == 2) {
+                stat = 'Pending Membership';
+            } else if (data.status == 3) {
+                stat = 'Active';
+            } else {
+                stat = 'Nonactive';
+            }
+
+            $("#detail_userid").html(data.user_id);
+            $("#detail_fullname").html(data.full_name);
+            $("#detail_date").html(dateTime(data.created_at));
+            $("#detail_status").html(stat);
+
+            var member = data.membership;
+            $("#detail_membership").html(member.membership);
+            $("#detail_pricing").html("Rp "+rupiah(member.pricing));
+            $("#detail_deskripsi").html(member.description);
+
+            $("#modal_detail_subs_active").modal("show");
+        });
 
     }
 
@@ -450,18 +636,51 @@
                     }
                 },
                 {
-                    mData: 'id',
+                    mData: null,
                     render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_subs_super(\'' + data + '\')">' +
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                             '<i class="mdi mdi-eye"></i>' +
                             '</button>';
                     }
                 }
             ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
 
         });
         $("#modal_generate_pending").modal('hide');
+
+        //DETAIL USERTYPE FROM DATATABLE
+        $('#tabel_subs_pending tbody').on('click', 'button', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+
+            var stat = '';
+            if (data.status == 0) {
+                var stat = 'Waiting Approval';
+            } else if (data.status == 1) {
+                stat = 'Approved';
+            } else if (data.status == 2) {
+                stat = 'Pending Membership';
+            } else if (data.status == 3) {
+                stat = 'Active';
+            } else {
+                stat = 'Nonactive';
+            }
+
+            $("#detail_userid2").html(data.user_id);
+            $("#detail_fullname2").html(data.full_name);
+            $("#detail_date2").html(dateTime(data.created_at));
+            $("#detail_status2").html(stat);
+
+            $("#modal_detail_subs_pending").modal("show");
+        });
 
     }
 

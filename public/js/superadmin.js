@@ -412,3 +412,14 @@ function formatDatetime(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
 }
 
+function dateTime(tgl) {
+    var d = new Date(tgl);
+
+    dformat = [d.getDate(), d.getMonth() + 1,
+    d.getFullYear()].join('/') + ' &nbsp; ' +
+        [d.getHours(),
+        d.getMinutes(),
+        d.getSeconds()].join(':');
+
+    return dformat;
+}
