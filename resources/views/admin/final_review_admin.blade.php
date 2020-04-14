@@ -257,10 +257,10 @@
                 type: "POST",
                 dataType: "json",
                 success: function (status, code, data) {
-                    // console.log(status.data);
+                    // console.log(status);
 
-                    if (status.success == true) {
-                        var data = status.data;
+                    // if (status.success == true) {
+                        var data = status;
 
                         $('#jeniscom2').empty();
                         $('#jeniscom2').append("<option disabled> --- </option>");
@@ -274,7 +274,7 @@
                         }));
 
                         $("#jeniscom2").get(0).selectedIndex = 0; //e.preventDefault();
-                    }
+                    // }
                     const OldValue = '{{old("jeniscom2")}}';
 
                     if (OldValue !== '') {
@@ -283,6 +283,7 @@
                     var isijenis = "{!! $dt['community']['jenis_comm_id'] !!}";
                     var isirange = "{!! $dt['community']['range_member'] !!}";
 
+                    $('#jeniscom2').val(isijenis);
                     $('select[name="jeniscom2"]').val(isijenis);
                     $('select[name="range_member2"]').val(isirange);
 
@@ -309,7 +310,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var html = "";
 
                 $.each(result.data, function (i, item) {
