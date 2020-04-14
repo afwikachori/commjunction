@@ -1,11 +1,11 @@
 // onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 
 // LANG -EN-ID
-// var lang = new Lang();
-//       lang.dynamic('id', '/js/langpack/id.json');
-//       lang.init({
-//           defaultLang: 'en'
-//       });
+var lang = new Lang();
+lang.dynamic('id', '/js/langpack/id.json');
+lang.init({
+    defaultLang: 'en'
+});
 
 
 var server_cdn = $("#server_cdn").val();
@@ -47,7 +47,9 @@ var ui = {
 };
 
 $(document).ready(function () {
-    session_subscriber_logged();
+    // session_subscriber_logged();
+    console.log(lang);
+
 });
 
 // SESSION LOGIN SUBSVRIBER
@@ -151,7 +153,7 @@ function get_initial_feature(datafitur) {
     var showui = '';
     var jum = 0;
     $.each(datafitur, function (i, item) {
-        console.log(item);
+        // console.log(item);
         jum++;
         showui += '<div class="col-md-6 stretch-card grid-margin" style="height:75px; padding-left: 5px; padding-right:4px; padding-bottom:0px; margin-bottom:0.5em;"' +
             'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
@@ -290,17 +292,20 @@ function showPassNew() {
 }
 
 function cekimage_cdn(img) {
-    var cekone = img.slice(0, 1);
-    var foto = '';
-    if (cekone != "/") {
-        foto = "/" + img;
+    if (img != undefined && img != null) {
+        var cekone = img.slice(0, 1);
+        var foto = '';
+        if (cekone != "/") {
+            foto = "/" + img;
+        } else {
+            foto = img;
+        }
     } else {
-        foto = img;
+        foto = '/img/fitur.png';
     }
 
     return foto;
 }
-
 
 
 
@@ -343,10 +348,10 @@ function get_pricing_membership() {
                         '<small class="h6">IDR</small></sup>' +
                         '<label class="card-harga cgrey">' +
                         '<strong>' + rupiah(item.pricing) + '</strong></label>' +
-                        '<small class="clight"> /Once</small>' +
+                        '<small class="clight" lang="en">/Once</small>' +
                         '</div>' +
                         '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')">Get Now</button>' +
+                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">Get Now</button>' +
                         '</center>' +
                         '</div></div></div>';
                 });

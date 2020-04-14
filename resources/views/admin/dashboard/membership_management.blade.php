@@ -42,7 +42,7 @@
                                         <h2 class="clight">No Membership Available</h2>
                                     </center>
                                 </div>
-                                <div id="show_membership" class="card-deck">
+                                <div id="show_membership" class="card-deck" style="width: 100%;">
 
                                 </div>
                             </div><!-- endrow -->
@@ -456,7 +456,7 @@
                         <small class="clight">Features : </small> &nbsp;
                         <small class="ctosca s15" id="total_fitur_member"> 0</small>
                     </div>
-                    <div class="card-deck" id="show_feature_member" style="margin-top: 0.5em;">
+                    <div class="card-deck" id="show_feature_member" style="margin-top: 0.5em; width: 100%;">
 
                     </div>
                 </div>

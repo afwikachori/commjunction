@@ -304,7 +304,19 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
-            // console.log(result);
+            console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+            } else {
 
             var isiku = '';
             $.each(result, function (i, item) {
@@ -341,6 +353,8 @@ function get_list_notif_navbar(idkom) {
                     '<div class="dropdown-divider"></div>';
             });
             $("#isi_notif_navbar").html(isiku);
+                $("#ada_notif").show();
+        }
         },
         error: function (result) {
             console.log(result);

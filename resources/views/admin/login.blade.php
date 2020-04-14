@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Login')
 @section('content')
 <div class="row" id="loginadmincom" class="full_height">
     <div class="col-xl orenq">

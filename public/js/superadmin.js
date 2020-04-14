@@ -423,3 +423,20 @@ function dateTime(tgl) {
 
     return dformat;
 }
+
+
+function cekimage_cdn(img) {
+    if (img != undefined && img != null) {
+        var cekone = img.slice(0, 1);
+        var foto = '';
+        if (cekone != "/") {
+            foto = "/" + img;
+        } else {
+            foto = img;
+        }
+    } else {
+        foto = '/img/fitur.png';
+    }
+
+    return foto;
+}

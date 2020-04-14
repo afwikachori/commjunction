@@ -20,9 +20,10 @@
             <div class="card-body">
                 <h4 class="card-title">Project Status</h4>
                 <br>
-                <table id="example" class="table table-hover dt-responsive nowrap" style="width:100%">
+                <table id="tabel_verify_superadmin" class="table table-hover dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Invoice Number</th>
                             <th>Nama</th>
                             <th>Bank</th>
                             <th>Nominal</th>
@@ -57,7 +58,7 @@
                         <div class="col-sm-8">
                             <input id="invoice_num" type="text"
                                 class="form-control input-abu @error('invoice_num') is-invalid @enderror"
-                                name="invoice_num" required readonly="readonly">
+                                name="invoice_num" required>
                             <small id="pesan_invnum" class="redhide"></small>
                         </div>
                     </div>
@@ -113,7 +114,7 @@
                     <button type="submit" name="approval" value="2" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Approve </button>
-                        </div>
+                </div>
             </form>
         </div>
     </div>
@@ -125,15 +126,37 @@
 
 @section('script')
 <script type="text/javascript">
-    var cdn = '{{ env("CDN") }}';
+    var cdn = $("#server_cdn").val();
     $(document).ready(function () {
 
         // session_logged_superadmin();
         tabel_req_verify(); //datables
+
+        tabel_tes();
     });
 
+    function tabel_tes() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/list_req_admincomm',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (result) {
+                console.log("Cant tabel tes");
+            }
+        });
+    }
+
     function tabel_req_verify() {
-        var tabel = $('#example').DataTable({
+        var tabel = $('#tabel_verify_superadmin').DataTable({
             responsive: true,
             language: {
                 paginate: {
@@ -148,31 +171,65 @@
                 timeout: 30000
             },
             columns: [
+                { mData: 'invoice_number' },
                 { mData: 'nama' },
                 { mData: 'payment_bank_name' },
-                { mData: 'nominal' },
-                { mData: 'created_at' },
                 {
-                    mData: 'file_customer',
+                    mData: 'nominal',
                     render: function (data, type, row, meta) {
-                        var pic = cdn + data;
-                        return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror="errorImg()"></center>';
+                        return "Rp " + rupiah(data);
                     }
                 },
                 {
-                    mData: 'invoice_number',
-                    render: function (data, type, row) {
-                        // console.log("ini : " +row.invoice_number);
-                        return '<button type="button" class="btn btn-tosca btn-sm" onclick="verify_reqadmin(' + data + ');">Verify</button>';
+                    mData: 'created_at',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                },
+                {
+                    mData: 'file_customer',
+                    render: function (data, type, row, meta) {
+                        var noimg = '/img/noimg.jpg'
+                        var pic = cdn + cekimage_cdn(data);
+                        return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+                    }
+                },
+                {
+                    mData: null,
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                            '<i class="mdi mdi-eye"></i>' +
+                            '</button>';
                     }
                 }
             ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
 
         });
+
+        //DETAIL USERTYPE FROM DATATABLE
+        $('#tabel_verify_superadmin tbody').on('click', 'button', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            // console.log(data);
+
+            $('input[name="invoice_num"]').val(data.invoice_number);
+            $("#modal_verify_admincom").modal('show');
+            $("#btn_verifyreq").attr("disabled", true);
+
+        });
+
     }
 
 
     function verify_reqadmin(invoice_num) {
+        alert(invoice_num);
         // $("#invoice_num").val(invoice_num);
         $('input[name="invoice_num"]').val(invoice_num);
         $("#modal_verify_admincom").modal('show');

@@ -17,35 +17,35 @@
 
     <li class="nav-item">
         <a class="nav-link" href="/subscriber/dashboard">
-            <span class="menu-title">Dashboard</span>
+            <span class="menu-title" lang="en">Dashboard</span>
             <i class="mdi mdi-home menu-icon"></i>
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="/subscriber/membership">
-            <span class="menu-title">Membership Type</span>
+            <span class="menu-title" lang="en">Membership Type</span>
             <i class="mdi mdi-wallet-membership menu-icon"></i>
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="/subscriber/transaction_management">
-            <span class="menu-title">Transaction Management</span>
+            <span class="menu-title" lang="en">Transaction Management</span>
             <i class="mdi mdi-cart menu-icon"></i>
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="/subscriber/inbox_management">
-            <span class="menu-title">Inbox Management</span>
+            <span class="menu-title" lang="en">Inbox Management</span>
             <i class="mdi mdi-message-text-outline menu-icon"></i>
         </a>
     </li>
 
        <li class="nav-item">
         <a class="nav-link" href="/subscriber/notification_management">
-            <span class="menu-title">Notification Management</span>
+            <span class="menu-title" lang="en">Notification Management</span>
             <i class="mdi mdi-bell-ring menu-icon"></i>
         </a>
     </li>

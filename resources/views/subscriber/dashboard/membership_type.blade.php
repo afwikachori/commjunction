@@ -3,16 +3,17 @@
 @section('content')
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title">Membership Type</h3>
+        <h3 class="page-title" lang="en">Membership Type</h3>
     </div>
     <div class="col-md-6">
-        <label class="cgrey">Manage your memberbership type<label>
+        <label class="cgrey" lang="en">Manage your membership type<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                data-target="#modal_confirmpay_membership">
-                Payment Confirmation</button>
+            <button type="button" class="btn btn-tosca btn-sm"
+            style="min-width: 175px;"
+            data-toggle="modal"
+            data-target="#modal_confirmpay_membership" lang="en">Payment Confirmation</button>
         </nav>
     </div>
 </div>
@@ -23,13 +24,12 @@
             <nav class="navbar nav-biru">
             </nav>
             <div class="card-body member">
-                <h4 class="tebal">Choose your plan</h4>
-                <p class="cgrey2" style="margin-bottom: 0.5em;">Our Community Administrators are on their way to approve
+                <h4 class="tebal" lang="en">Choose your plan</h4>
+                <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en" data-lang-token="des_membership">Our Community Administrators are on their way to approve
                     your account, please check
-                    our
-                    email!</p>
+                    our email!</p>
                 <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
-                    <div class="card-deck price_member">
+                    <div class="card-deck price_member" style="width: 100%;">
 
                     </div>
                 </div> <!-- end-row -->

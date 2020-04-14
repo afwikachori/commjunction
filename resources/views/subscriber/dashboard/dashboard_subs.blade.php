@@ -4,10 +4,10 @@
 
 <div class="row" style="margin-bottom: 1em;">
     <div class="col-md-2">
-        <h3 class="cgrey">Dashboard</h3>
+        <h3 class="cgrey" lang="en">Dashboard</h3>
     </div>
     <div class="col-md-10">
-        <p class="clight">Summary your apps performance<p>
+        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Summary your apps performance<p>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
         <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3 cteal">Total News<i
+                <h4 class="font-weight-normal mb-3 cteal" lang="en">Total News<i
                         class="mdi mdi-book-open-page-variant cwhite cwhite mdi-24px float-right"></i>
                 </h4>
                 <h1 class="total_news"> 0 </h1>
@@ -30,13 +30,13 @@
             <img src="/visual/dash2.png" id="img-dash2" />
             <img src="/visual/dash1.png" class="card-img-absolute" style="width: 100%; position: absolute;" />
             <div class="card-body setnotifdash">
-                <h4 class="mb-3 s21">Get your notification realtime with a new feature</h4>
-                <p class="s16 mb-3" style="width: 400px;">You can get notification realtime to your application with a
+                <h4 class="mb-3 s21" lang="en">Get your notification realtime with a new feature</h4>
+                <p class="s16 mb-3" style="width: 400px;" lang="en" data-lang-token="dash_realtime">
+                    You can get notification realtime to your application with a
                     this feature,
                     smart application with low cost .</p>
                 <a href="/subscriber/dashboard_setting" type="button" id="btn_getnow" class="btn btn-white btn-sm"
-                    style="position: relative;">
-                    Get Now </a>
+                    style="position: relative;" lang="en">Get Now</a>
             </div>
         </div>
     </div>
@@ -49,11 +49,11 @@
                 <div class="card bg-gradient-info card-img-holder text-white" style="height: auto; min-height: 217px;">
                     <div class="card-body">
                         <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3 cteal">Total Friends <i
+                        <h4 class="font-weight-normal mb-3 cteal" lang="en">Total Friends <i
                                 class="mdi mdi-human-handsup cwhite mdi-24px float-right"></i>
                         </h4>
                         <h1 class="total_friend"> 0 </h1>
-                        <span class="mb-5"> Person</span>
+                        <span class="mb-5" lang="en"> Person</span>
                         <!-- <h6 class="card-text">Decreased by 0%</h6> -->
                     </div>
                 </div>
@@ -63,11 +63,11 @@
                     style="height: auto; min-height: 217px;">
                     <div class="card-body">
                         <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                        <h4 class="font-weight-normal mb-3 cteal">Total Event<i
+                        <h4 class="font-weight-normal mb-3 cteal" lang="en">Total Event<i
                                 class="mdi mdi-theater cwhite mdi-24px float-right"></i>
                         </h4>
                         <h1 class="total_event"> 0 </h1>
-                        <span class="mb-5"> Event</span>
+                        <span class="mb-5" lang="en">Event</span>
                         <!-- <h6 class="card-text">Decreased by 0%</h6> -->
                     </div>
                 </div>
@@ -75,6 +75,9 @@
         </div>
     </div>
     <div class="col-md-8">
+        <div class="card pas_tengah" id="nodata_dash_artikel" style="height:473px; display: none;">
+            <h2 class="clight pas_tengah" data-lang-token="nodata_dash_artikel" lang="en">No Data Articles Available</h2>
+        </div>
         <div class="row" id="idashbord_news">
 
         </div>
@@ -83,7 +86,7 @@
 
 
 <div class="divkonco">
-    <h4 class="cgrey" style="margin-bottom: 1em;">Friend Sugestion</h4>
+    <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Friend Sugestion</h4>
     <div id="div_friendsugest">
         <!-- <div class="card konco">
             <div class="card-body color">
@@ -114,7 +117,7 @@
             <div class="card-header bg-pastel-red sumari>
                 <div class=" row">
                 <div class="col-9">
-                    <h4 class="cteal">Last News</h4>
+                    <h4 class="cteal" lang="en">Last News</h4>
                 </div>
                 <div class="col icon-atas">
                     <i class="mdi mdi-newspaper top-ico-right cteal"></i>
@@ -133,7 +136,7 @@
             <div class="card-header bg-pastel-red sumari>
                         <div class=" row">
                 <div class="col-9">
-                    <h4 class="cteal">Most Love News</h4>
+                    <h4 class="cteal" lang="en">Most Love News</h4>
                 </div>
                 <div class="col icon-atas">
                     <i class="mdi mdi-heart-outline top-ico-right cteal"></i>
@@ -152,7 +155,7 @@
             <div class="card-header bg-pastel-red sumari>
                     <div class=" row">
                 <div class="col-9">
-                    <h4 class="cteal">Top Visit News</h4>
+                    <h4 class="cteal" lang="en">Top Visit News</h4>
                 </div>
                 <div class="col icon-atas">
                     <i class="mdi mdi-auto-upload top-ico-right cteal"></i>
@@ -181,10 +184,10 @@
                 </div>
                 <div class="col-10">
                     <div class="pad-1em">
-                        <h4 class="cteal">Top Visit Club</h4>
+                        <h4 class="cteal" lang="en">Top Visit Club</h4>
                         <div id="topclubvisit_nodata" style="display: none;">
                             <center>
-                                <h3 class="clight mgt-1half">No Available Data</h3>
+                                <h3 class="clight mgt-1half" lang="">No Available Data</h3>
                             </center>
                         </div>
                         <div id="isi_top_visit_club" class="row">
@@ -206,10 +209,10 @@
                 </div>
                 <div class="col-10">
                     <div class="pad-1em">
-                        <h4 class="cteal" style="margin-bottom: 1em;">Top Visit Player</h4>
+                        <h4 class="cteal" style="margin-bottom: 1em;" lang="en">Top Visit Player</h4>
                         <div id="topplayer_nodata" style="display: none;">
                             <center>
-                                <h3 class="clight mgt-1half">No Available Data</h3>
+                                <h3 class="clight mgt-1half" lang="en">No Available Data</h3>
                             </center>
                         </div>
                         <div id="isi_top_player" class="row">
@@ -235,7 +238,7 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="cteal">List News</h4>
+                        <h4 class="cteal" lang="en">List News</h4>
                         <ul class="list-arrow" id="list_news">
 
                         </ul>
@@ -253,7 +256,7 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="cteal">List Friends</h4>
+                        <h4 class="cteal" lang="en">List Friends</h4>
                         <ul class="list-arrow" id="list_friend">
 
                         </ul>
@@ -271,7 +274,7 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="cteal">List Event</h4>
+                        <h4 class="cteal" lang="en">List Event</h4>
                         <ul class="list-arrow" id="list_event">
 
                         </ul>
@@ -376,7 +379,7 @@
         <div class="modal-content membership">
             <div class="modal-body">
                 <div class="row justify-content-center" style="text-align: center;">
-                    <div class="card-deck price_member" style="padding-left: 6%; padding-right: 3%;">
+                    <div class="card-deck price_member" style="padding-left: 6%; padding-right: 3%; width: 100%;">
 
                     </div>
                     <br>
@@ -439,19 +442,20 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+    var no_data = '';
 
     $(document).ready(function () {
-        get_pricing_membership();
-        get_payment_initial();
+        // get_pricing_membership();
+        // get_payment_initial();
 
         get_dashboard_news();
-        get_friends_total();
-        get_last_news();
-        get_love_news();
-        get_topvisit_news();
-        get_friends_sugestion();
-        get_top_player();
-        get_top_visit_club(); //no data - ui wait data
+        // get_friends_total();
+        // get_last_news();
+        // get_love_news();
+        // get_topvisit_news();
+        // get_friends_sugestion();
+        // get_top_player();
+        // get_top_visit_club(); //no data - ui wait data
     });
 
     function tabel_tes() {
@@ -499,9 +503,10 @@
                 "limit": 4,
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    $("#nodata_dash_artikel").show();
+                    $("#idashbord_news").hide();
                 } else {
                     var berita = '';
                     $.each(result, function (i, item) {
@@ -530,12 +535,16 @@
                             '</div></div></div>';
                     });
                     $("#idashbord_news").html(berita);
+                    $("#nodata_dash_artikel").hide();
+                    $("#idashbord_news").show();
                 }
 
             },
             error: function (result) {
                 console.log(result);
-                console.log("Cant Get News");
+                $("#nodata_dash_artikel").show();
+                $("#idashbord_news").hide();
+                console.log("Cant Get Articles News");
             }
         });
     }
