@@ -6,8 +6,8 @@ variables:
   GIT_CLEAN_FLAGS: -n
     
 before_script:
-  #- export http_proxy=http://192.168.13.6:3128
-  #- export https_proxy=http://192.168.13.6:3128
+  - export http_proxy=http://192.168.13.6:3128
+  - export https_proxy=http://192.168.13.6:3128
 
 after_script:
   - docker image prune -f
