@@ -168,7 +168,8 @@
                 <div class="row">
                     <div class="col-6" style="text-align: right;">
                         <div class="bunder-ring2">
-                            <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs">
+                            <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs"
+                            onerror="this.onerror=null;this.src='/img/default.png';">
                         </div>
                     </div>
                     <div class="col-6">
@@ -188,7 +189,7 @@
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: right;">
                                         <img src="/img/cam.png" class="rounded-circle img-fluid icon-req-member"
-                                            id="icon_member">
+                                            id="icon_member" onerror="this.onerror=null;this.src='/img/cam.png';">
                                     </div>
                                     <div class="col-md-8">
                                         <h4 id="judul_member" style="margin-top: 1em;">Starter</h4>
@@ -589,7 +590,7 @@
                    $("#div_nomembership").hide();
                 var isimember = '';
                 $.each(result, function (i, item) {
-                    var logo = server_cdn + item.image;
+                    var logo = server_cdn + cekimage_cdn(item.image);
                     var noimg = '/img/fitur.png';
                     isimember += '<div class="col-md-4 stretch-card grid-margin card-member">' +
                         '<div class="card bg-gradient-success card-img-holder text-white member">' +
@@ -637,7 +638,7 @@
                 $("#detail_judul_member").html(result.membership);
                 $("#detail_harga_member").html(rupiah(result.pricing));
                 $("#detail_deskripsi_member").html(result.description);
-                $("#foto_membership").attr("src", server_cdn + result.image);
+                $("#foto_membership").attr("src", server_cdn + cekimage_cdn(result.image));
                 $("#modal_detail_membership_card").modal('show');
 
                 var subf = '';
@@ -654,7 +655,7 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2"'+
+                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"'+
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '</div>' +
                         '<div class="col-md-9">' +
@@ -750,7 +751,7 @@
                 $("#judul_member").html(dt.membership);
 
                 if (dt.picture != "0") {
-                    $(".logo_komunitas").attr("src", server_cdn + dt.picture);
+                    $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(dt.picture));
                 }
 
                 if (dt.file_subscriber == null) {

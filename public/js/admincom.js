@@ -77,6 +77,7 @@ function session_admin_logged() {
 
             var user = result.user;
             get_list_notif_navbar(user.community_id);
+
             if (result != "") {
                 $(".username_komunitas").html(user.user_name);
                 $(".phone_komunitas").html(user.notelp);
@@ -303,7 +304,7 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
 
             var isiku = '';
             $.each(result, function (i, item) {

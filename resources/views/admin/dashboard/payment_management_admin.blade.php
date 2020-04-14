@@ -102,7 +102,7 @@
 
                         <div id="infor_pay_admin" style="margin-top: 7%;">
                             <center>
-                                <img src="" class="rounded-circle img-fluid" id="img_detail_payment_super"
+                                <img src="/img/default.png" class="rounded-circle img-fluid" id="img_detail_payment_super"
                                     onerror="this.onerror=null;this.src='/img/default.png';">
                                 <br>
                                 <small class="cblue">Payment Name</small>
@@ -246,7 +246,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <small class="clight s13">Payment Name</small>
-                                        <p id="detail_nama_pay"> </p>
+                                        <p id="detail_nama_pay"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -616,7 +616,7 @@
                                 {
                                     mData: 'icon',
                                     render: function (data, type, row, meta) {
-                                        var dtimg = server_cdn + data;
+                                        var dtimg = server_cdn + cekimage_cdn(data);
                                         var noimg = '/img/fitur.png';
                                         return '<img src="' + dtimg + '" style="width:30px; height:30px;" id="imgsubpay_' + row + '" class="rounded-circle img-fluid zoom" onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"">';
                                     }
@@ -710,7 +710,7 @@
                     } else {
                         var isiimg = isi.icon;
                     }
-                    imglogo = server_cdn + isiimg;
+                    imglogo = server_cdn + cekimage_cdn(isiimg);
                     $('#img_subpay').attr('src', imglogo);
                 }
 
@@ -877,7 +877,7 @@
                             '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
                             'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
                             'aria-controls="collapseOne' + itm.id + '">' +
-                            '<img src="' + server_cdn + itm.icon + '" class="imgepay" style="width: 10%; height: auto;"' +
+                            '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                             'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
                             '<span class="float-right">' +
                             '<i class="fa fa-chevron-right"></i>' +

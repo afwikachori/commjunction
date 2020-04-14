@@ -437,6 +437,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
+                console.log(result);
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -455,21 +456,31 @@
                         if (item.input_type == 1) {
                             inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
                         } else if (item.input_type == 2) {
+                             if (item.value == 1) {
+                                var one = 'checked';
+                                var two = '';
+                            } else if (item.value == 2) {
+                                var one = '';
+                                var two = 'checked';
+                            } else {
+                                var one = '';
+                                var two = '';
+                            }
                             inputipe = '<div class="form-group">' +
-                                '< div class="form-check" >' +
+                                '<div class="form-check" >' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
                                 'True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2">' +
+                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + one + '>' +
                                 'False <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '</div>';
                         }
 
-                        uiku += ' <div class="row">' +
+                        uiku += '<div class="row">' +
                             '<div class="col-6">' +
                             '<div class="form-group">' +
                             '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
