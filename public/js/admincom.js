@@ -327,7 +327,7 @@ function get_list_notif_navbar(idkom) {
 
                 isiku += '<a class="dropdown-item preview-item notif">' +
                     '<div class="preview-thumbnail medium">' +
-                    '<div class="preview-icon ' + textArray[acak] +'">' +
+                    '<div class="preview-icon ' + textArray[acak] + '">' +
                     '<i class="mdi mdi-bell-outline"></i>' +
                     '</div>' +
                     '</div>' +
@@ -413,7 +413,7 @@ function get_initial_feature(datafitur) {
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-        '<img src="' + server_cdn + imgk+ '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
+            '<img src="' + server_cdn + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
             item.title + '</h6>' +
@@ -543,12 +543,16 @@ function showPassText(ini) {
     }
 }
 function cekimage_cdn(img) {
-    var cekone = img.slice(0, 1);
-    var foto = '';
-    if (cekone != "/") {
-        foto = "/" + img;
-    } else {
-        foto = img;
+    if (img != undefined && img != null) {
+        var cekone = img.slice(0, 1);
+        var foto = '';
+        if (cekone != "/") {
+            foto = "/" + img;
+        } else {
+            foto = img;
+        }
+    }else{
+        foto = '/img/fitur.png';
     }
 
     return foto;

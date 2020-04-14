@@ -2987,6 +2987,8 @@ class AdminCommController extends Controller
                 "file"              => $imgku
             ];
 
+            dd($imageRequest);
+
 
             try {
                 $resImg = $req->create_membership_admin($imageRequest, $url, $token);

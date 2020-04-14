@@ -555,7 +555,8 @@
 
             },
             success: function (result) {
-                // console.log(result);
+                console.log(split);
+                console.log(result);
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -730,7 +731,7 @@
                 if(isi.level_status != 2 ){
                     $(".isi_setting_subpay").html('<center><br><br><br><h4 class=clight>To setting up, Please Activate this payment first or see Active Payment Table</h4></center');
                 }else{
-                    alert('level stat : 2');
+                    // alert('level stat : 2');
                      get_setting_subpayment_admin(isi.id);
                 }
 
