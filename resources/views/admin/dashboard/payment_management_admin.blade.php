@@ -913,7 +913,9 @@
         $(".border-oren").removeClass("active");
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
+
         if($("#payment_time_module").val() !=""){
+
             $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
         }
     }

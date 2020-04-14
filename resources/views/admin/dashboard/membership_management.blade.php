@@ -588,6 +588,7 @@
                 }
             } else {
                    $("#div_nomembership").hide();
+                    $("#show_membership").show();
                 var isimember = '';
                 $.each(result, function (i, item) {
                     var logo = server_cdn + cekimage_cdn(item.image);

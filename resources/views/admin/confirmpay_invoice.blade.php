@@ -7,7 +7,7 @@
 <img src="/visual/kiribawah.png" class="img_confirm3">
 
 <div class="container">
-<h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Please Confirm your Regsitrasion !</h3>
+<h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Please Confirm your Registrasion !</h3>
 <br>
 <div class="row">
   <div class="col-4">
