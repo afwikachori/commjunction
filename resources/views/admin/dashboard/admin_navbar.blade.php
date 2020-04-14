@@ -51,7 +51,7 @@
 
                 </div>
                 <div class="dropdown-divider"></div>
-                <a href="#"><h6 class="p-3 mb-0 text-center">See all notifications</h6></a>
+                <a href="/admin/notification_management"><h6 class="p-3 mb-0 text-center">See all notifications</h6></a>
               </div>
             </li>
 

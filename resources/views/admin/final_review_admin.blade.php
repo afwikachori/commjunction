@@ -150,8 +150,10 @@
                         <h6 class="cgrey1" id="judulpay"></h6>
                     </div>
 
-                    <button type="button" onclick="window.location='/FinalAdminRegis'" class="btn btn-oren btn-sm"
-                        lang="en" style="width: 100px; margin-top: 1em;">Finish</button>
+                    <!-- <button type="button" onclick="window.location='/FinalAdminRegis'" class="btn btn-oren btn-sm"
+                        lang="en" style="width: 100px; margin-top: 1em;">Finish</button> -->
+                            <a href="{{ route('FinalAdminRegis') }}" type="button" class="btn btn-oren btn-sm" lang="en"
+                                style="width: 100px; margin-top: 1em;">Finish</a>
 
                 </div> <!-- end col-6 -->
 

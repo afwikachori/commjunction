@@ -36,6 +36,12 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_member_1">
                             <div class="row">
+                                <div id="div_nomembership" style="display: none; text-align: center; margin: auto;">
+                                    <center>
+                                        <br><br><br><br>
+                                        <h2 class="clight">No Membership Available</h2>
+                                    </center>
+                                </div>
                                 <div id="show_membership" class="card-deck">
 
                                 </div>
@@ -473,7 +479,7 @@
         get_membership_admin();
         tabel_req_membership();
         get_list_fitur_membership_admin();
-        tabel_tes();
+        // tabel_tes();
     });
 
 
@@ -522,9 +528,16 @@
             success: function (result) {
                 // console.log(result);
 
-                if (result.status == 500) {
-                    ui.popup.show('error', result.message, 'Failed');
+                  if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
                 }
+            } else {
                 var fitur = '';
 
                 $.each(result, function (i, item) {
@@ -538,7 +551,7 @@
                 });
 
                 $("#isi_membership_admin").html(fitur);
-
+            }
             },
             error: function (error) {
                 ui.popup.show('error', error.message, 'Failed');
@@ -560,7 +573,20 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
+                if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    $("#div_nomembership").show();
+                     $("#show_membership").hide();
+                    // ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                   $("#div_nomembership").hide();
                 var isimember = '';
                 $.each(result, function (i, item) {
                     var logo = server_cdn + item.image;
@@ -585,7 +611,7 @@
                 });
 
                 $("#show_membership").html(isimember);
-
+            }
             },
             error: function (result) {
                 ui.popup.show('error', 'Cant Get Membership Features', 'Failed');
@@ -616,6 +642,7 @@
 
                 var subf = '';
                 var jum = 0;
+                var noimg = '/img/fitur.png';
                 $.each(result.feature, function (i, item) {
                     jum++;
                     subf += '<div class="col-md-6 stretch-card grid-margin' +
@@ -627,7 +654,8 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2">' +
+                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2"'+
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '</div>' +
                         '<div class="col-md-9">' +
                         '<b><small>' + item.title + '</small></b>' +

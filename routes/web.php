@@ -199,7 +199,7 @@ Route::post('getSelectedFitur', 'RegisterController@getSelectedFitur')->name('ge
 Route::post('getSelectedPrice', 'RegisterController@getSelectedPrice')->name('getSelectedPrice');
 Route::post('getSelectedPayment', 'RegisterController@getSelectedPayment')->name('getSelectedPayment');
 // FINAL ADMIN REGISTRASION
-Route::get('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
+Route::post('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
 // LOADING _ FINISH
 Route::get('admin/loading','RegisterController@loadingcreatingView')->name('admin/loading');
 Route::get('admin/finish','RegisterController@finishView')->name('finishView');

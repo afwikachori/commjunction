@@ -276,7 +276,7 @@
 
                             <br>
 
-                            <h5 class="cgrey tebal">Payment Confirmation</h5>
+                            <h5 class="cgrey tebal">Payment Verification</h5>
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_aprov" onclick="clickImage(this)"
                                     style="height: 115px; width: 100%; border-radius: 10px;"
