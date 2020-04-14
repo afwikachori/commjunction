@@ -70,6 +70,7 @@
     </div>
 </div>
 
+<!-- ber -->
 
 <!-- MODAL ADD CREATE MEMBERSHIP-->
 <div class="modal fade" id="modal_add_create_membership" data-backdrop="static" tabindex="-1" role="dialog"
