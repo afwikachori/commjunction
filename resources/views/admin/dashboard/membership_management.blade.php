@@ -57,6 +57,7 @@
                                         <th class="th-center"> ID Subscriber</th>
                                         <th class="th-center"> Name</th>
                                         <th class="th-center"> Status</th>
+                                        <th class="th-center"> Payment Method</th>
                                         <th class="th-center"> Membership Type</th>
                                         <th class="th-center"> Action</th>
                                     </tr>
@@ -70,7 +71,7 @@
     </div>
 </div>
 
-<!-- ber -->
+
 
 <!-- MODAL ADD CREATE MEMBERSHIP-->
 <div class="modal fade" id="modal_add_create_membership" data-backdrop="static" tabindex="-1" role="dialog"
@@ -170,7 +171,7 @@
                     <div class="col-6" style="text-align: right;">
                         <div class="bunder-ring2">
                             <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs"
-                            onerror="this.onerror=null;this.src='/img/default.png';">
+                                onerror="this.onerror=null;this.src='/img/default.png';">
                         </div>
                     </div>
                     <div class="col-6">
@@ -279,9 +280,8 @@
 
             <div class="modal-body detail_member">
                 <center>
-                    <img src="/img/noimg.jpg" class="img_file_bayar_subs"
-                    onclick="clickImage(this)"
-                     onerror = "this.onerror=null;this.src='/img/noimg.jpg';">
+                    <img src="/img/noimg.jpg" class="img_file_bayar_subs" onclick="clickImage(this)"
+                        onerror="this.onerror=null;this.src='/img/noimg.jpg';">
 
                     <div class="row">
                         <div class="col-md-6">
@@ -481,7 +481,7 @@
         get_membership_admin();
         tabel_req_membership();
         get_list_fitur_membership_admin();
-        // tabel_tes();
+        tabel_tes();
     });
 
 
@@ -530,30 +530,30 @@
             success: function (result) {
                 // console.log(result);
 
-                  if (result.success == false) {
-                if (result.status == 401 || result.message == "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/admin';
-                    }, 5000);
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 } else {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    var fitur = '';
+
+                    $.each(result, function (i, item) {
+                        // console.log(item);
+                        fitur += '<div class="custom-control custom-checkbox lismember">' +
+                            '<input type = "checkbox" class="custom-control-input" id="fitur' + item.feature_id + '"' +
+                            'name = "fitur_member[]" value = "' + item.feature_id + '">' +
+                            '<label class="custom-control-label" for="fitur' + item.feature_id + '">' + item.title + '</label><br>' +
+                            '<small class="clight s13 deskripsifitur">' + item.description + '</small>' +
+                            '</div>';
+                    });
+
+                    $("#isi_membership_admin").html(fitur);
                 }
-            } else {
-                var fitur = '';
-
-                $.each(result, function (i, item) {
-                    // console.log(item);
-                    fitur += '<div class="custom-control custom-checkbox lismember">' +
-                        '<input type = "checkbox" class="custom-control-input" id="fitur' + item.feature_id + '"' +
-                        'name = "fitur_member[]" value = "' + item.feature_id + '">' +
-                        '<label class="custom-control-label" for="fitur' + item.feature_id + '">' + item.title + '</label><br>' +
-                        '<small class="clight s13 deskripsifitur">' + item.description + '</small>' +
-                        '</div>';
-                });
-
-                $("#isi_membership_admin").html(fitur);
-            }
             },
             error: function (error) {
                 ui.popup.show('error', error.message, 'Failed');
@@ -575,46 +575,46 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
-                if (result.status == 401 || result.message == "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/admin';
-                    }, 5000);
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        $("#div_nomembership").show();
+                        $("#show_membership").hide();
+                        // ui.popup.show('warning', result.message, 'Warning');
+                    }
                 } else {
-                    $("#div_nomembership").show();
-                     $("#show_membership").hide();
-                    // ui.popup.show('warning', result.message, 'Warning');
-                }
-            } else {
-                   $("#div_nomembership").hide();
+                    $("#div_nomembership").hide();
                     $("#show_membership").show();
-                var isimember = '';
-                $.each(result, function (i, item) {
-                    var logo = server_cdn + cekimage_cdn(item.image);
-                    var noimg = '/img/fitur.png';
-                    isimember += '<div class="col-md-4 stretch-card grid-margin card-member">' +
-                        '<div class="card bg-gradient-success card-img-holder text-white member">' +
-                        '<div class="card-body member">' +
-                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<h4 class="font-weight-normal mb-3">' + item.membership + '<i class="mdi mdi-cube-outline mdi-24px float-right"></i>' +
-                        '</h4>' +
-                        '<div class="row">' +
-                        '<div class="col-7">' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership" onerror="this.onerror=null;this.src=\'' + noimg + '\';" >' +
-                        '</div>' +
-                        '<div class="col-5" style="text-align:right;">' +
-                        '<button type="button" class="membershipbtn" onclick="detail_membership_card(' + i + ')">' +
-                        '<b><small class="cteal s12"><i class="mdi mdi-checkbox-blank-circle"></i>' +
-                        'Detail</small></b></button>' +
-                        '</div></div>' +
-                        '<small class="card-text">' + item.description + '</small>' +
-                        '</div></div></div>';
-                });
+                    var isimember = '';
+                    $.each(result, function (i, item) {
+                        var logo = server_cdn + cekimage_cdn(item.image);
+                        var noimg = '/img/fitur.png';
+                        isimember += '<div class="col-md-4 stretch-card grid-margin card-member">' +
+                            '<div class="card bg-gradient-success card-img-holder text-white member">' +
+                            '<div class="card-body member">' +
+                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                            '<h4 class="font-weight-normal mb-3">' + item.membership + '<i class="mdi mdi-cube-outline mdi-24px float-right"></i>' +
+                            '</h4>' +
+                            '<div class="row">' +
+                            '<div class="col-7">' +
+                            '<img src="' + logo + '" class="rounded-circle img-fluid logo-membership" onerror="this.onerror=null;this.src=\'' + noimg + '\';" >' +
+                            '</div>' +
+                            '<div class="col-5" style="text-align:right;">' +
+                            '<button type="button" class="membershipbtn" onclick="detail_membership_card(' + i + ')">' +
+                            '<b><small class="cteal s12"><i class="mdi mdi-checkbox-blank-circle"></i>' +
+                            'Detail</small></b></button>' +
+                            '</div></div>' +
+                            '<small class="card-text">' + item.description + '</small>' +
+                            '</div></div></div>';
+                    });
 
-                $("#show_membership").html(isimember);
-            }
+                    $("#show_membership").html(isimember);
+                }
             },
             error: function (result) {
                 ui.popup.show('error', 'Cant Get Membership Features', 'Failed');
@@ -657,7 +657,7 @@
                         'alt="circle-image" /> ' +
                         '<div class="row">' +
                         '<div class="col-md-3" style="padding-right:4px;">' +
-                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"'+
+                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '</div>' +
                         '<div class="col-md-9">' +
@@ -707,12 +707,14 @@
                 { mData: 'user_id' },
                 { mData: 'full_name' },
                 { mData: 'payment_status_title' },
+                { mData: 'payment_method' },
                 { mData: 'membership' },
                 {
-                    mData: 'invoice_number',
+                    mData: 'user_id',
                     render: function (data, type, row, meta) {
 
-                        return '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick="detail_req_membership(\'' + data + '\')">' +
+                        return '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                            'onclick="detail_req_membership(\'' + data + '\')">' +
                             '<i class="mdi mdi-eye matadetail"></i>' +
                             '</a>';
                     }
@@ -724,8 +726,7 @@
     }
 
 
-    function detail_req_membership(inv_num) {
-        // alert(inv_num);
+    function detail_req_membership(id_subs) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -736,7 +737,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {
-                "invoice_number": inv_num
+                "user_id": id_subs
             },
             success: function (result) {
                 var isipaid = '';

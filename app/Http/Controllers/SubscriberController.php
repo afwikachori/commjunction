@@ -183,15 +183,17 @@ class SubscriberController extends Controller
 
                 // return redirect('subscriber/url/'.$url_comname)->with('register_sukses', $url_sukses);
             }
-        } catch (RequestException $exception) {
-            return $exception;
-            // $response = $exception->getResponse();
-            $code = $exception->getCode();
-            // dd($code);
-            if ($code == 400) {
-                alert()->error('Your Community Not Active Yet', 'Ooops Sorry!');
-                return back()->withInput();
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
         }
     }
 
@@ -939,6 +941,7 @@ class SubscriberController extends Controller
             "payment_id" => $input['id_pay_initial'],
         ]);
 
+
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
@@ -1083,7 +1086,10 @@ class SubscriberController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                 return back();
             }
-        } //END-IF  UPLOAD-IMAGE
+        } else{
+            alert()->error('File is Required', 'Failed!')->autoclose(4500)->persistent('Done');
+            return back();
+        }
     } //end-function
 
 
@@ -1438,9 +1444,9 @@ class SubscriberController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            if ($json['success'] == true) {
+
                 return $json['data'];
-            }
+
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1481,9 +1487,9 @@ class SubscriberController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            if ($json['success'] == true) {
+
                 return $json['data'];
-            }
+
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;

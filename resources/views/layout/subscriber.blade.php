@@ -14,13 +14,13 @@
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/purple/css/style.css">
-    <link rel="stylesheet" href="/css/subscriber.css">
+    <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('purple/vendors/css/vendor.bundle.base.css')}}">
+    <link rel="stylesheet" href="{{asset('purple/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/subscriber.css')}}">
 
     <!-- toastr -->
-    <link rel="stylesheet" href="/css/toastr.min.css">
+    <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
 
     <!-- chart -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
@@ -64,8 +64,10 @@
                             <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en">Privacy Policy</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Documentation &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
+                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Documentation &nbsp;<i
+                                    class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
+                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i
+                                    class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>
                 </footer>
@@ -115,8 +117,8 @@
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                     <center>
                         <img src="/img/logout.png" id="img_signout_subs">
-                        <h3 class="cgrey">Logout Comfirmation</h3>
-                        <small class="clight">Are you sure, you want to exit ?</small>
+                        <h3 class="cgrey" lang="en">Logout Confirmation</h3>
+                        <small class="clight" lang="en">Are you sure, you want to exit ?</small>
                     </center>
                 </div> <!-- end-body -->
 
@@ -124,7 +126,7 @@
                     <center>
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> No, Im Doubt
+                            <i class="mdi mdi-close"></i><span lang="en">No, Im Doubt</span>
                         </button>
                         &nbsp;
                         <button onclick="LogoutSubscriber()" id="btn_logout_all" type="button"
@@ -134,7 +136,7 @@
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span class="sr-only">Loading...</span>
                             </span>
-                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i>Yeah, Im Sure</div>
+                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im Sure</span></div>
                         </button>
 
                     </center>
@@ -154,11 +156,11 @@
                     {{ csrf_field() }}
 
                     <div class="modal-header" style="padding-bottom: 0em !important;">
-                        <h4 class="modal-title cgrey">Edit Profile</h4>
+                        <h4 class="modal-title cgrey" lang="en">Edit Profile</h4>
 
                         <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
                             style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_subs"
-                            data-dismiss="modal">Change Password</button>
+                            data-dismiss="modal" lang="en">Change Password</button>
                     </div> <!-- end-header -->
 
                     <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
@@ -182,29 +184,29 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <small class="clight">Fullname</small>
+                                    <small class="clight" lang="en">Fullname</small>
                                     <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
                                 </div>
                                 <div class="form-group">
-                                    <small class="clight">Username</small>
+                                    <small class="clight" lang="en">Username</small>
                                     <input type="text" id="username_subs" name="username_subs"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-group">
-                                    <small class="clight">Phone Number</small>
+                                    <small class="clight" lang="en">Phone Number</small>
                                     <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
                                 </div>
                                 <div class="form-group">
-                                    <small class="clight">Email</small>
+                                    <small class="clight" lang="en">Email</small>
                                     <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <small class="clight">Alamat</small>
+                                <small class="clight" lang="en">Address</small>
                                 <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs"
                                     rows="3"></textarea>
                             </div>
@@ -214,12 +216,12 @@
                     <div class="modal-footer" style="border: none;">
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
+                            <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                         </button>
                         &nbsp;
                         <button type="submit" class="btn btn-tosca btn-sm">
                             <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Edit </button>
+                            </i><span lang="en">Edit</span> </button>
                     </div> <!-- end-footer     -->
                 </form>
             </div> <!-- END-MDL CONTENT -->
@@ -243,13 +245,13 @@
                             <img src="/img/key.png" id="img_changepass">
                         </center>
                         <div class="form-group">
-                            <small class="clight">Old Password</small>
+                            <small class="clight" lang="en">Old Password</small>
                             <input type="password" id="old_pass_subs" name="old_pass_subs"
                                 class="form-control input-abu">
                         </div>
 
                         <div class="form-group">
-                            <small class="clight">New Password</small>
+                            <small class="clight" lang="en">New Password</small>
                             <div class="input-group">
                                 <input class="form-control input-abu" id="new_pass_subs" type="password"
                                     name="new_pass_subs" required="" autocomplete="passadmin"
@@ -265,17 +267,14 @@
                         </div>
                     </div> <!-- end-body -->
 
-                    <div class="modal-footer changepass" style="border: none;">
-                        <center>
+                    <div class="modal-footer changepass pas_tengah" style="border: none;">
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 style="border-radius: 10px;">
-                                <i class="mdi mdi-close"></i>No, Im Doubt
-                            </button>
+                                <i class="mdi mdi-close"></i><span lang="en">No, Im Doubt</button>
                             &nbsp;
                             <button type="submit" class="btn btn-tosca btn-sm btn-center">
                                 <i class="mdi mdi-check btn-icon-prepend">
-                                </i> Yeah, Im Sure </button>
-                        </center>
+                                </i> <span lang="en">Yeah, Im Sure</span></button>
                     </div> <!-- end-footer     -->
                 </form>
             </div> <!-- END-MDL CONTENT -->
@@ -302,33 +301,25 @@
     @endif
 
     <!-- plugins:js -->
-    <script src="/js/jquery.3.2.1.min.js"></script>
-    <script src="/purple/vendors/js/vendor.bundle.base.js"></script>
-    <script src="/purple/vendors/chart.js/Chart.min.js"></script>
-    <script src="/purple/js/off-canvas.js"></script>
-    <script src="/purple/js/hoverable-collapse.js"></script>
-    <script src="/purple/js/misc.js"></script>
-    <script src="/purple/js/dashboard.js"></script>
-    <script src="/purple/js/todolist.js"></script>
-    <script src="/purple/js/file-upload.js"></script>
+    <script src="{{asset('js/jquery.3.2.1.min.js')}}"></script>
+    <script src="{{asset('purple/vendors/js/vendor.bundle.base.js')}}"></script>
+    <script src="{{asset('purple/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('purple/js/off-canvas.js')}}"></script>
+    <script src="{{asset('purple/js/hoverable-collapse.js')}}"></script>
+    <script src="{{asset('purple/js/misc.js')}}"></script>
+    <script src="{{asset('purple/js/dashboard.js')}}"></script>
+    <script src="{{asset('purple/js/todolist.js')}}"></script>
+    <script src="{{asset('purple/js/file-upload.js')}}"></script>
 
-        <!-- afwika custom translate page  -->
-    <script src="/js/js.cookie.js" charset="utf-8" type="text/javascript"></script>
-    <script src="{{url('/js/jquery-lang.js')}}" charset="utf-8" type="text/javascript"></script>
+    <!-- afwika custom translate page  -->
+    <script src="{{asset('js/js.cookie.js')}}" charset="utf-8" type="text/javascript"></script>
+    <script src="{{asset('js/jquery-lang.js')}}" charset="utf-8" type="text/javascript"></script>
 
-
-    <!-- dataTables -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
     <!-- js custum superadmin -->
-    <script src="/js/subscriber.js"></script>
+    <script src="{{asset('js/subscriber.js')}}"></script>
 
-    <script src="/js/toastr.min.js"></script>
+    <script src="{{asset('js/toastr.min.js')}}"></script>
 
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -351,8 +342,22 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
     <!-- Sweetalert -->
-    <script src="/js/sweetalert.min.js"></script>
+    <!-- <script src="/js/sweetalert.min.js"></script> -->
+
+
+
+    <!-- Sweetalert -->
+    <script src="{{asset('js/sweetalert.min.js')}}"></script>
+
+
+    <!-- <script src="{{asset('')}}"></script> -->
+
+
+
+
+
     @include('sweet::alert')
+
 
     @yield('script')
 </body>

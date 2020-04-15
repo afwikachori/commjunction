@@ -90,16 +90,16 @@
              <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
-                <span class="count-symbol bg-danger"></span>
+                <span class="count-symbol bg-danger" id="ada_notif" style="display: none;"></span>
               </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown" style="min-width: 250px;">
                 <h6 class="p-3 mb-0" lang="en">Notifications</h6>
                 <div class="dropdown-divider"></div>
                 <div id="isi_notif_navbar">
 
                 </div>
                 <div class="dropdown-divider"></div>
-                <a href="/subscriber/notification_management"><h6 class="p-3 mb-0 text-center" lang="en">See all notifications</h6></a>
+                <a href="/subscriber/notification_management"><h6 class="p-3 mb-0 text-center" lang="en" data-lang-token="See all notifications">See all notifications</h6></a>
               </div>
             </li>
 
@@ -111,12 +111,12 @@
             </a>
 
             <div class="dropdown-menu navbar-dropdown dropdown-menu-right">
-                <a class="dropdown-item" href="" lang="en">
+                <a class="dropdown-item" href="" lang="en" data-lang-token="Settings">
                     Settings
                 </a>
-                    <a class="dropdown-toggle dropdown-item" href="#" id="subnav_bahasa" role="button" data-toggle="dropdown"
+                    <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" >
-                    <span class="menu-title" lang="en">Languages</span>
+                    <span class="menu-title" lang="en" data-lang-token="Languages">Languages</span>
                     <i class="menu-arrow"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-left dropleft" aria-labelledby="subnav_bahasa">

@@ -304,7 +304,7 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -357,8 +357,10 @@ function get_list_notif_navbar(idkom) {
         }
         },
         error: function (result) {
-            console.log(result);
-            console.log("Cant Show");
+            var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+            $("#isi_notif_navbar").html(nonotif);
+            $("#ada_notif").hide();
+            console.log("Cant Show Navbar Notif");
         }
     });
 }

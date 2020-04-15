@@ -1164,8 +1164,10 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode(['invoice_number' => $input['invoice_number']]);
-// return $bodyku;
+        $bodyku = json_encode([
+            'user_id' => $input['user_id']
+        ]);
+
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,

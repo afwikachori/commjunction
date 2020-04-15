@@ -46,10 +46,16 @@ var ui = {
     }
 };
 
-$(document).ready(function () {
-    // session_subscriber_logged();
-    console.log(lang);
 
+// (function () {
+//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+// })();
+
+$(document).ready(function () {
+    session_subscriber_logged();
 });
 
 // SESSION LOGIN SUBSVRIBER
@@ -351,7 +357,8 @@ function get_pricing_membership() {
                         '<small class="clight" lang="en">/Once</small>' +
                         '</div>' +
                         '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">Get Now</button>' +
+                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">'+
+                        'Get Now</button>' +
                         '</center>' +
                         '</div></div></div>';
                 });
@@ -495,7 +502,18 @@ function get_list_notif_navbar(idkom) {
         timeout: 30000,
         success: function (result) {
             // console.log(result);
-
+        if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+            } else {
             var isiku = '';
             $.each(result, function (i, item) {
 
@@ -531,10 +549,14 @@ function get_list_notif_navbar(idkom) {
                     '<div class="dropdown-divider"></div>';
             });
             $("#isi_notif_navbar").html(isiku);
+            $("#ada_notif").show();
+        }
         },
         error: function (result) {
-            console.log(result);
-            console.log("Cant Show");
+            var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+            $("#isi_notif_navbar").html(nonotif);
+            $("#ada_notif").hide();
+            console.log("Cant Show Navbar Notif");
         }
     });
 }

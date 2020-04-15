@@ -11,9 +11,10 @@
 @foreach($subs_data as $dt)
 <div class="row">
     <div class="col-sm biruq">
-      <img src="{{ env('CDN') }}{{ $dt['logo'] }}"
+      <img src="{{ env('CDN') }}/{{ $dt['logo'] }}"
       id="login-left-commjuctioncdn" class="rounded-circle img-fluid"
-      onerror = "this.onerror=null;this.src='/visual/logo2.png';">
+      onerror = "this.onerror=null;this.src='/visual/logo2.png';"
+      >
 
     <div class="container subs_judul">
       <h2 class="cgrey">{{ $dt['name'] }}</h2>

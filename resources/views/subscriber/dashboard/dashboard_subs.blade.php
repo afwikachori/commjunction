@@ -36,7 +36,7 @@
                     this feature,
                     smart application with low cost .</p>
                 <a href="/subscriber/dashboard_setting" type="button" id="btn_getnow" class="btn btn-white btn-sm"
-                    style="position: relative;" lang="en">Get Now</a>
+                    style="position: relative;" lang="en" data-lang-token="get_now">Get Now</a>
             </div>
         </div>
     </div>
@@ -75,17 +75,17 @@
         </div>
     </div>
     <div class="col-md-8">
-        <div class="card pas_tengah" id="nodata_dash_artikel" style="height:473px; display: none;">
+        <div class="card pas_tengah" id="nodata_dash_artikel" style="height:473px;">
             <h2 class="clight pas_tengah" data-lang-token="nodata_dash_artikel" lang="en">No Data Articles Available</h2>
         </div>
-        <div class="row" id="idashbord_news">
+        <div class="row" id="idashbord_news" style="display: none;">
 
         </div>
     </div>
 </div>
 
 
-<div class="divkonco">
+<div class="divkonco" style="display: none;">
     <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Friend Sugestion</h4>
     <div id="div_friendsugest">
         <!-- <div class="card konco">
@@ -125,7 +125,10 @@
             </div>
 
             <div class="card-body sumari">
-                <ul class="list-arrow" id="isi_last_news" style="padding-left: 5px;">
+                <div class="card pas_tengah" id="nodata_last_news">
+                    <h4 class="clight pas_tengah" lang="en">No Data Available</h4>
+                </div>
+                <ul class="list-arrow" id="isi_last_news" style="padding-left: 5px; display: none;">
 
                 </ul>
             </div>
@@ -144,7 +147,10 @@
             </div>
 
             <div class="card-body sumari">
-                <div id="isi_love_news" style="padding-left: 10px;">
+                <div class="card pas_tengah" id="nodata_love_news">
+                    <h4 class="clight pas_tengah"  lang="en">No Data Available</h3>
+                </div>
+                <div id="isi_love_news" style="padding-left: 10px; display: none;">
 
                 </div>
             </div>
@@ -163,7 +169,10 @@
             </div>
 
             <div class="card-body sumari">
-                <ul class="list-star" id="isi_topvisit_news" style="padding-left: 5px;">
+                <div class="card pas_tengah" id="nodata_topvisit_news">
+                    <h4 class="clight pas_tengah" lang="en">No Data Available</h4>
+                </div>
+                <ul class="list-star" id="isi_topvisit_news" style="padding-left: 5px; display: none;">
 
                 </ul>
             </div>
@@ -185,12 +194,12 @@
                 <div class="col-10">
                     <div class="pad-1em">
                         <h4 class="cteal" lang="en">Top Visit Club</h4>
-                        <div id="topclubvisit_nodata" style="display: none;">
+                        <div id="topclubvisit_nodata">
                             <center>
-                                <h3 class="clight mgt-1half" lang="">No Available Data</h3>
+                                <h3 class="clight mgt-1half" lang="en">No Available Data</h3>
                             </center>
                         </div>
-                        <div id="isi_top_visit_club" class="row">
+                        <div id="isi_top_visit_club" class="row" style="display: none;">
 
                         </div>
                     </div>
@@ -210,12 +219,12 @@
                 <div class="col-10">
                     <div class="pad-1em">
                         <h4 class="cteal" style="margin-bottom: 1em;" lang="en">Top Visit Player</h4>
-                        <div id="topplayer_nodata" style="display: none;">
+                        <div id="topplayer_nodata">
                             <center>
                                 <h3 class="clight mgt-1half" lang="en">No Available Data</h3>
                             </center>
                         </div>
-                        <div id="isi_top_player" class="row">
+                        <div id="isi_top_player" class="row" style="display: none;">
 
                         </div>
                     </div>
@@ -224,11 +233,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 
 
 
@@ -299,17 +303,15 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/hore.png" id="img-initial1">
-                    <h3 class="cgrey" style="margin-bottom: 0.5em;">Congratulations !!!</h3>
-                    <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already
-                        member
-                        of community . Let’s look what do you can explore !</p>
+                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations !!!</h3>
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already
+                        member of community . Let’s look what do you can explore !</p>
                     <br>
                     <div>
-                        <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;">Take a
-                            Tour</button>
+                        <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;" lang="en">Take a Tour</button>
                         &nbsp;
                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm"
-                            style="width:100px; margin-top: 1em;">Skip</button>
+                            style="width:100px; margin-top: 1em;" lang="en">Skip</button>
                         <br>
                     </div>
                     <br>
@@ -330,7 +332,7 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/init-fitur.png" id="img-initial2">
-                    <h4 class="cgrey" style="margin-bottom: 1em;">Features Overiew</h4>
+                    <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Features Overview</h4>
                 </center>
 
                 <div class="row" style="padding-left: 7%; padding-right:6.6%; margin-bottom:1.5em;">
@@ -339,8 +341,7 @@
                     </div>
                 </div>
                 <center>
-                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;">Got
-                        it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;" lang="en">Got it</button>
                     <br>
                 </center>
             </div> <!-- end-modal body -->
@@ -358,13 +359,12 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/init3.png" id="img-initial3">
-                    <h3 class="cgrey" style="margin-bottom: 0.5em;">Ready For Action ?</h3>
-                    <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already
-                        member
-                        of community . Let’s look what do you can explore !</p>
+                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Ready For Action ?</h3>
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already
+                        member of community . Let’s look what do you can explore !</p>
                     <br>
                     <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm"
-                        style="width:100px;">Finish</button>
+                        style="width:100px;" lang="en">Finish</button>
                     <br><br>
                 </center>
             </div> <!-- end-modal body -->
@@ -398,10 +398,10 @@
                 {{ csrf_field() }}
 
                 <div class="modal-body" style="min-height: 355px; height: auto; padding-left: 5%; padding-right: 5%;">
-                    <h3 class="cgrey" style="margin-bottom: 1.5em; margin-top:1em;">Choose Payment Method</h3>
+                    <h3 class="cgrey" style="margin-bottom: 1.5em; margin-top:1em;" lang="en">Choose Payment Method</h3>
                     <div class="row" style="margin-bottom: 0.5em;">
                         <div class="col-md-12">
-                            <h5 class="h5 clight">Membership Price</h5>
+                            <h5 class="h5 clight" lang="en">Membership Price</h5>
                             <small class="cgrey2">Rp &nbsp;</small>
                             <span class="h6 cblue" id="harga_member"></span>&nbsp;
                             <small class="cgrey2"> ,-</small>
@@ -410,7 +410,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-7">
-                            <h6 class="h6 clight">Choose Payment Method</h6>
+                            <h6 class="h6 clight" lang="en">Choose Payment Method</h6>
                             <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
                                 <div class="isi_method_pay">
 
@@ -430,8 +430,8 @@
                 <input type="hidden" name="id_pay_initial" id="id_pay_initial">
                 <input type="hidden" name="id_membertype" id="id_membertype">
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm">Submit</button>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" lang="en">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" lang="en">Submit</button>
                 </div>
             </form>
         </div>
@@ -445,17 +445,18 @@
     var no_data = '';
 
     $(document).ready(function () {
-        // get_pricing_membership();
-        // get_payment_initial();
+        get_pricing_membership();
+        get_payment_initial();
 
         get_dashboard_news();
-        // get_friends_total();
-        // get_last_news();
-        // get_love_news();
-        // get_topvisit_news();
-        // get_friends_sugestion();
-        // get_top_player();
-        // get_top_visit_club(); //no data - ui wait data
+        get_friends_total();
+        get_friends_sugestion();
+        get_last_news();
+        get_love_news();
+        get_topvisit_news();
+
+        get_top_player();
+        get_top_visit_club(); //no data - ui wait data
     });
 
     function tabel_tes() {
@@ -503,10 +504,11 @@
                 "limit": 4,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
                     $("#nodata_dash_artikel").show();
                     $("#idashbord_news").hide();
+                    console.log(result.message);
                 } else {
                     var berita = '';
                     $.each(result, function (i, item) {
@@ -541,7 +543,6 @@
 
             },
             error: function (result) {
-                console.log(result);
                 $("#nodata_dash_artikel").show();
                 $("#idashbord_news").hide();
                 console.log("Cant Get Articles News");
@@ -564,15 +565,16 @@
                 "limit": 4,
             },
             success: function (result) {
-                // console.log(result);
                 if (result.success == false) {
                     $(".total_friend").html("0");
+                      console.log(result);
                 } else {
                     $(".total_friend").html(result.total_friend);
                 }
             },
             error: function (result) {
-                console.log(result);
+                 $(".total_friend").html("0");
+                // console.log(result);
                 console.log("Cant Show");
             }
         });
@@ -595,9 +597,9 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
-                }
-
+                console.log(result);
+                $(".divkonco").hide();
+                }else{
                 var nofoto = '/img/kosong.png';
                 var isiui = '';
                 var jumlah = 0;
@@ -615,7 +617,7 @@
                         '<center>' +
                         '<img src="' + server_cdn + item.picture + '" class="rounded-circle img-fluid mb-2 konco"' +
                         'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                        '<h6 class="cgrey2">' + item.full_name + '</h6>' +
+                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
                         '<input type="hidden" value="" name="frend_suges">' +
                         '<button type="button" class="btn btn-tosca btn-sm konco">' +
                         '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
@@ -626,12 +628,14 @@
                         '</div>' +
                         '</div>';
                 });
+                $(".divkonco").show();
                 $("#div_friendsugest").html(isiui);
-
+            }
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                // console.log(result);
+                console.log("Cant Show Friend Suggest");
+                   $(".divkonco").hide();
             }
         });
     }
@@ -661,7 +665,9 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    $("#nodata_last_news").show();
+                     $("#isi_last_news").hide();
+                     console.log(result);
                 }
                 var newsui = '';
                 $.each(result, function (i, item) {
@@ -671,11 +677,15 @@
                         '</li>';
                 });
                 $("#isi_last_news").html(newsui);
+                 $("#nodata_last_news").hide();
+                $("#isi_last_news").show();
 
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                $("#nodata_last_news").show();
+                $("#isi_last_news").hide();
+                // console.log(result);
+                console.log("Cant Show Last News");
             }
         });
     }
@@ -698,7 +708,9 @@
                 // console.log(result);
                 var noimg = '/img/fitur.png';
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    $("#nodata_love_news").show();
+                     $("#isi_love_news").hide();
+                     console.log(result);
                 }
                 var loveui = '';
                 $.each(result, function (i, item) {
@@ -712,11 +724,15 @@
                         '</div></div>';
                 });
                 $("#isi_love_news").html(loveui);
+                $("#nodata_love_news").hide();
+                $("#isi_love_news").show();
 
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                   $("#nodata_love_news").show();
+                $("#isi_love_news").hide();
+                // console.log(result);
+                console.log("Cant Show love news");
             }
         });
     }
@@ -738,7 +754,8 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    $("#nodata_topvisit_news").show();
+                      $("#isi_topvisit_news").hide();
                 }
                 var newsui = '';
                 $.each(result, function (i, item) {
@@ -748,11 +765,13 @@
                         '</li>';
                 });
                 $("#isi_topvisit_news").html(newsui);
-
+                $("#nodata_topvisit_news").hide();
+                $("#isi_topvisit_news").show();
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                console.log("Cant Show top visit news");
+                $("#nodata_topvisit_news").show();
+                $("#isi_topvisit_news").hide();
             }
         });
     }
@@ -774,11 +793,14 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                     $("#topplayer_nodata").show();
+                    $("#isi_top_player").hide();
+                    console.log(result);
                 }
 
                 if (result.length == 0) {
                     $("#topplayer_nodata").show();
+                    $("#isi_top_player").hide();
                 } else {
                     var iuplyr = '';
                     var nopic = '';
@@ -806,11 +828,15 @@
                             '</div>';
                     });
                     $("#isi_top_player").html(iuplyr);
+                    $("#topplayer_nodata").hide();
+                    $("#isi_top_player").show();
+
                 }
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                  $("#topplayer_nodata").show();
+                $("#isi_top_player").hide();
+                console.log("Cant Show top Player");
             }
         });
     }
@@ -830,13 +856,16 @@
                 "limit": 4,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
+                    console.log(result);
+                      $("#topclubvisit_nodata").show();
+                    $("#isi_top_visit_club").hide();
                 }
 
                 if (result.length == 0) {
                     $("#topclubvisit_nodata").show();
+                    $("#isi_top_visit_club").hide();
                 }
                 // $.each(result, function (i, item) {
 
@@ -844,8 +873,9 @@
 
             },
             error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
+                  $("#topclubvisit_nodata").show();
+                $("#isi_top_visit_club").hide();
+                console.log("Cant Show Top Club Visit");
             }
         });
     }
