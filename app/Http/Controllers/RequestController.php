@@ -570,8 +570,8 @@ class RequestController extends Controller
                     'contents' =>  $requestImage["membership_title"]
                 ],
                 [
-                    'name'     => 'feature_id',
-                    'contents' =>  $requestImage["feature_id"]
+                    'name'     => 'subfeature_id',
+                    'contents' =>  $requestImage["subfeature_id"]
                 ],
                 [
                     'name'     => 'pricing',

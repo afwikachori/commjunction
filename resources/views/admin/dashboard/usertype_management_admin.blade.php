@@ -79,7 +79,7 @@
                         <input type="hidden" value="error" id="error_priv">
                         <small class="error_subfitur" style="color: red;">{{ $errors->first('subfitur')}}</small>
                         @endif
-                        <div class="isi_cek_priviledge">
+                        <div class="isi_cek_priviledge" style="margin-top: 1em;">
 
                         </div>
 
@@ -413,16 +413,16 @@
 
 
 
-    $(document).on('click', '.tree label', function (e) {
-        $(this).next('ul').fadeToggle();
-        e.stopPropagation();
-    });
+    // $(document).on('click', '.tree label', function (e) {
+    //     $(this).next('ul').fadeToggle();
+    //     e.stopPropagation();
+    // });
 
-    $(document).on('change', '.tree input[type=checkbox]', function (e) {
-        $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
-        $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
-        e.stopPropagation();
-    });
+    // $(document).on('change', '.tree input[type=checkbox]', function (e) {
+    //     $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
+    //     $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
+    //     e.stopPropagation();
+    // });
 
     $(document).on('click', 'button', function (e) {
         switch ($(this).text()) {

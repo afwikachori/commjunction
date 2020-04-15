@@ -637,7 +637,7 @@ position: relative;
 
 .p-image.editprofil {
     margin-top: -2em;
-    left: 80%;
+    left: 70%;
     color: #666666;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
     position: relative;
@@ -1600,14 +1600,14 @@ input[type="checkbox"] {
 
 .tree {
     margin: auto;
-    margin-top: 3%;
+    /* margin-top: 3%; */
     /* width: 80%; */
     list-style-type: none;
 }
 
 .tree ul {
     display: none;
-    margin: 4px auto;
+    margin: 2px auto;
     margin-left: 6px;
     border-left: 1px dashed #dfdfdf;
     list-style-type: none;
@@ -1635,10 +1635,14 @@ input[type="checkbox"] {
 
 .tree label {
     cursor: pointer;
+    margin-bottom: 0em !important;
 }
 
 .tree input[type="checkbox"] {
     margin: -10px 6px 0 0px;
+}
+.tree.member input[type="checkbox"] {
+    margin: 0px 6px 0 0px;
 }
 
 .has > label {

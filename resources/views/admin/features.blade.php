@@ -32,7 +32,7 @@
                                     <center>
                                         <img class="rounded-circle img-fluid" src="{{ env('CDN').$newdata['logo'] }}"
                                             style="width: 45px; margin-bottom: 0.5em;"
-                                            onerror="this.onerror=null;this.src='/img/fitur.png';">
+                                            onerror="this.onerror=null;this.src='/img/fiturs.png';">
                                         <h6 class="cgrey">{{ $newdata['title'] }}</h6>
                                         <small class="clight">{{ $newdata['description'] }}</small>
                                     </center>

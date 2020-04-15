@@ -15,27 +15,22 @@ use Alert;
 class RegisterController extends Controller
 {
 
-    public function test()
-    {
-        return view('admin/testing');
-    }
 
     public function ReviewAdminView()
     {
         return view('admin/final_review_admin');
     }
 
-    public function cobaView()
+
+    public function FeatureListRegisterView()
     {
-        return view('admin/coba');
+        return view('admin/featurelist');
     }
 
     public function logoutssoView()
     {
         return view('admin/logoutsso');
     }
-
-
 
     public function features_detail()
     {
@@ -369,33 +364,40 @@ class RegisterController extends Controller
         }
     }
 
+    public function get_list_feature_regis()
+    {
+        $dt_pricing = session()->get('data_pricing');
+        // return $dt_pricing;
 
+        $url = env('SERVICE') . 'registration/feature';
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'pricing_id' => $dt_pricing['pricing_id']
+                ]
+            ]);
 
-    // public function pricingkefitur(Request $request){
-    // $idfitur = $request['feature_type_id'];
-    // $paytime = $request['payment_time'];
-    // $idprice = $request['idprice'];
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-    // $data = ['pricing_id'   => $idprice,
-    //          'payment_time' => $paytime];
-
-    // $arr = json_encode($data);
-    //  session()->put('data_pricing', $data);
-    //  session()->put('fiturpilih', $idfitur);
-
-    // //get data pricing untuk fitur
-    // $url = env('SERVICE').'registration/feature';
-
-    // $client = new \GuzzleHttp\Client();
-    // $response = $client->request('POST',$url, [
-    //     'form_params' => [
-    //         'feature_type_id' => $idfitur
-    //     ]
-    // ]);
-    // $response = $response->getBody()->getContents();
-    // $json = json_decode($response, true);
-    //  return view('admin/features', ['data' => $json['data']]);
-    // }
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        } catch (BadResponseException  $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        }
+    }
 
 
     public function getSelectedFitur(Request $request)
@@ -845,13 +847,6 @@ class RegisterController extends Controller
     public function confirmView()
     {
         return view('admin/confirmpay_invoice');
-    }
-
-
-    /// ######CONFIRM PAYMENT ADMIN
-    public function confirmpayView()
-    {
-        return view('admin/confirmpay');
     }
 
 

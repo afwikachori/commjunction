@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
+                            <div class="form-group input_pricemember">
                                 <small class="clight">Pricing</small>
                                 <input type="text" id="harga_member" name="harga_member" class="form-control input-abu">
                             </div>
@@ -171,7 +171,7 @@
                     <div class="col-6" style="text-align: right;">
                         <div class="bunder-ring2">
                             <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs"
-                                onerror="this.onerror=null;this.src='/img/default.png';">
+                                onerror="this.onerror=null;this.src='/img/focus.png';">
                         </div>
                     </div>
                     <div class="col-6">
@@ -456,7 +456,8 @@
                         <small class="clight">Features : </small> &nbsp;
                         <small class="ctosca s15" id="total_fitur_member"> 0</small>
                     </div>
-                    <div class="card-deck" id="show_feature_member" style="margin-top: 0.5em; width: 100%;">
+                    <div class="card-deck" id="show_feature_member"
+                    style="margin-top: 0.5em; width: 100%; overflow-y: auto; height:170px;">
 
                     </div>
                 </div>
@@ -481,7 +482,7 @@
         get_membership_admin();
         tabel_req_membership();
         get_list_fitur_membership_admin();
-        tabel_tes();
+        // tabel_tes();
     });
 
 
@@ -499,12 +500,7 @@
             timeout: 30000,
             success: function (result) {
                 console.log(result);
-                if (result.success == false) {
-                    ui.popup.show('warning', result.message, 'Warning');
-                }
-                // $.each(result, function (i, item) {
 
-                // });
             },
             error: function (result) {
                 console.log(result);
@@ -540,19 +536,47 @@
                         ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
-                    var fitur = '';
-
+                     var parent_ui = '';
                     $.each(result, function (i, item) {
-                        // console.log(item);
-                        fitur += '<div class="custom-control custom-checkbox lismember">' +
-                            '<input type = "checkbox" class="custom-control-input" id="fitur' + item.feature_id + '"' +
-                            'name = "fitur_member[]" value = "' + item.feature_id + '">' +
-                            '<label class="custom-control-label" for="fitur' + item.feature_id + '">' + item.title + '</label><br>' +
-                            '<small class="clight s13 deskripsifitur">' + item.description + '</small>' +
-                            '</div>';
+                        var child_ui = '';
+                        var parent = item.title;
+                        var jum = 0;
+                        var idfitur = '';
+                        idfitur = item.id;
+                        $.each(item.sub_features, function (i, subitem) {
+
+                            child_ui += '<li class="">' +
+                                '<input type="checkbox" name="fitur_member[]"' +
+                                'id="subfitur_' + subitem.id + '"' +
+                                'value="' + subitem.id + '">' +
+                                '<label>' + subitem.title + '</label>' +
+                                '</li>';
+                            jum++;
+                        });
+
+                        if (jum == 0) {
+                            parent_ui += '<ul class="tree member">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="fitur_id[]" value="0" id="id_' + item.id + '">' +
+                                '<label>' + parent + ' &nbsp;' +
+                                '</label>' +
+                                '</li>' +
+                                '</ul>';
+                        } else {
+                            parent_ui += '<ul class="tree member">' +
+                                '<li class="has">' +
+                                '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
+                                '<label>' + parent + ' &nbsp;' +
+                                '<small class="total"> &nbsp; (' + jum + ') </small>' +
+                                '<i class="mdi mdi-chevron-down clight"></i>' +
+                                '</label>' +
+                                '<ul>' + child_ui + '</ul>' +
+                                '</li>' +
+                                '</ul>';
+                        }
                     });
 
-                    $("#isi_membership_admin").html(fitur);
+                    $("#isi_membership_admin").html(parent_ui);
                 }
             },
             error: function (error) {
@@ -635,7 +659,8 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result[dtnya]);
+                console.log(result);
+                alert(dtnya);
                 var result = result[dtnya];
                 $("#detail_judul_member").html(result.membership);
                 $("#detail_harga_member").html(rupiah(result.pricing));
@@ -749,13 +774,17 @@
                 $("#id_subs_acc").val(dt.user_id);
                 $("#isi_username").html(dt.full_name);
                 $("#isi_paytipe").html(dt.payment_method);
-                $("#isi_totalpay").html(rupiah(dt.grand_total));
+                $("#isi_totalpay").html("Rp "+rupiah(dt.grand_total));
                 $("#isi_paystatus").html(dt.payment_status_title);
                 $("#judul_member").html(dt.membership);
 
-                if (dt.picture != "0") {
-                    $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(dt.picture));
+                if(dt.picture != undefined || dt.picture != null || dt.picture != "" || dt.picture != "0"){
+                    $("#foto_subs").attr("src", server_cdn + cekimage_cdn(dt.picture));
                 }
+
+                // if (dt.picture != "0") {
+                //     $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(dt.picture));
+                // }
 
                 if (dt.file_subscriber == null) {
                     $(".img_file_bayar_subs").attr("src", "/img/noimg.jpg");

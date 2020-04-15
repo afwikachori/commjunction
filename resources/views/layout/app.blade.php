@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- @yield('head') -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
 
-     <meta name="google-signin-client_id" content="889108417330-5undo76r5eqfl1fuf3e93eusu2kbaei8.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+        content="889108417330-5undo76r5eqfl1fuf3e93eusu2kbaei8.apps.googleusercontent.com">
 
 
     <!-- CSRF Token -->
@@ -16,7 +18,7 @@
     <title>@yield('title')</title>
 
     <!-- ICON WEB -->
-    <link rel="icon" href="/img/commjuction_icoweb.ico"/>
+    <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -33,28 +35,32 @@
     @yield('css')
 
 </head>
+
 <body>
 
 
-            @yield('content')
-            <div id="fb-root"></div>
+    @yield('content')
+    <div id="fb-root"></div>
+
+    <input type="hidden" id="server_cdn" value="{{ env('CDN') }}">
 
 
     <!-- MOdal Image Viewer-->
-<div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" style="font-size: 50px;">&times;</span>
-        </button>
-      </div>
-      <center>
-      <img id="mdl-img-view">
-    </center>
+    <div class="modal fade bd-example-modal-xl" id="mdl-img-click" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 50px;">&times;</span>
+                    </button>
+                </div>
+                <center>
+                    <img id="mdl-img-view">
+                </center>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <!--   Core JS Files   -->
     <script src="/js/jquery.3.2.1.min.js"></script>
@@ -80,4 +86,5 @@
 
     @yield('script')
 </body>
+
 </html>

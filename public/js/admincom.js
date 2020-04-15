@@ -158,6 +158,17 @@ function session_admin_logged() {
                     window.location.href = "/admin";
                 }
 
+                //cek membership pricing free or not
+                if (user.community_membership_type == 1){
+                    // alert('free');
+                    $(".input_pricemember").hide();
+                    $("#harga_member").val(0);
+                }else{
+                    // alert('paid');
+                    $(".input_pricemember").show();
+                }
+
+
 
             }
         },
@@ -558,6 +569,8 @@ function showPassText(ini) {
         a.type = "password";
     }
 }
+
+
 function cekimage_cdn(img) {
     if (img != undefined && img != null) {
         var cekone = img.slice(0, 1);
@@ -585,3 +598,16 @@ function dateTime(tgl) {
 
     return dformat;
 }
+
+
+//tree list
+$(document).on('click', '.tree label', function (e) {
+    $(this).next('ul').fadeToggle();
+    e.stopPropagation();
+});
+
+$(document).on('change', '.tree input[type=checkbox]', function (e) {
+    $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
+    $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
+    e.stopPropagation();
+});

@@ -1,3 +1,4 @@
+// onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 
 // LANG -EN-ID
   var lang = new Lang();
@@ -481,4 +482,21 @@ $.ajax({
         console.log("Cant Reach Session Logged User Dashboard");
     }
 });
+}
+
+
+function cekimage_cdn(img) {
+    if (img != undefined && img != null) {
+        var cekone = img.slice(0, 1);
+        var foto = '';
+        if (cekone != "/") {
+            foto = "/" + img;
+        } else {
+            foto = img;
+        }
+    } else {
+        foto = '/img/fiturs.png';
+    }
+
+    return foto;
 }

@@ -5,9 +5,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('admin/coba','RegisterController@cobaView')->name('admin/coba');
-
-Route::get('admin/testing','RegisterController@test')->name('admin/testing');
 
 Route::get('admin/finalreview','RegisterController@ReviewAdminView')->name('admin/finalreview');
 
@@ -15,15 +12,18 @@ Route::get('admin/logoutsso','RegisterController@logoutssoView');
 
 Route::get('logout','RegisterController@logout');
 
+//404
 Route::get('404','RequestController@NotFoundView')->name('404');
-
-
 
 // ADMIN COMMUNITY
 Route::prefix('admin')->group(function(){
+
+//REGISTER
+Route::get('/featurelist', 'RegisterController@FeatureListRegisterView')->name('/featurelist');
+
+
 // GET
 Route::get('/','AdminCommController@login')->name('/');
-// Route::get('/logout', 'AdminCommController@LogoutAdmin')->name('/logout');
 Route::get('/dashboard','AdminCommController@adminDashboardView')->name('/dashboard');
 Route::get('/publish','AdminCommController@publishAdminView')->name('/publish');
 Route::get('/editprofil','AdminCommController@editProfilAdminView')->name('/editprofil');
@@ -57,7 +57,6 @@ Route::get('/payment','AdminCommController@SetpaymentAdminView')->name('/payment
 //POST
 
 Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');
-
 Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
 Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
 Route::post('detail_tabel_subpayment', 'AdminCommController@detail_tabel_subpayment')->name('detail_tabel_subpayment');
@@ -180,6 +179,7 @@ Route::get('admin/pricing','RegisterController@pricingView')->name('pricingView'
 Route::post('get_pricing_com', 'RegisterController@get_pricing_com');
 Route::post('pricingkefitur', 'RegisterController@pricingkefitur')->name('pricingkefitur');
 // register - feature
+Route::post('get_list_feature_regis', 'RegisterController@get_list_feature_regis')->name('get_list_feature_regis');
 Route::get('admin/features','RegisterController@featuresView')->name('admin/features');
 Route::post('sendfeature', 'RegisterController@sendfeature')->name('sendfeature');
 Route::get('session_backfitur', 'RegisterController@session_backfitur')->name('session_backfitur');

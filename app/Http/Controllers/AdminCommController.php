@@ -16,15 +16,6 @@ use Helper;
 class AdminCommController extends Controller
 {
 
-    // METHOD GET
-
-    // @if (session()->has('session_admin_logged'))
-    // @else
-    //   <script>window.location = "/admin";</script>
-    //   @endif
-
-
-
     public function adminDashboardView()
     {
         return view('admin/dashboard/dashboard_admin');
@@ -2970,6 +2961,7 @@ class AdminCommController extends Controller
         $token = $ses_login['access_token'];
         $input = $request->all();
         // return $input;
+
         $url = env('SERVICE') . 'membershipmanagement/createmembership';
         $fitur = $input['fitur_member'];
         $hasilfitur = implode(",", $fitur);
@@ -2982,71 +2974,45 @@ class AdminCommController extends Controller
             $filnam = $request->file('fileup')->getClientOriginalName();
             $imageRequest = [
                 "membership_title"  => $input['judul_member'],
-                "feature_id"        => $hasilfitur,
+                "subfeature_id"        => $hasilfitur,
                 "pricing"           => $input['harga_member'],
                 "description"       => $input['deskripsi_member'],
                 "filename"          => $filnam,
                 "file"              => $imgku
             ];
+        } else {
+            $imageRequest = [
+                "membership_title"  => $input['judul_member'],
+                "subfeature_id"        => $hasilfitur,
+                "pricing"           => $input['harga_member'],
+                "description"       => $input['deskripsi_member'],
+                "filename"          => "",
+                "file"              => "",
+            ];
+        }
+        // dd($imageRequest);
 
-
-            try {
-                $resImg = $req->create_membership_admin($imageRequest, $url, $token);
-                // return $resImg;
-                if ($resImg['success'] == true) {
-                    alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
-                    return back();
-                }
-            } catch (ClientException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ServerException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ConnectException $errornya) {
-                $error['status'] = 500;
-                $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        try {
+            $resImg = $req->create_membership_admin($imageRequest, $url, $token);
+            if ($resImg['success'] == true) {
+                alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
                 return back();
             }
-        } else { //END-IF  UPLOAD-IMAGE
-            alert()->error('File is Required', 'Failed!')->autoclose(4500);
-            // $imageRequest = [
-            //     "membership_title"  => $input['judul_member'],
-            //     "feature_id"        => $hasilfitur,
-            //     "pricing"           => $input['harga_member'],
-            //     "description"       => $input['deskripsi_member'],
-            //     "filename"    => "",
-            //     "file"        => ""
-            // ];
-
-            // $url = env('SERVICE') . 'commsetting/editcomm';
-            // try {
-            //     $resImg = $req->create_membership_admin($imageRequest, $url, $token);
-
-            //     if ($resImg['success'] == true) {
-            //         alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
-            //         return back();
-            //     }
-            // } catch (ClientException $errornya) {
-            //     $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            //     alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            //     return back();
-            // } catch (ServerException $errornya) {
-            //     $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            //     alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            //     return back();
-            // } catch (ConnectException $errornya) {
-            //     $error['status'] = 500;
-            //     $error['message'] = "Server bermasalah";
-            //     $error['succes'] = false;
-            //     alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            //     return back();
-            // }
-        } // endelse
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     }
 
 
