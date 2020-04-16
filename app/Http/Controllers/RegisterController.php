@@ -27,6 +27,16 @@ class RegisterController extends Controller
         return view('admin/featurelist');
     }
 
+    public function featuresView()
+    {
+        return view('admin/features');
+    }
+
+    public function registerSixView()
+    {
+        return view('admin/register6');
+    }
+
     public function logoutssoView()
     {
         return view('admin/logoutsso');
@@ -36,6 +46,18 @@ class RegisterController extends Controller
     {
         return view('admin/features_detail');
     }
+
+    public function paymentView()
+    {
+        return view('admin/payment');
+    }
+
+    public function paymentMethodRegisView()
+    {
+        return view('admin/payment_method');
+    }
+
+
 
 
     public function detailFiturView($id_fitur)
@@ -318,7 +340,6 @@ class RegisterController extends Controller
         $input = $request->all();
         $paytime = $input['payment_time'];
         $idprice = $input['idprice'];
-        // dd($input);
 
         $data = [
             'pricing_id'   => $idprice,
@@ -327,46 +348,22 @@ class RegisterController extends Controller
 
         $arr = json_encode($data);
         session()->put('data_pricing', $data);
-        session()->put('fiturpilih', $idprice); //wikajumat 13/03
+        session()->put('fiturpilih', $idprice); //for review final
 
-        //get data pricing untuk fitur
-        $url = env('SERVICE') . 'registration/feature';
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('POST', $url, [
-                'form_params' => [
-                    'pricing_id' => $idprice
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            $isidata = $json['data'];
-
-            $isini = [];
-            foreach ($isidata as $i => $dt) {
-                array_push($isini, $dt['feature']);
-            }
-            // return $isini;
-            $count = count($isidata);
-            return redirect('admin/features')->with(['datafitur' => $isini, 'sum' => $count]);
-        } catch (ClientException $exception) {
-            // return $exception;
-            $code = $exception->getMessage();
-            if ($code == 400) {
-                alert()->error('Low Connection try again later ', 'Failed!')->autoclose(4500);
-                return view('admin/pricing');
-            }
-            if ($code == 404) {
-                alert()->error('Data Features Not Found', 'Not Found!')->autoclose(4500);
-                return view('admin/pricing');
-            }
-        }
+        return redirect('/admin/features');
     }
 
     public function get_list_feature_regis()
     {
-        $dt_pricing = session()->get('data_pricing');
+
+        if (session()->has('data_pricing')) {
+            $dt_pricing = session()->get('data_pricing');
+        } else {
+            $error['succes'] = false;
+            $error['message'] = "pricing null";
+            return $error;
+        }
+
         // return $dt_pricing;
 
         $url = env('SERVICE') . 'registration/feature';
@@ -393,8 +390,8 @@ class RegisterController extends Controller
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
             return $error;
+        }
     }
-}
 
 
     public function getSelectedFitur(Request $request)
@@ -486,42 +483,35 @@ class RegisterController extends Controller
             array_push($arry, $data);
         }
 
-        //session ambil data fitur multiple check
         session()->put('data_fitur', $arry);
         session()->put('listfitur', $id);
 
+        return redirect('admin/payment');
+    }
+
+    public function get_payment_method_regis()
+    {
         $url = env('SERVICE') . 'registration/paymenttype';
 
         $client = new \GuzzleHttp\Client();
-        $request = $client->post($url);
-        $response = $request->getBody();
-        $json = json_decode($response, true);
-        // dd($json['data']);
-
-        session()->put('list_payment', $json['data']);
-
-        return redirect('admin/payment')->with('pay_type', $json['data']);
+        try {
+            $request = $client->post($url);
+            $response = $request->getBody();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
-
-    //   public function sendfeature(Request $request){
-    //     $id = $request['feature_id'];
-    //     $arry = [];
-
-    //     foreach ($id as $idk) {
-    //          $ar = array(
-    //                 'feature_id' =>  $idk
-    //             );
-    //          $data =  json_decode(json_encode($ar));
-    //          array_push($arry, $data);
-    //     }
-
-    //     //session ambil data fitur multiple check
-    //      session()->put('data_fitur', $arry);
-    //      session()->put('listfitur', $id);
-
-
-    //     return redirect('admin/payment')->with('fixfitur', $arry);
-    // }
 
     public function getsubfitur(Request $request)
     {
@@ -691,10 +681,6 @@ class RegisterController extends Controller
 
 
     /// PAYMENT - ADMIN COMMUNITY REGISTRATION
-    public function paymentView()
-    {
-        return view('admin/payment');
-    }
 
 
     public function isi_payment()
@@ -978,15 +964,7 @@ class RegisterController extends Controller
 
 
 
-    public function featuresView()
-    {
-        return view('admin/features');
-    }
 
-    public function registerSixView()
-    {
-        return view('admin/register6');
-    }
 
     public function ReviewFinal(Request $request)
     {
@@ -1028,6 +1006,8 @@ class RegisterController extends Controller
         return redirect('admin/finalreview')->with('fadmin', $arr);
         // return view('admin/register6',['fadmin'=> $arr]);
     }
+
+
 
     public function logout()
     {
@@ -1181,8 +1161,7 @@ class RegisterController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
-             return $json;
-
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1214,8 +1193,7 @@ class RegisterController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
-                return $json;
-
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1262,18 +1240,4 @@ class RegisterController extends Controller
             return $error;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } // END-CLASS

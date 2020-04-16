@@ -170,7 +170,7 @@ function get_initial_feature(datafitur) {
             'alt="circle-image" /> ' +
             '<div class="row">' +
             '<div class="col-md-3" style="padding-right:4px;">' +
-            '<img src="' + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
+            '<img src="' + server_cdn +cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
             'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
             '</div>' +
             '<div class="col-md-9" style="padding-left:5px;">' +

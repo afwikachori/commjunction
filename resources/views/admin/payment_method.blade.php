@@ -6,24 +6,26 @@
 
 <a href="/admin/pricing">
     <img border="0" src="/visual/left-arrow.png" id="panah_pay">
-</a><a href="/admin/pricing" class="clight backarrow-pay" lang="en">Back to Previous</a>
+</a><a href="/admin/pricing" class="clight backarrow-pay">Back to Previous</a>
 
 <div class="contain-pay">
-    <h3 class="cgrey" lang="en" id="pay_judul" style="margin-top: 0.5em; margin-bottom: 0.5em;" lang="en">Payment Method
-    </h3>
+    <h3 class="cgrey" lang="en" id="pay_judul">Payment Method</h3>
 
     <div class="row">
         <div class="col-md-6">
-            <h6 class="h6 cgrey1" id="judul_pilihpay" lang="en">Click Payment Type Below</h6>
+            <h6 class="h6 cgrey1" id="judul_pilihpay">Choose Payment Method</h6>
 
-            <div id="isi_tipe_payment">
-
-            </div>
-
+            @foreach(Session::get('pay_type') as $dt)
+            <button type="button" id="tipe{{ $dt['id']  }}" class="btn btn-orenline col-md-4 btn-sm btn-fluid"
+                value="{{ $dt['id'] }}" onclick="getmethod_payment(this);">
+                <i class="fa fa-exchange "></i>
+                &nbsp; {{ $dt['payment_title'] }}</button>
+            &nbsp;
+            @endforeach
 
         </div>
         <div class="col-md-5" id="showhide_pay" style="display: none;">
-            <h6 class="h6 cgrey1" id="txt_paymethod" style="margin-bottom: 1em;" lang="en">Choose Payment Method</h6>
+            <h6 class="h6 cgrey1" id="txt_paymethod">Bank Transfer</h6>
 
             <form method="POST" id="form_pay_admin" action="{{route('ReviewFinal')}}">
                 {{ csrf_field() }}
@@ -43,7 +45,7 @@
 
 
     <div class="footer-admin">
-        <div class="row" style="margin-top: 0em;">
+        <div class="row" style="margin-top: 1em;">
             <div class="col">
                 <img src="/visual/commjuction.png" id="com_superadminlogin">
                 <div class="textfooter-kiri">
@@ -65,13 +67,15 @@
 
 
     <!-- MODAL LOADING AJAX -->
-    <div class="modal fade bd-example-modal-sm modal_ajax" id="mdl-loadingajax" tabindex="-1" role="dialog"
-        aria-hidden="true">
+    <div class="modal fade bd-example-modal-sm" id="mdl-loadingajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content loading">
-                <div id="comjuction_loading">
-                    @include('loading')
-                </div>
+                <center>
+                    <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="h6 iniloading">Loading . . .</p>
+                    <center>
             </div>
         </div>
     </div>
@@ -82,42 +86,17 @@
     @section('script')
     <script type="text/javascript">
         var server_cdn = '{{ env("CDN") }}';
-        var noimg = '/img/fiturs.png';
 
         $(document).ready(function () {
-            get_payment_method_regis();
+            // $("#mdl-loadingajax").modal('show');
+
+            // validasi_pay_next();
+            get_session_payadmin();
 
         });
 
-        function get_payment_method_regis() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/get_payment_method_regis',
-                type: 'POST',
-                datatype: 'JSON',
-                success: function (result) {
-                    // console.log(result);
-                    var uipay = '';
-                    $.each(result, function (i, item) {
-                        uipay += '<button type="button" id="tipe' + item.id + '" class="btn btn-orenline col-md-5 btn-sm btn-fluid"' +
-                            'value="' + item.id + '" onclick="getmethod_payment(this);"' +
-                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
-                            '<i class="fa fa-exchange"></i> &nbsp; ' + item.payment_title + ' </button>&nbsp;&nbsp;';
-                    });
-                    $("#isi_tipe_payment").html(uipay);
-                         get_session_payadmin();
-                },
-                error: function (result) {
-                    console.log("Cant Reach Payment Method");
-                }
-            });
-        }
-
         function pilihpay(idpay) {
+            // alert("ini pay :" +idpay);
             $("#id_pay_method").val(idpay);
             $(".border-oren").removeClass("active");
             $("#cardpay" + idpay).addClass("active");
@@ -131,7 +110,6 @@
             var val = ini.value;
             $('#mdl-loadingajax').modal('hide');
             $("#id_pay_type").val(val);
-            $("#btn_pay_next").attr("disabled", true);
 
             $.ajaxSetup({
                 headers: {
@@ -147,37 +125,43 @@
                     $('#mdl-loadingajax').modal('show');
                 },
                 success: function (result) {
-                    // console.log(result);
                     $("#showhide_pay").css("display", "block");
+                    // $('#mdl-loadingajax').modal('hide');
                     setTimeout(function () { $('#mdl-loadingajax').modal('hide'); }, 4000);
                     validasi_pay_next();
+
 
                     var html = '';
                     var text = '';
 
                     $.each(result.data, function (i, item) {
                         var isitext = '';
-                        $.each(item.description, function (x, isides) {
-                            isitext += '<li class="cgrey2">' + isides + '</li>';
-                        });
 
-                        html +='<div class="card border-oren" id="cardpay' + item.id + '">' +
-                            '<div class="card-header payregis cardpay' + item.id + '" role="tab">' +
+                        $.each(item.description, function (x, isides) {
+                            isitext += '<li>' + isides + '</li>';
+                        });
+                        // console.log(i , isitext)
+
+                        html +=
+                            '<div class="card border-oren" id="cardpay' + item.id + '">' +
+                            '<div class="card-header" role="tab">' +
                             '<h6 class="mb-0 pdb1">' +
-                            '<a class="payregis" data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne' + item.id + '" ' +
+                            '<a data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne' + item.id + '" ' +
                             'id="idpayq' + item.id + '" onclick="pilihpay(' + item.id + ');" aria-expanded="true"' +
                             'aria-controls="collapseOne' + item.id + '">' +
-                            '<img src="' + server_cdn + cekimage_cdn(item.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
-                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + item.payment_title +
+                            '<img src="' + server_cdn + item.icon + '" class="imgepay" style="width: 10%; height: auto;" onerror="errorImg2()"> &nbsp; &nbsp;' + item.payment_title +
                             '<span class="float-right">' +
-                            '<i class="fa fa-chevron-right simbol-payregis"></i>' +
+                            '<i class="fa fa-chevron-right"></i>' +
                             '</span>' +
                             '</a></h6></div>' +
                             '<div id="collapseOne' + item.id + '" class="collapse" role="tabpanel" aria-labelledby="headingOne2">' +
-                            '<div class="card-block payregis"><ul>' + isitext +
+                            '<div class="card-block"><ul>' + isitext +
                             '</ul></div></div></div><br>';
+
                     });
+
                     $('#list_paymentmethod').html(html);
+
                 },
                 error: function (result) {
                     console.log("Cant get data payment method");
@@ -190,6 +174,10 @@
 
         }
 
+        //ON ERROR IMAGE
+        function errorImg2() {
+            $('.imgepay').attr('src', '/img/fitur.png');
+        }
 
 
         function validasi_pay_next() {
@@ -218,13 +206,10 @@
                     console.log(result);
                     if (result.id_tipe != "") {
                         $("#tipe" + result.id_tipe).trigger('click');
-                        $("#id_pay_type").val(result.id_tipe);
                     }
                     if (result.id_pay != "") {
-                        $("#id_pay_method").val(result.id_pay);
-                          setTimeout(function () {
-                          pilihpay(result.id_pay);
-                        }, 3000);
+                        window.onclick = pilihpay(result.id_pay);
+
                     }
                 },
                 error: function (result) {

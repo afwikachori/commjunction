@@ -413,7 +413,7 @@ top: 23px;
 
 #next_pilihfitur{
   width: 150px;
-  margin-top: 3%;
+  margin-top: 15px;
   margin-bottom: 3%;
 }
 
@@ -1010,19 +1010,52 @@ border: none;
 }
 
 
-/*.card.border-oren:active{
-  border: 2px solid #FF9A44 !important;
+.card.border-oren{
+    border-radius: 10px;
 }
-*/
+
+.card-header.payregis{
+    border-radius: 10px;
+    border: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    min-height: 65px;
+}
+
+.simbol-payregis{
+    margin-top: 1em;
+}
+
+.card-block.payregis{
+padding: 0rem;
+}
+
+a.payregis{
+      text-decoration: none;
+}
+
 .card.border-oren.active{
   border: 3px solid #FF9A44 !important;
+  border-radius: 10px;
+}
+
+.dipilih{
+  border: 3px solid #FF9A44 !important;
+  border-radius: 10px;
+}
+
+.tebal{
+    font-weight: bold;
 }
 
 .collapse-accordion .card-header {
   background-color: white !important;
   color: grey;
   padding:0;
+}
 
+.collapse-accordion .card-header:hover {
+    background: linear-gradient(106.53deg, #fff6e6 0%, #fffcde 56.6%);
 }
 
 
@@ -1063,6 +1096,17 @@ border: none;
   height: 345px;
 }
 
+.modal.modal_ajax{
+    background: radial-gradient(#ffffff7a, #fff6ca57);
+}
+
+.modal_ajax .modal-content{
+  background-color: #fff0 !important;
+  border: none;
+  color: white;
+}
+
+
 .forgetbgpic{
 position: absolute;
 width: 530px;
@@ -1102,11 +1146,12 @@ width: 17%;
 }
 
 .btn-orenline{
-  margin-top: 2%;
-  border: 1px solid #828282;
+margin-top: 2%;
+border: 1.2px solid #dfdfdf;
 box-sizing: border-box;
-border-radius: 6px;
+border-radius: 8px;
 color: #777777;
+height: 40px;
 }
 
 #btn_pay_next{
@@ -1124,7 +1169,7 @@ background-color: #fff6d5;
     margin-top: 1em;
   border: 3px solid #FF9A44;
 box-sizing: border-box;
-border-radius: 6px;
+border-radius: 8px;
 color: #384049;
 }
 
@@ -1145,7 +1190,7 @@ color: #384049;
    left: 0;
    bottom: 0;
    width: 100%;
-   height: 80px;
+   height: 65px;
    background-color: white;
    color: grey;
    padding-left: 4em;

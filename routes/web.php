@@ -187,6 +187,11 @@ Route::get('session_backfitur', 'RegisterController@session_backfitur')->name('s
 Route::get('admin/features_detail','RegisterController@fiturdetailView')->name('admin/features_detail');
 Route::get('admin/features_detail/{id_fitur}', 'RegisterController@detailFiturView')->name('features_detail');
 // register - payment
+
+
+Route::get('admin/paymentmethod', 'RegisterController@paymentMethodRegisView')->name('paymentmethod');
+Route::post('get_payment_method_regis', 'RegisterController@get_payment_method_regis')->name('get_payment_method_regis');
+
 Route::get('admin/payment','RegisterController@paymentView')->name('paymentView');
 Route::get('isi_payment','RegisterController@isi_payment')->name('isi_payment');
 Route::post('getDetailPay', 'RegisterController@getDetailPay')->name('getDetailPay');
