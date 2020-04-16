@@ -170,8 +170,8 @@
                 <div class="row">
                     <div class="col-6" style="text-align:right;">
                         <div class="bunder-ring2">
-                            <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs"
-                                onerror="this.onerror=null;this.src='/img/focus.png';">
+                            <img class="profile-pic rounded-circle img-fluid" src="/img/kosong.png" id="foto_subs"
+                                onerror="this.onerror=null;this.src='/img/kosong.png';">
                         </div>
                     </div>
                     <div class="col-6">
@@ -190,8 +190,8 @@
                                     alt="circle-image">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: right;">
-                                        <img src="/img/cam.png" class="rounded-circle img-fluid icon-req-member"
-                                            id="icon_member" onerror="this.onerror=null;this.src='/img/cam.png';">
+                                        <img src="/img/fitur.png" class="rounded-circle img-fluid icon-req-member"
+                                            id="icon_member" onerror="this.onerror=null;this.src='/img/fitur.png';">
                                     </div>
                                     <div class="col-md-8">
                                         <h4 id="judul_member" style="margin-top: 1em;">Starter</h4>
@@ -280,8 +280,8 @@
 
             <div class="modal-body detail_member">
                 <center>
-                    <img src="/img/kosong.png" class="img_file_bayar_subs" onclick="clickImage(this)"
-                        onerror="this.onerror=null;this.src='/img/kosong.png';">
+                    <img src="/img/noimg.jpg" class="img_file_bayar_subs" onclick="clickImage(this)"
+                        onerror="this.onerror=null;this.src='/img/noimg.jpg';">
 
                     <div class="row">
                         <div class="col-md-6">
@@ -378,8 +378,9 @@
                         <div class="col-md-9">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input class="form-control input-abu" id="acc_password" type="password"
-                                        name="acc_password" required aria-describedby="btn_showpass_accmember">
+                                    <input class="form-control" id="acc_password" type="password"
+                                        name="acc_password" required aria-describedby="btn_showpass_accmember"
+                                        style="background-color: #efefef; border-radius: 10px 0px 0px 10px;">
                                     <div class="input-group-append">
                                         <a class="btn btn-outline-light" type="button" id="btn_showpass_accmember"
                                             onclick="showPassText('acc_password')">
@@ -789,7 +790,7 @@
                 $("#isi_paystatus").html(dt.payment_status_title);
                 $("#judul_member").html(dt.membership);
 
-                if (dt.picture != undefined || dt.picture != null || dt.picture != "" || dt.picture != "0") {
+                if (dt.picture != undefined && dt.picture != null && dt.picture != "" && dt.picture != "0") {
                     $("#foto_subs").attr("src", server_cdn + cekimage_cdn(dt.picture));
                 }
 

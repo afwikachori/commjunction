@@ -1540,6 +1540,7 @@ class AdminCommController extends Controller
         $fileimg = "";
 
         if ($request->hasFile('fileup')) {
+
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
             if ($request->input('action') == 'approve') {
@@ -1550,8 +1551,14 @@ class AdminCommController extends Controller
                 $paystatusjudul = "Membership Rejected";
             }
 
+            if($input['invoice_num_acc'] == "Free"){
+                $invnum = 0;
+            }else{
+                $invnum = $input['invoice_num_acc'];
+            }
+
             $imageRequest = [
-                "invoice_number" => $input['invoice_num_acc'],
+                "invoice_number" => $invnum,
                 "payment_status" => $paystatus,
                 "password"       => $input['acc_password'],
                 "subscriber_id"  => $input['id_subs_acc'],
@@ -1582,7 +1589,10 @@ class AdminCommController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } //endif
+        } else{
+            alert()->error('File verification is required', 'Failed!')->autoclose(4500);
+            return back();
+        }
     }
 
 
