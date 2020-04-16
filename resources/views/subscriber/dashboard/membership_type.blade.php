@@ -69,8 +69,7 @@
                         </div>
 
                         <div class="col-md-5">
-                            <div class="isi_show_bank" class="collapse-accordion" role="tablist"
-                                aria-multiselectable="true">
+                            <div class="isi_show_bank" class="collapse-accordion" role="tablist" aria-multiselectable="true">
 
                             </div>
                         </div>
@@ -190,11 +189,12 @@
 <script type="text/javascript">
     var server_cdn = $(".server_cdn").val();
     $(document).ready(function () {
-        hidenlah_confirm_member();
+        // hidenlah_confirm_member();
 
         get_pricing_membership();
         get_payment_initial();
 
+        // $("#modal_pay_initial").modal('show');
 
 
     });
@@ -289,47 +289,7 @@
     });
 
 
-    // function get_pricing_membership() {
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-    //     $.ajax({
-    //         url: "/subscriber/get_pricing_membership",
-    //         type: "POST",
-    //         dataType: "json",
-    //         success: function (result) {
-    //             // console.log(result);
-    //             var html = '';
-    //             var noimg = '/img/fitur.png';
-    //             $.each(result, function (i, item) {
-    //                 // console.log(item);
-    //                 var idprice = item.id;
 
-    //                 html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:0.2em;">' +
-    //                     '<div class="card cd-pricing pricing' + idprice + '">' +
-    //                     '<div class="card-body">' +
-    //                     '<center>' +
-    //                     '<h4 class="cgrey2 s20" style="margin-top: 0.7em;">' + item.membership + '</h4>' +
-    //                     '<img src="' + server_cdn + item.icon + '"  class="rounded-circle img-fluid imgprice"' +
-    //                     'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-    //                     '<div class="hidetime1">' +
-    //                     '<sup class="cgrey" style="font-size: 30px;">' +
-    //                     '<small class="h6">IDR</small></sup>' +
-    //                     '<label class="card-harga cgrey">' +
-    //                     '<strong>' + rupiah(item.pricing) + '</strong></label>' +
-    //                     '<small class="clight"> /Once</small>' +
-    //                     '</div>' +
-    //                     '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-    //                     'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')">Get Now</button>' +
-    //                     '</center>' +
-    //                     '</div></div></div>';
-    //             });
-    //             $('.price_member').html(html);
-    //         }
-    //     });
-    // }
 
     // function get_payment_initial() {
     //     $("#btn_submit_paymethod").attr("disabled", "disabled");
@@ -369,55 +329,7 @@
     //     });
     // }
 
-    // function pilih_payment_initial(dtmember) {
-    //     $("#id_membertype").val("");
-    //     var dt = dtmember.split('<>');
 
-    //     if(dt[1] != 0){
-    //     $("#modal_pay_initial").modal('show');
-    //     $("#harga_member").html(rupiah(dt[1]));
-    //     $("#id_membertype").val(dt[0]);
-    //       } else {
-    //         $.ajaxSetup({
-    //             headers: {
-    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //             }
-    //         });
-    //         $.ajax({
-    //             url: '/subscriber/set_initial_membership_pay',
-    //             type: 'POST',
-    //             dataSrc: '',
-    //             timeout: 30000,
-    //             data: {
-    //                 "id_membertype": dt[0],
-    //                 "id_pay_initial": "0",
-    //             },
-    //             success: function (result) {
-    //                 console.log(result);
-    //                 if (result.success == false) {
-    //                     if (result.status == 401 || result.message == "Unauthorized") {
-    //                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-    //                         setTimeout(function () {
-    //                             location.href = '/admin';
-    //                         }, 5000);
-    //                     } else {
-    //                         ui.popup.show('warning', result.message, 'Warning');
-    //                     }
-    //                 } else {
-    //                     swal("Successfully", "Waiting your membership confirmation from Administrator", "success");
-    //                     setTimeout(function () {
-    //                         window.location.reload();
-    //                     }, 3500);
-    //                 }
-    //             },
-    //             error: function (result) {
-    //                 console.log(result);
-    //                 console.log("Cant Show");
-    //             }
-    //         });
-
-    //     }
-    // }
 
     // function pilih_pay_bank(ini) {
     //     console.log(ini.value);

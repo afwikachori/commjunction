@@ -412,7 +412,7 @@
                 var result = result[0];
                 if (result != "") {
                     $("#community_id").val(result.id);
-                    $("#icon_comm_subs").attr("src", cdn + result.logo);
+                    $("#icon_comm_subs").attr("src", cdn + cekimage_cdn(result.logo));
                     $("#judul_comm_subs").html(result.name);
 
                     $("#klik_login_subs").attr("href", "/subscriber/url/" + result.name);

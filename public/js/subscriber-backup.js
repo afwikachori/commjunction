@@ -4,7 +4,7 @@
 var lang = new Lang();
 lang.dynamic('id', '/js/langpack/id.json');
 lang.init({
-    defaultLang: 'en'
+    defaultLang:'en'
 });
 
 
@@ -123,7 +123,7 @@ function session_subscriber_logged() {
             $("#alamat_subs").val(user.alamat);
 
             //initial login
-            if (user.status == 2) { //first-login
+            if (user.status == 1) { //first-login
                 get_initial_feature(result.community_feature);
             }
 
@@ -391,15 +391,17 @@ function get_payment_initial() {
                 text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
                     'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
                 var deskrip = '';
+
                 $.each(item.comm_payment_methods, function (i, itm) {
                     $.each(itm.description, function (x, isides) {
+                        console.log(isides);
                         deskrip += '<li sytle="background-color:#fff;">' + isides + '</li>';
                     });
                     isibank +=
                         '<div class="card border-oren hidendulu method' + item.id + '" id="cardpay' + itm.id + '">' +
-                        '<div class="card-header paybankmember" role="tab" sytle="background-color:#fff;">' +
+                        '<div class="card-header" role="tab" sytle="background-color:#fff;">' +
                         '<h6 class="mb-0 pdb1">' +
-                        '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
+                        '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
                         'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
                         '<img src="' + server_cdn + itm.icon + '" class="imgepay" style="width: 10%; height: auto;"' +
@@ -409,7 +411,7 @@ function get_payment_initial() {
                         '</span>' +
                         '</a></h6></div>' +
                         '<div id="collapseOne' + itm.id + '" class="collapse" role="tabpanel">' +
-                        '<div class="card-block"><ul class="paybankmember">' + deskrip +
+                        '<div class="card-block"><ul>' + deskrip +
                         '</ul></div></div></div>';
                 });
             });
@@ -424,33 +426,7 @@ function get_payment_initial() {
     });
 }
 
-
-
-
-function pilih_pay_bank(ini) {
-    $("#btn_submit_paymethod").attr("disabled", "disabled");
-    $(".hidendulu").removeClass('dipilih');
-    $('.btn-blueline').removeClass('active');
-    $("#" + ini.id).addClass('active');
-    $("." + ini.id).addClass('dipilih');
-    $("." + ini.id).removeClass('active');
-    $("#btn_submit_paymethod").attr("disabled", "disabled");
-}
-
-
-function pilihpay(idpay) {
-    $("#id_pay_initial").val(idpay);
-    $(".border-oren").removeClass("active");
-    $("#cardpay" + idpay).addClass("active");
-    $("#btn_pay_next").removeAttr("disabled");
-    $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
-}
-
-
-
-
-
-function pilih_payment_initial(dtmember) { //FREE
+function pilih_payment_initial(dtmember) {
     $("#id_membertype").val("");
     var dt = dtmember.split('<>');
     $("#modal_initial_membership").modal('hide');
@@ -501,6 +477,27 @@ function pilih_payment_initial(dtmember) { //FREE
     }
 }
 
+
+function pilih_pay_bank(ini) {
+    $("#id_pay_initial").val("");
+    $("#btn_submit_paymethod").attr("disabled", "disabled");
+    $(".hidendulu").removeClass('dipilih');
+    $('.btn-blueline').removeClass('active');
+    $(".hidenlah").show();
+    $("#" + ini.id).addClass('active');
+    $("." + ini.id).addClass('dipilih');
+    $("." + ini.id).removeClass('active');
+}
+
+function pilihpay(idpay) {
+    $("#id_pay_initial").val(idpay);
+    $(".border-oren").removeClass("active");
+    $("#cardpay" + idpay).addClass("active");
+    $("#btn_pay_next").removeAttr("disabled");
+    if ($("#id_pay_initial").val() != "") {
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
+}
 
 
 //GET LAST NOTIFICATION

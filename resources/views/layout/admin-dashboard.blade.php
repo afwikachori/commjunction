@@ -13,23 +13,21 @@
     <!-- ICON WEB -->
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/purple/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/purple/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/purple/css/style.css">
+     <!-- CSS Files -->
+    <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('purple/vendors/css/vendor.bundle.base.css')}}">
+    <link rel="stylesheet" href="{{asset('purple/css/style.css')}}">
 
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="/visual/commjuction.png" />
-
-    <!-- Styles Custom-->
-    <link rel="stylesheet" href="/css/admin.css">
-    <link rel="stylesheet" href="/css/admin-mobile.css">
-
-    <!-- tags -->
-    <link rel="stylesheet" href="/css/tags/tagify.css">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin-mobile.css')}}">
 
     <!-- toastr -->
-    <link rel="stylesheet" href="/css/toastr.min.css">
+    <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
+
+
+
+
+
 
     <!-- chart -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
@@ -39,6 +37,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
     <!-- export datatble -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+
+
+    <script src="{{asset('js/jquery.3.2.1.min.js')}}"></script>
+      <!-- Language translate page  -->
+    <script src="{{asset('js/js.cookie.js')}}" charset="utf-8" type="text/javascript"></script>
+    <script src="{{asset('js/jquery-lang.js')}}" charset="utf-8" type="text/javascript"></script>
+
 
     @yield('css')
 </head>
@@ -310,22 +315,20 @@
 
 
     <!-- plugins:js -->
-    <script src="/js/jquery.3.2.1.min.js"></script>
-    <script src="/purple/vendors/js/vendor.bundle.base.js"></script>
-    <script src="/purple/vendors/chart.js/Chart.min.js"></script>
-    <script src="/purple/js/off-canvas.js"></script>
-    <script src="/purple/js/hoverable-collapse.js"></script>
-    <script src="/purple/js/misc.js"></script>
-    <script src="/purple/js/dashboard.js"></script>
-    <script src="/purple/js/todolist.js"></script>
-    <script src="/purple/js/file-upload.js"></script>
-    <script src="/purple/js/todolist.js"></script>
+    <script src="{{asset('purple/vendors/js/vendor.bundle.base.js')}}"></script>
+    <script src="{{asset('purple/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('purple/js/off-canvas.js')}}"></script>
+    <script src="{{asset('purple/js/hoverable-collapse.js')}}"></script>
+    <script src="{{asset('purple/js/misc.js')}}"></script>
+    <script src="{{asset('purple/js/dashboard.js')}}"></script>
+    <script src="{{asset('purple/js/todolist.js')}}"></script>
+    <script src="{{asset('purple/js/file-upload.js')}}"></script>
 
-    <script src="{{ asset('/js/admincom.js') }}"></script>
+    <script src="{{asset('js/admincom.js')}}"></script>
 
-    <script src="/js/tags/tagify.min.js"></script>
 
-    <script src="/js/toastr.min.js"></script>
+
+    <script src="{{asset('js/toastr.min.js')}}"></script>
 
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -353,7 +356,7 @@
 
 
     <!-- Sweetalert -->
-    <script src="/js/sweetalert.min.js"></script>
+    <script src="{{asset('js/sweetalert.min.js')}}"></script>
     @include('sweet::alert')
 
     @yield('script')

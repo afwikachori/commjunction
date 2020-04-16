@@ -114,6 +114,7 @@
                 <a class="dropdown-item" href="" lang="en" data-lang-token="Settings">
                     Settings
                 </a>
+                  <div class="dropdown-divider"></div>
                     <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" >
                     <span class="menu-title" lang="en" data-lang-token="Languages">Languages</span>

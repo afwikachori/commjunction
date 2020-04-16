@@ -66,8 +66,17 @@
                 <a class="dropdown-item" href="/admin/settings">
                  Community Setting</a>
                 <div class="dropdown-divider"></div>
-                <!-- <a class="dropdown-item" href="">
-                Etc</a> -->
+                   <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" >
+                    <span class="menu-title" lang="en" data-lang-token="Languages">Languages</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left dropleft" aria-labelledby="subnav_bahasa">
+                        <a href="#" class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
+                            <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>
+                        <a href="#" class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
+                            <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
+                    </div>
               </div>
             </li>
 

@@ -1966,3 +1966,23 @@ width: auto;
     margin-right: 1em;
 
 }
+
+
+.padsubmember{
+    padding-right: 0px;
+    margin-right: -1em;
+}
+
+.bg-gradient-blue.submember{
+    min-height: 80px;
+    height: auto;
+}
+
+
+ul.submember li {
+    line-height: 1.3 !important;
+}
+
+ul.submember{
+font-size: 0.9rem !important;
+}

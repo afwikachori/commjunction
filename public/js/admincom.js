@@ -1,4 +1,12 @@
 // onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
+
+// LANG -EN-ID
+var lang = new Lang();
+lang.dynamic('id', '/js/langpack/id.json');
+lang.init({
+    defaultLang:'en'
+});
+
 var server_cdn = $(".server_cdn").val();
 var ui = {
     popup: {
@@ -581,7 +589,7 @@ function cekimage_cdn(img) {
             foto = img;
         }
     }else{
-        foto = '/img/fitur.png';
+        foto = '';
     }
 
     return foto;

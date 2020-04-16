@@ -79,8 +79,6 @@
     <input type="hidden" class="community_name">
 
 
-
-
     <!-- MODAL LOADING AJAX -->
     <div class="modal fade modal_ajax" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -136,7 +134,8 @@
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span class="sr-only">Loading...</span>
                             </span>
-                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im Sure</span></div>
+                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im
+                                    Sure</span></div>
                         </button>
 
                     </center>
@@ -233,8 +232,7 @@
     <div class="modal fade" id="modal_changepass_subs" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="background-color: #ffffff; width: 400px;
-    min-height: 350px;">
+            <div class="modal-content" style="background-color: #ffffff; width: 400px; min-height: 350px;">
 
                 <form method="POST" id="form_changepass_admin" action="{{route('change_password_subs')}}"
                     enctype="multipart/form-data">
@@ -268,13 +266,13 @@
                     </div> <!-- end-body -->
 
                     <div class="modal-footer changepass pas_tengah" style="border: none;">
-                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                                style="border-radius: 10px;">
-                                <i class="mdi mdi-close"></i><span lang="en">No, Im Doubt</button>
-                            &nbsp;
-                            <button type="submit" class="btn btn-tosca btn-sm btn-center">
-                                <i class="mdi mdi-check btn-icon-prepend">
-                                </i> <span lang="en">Yeah, Im Sure</span></button>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i><span lang="en">No, Im Doubt</button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-tosca btn-sm btn-center">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> <span lang="en">Yeah, Im Sure</span></button>
                     </div> <!-- end-footer     -->
                 </form>
             </div> <!-- END-MDL CONTENT -->

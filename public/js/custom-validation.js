@@ -495,7 +495,7 @@ function cekimage_cdn(img) {
             foto = img;
         }
     } else {
-        foto = '/img/fiturs.png';
+        foto = '';
     }
 
     return foto;

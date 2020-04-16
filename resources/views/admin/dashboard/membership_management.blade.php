@@ -5,11 +5,11 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-settings"></i>
-        </span> Membership Management</h3>
+        </span lang="en">Membership Management</h3>
 
     <nav aria-label="breadcrumb">
         <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-            data-target="#modal_add_create_membership" data-dismiss="modal">Add Membership</button>
+            data-target="#modal_add_create_membership" data-dismiss="modal" lang="en">Add Membership</button>
     </nav>
 </div>
 
@@ -17,17 +17,17 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body memberku">
-                <h4 class="cgrey" style="margin-bottom: -0.5em;">Membership List</h4>
+                <h4 class="cgrey" style="margin-bottom: -0.5em;" lang="en">Membership List</h4>
 
                 <div class="tabbable-line memberaku">
                     <ul class="nav nav-tabs member">
                         <li class="tab-subs member active" id="tab_all">
-                            <a href="#tab_member_1" data-toggle="tab">
+                            <a href="#tab_member_1" data-toggle="tab" lang="en" data-lang-token="List Membership">
                                 List Membership
                             </a>
                         </li>
                         <li class="tab-subs member" id="tab_pending">
-                            <a href="#tab_member_2" data-toggle="tab">
+                            <a href="#tab_member_2" data-toggle="tab" lang="en" data-lang-token="Membership Request">
                                 Membership Request
                             </a>
                         </li>
@@ -39,7 +39,7 @@
                                 <div id="div_nomembership" style="display: none; text-align: center; margin: auto;">
                                     <center>
                                         <br><br><br><br>
-                                        <h2 class="clight">No Membership Available</h2>
+                                        <h2 class="clight" lang="en">No Membership Available</h2>
                                     </center>
                                 </div>
                                 <div id="show_membership" class="card-deck" style="width: 100%;">
@@ -54,12 +54,12 @@
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="th-center"> ID Subscriber</th>
-                                        <th class="th-center"> Name</th>
-                                        <th class="th-center"> Status</th>
-                                        <th class="th-center"> Payment Method</th>
-                                        <th class="th-center"> Membership Type</th>
-                                        <th class="th-center"> Action</th>
+                                        <th class="th-center" lang="en">ID Subscriber</th>
+                                        <th class="th-center" lang="en">Name</th>
+                                        <th class="th-center" lang="en">Status</th>
+                                        <th class="th-center" lang="en">Payment Method</th>
+                                        <th class="th-center" lang="en">Membership Type</th>
+                                        <th class="th-center" lang="en">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -168,7 +168,7 @@
 
             <div class="modal-body detail_member">
                 <div class="row">
-                    <div class="col-6" style="text-align: right;">
+                    <div class="col-6" style="text-align:right;">
                         <div class="bunder-ring2">
                             <img class="profile-pic rounded-circle img-fluid" src="/img/focus.png" id="foto_subs"
                                 onerror="this.onerror=null;this.src='/img/focus.png';">
@@ -280,8 +280,8 @@
 
             <div class="modal-body detail_member">
                 <center>
-                    <img src="/img/noimg.jpg" class="img_file_bayar_subs" onclick="clickImage(this)"
-                        onerror="this.onerror=null;this.src='/img/noimg.jpg';">
+                    <img src="/img/kosong.png" class="img_file_bayar_subs" onclick="clickImage(this)"
+                        onerror="this.onerror=null;this.src='/img/kosong.png';">
 
                     <div class="row">
                         <div class="col-md-6">
@@ -429,7 +429,7 @@
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                 <div class="bunder-ring" id="img_detail_member">
                     <img class="profile-pic rounded-circle img-fluid" id="foto_membership" src="/img/loading.gif"
-                        onerror="this.onerror=null;this.src='/img/default.png';">
+                        onerror="this.onerror=null;this.src='/img/kosong.png';">
                 </div>
                 <div class="row">
                     <div class="col-md">
@@ -456,10 +456,10 @@
                         <small class="clight">Features : </small> &nbsp;
                         <small class="ctosca s15" id="total_fitur_member"> 0</small>
                     </div>
-                    <div class="card-deck" id="show_feature_member"
-                    style="margin-top: 0.5em; width: 100%; overflow-y: auto; height:170px;">
+                </div>
+                <div class="card-deck" id="show_feature_member"
+                    style="margin-top: 0.5em; width: 100%; overflow-y: auto; overflow-x: hidden; height:170px;">
 
-                    </div>
                 </div>
             </div> <!-- end-body -->
 
@@ -536,7 +536,7 @@
                         ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
-                     var parent_ui = '';
+                    var parent_ui = '';
                     $.each(result, function (i, item) {
                         var child_ui = '';
                         var parent = item.title;
@@ -585,7 +585,6 @@
             }
         });
     }
-
 
 
     function get_membership_admin() {
@@ -659,11 +658,11 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
-                alert(dtnya);
+                // console.log(result);
+
                 var result = result[dtnya];
                 $("#detail_judul_member").html(result.membership);
-                $("#detail_harga_member").html(rupiah(result.pricing));
+                $("#detail_harga_member").html("Rp  "+rupiah(result.pricing));
                 $("#detail_deskripsi_member").html(result.description);
                 $("#foto_membership").attr("src", server_cdn + cekimage_cdn(result.image));
                 $("#modal_detail_membership_card").modal('show');
@@ -671,12 +670,19 @@
                 var subf = '';
                 var jum = 0;
                 var noimg = '/img/fitur.png';
+
                 $.each(result.feature, function (i, item) {
+                    var sub_ui = '';
+                    $.each(item.sub_features, function (i, subitem) {
+                        sub_ui +=
+                            '<li><small class="clight">' + subitem.title + '</small></li>';
+                    });
                     jum++;
-                    subf += '<div class="col-md-6 stretch-card grid-margin' +
+                    subf += '<div class="row" style="margin-bottom:0.5em;">'+
+                    '<div class="col-md-6"' +
                         'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
                         'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
-                        '<div class="card bg-gradient-blue card-img-holder text-white">' +
+                        '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
                         '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important;">' +
                         '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
                         'alt="circle-image" /> ' +
@@ -686,12 +692,17 @@
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '</div>' +
                         '<div class="col-md-9">' +
-                        '<b><small>' + item.title + '</small></b>' +
+                        '<b><small>' + item.title + '</small></b><br>' +
+                        '<small class="cblue"> <b>'+ jum +'</b> Subfeature</small>'+
                         '</div>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
-                        '</div>';
+                        '</div>'+
+                        '<div class="col-md-6 padsubmember">' +
+                        '<small class="cgrey2 s13">' + item.title + '</small>'+
+                        '<ul class="submember">' + sub_ui+'</ul>' +
+                        '</div></div>';
                 });
                 $("#show_feature_member").html(subf);
                 $("#total_fitur_member").html(jum);
@@ -774,11 +785,11 @@
                 $("#id_subs_acc").val(dt.user_id);
                 $("#isi_username").html(dt.full_name);
                 $("#isi_paytipe").html(dt.payment_method);
-                $("#isi_totalpay").html("Rp "+rupiah(dt.grand_total));
+                $("#isi_totalpay").html("Rp " + rupiah(dt.grand_total));
                 $("#isi_paystatus").html(dt.payment_status_title);
                 $("#judul_member").html(dt.membership);
 
-                if(dt.picture != undefined || dt.picture != null || dt.picture != "" || dt.picture != "0"){
+                if (dt.picture != undefined || dt.picture != null || dt.picture != "" || dt.picture != "0") {
                     $("#foto_subs").attr("src", server_cdn + cekimage_cdn(dt.picture));
                 }
 

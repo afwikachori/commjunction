@@ -393,11 +393,8 @@ class RegisterController extends Controller
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
             return $error;
-        } catch (BadResponseException  $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        }
     }
+}
 
 
     public function getSelectedFitur(Request $request)
@@ -922,7 +919,7 @@ class RegisterController extends Controller
 
         $validator = $request->validate([
             'name_userpay'   => 'required',
-            'invoice_number' => 'required|numeric',
+            'invoice_number' => 'required',
             'file_payment'  => 'required|mimes:jpeg,jpg,png,pdf',
         ]);
 
