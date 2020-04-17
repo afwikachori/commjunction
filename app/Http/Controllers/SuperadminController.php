@@ -3042,14 +3042,15 @@ try{
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
         $input = $request->all();
-        // return $ses_user;
+
+        // return $input;
+
         $req = new RequestController;
         $fileimg = "";
 
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
-
 
             $imageRequest = [
                 "user_name" => $input['username_super'],
@@ -3076,8 +3077,6 @@ try{
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
                         //////////////////////
-                        "user_id" => $ses_user['user_id'],
-                        "level" => $ses_user['level'],
                     ]);
 
                     alert()->success($resImg['message'], 'Now Updated!')->persistent('Done');
@@ -3126,8 +3125,6 @@ try{
                         "alamat" => $resImg['data']['alamat'],
                         //////////////////////
                         "picture" => $ses_user['picture'],
-                        "user_id" => $ses_user['user_id'],
-                        "level" => $ses_user['level'],
                     ]);
                     alert()->success($resImg['message'], 'Now Updated!')->persistent('Done');
                     return back();

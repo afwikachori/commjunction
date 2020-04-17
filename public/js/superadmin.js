@@ -133,7 +133,7 @@ function session_logged_superadmin() {
                 $("#alamat_super").text(user.alamat);
             }
 
-            var imguser = server_cdn + user.picture;
+            var imguser = server_cdn + cekimage_cdn(user.picture);
             // console.log(imguser);
             if (user.picture != null) {
                 $("#foto_profil_superadmin").attr("src", imguser);

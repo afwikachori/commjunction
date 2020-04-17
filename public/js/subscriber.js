@@ -123,7 +123,7 @@ function session_subscriber_logged() {
             $("#alamat_subs").val(user.alamat);
 
             //initial login
-            if (user.status == 2) { //first-login
+            if (user.status == 1) { //first-login
                 get_initial_feature(result.community_feature);
             }
 
