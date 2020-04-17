@@ -106,8 +106,11 @@
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
+            beforeSend: function () {
+                $('#mdl-loadingajax').modal('show');
+            },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false || result.message == "pricing null") {
                     swal("Pricing is null!", "Choose your pricing first", "error")
                         .then((value) => {
@@ -149,11 +152,16 @@
                     $("#total_fitur").html(jum);
                     $("#isi_fitur_regis").html(uifitur);
                     get_session_fitur();
+                     $('#mdl-loadingajax').modal('hide');
                 }
             },
             error: function (result) {
                 console.log(result);
                 console.log("Cant Show");
+                $('#mdl-loadingajax').modal('hide');
+            },
+            complete: function (result) {
+                $('#mdl-loadingajax').modal('hide');
             }
         });
     }

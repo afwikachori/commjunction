@@ -64,18 +64,7 @@
     </div>
 
 
-    <!-- MODAL LOADING AJAX -->
-    <div class="modal fade bd-example-modal-sm modal_ajax" id="mdl-loadingajax" tabindex="-1" role="dialog"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content loading">
-                <div id="comjuction_loading">
-                    @include('loading')
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END-MODAL -->
+
     @endsection
 
 
@@ -109,7 +98,7 @@
                             '<i class="fa fa-exchange"></i> &nbsp; ' + item.payment_title + ' </button>&nbsp;&nbsp;';
                     });
                     $("#isi_tipe_payment").html(uipay);
-                         get_session_payadmin();
+                    get_session_payadmin();
                 },
                 error: function (result) {
                     console.log("Cant Reach Payment Method");
@@ -161,7 +150,7 @@
                             isitext += '<li class="cgrey2">' + isides + '</li>';
                         });
 
-                        html +='<div class="card border-oren" id="cardpay' + item.id + '">' +
+                        html += '<div class="card border-oren" id="cardpay' + item.id + '">' +
                             '<div class="card-header payregis cardpay' + item.id + '" role="tab">' +
                             '<h6 class="mb-0 pdb1">' +
                             '<a class="payregis" data-toggle="collapse" data-parent="#list_paymentmethod" href="#collapseOne' + item.id + '" ' +
@@ -222,8 +211,8 @@
                     }
                     if (result.id_pay != "") {
                         $("#id_pay_method").val(result.id_pay);
-                          setTimeout(function () {
-                          pilihpay(result.id_pay);
+                        setTimeout(function () {
+                            pilihpay(result.id_pay);
                         }, 3000);
                     }
                 },

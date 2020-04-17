@@ -224,7 +224,7 @@ width: 100%;
 }
 
 .mg-pricing{
-    margin-top: 2%;
+    margin-top: 1em;
     padding-top: 2%;
     padding-left: 10%;
     padding-right: 10%;
@@ -309,14 +309,16 @@ right: 94.24%;
 top: 29px;
 bottom: 86.33%;
 }
+
 .card.cd-pricing:hover{
  border-style: solid;
 height: auto;
 margin-top: 3%;
- border-width: 3px;
+ border-width: 5px;
  border-color: #FF9A44;
  margin-top: 0em;
  border-radius: 10px;
+ opacity: 1 !important;
 }
 
 #shadow-pricing{
@@ -328,6 +330,10 @@ bottom: 62.85%;
 opacity: 1.4;
 }
 
+.hidepayment{
+    display: none;
+}
+
 #shadow-fiturq{
 position: absolute;
 left: 8.33%;
@@ -335,6 +341,12 @@ right: 65.6%;
 top: 12.6%;
 bottom: 62.85%;
 opacity: 2.4;
+}
+
+select.review{
+border-color: #efefef;
+border-radius: 8px;
+background-color: #fff !important;
 }
 
 .detail-fiturq{
@@ -434,8 +446,24 @@ margin-top: 5%;
 border-radius: 10px;
 }
 
+.back-pricing{
+        position: relative;
+    left: 6.5em;
+    top: 1.5em;
+}
+.panah-pricing{
+    position: relative;
+    left: 4em;
+    top: 1.4em;
+}
+
 .mgb-0px{
     margin-bottom: 0em;
+}
+
+.cd-pricing.active {
+box-shadow: 0px 0px 40px 10px rgb(255, 247, 170);
+border: 5px solid #FF9A44;
 }
 
 .cd-pricing {

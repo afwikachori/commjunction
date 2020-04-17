@@ -3,10 +3,11 @@
 @section('content')
 <nav class="navbar navbar-light nav-oren">
 </nav>
+
 <img src="/visual/vs-pricing.png" id="shadow-pricing">
 <a href="/admin/register2">
-    <img border="0" src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="/admin/register2" class="clight backarrow2">Back to Register</a>
+    <img border="0" src="/visual/left-arrow.png" class="panah-pricing">
+</a><a href="/admin/register2" class="clight back-pricing">Back to Register</a>
 
 <div class="container-fluid mg-pricing">
     <div class="row">
@@ -120,6 +121,9 @@
             url: "/get_pricing_com",
             type: "POST",
             dataType: "json",
+             beforeSend: function () {
+                $('#mdl-loadingajax').modal('show');
+            },
             success: function (status, code, data) {
                 console.log(status.data);
                 var html = '';
@@ -172,9 +176,15 @@
                             '<div class="row" style="padding-left:25%;"><small style="text-align:left;">' + subfitur + '</small></div></div></div></div>';
                 });
                 $('.price-ajax').html(html);
+                  setTimeout(function () {
+                    $('#mdl-loadingajax').modal('hide');
+                }, 4000);
                 cekawalpricing();
                 get_session_pricing();
-            }
+            },
+             error: function (result) {
+                console.log("Cant Show All Data Regis");
+            },
         });
     }
 
@@ -196,8 +206,12 @@
                     var idtime = result.payment_time;
                     $(".price-ajax").fadeIn(900);
                     $("#time-pricing" + idtime).css('font-weight', 'bold');
+                     $("#time-pricing" + idtime).css('background', 'linear-gradient(to right, rgb(251, 248, 234) 0%, rgb(251, 255, 199) 51%, rgb(255, 249, 225) 100%)');
                     $("#time-pricing" + idtime).css('color', '#2b4690');
-                    $(".pricing" + result.pricing_id).css("box-shadow", "0 0 20px yellow");
+                    // $(".pricing" + result.pricing_id).css("box-shadow", "0 0 20px yellow");
+                    $(".cd-pricing").css("opacity", "0.6");
+                    $(".pricing" + result.pricing_id).css("opacity", "1");
+                    $(".pricing" + result.pricing_id).addClass("active");
                     $(".isitime").val(idtime);
 
                     if (idtime === "1") {

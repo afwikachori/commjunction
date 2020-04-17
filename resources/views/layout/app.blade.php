@@ -62,6 +62,21 @@
         </div>
     </div>
 
+
+
+    <!-- MODAL LOADING AJAX -->
+    <div class="modal fade bd-example-modal-sm modal_ajax" id="mdl-loadingajax" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content loading">
+                <div id="comjuction_loading">
+                    @include('loading')
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END-MODAL -->
+
     <!--   Core JS Files   -->
     <script src="/js/jquery.3.2.1.min.js"></script>
     <!-- <script src="/js/jquery-3.4.1.slim.min.js"></script> -->

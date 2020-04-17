@@ -4,9 +4,9 @@
 <nav class="navbar navbar-light nav-oren">
 </nav>
 
-<a href="{{route('isi_payment')}}">
+<a href="/admin/payment" class="review_back">
     <img border="0" src="/visual/left-arrow.png" id="left_backpay">
-</a><a href="{{route('isi_payment')}}" class="clight backarrow1">Back to Payment</a>
+</a><a href="/admin/payment" class="clight backarrow1 review_back">Back to Previous</a>
 
 <div class="contain-pay">
     <div class="row">
@@ -81,11 +81,12 @@
 
                 </div>
                 <div class="col-md-5">
-                    <div class="form-group">
+                    <div class="form-group" style="width: 185px;">
                         <small class="clight2 mgb-05">Community Type</small>
                         <h6 class="cgrey1" id="etcjenis" style="display: none;">
                             -</h6>
-                        <select id="jenis_kom" class="form-control s13" name="jenis_kom" style="display: none;">
+                        <select id="jenis_kom" class="form-control s13 review" name="jenis_kom" style="display: none;"
+                            disabled>
                         </select>
                     </div>
 
@@ -135,12 +136,16 @@
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Payment Method</small>
+                        <small class="clight2 mgb-05 hidepayment">Payment Method</small>
                         <h6 class="cgrey1" id="judulpay"></h6>
                     </div>
 
-                    <button type="button" onclick="window.location='/FinalAdminRegis'" class="btn btn-oren btn-sm"
-                        lang="en" style="width: 100px; margin-top: 1em;">Finish</button>
+                    <form method="POST" id="form_create_community" action="{{route('FinalAdminRegis')}}">
+                        {{ csrf_field() }}
+                        <button type="submit" name="btn_finish_createcom" value="finish" class="btn btn-oren btn-sm"
+                            lang="en" style="width: 100px; margin-top: 1em;">Finish</button>
+                    </form>
+
 
                 </div> <!-- end col-6 -->
 
@@ -155,7 +160,7 @@
                         <h6 class="cgrey1" id="deskriprice"></h6>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group hidepayment">
                         <small class="clight2 mgb-05">Bank Name</small>
                         <div class="row">
                             <div class="col-4">
@@ -163,7 +168,7 @@
                             </div>
                             <div class="col">
                                 <img src="/img/loading.gif" id="imgpaymentr"
-                                    onerror="this.onerror=null;this.src='/img/fitur.png';">
+                                    onerror="this.onerror=null;this.src='/img/money.png';">
                             </div>
                         </div>
                     </div>
@@ -223,6 +228,9 @@
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
+            beforeSend: function () {
+                $('#mdl-loadingajax').modal('show');
+            },
             success: function (result) {
                 console.log(result);
 
@@ -254,15 +262,29 @@
                 }
                 var idpricing = result.payment.pricing_id;
                 var timepricing = result.payment.payment_time;
-                    get_pricing_selected(idpricing,timepricing);
+                get_pricing_selected(idpricing, timepricing);
                 get_selectedfitur(result.feature);
-                get_payment_selected(result.payment.payment_id);
+
+                setTimeout(function () {
+                    $('#mdl-loadingajax').modal('hide');
+                }, 4000);
+
+                if (result.free == "0") {
+                    $(".hidepayment").hide();
+                    $(".review_back").attr("href", "/admin/features");
+                } else {
+                    $(".review_back").attr("href", "/admin/payment");
+                    get_payment_selected(result.payment.payment_id);
+                }
 
 
             },
             error: function (result) {
-                console.log(result);
                 console.log("Cant Show All Data Regis");
+                $('#mdl-loadingajax').modal('hide');
+            },
+            complete: function (result) {
+                $('#mdl-loadingajax').modal('hide');
             }
         });
     }
@@ -305,7 +327,6 @@
             }
         });
     } //endfunction
-
 
     function get_selectedfitur(idfitur) {
 
@@ -352,8 +373,6 @@
 
     }
 
-
-
     function get_pricing_selected(idpricing, pricingtime) {
         // swal(idpricing);
         $.ajaxSetup({
@@ -366,6 +385,9 @@
             data: { 'id': idpricing },
             type: 'POST',
             datatype: 'JSON',
+            beforeSend: function () {
+                $('#mdl-loadingajax').modal('show');
+            },
             success: function (result) {
                 // console.log(result.data);
                 $.each(result.data, function (i, item) {
@@ -378,11 +400,11 @@
                     } else if (pricingtime == '2') {
                         $("#hargaprice").html(item.price_monthly);
                         $("#satuanwaktu").html("  / Monthly");
-                         $("#pricingtime").html("Month");
+                        $("#pricingtime").html("Month");
                     } else {
                         $("#hargaprice").html(item.price_annual);
                         $("#satuanwaktu").html(" / Year");
-                         $("#pricingtime").html("Annual");
+                        $("#pricingtime").html("Annual");
                     }
 
                 });
@@ -390,40 +412,42 @@
 
             error: function (result) {
                 console.log("Cant Show selected Pricing!");
-            }
+            },
 
         });
     }
 
-        function get_payment_selected(id_pay) {
+    function get_payment_selected(id_pay) {
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '/getSelectedPayment',
-                    data: { 'id': id_pay },
-                    type: 'POST',
-                    datatype: 'JSON',
-                    success: function (result) {
-                        // console.log(result.data);
-                        $.each(result.data, function (i, item) {
-                            $("#judulpay").html(item.payment_title);
-                            $("#bankname").html(item.payment_bank_name);
-                            var payimg = server_cdn + cekimage_cdn(item.icon);
-                            $("#imgpaymentr").attr("src", payimg);
-                        });
-                    },
-
-                    error: function (result) {
-                        console.log("Cant Show selected Pricing!");
-                    }
-
-                });
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+        $.ajax({
+            url: '/getSelectedPayment',
+            data: { 'id': id_pay },
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                // console.log(result.data);
+                $.each(result.data, function (i, item) {
+                    $("#judulpay").html(item.payment_title);
+                    $("#bankname").html(item.payment_bank_name);
+                    var payimg = server_cdn + cekimage_cdn(item.icon);
+                    $("#imgpaymentr").attr("src", payimg);
+                });
+                 $(".hidepayment").show();
+                $('#mdl-loadingajax').modal('hide');
+            },
+            error: function (result) {
+                console.log("Cant Show selected Pricing!");
+                $('#mdl-loadingajax').modal('hide');
+            }
+
+        });
+
+    }
 
 
     function showPass() {

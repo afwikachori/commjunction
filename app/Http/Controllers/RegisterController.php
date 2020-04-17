@@ -488,12 +488,12 @@ class RegisterController extends Controller
 
         $ses3  = session()->get('data_pricing');
 
-        if($ses3['price'] == "0"){
-        session()->put('data_idpay', 0);
-        return redirect('admin/review');
-        }else{
-        return redirect('admin/payment');
-    }
+        if ($ses3['price'] == "0") {
+            session()->put('data_idpay', 0);
+            return redirect('admin/review');
+        } else {
+            return redirect('admin/payment');
+        }
     }
 
 
@@ -740,17 +740,14 @@ class RegisterController extends Controller
 
 
     // FINAL REGISTRASION - ADMIN COMMUNITY
-    public function FinalAdminRegis()
+    public function FinalAdminRegis(Request $request)
     {
-
+        $input = $request->all();
         $idpay = session()->get('data_idpay');
         $ses1  = session()->get('data_regis1');
         $ses2  = session()->get('data_regis2');
         $ses3  = session()->get('data_pricing');
         $ses4  = session()->get('data_fitur');
-
-        $back_final = session()->get('sesback_finalregis_admin');
-
         $dtpay = [
             'payment_title' => 'Pembayaran Pendaftaran Community',
             'pricing_id'    => $ses3['pricing_id'],
@@ -764,50 +761,18 @@ class RegisterController extends Controller
             'feature'  => $ses4,
             'payment'  => $dtpay,
         ];
-
-        // dd($datafinal);
+        // return $datafinal;
 
         $url = env('SERVICE') . 'registration/adcommcreate';
         $client = new \GuzzleHttp\Client();
-
         try {
             $response = $client->request('POST', $url, [
                 'form_params' => $datafinal
             ]);
-        } catch (RequestException $exception) {
-            $response = $exception->getResponse();
-        }
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-
-        // dd($json);
-
-        if ($json['success'] == true) {
-            session()->forget('data_regis1');
-            session()->forget('data_regis1show');
-            session()->forget('data_idpay');
-            session()->forget('data_regis1');
-            session()->forget('data_regis2');
-            session()->forget('data_pricing');
-            session()->forget('listfitur');
-            session()->forget('pricing_id');
-            session()->forget('data_idpay');
-            session()->forget('datafitur');
-            session()->forget('data_fitur');
-            session()->forget('sesback_finalregis_admin');
-            session()->forget('list_payment');
-            session()->forget('data_idpay');
-            session()->forget('id_pay_type');
-
-            // return view('admin/finish');
-            return view('admin/loading_creating');
-        } else {
-
-            if ($json['status'] == 500) {
-                alert()->error('Internal server error, try again by clicking finish button', 'Oh Sorry!');
-                return redirect('admin/finalreview')->with('fadmin', $back_final);
-            } else if ($json['status'] == 400) {
+            if ($json['success'] == true) {
                 session()->forget('data_regis1');
                 session()->forget('data_regis1show');
                 session()->forget('data_idpay');
@@ -824,11 +789,24 @@ class RegisterController extends Controller
                 session()->forget('data_idpay');
                 session()->forget('id_pay_type');
 
-                alert()->error('Check your email, if you dont get message from us please Repeat your registration ', 'Process was interrupted !');
-                return view('admin/login');
-            } //end-else
-
-        } //end sukses = false
+                // return view('admin/finish');
+                return view('admin/loading_creating');
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -992,7 +970,6 @@ class RegisterController extends Controller
             'admin'     => $ses2,
             'feature'   => $ses4,
             'payment'   => $dtpay,
-            // 'pricing_id'   => $ses5,
             'free'      => $ses3['price']
         ];
         session()->put('sesback_finalregis_admin', $datafinal);
