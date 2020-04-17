@@ -32,10 +32,6 @@ class RegisterController extends Controller
         return view('admin/features');
     }
 
-    public function registerSixView()
-    {
-        return view('admin/register6');
-    }
 
     public function logoutssoView()
     {
@@ -55,6 +51,11 @@ class RegisterController extends Controller
     public function paymentMethodRegisView()
     {
         return view('admin/payment_method');
+    }
+
+    public function ReviewRegisView()
+    {
+        return view('admin/final_review_regis');
     }
 
 
@@ -340,22 +341,22 @@ class RegisterController extends Controller
         $input = $request->all();
         $paytime = $input['payment_time'];
         $idprice = $input['idprice'];
+        // return $input;
 
         $data = [
             'pricing_id'   => $idprice,
-            'payment_time' => $paytime
+            'payment_time' => $paytime,
+            'price'        => $input['harganya']
         ];
 
         $arr = json_encode($data);
         session()->put('data_pricing', $data);
-        session()->put('fiturpilih', $idprice); //for review final
 
         return redirect('/admin/features');
     }
 
     public function get_list_feature_regis()
     {
-
         if (session()->has('data_pricing')) {
             $dt_pricing = session()->get('data_pricing');
         } else {
@@ -482,12 +483,20 @@ class RegisterController extends Controller
             $data =  json_decode(json_encode($ar));
             array_push($arry, $data);
         }
-
         session()->put('data_fitur', $arry);
         session()->put('listfitur', $id);
 
+        $ses3  = session()->get('data_pricing');
+
+        if($ses3['price'] == "0"){
+        session()->put('data_idpay', 0);
+        return redirect('admin/review');
+        }else{
         return redirect('admin/payment');
     }
+    }
+
+
 
     public function get_payment_method_regis()
     {
@@ -782,7 +791,7 @@ class RegisterController extends Controller
             session()->forget('data_regis2');
             session()->forget('data_pricing');
             session()->forget('listfitur');
-            session()->forget('fiturpilih');
+            session()->forget('pricing_id');
             session()->forget('data_idpay');
             session()->forget('datafitur');
             session()->forget('data_fitur');
@@ -806,7 +815,7 @@ class RegisterController extends Controller
                 session()->forget('data_regis2');
                 session()->forget('data_pricing');
                 session()->forget('listfitur');
-                session()->forget('fiturpilih');
+                session()->forget('pricing_id');
                 session()->forget('data_idpay');
                 session()->forget('datafitur');
                 session()->forget('data_fitur');
@@ -963,22 +972,13 @@ class RegisterController extends Controller
     }
 
 
-
-
-
-    public function ReviewFinal(Request $request)
+    public function GetAllDataRegisAdmin()
     {
-        $idpay = $request['id_pay_method'];
-        $idtipepay = $request['id_pay_type'];
-        session()->put('data_idpay', $idpay);
-        session()->put('id_pay_type', $idtipepay);
-
-        $idpay = session()->get('data_idpay');
         $ses1 = session()->get('data_regis1');
         $ses2 = session()->get('data_regis2');
         $ses3 = session()->get('data_pricing');
         $ses4 = session()->get('listfitur');
-        $ses5 = session()->get('fiturpilih');
+        $idpay = session()->get('data_idpay');
 
         $dtpay = [
             'payment_title' => 'Pembayaran Pendaftaran Community',
@@ -992,19 +992,25 @@ class RegisterController extends Controller
             'admin'     => $ses2,
             'feature'   => $ses4,
             'payment'   => $dtpay,
-            'fiturid'   => $ses5
+            // 'pricing_id'   => $ses5,
+            'free'      => $ses3['price']
         ];
-        $arr = [];
+        session()->put('sesback_finalregis_admin', $datafinal);
+
+        return $datafinal;
+    }
 
 
-        $dec = json_decode(json_encode($datafinal), true);
-        array_push($arr, $dec);
 
-        session()->put('sesback_finalregis_admin', $arr);
+    public function ReviewFinal(Request $request)
+    {
+        $idpay = $request['id_pay_method'];
+        $idtipepay = $request['id_pay_type'];
 
-        // dd($arr);
-        return redirect('admin/finalreview')->with('fadmin', $arr);
-        // return view('admin/register6',['fadmin'=> $arr]);
+        session()->put('data_idpay', $idpay);
+        session()->put('id_pay_type', $idtipepay);
+
+        return redirect('admin/review');
     }
 
 
@@ -1018,7 +1024,7 @@ class RegisterController extends Controller
         session()->forget('data_regis2');
         session()->forget('data_pricing');
         session()->forget('listfitur');
-        session()->forget('fiturpilih');
+        session()->forget('pricing_id');
         session()->forget('data_idpay');
         session()->forget('datafitur');
         session()->forget('data_fitur');
@@ -1120,15 +1126,15 @@ class RegisterController extends Controller
 
     public function session_backfitur()
     {
-        $ses_getfitur = session()->get('fiturpilih');
-        // return $ses_getfitur;
-        //get data pricing untuk fitur
+        $ses_pricing = session()->get('data_pricing');
+        $id_pricing = $ses_pricing['pricing_id'];
+
         $url = env('SERVICE') . 'registration/feature';
 
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', $url, [
             'form_params' => [
-                'pricing_id' => $ses_getfitur
+                'pricing_id' => $id_pricing
             ]
         ]);
         $response = $response->getBody()->getContents();

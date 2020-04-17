@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Review')
 @section('content')
 <nav class="navbar navbar-light nav-oren">
 </nav>
@@ -10,9 +10,6 @@
 
 <div class="contain-pay">
     <div class="row">
-
-        @foreach(Session::get('fadmin') as $dt)
-
         <div class="col-md">
             <h3 class="cgrey" lang="en" id="judul_finalregis">Verify</h3>
             <small class="clight" data-lang-token="reviewadmin">Here we are, that is the last step you have seen. Please
@@ -27,24 +24,24 @@
                 <div class="col-7">
                     <div class="form-group">
                         <small class="clight2 mgb-05">Full Name</small>
-                        <h6 class="cgrey1">{{ $dt['admin']['full_name'] }}</h6>
+                        <h6 class="cgrey1" id="fullname">-</h6>
                     </div>
 
                     <div class="form-group">
                         <small class="clight2 mgb-05">Address</small>
-                        <h6 class="cgrey1">{{ $dt['admin']['alamat'] }}</h6>
+                        <h6 class="cgrey1" id="alamat">-</h6>
                     </div>
                 </div>
 
                 <div class="col-5">
                     <div class="form-group">
                         <small class="clight2 mgb-05">Phone Number</small>
-                        <h6 class="cgrey1">{{ $dt['admin']['notelp'] }}</h6>
+                        <h6 class="cgrey1" id="phone">-</h6>
                     </div>
 
                     <div class="form-group">
                         <small class="clight2 mgb-05">Username</small>
-                        <h6 class="cgrey1">{{ $dt['admin']['user_name'] }}</h6>
+                        <h6 class="cgrey1" id="username">-</h6>
                     </div>
                 </div>
             </div>
@@ -53,7 +50,7 @@
                 <div class="col-md-7">
                     <div class="form-group">
                         <small class="clight2 mgb-05">Email</small>
-                        <h6 class="cgrey1">{{ $dt['admin']['email'] }}</h6>
+                        <h6 class="cgrey1" id="email">-</h6>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -62,7 +59,7 @@
                         <div class="row">
                             <div class="col-7">
                                 <input type="password" id="password_admin_review" readonly
-                                    class="form-control-plaintext cgrey1 h6" value="{{ $dt['admin']['password'] }}">
+                                    class="form-control-plaintext cgrey1 h6" value="">
                             </div>
                             <div class="col-2">
                                 <button type="button" id="btn_showpass_review" onclick="showPass()">
@@ -79,7 +76,7 @@
                 <div class="col-md-7">
                     <div class="form-group">
                         <small class="clight2 mgb-05">Community Name</small>
-                        <h6 class="cgrey1">{{ $dt['community']['name'] }}</h6>
+                        <h6 class="cgrey1" id="komunitas_name">-</h6>
                     </div>
 
                 </div>
@@ -87,9 +84,8 @@
                     <div class="form-group">
                         <small class="clight2 mgb-05">Community Type</small>
                         <h6 class="cgrey1" id="etcjenis" style="display: none;">
-                            {{ $dt['community']['cust_jenis_comm'] }}</h6>
-                        <select id="jeniscom2" class="form-control s13" name="jeniscom2" s
-                            style="display: none;">
+                            -</h6>
+                        <select id="jenis_kom" class="form-control s13" name="jenis_kom" style="display: none;">
                         </select>
                     </div>
 
@@ -99,8 +95,8 @@
             <div class="row">
                 <div class="form-group col-md-10">
                     <small class="clight2 mgb-05">Description Community</small>
-                    <h6 class="cgrey1 s13">
-                        {{ $dt['community']['description'] }}</h6>
+                    <h6 class="cgrey1 s13" id="deskripsi_kom">
+                        -
                 </div>
             </div>
 
@@ -128,14 +124,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <small class="clight2 mgb-05">Pricing Time</small>
-                        <h6 class="cgrey1" id="pricingtime">
-                            @if ($dt["payment"]["payment_time"] === '1')
-                            <div lang="en">Onetime</div>
-                            @elseif ($dt["payment"]["payment_time"] === '2')
-                            <div lang="en">Monthly</div>
-                            @else
-                            <div lang="en">Annual</div>
-                            @endif
+                        <h6 class="cgrey1" id="pricingtime">-
                         </h6>
                     </div>
 
@@ -152,8 +141,6 @@
 
                     <button type="button" onclick="window.location='/FinalAdminRegis'" class="btn btn-oren btn-sm"
                         lang="en" style="width: 100px; margin-top: 1em;">Finish</button>
-                            <!-- {{-- <a href="{{ route('FinalAdminRegis') }}" type="button" class="btn btn-oren btn-sm" lang="en"
-                                style="width: 100px; margin-top: 1em;">Finish</a> --}} -->
 
                 </div> <!-- end col-6 -->
 
@@ -165,7 +152,7 @@
 
                     <div class="form-group">
                         <small class="clight2 mgb-05">Package Description</small>
-                        <h6 class="cgrey1" id="deskriprice s13"></h6>
+                        <h6 class="cgrey1" id="deskriprice"></h6>
                     </div>
 
                     <div class="form-group">
@@ -184,13 +171,12 @@
                 </div>
             </div> <!-- //end pay -->
         </div> <!-- end-col kanan -->
-        @endforeach
     </div> <!-- end-row -->
 </div> <!-- end-contain -->
 
 
 <div class="footer-admin">
-    <div class="row" style="margin-top: 1em;">
+    <div class="row">
         <div class="col">
             <img src="/visual/commjuction.png" id="com_superadminlogin">
             <div class="textfooter-kiri">
@@ -209,96 +195,120 @@
         </div>
     </div>
 </div>
+
+
 @endsection
 
 
 
 @section('script')
 <script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
+    var server_cdn = $("#server_cdn").val();
+    var noimg = '/img/fiturs.png';
 
     $(document).ready(function () {
-        get_jenis();
-        get_selectedfitur();
-        get_pricenyid();
-        get_paybyid();
+        GetAllDataRegisAdmin();
 
     });
 
 
-    function showPass() {
-        var a = document.getElementById("password_admin_review");
-        if (a.type == "password") {
-            a.type = "text";
-        } else {
-            a.type = "password";
-        }
+    function GetAllDataRegisAdmin() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/GetAllDataRegisAdmin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+
+                var komunitas = result.community;
+                $("#komunitas_name").html(komunitas.name);
+                $("#deskripsi_kom").html(komunitas.description);
+
+                var admin = result.admin;
+                $("#fullname").html(admin.full_name);
+                $("#alamat").html(admin.alamat);
+                $("#email").html(admin.email);
+                $("#phone").html(admin.notelp);
+                $("#username").html(admin.user_name);
+                $("#password_admin_review").val(admin.password);
+
+                if (komunitas.cust_jenis_comm != null) {
+                    $("#etcjenis").html(komunitas.cust_jenis_comm);
+                    $('#etcjenis').show();
+                    $('#jenis_kom').hide();
+                } else {
+                    var idjenis = komunitas.jenis_comm_id;
+                    get_jenis(idjenis);
+                    // swal(komunitas.jenis_comm_id);
+                    // $('#jenis_kom').val(komunitas.jenis_comm_id).attr("selected", "selected");
+                    // $('select[name="jenis_kom"]').val(idjenis);
+                    // $("#jenis_kom").val(komunitas.jenis_comm_id);
+                    $('#etcjenis').hide();
+                    $('#jenis_kom').show();
+                }
+                var idpricing = result.payment.pricing_id;
+                var timepricing = result.payment.payment_time;
+                    get_pricing_selected(idpricing,timepricing);
+                get_selectedfitur(result.feature);
+                get_payment_selected(result.payment.payment_id);
+
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show All Data Regis");
+            }
+        });
     }
 
+    function get_jenis(idjenis) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "/get_jenis_com",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                var data = result;
 
-    //dropdown get jenis komunitas
-    function get_jenis() {
-        var a = '{!! $dt["community"]["jenis_comm_id"] !!}';
+                $('#jenis_kom').empty();
+                $('#jenis_kom').append("<option disabled> --- </option>");
 
-        if (a === '1') {
-            $('#etcjenis').show();
-            $('#jeniscom2').hide();
-        } else {
-            $('#etcjenis').hide();
-            $('#jeniscom2').show();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                for (var i = data.length - 1; i >= 0; i--) {
+                    $('#jenis_kom').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].jenis_comm, "</option>"));
                 }
-            });
-            $.ajax({
-                url: "/get_jenis_com",
-                type: "POST",
-                dataType: "json",
-                success: function (status, code, data) {
-                    // console.log(status);
+                //Short Function Ascending//
+                $("#jenis_kom").html($('#jenis_kom option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
 
-                    // if (status.success == true) {
-                        var data = status;
+                $("#jenis_kom").get(0).selectedIndex = 0; //e.preventDefault();
+                // }
+                const OldValue = '{{old("' + idjenis + '")}}';
 
-                        $('#jeniscom2').empty();
-                        $('#jeniscom2').append("<option disabled> --- </option>");
-
-                        for (var i = data.length - 1; i >= 0; i--) {
-                            $('#jeniscom2').append("<option value=\"".concat(data[i].id, "\">").concat(data[i].jenis_comm, "</option>"));
-                        }
-                        //Short Function Ascending//
-                        $("#jeniscom2").html($('#jeniscom2 option').sort(function (x, y) {
-                            return $(x).val() < $(y).val() ? -1 : 1;
-                        }));
-
-                        $("#jeniscom2").get(0).selectedIndex = 0; //e.preventDefault();
-                    // }
-                    const OldValue = '{{old("jeniscom2")}}';
-
-                    if (OldValue !== '') {
-                        $('#jeniscom2').val(OldValue);
-                    }
-                    var isijenis = "{!! $dt['community']['jenis_comm_id'] !!}";
-                    var isirange = "{!! $dt['community']['range_member'] !!}";
-
-                    $('#jeniscom2').val(isijenis);
-                    $('select[name="jeniscom2"]').val(isijenis);
-                    $('select[name="range_member2"]').val(isirange);
-
+                if (OldValue !== '') {
+                    $('#jenis_kom').val(idjenis);
                 }
-            });
-        }
+
+                $('#jenis_kom').val(idjenis);
+                $('select[name="jenis_kom"]').val(idjenis);
+
+            }
+        });
     } //endfunction
 
 
+    function get_selectedfitur(idfitur) {
 
-    function get_selectedfitur() {
-        var val = '{!! json_encode($dt["feature"]) !!}';
-        var listfitur = JSON.parse(val);
-        // alert(val);
-        // console.log("fitur dipilih : "+listfitur);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -306,7 +316,7 @@
         });
         $.ajax({
             url: '/getSelectedFitur',
-            data: { 'id': listfitur },
+            data: { 'id': idfitur },
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
@@ -315,15 +325,15 @@
 
                 $.each(result.data, function (i, item) {
                     html += '<div class="col-3">' +
-                        '<div class="card cardku" style="width: 6.5rem; height: 6.5rem;">' +
+                        '<div class="card cardku" style="width: 6.5rem; height: 6.5rem; border-radius:10px;">' +
                         '<div class="card-body" style="padding: 0.5em !important;">' +
                         '<div class="roundcheck2">' +
                         '<input type="checkbox" disabled class="boxfitur" name="feature_id[]" value="' + item.id + '" id="fitur' + item.id + '"/>' +
                         '<label for="fitur' + item.id + '"></label>' +
                         '</div><center>' +
-                        '<img class="rounded-circle img-fluid" src="' + server_cdn + item.logo + '" style="width: 35px;'+
-                        'height:auto; margin-bottom:0.5em; margin-top:0.6em;"'+
-                        'onerror="errorImg()">' +
+                        '<img class="rounded-circle img-fluid" src="' + server_cdn + cekimage_cdn(item.logo) + '" style="width: 35px;' +
+                        'height:auto; margin-bottom:0.5em; margin-top:0.6em;"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '<h6 class="clight s13 text-wrap width-90">' + item.title + '</h6>' +
                         '</center></div></div></div>';
 
@@ -342,16 +352,10 @@
 
     }
 
-    //ON ERROR IMAGE
-    function errorImg() {
-        $('.rounded-circle').attr('src', '/img/fitur.png');
-    }
 
 
-    function get_pricenyid() {
-        var val = '{!! json_encode($dt["payment"]["pricing_id"]) !!}';
-        var listfitur = [JSON.parse(val)];
-
+    function get_pricing_selected(idpricing, pricingtime) {
+        // swal(idpricing);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -359,7 +363,7 @@
         });
         $.ajax({
             url: '/getSelectedPrice',
-            data: { 'id': listfitur },
+            data: { 'id': idpricing },
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
@@ -367,51 +371,20 @@
                 $.each(result.data, function (i, item) {
                     $("#judulprice").html(item.title);
                     $("#deskriprice").html(item.description);
-    if ({!! $dt["payment"]["payment_time"]!!} == '1'){
-                    $("#hargaprice").html(rupiah(item.grand_pricing));
-                    $("#satuanwaktu").html("  / Once");
-                }else if({!!$dt["payment"]["payment_time"]!!} == '2'){
-            $("#hargaprice").html(item.price_monthly);
-            $("#satuanwaktu").html("  / Month");
-        }else {
-            $("#hargaprice").html(item.price_annual);
-            $("#satuanwaktu").html(" / Year");
-        }
+                    if (pricingtime == '1') {
+                        $("#hargaprice").html(rupiah(item.grand_pricing));
+                        $("#satuanwaktu").html("  / Once");
+                        $("#pricingtime").html("Onetime");
+                    } else if (pricingtime == '2') {
+                        $("#hargaprice").html(item.price_monthly);
+                        $("#satuanwaktu").html("  / Monthly");
+                         $("#pricingtime").html("Month");
+                    } else {
+                        $("#hargaprice").html(item.price_annual);
+                        $("#satuanwaktu").html(" / Year");
+                         $("#pricingtime").html("Annual");
+                    }
 
-    });
-      },
-
-    error: function (result) {
-        console.log("Cant Show selected Pricing!");
-    }
-
-});
-
-  }
-
-
-
-    function get_paybyid() {
-        var val = '{!! json_encode($dt["payment"]["payment_id"]) !!}';
-        var idpay = [JSON.parse(val)];
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/getSelectedPayment',
-            data: { 'id': idpay },
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                // console.log(result.data);
-                $.each(result.data, function (i, item) {
-                    $("#judulpay").html(item.payment_title);
-                    $("#bankname").html(item.payment_bank_name);
-                    var payimg = server_cdn + item.icon;
-                    $("#imgpaymentr").attr("src", payimg);
                 });
             },
 
@@ -420,7 +393,46 @@
             }
 
         });
+    }
 
+        function get_payment_selected(id_pay) {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/getSelectedPayment',
+                    data: { 'id': id_pay },
+                    type: 'POST',
+                    datatype: 'JSON',
+                    success: function (result) {
+                        // console.log(result.data);
+                        $.each(result.data, function (i, item) {
+                            $("#judulpay").html(item.payment_title);
+                            $("#bankname").html(item.payment_bank_name);
+                            var payimg = server_cdn + cekimage_cdn(item.icon);
+                            $("#imgpaymentr").attr("src", payimg);
+                        });
+                    },
+
+                    error: function (result) {
+                        console.log("Cant Show selected Pricing!");
+                    }
+
+                });
+
+            }
+
+
+    function showPass() {
+        var a = document.getElementById("password_admin_review");
+        if (a.type == "password") {
+            a.type = "text";
+        } else {
+            a.type = "password";
+        }
     }
 
 

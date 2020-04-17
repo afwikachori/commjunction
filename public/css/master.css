@@ -225,7 +225,7 @@ width: 100%;
 
 .mg-pricing{
     margin-top: 2%;
-    padding-top: 3%;
+    padding-top: 2%;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -259,8 +259,8 @@ bottom: 86.33%;
 
 .backarrow2{
 position: absolute;
-left: 13%;
-top: 10%;
+left: 10%;
+top: 9%;
 bottom: 86.33%;
 }
 
@@ -275,7 +275,7 @@ bottom: 86.33%;
 position: fixed;
     left: 4%;
     right: 94.24%;
-    top: 11.5%;
+    top: 9.5%;
     bottom: 86.33%;
 }
 
@@ -440,8 +440,8 @@ border-radius: 10px;
 
 .cd-pricing {
 width: 65%;
-min-width: 290px;
-min-height: 390px;
+min-width: 260px;
+min-height: 355px;
 height: auto;
 margin-top: 10%;
 border-radius: 10px;
@@ -452,19 +452,26 @@ background-size: cover;
 }
 
 .card-harga{
-font-size: 35px;
+font-size:27px;
 }
 
 .clr-oren{
   background: linear-gradient(109.6deg, #FC6076 -2.66%, #FF9A44 102.89%);
-  border-radius: 60px;
+  border-radius: 30px;
   color: white;
-  width: 150px;
+  width: 120px;
   text-align: center;
 }
 
 
+.card-body.pricing{
+    padding: 1rem 0.5rem !important;
+}
 
+.pd-subf{
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 
 #myImg:hover {opacity: 0.7;}

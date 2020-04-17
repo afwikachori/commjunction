@@ -198,7 +198,11 @@ Route::post('getDetailPay', 'RegisterController@getDetailPay')->name('getDetailP
 Route::post('getpayment_method', 'RegisterController@getpayment_method')->name('getpayment_method');
 Route::post('sendIdPayment', 'RegisterController@sendIdPayment')->name('sendIdPayment');
 // register 6 - Final Regis Admin
-Route::get('admin/register6','RegisterController@registerSixView')->name('registerSixView');
+Route::get('admin/review', 'RegisterController@ReviewRegisView')->name('admin/review');
+Route::post('GetAllDataRegisAdmin', 'RegisterController@GetAllDataRegisAdmin')->name('GetAllDataRegisAdmin');
+
+
+Route::get('admin/review', 'RegisterController@ReviewRegisView')->name('admin/review');
 Route::post('ReviewFinal','RegisterController@ReviewFinal')->name('ReviewFinal');
 Route::post('getSelectedFitur', 'RegisterController@getSelectedFitur')->name('getSelectedFitur');
 Route::post('getSelectedPrice', 'RegisterController@getSelectedPrice')->name('getSelectedPrice');
