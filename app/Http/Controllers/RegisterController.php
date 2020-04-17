@@ -258,13 +258,22 @@ class RegisterController extends Controller
                     'user_name' => $in_username
                 ]
             ]);
-        } catch (RequestException $exception) {
-            $response = $exception->getResponse();
-        }
 
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
         return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function cektelfon_admin(Request $request)
@@ -280,14 +289,23 @@ class RegisterController extends Controller
                     'notelp' => $in_username
                 ]
             ]);
-        } catch (RequestException $exception) {
-            $response = $exception->getResponse();
-        }
 
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
         return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
@@ -304,14 +322,23 @@ class RegisterController extends Controller
                     'email' => $in
                 ]
             ]);
-        } catch (RequestException $exception) {
-            $response = $exception->getResponse();
-        }
 
         $response = $response->getBody()->getContents();
         $json = json_decode($response, true);
 
         return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
 
