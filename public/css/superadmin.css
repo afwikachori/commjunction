@@ -123,6 +123,9 @@ body::-webkit-scrollbar-thumb {
 .width-300 {
     width: 300px !important;
 }
+.width-350 {
+    width: 350px !important;
+}
 .width-200 {
     width: 200px !important;
 }

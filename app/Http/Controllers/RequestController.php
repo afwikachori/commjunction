@@ -622,4 +622,91 @@ class RequestController extends Controller
     }
 
 
+
+
+    public function editNews($requestImage, $url, $token)
+    {
+
+        $client = new \GuzzleHttp\Client();
+        $reqcollect = [
+
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'title',
+                    'contents' =>  $requestImage["title"]
+                ],
+                [
+                    'name'     => 'content',
+                    'contents' =>  $requestImage["content"]
+                ],
+                [
+                    'name'      => 'image',
+                    'contents'  => $requestImage["image"],
+                    'filename'  => $requestImage["filename"]
+                ],
+                [
+                    'name'     => 'news_id',
+                    'contents' =>  $requestImage["id"]
+                ],
+                [
+                    'name'     => 'scala',
+                    'contents' =>  $requestImage["scala"]
+                ],
+                [
+                    'name'     => 'url',
+                    'contents' =>  $requestImage["url"]
+                ]
+            ]
+        ];
+
+        $request = $client->request('POST', $url, $reqcollect);
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
+    public function AddNews($requestImage, $url, $token)
+    {
+
+        $client = new \GuzzleHttp\Client();
+
+        $reqcollect = [
+
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'title',
+                    'contents' =>  $requestImage["title"]
+                ],
+                [
+                    'name'     => 'content',
+                    'contents' =>  $requestImage["content"]
+                ],
+                [
+                    'name'      => 'image',
+                    'contents'  => $requestImage["image"],
+                    'filename'  => $requestImage["filename"]
+                ],
+                [
+                    'name'     => 'scala',
+                    'contents' =>  $requestImage["scala"]
+                ],
+                [
+                    'name'     => 'url',
+                    'contents' =>  $requestImage["url"]
+                ]
+            ]
+        ];
+
+
+        $request = $client->request('POST', $url, $reqcollect);
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
+
 } //END_CLASS

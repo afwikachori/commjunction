@@ -43,6 +43,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/transaction', 'AdminCommController@TransactionManagementViewAdmin')->name('/transaction');
     Route::get('/module_report', 'AdminCommController@ModuleReportManagementView')->name('/module_report');
     Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
+    //NEWS
+    Route::get('/news_management', 'ModuleController@NewsManagementView')->name('/news_management');
+    Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
+    Route::get('/get_detail_news/{id_news}', 'ModuleController@getDetailNews')->name('/get_detail_news');
 
 
     // admin/settings
@@ -55,6 +59,22 @@ Route::prefix('admin')->group(function () {
     }); //end-admin
 
     //POST
+
+    // NEWS MODULE
+    Route::post('/tabel_news_management', 'ModuleController@tabel_news_management')->name('/tabel_news_management');
+    Route::post('/get_detail_news', 'ModuleController@getDetailNews')->name('/get_detail_news');
+    Route::post('get_data_edit', 'ModuleController@getDataEdit')->name('get_data_edit');
+    Route::post('edit_news_management', 'ModuleController@edit_news_management')->name('edit_news_management');
+    Route::post('add_news_management', 'ModuleController@add_news_management')->name('add_news_management');
+    Route::post('publish_news', 'ModuleController@PublishNews')->name('publish_news');
+    Route::post('scrape_news', 'ModuleController@ScrapeNews')->name('scrape_news');
+    Route::post('get_headline_news', 'ModuleController@getHeadlineNews')->name('get_headline_news');
+    Route::post('tabel_last_news', 'ModuleController@LastNews')->name('tabel_last_news');
+    Route::post('table_topvisit_news', 'ModuleController@TopVisitNews')->name('table_topvisit_news');
+    Route::post('table_toploved_news', 'ModuleController@TopLovedNews')->name('table_toploved_news');
+    Route::post('publish_headline', 'ModuleController@PublishHeadline')->name('publish_headline');
+
+
 
     Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');
     Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
@@ -239,9 +259,32 @@ Route::prefix('subscriber')->group(function () {
     Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->name('/dashboard_setting');
 
 
-    //POST
-    Route::post('get_top_visit_club', 'SubscriberController@get_top_visit_club')->name('get_top_visit_club');
 
+    // MODULE ROUTE
+    //FRIENDS
+    Route::get('/friend_list', 'ModuleController@FriendList')->name('/friend_list');
+    Route::get('/view_profile/{friend_id}', 'ModuleController@friendProfile')->name('/view_profile');
+
+    //NEWS
+    Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
+    Route::get('/detail_news/{id_news}', 'ModuleController@DetailNews')->name('/detail_news');
+
+    // FRIEND MODULE
+
+    Route::post('/tabel_friend_management', 'ModuleController@tabel_friend_management')->name('/tabel_friend_management');
+    Route::post('/view_profile', 'ModuleController@friendProfile')->name('/view_profile');
+    Route::post('/friend_send_message', 'ModuleController@SendMessage')->name('friend_send_message');
+
+    // NEWS MODULE
+
+    Route::post('/table_news_list', 'ModuleController@table_news_list')->name('/table_news_list');
+
+
+
+    //POST
+    Route::post('add_friend_suggest_subs', 'SubscriberController@add_friend_suggest_subs')->name('add_friend_suggest_subs');
+
+    Route::post('get_top_visit_club', 'SubscriberController@get_top_visit_club')->name('get_top_visit_club');
     Route::post('get_top_player', 'SubscriberController@get_top_player')->name('get_top_player');
     Route::post('get_topvisit_news', 'SubscriberController@get_topvisit_news')->name('get_topvisit_news');
     Route::post('get_love_news', 'SubscriberController@get_love_news')->name('get_love_news');
@@ -281,8 +324,6 @@ Route::get('subscriber/subs_community', 'SubscriberController@registerCommView')
 Route::get('subscriber/subs_payment', 'SubscriberController@registerPaymentView')->name('subscriber/subs_payment');
 //POST
 Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->name('registerSubscriber');
-
-
 
 
 

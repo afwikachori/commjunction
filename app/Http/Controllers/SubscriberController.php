@@ -1637,6 +1637,57 @@ class SubscriberController extends Controller
 
 
 
+    public function add_friend_suggest_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+        $url = env('SERVICE') . 'module/friend/addfriend';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+
+        // dd($input);
+
+        $bodyku = json_encode([
+            "user_id"     => $input['user_id_subs'],
+        ]);
+
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            if ($json['success'] == true) {
+                alert()->success('Add friend request successfully sent', 'Sent')->autoclose(4000);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
+
+
 
 
 

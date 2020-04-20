@@ -76,7 +76,8 @@
     </div>
     <div class="col-md-8">
         <div class="card pas_tengah" id="nodata_dash_artikel" style="height:473px;">
-            <h2 class="clight pas_tengah" data-lang-token="nodata_dash_artikel" lang="en">No Data Articles Available</h2>
+            <h2 class="clight pas_tengah" data-lang-token="nodata_dash_artikel" lang="en">No Data Articles Available
+            </h2>
         </div>
         <div class="row" id="idashbord_news" style="display: none;">
 
@@ -148,7 +149,7 @@
 
             <div class="card-body sumari">
                 <div class="card pas_tengah" id="nodata_love_news">
-                    <h4 class="clight pas_tengah"  lang="en">No Data Available</h3>
+                    <h4 class="clight pas_tengah" lang="en">No Data Available</h3>
                 </div>
                 <div id="isi_love_news" style="padding-left: 10px; display: none;">
 
@@ -304,11 +305,13 @@
                 <center>
                     <img src="/visual/hore.png" id="img-initial1">
                     <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations !!!</h3>
-                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already
+                        succesfull register and you’re already
                         member of community . Let’s look what do you can explore !</p>
                     <br>
                     <div>
-                        <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;" lang="en">Take a Tour</button>
+                        <button type="button" id="btn-initial1" class="btn btn-tosca btn-sm" style="width:100px;"
+                            lang="en">Take a Tour</button>
                         &nbsp;
                         <button type="button" data-dismiss="modal" class="btn btn-light btn-sm"
                             style="width:100px; margin-top: 1em;" lang="en">Skip</button>
@@ -341,7 +344,8 @@
                     </div>
                 </div>
                 <center>
-                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;" lang="en">Got it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-tosca btn-sm" style="width:100px;"
+                        lang="en">Got it</button>
                     <br>
                 </center>
             </div> <!-- end-modal body -->
@@ -360,11 +364,12 @@
                 <center>
                     <img src="/visual/init3.png" id="img-initial3">
                     <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Ready For Action ?</h3>
-                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already
+                        succesfull register and you’re already
                         member of community . Let’s look what do you can explore !</p>
                     <br>
-                    <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm"
-                        style="width:100px;" lang="en">Finish</button>
+                    <button type="button" id="btn-initial3" class="btn btn-tosca btn-sm" style="width:100px;"
+                        lang="en">Finish</button>
                     <br><br>
                 </center>
             </div> <!-- end-modal body -->
@@ -521,7 +526,7 @@
                             'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
                             'style="border-radius: 8px 8px 0px 0px;">' +
                             '<div class="card-body card-dashsub">' +
-                            '<small class="card-text">' + item.title +
+                            '<small class="card-text text-wrap">' + item.title +
                             '</small>' +
                             '</div>' +
                             '<div class="card-footer card-dashsub">' +
@@ -531,7 +536,8 @@
                             dateTime(item.createdAt) + '</small></p>' +
                             '</div>' +
                             '<div class="col-md-4" style="text-align: right;">' +
-                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small></p>' +
+                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small>'+
+                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small>See Detail</small></a></p>' +
                             '</div>' +
                             '</div>' +
                             '</div></div></div>';
@@ -567,13 +573,13 @@
             success: function (result) {
                 if (result.success == false) {
                     $(".total_friend").html("0");
-                      console.log(result);
+                    console.log(result);
                 } else {
                     $(".total_friend").html(result.total_friend);
                 }
             },
             error: function (result) {
-                 $(".total_friend").html("0");
+                $(".total_friend").html("0");
                 // console.log(result);
                 console.log("Cant Show");
             }
@@ -595,47 +601,48 @@
                 "limit": 10,
             },
             success: function (result) {
-                // console.log(result);
-                if (result.success == false) {
                 console.log(result);
-                $(".divkonco").hide();
-                }else{
-                var nofoto = '/img/kosong.png';
-                var isiui = '';
-                var jumlah = 0;
-                $.each(result, function (i, item) {
-                    jumlah++;
-                    isiui += '<div class="card konco" id="' + item.user_id + '">' +
-                        '<div class="card-body color">' +
-                        '<div class="close_konco">' +
-                        '<button type="button" class="close cgrey2" aria-label="Close"' +
-                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
-                        '<span aria-hidden="true">&times;</span>' +
-                        '</button>' +
-                        '</div>' +
-                        '<form>' +
-                        '<center>' +
-                        '<img src="' + server_cdn + item.picture + '" class="rounded-circle img-fluid mb-2 konco"' +
-                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
-                        '<input type="hidden" value="" name="frend_suges">' +
-                        '<button type="button" class="btn btn-tosca btn-sm konco">' +
-                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
-                        '</button>' +
-                        '<center>' +
-                        '</form>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                });
-                $(".divkonco").show();
-                $("#div_friendsugest").html(isiui);
-            }
+                if (result.success == false) {
+                    console.log(result);
+                    $(".divkonco").hide();
+                } else {
+                    var nofoto = '/img/kosong.png';
+                    var isiui = '';
+                    var jumlah = 0;
+                    $.each(result, function (i, item) {
+                        jumlah++;
+                        isiui += '<div class="card konco" id="' + item.user_id + '">' +
+                            '<div class="card-body color">' +
+                            '<div class="close_konco">' +
+                            '<button type="button" class="close cgrey2" aria-label="Close"' +
+                            'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                            '<span aria-hidden="true">&times;</span>' +
+                            '</button>' +
+                            '</div>' +
+                            '<form method="POST" id="form_add_friend" action="{{route('add_friend_suggest_subs')}}">'+
+                            '{{ csrf_field() }}'+
+                            '<center>' +
+                            '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                            '<input type="hidden" value="' + item.user_id + '" name="user_id_subs">' +
+                            '<button type="submit" class="btn btn-tosca btn-sm konco">' +
+                            '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                            '</button>' +
+                            '<center>' +
+                            '</form>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $(".divkonco").show();
+                    $("#div_friendsugest").html(isiui);
+                }
             },
             error: function (result) {
                 // console.log(result);
                 console.log("Cant Show Friend Suggest");
-                   $(".divkonco").hide();
+                $(".divkonco").hide();
             }
         });
     }
@@ -666,18 +673,20 @@
                 // console.log(result);
                 if (result.success == false) {
                     $("#nodata_last_news").show();
-                     $("#isi_last_news").hide();
-                     console.log(result);
+                    $("#isi_last_news").hide();
+                    console.log(result);
                 }
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
-                        '<small class="cgrey">' + item.title + '</small><br>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small> &nbsp;&nbsp;&nbsp;' +
+                        '<a href="/subscriber/detail_news/' + item.id + '">' +
+                        '<small class="clight s13">See Details</small></a><br>' +
+                        '<small class="cgrey s13">' + item.title + '</small><br>' +
                         '</li>';
                 });
                 $("#isi_last_news").html(newsui);
-                 $("#nodata_last_news").hide();
+                $("#nodata_last_news").hide();
                 $("#isi_last_news").show();
 
             },
@@ -709,8 +718,8 @@
                 var noimg = '/img/fitur.png';
                 if (result.success == false) {
                     $("#nodata_love_news").show();
-                     $("#isi_love_news").hide();
-                     console.log(result);
+                    $("#isi_love_news").hide();
+                    console.log(result);
                 }
                 var loveui = '';
                 $.each(result, function (i, item) {
@@ -720,6 +729,7 @@
                         '</div>' +
                         '<div class="col-md-10 pd-5px">' +
                         '<small class="cblue s12">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
+                        '<a href="/subscriber/detail_news/' + item.id + '"><small class="clight">See Details</a></small>' +
                         '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
                         '</div></div>';
                 });
@@ -729,7 +739,7 @@
 
             },
             error: function (result) {
-                   $("#nodata_love_news").show();
+                $("#nodata_love_news").show();
                 $("#isi_love_news").hide();
                 // console.log(result);
                 console.log("Cant Show love news");
@@ -755,13 +765,15 @@
                 // console.log(result);
                 if (result.success == false) {
                     $("#nodata_topvisit_news").show();
-                      $("#isi_topvisit_news").hide();
+                    $("#isi_topvisit_news").hide();
                 }
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
-                        '<small class="cgrey">' + item.title + '</small><br>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small> &nbsp;&nbsp; &nbsp;' +
+                        '<a href="/subscriber/detail_news/' + item.id + '">' +
+                        '<small class="clight s13">See Details</small></a><br>' +
+                        '<small class="cgrey mgtop-minus-1em s13>' + item.title + '</small><br>' +
                         '</li>';
                 });
                 $("#isi_topvisit_news").html(newsui);
@@ -793,7 +805,7 @@
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
-                     $("#topplayer_nodata").show();
+                    $("#topplayer_nodata").show();
                     $("#isi_top_player").hide();
                     console.log(result);
                 }
@@ -834,7 +846,7 @@
                 }
             },
             error: function (result) {
-                  $("#topplayer_nodata").show();
+                $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();
                 console.log("Cant Show top Player");
             }
@@ -859,7 +871,7 @@
                 // console.log(result);
                 if (result.success == false) {
                     console.log(result);
-                      $("#topclubvisit_nodata").show();
+                    $("#topclubvisit_nodata").show();
                     $("#isi_top_visit_club").hide();
                 }
 
@@ -873,7 +885,7 @@
 
             },
             error: function (result) {
-                  $("#topclubvisit_nodata").show();
+                $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
                 console.log("Cant Show Top Club Visit");
             }

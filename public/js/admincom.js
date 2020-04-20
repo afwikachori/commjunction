@@ -490,6 +490,7 @@ function IsEmail(email) {
 
 
 function clickImage(img) {
+    if(img != null && img != undefined){
     var modal = document.getElementById("mdl-img-click");
     var img = document.getElementById(img.id);
     var modalImg = document.getElementById("mdl-img-view");
@@ -498,6 +499,7 @@ function clickImage(img) {
         $('#mdl-img-click').modal('show');
         modalImg.src = this.src;
     }
+}
 }
 
 function rupiah(val) {

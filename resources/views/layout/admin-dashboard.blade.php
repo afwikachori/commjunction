@@ -13,7 +13,7 @@
     <!-- ICON WEB -->
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
-     <!-- CSS Files -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('purple/vendors/css/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="{{asset('purple/css/style.css')}}">
@@ -40,7 +40,7 @@
 
 
     <script src="{{asset('js/jquery.3.2.1.min.js')}}"></script>
-      <!-- Language translate page  -->
+    <!-- Language translate page  -->
     <script src="{{asset('js/js.cookie.js')}}" charset="utf-8" type="text/javascript"></script>
     <script src="{{asset('js/jquery-lang.js')}}" charset="utf-8" type="text/javascript"></script>
 
@@ -324,8 +324,11 @@
     <script src="{{asset('purple/js/todolist.js')}}"></script>
     <script src="{{asset('purple/js/file-upload.js')}}"></script>
 
-    <script src="{{asset('js/admincom.js')}}"></script>
+    <script src="/js/nicEdit.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
+
+    <script src="{{asset('js/admincom.js')}}"></script>
 
 
     <script src="{{asset('js/toastr.min.js')}}"></script>
@@ -349,6 +352,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
 
 
     <!-- js pdf -->

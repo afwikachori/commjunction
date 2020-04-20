@@ -89,4 +89,11 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/news_management">
+            <span class="menu-title">News Management</span>
+            <i class="mdi mdi-message-text-outline menu-icon"></i>
+        </a>
+    </li>
+
 </ul>

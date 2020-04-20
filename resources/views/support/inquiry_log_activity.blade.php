@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <small class="clight s13">Start Date</small>
                                 <input type="date" id="tanggal_mulai" name="tanggal_mulai"
-                                    class="form-control input-abu">
+                                    class="form-control input-abu" required>
                             </div>
 
                         </div> <!-- end-col-md -->
@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <small class="clight s13">End Date</small>
                                 <input type="date" id="tanggal_selesai" name="tanggal_selesai"
-                                    class="form-control input-abu">
+                                    class="form-control input-abu" required>
                             </div>
                         </div> <!-- end-col-md -->
                     </div>
@@ -86,7 +86,7 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Community Status</small>
-                                <select class="form-control input-abu" name="status_komunitas" id="status_komunitas">
+                                <select class="form-control input-abu" name="status_komunitas" id="status_komunitas" required>
                                     <option selected disabled> Choose </option>
                                     <option value="all" selected> All </option>
                                     <option value="0"> Newly </option>
@@ -101,7 +101,7 @@
                         <div class="col-md">
                             <div class="form-group" id="hide_status_kom" style="display: nones;">
                                 <small class="clight s13">Community List</small>
-                                <select class="form-control input-abu" name="list_komunitas" id="list_komunitas">
+                                <select class="form-control input-abu" name="list_komunitas" id="list_komunitas" required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -113,7 +113,7 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Feature</small>
-                                <select class="form-control input-abu" name="list_feature" id="list_feature">
+                                <select class="form-control input-abu" name="list_feature" id="list_feature" required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -122,7 +122,7 @@
                         <div class="col-md">
                             <div class="form-group" style="display: none;" id="hide_subfitur">
                                 <small class="clight s13">Sub-Feature</small>
-                                <select class="form-control input-abu" name="list_subfeature" id="list_subfeature">
+                                <select class="form-control input-abu" name="list_subfeature" id="list_subfeature" required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -133,7 +133,7 @@
                         <div class="col-md">
                             <div class="form-group" style="display: none;" id="hide_endpoint">
                                 <small class="clight s13">Endpoint List</small>
-                                <select class="form-control input-abu" name="list_endpoint" id="list_endpoint">
+                                <select class="form-control input-abu" name="list_endpoint" id="list_endpoint" required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -142,7 +142,7 @@
                         <div class="col-md">
                             <div class="form-group" style="display: none;" id="hide_aktivitastipe">
                                 <small class="clight s13">Activity Type</small>
-                                <select class="form-control input-abu" name="activity_type" id="activity_type">
+                                <select class="form-control input-abu" name="activity_type" id="activity_type" required>
                                     <option selected disabled> Choose </option>
                                     <option value="1"> Community </option>
                                     <option value="2"> Subscriber </option>
@@ -298,7 +298,7 @@
                 },
                 { mData: 'activity',
                     render: function (data, type, row, meta) {
-                        return '<span class="s12 text-wrap width-350">' + data + '</span>';
+                        return '<span class="s12 text-wrap width-250">' + data + '</span>';
                     }
                  },
                 { mData: 'user_name' ,
@@ -356,7 +356,7 @@
             var data = tabel.row($(this).parents('tr')).data();
             console.log(data);
 
-            alert(data.endpoint);
+            // alert(data.endpoint);
 
         });
 

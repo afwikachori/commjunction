@@ -206,6 +206,95 @@
     </div>
 </div>
 
+
+<!-- NEWS MODULE DASHBOARD START  -->
+<!-- NEWS HEADLINE -->
+<div class="row">
+    <div class="col-6">
+        <h2 class="cgrey">HEADLINE NEWS</h2>
+    </div>
+    <div class="col-6">
+        <a href="/admin/news_management" id="other-news">See Other News</a>
+    </div>
+</div>
+<div id="headline_cont" class="row ">
+
+    <div id="news_headline_cont">
+
+    </div>
+</div>
+
+<!-- NEWS INFO -->
+<div class="row">
+
+    <!-- LAST NEWS -->
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title cteal">Last News</h4>
+                <table id="table_last_news" class="table table-hover dt-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <center>
+                                <th class="bg-greymuda"></th>
+                                <th class="bg-greymuda">Title</th>
+                                <th class="bg-greymuda">Date</th>
+                            </center>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP VISIT NEWS -->
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title cteal">TOP VISIT News</h4>
+                <table id="table_topvisit_news" class="table table-hover dt-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <center>
+                                <th class="bg-greymuda"></th>
+                                <th class="bg-greymuda">Title</th>
+                                <th class="bg-greymuda">Date</th>
+                            </center>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- TOP VISIT NEWS -->
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title cteal">TOP LOVED</h4>
+                <table id="table_toploved_news" class="table table-hover dt-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <center>
+                                <th class="bg-greymuda"></th>
+                                <th class="bg-greymuda">Title</th>
+                                <th class="bg-greymuda">Date</th>
+                            </center>
+                        </tr>
+                    </thead>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NEWS MODULE DASHBOARD END  -->
+
+
+
+
 <!-- Modal INITIAL-1-->
 <div class="modal fade" id="initial1" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -298,6 +387,10 @@
     $(document).ready(function () {
 
         get_dashboard_admin(); //data dashboard
+        get_headline_news(); //data headline news
+        get_last_news(); //data Last news
+        get_topvisit_news(); //data Top Visit news
+        get_toploved_news(); //data Top Loved news
 
     });
 
@@ -482,6 +575,177 @@
         $("#isi_total_module").html(jum + "  Modules");
     }
 
+
+
+    function get_headline_news() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/get_headline_news',
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (result) {
+                //console.log(result);
+                var isiheadline = '';
+
+
+                $.each(result, function (i, item) {
+                    var noimg = '/visual/car1.png';
+                    $news_id = parseInt(item.id);
+                    var $headpic = server_cdn + cekimage_cdn(item.image);
+                    isiheadline += '<div class="stretch-card grid-margin news_headline_card">' +
+                        '<div class="card sumari">' +
+                        '<div class="card-body sumari">' +
+                        '<div class="row">' +
+                        '<div class="col-12">' +
+                        '<div class="news_pic_dash">' +
+                        '<img class="news_pic" src="' + $headpic + '" onerror="this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        '</div>' +
+                        '<small class="clight">' + dateTime(item.createdAt) + '</small>' +
+                        '<h4 class="cgrey-mid total_fituraktif">' + item.title + '</h4>' +
+                        '<a href="/admin/get_detail_news/' + $news_id + '" class="news_readmore">Read More</a>' +
+                        '</div></div></div></div></div>';
+                });
+
+                $("#news_headline_cont").html(isiheadline);
+            },
+            error: function (result) {
+                console.log("Cant Show Headline News");
+            }
+        });
+    }
+
+    function get_last_news() {
+        var noimg = '/img/kosong.png';
+        var tabel = $('#table_last_news').DataTable({
+            responsive: true,
+            dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12'i><'col-sm-12'p>>",
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/admin/tabel_last_news',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+            },
+            columns: [
+                {
+                    mData: 'image',
+                    render: function (data, type, row) {
+                        console.log('lastnews' + data);
+                        return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                    }
+                },
+                { mData: 'title' ,
+                    render: function (data, type, row, meta) {
+                        return '<p class="s13 text-wrap width-200">' + data + '</p>';
+                    }
+                },
+                {
+                    mData: 'createdAt',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                }
+            ],
+
+        });
+    }
+
+    function get_topvisit_news() {
+        var noimg = '/img/kosong.png';
+        var tabel = $('#table_topvisit_news').DataTable({
+            responsive: true,
+              dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12'i><'col-sm-12'p>>",
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/admin/table_topvisit_news',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+            },
+            columns: [
+                {
+                    mData: 'image',
+                    render: function (data, type, row, meta) {
+                        console.log('topvisit' + data);
+                        return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                    }
+                },
+                { mData: 'title',
+                    render: function (data, type, row, meta) {
+                        return '<p class="s13 text-wrap width-200">' + data + '</p>';
+                    }
+                 },
+                {
+                    mData: 'createdAt',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                }
+            ],
+
+        });
+    }
+
+    function get_toploved_news() {
+        var noimg = '/img/kosong.png';
+        var tabel = $('#table_toploved_news').DataTable({
+            responsive: true,
+              dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12'i><'col-sm-12'p>>",
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: '/admin/table_toploved_news',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+            },
+            columns: [
+                {
+                    mData: 'image',
+                    render: function (data, type, row, meta) {
+                        console.log('toplove' + data);
+                        return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                    }
+                },
+                { mData: 'title',
+                    render: function (data, type, row, meta) {
+                        return '<p class="s13 text-wrap width-200">' + data + '</p>';
+                    }
+                },
+                {
+                    mData: 'createdAt',
+                    render: function (data, type, row, meta) {
+                        return dateFormat(data);
+                    }
+                }
+            ],
+
+        });
+    }
 
 
 </script>
