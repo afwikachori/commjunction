@@ -519,6 +519,8 @@ margin-bottom: 1.5em;
 .input-abu{
   border-radius: 10px;
   background-color: #efefef;
+  outline: none !important;
+  border-radius: none;
 }
 
 .sidebar .nav .nav-item {
@@ -1532,6 +1534,25 @@ text-align: center;
 margin: auto;
 width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

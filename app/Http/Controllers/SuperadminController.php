@@ -9,6 +9,8 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 use Session;
 use Alert;
@@ -211,7 +213,14 @@ class SuperadminController extends Controller
             $error['succes'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
+        } catch (FatalErrorException $errornya) {
+            alert()->error("Maximum execution time of 60 seconds exceeded", 'Failed!')->autoclose(4500);
+            return back();
+        } catch (Throwable  $errornya) {
+            alert()->error("Maximum execution time of 60 seconds exceeded", 'Failed!')->autoclose(4500);
+            return back();
         }
+
     }
 
 

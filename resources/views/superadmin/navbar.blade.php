@@ -36,67 +36,32 @@
             </div>
         </li>
 
-
-        <!-- <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="mdi mdi-bell-outline"></i>
-                <span class="count-symbol bg-danger"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <h6 class="p-3 mb-0">Notifications</h6>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="mdi mdi-calendar"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="mdi mdi-settings"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="mdi mdi-link-variant"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <h6 class="p-3 mb-0 text-center">See all notifications</h6>
-              </div>
-            </li> -->
-
-
-        <!-- <li class="nav-item nav-logout dropdown">
-              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+        <li class="nav-item nav-logout dropdown">
+            <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-settings"></i>
-              </a>
+            </a>
 
-              <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
-                <a class="dropdown-item" href="/superadmin/add_user">
-                 Add User</a>
+            <div class="dropdown-menu navbar-dropdown dropdown-menu-right">
+                <a class="dropdown-item" href="/support" lang="en" data-lang-token="Settings">
+                    Support System
+                </a>
                 <div class="dropdown-divider"></div>
-              </div>
-            </li> -->
+                <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="menu-title" lang="en" data-lang-token="Languages">Languages</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left dropleft" aria-labelledby="subnav_bahasa">
+                    <a class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
+                        <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>
+                    <a class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
+                        <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
+                </div>
+            </div>
+        </li>
+
+
+
 
     </ul>
     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"

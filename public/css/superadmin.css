@@ -1145,3 +1145,40 @@ input[type="checkbox"] {
     display: none;
 }
 
+
+/* /// SUPPORT COMMJUCTION support /// */
+.hiding{
+    display: none !important;
+}
+
+.body250{
+    min-height: 250px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.mod-header{
+    padding: 5%;
+    padding-bottom: 2% !important;
+}
+
+
+.img-mdl-bottom{
+    position: absolute;
+    width: 175px;
+    height: auto;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 0px 0px 0px 4px;
+    opacity: 0.3;
+}
+
+.img-mdl-top{
+    position: absolute;
+    width: 125px;
+    height: auto;
+    top: 0px;
+    right: 0px;
+    border-radius: 4px 0px;
+    opacity: 0.3;
+}

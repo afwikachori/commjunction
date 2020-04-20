@@ -46,50 +46,6 @@ $(document).ready(function () {
 
 });
 
-
-//tab-line
-$(".tabbable-line li a").click(function () {
-    $(".tabbable-line li").removeClass('active');
-    $(this).parent().addClass('active');
-});
-
-
-// FORMAT PISAH UANG RUPIAH
-function rupiah(val) {
-    var bilangan = val;
-    var reverse = bilangan.toString().split('').reverse().join(''),
-        ribuan = reverse.match(/\d{1,3}/g);
-    ribuan = ribuan.join('.').split('').reverse().join('');
-
-    return ribuan;
-}
-
-
-//FORMAT VALIDASI EMAIL
-function IsEmail_valid(email) {
-    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (!regex.test(email)) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-
-//IMAGE FILENAME INPUT
-// show filename di inputfile
-function filenameImg(input) {
-    var fileName = $(input).val();
-    if (fileName.length > 30) {
-        var fileNameFst = fileName.substring(0, 30);
-        $(input).next('.custom-file-label').html(fileNameFst + "...");
-    } else {
-        $(input).next('.custom-file-label').html(fileName);
-    }
-}
-
-
-
 // SESSION LOGIN SUPEADMIN
 function session_logged_superadmin() {
     $.ajaxSetup({
@@ -102,7 +58,7 @@ function session_logged_superadmin() {
                 ui.popup.hideLoader();
             }, 10000);
         },
-        timeout: 18000,
+        timeout: 20000,
         error: function error(event, jxqhr, status, _error) {
             ui.popup.show('error', status, 'Error');
             ui.popup.hideLoader();
@@ -150,6 +106,51 @@ function session_logged_superadmin() {
         }
     });
 }
+
+
+//tab-line
+$(".tabbable-line li a").click(function () {
+    $(".tabbable-line li").removeClass('active');
+    $(this).parent().addClass('active');
+});
+
+
+// FORMAT PISAH UANG RUPIAH
+function rupiah(val) {
+    var bilangan = val;
+    var reverse = bilangan.toString().split('').reverse().join(''),
+        ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+
+    return ribuan;
+}
+
+
+//FORMAT VALIDASI EMAIL
+function IsEmail_valid(email) {
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!regex.test(email)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+//IMAGE FILENAME INPUT
+// show filename di inputfile
+function filenameImg(input) {
+    var fileName = $(input).val();
+    if (fileName.length > 30) {
+        var fileNameFst = fileName.substring(0, 30);
+        $(input).next('.custom-file-label').html(fileNameFst + "...");
+    } else {
+        $(input).next('.custom-file-label').html(fileName);
+    }
+}
+
+
+
 
 function showPassNew() {
     var a = document.getElementById("new_pass_super");
