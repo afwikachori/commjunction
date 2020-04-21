@@ -69,7 +69,7 @@
   </div>
 
   <div class="col" style="text-align: right;">
-   <button type="submit" class="btn btn-oren" style="width: 120px;" lang="en">
+   <button type="submit" class="btn btn-blue" style="width: 120px;" lang="en">
    Send</button>
     </div>
   </div>

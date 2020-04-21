@@ -636,6 +636,11 @@ class RegisterController extends Controller
             'digit-6' => 'required|numeric',
         ]);
 
+        $ses_login = session()->get('session_subscriber_logged');
+        $subs = $ses_login['user'];
+        $url_comname = $subs['community_name'];
+
+
         try { //try-cath
             $otp_six = $request['digit-1'] . $request['digit-2'] . $request['digit-3'] . $request['digit-4'] . $request['digit-5'] . $request['digit-6'];
 
@@ -654,7 +659,8 @@ class RegisterController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
-                return view('admin/login');
+                // return view('admin/login');
+                return redirect('subscriber/url/'.$url_comname);
             }
         } catch (ClientException $exception) {
             $status_error = $exception->getCode();

@@ -401,6 +401,14 @@ top: 23px;
     border-radius: 2rem;
 }
 
+.btn-blue{
+  background: linear-gradient(127.87deg, #48C6EF 0%, #6F86D6 61.61%);
+  color: white;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
 .btn-oren{
   background: linear-gradient(108.22deg, #FC6076 -2.66%, #FF9A44 102.89%);
   color: white;
@@ -1122,7 +1130,8 @@ a.payregis{
 }
 
 .bg-page-forget{
-  background: linear-gradient(97.28deg, #FC6076 -2.66%, #FF9A44 102.89%);
+  /* background: linear-gradient(97.28deg, #FC6076 -2.66%, #FF9A44 102.89%); */
+    background:linear-gradient(127.87deg, #48C6EF 0%, #6F86D6 61.61%);
   height: 310px;
 }
 
