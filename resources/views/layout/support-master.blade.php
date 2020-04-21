@@ -13,6 +13,9 @@
     <!-- ICON WEB -->
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
+
+	<link rel="stylesheet" href="/css/jjsonviewer.css">
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('purple/vendors/css/vendor.bundle.base.css')}}">
@@ -146,6 +149,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
+	<script type="text/javascript" src="/js/jsonviewer/jjsonviewer.js"></script>
 
     <!-- Sweetalert -->
     <script src="{{asset('js/sweetalert.min.js')}}"></script>

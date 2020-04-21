@@ -31,7 +31,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/support/inquiry_specific>
+        <a class="nav-link" href="/support/inquiry_specific">
             <span class=" menu-title" lang="en">Inquiry Specific Community</span>
             <i class="mdi mdi-google-circles-communities menu-icon"></i>
         </a>

@@ -283,6 +283,47 @@ class SupportCommjunction extends Controller
         }
     }
 
+    public function tabel_inquiry_spesific_com(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $input;
+
+        $url = env('SERVICE') . 'operationalsupportsystem/inquiryspecific';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+        $bodyku = json_encode([
+            "community_id" => $input['community_id'],
+            "activity_type" => $input['activity_type'],
+            "subscriber_id" => $input['subscriber_id'],
+        ]);
+
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'][0]['last_activity'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 } //END-CLASS

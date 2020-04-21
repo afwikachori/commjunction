@@ -446,9 +446,7 @@ Route::prefix('support')->group(function () {
     Route::post('get_list_endpoint_support', 'SupportCommjunction@get_list_endpoint_support')->name('get_list_endpoint_support');
     Route::post('get_list_subscriber_support', 'SupportCommjunction@get_list_subscriber_support')->name('get_list_subscriber_support');
     Route::post('tabel_inquiry_log_activity', 'SupportCommjunction@tabel_inquiry_log_activity')->name('tabel_inquiry_log_activity');
-
-
-
+    Route::post('tabel_inquiry_spesific_com', 'SupportCommjunction@tabel_inquiry_spesific_com')->name('tabel_inquiry_spesific_com');
 
 
 });

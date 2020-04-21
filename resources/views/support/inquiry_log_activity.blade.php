@@ -86,7 +86,8 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Community Status</small>
-                                <select class="form-control input-abu" name="status_komunitas" id="status_komunitas" required>
+                                <select class="form-control input-abu" name="status_komunitas" id="status_komunitas"
+                                    required>
                                     <option selected disabled> Choose </option>
                                     <option value="all" selected> All </option>
                                     <option value="0"> Newly </option>
@@ -101,7 +102,8 @@
                         <div class="col-md">
                             <div class="form-group" id="hide_status_kom" style="display: nones;">
                                 <small class="clight s13">Community List</small>
-                                <select class="form-control input-abu" name="list_komunitas" id="list_komunitas" required>
+                                <select class="form-control input-abu" name="list_komunitas" id="list_komunitas"
+                                    required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -122,7 +124,8 @@
                         <div class="col-md">
                             <div class="form-group" style="display: none;" id="hide_subfitur">
                                 <small class="clight s13">Sub-Feature</small>
-                                <select class="form-control input-abu" name="list_subfeature" id="list_subfeature" required>
+                                <select class="form-control input-abu" name="list_subfeature" id="list_subfeature"
+                                    required>
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -187,6 +190,84 @@
     </div>
 </div>
 
+
+
+<!-- MODAL DETAIL INQUIRY LOG ACTIVITY-->
+<div class="modal fade" id="modal_detail_log_activity" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="mod-header pad-5persen">
+                <img src="/visual/kananatas2.png" class="img-mdl-top">
+                <small class="modal-title cgrey2">Detail Inquiry</small>
+                <br>
+                <h4 class=" cblue">Activity Log</h4>
+            </div>
+
+
+
+            <div class="modal-body" style="height: auto;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <small class="clight s13">Title</small>
+                            <p class="cgrey" id="detail_judul"></p>
+                        </div>
+                        <div class="form-group">
+                            <small class="clight s13">Description</small>
+                            <p class="cgrey" id="detail_dekripsi"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Message Type</small>
+                            <p class="cgrey" id="detail_tipepesan"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Community Name</small>
+                            <p class="cgrey" id="detail_komunitas"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Created Date</small>
+                            <p class="cgrey s11" id="detail_date"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight">Created By</small>
+                            <p class="cgrey" id="detail_by"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <small class="clight s13">Response Log</small>
+                <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 180px;
+                             border-radius: 10px; width: 100%; margin-top: 0.5em;
+                            padding: 1%;">
+                    <div class="cgrey s11 jjson" id="detail_response"></div>
+                </div>
+            </div> <!-- end-body -->
+
+            <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                   padding-left: 5%; padding-right: 5%;">
+                <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                    <i class="mdi mdi-close"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
@@ -291,17 +372,20 @@
 
             },
             columns: [
-                { mData: 'endpoint' ,
+                {
+                    mData: 'endpoint',
                     render: function (data, type, row, meta) {
-                       return '<span class="s13">' + data + '</span>';
+                        return '<span class="s13">' + data + '</span>';
                     }
                 },
-                { mData: 'activity',
+                {
+                    mData: 'activity',
                     render: function (data, type, row, meta) {
                         return '<span class="s12 text-wrap width-250">' + data + '</span>';
                     }
-                 },
-                { mData: 'user_name' ,
+                },
+                {
+                    mData: 'user_name',
                     render: function (data, type, row, meta) {
                         return '<span class="s13">' + data + '</span>';
                     }
@@ -323,14 +407,15 @@
                 {
                     mData: 'date',
                     render: function (data, type, row, meta) {
-                        return '<span class="s13">'+dateFormat(data)+'</span>';
+                        return '<span class="s13">' + dateFormat(data) + '</span>';
                     }
                 },
-                { mData: 'log_status',
+                {
+                    mData: 'log_status',
                     render: function (data, type, row, meta) {
                         return '<span class="s13">' + data + '</span>';
                     }
-                 },
+                },
                 {
                     mData: null,
                     render: function (data, type, row, meta) {
@@ -355,8 +440,36 @@
         $('#tabel_inquiry_log_activity tbody').on('click', 'button', function () {
             var data = tabel.row($(this).parents('tr')).data();
             console.log(data);
+            $("#modal_detail_log_activity").modal('show');
 
-            // alert(data.endpoint);
+            // activity: "List All News"
+            // date: "2020-04-20T13:15:53.641Z"
+            // elapsed_time: "21"
+            // endpoint: "/api/module/news/listall"
+            // feature_id: "14"
+            // ip: "4.6.6.126"
+            // log_status: "Log Success"
+            // module: "News Module"
+            // request: "{}"
+            // response: "{"code":"00","status":200,"message":"Sample succes"
+            // status: "200"
+            // subfeature_id: "198"
+            // time: "20:15:53"
+            // user_id: "ADCM-881523101255768320200117"
+            // user_level: 2
+            // user_name: "brian_anggriawan"
+            // _id: "5e9da0893205c90011f2323e"
+
+            $("#detail_response").jJsonViewer(data.response);
+
+            // $("#").html();
+            // $("#").html();
+            // $("#").html();
+            // $("#").html();
+            // $("#").html();
+            // $("#").html();
+            // $("#").html();
+
 
         });
 
@@ -549,7 +662,7 @@
         if (id_tipe == "2") {
             $("#hide_subscriber").show();
         } else {
-             $("#list_subscriber").val(null);
+            $("#list_subscriber").val(null);
             $("#hide_subscriber").hide();
         }
 
