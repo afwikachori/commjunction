@@ -39,7 +39,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
 
+    <!-- news management -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+
     <script src="{{asset('js/jquery.3.2.1.min.js')}}"></script>
+
     <!-- Language translate page  -->
     <script src="{{asset('js/js.cookie.js')}}" charset="utf-8" type="text/javascript"></script>
     <script src="{{asset('js/jquery-lang.js')}}" charset="utf-8" type="text/javascript"></script>
@@ -326,7 +331,6 @@
 
     <script src="/js/nicEdit.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-
 
     <script src="{{asset('js/admincom.js')}}"></script>
 

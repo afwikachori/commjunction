@@ -79,7 +79,8 @@
                             <div class="form-group">
                                 <div class="news-img-upload">
                                     <div class="news-img-cont">
-                                        <img class="img-fluid news_pic" id="news_picture2" src="/img/noimg.jpg" onerror="this.onerror=null;this.src='/visual/car1.png';">
+                                        <img class="img-fluid news_pic" id="news_picture2" src="/img/noimg.jpg"
+                                            onerror="this.onerror=null;this.src='/visual/car1.png';">
                                     </div>
                                     <div class="p-image editnews">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
@@ -175,21 +176,21 @@
 
 
 <!-- MODAL EDIT NEWS -->
-<div class="modal fade" id="modal_edit_news"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="modal_edit_news" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
     <div class="modal-dialog  modal-dialog-scrollable" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-
-            <form method="POST" id="form_edit_news_management" action="{{route('edit_news_management')}}"
-                enctype="multipart/form-data">{{ csrf_field() }}
-
+        <form method="POST" id="form_edit_news_management" action="{{route('edit_news_management')}}"
+            enctype="multipart/form-data">{{ csrf_field() }}
+            <div class="modal-content" style="background-color: #ffffff;">
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                     <h4 class="modal-title cgrey">Edit News</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div> <!-- end-header -->
 
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
+                <div class="modal-body"
+                    style="padding-left: 5%;padding-right: 5%; min-height: 300px; overflow-y: scroll;overflow-x: hidden;">
 
 
                     <div class="row">
@@ -197,7 +198,8 @@
                             <div class="form-group">
                                 <div class="news-img-upload">
                                     <div class="news-img-cont">
-                                        <img class="img-fluid news_pic" id="news_picture" src="/img/focus.png"  onerror="this.onerror=null;this.src='/visual/car1.png';">
+                                        <img class="img-fluid news_pic" id="news_picture" src="/img/focus.png"
+                                            onerror="this.onerror=null;this.src='/visual/car1.png';">
                                     </div>
                                     <div class="p-image editnews">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
@@ -237,7 +239,7 @@
                     </div>
                 </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none; margin-bottom: 15%;">
+                <div class="modal-footer" style="border: none;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
@@ -247,9 +249,8 @@
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Save </button>
                 </div> <!-- end-footer     -->
-            </form>
-        </div> <!-- END-MDL CONTENT -->
-
+            </div> <!-- END-MDL CONTENT -->
+        </form>
     </div>
 </div>
 
@@ -345,9 +346,9 @@
                 $msg = result.status;
                 // alert($msg);
                 if ($msg == 1) {
-                    alert("News Successfully Published");
+                    swal("News Successfully Published");
                 } else {
-                    alert("News Successfully Disabled");
+                    swal("News Successfully Disabled");
                 }
             },
             error: function (result) {
@@ -377,9 +378,9 @@
                 $msg = result.status;
                 //alert($msg);
                 if ($msg == true) {
-                    alert("News Set as Headline");
+                    swal("News Set as Headline");
                 } else {
-                    alert("News Headline Disabled");
+                    swal("News Headline Disabled");
                 }
             },
             error: function (result) {
@@ -424,7 +425,7 @@
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
-                 error: function (jqXHR, ajaxOptions, thrownError) {
+                error: function (jqXHR, ajaxOptions, thrownError) {
                     var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_news_manage tbody').empty().append(nofound);
                 },
@@ -438,13 +439,15 @@
                         return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box zoom"  onclick="clickImage(this)" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">';
                     }
                 },
-                { mData: 'title',
+                {
+                    mData: 'title',
                     render: function (data, type, row, meta) {
-                        return '<p class="s13 text-wrap width-200">'+data+'</p>';
+                        return '<p class="s13 text-wrap width-200">' + data + '</p>';
                     }
                 },
                 { mData: 'author_name' },
-                { mData: 'createdAt' ,
+                {
+                    mData: 'createdAt',
                     render: function (data, type, row, meta) {
                         return dateFormat(data);
                     }
