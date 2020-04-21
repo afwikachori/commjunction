@@ -272,7 +272,7 @@
             <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
                    padding-left: 5%; padding-right: 5%;">
                 <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
                     <i class="mdi mdi-close"></i> Cancel
                 </button>
             </div>

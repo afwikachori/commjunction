@@ -43,7 +43,7 @@
 </div>
 
 <div class="footer-admin">
-    <div class="row" style="margin-top: 1em;">
+    <div class="row">
         <div class="col">
             <img src="/visual/commjuction.png" id="com_superadminlogin">
             <div class="textfooter-kiri">

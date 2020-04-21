@@ -708,5 +708,39 @@ class RequestController extends Controller
         return $dataku;
     }
 
+    public function change_status_reactive($requestImage, $url, $token)
+    {
+        // dd($requestImage);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'comment',
+                    'contents' =>  $requestImage["comment"]
+                ],
+                [
+                    'name'     => 'active',
+                    'contents' =>  $requestImage["active"]
+                ],
+                [
+                    'name'     => 'community_id',
+                    'contents' =>  $requestImage["community_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
 
 } //END_CLASS

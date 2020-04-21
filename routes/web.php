@@ -437,6 +437,7 @@ Route::prefix('support')->group(function () {
     Route::get('/', 'SupportCommjunction@OpeningSupportView')->name('support');
     Route::get('/inquiry_specific', 'SupportCommjunction@InquirySpecificView')->name('/inquiry_specific');
     Route::get('/inquiry_log', 'SupportCommjunction@InquiryLogActivityView')->name('/inquiry_log');
+    Route::get('/reactivate_deactivate', 'SupportCommjunction@ReactivateDeactivateView')->name('/reactivate_deactivate');
 
 
     //POST
@@ -447,6 +448,7 @@ Route::prefix('support')->group(function () {
     Route::post('get_list_subscriber_support', 'SupportCommjunction@get_list_subscriber_support')->name('get_list_subscriber_support');
     Route::post('tabel_inquiry_log_activity', 'SupportCommjunction@tabel_inquiry_log_activity')->name('tabel_inquiry_log_activity');
     Route::post('tabel_inquiry_spesific_com', 'SupportCommjunction@tabel_inquiry_spesific_com')->name('tabel_inquiry_spesific_com');
+    Route::post('change_status_reactive', 'SupportCommjunction@change_status_reactive')->name('change_status_reactive');
 
 
 });

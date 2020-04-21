@@ -32,9 +32,15 @@
 
     <li class="nav-item">
         <a class="nav-link" href="/support/inquiry_specific">
-            <span class=" menu-title" lang="en">Inquiry Specific Community</span>
+            <span class=" menu-title" lang="en">Inquiry Specific</span>
             <i class="mdi mdi-google-circles-communities menu-icon"></i>
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/support/reactivate_deactivate">
+            <span class=" menu-title" lang="en">Reactivate/Deactivate</span>
+            <i class="mdi mdi-power-settings menu-icon"></i>
+        </a>
+    </li>
 </ul>

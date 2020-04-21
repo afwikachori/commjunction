@@ -441,3 +441,4 @@ function cekimage_cdn(img) {
 
     return foto;
 }
+
