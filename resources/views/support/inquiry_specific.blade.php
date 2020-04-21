@@ -153,7 +153,8 @@
                 <h4 class=" cblue">Activity Log</h4>
             </div>
 
-            <div class="modal-body detaillog" style="height: auto; padding: 4% !important;">
+            <div class="modal-body detaillog" style="height: auto; padding-left: 4% !important;
+            padding-right: 4% !important; padding-top:2%;">
 
                 <div class="row">
                     <div class="col-md-3">
