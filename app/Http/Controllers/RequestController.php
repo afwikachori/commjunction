@@ -743,4 +743,42 @@ class RequestController extends Controller
     }
 
 
+    public function change_reactive_subscriber($requestImage, $url, $token)
+    {
+        // dd($requestImage);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => [
+                [
+                    'name'     => 'comment',
+                    'contents' =>  $requestImage["comment"]
+                ],
+                [
+                    'name'     => 'active',
+                    'contents' =>  $requestImage["active"]
+                ],
+                [
+                    'name'     => 'community_id',
+                    'contents' =>  $requestImage["community_id"]
+                ],
+                [
+                    'name'     => 'subscriber_id',
+                    'contents' =>  $requestImage["subscriber_id"]
+                ],
+                [
+                    'name'      => 'file',
+                    'contents'  => $requestImage["file"],
+                    'filename'  => $requestImage["filename"]
+                ]
+            ],
+
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+    }
+
 } //END_CLASS

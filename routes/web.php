@@ -449,6 +449,7 @@ Route::prefix('support')->group(function () {
     Route::post('tabel_inquiry_log_activity', 'SupportCommjunction@tabel_inquiry_log_activity')->name('tabel_inquiry_log_activity');
     Route::post('tabel_inquiry_spesific_com', 'SupportCommjunction@tabel_inquiry_spesific_com')->name('tabel_inquiry_spesific_com');
     Route::post('change_status_reactive', 'SupportCommjunction@change_status_reactive')->name('change_status_reactive');
+    Route::post('change_reactive_subscriber', 'SupportCommjunction@change_reactive_subscriber')->name('change_reactive_subscriber');
 
 
 });

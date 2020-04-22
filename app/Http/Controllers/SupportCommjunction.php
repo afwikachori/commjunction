@@ -389,4 +389,80 @@ class SupportCommjunction extends Controller
             return back()->withInput();
         } // endelse
     }
+
+
+    public function change_reactive_subscriber(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        $token = $ses_login['access_token'];
+        $url = env('SERVICE') . 'operationalsupportsystem/reactivateordeactivatesubscriber';
+
+        if ($request->has('status_active_subs') && $input['status_active'] == "on") {
+            $reactive = "true";
+        } else {
+            $reactive = "false";
+        }
+
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
+
+            $input = $request->all(); // getdata form by name
+            $imageRequest = [
+                "comment"       => $input['acc_komen_subs'],
+                "active"        => $reactive,
+                "community_id"  => $input['id_komunitas_subs'],
+                "subscriber_id"  => $input['id_subs'],
+                "filename"      => $filnam,
+                "file"          => $imgku
+            ];
+
+
+            try {
+                $resImg = $req->change_reactive_subscriber($imageRequest, $url, $token);
+
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully update status subscriber', 'Updated!')->persistent('Done');
+                    return back();
+                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } else {
+            alert()->error("File Confirmation is Required", 'Failed!')->autoclose(4500);
+            return back()->withInput();
+        } // endelse
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } //END-CLASS

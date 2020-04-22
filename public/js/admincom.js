@@ -7,6 +7,13 @@ lang.init({
     defaultLang:'en'
 });
 
+(function () {
+    window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+    var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+    ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+})();
+
 var server_cdn = $(".server_cdn").val();
 var ui = {
     popup: {
@@ -45,7 +52,7 @@ var ui = {
 
 $(document).ready(function () {
     session_admin_logged();
-
+console.log(lang);
 });
 
 

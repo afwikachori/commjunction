@@ -436,6 +436,7 @@ select.form-control {
     border-radius: 10px !important;
     background-color: #efefef !important;
     outline: none !important;
+    border: none;
 }
 
 #img_signout_superadmin {
@@ -1394,6 +1395,14 @@ position: relative;
   display: none;
 }
 
+#view_img_subs{
+  margin-top: 1em;
+  height: 75px;
+  width: auto;
+  border-radius: 10px;
+  display: none;
+}
+
 
 .img-fitur-module{
     width: 50px;
@@ -1407,185 +1416,22 @@ position: relative;
     text-align: left;
 }
 
+select.list-blue {
+    border-radius: 10px !important;
+    outline: none !important;
+    border: none;
+    background: linear-gradient(125.96deg, #96deda 0%, #50c9c3 56.6%);
+    font-size: 14px;
+    color: white !important;
+}
 
-.toggle-switch {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none
+select.list-blue option {
+    outline: none !important;
+    background: white;
+    height: 30px;
+    border: none;
+    color : rgb(94, 94, 94);
 }
 
 
-.toggle-switch {
-    display: inline-block;
-    vertical-align: top;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none
-}
 
-.toggle-switch .ts-label {
-    display: inline-block;
-    margin: 0 20px 0 0;
-    vertical-align: top;
-    -webkit-transition: color .56s cubic-bezier(.4, 0, .2, 1);
-    transition: color .56s cubic-bezier(.4, 0, .2, 1)
-}
-
-.toggle-switch .ts-helper {
-    display: inline-block;
-    position: relative;
-    width: 40px;
-    height: 16px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, .26);
-    -webkit-transition: background .28s cubic-bezier(.4, 0, .2, 1);
-    transition: background .28s cubic-bezier(.4, 0, .2, 1);
-    vertical-align: middle;
-    cursor: pointer
-}
-
-.toggle-switch .ts-helper:before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: 24px;
-    height: 24px;
-    background: #fafafa;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28);
-    border-radius: 50%;
-    webkit-transition: left .28s cubic-bezier(.4, 0, .2, 1), background .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1);
-    transition: left .28s cubic-bezier(.4, 0, .2, 1), background .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1)
-}
-
-.toggle-switch:not(.disabled) .ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(128, 128, 128, .1)
-}
-
-.toggle-switch input {
-    position: absolute;
-    z-index: 1;
-    width: 46px;
-    margin: 0 0 0 -4px;
-    height: 24px;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    cursor: pointer
-}
-
-.toggle-switch input:checked+.ts-helper:before {
-    left: 20px
-}
-
-.toggle-switch:not([data-ts-color]) input:not(:disabled):checked+.ts-helper {
-    background: rgba(0, 150, 136, .5)
-}
-
-.toggle-switch:not([data-ts-color]) input:not(:disabled):checked+.ts-helper:before {
-    background: #009688
-}
-
-.toggle-switch:not([data-ts-color]) input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(0, 150, 136, .2)
-}
-
-.toggle-switch.disabled {
-    opacity: .6;
-    filter: alpha(opacity=60)
-}
-
-.toggle-switch[data-ts-color=red] input:not(:disabled):checked+.ts-helper {
-    background: rgba(244, 67, 54, .5)
-}
-
-.toggle-switch[data-ts-color=red] input:not(:disabled):checked+.ts-helper:before {
-    background: #F44336
-}
-
-.toggle-switch[data-ts-color=red] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(244, 67, 54, .2)
-}
-
-.toggle-switch[data-ts-color=blue] input:not(:disabled):checked+.ts-helper {
-    background: rgba(33, 150, 243, .5)
-}
-
-.toggle-switch[data-ts-color=blue] input:not(:disabled):checked+.ts-helper:before {
-    background: #2196F3
-}
-
-.toggle-switch[data-ts-color=blue] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(33, 150, 243, .2)
-}
-
-.toggle-switch[data-ts-color=amber] input:not(:disabled):checked+.ts-helper {
-    background: rgba(255, 193, 7, .5)
-}
-
-.toggle-switch[data-ts-color=amber] input:not(:disabled):checked+.ts-helper:before {
-    background: #FFC107
-}
-
-.toggle-switch[data-ts-color=amber] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(255, 193, 7, .2)
-}
-
-.toggle-switch[data-ts-color=purple] input:not(:disabled):checked+.ts-helper {
-    background: rgba(186, 104, 200, .5)
-}
-
-.toggle-switch[data-ts-color=purple] input:not(:disabled):checked+.ts-helper:before {
-    background: #BA68C8
-}
-
-.toggle-switch[data-ts-color=purple] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(186, 104, 200, .2)
-}
-
-.toggle-switch[data-ts-color=pink] input:not(:disabled):checked+.ts-helper {
-    background: rgba(233, 30, 99, .5)
-}
-
-.toggle-switch[data-ts-color=pink] input:not(:disabled):checked+.ts-helper:before {
-    background: #E91E63
-}
-
-.toggle-switch[data-ts-color=pink] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(233, 30, 99, .2)
-}
-
-.toggle-switch[data-ts-color=lime] input:not(:disabled):checked+.ts-helper {
-    background: rgba(205, 220, 57, .5)
-}
-
-.toggle-switch[data-ts-color=lime] input:not(:disabled):checked+.ts-helper:before {
-    background: #CDDC39
-}
-
-.toggle-switch[data-ts-color=lime] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(205, 220, 57, .2)
-}
-
-.toggle-switch[data-ts-color=cyan] input:not(:disabled):checked+.ts-helper {
-    background: rgba(0, 188, 212, .5)
-}
-
-.toggle-switch[data-ts-color=cyan] input:not(:disabled):checked+.ts-helper:before {
-    background: #00BCD4
-}
-
-.toggle-switch[data-ts-color=cyan] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(0, 188, 212, .2)
-}
-
-.toggle-switch[data-ts-color=green] input:not(:disabled):checked+.ts-helper {
-    background: rgba(76, 175, 80, .5)
-}
-
-.toggle-switch[data-ts-color=green] input:not(:disabled):checked+.ts-helper:before {
-    background: #4CAF50
-}
-
-.toggle-switch[data-ts-color=green] input:not(:disabled):checked+.ts-helper:active:before {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .28), 0 0 0 20px rgba(76, 175, 80, .2)
-}
