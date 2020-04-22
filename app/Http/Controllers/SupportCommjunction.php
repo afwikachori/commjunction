@@ -398,7 +398,7 @@ class SupportCommjunction extends Controller
         $token = $ses_login['access_token'];
         $url = env('SERVICE') . 'operationalsupportsystem/reactivateordeactivatesubscriber';
 
-        if ($request->has('status_active_subs') && $input['status_active'] == "on") {
+        if ($request->has('status_active_subs') && $input['status_active_subs'] == "on") {
             $reactive = "true";
         } else {
             $reactive = "false";

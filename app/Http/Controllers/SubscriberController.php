@@ -233,7 +233,7 @@ class SubscriberController extends Controller
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return view('404');
         }
     } //end-func
 

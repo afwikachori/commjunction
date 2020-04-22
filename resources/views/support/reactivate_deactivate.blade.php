@@ -279,7 +279,7 @@
 
     function get_list_komunitas_support(id_status) {
         $('#tabel_komunitas_support').DataTable().clear().destroy();
-        $('#tabel_komunitas_support tbody').empty();
+        $('#tabel_komunitas_support').empty();
 
         var tabel = $('#tabel_komunitas_support').DataTable({
             dom: 'Bfrtip',
@@ -502,7 +502,8 @@
     function get_list_subscriber_support(id_kom) {
 
         $('#tabel_subscriber').DataTable().clear().destroy();
-        $('#tabel_subscriber tbody').empty();
+        $('#tabel_subscriber').empty();
+
 
         var tabel = $('#tabel_subscriber').DataTable({
             dom: 'Bfrtip',
@@ -575,15 +576,15 @@
                     mData: 'status',
                     render: function (data, type, row, meta) {
                         if (data == 0) {
-                            return '<small class="cgrey s13">Newly</small>';
+                            return '<small class="cgrey s13 text-wrap width-100">Newly</small>';
                         } else if (data == 1) {
-                            return '<small class="cgrey s13">First Login</small>';
+                            return '<small class="cgrey s13 text-wrap width-100">First Login</small>';
                         } else if (data == 2) {
-                            return '<small class="cgrey s13">Active</small>';
+                            return '<small class="cgrey s13 text-wrap width-100">Pending Membership</small>';
                         } else if (data == 3) {
-                            return '<small class="cgrey s13">Published</small>';
+                            return '<small class="cgrey s13 text-wrap width-100">Active</small>';
                         } else {
-                            return '<small class="cgrey s13">Deactive</small>';
+                            return '<small class="cgrey s13 text-wrap width-100">Deactive</small>';
                         }
 
                     }
@@ -612,7 +613,9 @@
                             return '<small class="cgrey s13">Newly</small>';
                         } else if (data == 1) {
                             return '<small class="cgrey s13">First Login</small>';
-                        } else {
+                        } else if (data == 2) {
+                            return '<small class="cgrey s13">Pending Membership</small>';
+                        }else {
                             return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                                 '<i class="mdi mdi-lead-pencil"></i>' +
                                 '</button>';
@@ -645,31 +648,27 @@
                 $('#status_active_subs').attr("checked", false);
                 uistat = '<small class="cgrey tebal"> Deactive </small>';
             } else {
-                if (stat == 2) {
-                    uistat = '<small class="cblue tebal"> Active </small>';
-                } else if (stat == 3) {
-                    uistat = '<small class="cblue tebal"> Published </small>';
-                }
-                $('#status_active_subs').attr("checked", true);
+                uistat = '<small class="cblue tebal"> Active </small>';
+                 $('#status_active_subs').attr("checked", true);
             }
             $("#status_label_subs").html(uistat).show();
 
-            $("#modal_reactive_subscriber").modal('show');
-            $("#id_komunitas_subs").val(id_kom);
-            $("#id_subs").val(data.user_id);
-            $("#status_subs").val(data.status);
-        });
+        $("#modal_reactive_subscriber").modal('show');
+        $("#id_komunitas_subs").val(id_kom);
+        $("#id_subs").val(data.user_id);
+        $("#status_subs").val(data.status);
+    });
 
-        $("#status_active_subs").on('change', function () {
-            if ($(this).is(':checked')) {
-                $("#status_label_subs").show();
-                $("#stat_deactive_subs").hide();
-            }
-            else {
-                $("#stat_deactive_subs").show();
-                $("#status_label_subs").hide();
-            }
-        });
+    $("#status_active_subs").on('change', function () {
+        if ($(this).is(':checked')) {
+            $("#status_label_subs").show();
+            $("#stat_deactive_subs").hide();
+        }
+        else {
+            $("#stat_deactive_subs").show();
+            $("#status_label_subs").hide();
+        }
+    });
 
     } //endfunction
 
