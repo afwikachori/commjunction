@@ -37,7 +37,10 @@ class SupportCommjunction extends Controller
         return view('support/reactivate_deactivate');
     }
 
-
+    public function knowledgeSupportView()
+    {
+        return view('support/knowledge_support');
+    }
 
 
 
@@ -452,17 +455,173 @@ class SupportCommjunction extends Controller
 
 
 
+    public function tabel_knowledge_support(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'operationalsupportsystem/listknowledge';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+        $datakirim = [
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 
+    public function add_knowledge_support(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'operationalsupportsystem/createknowledge';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+
+        if ($request->has('list_feature')) {
+            $fitur =  $input['list_feature'];
+        } else {
+            $fitur = "";
+        }
+        if ($request->has('list_subfeature')) {
+            $subfitur =  $input['list_subfeature'];
+        } else {
+            $subfitur = "";
+        }
+
+        $bodyku = json_encode([
+            "date" => $input['tanggal'],
+            "feature_id" => $fitur,
+            "subfeature_id" => $subfitur,
+            "feature_type" => $input['feature_type'],
+            "feature_description" => $input['deskripsi_fitur'],
+            "kondisi" => $input['kondisi'],
+            "analisis" => $input['analisis'],
+            "solusi" => $input['solusi'],
+            "title" => $input['judul'],
+            "error_level" => $input['error_level'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully create new knowledge', 'Added!')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 
+    public function edit_knowledge_support(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+return $input;
+        $url = env('SERVICE') . 'operationalsupportsystem/editknowledge';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
 
+        if ($request->has('list_feature')) {
+            $fitur =  $input['list_feature'];
+        } else {
+            $fitur = "";
+        }
+        if ($request->has('list_subfeature')) {
+            $subfitur =  $input['list_subfeature'];
+        } else {
+            $subfitur = "";
+        }
 
+        $bodyku = json_encode([
+            "date" => $input['tanggal'],
+            "feature_id" => $fitur,
+            "subfeature_id" => $subfitur,
+            "feature_type" => $input['feature_type'],
+            "feature_description" => $input['deskripsi_fitur'],
+            "kondisi" => $input['kondisi'],
+            "analisis" => $input['analisis'],
+            "solusi" => $input['solusi'],
+            "title" => $input['judul'],
+            "error_level" => $input['error_level'],
+        ]);
 
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
 
-
-
-
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully create new knowledge', 'Added!')->persistent('Done');
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 } //END-CLASS

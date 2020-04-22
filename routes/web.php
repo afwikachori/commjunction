@@ -438,6 +438,7 @@ Route::prefix('support')->group(function () {
     Route::get('/inquiry_specific', 'SupportCommjunction@InquirySpecificView')->name('/inquiry_specific');
     Route::get('/inquiry_log', 'SupportCommjunction@InquiryLogActivityView')->name('/inquiry_log');
     Route::get('/reactivate_deactivate', 'SupportCommjunction@ReactivateDeactivateView')->name('/reactivate_deactivate');
+    Route::get('/knowledge', 'SupportCommjunction@knowledgeSupportView')->name('/knowledge');
 
 
     //POST
@@ -450,6 +451,8 @@ Route::prefix('support')->group(function () {
     Route::post('tabel_inquiry_spesific_com', 'SupportCommjunction@tabel_inquiry_spesific_com')->name('tabel_inquiry_spesific_com');
     Route::post('change_status_reactive', 'SupportCommjunction@change_status_reactive')->name('change_status_reactive');
     Route::post('change_reactive_subscriber', 'SupportCommjunction@change_reactive_subscriber')->name('change_reactive_subscriber');
-
+    Route::post('tabel_knowledge_support', 'SupportCommjunction@tabel_knowledge_support')->name('tabel_knowledge_support');
+    Route::post('add_knowledge_support', 'SupportCommjunction@add_knowledge_support')->name('add_knowledge_support');
+    Route::post('edit_knowledge_support', 'SupportCommjunction@edit_knowledge_support')->name('edit_knowledge_support');
 
 });

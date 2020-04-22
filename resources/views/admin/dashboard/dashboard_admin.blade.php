@@ -7,12 +7,12 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-home"></i>
-        </span> Dashboard</h3>
+        </span><span lang="en">Dashboard</span></h3>
 
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="" class="nav-link text-primary"> Refresh <i
+                <a href="" class="nav-link text-primary" lang="en" data-lang-token="Refresh">Refresh<i
                         class="mdi mdi-refresh icon-sm text-primary align-middle"></i>
                 </a>
             </li>
@@ -27,8 +27,8 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <small class="clight">Total Feature Active</small>
-                        <h4 class="cgrey-mid total_fituraktif">0 Features</h4>
+                        <small class="clight" lang="en">Total Feature Active</small>
+                        <h4 class="cgrey-mid total_fituraktif" lang="en">0 Features</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-chart-bubble mdi-24px float-right top-ico cteal"></i>
@@ -43,8 +43,8 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <small class="clight">Total Subscriber</small>
-                        <h4 class="cgrey-mid total_subs">0 Person</h4>
+                        <small class="clight" lang="en">Total Subscriber</small>
+                        <h4 class="cgrey-mid total_subs" lang="en">0 Person</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-human-handsup mdi-24px float-right top-ico cteal"></i>
@@ -60,9 +60,8 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <small class="clight">
-                            Total Transaction Count</small>
-                        <h4 class="cgrey-mid total_transaction_count">0 Transaction</h4>
+                        <small class="clight" lang="en">Total Transaction Count</small>
+                        <h4 class="cgrey-mid total_transaction_count" lang="en">0 Transaction</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-cart mdi-24px float-right top-ico cteal"></i>
@@ -77,8 +76,8 @@
             <div class="card-body sumari">
                 <div class="row">
                     <div class="col-9">
-                        <small class="clight"> Total Transaction Number</small>
-                        <h4 class="cgrey-mid total_trans_number">0 Transaction</h4>
+                        <small class="clight" lang="en">Total Transaction Number</small>
+                        <h4 class="cgrey-mid total_trans_number" lang="en">0 Transaction</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-shopping mdi-24px float-right top-ico cteal"></i>
@@ -98,11 +97,11 @@
         <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Top Subscriber <i
+                <h4 class="font-weight-normal mb-3" lang="en">Top Subscriber <i
                         class="mdi mdi-chart-line mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Increased by 60%</h6>
+                {{-- <h6 class="card-text">Increased by 60%</h6> --}}
             </div>
         </div>
     </div>
@@ -110,11 +109,11 @@
         <div class="card bg-gradient-info card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Weekly Transation <i
+                <h4 class="font-weight-normal mb-3" lang="en">Weekly Transation <i
                         class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Decreased by 0%</h6>
+                {{-- <h6 class="card-text">Decreased by 0%</h6> --}}
             </div>
         </div>
     </div>
@@ -122,10 +121,10 @@
         <div class="card bg-gradient-success card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3" lang="en">Pending Subscriber <i class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">0</h2>
-                <h6 class="card-text">Increased by 0%</h6>
+                {{-- <h6 class="card-text">Increased by 0%</h6> --}}
             </div>
         </div>
     </div>
@@ -137,7 +136,7 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Chart Activity</h4>
+                <h4 class="card-title" lang="en">Chart Activity</h4>
 
                 <canvas id="myChart"></canvas>
 
@@ -148,7 +147,7 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Chart Transaction</h4>
+                <h4 class="card-title" lang="en">Chart Transaction</h4>
                 <canvas id="myChartTransaction"></canvas>
             </div>
         </div>
@@ -162,10 +161,10 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card" style="height:300px;">
             <div class="card-body">
-                <h4 class="card-title">Pending Subscriber</h4>
+                <h4 class="card-title" lang="en">Pending Subscriber</h4>
                 <div style="margin-top: 0.5em; margin-bottom: 0.5em;">
                     <small class="clight">Total :</small>
-                    <span class="cblue" id="isi_total_pendingsubs">0 Person</span>
+                    <span class="cblue" id="isi_total_pendingsubs" lang="en">0 Person</span>
                 </div>
 
                 <div style="width: 100%; height: 150px; overflow-y: scroll;">
@@ -181,10 +180,10 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card" style="height:300px;">
             <div class="card-body">
-                <h4 class="card-title">Module Information</h4>
+                <h4 class="card-title" lang="en">Module Information</h4>
                 <div style="margin-top: 0.5em; margin-bottom: 1em;">
                     <small class="clight">Total :</small>
-                    <span class="cblue" id="isi_total_module">0 Module</span>
+                    <span class="cblue" id="isi_total_module" lang="en">0 Module</span>
                 </div>
                 <div style="width: 100%; height: 150px; overflow-y: scroll;">
                     <div id="module_info_dash">
@@ -197,7 +196,7 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card" style="height:300px;">
             <div class="card-body">
-                <h4 class="card-title">Top 5 Subsciber</h4>
+                <h4 class="card-title" lang="en">Top 5 Subsciber</h4>
                 <ul class="list-star" id="top-5-subs">
 
                 </ul>
@@ -211,10 +210,10 @@
 <!-- NEWS HEADLINE -->
 <div class="row">
     <div class="col-6">
-        <h2 class="cgrey">HEADLINE NEWS</h2>
+        <h2 class="cgrey" lang="en">HEADLINE NEWS</h2>
     </div>
     <div class="col-6">
-        <a href="/admin/news_management" id="other-news">See Other News</a>
+        <a href="/admin/news_management" id="other-news" lang="en" data-lang-token="">See Other News</a>
     </div>
 </div>
 <div id="headline_cont" class="row ">
@@ -231,14 +230,14 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title cteal">Last News</h4>
+                <h4 class="card-title cteal" lang="en">Last News</h4>
                 <table id="table_last_news" class="table table-hover dt-responsive" style="width:100%">
                     <thead>
                         <tr>
                             <center>
                                 <th class="bg-greymuda"></th>
-                                <th class="bg-greymuda">Title</th>
-                                <th class="bg-greymuda">Date</th>
+                                <th class="bg-greymuda" lang="en">Title</th>
+                                <th class="bg-greymuda" lang="en">Date</th>
                             </center>
                         </tr>
                     </thead>
@@ -251,14 +250,14 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title cteal">TOP VISIT News</h4>
+                <h4 class="card-title cteal" lang="en">Top Visited News</h4>
                 <table id="table_topvisit_news" class="table table-hover dt-responsive" style="width:100%">
                     <thead>
                         <tr>
                             <center>
                                 <th class="bg-greymuda"></th>
-                                <th class="bg-greymuda">Title</th>
-                                <th class="bg-greymuda">Date</th>
+                                <th class="bg-greymuda" lang="en">Title</th>
+                                <th class="bg-greymuda" lang="en">Date</th>
                             </center>
                         </tr>
                     </thead>
@@ -271,14 +270,14 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title cteal">TOP LOVED</h4>
+                <h4 class="card-title cteal" lang="en">Top Love News</h4>
                 <table id="table_toploved_news" class="table table-hover dt-responsive" style="width:100%">
                     <thead>
                         <tr>
                             <center>
                                 <th class="bg-greymuda"></th>
-                                <th class="bg-greymuda">Title</th>
-                                <th class="bg-greymuda">Date</th>
+                                <th class="bg-greymuda" lang="en">Title</th>
+                                <th class="bg-greymuda" lang="en">Date</th>
                             </center>
                         </tr>
                     </thead>
@@ -303,11 +302,11 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/hore.png" id="img-initial1">
-                    <h3 class="cgrey" style="margin-bottom: 0.5em;">Congratulations !!!</h3>
-                    <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
+                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations !!!</h3>
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
-                    <button type="button" id="btn-initial1" class="btn btn-primary btn-sm">Take a tour</button>
+                    <button type="button" id="btn-initial1" class="btn btn-primary btn-sm" lang="en">Take a tour</button>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -323,7 +322,7 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/init-fitur.png" id="img-initial2">
-                    <h4 class="cgrey" style="margin-bottom: 1em;">Features Overiew</h4>
+                    <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Features Overiew</h4>
                 </center>
 
                 <div class="row modal_initial_fitur">
@@ -332,7 +331,7 @@
             </div> <!-- end-modal body -->
             <center>
                 <div class="modal-footer" id="mdl-footer-initialfitur">
-                    <button type="button" id="btn-initial2" class="btn btn-primary btn-sm">Got it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-primary btn-sm" lang="en">Got it</button>
                 </div>
             </center>
         </div>
@@ -349,11 +348,11 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/init3.png" id="img-initial3">
-                    <h3 class="cgrey" style="margin-bottom: 0.5em;">Ready For Action ?</h3>
-                    <p class="clight s14">Congratulations ! You’re already succesfull register and you’re already member
+                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Ready For Action ?</h3>
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
-                    <button type="button" id="btn-initial3" class="btn btn-primary btn-sm">Finish</button>
+                    <button type="button" id="btn-initial3" class="btn btn-primary btn-sm" lang="en">Finish</button>
                 </center>
             </div> <!-- end-modal body -->
         </div>

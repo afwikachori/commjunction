@@ -1,7 +1,7 @@
 <ul class="nav">
     <li class="nav-item nav-profile">
         <center>
-            <img src="/img/loading2.gif" class="rounded-circle img-fluid dash-img-profil foto_profil_subs"
+            <img src="/img/commjuction_icoweb.ico" class="rounded-circle img-fluid dash-img-profil foto_profil_subs"
                 style="height: 80px; width: 80px;" onerror="this.onerror=null;this.src='/img/cam.png';">
             <br>
         </center>
@@ -41,6 +41,12 @@
         <a class="nav-link" href="/support/reactivate_deactivate">
             <span class=" menu-title" lang="en">Reactivate/Deactivate</span>
             <i class="mdi mdi-power-settings menu-icon"></i>
+        </a>
+    </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/support/knowledge">
+            <span class=" menu-title" lang="en">Knowledge</span>
+            <i class="mdi mdi-book-open-page-variant menu-icon"></i>
         </a>
     </li>
 </ul>

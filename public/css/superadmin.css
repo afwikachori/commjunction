@@ -17,18 +17,20 @@ body::-webkit-scrollbar-thumb {
         #ffc3b2,
         #ffb6bc
     );
+
 }
 
 * {
-    font-family: "SF Pro Display Regular" !important;
+    font-family: "SF Pro Display Regular", Arial !important;
+     font-family: 'MyWebFont', Fallback, sans-serif;
 }
 
-/* @font-face {
+@font-face {
     font-family: "SF Pro Display Regular";
     src: url("/font/sf_pro.ttf")format("ttf");
     font-weight: normal;
     font-style: normal;
-} */
+}
 
 @font-face {
   font-family: "SF Pro Display Regular";
@@ -1176,7 +1178,7 @@ input[type="checkbox"] {
 
 .mod-header{
     padding: 5%;
-    padding-bottom: 2% !important;
+    padding-bottom: 0px !important;
 }
 
 
@@ -1437,6 +1439,28 @@ select.list-blue option {
     border: none;
     color : rgb(94, 94, 94);
 }
+/* //modal scroll */
+.modal::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.modal::-webkit-scrollbar {
+    width: 7px;
+    background-color: #f5f5f5;
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        to bottom,
+        #faf9da,
+        #e0fcfa,
+        #def0f3,
+        #c8cfd3,
+        #ded5e6
+    );
+}
+/* end */
+
 
 
 

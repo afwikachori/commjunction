@@ -7,7 +7,7 @@
 
     <div class="container cjudul">
       <h3 lang="en" class="judullogin">Lets Get Started</h3>
-      <p class="deslogin" lang="en">Gathering data with a smart application that trusted and fastest.</p>
+      <p class="desloginadmin" lang="en">Platform for your exclusive Community</p>
     </div>
 
       <img src="/visual/loginadmin.png" id="img-loginadmin">
