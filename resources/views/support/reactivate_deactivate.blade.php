@@ -107,6 +107,7 @@
 </div>
 
 
+
 <!-- MODAL REACTIVE KOMUNITAS-->
 <div class="modal fade" id="modal_update_active" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -210,8 +211,8 @@
                                     <i id="browse_acc_subs" class="mdi mdi-camera upload-button accmember"
                                         style="font-size: 1.5rem;"></i>
                                 </button>
-                                <input id="file_acc_subs" class="file-upload file-upload-default accmember"
-                                    type="file" name="fileup" accept="image/*" />
+                                <input id="file_acc_subs" class="file-upload file-upload-default accmember" type="file"
+                                    name="fileup" accept="image/*" />
                             </div>
 
                         </div>
@@ -417,7 +418,7 @@
         });
 
 
-          $("#status_active").on('change', function () {
+        $("#status_active").on('change', function () {
             if ($(this).is(':checked')) {
                 $("#status_label_kom").show();
                 $("#stat_deactive_kom").hide();
@@ -528,7 +529,7 @@
             ajax: {
                 url: "/support/get_list_subscriber_support",
                 type: "POST",
-                 dataSrc: '',
+                dataSrc: '',
                 data: {
                     "community_id": id_kom
                 },
@@ -549,7 +550,7 @@
                         return '<span class="s13 text-wrap width-300">' + data + '</span>';
                     }
                 },
-                 {
+                {
                     mData: 'sso_picture',
                     render: function (data, type, row, meta) {
                         var noimg = '/img/kosong.png';
@@ -582,7 +583,7 @@
                         } else if (data == 3) {
                             return '<small class="cgrey s13">Published</small>';
                         } else {
-                             return '<small class="cgrey s13">Deactive</small>';
+                            return '<small class="cgrey s13">Deactive</small>';
                         }
 
                     }
@@ -590,21 +591,21 @@
                 {
                     mData: 'created_at',
                     render: function (data, type, row, meta) {
-                          return '<span class="s13">' + dateFormat(data) + '</span>';
+                        return '<span class="s13">' + dateFormat(data) + '</span>';
                     }
                 },
                 {
                     mData: 'membership',
                     render: function (data, type, row, meta) {
-                        if(data != null){
-                             return '<small class="cgrey s13">'+ data.membership+'</small>';
-                        }else{
+                        if (data != null) {
+                            return '<small class="cgrey s13">' + data.membership + '</small>';
+                        } else {
                             return '<small class="cgrey s13"> - </small>';
                         }
 
                     }
                 },
-                 {
+                {
                     mData: 'status',
                     render: function (data, type, row, meta) {
                         if (data == 0) {
@@ -656,17 +657,17 @@
             $("#modal_reactive_subscriber").modal('show');
             $("#id_komunitas_subs").val(id_kom);
             $("#id_subs").val(data.user_id);
-             $("#status_subs").val(data.status);
+            $("#status_subs").val(data.status);
         });
 
-       $("#status_active_subs").on('change', function () {
+        $("#status_active_subs").on('change', function () {
             if ($(this).is(':checked')) {
                 $("#status_label_subs").show();
                 $("#stat_deactive_subs").hide();
             }
             else {
-               $("#stat_deactive_subs").show();
-               $("#status_label_subs").hide();
+                $("#stat_deactive_subs").show();
+                $("#status_label_subs").hide();
             }
         });
 

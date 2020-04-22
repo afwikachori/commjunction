@@ -23,11 +23,16 @@ body::-webkit-scrollbar-thumb {
     font-family: "SF Pro Display Regular" !important;
 }
 
-@font-face {
+/* @font-face {
     font-family: "SF Pro Display Regular";
     src: url("/font/sf_pro.ttf")format("ttf");
     font-weight: normal;
     font-style: normal;
+} */
+
+@font-face {
+  font-family: "SF Pro Display Regular";
+  src: url("/font/sf_pro.ttf");
 }
 
 /* //modal scroll */
