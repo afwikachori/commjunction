@@ -13,11 +13,12 @@ html, body {
 }
 
 @font-face {
-  font-family: "SF Pro Display Regular";
-  src:  url("/assets/font/sf_pro.ttf") format("ttf");
-  font-weight: normal;
-  font-style: normal;
+    font-family: "SF Pro Display Regular";
+    src: url("/font/sf_pro.ttf")format("ttf");
+    font-weight: normal;
+    font-style: normal;
 }
+
 
 body::-webkit-scrollbar-track
 {
