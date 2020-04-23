@@ -3,10 +3,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-3">
-        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;" lang="en">Community Setting</h3>
     </div>
     <div class="col-md-9">
-        <label class="cgrey">Publish Community to Live<label>
+        <label class="cgrey" lang="en">Publish Community to Live<label>
     </div>
 </div>
 <br>
@@ -16,12 +16,11 @@
             <div class="card-header putih">
                 <div class="row">
                     <div class="col-md-8" style="margin-top: 0.5em;">
-                        <h4 class="cgrey tebal"> Subscriber Payment</h4>
+                        <h4 class="cgrey tebal" lang="en">Subscriber Payment</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
                         <button type="button" id="btn_add_payment" class="btn btn-tosca btn-sm"
-                            style="margin-top: 0.5em;">Add
-                            Payment</button>
+                            style="margin-top: 0.5em;" lang="en">Add Payment</button>
                     </div>
                 </div>
             </div>
@@ -31,11 +30,11 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th><b>ID Pay</b></th>
-                            <th><b>Payment Title</b></th>
-                            <th><b>Bank Name</b></th>
-                            <th><b>Status</b></th>
-                            <th><b>Action</b></th>
+                            <th><b lang="en">ID Pay</b></th>
+                            <th><b lang="en">Payment Title</b></th>
+                            <th><b lang="en">Bank Name</b></th>
+                            <th><b lang="en">Status</b></th>
+                            <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -54,7 +53,7 @@
 
                 <div class="modal-header" style="border: none;">
                     <center>
-                        <h4 class="modal-title cgrey">Add Payment Type</h4>
+                        <h4 class="modal-title cgrey" lang="en">Add Payment Type</h4>
                     </center>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -67,14 +66,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Payment Name</label>
+                                    <label lang="en">Payment Name</label>
                                     <input type="text" id="payment_name" name="payment_name"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Payment Type</label>
+                                    <label lang="en">Payment Type</label>
                                     <select class="form-control input-abu" id="payment_tipe" name="payment_tipe">
                                     </select>
                                 </div>
@@ -83,55 +82,55 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nama Pemilik Rekening</label>
+                                    <label lang="en">Account Holder Name</label>
                                     <input type="text" id="rekening_name" name="rekening_name"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nomer Rekening</label>
+                                    <label lang="en">Rekening Number</label>
                                     <input type="text" id="rekening_number" name="rekening_number"
                                         class="form-control input-abu">
                                 </div>
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <small>Dekripsi</small>
+                                <small lang="en">Description</small>
                                 <textarea class="form-control input-abu" id="deskripsi_paysubs" name="deskripsi_paysubs"
                                     rows="2"></textarea>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Bank Name</label>
+                                    <label lang="en">Bank Name</label>
                                     <select class="form-control input-abu" id="bank_name" name="bank_name">
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Payment Time Limit</label>
+                                    <label lang="en">Payment Time Limit</label>
                                     <select class="form-control input-abu" id="pay_time_limit" name="pay_time_limit"
                                         value="{{old('pay_time_limit')}}">
-                                        <option selected disabled> Choose </option>
-                                        <option value="1"> 1 Day </option>
-                                        <option value="2"> 2 Days </option>
-                                        <option value="3"> 3 Days </option>
-                                        <option value="4"> 4 Days </option>
-                                        <option value="5"> 5 Days </option>
-                                        <option value="6"> 6 Days </option>
-                                        <option value="7"> 7 Days </option>
+                                        <option selected disabled lang="en">Choose</option>
+                                        <option value="1" lang="en">1 Day</option>
+                                        <option value="2" lang="en">2 Days</option>
+                                        <option value="3" lang="en">3 Days</option>
+                                        <option value="4" lang="en">4 Days</option>
+                                        <option value="5" lang="en">5 Days</option>
+                                        <option value="6" lang="en">6 Days</option>
+                                        <option value="7" lang="en">7 Days</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Payment Status</label>
+                                    <label lang="en">Payment Status</label>
                                     <select class="form-control input-abu" id="payment_status" name="payment_status"
                                         value="{{old('payment_status')}}">
-                                        <option selected disabled> Choose </option>
-                                        <option value="1"> Active </option>
-                                        <option value="0"> Deactive </option>
+                                        <option selected disabled lang="en">Choose</option>
+                                        <option value="1" lang="en">Active</option>
+                                        <option value="0" lang="en">Deactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -142,12 +141,12 @@
                     <div class="modal-footer" style="border: none; margin-top: -1.5em;">
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
+                            <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                         </button>
                         &nbsp;
                         <button type="submit" id="btn_add_paysubs" class="btn btn-teal btn-sm">
                             <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Add </button>
+                            </i> <span lang="en">Add</span> </button>
                     </div> <!-- end-footer     -->
                 </form>
             </div> <!-- END-MDL CONTENT -->
@@ -161,7 +160,7 @@
             <div class="modal-content modal" style="background-color: #ffffff;">
 
                 <div class="modal-header" style="border-bottom: none;">
-                    <h4 class="modal-title cgrey">Detail Payment</h4>
+                    <h4 class="modal-title cgrey" lang="en">Detail Payment</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -171,13 +170,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Payment Name</small>
+                                <small class="clight" lang="en">Payment Name</small>
                                 <p class="cgrey2" id="detail_nama_pay"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Payment Type</small>
+                                <small class="clight" lang="en">Payment Type</small>
                                 <p class="cgrey2" id="detail_tipe_pay"></p>
                             </div>
                         </div>
@@ -185,20 +184,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Nama Pemilik Rekening</small>
+                                <small class="clight" lang="en">Account Holder Name</small>
                                 <p class="cgrey2" id="detail_owner"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Nomer Rekening</small>
+                                <small class="clight" lang="en">Rekening Number</small>
                                 <p class="cgrey2" id="detail_no_rekening"></p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <small class="clight">Dekripsi</small>
+                            <small class="clight" lang="en">Description</small>
                             <p class="cgrey2" id="detail_deskripsi"></p>
                         </div>
                     </div>
@@ -206,18 +205,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Bank Name</small>
+                                <small class="clight" lang="en">Bank Name</small>
                                 <p class="cgrey2" id="detail_bank"></p>
                             </div>
                             <div class="form-group">
-                                <small class="clight">Payment Time Limit</small>
+                                <small class="clight" lang="en">Payment Time Limit</small>
                                 <p class="cgrey2" id="detail_timelimit"></p>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Payment Status</small>
+                                <small class="clight" lang="en">Payment Status</small>
                                 <p class="cgrey2" id="detail_status"></p>
                             </div>
                         </div>
@@ -231,13 +230,13 @@
                         <button type="submit" class="btn bg-merah melengkung10px btn-sm"
                             style="text-align: right; width: 100px;">
                             <i class="mdi mdi-delete btn-icon-prepend">
-                            </i> Delete </button>
+                            </i> <span lang="en">Delete</span> </button>
                     </form>
                     &nbsp;
                     <button class="btn btn-tosca btn-sm" style="width: 100px;" data-toggle="modal"
                         data-target="#modal_edit_payment" data-dismiss="modal">
                         <i class="mdi mdi-lead-pencil">
-                        </i> Edit </button>
+                        </i> <span lang="en">Edit</span></button>
                 </div> <!-- end-footer     -->
             </div>
         </div>
@@ -251,7 +250,7 @@
 
                 <div class="modal-header" style="border: none;">
                     <center>
-                        <h4 class="modal-title cgrey">Edit Payment Type</h4>
+                        <h4 class="modal-title cgrey" lang="en">Edit Payment Type</h4>
                     </center>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -265,14 +264,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Payment Name</label>
+                                    <label lang="en">Payment Name</label>
                                     <input type="text" id="edit_payment_name" name="edit_payment_name"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Payment Type</label>
+                                    <label lang="en">Payment Type</label>
                                     <select class="form-control input-abu" id="edit_payment_tipe"
                                         name="edit_payment_tipe">
                                     </select>
@@ -282,33 +281,33 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nama Pemilik Rekening</label>
+                                    <label lang="en">Account Holder Name</label>
                                     <input type="text" id="edit_rekening_name" name="edit_rekening_name"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nomer Rekening</label>
+                                    <label lang="en">Rekening Number</label>
                                     <input type="text" id="edit_rekening_number" name="edit_rekening_number"
                                         class="form-control input-abu">
                                 </div>
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <small>Dekripsi</small>
+                                <small lang="en">Description</small>
                                 <textarea class="form-control input-abu" id="edit_deskripsi_paysubs"
                                     name="edit_deskripsi_paysubs" rows="2"></textarea>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Bank Name</label>
+                                    <label lang="en">Bank Name</label>
                                     <select class="form-control input-abu" id="edit_bank_name" name="edit_bank_name">
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Payment Time Limit</label>
+                                    <label lang="en">Payment Time Limit</label>
                                     <div class="row">
                                         <div class="col-6" style="padding-right: 2px;">
                                             <input type="text" class="form-control input-abu" id="edit_pay_time_limit"
@@ -316,7 +315,7 @@
                                         </div>
                                         <div class="col-6" style="text-align: left; padding-top: 10px;">
                                             <small class="clight"
-                                                style="margin-top: 1em; margin-left: -1em;">Days</small>
+                                                style="margin-top: 1em; margin-left: -1em;" lang="en">Days</small>
                                         </div>
                                     </div>
 
@@ -325,12 +324,12 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Payment Status</label>
+                                    <label lang="en">Payment Status</label>
                                     <select class="form-control input-abu" id="edit_payment_status"
                                         name="edit_payment_status" value="{{old('edit_payment_status')}}">
-                                        <option selected disabled> Choose </option>
-                                        <option value="1"> Active </option>
-                                        <option value="0"> Deactive </option>
+                                        <option selected disabled lang="en">Choose</option>
+                                        <option value="1" lang="en">Active</option>
+                                        <option value="0" lang="en">Deactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -339,12 +338,12 @@
                     <div class="modal-footer" style="border: none; margin-top: -1.5em;">
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
+                            <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                         </button>
                         &nbsp;
                         <button type="submit" id="btn_edit_paysubs" class="btn btn-teal btn-sm">
                             <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Edit </button>
+                            </i> <span lang="en">Edit</span> </button>
                     </div> <!-- end-footer     -->
                 </form>
             </div> <!-- END-MDL CONTENT -->

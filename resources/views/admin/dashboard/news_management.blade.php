@@ -1,34 +1,33 @@
 @extends('layout.admin-dashboard')
 @section('title', 'News Management')
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span>News Management</h3>
 
-    <nav aria-label="breadcrumb">
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title" lang="en">News Management</h3>
+    </div>
+    <div class="col-md-6">
+        <label class="cgrey" lang="en">Manage your news information<label>
+    </div>
+    <div class="col-md-4" style="text-align: right;">
+          <nav aria-label="breadcrumb">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle btn-tosca btn-sm" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add News
-            </button>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" lang="en">Add News</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_add_news">Manual Add News</a>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_scrape_news">Scrape News</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_add_news" lang="en">Manual Add News</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_scrape_news" lang="en">Scrape News</a>
             </div>
         </div>
-
     </nav>
+    </div>
 </div>
-
+<br>
 
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-            <div class="card-header putih">
-                List News
-            </div>
+            <div class="card-header putih" lang="en">List News</div>
 
             <div class="card-body">
                 <!-- tabel all susbcriber -->
@@ -37,12 +36,12 @@
                     <thead>
                         <tr>
                             <th><b></b></th>
-                            <th><b>Title</b></th>
-                            <th><b>Author</b></th>
-                            <th><b>Date</b></th>
-                            <th><b>Publish Status</b></th>
-                            <th><b>Headline Status</b></th>
-                            <th><b>Action</b></th>
+                            <th><b lang="en">Title</b></th>
+                            <th><b lang="en">Author</b></th>
+                            <th><b lang="en">Date</b></th>
+                            <th><b lang="en">Publish Status</b></th>
+                            <th><b lang="en">Headline Status</b></th>
+                            <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -68,7 +67,7 @@
 
 
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Add News</h4>
+                    <h4 class="modal-title cgrey" lang="en">Add News</h4>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
@@ -91,12 +90,12 @@
                                             type="file" name="fileup2" accept="image/*" />
                                     </div>
                                 </div>
-                                <small class="clight">News Title</small>
+                                <small class="clight" lang="en">News Title</small>
                                 <input type="text" id="add_title" name="add_title"
                                     class="form-control input-abu melengkung10px" required>
                             </div>
                             <div class="form-group">
-                                <small class="clight">News Content</small>
+                                <small class="clight" lang="en">News Content</small>
                                 <textarea class="form-control input-abu" label="Konten" req="" id="news_add_content"
                                     name="news_add_content"></textarea>
                             </div>
@@ -108,12 +107,12 @@
                 <div class="modal-footer" style="border: none;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" class="btn btn-tosca btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Add News </button>
+                        </i> <span lang="en">Add News</span> </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -132,7 +131,7 @@
 
 
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Scrape News</h4>
+                    <h4 class="modal-title cgrey" lang="en">Scrape News</h4>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
@@ -142,7 +141,7 @@
                         <div class="col-md">
                             <div class="form-group">
 
-                                <small class="clight">News URL</small>
+                                <small class="clight" lang="en">News URL</small>
                                 <input type="text" id="url_add" name="url" class="form-control input-abu melengkung10px"
                                     required>
                             </div>
@@ -154,12 +153,12 @@
                 <div class="modal-footer" style="border: none;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" class="btn btn-tosca btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Get News </button>
+                        </i> <span lang="en">Get News</span> </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -183,7 +182,7 @@
             enctype="multipart/form-data">{{ csrf_field() }}
             <div class="modal-content" style="background-color: #ffffff;">
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Edit News</h4>
+                    <h4 class="modal-title cgrey" lang="en">Edit News</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -210,25 +209,25 @@
                                             type="file" id="fileup" name="fileup" accept="image/*" />
                                     </div>
                                 </div>
-                                <small class="clight">News Title</small>
+                                <small class="clight" lang="en">News Title</small>
                                 <input type="text" id="edit_title" name="edit_title"
                                     class="form-control input-abu melengkung10px">
                             </div>
                             <div class="form-group">
-                                <small class="clight">News Content</small>
+                                <small class="clight" lang="en">News Content</small>
                                 <textarea class="form-control input-abu" label="Konten" req="" id="news_edit_content"
                                     name="news_edit_content"></textarea>
                             </div>
 
                             <div class="form-group publish-stat">
-                                <small class="clight">Publish Status</small>
+                                <small class="clight" lang="en">Publish Status</small>
                                 <input id="toggle-status" type="checkbox" data-toggle="toggle" data-on="Published"
                                     data-off="Disabled" data-onstyle="success" data-offstyle="danger" data-width="100"
                                     data-size="sm" onclick="toggleStatus()">
                             </div>
 
                             <div class="form-group headline-stat">
-                                <small class="clight">Headline Status</small>
+                                <small class="clight" lang="en">Headline Status</small>
                                 <input id="toggle-headline" type="checkbox" data-toggle="toggle" data-on="Headline"
                                     data-off="Normal" data-onstyle="warning" data-offstyle="light" data-width="100"
                                     data-size="sm" onclick="toggleHeadline()">
@@ -242,12 +241,12 @@
                 <div class="modal-footer" style="border: none;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Save </button>
+                        </i> <span lang="en">Save</span> </button>
                 </div> <!-- end-footer     -->
             </div> <!-- END-MDL CONTENT -->
         </form>

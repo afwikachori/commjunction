@@ -9,7 +9,7 @@ html, body {
 
 
 * {
-    font-family: "SF Pro Display Regular", Arial !important;
+    font-family: "SF Pro Display Regular",Calibri !important;
      font-family: 'MyWebFont', Fallback, sans-serif;
 }
 
@@ -431,9 +431,7 @@ color: white;
 margin-bottom: 1.5em;
 }
 
-.tebal{
-  font-weight: bold;
-}
+
 
 .btn-teal{
   background-color: #0E5F75;
@@ -1412,7 +1410,7 @@ select.form-control {
 }
 
 .tebal {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 .btn-teal {

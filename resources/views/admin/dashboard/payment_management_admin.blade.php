@@ -3,10 +3,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title">Payment Management</h3>
+        <h3 class="page-title" lang="en">Payment Management</h3>
     </div>
     <div class="col-md-5">
-        <label class="cgrey">Manage your payment information<label>
+        <label class="cgrey" lang="en">Manage your payment information<label>
     </div>
 </div>
 <br>
@@ -20,14 +20,10 @@
                 <div class="tabbable-line payment">
                     <ul class="nav nav-tabs ">
                         <li class="tab-subs active" id="tab_all">
-                            <a href="#tab_default_1" data-toggle="tab">
-                                All
-                            </a>
+                            <a href="#tab_default_1" data-toggle="tab" lang="en" data-lang-token="All">All</a>
                         </li>
                         <li class="tab-subs" id="tab_pending">
-                            <a href="#tab_default_2" data-toggle="tab">
-                                Active
-                            </a>
+                            <a href="#tab_default_2" data-toggle="tab" lang="en" data-lang-token="Active">Active</a>
                         </li>
 
                     </ul>
@@ -51,10 +47,10 @@
                                 class="table table-hover table-striped dt-responsive wrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID Payment</th>
-                                        <th>Payment Title</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
+                                        <th><b lang="en">ID Payment</b></th>
+                                        <th><b lang="en">Payment Title</b></th>
+                                        <th><b lang="en">Description</b></th>
+                                        <th><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -66,10 +62,10 @@
                                 class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID Payment</th>
-                                        <th>Payment Title</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
+                                        <th><b lang="en">ID Payment</b></th>
+                                        <th><b lang="en">Payment Title</b></th>
+                                        <th><b lang="en">Description</b></th>
+                                        <th><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -98,24 +94,24 @@
             <div class="modal-body" style="padding:25px; min-height: 550px; height: auto; padding: 5px 25px 0px 25px;">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4 class="cdarkgrey s20">Detail Payment</h4>
+                        <h4 class="cdarkgrey s20" lang="en">Detail Payment</h4>
 
                         <div id="infor_pay_admin" style="margin-top: 7%;">
                             <center>
                                 <img src="/img/default.png" class="rounded-circle img-fluid" id="img_detail_payment_super"
                                     onerror="this.onerror=null;this.src='/img/default.png';">
                                 <br>
-                                <small class="cblue">Payment Name</small>
+                                <small class="cblue" lang="en">Payment Name</small>
                                 <h6 class="cgrey tebal" id="detail_judul">-</h6>
                             </center>
 
                             <div class="div-info-payment">
                                 <div class="form-group">
-                                    <small class="cblue">Payment Type</small>
+                                    <small class="cblue" lang="en">Payment Type</small>
                                     <p class="cgrey2" id="detail_tipe_pay"> Not Set </p>
                                 </div>
                                 <div class="form-group">
-                                    <small class="cblue">Description</small>
+                                    <small class="cblue" lang="en">Description</small>
                                     <div style="overflow-y: scroll; height: 60px;">
                                         <p class="cgrey2 s14" id="detail_deskripsi">-</p>
                                     </div>
@@ -123,13 +119,13 @@
                                 <div class="row hideku" style="display: none;">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <small class="cblue">Price Montly</small>
+                                            <small class="cblue" lang="en">Price Montly</small>
                                             <p class="cgrey2" id="detail_pricebulan">-</p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <small class="cblue">Price Annual</small>
+                                            <small class="cblue" lang="en">Price Annual</small>
                                             <p class="cgrey2" id="detail_pricetahun">-</p>
                                         </div>
                                     </div>
@@ -137,14 +133,14 @@
                                 <div class="row hideku" style="display: none;">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <small class="cblue">Minimum Montly</small><br>
+                                            <small class="cblue" lang="en">Minimum Montly</small><br>
                                             <span class="cgrey2" id="detail_minbulan"> 0 </span>
                                             <small class="clight"> &nbsp; / Month</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <small class="cblue">Minimum Annual</small><br>
+                                            <small class="cblue" lang="en">Minimum Annual</small><br>
                                             <spam class="cgrey2" id="detail_mintahun"> 0 </spam>
                                             <small class="clight"> &nbsp; / Year</small>
                                         </div>
@@ -159,12 +155,12 @@
 
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
-                                <h4 class="cdarkgrey s20">Sub Payment</h4>
+                                <h4 class="cdarkgrey s20" lang="en">Sub Payment</h4>
                             </div>
                             <div class="col-md-6 col-sm-12" style="text-align: right; display: none;"
                                 id="hide_btn_aktivasi">
                                 <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                                    data-target="#modal_pay_module" data-dismiss="modal">
+                                    data-target="#modal_pay_module" data-dismiss="modal" lang="en">
                                     Activation</button>
                             </div>
                         </div>
@@ -174,23 +170,23 @@
                             class="table table-hover table-sm table-striped dt-responsive" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th class="cgrey2"><b> ID </b></th>
-                                    <th class="cgrey2"><b> Title </b></th>
-                                    <th class="cgrey2"><b> Icon </b></th>
-                                    <th class="cgrey2"><b> Bank Name </b></th>
-                                    <th class="cgrey2"><b> Owner Bank </b></th>
-                                    <th class="cgrey2"><b> Status </b></th>
+                                    <th class="cgrey2"><b lang="en">ID</b></th>
+                                    <th class="cgrey2"><b lang="en">Title</b></th>
+                                    <th class="cgrey2"><b lang="en">Icon</b></th>
+                                    <th class="cgrey2"><b lang="en">Bank Name</b></th>
+                                    <th class="cgrey2"><b lang="en">Owner Bank</b></th>
+                                    <th class="cgrey2"><b lang="en">Status</b></th>
                                     <!-- <th class="cgrey2"><b> Time Limit </b></th>
                                     <th class="cgrey2"><b> Account </b></th>
                                     <th class="cgrey2"><b> Description </b></th> -->
-                                    <th class="cgrey2"><b> Action </b></th>
+                                    <th class="cgrey2"><b lang="en">Action</b></th>
                                 </tr>
                             </thead>
                         </table>
                         <div id="notabel" style="display: none">
                             <center>
                                 <br><br><br><br>
-                                <h1 class="clight">Data Not Found</h1>
+                                <h1 class="clight" lang="en">Data Not Found</h1>
                             </center>
                         </div>
                     </div>
@@ -212,21 +208,17 @@
 
 
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
-                <h4 class="modal-title cgrey">Detail Sub-Payment</h4>
+                <h4 class="modal-title cgrey" lang="en">Detail Sub-Payment</h4>
                 <div id="subpay_status" style="text-align: right; margin-top: -1.5em; margin-bottom: 1.5em;"></div>
 
 
                 <div class="tabbable-line" style="margin-top: -0.5em;">
                     <ul class="nav nav-tabs detailsubpay">
                         <li class="tab-subs active" id="tab_all">
-                            <a href="#tab_default_1_subpay" data-toggle="tab">
-                                Detail
-                            </a>
+                            <a href="#tab_default_1_subpay" data-toggle="tab" lang="en" data-lang-token="Detail">Detail</a>
                         </li>
                         <li class="tab-subs" id="tab_pending">
-                            <a href="#tab_default_2_subpay" data-toggle="tab">
-                                Setting Sub
-                            </a>
+                            <a href="#tab_default_2_subpay" data-toggle="tab" lang="en" data-lang-token="en">Setting Sub</a>
                         </li>
 
                     </ul>
@@ -245,19 +237,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <small class="clight s13">Payment Name</small>
+                                        <small class="clight s13" lang="en">Payment Name</small>
                                         <p id="detail_nama_pay"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <small class="clight s13">Payment Time Limit</small>
+                                        <small class="clight s13" lang="en">Payment Time Limit</small>
                                         <p id="detail_time_limit"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="margin-top: -0.5em;">
                                     <div class="form-group">
-                                        <small class="clight s13">Description</small>
+                                        <small class="clight s13" lang="en">Description</small>
                                         <ul>
                                             <div id="detail_deskripsi_pay"></div>
                                         </ul>
@@ -268,17 +260,17 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <small class="clight s13"> Bank Name</small>
+                                        <small class="clight s13" lang="en">Bank Name</small>
                                         <p id="detail_bank_pay"></p>
                                     </div>
                                     <div class="form-group">
-                                        <small class="clight s13"> Rekening Numbers</small>
+                                        <small class="clight s13" lang="en">Rekening Numbers</small>
                                         <p id="detail_rekening"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <small class="clight s13"> Owner Bank Name</small>
+                                        <small class="clight s13" lang="en">Owner Bank Name</small>
                                         <p id="detail_bankname"></p>
                                     </div>
                                 </div>
@@ -287,7 +279,7 @@
                             <div class="modal-footer" style="border: none;">
                                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                     style="border-radius: 10px;">
-                                    <i class="mdi mdi-close"></i> Cancel
+                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>
                             </div>
                         </div>
@@ -296,7 +288,7 @@
                             <div id="nosetting_pay" style="display: none">
                                 <center>
                                     <br><br><br><br>
-                                    <h2 class="clight">No Setting Payment</h2>
+                                    <h2 class="clight" lang="en">No Setting Payment</h2>
                                 </center>
                             </div>
                             <form method="POST" id="form_setting_subpayment"
@@ -308,13 +300,13 @@
                                 <div class="modal-footer kananbawah">
                                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                         style="border-radius: 10px;">
-                                        <i class="mdi mdi-close"></i> Cancel
+                                        <i class="mdi mdi-close"></i><span>Cancel</span>
                                     </button>
                                     &nbsp;
                                     <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_setpay"
                                         style="display: none;">
                                         <i class="mdi mdi-check btn-icon-prepend">
-                                        </i>Submit</button>
+                                        </i><span lang="en">Submit</span></button>
                                 </div>
                             </form>
                         </div>

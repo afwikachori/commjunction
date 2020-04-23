@@ -208,7 +208,7 @@
                         <small class="clight" lang="en">Module Sub-Features</small>
                         <div id="nosubfitur"
                             style="display: none; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;">
-                            <h2 class="clight" style="text-align: center; margin-top: 3em;">No Subfeature</h2>
+                            <h2 class="clight" style="text-align: center; margin-top: 3em;" lang="en">No Subfeature</h2>
                         </div>
                         <br>
 
@@ -227,13 +227,12 @@
                 <center>
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="button" id="btn_aktivasi_showhide" onclick="cek_pay_module(this)"
                     data-dismiss="modal" class="btn btn-teal btn-sm" style="display: none;">
-                        <i class="mdi mdi-check btn-icon-prepend"></i>
-                        Activate</button>
+                        <i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Activate</span></button>
                 </center>
             </div> <!-- end-footer     -->
 
@@ -252,16 +251,16 @@
                 <input type="hidden" name="id_modulefitur" id="id_modulefitur">
 
                 <div class="modal-body" style="min-height: 400px; height: auto; padding-left: 5%; padding-right: 5%;">
-                    <h3 class="cgrey" style="margin-bottom: 1em;">Choose Payment</h3>
+                    <h3 class="cgrey" style="margin-bottom: 1em;" lang="en">Choose Payment</h3>
                     <div class="row" style="margin-bottom: 0.5em;">
                         <div class="col-md-4">
-                            <h6 class="h6 clight">Choose Payment Time</h6>
+                            <h6 class="h6 clight" lang="en">Choose Payment Time</h6>
                             <select id="payment_time_module" class="form-control input-abu" name="payment_time_module"
                                 required>
-                                <option disabled selected>Choose</option>
-                                <option value="1">Onetime</option>
-                                <option value="2">Monthly</option>
-                                <option value="3">Annual</option>
+                                <option disabled selected lang="en">Choose</option>
+                                <option value="1" lang="en">Onetime</option>
+                                <option value="2" lang="en">Monthly</option>
+                                <option value="3" lang="en">Annual</option>
                             </select>
                         </div>
                         <div class="col-md-8" style="margin-top: auto; margin-bottom: auto;">
@@ -273,7 +272,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-7">
-                            <h6 class="h6 clight">Choose Payment Method</h6>
+                            <h6 class="h6 clight" lang="en">Choose Payment Method</h6>
                             <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
                                 <div id="isi_method_pay">
 
@@ -282,7 +281,7 @@
                         </div>
 
                         <div class="col-md-5">
-                            <h6 class="h6 clight" style="margin-bottom:1em;">Bank Transfer</h6>
+                            <h6 class="h6 clight" style="margin-bottom:1em;" lang="en">Bank Transfer</h6>
                             <div id="isi_show_bank" class="collapse-accordion" role="tablist"
                                 aria-multiselectable="true">
 
@@ -293,8 +292,8 @@
 
                 <input type="hidden" name="id_pay_method_module" id="id_pay_method_module">
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" lang="en">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod" lang="en">Submit</button>
                 </div>
             </form>
         </div>

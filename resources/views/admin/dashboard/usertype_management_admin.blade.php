@@ -4,16 +4,15 @@
 @section('content')
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title">Usertype Management</h3>
+        <h3 class="page-title" lang="en">Usertype Management</h3>
     </div>
     <div class="col-md-6">
-        <label class="cgrey">Manage your usertype information<label>
+        <label class="cgrey" lang="en">Manage your usertype information<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
 
-            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_usertype">Add
-                User Type</button>
+            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_usertype" lang="en">Add User Type</button>
         </nav>
     </div>
 </div>
@@ -28,10 +27,10 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID Usertype</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Action</th>
+                            <th class="tebal" lang="en">ID Usertype</th>
+                            <th class="tebal" lang="en">Title</th>
+                            <th class="tebal" lang="en">Description</th>
+                            <th class="tebal" lang="en">Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -49,7 +48,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border:none;">
-                    <h4 class="modal-title cdarkgrey">Add User Type</h4>
+                    <h4 class="modal-title cdarkgrey" lang="en">Add User Type</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -57,22 +56,22 @@
 
                 <div class="modal-body" style="padding-left: 10%;padding-right: 10%; min-height: 300px;">
                     <div class="form-group">
-                        <small class="cgrey">User Type Name</small>
+                        <small class="cgrey" lang="en">User Type Name</small>
                         <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu"
                         value="{{ old('nama_usertipe') }}" required>
                     </div>
                     <div class="form-group">
-                        <small class="cgrey">Description</small>
+                        <small class="cgrey" lang="en">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe" name="dekripsi_usertipe"
                             rows="2" required>{{ old('dekripsi_usertipe') }}</textarea>
                     </div>
                     <br>
                     <div class="form-group">
-                        <small class="cgrey">Priviledge</small>
+                        <small class="cgrey" lang="en">Priviledge</small>
                         <div class="text-center loading_tree" style="display: none;">
                             <div class="spinner-border" role="status"
                                 style="margin-top: 3em; color: rgb(202, 202, 202); width: 4rem; height: 4rem;">
-                                <span class="sr-only">Loading...</span>
+                                <span class="sr-only" lang="en">Loading...</span>
                             </div>
                         </div>
                         @if($errors->has('subfitur'))
@@ -89,12 +88,12 @@
                 <div class="modal-footer" style="border: none; padding-left: 5%;padding-right: 5%; margin-bottom: 2%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" class="btn btn-teal btn-sm btnsubmit">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Add </button>
+                        </i> <span lang="en">Add</span></button>
                 </div>
             </div>
         </div>
@@ -111,7 +110,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border:none;">
-                    <h4 class="modal-title cdarkgrey">Edit User Type</h4>
+                    <h4 class="modal-title cdarkgrey" lang="en">Edit User Type</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -119,13 +118,13 @@
 
                 <div class="modal-body" style="padding-left: 10%;padding-right: 10%; min-height: 300px;">
                     <div class="form-group">
-                        <small class="cgrey">User Type Name</small>
+                        <small class="cgrey" lang="en">User Type Name</small>
                         <input type="text" id="nama_usertipe_edit" name="nama_usertipe_edit"
                         value="{{ old('nama_usertipe_edit') }}"
                             class="form-control input-abu">
                     </div>
                     <div class="form-group">
-                        <small class="cgrey">Description</small>
+                        <small class="cgrey" lang="en">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe_edit"
                             name="dekripsi_usertipe_edit" rows="2">{{ old('dekripsi_usertipe_edit') }}</textarea>
                     </div>
@@ -146,12 +145,12 @@
                 <div class="modal-footer" style="border: none; padding-left: 5%;padding-right: 5%; margin-bottom: 2%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" class="btn btn-teal btn-sm btnsubmit">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Edit </button>
+                        </i><span lang="en">Edit</span></button>
                 </div>
             </div>
         </div>

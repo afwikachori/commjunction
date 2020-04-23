@@ -160,7 +160,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight s13">User Type</small>
+                                <small class="clight s13" lang="en">User Type</small>
                                 <select class="form-control input-abu" name="usertipe_notif" id="usertipe_notif">
                                     <option selected disabled lang="en">Choose</option>
                                     <option value="1" lang="en">Admin Commjuction</option>
@@ -206,7 +206,7 @@
                             <div class="form-group">
                                 <small class="clight s13" lang="en">Notification Type</small>
                                 <select class="form-control input-abu" name="tipenotif" id="tipenotif">
-                                    <option selected disabled>Choose</option>
+                                    <option selected disabled lang="en">Choose</option>
                                     <option value="1" lang="en">Push Notification</option>
                                     <option value="2" lang="en">Mail Notification</option>
                                 </select>
@@ -350,14 +350,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-
-
-
                 </div> <!-- end-body -->
 
                 <div class="modal-footer" style="border: none; margin-bottom: 0.5em; margin-top: -1em;">

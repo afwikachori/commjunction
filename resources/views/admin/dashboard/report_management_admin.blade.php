@@ -2,38 +2,37 @@
 @section('title', 'Report Management')
 @section('content')
 
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-diamond"></i>
-        </span> Report Management</h3>
-
-    <nav aria-label="breadcrumb">
-
-    </nav>
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title" lang="en">Report Management</h3>
+    </div>
+    <div class="col-md-5">
+        <label class="cgrey" lang="en">Manage your report information<label>
+    </div>
 </div>
+<br>
 
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="cgrey" style="margin-bottom: -1em;">Report Generated</h4>
+                <h4 class="cgrey" style="margin-bottom: -1em;" lang="en">Report Generated</h4>
 
                 <div class="tabbable-line tabreport">
                     <ul class="nav nav-tabs ">
                         <li class="tab-subs active" id="tab_trans">
-                            <a href="#tab_default_1" data-toggle="tab">
-                                Transaction
+                            <a href="#tab_default_1" data-toggle="tab" lang="en">
+                                <span lang="en">Transaction</span>
                             </a>
                         </li>
                         <li class="tab-subs" id="tab_reconsile">
-                            <a href="#tab_default_2" data-toggle="tab">
-                                Reconsile
+                            <a href="#tab_default_2" data-toggle="tab" lang="en">
+                                <span lang="en">Reconsile</span>
                             </a>
                         </li>
                         <li class="tab-subs" id="tab_subscriber">
-                            <a href="#tab_default_3" data-toggle="tab">
-                                Subscriber
+                            <a href="#tab_default_3" data-toggle="tab" lang="en">
+                                <span lang="en">Subscriber</span>
                             </a>
                         </li>
                     </ul>
@@ -42,22 +41,21 @@
                         <div class="tab-pane active" id="tab_default_1">
 
                             <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                                data-target="#modal_generate_transaksi" style="margin-bottom: 2em;">
-                                Generate Transaction Report</button>
+                                data-target="#modal_generate_transaksi" style="margin-bottom: 2em;" lang="en">Generate Transaction Report</button>
                             <br>
                             <!-- tabel all susbcriber -->
                             <table id="tabel_transaksi_report" class="table table-hover table-striped dt-responsive "
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Number</th>
-                                        <th>Trans Date</th>
-                                        <th>Status</th>
-                                        <th>Type</th>
-                                        <th>Admin Name</th>
-                                        <th>Nominal</th>
-                                        <th>Payment Type</th>
-                                        <th>Payment Method</th>
+                                        <th><b lang="en">Invoice Number</b></th>
+                                        <th><b lang="en">Date</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Type</b></th>
+                                        <th><b lang="en">Admin Name</b></th>
+                                        <th><b lang="en">Nominal</b></th>
+                                        <th><b lang="en">Payment Type</b></th>
+                                        <th><b lang="en">Payment Method</b></th>
 
                                     </tr>
                                 </thead>
@@ -68,7 +66,7 @@
 
                         <div class="tab-pane" id="tab_default_2">
                             <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                                data-target="#modal_reconcile_transaksi" style="margin-bottom: 2em;">
+                                data-target="#modal_reconcile_transaksi" style="margin-bottom: 2em;" lang="en">
                                 Generate Reconcile Report</button>
                             <br>
                             <!-- tabel all susbcriber -->
@@ -76,12 +74,12 @@
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Number</th>
-                                        <th>Transaction Date</th>
-                                        <th>Status</th>
-                                        <th>Type</th>
-                                        <th>Admin Name</th>
-                                        <th>Nominal</th>
+                                        <th><b lang="en">Invoice Number</b></th>
+                                        <th><b lang="en">Transaction Date</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Type</b></th>
+                                        <th><b lang="en">Admin Name</b></th>
+                                        <th><b lang="en">Nominal</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -90,16 +88,15 @@
 
                         <div class="tab-pane" id="tab_default_3">
                             <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                                data-target="#modal_subscriber_report" style="margin-bottom: 2em;">
-                                Generate Subscriber Report</button>
+                                data-target="#modal_subscriber_report" style="margin-bottom: 2em;" lang="en">Generate Subscriber Report</button>
                             <br>
                             <table id="tabel_subscriber_report" class="table table-hover table-striped dt-responsive "
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>ID Subscriber</th>
-                                        <th>Name</th>
-                                        <th>Activity</th>
+                                        <th><b lang="en">ID Subscriber</b></th>
+                                        <th><b lang="en">Name</b></th>
+                                        <th><b lang="en">Activity</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -124,38 +121,38 @@
 
             <form>
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <small class="modal-title cdarkgrey">Generate Report</small>
-                    <h4 class="cblue" style="margin-bottom: 1.5em;">Transaction Report</h4>
+                    <small class="modal-title cdarkgrey" lang="en">Generate Report</small>
+                    <h4 class="cblue" style="margin-bottom: 1.5em;" lang="en">Transaction Report</h4>
 
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">Start Date</small>
+                                <small class="clight s13" lang="en">Start Date</small>
                                 <input type="date" id="tanggal_mulai" name="tanggal_mulai"
                                     class="form-control input-abu">
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Transaction Type</small>
+                                <small class="clight s13" lang="en">Transaction Type</small>
                                 <select class="form-control input-abu listjenistrans" name="jenis_transaksi"
                                     id="jenis_transaksi">
-                                    <option selected disabled> Choose </option>
+                                    <option selected disabled lang="en">Choose </option>
                                 </select>
                             </div>
                         </div> <!-- end-col-md -->
 
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">End Date</small>
+                                <small class="clight s13" lang="en">End Date</small>
                                 <input type="date" id="tanggal_selesai" name="tanggal_selesai"
                                     class="form-control input-abu">
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Transaction Status</small>
+                                <small class="clight s13" lang="en">Transaction Status</small>
                                 <select class="form-control input-abu" name="status_transaksi" id="status_transaksi">
-                                    <option selected disabled> Choose </option>
-                                    <option value="1"> Pending </option>
-                                    <option value="2"> Approved </option>
-                                    <option value="3"> Cancel </option>
+                                    <option selected disabled lang="en">Choose</option>
+                                    <option value="1" lang="en">Pending</option>
+                                    <option value="2" lang="en">Approved</option>
+                                    <option value="3" lang="en">Cancel</option>
                                 </select>
                             </div>
                         </div> <!-- end-col-md -->
@@ -164,11 +161,11 @@
                     <div class="row" style="margin-top: 0.5em;">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <small class="cgrey s13">Transaction Range</small>
+                                <small class="cgrey s13" lang="en">Transaction Range</small>
                                 <div class="row" style="margin-top: 0.5em;">
                                     <div class="col-md-2">
                                         <small class="clight s13"
-                                            style="text-align: right; margin-top: 1em;">Minimum</small>
+                                            style="text-align: right; margin-top: 1em;" lang="en">Minimum</small>
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control input-abu" id="min_trans"
@@ -176,7 +173,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <small class="clight s13"
-                                            style="text-align: right; margin-top: 1em;">Maximum</small>
+                                            style="text-align: right; margin-top: 1em;" lang="en">Maximum</small>
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control input-abu" id="max_trans"
@@ -192,12 +189,12 @@
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="button" id="btn_generate_trans" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Generate </button>
+                        </i> <span lang="en">Generate</span> </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -214,16 +211,16 @@
 
             <form id="form_reconcile">
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 350px; height: auto;">
-                    <small class="modal-title cdarkgrey">Generate Report</small>
-                    <h4 class="cblue" style="margin-bottom: 1.5em;">Reconcile Report</h4>
+                    <small class="modal-title cdarkgrey" lang="en">Generate Report</small>
+                    <h4 class="cblue" style="margin-bottom: 1.5em;" lang="en">Reconcile Report</h4>
 
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">Transaction Type</small>
+                                <small class="clight s13" lang="en">Transaction Type</small>
                                 <select class="form-control input-abu listjenistrans" name="jenis_transaksi2"
                                     id="jenis_transaksi2">
-                                    <option selected disabled> Choose </option>
+                                    <option selected disabled lang="en"> Choose </option>
                                 </select>
                             </div>
 
@@ -231,7 +228,7 @@
 
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">Month Year</small>
+                                <small class="clight s13" lang="en">Month Year</small>
                                 <input type="month" id="tahun_concile" name="tahun_concile" value="2020-01"
                                     class="form-control input-abu">
                             </div>
@@ -243,12 +240,12 @@
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close">"</i><span lang="en">Cancel </>
                     </button>
                     &nbsp;
                     <button type="button" id="btn_generate_reconcile" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Generate </button>
+                        </i> <span lang="en">Generate </span> </button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -264,13 +261,13 @@
 
             <form>
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <small class="modal-title cdarkgrey">Generate Report</small>
-                    <h4 class="cblue" style="margin-bottom: 1.5em;">Subscriber Report</h4>
+                    <small class="modal-title cdarkgrey" lang="en">Generate Report</small>
+                    <h4 class="cblue" style="margin-bottom: 1.5em;" lang="en">Subscriber Report</h4>
 
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">Start Date</small>
+                                <small class="clight s13" lang="en">Start Date</small>
                                 <input type="date" id="tanggal_mulai_subs" name="tanggal_mulai_subs"
                                     class="form-control input-abu">
                             </div>
@@ -278,7 +275,7 @@
 
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">End Date</small>
+                                <small class="clight s13" lang="en">End Date</small>
                                 <input type="date" id="tanggal_selesai_subs" name="tanggal_selesai_subs"
                                     class="form-control input-abu">
                             </div>
@@ -288,7 +285,7 @@
                     <div class="row" style="margin-top: 0.5em;">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight s13">Subscriber</small>
+                                <small class="clight s13" lang="en">Subscriber</small>
                                 <select class="form-control input-abu" name="list_pengikut" id="list_pengikut">
 
                                 </select>
@@ -301,12 +298,12 @@
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="button" id="btn_generate_subscriber" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Generate </button>
+                        </i><span lang="en">Generate</span></button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->

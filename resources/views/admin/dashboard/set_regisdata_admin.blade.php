@@ -3,10 +3,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-3">
-        <h3 class="page-title s22 cgrey" style="font-weight: bold;">Community Setting</h3>
+        <h3 class="page-title s22 cgrey" style="font-weight: bold;" lang="en">Community Setting</h3>
     </div>
     <div class="col-md-9">
-        <label class="cgrey">Publish Community to Live<label>
+        <label class="cgrey" lang="en">Publish Community to Live<label>
     </div>
 </div>
 <br>
@@ -16,10 +16,10 @@
             <div class="card-header putih">
                 <div class="row">
                     <div class="col-md-8" style="margin-top: 0.5em;">
-                       <h4 class="cgrey tebal"> Registrasion Data</h4>
+                       <h4 class="cgrey tebal" lang="en">Registrasion Data</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
-                        <button class="btn btn-birumuda btn-sm" id="btn-add-question"> Add Question</button>
+                        <button class="btn btn-birumuda btn-sm" id="btn-add-question" lang="en">Add Question</button>
                     </div>
                 </div>
             </div>
@@ -30,11 +30,11 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th><b>ID Question</b></th>
-                            <th><b>Question Title</b></th>
-                            <th><b>Type</b></th>
-                            <th><b>Date Created</b></th>
-                            <th><b>Action</b></th>
+                            <th><b lang="en">ID Question</b></th>
+                            <th><b lang="en">Question Title</b></th>
+                            <th><b lang="en">Type</b></th>
+                            <th><b lang="en">Date Created</b></th>
+                            <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -52,7 +52,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <div class="modal-header" style="border: none;">
-                <h5 class="modal-title putih">Add New Question</h5>
+                <h5 class="modal-title putih" lang="en">Add New Question</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -63,19 +63,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Default input</label>
+                                <label lang="en">Default input</label>
                                 <input type="text" class="form-control input-abu" name="question_regis">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Input Type</label>
+                                <label lang="en">Input Type</label>
                                 <select class="form-control input-abu" id="tipedata_regis" name="tipedata_regis">
-                                    <option value="1">Input Text Box</option>
-                                    <option value="2">Date Picker</option>
-                                    <option value="3">Checkbox</option>
-                                    <option value="4">Radiobutton</option>
+                                    <option value="1" lang="en">Input Text Box</option>
+                                    <option value="2" lang="en">Date Picker</option>
+                                    <option value="3" lang="en">Checkbox</option>
+                                    <option value="4" lang="en">Radiobutton</option>
                                 </select>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                     <div id="input_pilihan" style="display: none;">
                         <div class="row form-group">
                             <div class="col-md-3" style="margin-top: 1em;">
-                                <label class="cgrey">Choose Input</label>
+                                <label class="cgrey" lang="en">Choose Input</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="text" class="form-control input-abu" name="pilihan_input1">
@@ -93,7 +93,7 @@
 
                         <div class="row form-group">
                             <div class="col-md-3" style="margin-top: 1em;">
-                                <label class="cgrey">Choose Input</label>
+                                <label class="cgrey" lang="en">Choose Input</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="text" class="form-control input-abu" name="pilihan_input2">
@@ -103,14 +103,14 @@
                         <center>
                             <button type="button" class="btn btn-icon-text" id="addnewrow">
                                 <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                                <small>Add New Row</small> </button>
+                                <small lang="en">Add New Row</small> </button>
                         </center>
                     </div>
             </div>
             <div class="modal-footer putih" style="margin-bottom: 1em;">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
-                    style="border-radius: 6px;">Cancel</button>
-                <button type="submit" class="btn btn-teal btn-sm">Submit</button>
+                    style="border-radius: 6px;" lang="en">Cancel</button>
+                <button type="submit" class="btn btn-teal btn-sm" lang="en">Submit</button>
             </div>
             </form>
         </div>
@@ -122,7 +122,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <div class="modal-header" style="border: none;">
-                <h5 class="modal-title putih">Edit Data Question</h5>
+                <h5 class="modal-title putih" lang="en">Edit Data Question</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -134,7 +134,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Default input</label>
+                                <label lang="en">Default input</label>
                                 <input type="text" class="form-control input-abu" name="edit_question"
                                     id="edit_question">
                             </div>
@@ -142,12 +142,12 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Input Type</label>
+                                <label lang="en">Input Type</label>
                                 <select class="form-control input-abu" id="edit_tipedata" name="edit_tipedata">
-                                    <option value="1">Input Text Box</option>
-                                    <option value="2">Date Picker</option>
-                                    <option value="3">Checkbox</option>
-                                    <option value="4">Radiobutton</option>
+                                    <option value="1" lang="en">Input Text Box</option>
+                                    <option value="2" lang="en">Date Picker</option>
+                                    <option value="3" lang="en">Checkbox</option>
+                                    <option value="4" lang="en">Radiobutton</option>
                                 </select>
                             </div>
                         </div>
@@ -157,14 +157,14 @@
                         <center>
                             <button type="button" class="btn btn-icon-text" id="addnewrow_edit">
                                 <i class="mdi mdi-plus-circle" style="color: #50C9C3;"></i>
-                                <small>Add New Row</small> </button>
+                                <small lang="en">Add New Row</small> </button>
                         </center>
                     </div>
             </div>
             <div class="modal-footer putih" style="margin-bottom: 1em;">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
-                    style="border-radius: 6px;">Cancel</button>
-                <button type="submit" class="btn btn-teal btn-sm">Submit</button>
+                    style="border-radius: 6px;" lang="en">Cancel</button>
+                <button type="submit" class="btn btn-teal btn-sm" lang="en">Submit</button>
             </div>
             </form>
         </div>
