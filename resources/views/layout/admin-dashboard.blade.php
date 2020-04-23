@@ -76,13 +76,13 @@
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;">Terms & Conditions</a>
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;">Privacy Policy</a>
+                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en" data-lang-token="Terms & Conditions">Terms & Conditions</a>
+                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en" data-lang-token="">Privacy Policy</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;">
+                            <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en" data-lang-token="Documentation">
                                 Documentation &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;">
+                            <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en" data-lang-token="Support">
                                 Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>
@@ -136,11 +136,11 @@
                     {{ csrf_field() }}
 
                     <div class="modal-header" style="padding-bottom: 0em !important;">
-                        <h4 class="modal-title cgrey">Edit Profile</h4>
+                        <h4 class="modal-title cgrey" lang="en">Edit Profile</h4>
 
                         <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
                             style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_admin"
-                            data-dismiss="modal">Change Password</button>
+                            data-dismiss="modal" lang="en">Change Password</button>
                     </div> <!-- end-header -->
 
                     <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
@@ -164,23 +164,23 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <small class="clight">Fullname</small>
+                                    <small class="clight" lang="en">Fullname</small>
                                     <input type="text" id="name_admin" name="name_admin" class="form-control input-abu">
                                 </div>
                                 <div class="form-group">
-                                    <small class="clight">Username</small>
+                                    <small class="clight" lang="en">Username</small>
                                     <input type="text" id="username_admin" name="username_admin"
                                         class="form-control input-abu">
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-group">
-                                    <small class="clight">Phone Number</small>
+                                    <small class="clight" lang="en">Phone Number</small>
                                     <input type="text" id="phone_admin" name="phone_admin"
                                         class="form-control input-abu">
                                 </div>
                                 <div class="form-group">
-                                    <small class="clight">Email</small>
+                                    <small class="clight" lang="en">Email</small>
                                     <input type="text" id="email_admin" name="email_admin"
                                         class="form-control input-abu">
                                 </div>
@@ -188,7 +188,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <small class="clight">Alamat</small>
+                                <small class="clight" lang="en">Address</small>
                                 <textarea class="form-control input-abu" id="alamat_admin" name="alamat_admin"
                                     rows="3"></textarea>
                             </div>
@@ -198,7 +198,7 @@
                     <div class="modal-footer" style="border: none;">
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
+                            <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                         </button>
                         &nbsp;
                         <button type="submit" id="" class="btn btn-tosca btn-sm">
@@ -227,13 +227,13 @@
                             <img src="/img/key.png" id="img_changepass">
                         </center>
                         <div class="form-group">
-                            <small class="clight">Old Password</small>
+                            <small class="clight" lang="en">Old Password</small>
                             <input type="password" id="old_pass_admin" name="old_pass_admin"
                                 class="form-control input-abu">
                         </div>
 
                         <div class="form-group">
-                            <small class="clight">New Password</small>
+                            <small class="clight" lang="en">New Password</small>
                             <div class="input-group">
                                 <input class="form-control input-abu" id="new_pass_admin" type="password"
                                     name="new_pass_admin" required="" autocomplete="passadmin"
@@ -253,12 +253,12 @@
                         <center>
                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                 style="border-radius: 10px;">
-                                <i class="mdi mdi-close"></i> No, Im Doubt
+                                <i class="mdi mdi-close"></i><span lang="en">No, Im Doubt</span>
                             </button>
                             &nbsp;
                             <button type="submit" class="btn btn-tosca btn-sm">
                                 <i class="mdi mdi-check btn-icon-prepend">
-                                </i> Yeah, Im Sure </button>
+                                </i> <span lang="en">Yeah, Im Sure</span> </button>
                         </center>
                     </div> <!-- end-footer     -->
                 </form>
@@ -279,8 +279,8 @@
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                     <center>
                         <img src="/img/logout.png" id="img_signout_admin">
-                        <h3 class="cgrey">Logout Comfirmation</h3>
-                        <small class="clight">Are you sure, you want to exit ?</small>
+                        <h3 class="cgrey" lang="en">Logout Comfirmation</h3>
+                        <small class="clight" lang="en">Are you sure, you want to exit ?</small>
                     </center>
                 </div> <!-- end-body -->
 
@@ -288,16 +288,16 @@
                     <center>
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> No, Im Doubt
+                            <i class="mdi mdi-close"></i> <span lang="en">No, Im Doubt</span>
                         </button>
                         &nbsp;
                         <button onclick="LogoutAdmin()" id="btn_logout_all" type="button" class="btn btn-tosca btn-sm">
 
                             <span class="hide_load_log" style="display: none;">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span class="sr-only">Loading...</span>
+                                <span class="sr-only" lang="en">Loading...</span>
                             </span>
-                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i>Yeah, Im Sure</div>
+                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im Sure</span></div>
                         </button>
 
                     </center>

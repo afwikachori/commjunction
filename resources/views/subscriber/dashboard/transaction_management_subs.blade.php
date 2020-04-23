@@ -3,16 +3,15 @@
 @section('content')
 
 <div id="div_ignore">
-    <div class="page-header">
-        <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                <i class="mdi mdi-settings"></i>
-            </span>Transaction Management</h3>
-
-        <nav aria-label="breadcrumb">
-
-        </nav>
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title" lang="en">Transaction Management</h3>
     </div>
+    <div class="col-md-6">
+        <label class="cgrey" lang="en">Manage your transaction<label>
+    </div>
+</div>
+<br>
 
 
     <div class="row">
@@ -27,8 +26,7 @@
                                     <h4 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseOne" role="button"
                                             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                            style="color:#0e6f73;">
-                                            Choose Parameter First &nbsp;
+                                            style="color:#0e6f73;" lang="en" data-lang-token="Choose Parameter First">Choose Parameter First &nbsp;
                                             <i class="mdi mdi-chevron-down cteal"></i>
                                         </a>
                                     </h4>
@@ -48,7 +46,7 @@
                                         <div class="row">
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <small class="clight">Community Name</small>
+                                                    <small class="clight" lang="en">Community Name</small>
                                                     <h5 class="nama_komunitas cgrey2" style="margin-top: 0.5em;"></h5>
                                                     <input type="hidden" class="form-control input-abu" name="komunitas"
                                                         id="komunitas">
@@ -56,14 +54,14 @@
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <small class="clight">Start Date</small>
+                                                    <small class="clight" lang="en">Start Date</small>
                                                     <input type="date" id="tanggal_mulai" name="tanggal_mulai"
                                                         class="form-control input-abu">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <small class="clight">End Date</small>
+                                                    <small class="clight" lang="en">End Date</small>
                                                     <input type="date" id="tanggal_selesai" name="tanggal_selesai"
                                                         class="form-control input-abu">
                                                 </div>
@@ -73,7 +71,7 @@
                                         <div class="row">
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <small class="clight">Transaction Type</small>
+                                                    <small class="clight" lang="en">Transaction Type</small>
                                                     <select class="form-control input-abu" name="tipe_trans"
                                                         id="tipe_trans">
                                                     </select>
@@ -81,19 +79,19 @@
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <small class="clight"> Transaction Status</small>
+                                                    <small class="clight" lang="en">Transaction Status</small>
                                                     <select class="form-control input-abu" name="status_trans"
                                                         id="status_trans">
-                                                        <option value="null"> Choose </option>
-                                                        <option value="1"> Pending </option>
-                                                        <option value="2"> Approval </option>
-                                                        <option value="3"> Cancel </option>
+                                                        <option value="null" lang="en">Choose</option>
+                                                        <option value="1" lang="en">Pending</option>
+                                                        <option value="2" lang="en">Approval</option>
+                                                        <option value="3" lang="en">Cancel</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group subs_name">
-                                                    <small class="clight">Subscriber</small>
+                                                    <small class="clight" lang="en">Subscriber</small>
                                                     <select class="form-control input-abu" name="subs_name"
                                                         id="subs_name">
 
@@ -106,7 +104,7 @@
                                             <button type="button" id="btn_showtable_transaksi"
                                                 class="btn btn-teal btn-sm melengkung10px" style="margin-top: 2%;">
                                                 <i class="mdi mdi-check btn-icon-prepend">
-                                                </i> Show
+                                                </i> <span lang="en">Show</span>
                                             </button>
                                         </div>
                                     </form>
@@ -121,7 +119,7 @@
                             <div class="col-md-8">
                                 <button type="button" id="btn_filter_trans" class="btn btn-tosca btn-sm"
                                     style="min-width: 120px; margin-bottom: 1em;" data-toggle="modal"
-                                    data-target="#modal_trasaksi_filter" data-dismiss="modal">Filter</button>
+                                    data-target="#modal_trasaksi_filter" data-dismiss="modal"><span lang="en">Filter</span></button>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
                                 <button type="button" id="reset_tbl_subsall"
@@ -135,12 +133,12 @@
                             style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Invoice</th>
-                                    <th>Transaction Date</th>
-                                    <th>Subcriber Name</th>
-                                    <th>Transaction Type</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th><b lang="en">Invoice</b></th>
+                                    <th><b lang="en">Transaction Date</b></th>
+                                    <th><b lang="en">Subcriber Name</b></th>
+                                    <th><b lang="en">Transaction Type</b></th>
+                                    <th><b lang="en">Status</b></th>
+                                    <th><b lang="en">Action</b></th>
                                 </tr>
                             </thead>
                         </table>
@@ -174,11 +172,11 @@
                 <div id="for_download">
                     <div class="row">
                         <div class="col-md-6 col-sm-12" style="border-right: 1px solid #E0E0E0; height: 100%;">
-                            <h4 class="tebal cgrey2">Detail Transaction</h4>
+                            <h4 class="tebal cgrey2" lang="en">Detail Transaction</h4>
 
                             <h5 class="cblue" style="margin-bottom: 1em;" id="invoice_trans">-</h5>
 
-                            <small class="clight">Transaction Date</small>
+                            <small class="clight" lang="en">Transaction Date</small>
                             <p class="cgrey2" id="date_trans">-</p>
 
                             <div class="row">
@@ -186,7 +184,7 @@
                                     <img src="/img/cam.png" class="rounded-circle img-fluid" style="width: 40px;">
                                 </div>
                                 <div class="col-md-4" style="padding: 0px;">
-                                    <small class="clight">Community Name</small>
+                                    <small class="clight" lang="en">Community Name</small>
                                     <p class="cgrey2" id="komunitas_trans">-</p>
                                 </div>
                                 <div class="col-md-2"
@@ -195,7 +193,7 @@
                                         style="width: 40px;">
                                 </div>
                                 <div class="col-md-4" style="padding: 0px;">
-                                    <small class="clight">Subcriber Name</small>
+                                    <small class="clight" lang="en">Subcriber Name</small>
                                     <p class="cgrey2" id="subscriber_trans">-</p>
                                 </div>
                             </div>
@@ -204,26 +202,26 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <small class="clight">Level Title</small>
+                                    <small class="clight" lang="en">Level Title</small>
                                     <p class="cgrey2" id="level_title_trans">-</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <small class="clight">Status</small>
+                                    <small class="clight" lang="en">Status</small>
                                     <p class="cgrey2" id="statusjudul_trans">-</p>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <small class="clight">Transaction Type</small>
+                                    <small class="clight" lang="en">Transaction Type</small>
                                     <p class="cgrey2" id="jenis_trans">-</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <small class="clight">Transaction</small>
+                                    <small class="clight" lang="en">Transaction</small>
                                     <p class="cgrey2" id="transaksi_trans">-</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <small class="clight">Total Nominal</small>
+                                    <small class="clight" lang="en">Total Nominal</small>
                                     <p class="cgrey2" id="nominal_trans">-</p>
                                 </div>
                             </div>
@@ -232,26 +230,25 @@
                             <div class="footer_mdl" style="text-align: right; margin-top: 22%;">
                                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                                     style="border-radius: 10px;">
-                                    <i class="mdi mdi-close"></i> Cancel
+                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>
                                 &nbsp;
                                 <button type="button" class="btn btn-teal btn-sm" id="btn_download_detail"
                                     style="display: none;">
-                                    <i class="mdi mdi-check btn-icon-prepend"></i>
-                                    Download</button>
+                                    <i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Download</span></button>
                             </div>
                         </div>
 
 
                         <div class="col-md-6 col-sm-12" style="height: 100%;">
                             <div style="text-align: right;">
-                                <small class="clight" style="margin-top: 0.5em;">Payment Status</small>
+                                <small class="clight" style="margin-top: 0.5em;" lang="en">Payment Status</small>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <div id="status_color"></div>
                             </div>
 
                             <br>
-                            <h5 class="cgrey tebal">Payment Confirmation</h5>
+                            <h5 class="cgrey tebal" lang="en">Payment Confirmation</h5>
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_confirm" onclick="clickImage(this)"
                                     style="height: 115px; width: 100%; border-radius: 10px;"
@@ -261,22 +258,22 @@
                             </div>
                             <div class="row" style="margin-top: 0.5em;">
                                 <div class="col-md-4">
-                                    <small class="clight">Account Name</small><br>
+                                    <small class="clight" lang="en">Account Name</small><br>
                                     <small class="cgrey2" id="nama_confirm_trans">-</small>
                                 </div>
                                 <div class="col-md-4">
-                                    <small class="clight">Bank Name</small><br>
+                                    <small class="clight" lang="en">Bank Name</small><br>
                                     <small class="cgrey2" id="bank_confirm_trans">-</small>
                                 </div>
                                 <div class="col-md-4">
-                                    <small class="clight">Date Confirmation</small><br>
+                                    <small class="clight" lang="en">Date Confirmation</small><br>
                                     <small class="cgrey2" id="date_confirm_trans">-</small>
                                 </div>
                             </div>
 
                             <br>
 
-                            <h5 class="cgrey tebal">Payment Verification</h5>
+                            <h5 class="cgrey tebal" lang="en">Payment Verification</h5>
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_aprov" onclick="clickImage(this)"
                                     style="height: 115px; width: 100%; border-radius: 10px;"
@@ -286,11 +283,11 @@
                             </div>
                             <div class="row" style="margin-top: 0.5em;">
                                 <div class="col-md-4">
-                                    <small class="clight">Approver Name</small><br>
+                                    <small class="clight" lang="en">Approver Name</small><br>
                                     <small class="cgrey2" id="name_approv_trans">-</small>
                                 </div>
                                 <div class="col-md-8">
-                                    <small class="clight">Approved Date</small><br>
+                                    <small class="clight" lang="en">Approved Date</small><br>
                                     <small class="cgrey2" id="date_approv_trans">-</small>
                                 </div>
                             </div>
@@ -314,20 +311,20 @@
 
             <form>
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Filter Transaction</h4>
+                    <h4 class="modal-title cgrey" lang="en">Filter Transaction</h4>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">Start Date</small>
+                                <small class="clight s13" lang="en">Start Date</small>
                                 <input type="date" id="tanggal_mulai2" name="tanggal_mulai2"
                                     class="form-control input-abu">
                             </div>
 
                             <div class="form-group">
-                                <small class="clight s13">Transaction Type</small>
+                                <small class="clight s13" lang="en">Transaction Type</small>
                                 <select class="form-control input-abu" name="tipe_trans2" id="tipe_trans2">
                                 </select>
                             </div>
@@ -337,18 +334,18 @@
 
                         <div class="col-md">
                             <div class="form-group">
-                                <small class="clight s13">End Date</small>
+                                <small class="clight s13" lang="en">End Date</small>
                                 <input type="date" id="tanggal_selesai2" name="tanggal_selesai2"
                                     class="form-control input-abu">
                             </div>
 
                             <div class="form-group">
-                                <small class="clight s13"> Transaction Status</small>
+                                <small class="clight s13" lang="en">Transaction Status</small>
                                 <select class="form-control input-abu" name="status_trans2" id="status_trans2">
-                                    <option value="null"> Choose </option>
-                                    <option value="1"> Pending </option>
-                                    <option value="2"> Approval </option>
-                                    <option value="3"> Cancel </option>
+                                    <option value="null" lang="en">Choose</option>
+                                    <option value="1" lang="en">Pending</option>
+                                    <option value="2" lang="en"> Approval </option>
+                                    <option value="3" lang="en"> Cancel </option>
                                 </select>
                             </div>
 
@@ -358,9 +355,7 @@
                     <div class="row">
                         <div class="col-md">
                             <center>
-                                <label class="cgrey2" style="margin-top: 1.5em;">
-                                    Community
-                                </label>
+                                <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Community</label>
                             </center>
                         </div>
                         <div class="col-md">
@@ -374,15 +369,13 @@
                     <div class="row">
                         <div class="col-md">
                             <center>
-                                <label class="cgrey2" style="margin-top: 1.5em;">
-                                    Subscriber
-                                </label>
+                                <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Subscriber</label>
                             </center>
                         </div>
                         <div class="col-md">
                             <div class="form-group">
                                 <select class="form-control input-abu" name="subs_name2" id="subs_name2">
-                                    <option selected disabled> Choose Community First</option>
+                                    <option selected disabled lang="en">Choose Community First</option>
                                 </select>
                             </div>
                         </div>
@@ -393,12 +386,12 @@
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="button" id="btn_filter_transaksi" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Filter </button>
+                        </i><span lang="en">Filter</span></button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->

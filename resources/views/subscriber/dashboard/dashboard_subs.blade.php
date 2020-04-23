@@ -537,7 +537,7 @@
                             '</div>' +
                             '<div class="col-md-4" style="text-align: right;">' +
                             '<p class="card-text"><small class="text-muted">' + item.scala + '</small>'+
-                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small>See Detail</small></a></p>' +
+                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
                             '</div>' +
                             '</div>' +
                             '</div></div></div>';
@@ -627,7 +627,7 @@
                             '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
                             '<input type="hidden" value="' + item.user_id + '" name="user_id_subs">' +
                             '<button type="submit" class="btn btn-tosca btn-sm konco">' +
-                            '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                            '<i class="mdi mdi-account-plus"></i> &nbsp; <span lang="en">Add</span>' +
                             '</button>' +
                             '<center>' +
                             '</form>' +

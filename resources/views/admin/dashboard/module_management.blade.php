@@ -5,7 +5,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-settings"></i>
-        </span> Module Management</h3>
+        </span lang="en">Module Management</h3>
 
     <nav aria-label="breadcrumb">
         <!-- <button type="button" id="btn_show_payment" class="btn btn-teal btn-sm" data-toggle="modal"
@@ -19,18 +19,18 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body memberku">
-                <h4 class="cgrey" style="margin-bottom: -0.5em;">Module List</h4>
+                <h4 class="cgrey" style="margin-bottom: -0.5em;" lang="en">Module List</h4>
 
                 <div class="tabbable-line">
                     <ul class="nav nav-tabs">
                         <li class="tab-subs active" id="tab_active">
                             <a href="#tab_module_1" data-toggle="tab">
-                                Active
+                                <span lang="en">Active</span>
                             </a>
                         </li>
                         <li class="tab-subs" id="tab_all">
                             <a href="#tab_module_2" data-toggle="tab">
-                                All
+                                <span lang="en">All</span>
                             </a>
                         </li>
                     </ul>
@@ -39,7 +39,7 @@
                         <div class="tab-pane active" id="tab_module_1">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <small class="text-muted"> Total : </small> &nbsp;
+                                    <small class="text-muted" lang="en">Total : </small> &nbsp;
                                     <h4 class="card-title text-success" id="total_module_active"> 0 </h4>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
 
                         <div class="tab-pane" id="tab_module_2">
 
-                            <small class="text-muted"> Total : </small>
+                            <small class="text-muted" lang="en"> Total : </small>
                             <h4 class="card-title text-success" id="total_module"> 0 </h4>
 
 
@@ -80,7 +80,7 @@
         <div class="modal-content"
             style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
             <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
-                <h3 class="modal-title cgrey">Setting Module</h3>
+                <h3 class="modal-title cgrey" lang="en">Setting Module</h3>
             </div> <!-- end-header -->
             <form id="form_setting_module_admin" method="POST" action="{{route('send_setting_module_admin')}}">
                 {{ csrf_field() }}
@@ -97,12 +97,12 @@
                     <center>
                         <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                             style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> Cancel
+                            <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                         </button>
                         &nbsp;
                         <button type="submit" class="btn btn-teal btn-sm">
                             <i class="mdi mdi-check btn-icon-prepend">
-                            </i>Submit</button>
+                            </i><span lang="en">Submit</span></button>
                     </center>
                 </div> <!-- end-footer     -->
             </form>
@@ -117,7 +117,7 @@
         <div class="modal-content">
 
             <div class="modal-header" style="padding-bottom: 0em !important; border:none;">
-                <h4 class="modal-title cgrey">Detail Module</h4>
+                <h4 class="modal-title cgrey" lang="en">Detail Module</h4>
                 <div class="status_aktif"></div>
             </div> <!-- end-header -->
 
@@ -134,9 +134,7 @@
                                             class="rounded-circle img-fluid img-fitur-module" alt="">
                                     </div>
                                     <div class="col-md-7 kiri">
-                                        <h4 class="cwhite" style="margin-top: 0.5em;" id="module_name1">
-                                            Module Title
-                                        </h4>
+                                        <h4 class="cwhite" style="margin-top: 0.5em;" id="module_name1" lang="en">Module Title</h4>
                                     </div>
                                 </div>
                             </div>
@@ -148,20 +146,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight">Module Name</small>
+                                    <small class="clight" lang="en">Module Name</small>
                                     <p class="cgrey1 tebal s13" id="module_name">-</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight">Module Type</small>
+                                    <small class="clight" lang="en">Module Type</small>
                                     <p class="cgrey1 tebal s13" id="module_tipe">-</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <small class="clight">Description</small>
+                                <small class="clight" lang="en">Description</small>
                                 <p class="cgrey1 tebal s13" id="module_deskripsi">-</p>
                             </div>
                         </div>
@@ -173,13 +171,13 @@
                                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                         <a class="nav-item cus-a nav-link s10 active" id="nav_tab_1" data-toggle="tab"
                                             href="#nav_tabisi_1" role="tab" aria-controls="nav_tab_1"
-                                            aria-selected="true" lang="en"><small>Onetime</small></a>
+                                            aria-selected="true" lang="en"><small lang="en">Onetime</small></a>
                                         <a class="nav-item cus-a nav-link s10" id="nav_tab_2" data-toggle="tab"
                                             href="#nav_tabisi_2" role="tab" aria-controls="nav_tab_2"
-                                            aria-selected="false" lang="en"><small>Monthly</small></a>
+                                            aria-selected="false" lang="en"><small lang="en">Monthly</small></a>
                                         <a class="nav-item cus-a nav-link s10" id="nav_tab_3" data-toggle="tab"
                                             href="#nav_tabisi_3" role="tab" aria-controls="nav_tab_3"
-                                            aria-selected="false" lang="en"><small>Annual</small></a>
+                                            aria-selected="false" lang="en"><small lang="en">Annual</small></a>
                                     </div>
                                 </nav>
                                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -207,7 +205,7 @@
 
                     </div>
                     <div class="col-md-6">
-                        <small class="clight">Module Sub-Features</small>
+                        <small class="clight" lang="en">Module Sub-Features</small>
                         <div id="nosubfitur"
                             style="display: none; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;">
                             <h2 class="clight" style="text-align: center; margin-top: 3em;">No Subfeature</h2>

@@ -3,10 +3,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title">Inbox Management</h3>
+        <h3 class="page-title" lang="en">Inbox Management</h3>
     </div>
     <div class="col-md-6">
-        <label class="cgrey">Manage your message information<label>
+        <label class="cgrey" lang="en">Manage your message information<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
@@ -20,9 +20,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-            <div class="card-header putih">
-                Message List
-            </div>
+            <div class="card-header putih" lang="en">Message List</div>
 
             <div class="card-body">
 
@@ -30,14 +28,14 @@
                     style="width:100%;">
                     <thead>
                         <tr>
-                            <th><b> ID </b></th>
-                            <th><b> Title Message</b></th>
-                            <th><b> Inbox Type</b></th>
-                            <th><b> User Type </b></th>
-                            <th><b> Community</b></th>
-                            <th><b> Status</b></th>
-                            <th><b> Date </b></th>
-                            <th><b> Action </b></th>
+                            <th><b lang="en">ID</b></th>
+                            <th><b lang="en">Title Message</b></th>
+                            <th><b lang="en">Inbox Type</b></th>
+                            <th><b lang="en">User Type</b></th>
+                            <th><b lang="en">Community</b></th>
+                            <th><b lang="en">Status</b></th>
+                            <th><b lang="en">Date</b></th>
+                            <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -56,20 +54,20 @@
             <form>
                 <div class="modal-header" style="border: none; padding-bottom: 0px;
                 padding-left: 5%; padding-right: 5%;">
-                    <h4 class="modal-title cdarkgrey">Detail Message Inbox</h4>
+                    <h4 class="modal-title cdarkgrey" lang="en">Detail Message Inbox</h4>
                     <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
-                        data-target="#modal_changestatus_inbox" data-dismiss="modal">Change Status</button>
+                        data-target="#modal_changestatus_inbox" data-dismiss="modal" lang="en">Change Status</button>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="height: auto; padding-left: 5%; padding-right: 5%;">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <small class="clight s13">Title</small>
+                                <small class="clight s13" lang="en">Title</small>
                                 <p class="cgrey" id="detail_judul"></p>
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Description</small>
+                                <small class="clight s13" lang="en">Description</small>
                                 <div style="width: 100%; height: 50px; overflow-y: scroll;">
                                     <p class="cgrey" id="detail_dekripsi"></p>
                                 </div>
@@ -83,13 +81,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">Message Type</small>
+                                    <small class="clight s13" lang="en">Message Type</small>
                                     <p class="cgrey" id="detail_tipepesan"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">Community Name</small>
+                                    <small class="clight s13" lang="en">Community Name</small>
                                     <p class="cgrey" id="detail_komunitas"></p>
                                 </div>
                             </div>
@@ -97,13 +95,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">User Type</small>
+                                    <small class="clight s13" lang="en">User Type</small>
                                     <p class="cgrey" id="detail_usertipe"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">Specific User</small>
+                                    <small class="clight s13" lang="en">Specific User</small>
                                     <p class="cgrey" id="detail_user"></p>
                                 </div>
                             </div>
@@ -126,13 +124,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">Status Message</small>
+                                    <small class="clight s13" lang="en">Status Message</small>
                                     <p class="cgrey" id="detail_statuspesan"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <small class="clight s13">Sender Level</small>
+                                    <small class="clight s13" lang="en">Sender Level</small>
                                     <p class="cgrey" id="detail_senderlevel"></p>
                                 </div>
                             </div>
@@ -140,7 +138,7 @@
                     </div>
                     <div class="row" style="margin-top: 0.5em;">
                         <div class="col-6">
-                            <small class="clight s13"><b>Status</b></small>
+                            <small class="clight s13"><b lang="en">Status</b></small>
                         </div>
                         <div class="col-6" style="text-align: right;">
                             <b><small class="cblue s13" id="detail_status">-</small></b>
@@ -152,7 +150,7 @@
                    padding-left: 5%; padding-right: 5%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                 </div>
             </form>
@@ -168,7 +166,7 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <div class="modal-header" style="border: none;">
-                <h4 class="modal-title">Change Status</h4>
+                <h4 class="modal-title" lang="en">Change Status</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -179,15 +177,15 @@
                 <div class="modal-body" style="min-height: 130px;">
                     <div class="row" style="margin-top: 2em;">
                         <div class="col-md-3" style="padding-top: 0.6em;">
-                            <small class="clight s13"><b>Status</b></small>
+                            <small class="clight s13"><b lang="en">Status</b></small>
                         </div>
                         <div class="col-md-9">
                             <select class="form-control input-abu" name="list_status" id="list_status">
-                                <option selected disabled> Choose </option>
-                                <option value="1" class="tipe1" id="id1"> Active </option>
-                                <option value="2" class="tipe1" id="id2"> Not Publish </option>
-                                <option value="1" class="tipe2" id="id3"> Show </option>
-                                <option value="2" class="tipe2" id="id4"> Not Show </option>
+                                <option selected disabled lang="en"> Choose </option>
+                                <option value="1" class="tipe1" id="id1" lang="en"> Active </option>
+                                <option value="2" class="tipe1" id="id2" lang="en"> Not Publish </option>
+                                <option value="1" class="tipe2" id="id3" lang="en"> Show </option>
+                                <option value="2" class="tipe2" id="id4" lang="en"> Not Show </option>
                             </select>
                         </div>
                     </div>
@@ -200,12 +198,12 @@
                             display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" id="btn_change_status" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Change </button>
+                        </i><span lang="en">Change</span></button>
                 </div>
             </form>
         </div>

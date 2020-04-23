@@ -1,19 +1,17 @@
 @extends('layout.admin-dashboard')
-
+@section('title', 'Subscriber Management')
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span> Subscriber Management</h3>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Subscriber Management</a></li>
-            <!-- <li class="breadcrumb-item active" aria-current="page">Registrasion Data</li> -->
-        </ol>
-    </nav>
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title" lang="en">Subscriber Management</h3>
+    </div>
+    <div class="col-md-5">
+        <label class="cgrey" lang="en">Manage your Subscriber<label>
+    </div>
 </div>
+<br>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -25,12 +23,12 @@
                     <ul class="nav nav-tabs ">
                         <li class="tab-subs active" id="tab_all">
                             <a href="#tab_default_1" data-toggle="tab">
-                                All
+                                <span lang="en">All</span>
                             </a>
                         </li>
                         <li class="tab-subs" id="tab_pending">
                             <a href="#tab_default_2" data-toggle="tab">
-                                Pending
+                                <span lang="en">Pending</span>
                             </a>
                         </li>
 
@@ -40,7 +38,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <button type="button" id="btn-filter-subs" class="btn btn-tosca btn-sm"
-                                        style="min-width: 120px; margin-bottom: 1em;">Filter</button>
+                                        style="min-width: 120px; margin-bottom: 1em;" lang="en">Filter</button>
                                 </div>
                                 <div class="col-md-4" style="text-align: right;">
                                     <button type="button" id="reset_tbl_subsall"
@@ -57,12 +55,12 @@
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID Subscriber</th>
-                                        <th>Membership</th>
-                                        <th>Subcriber Name</th>
-                                        <th>Status</th>
-                                        <th>Last Login</th>
-                                        <th>Action</th>
+                                        <th><b lang="en">ID Subscriber</b></th>
+                                        <th><b lang="en">Membership</b></th>
+                                        <th><b lang="en">Subcriber Name</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Last Login</b></th>
+                                        <th><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -76,12 +74,12 @@
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID Subscriber</th>
-                                        <th>Membership</th>
-                                        <th>Subcriber Name</th>
-                                        <th>Status</th>
-                                        <th>Created Date</th>
-                                        <th>Action</th>
+                                        <th><b lang="en">ID Subscriber</b></th>
+                                        <th><b lang="en">Membership</b></th>
+                                        <th><b lang="en">Subcriber Name</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Created Date</b></th>
+                                        <th><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -107,7 +105,7 @@
 
             <div class="modal-header" style="border: none;">
                 <center>
-                    <h4 class="modal-title cgrey">Filter Data</h4>
+                    <h4 class="modal-title cgrey" lang="en">Filter Data</h4>
                 </center>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -135,13 +133,13 @@
                         <fieldset id="form_date_filter">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="start_date">Start Date</label>
+                                    <label for="start_date" lang="en">Start Date</label>
                                     <input type="date" id="subs_datemulai" name="subs_datemulai"
                                         class="form-control input-abu">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="start_date">End Date</label>
+                                    <label for="start_date" lang="en">End Date</label>
                                     <input type="date" id="subs_dateselesai" name="subs_dateselesai"
                                         class="form-control input-abu">
                                 </div>
@@ -149,12 +147,12 @@
 
                             <div class="modal-footer" style="border: none;">
                                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
-                                    <i class="mdi mdi-close"></i> Cancel
+                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>
                                 &nbsp;
                                 <button type="button" id="btn_filter_date" class="btn btn-tosca btn-sm">
                                     <i class="mdi mdi-check btn-icon-prepend">
-                                    </i> Submit </button>
+                                    </i><span lang="en">Submit</span></button>
                             </div>
                         </fieldset>
                     </form>
@@ -167,7 +165,7 @@
                         <fieldset id="form_member_filter">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="membership_tipe">Membership Type</label>
+                                    <label for="membership_tipe" lang="en">Membership Type</label>
                                     <select class="form-control input-abu" id="membership_tipe">
                                     </select>
                                 </div>
@@ -175,12 +173,12 @@
 
                             <div class="modal-footer" style="border: none; margin-top: 90px;">
                                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">
-                                    <i class="mdi mdi-close"></i> Cancel
+                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>
                                 &nbsp;
                                 <button type="button" id="btn_filter_membership" class="btn btn-tosca btn-sm">
                                     <i class="mdi mdi-check btn-icon-prepend">
-                                    </i> Submit </button>
+                                    </i><span lang="en">Submit</span></button>
                             </div>
                         </fieldset>
                     </form>

@@ -48,10 +48,10 @@
                 {{ csrf_field() }}
 
                 <div class="modal-body" style="min-height: 355px; height: auto; padding-left: 5%; padding-right: 5%;">
-                    <h3 class="cgrey" style="margin-bottom: 1.5em; margin-top:1em;">Choose Payment Method</h3>
+                    <h3 class="cgrey" style="margin-bottom: 1.5em; margin-top:1em;" lang="en">Choose Payment Method</h3>
                     <div class="row" style="margin-bottom: 0.5em;">
                         <div class="col-md-12">
-                            <h5 class="h5 clight">Membership Price</h5>
+                            <h5 class="h5 clight" lang="en">Membership Price</h5>
                             <small class="cgrey2">Rp &nbsp;</small>
                             <span class="h6 cblue" id="harga_member"></span>&nbsp;
                             <small class="cgrey2"> ,-</small>
@@ -60,7 +60,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-7">
-                            <h6 class="h6 clight">Choose Payment Method</h6>
+                            <h6 class="h6 clight" lang="en">Choose Payment Method</h6>
                             <div class="row" style="padding-left: 5%; margin-top: -0.3em;">
                                 <div class="isi_method_pay">
 
@@ -79,8 +79,8 @@
                 <input type="hidden" name="id_pay_initial" id="id_pay_initial">
                 <input type="hidden" name="id_membertype" id="id_membertype">
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod">Submit</button>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" lang="en">Close</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod" lang="en">Submit</button>
                 </div>
             </form>
         </div>
@@ -101,13 +101,12 @@
                     <img src="/visual/kananatas2.png" class="img_confirm1">
                     <img src="/visual/imgregis.png" class="img_confirm2">
 
-                    <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;">Confirm your
-                        Membership Payment !</h3>
+                    <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;" lang="en" data-lang-token="confirm_membership">Confirm your Membership Payment !</h3>
                     <br>
                     <div class="row">
                         <div class="col-5">
                             <div class="form-group row">
-                                <label class="h6 cgrey">Invoice Number</label>
+                                <label class="h6 cgrey" lang="en">Invoice Number</label>
                                 <input id="invoice_number" type="text"
                                     class="form-control @error('invoice_number') is-invalid @enderror"
                                     name="invoice_number" value="{{ old('invoice_number') }}" required
@@ -120,17 +119,16 @@
                             <br>
                             <div id="isi_form" style="display: none;">
                                 <div class="form-group row">
-                                    <label class="h6 cgrey">Image Of Payment</label>
+                                    <label class="h6 cgrey" lang="en">Image Of Payment</label>
                                     <div class="custom-file">
                                         <input type="file"
                                             class="custom-file-input form-control @error('fileup') is-invalid @enderror"
                                             name="fileup" value="{{ old('fileup') }}" required autocomplete="fileup"
                                             id="fileup" required>
-                                        <label class="custom-file-label" for="fileup" style="text-align: left;">Choose
-                                            file</label>
+                                        <label class="custom-file-label" for="fileup" style="text-align: left;" lang="en">Choose file</label>
 
                                         @if($errors->has('fileup'))
-                                        <small style="color: red;">Extension is <i>.jpg / .jpeg /
+                                        <small style="color: red;"><span lang="en">Extension is</span><i>.jpg / .jpeg /
                                                 .PDF</i></small>
                                         @endif
                                     </div>
@@ -142,27 +140,27 @@
 
                         <div class="col-4" id="detil_pay">
                             <div class="form-group" style="margin-top: 0.5em;">
-                                <small class="clight2 mgb-05">Total Payment</small>
+                                <small class="clight2 mgb-05" lang="en">Total Payment</small>
                                 <h6 class="cgrey1" id="nominal_payment1"></h6>
                             </div>
 
                             <div class="form-group">
-                                <small class="clight2 mgb-05">Account Number</small>
+                                <small class="clight2 mgb-05" lang="en">Account Number</small>
                                 <h6 class="cgrey1" id="bank_num"></h6>
                             </div>
 
                             <div class="form-group">
-                                <small class="clight2 mgb-05">Bank Name</small>
+                                <small class="clight2 mgb-05" lang="en">Bank Name</small>
                                 <h6 class="cgrey1" id="bank_receiver"></h6>
                             </div>
 
                             <div class="form-group">
-                                <small class="clight2 mgb-05">Name Receiver</small>
+                                <small class="clight2 mgb-05" lang="en">Name Receiver</small>
                                 <h6 class="cgrey1" id="name_receiver"></h6>
                             </div>
 
-                            <div class="form-group" id="hidein-img">
-                                <small class="clight2 mgb-05">Your Image Payment</small>
+                            <div class="form-group" id="hidein-img" lang="en">
+                                <small class="clight2 mgb-05" lang="en">Your Image Payment</small>
                                 <br>
                                 <img id="show_imgpay" class="img-fluid rounded float-left" src="" data-toggle="tooltip"
                                     data-placement="right" title="Double Click to Preview"
@@ -175,9 +173,9 @@
                 <div class="modal-footer" style="border: none;">
                     <img src="/visual/kiribawah2.png" class="img_confirm3">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="width: 110px;">Close</button> &nbsp;
+                        style="width: 110px;" lang="en">Close</button> &nbsp;
                     <button type="submit" id="btn_confirmpay" class="btn btn-teal btn-sm"
-                        style="width: 110px;">Submit</button>
+                        style="width: 110px;" lang="en">Submit</button>
                 </div>
             </form>
         </div>

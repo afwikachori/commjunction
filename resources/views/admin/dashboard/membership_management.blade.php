@@ -1,17 +1,16 @@
 @extends('layout.admin-dashboard')
 @section('title', 'Membership Management')
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-settings"></i>
-        </span lang="en">Membership Management</h3>
 
-    <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-            data-target="#modal_add_create_membership" data-dismiss="modal" lang="en">Add Membership</button>
-    </nav>
+<div class="row">
+    <div class="col-md-2">
+        <h3 class="page-title" lang="en">Membership Management</h3>
+    </div>
+    <div class="col-md-5">
+        <label class="cgrey" lang="en">Manage your membership type<label>
+    </div>
 </div>
+<br>
 
 <div class="row">
     <div class="col-12">
@@ -54,12 +53,12 @@
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th class="th-center" lang="en">ID Subscriber</th>
-                                        <th class="th-center" lang="en">Name</th>
-                                        <th class="th-center" lang="en">Status</th>
-                                        <th class="th-center" lang="en">Payment Method</th>
-                                        <th class="th-center" lang="en">Membership Type</th>
-                                        <th class="th-center" lang="en">Action</th>
+                                        <th class="th-center"><b lang="en">ID Subscriber</b></th>
+                                        <th class="th-center"><b lang="en">Name</b></th>
+                                        <th class="th-center"><b lang="en">Status</b></th>
+                                        <th class="th-center"><b lang="en">Payment Method</b></th>
+                                        <th class="th-center"><b lang="en">Membership Type</b></th>
+                                        <th class="th-center"><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -84,7 +83,7 @@
                 {{ csrf_field() }}
 
                 <div class="modal-header" style="padding-bottom: 0em !important;">
-                    <h4 class="modal-title cgrey">Create Membership</h4>
+                    <h4 class="modal-title cgrey" lang="en">Create Membership</h4>
                 </div>
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
@@ -106,27 +105,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <small class="clight">Membership Title</small>
+                                <small class="clight" lang="en">Membership Title</small>
                                 <input type="text" id="judul_member" name="judul_member" class="form-control input-abu">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group input_pricemember">
-                                <small class="clight">Pricing</small>
+                                <small class="clight" lang="en">Pricing</small>
                                 <input type="text" id="harga_member" name="harga_member" class="form-control input-abu">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <small class="clight">Description</small>
+                            <small class="clight" lang="en">Description</small>
                             <textarea class="form-control input-abu" id="deskripsi_member" name="deskripsi_member"
                                 rows="2"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <small class="clight">Features</small>
+                            <small class="clight" lang="en">Features</small>
                         </div>
                         <div class="col-12">
                             <div id="isi_membership_admin">
@@ -139,12 +138,12 @@
                 <div class="modal-footer" style="border: none; margin-top: -1em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="submit" id="btn_add_membership" class="btn btn-tosca btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Create </button>
+                        </i><span lang="en">Create</span></button>
                 </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
@@ -160,10 +159,10 @@
         <div class="modal-content" style="background-color: #ffffff;">
 
             <div class="modal-header" style="padding-bottom: 0em !important;">
-                <h4 class="modal-title cgrey">Detail Request Membership Type</h4>
+                <h4 class="modal-title cgrey" lang="en">Detail Request Membership Type</h4>
 
                 <label class="badge badge-secondary melengkung10px" id="status_member"
-                    style="text-align: right; min">Requested</label>
+                    style="text-align: right; min" lang="en">Requested</label>
             </div> <!-- end-header -->
 
             <div class="modal-body detail_member">
@@ -176,7 +175,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group" style="margin-top: 5%;">
-                            <small class="clight">Username</small>
+                            <small class="clight" lang="en">Username</small>
                             <p class="cgrey1 tebal" id="isi_username">-</p>
                         </div>
                     </div>
@@ -205,24 +204,24 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group" style="margin-top: 5%;">
-                            <small class="clight">Request Date</small>
+                            <small class="clight" lang="en">Request Date</small>
                             <p class="cgrey1 tebal" id="isi_date">-</p>
                         </div>
 
                         <div class="form-group" style="margin-top: 5%;">
-                            <small class="clight">Invoice Number</small>
+                            <small class="clight" lang="en">Invoice Number</small>
                             <p class="cgrey1 tebal" id="isi_invoice">-</p>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group" style="margin-top: 5%;">
-                            <small class="clight">Payment Type</small>
+                            <small class="clight" lang="en">Payment Type</small>
                             <p class="cgrey1 tebal" id="isi_paytipe">-</p>
                         </div>
 
                         <div class="form-group" style="margin-top: 5%;">
-                            <small class="clight">Payment Status</small>
+                            <small class="clight" lang="en">Payment Status</small>
                             <p class="cgrey1 tebal" id="isi_paystatus">-</p>
                         </div>
                     </div>
@@ -232,10 +231,10 @@
                     <div class="col-md-12">
                         <center>
                             <div class="form-group" style="margin-bottom: 1em;">
-                                <small class="clight" style="margin-bottom: 2%;">Payment Detail</small><br>
+                                <small class="clight" style="margin-bottom: 2%;" lang="en">Payment Detail</small><br>
                                 <a href="" class="cfblue s16 tebal" data-toggle="modal"
                                     data-target="#modal_detail_pay_membership" data-dismiss="modal">
-                                    <i>View Detail Payment</i></a>
+                                    <i lang="en">View Detail Payment</i></a>
                             </div>
                         </center>
                     </div>
@@ -248,13 +247,13 @@
                 <center>
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
+                        <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>
                     </button>
                     &nbsp;
                     <button type="button" id="" class="btn btn-teal btn-sm melengkung10px" data-toggle="modal"
                         data-target="#modal_confirm_membership" data-dismiss="modal">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Approve </button>
+                        </i><span lang="en">Approve</span></button>
                 </center>
 
             </div> <!-- end-footer     -->

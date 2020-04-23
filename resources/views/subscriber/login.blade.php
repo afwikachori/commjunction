@@ -46,8 +46,8 @@
 </div>
 
     <div class="container pdsubslogin">
-       <h2 lang="en" style="color: #4F4F4F;">Login</h2>
-       <label lang="en" class="cgrey textlogin">Please login to continue using this app</label>
+       <h2 lang="en" style="color: #4F4F4F;" lang="en">Login</h2>
+       <label lang="en" class="cgrey textlogin" lang="en">Please login to continue using this app</label>
 
             <!-- login  Form -->
             <form method="POST" id="form_login_admin" action="{{route('LoginSubscriber')}}">
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                <button lang="en" type="submit" class="btn btn-primary" id="LoginSubscriber">Login</button>
+                <button lang="en" type="submit" class="btn btn-primary" id="LoginSubscriber" lang="en">Login</button>
                 </div>
 
                 <!-- <div id="login_btn_google">

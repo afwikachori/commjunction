@@ -8,8 +8,9 @@ html, body {
 }
 
 
-*{
-  font-family: 'SF Pro Display Regular' !important;
+* {
+    font-family: "SF Pro Display Regular", Arial !important;
+     font-family: 'MyWebFont', Fallback, sans-serif;
 }
 
 @font-face {
@@ -19,6 +20,10 @@ html, body {
     font-style: normal;
 }
 
+@font-face {
+  font-family: "SF Pro Display Regular";
+  src: url("/font/sf_pro.ttf");
+}
 
 body::-webkit-scrollbar-track
 {
