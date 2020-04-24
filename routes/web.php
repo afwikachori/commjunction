@@ -439,6 +439,8 @@ Route::prefix('support')->group(function () {
     Route::get('/inquiry_log', 'SupportCommjunction@InquiryLogActivityView')->name('/inquiry_log');
     Route::get('/reactivate_deactivate', 'SupportCommjunction@ReactivateDeactivateView')->name('/reactivate_deactivate');
     Route::get('/knowledge', 'SupportCommjunction@knowledgeSupportView')->name('/knowledge');
+    Route::get('/subdomain', 'SupportCommjunction@SubdomainSupportView')->name('/subdomain');
+
 
 
     //POST

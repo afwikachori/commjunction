@@ -42,6 +42,10 @@ class SupportCommjunction extends Controller
         return view('support/knowledge_support');
     }
 
+    public function SubdomainSupportView()
+    {
+        return view('support/subdomain_support');
+    }
 
 
     public function get_list_komunitas_support(Request $request)

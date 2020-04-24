@@ -1,18 +1,16 @@
 @extends('layout.support-master')
-@section('title', 'Knowledge')
+@section('title', 'Subdomain')
 @section('content')
 
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title">Knowledge</h3>
+        <h3 class="page-title">Subdomain</h3>
     </div>
     <div class="col-md-6">
-        <label class="cgrey">Manage your information for Knowledges<label>
+        <label class="cgrey">Manage your information for Subdomain<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_knowledge">
-                Create Knowledge </button>
         </nav>
     </div>
 </div>
@@ -259,10 +257,9 @@
             <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
                    padding-left: 6%; padding-right: 6%;">
                 <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
-                <button type="button" class="btn btn-teal btn-sm" data-toggle="modal"
-                    data-target="#modal_edit_knowledge" data-dismiss="modal">
+                <button type="button" class="btn btn-teal btn-sm" data-toggle="modal" data-target="#modal_edit_knowledge" data-dismiss="modal" >
                     <i class="mdi mdi-pencil btn-icon-prepend">
-                    </i> Edit </button>
+                    </i> Edit  </button>
                 &nbsp;
                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
                     <i class="mdi mdi-close"></i> Cancel
@@ -292,8 +289,7 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Feature Type</small>
-                                <select class="form-control input-abu" name="edit_feature_type" id="edit_feature_type"
-                                    required>
+                                <select class="form-control input-abu" name="edit_feature_type" id="edit_feature_type" required>
                                     <option selected disabled> Choose </option>
                                     <option value="1"> Feature </option>
                                     <option value="2"> Support / Non Feature </option>
@@ -304,8 +300,7 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Error Level</small>
-                                <select class="form-control input-abu" name="edit_error_level" id="edit_error_level"
-                                    required>
+                                <select class="form-control input-abu" name="edit_error_level" id="edit_error_level" required>
                                     <option selected disabled> Choose </option>
                                     <option value="1"> Low </option>
                                     <option value="2"> Medium </option>
@@ -319,15 +314,13 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Title</small>
-                                <input type="text" id="edit_judul" name="edit_judul" class="form-control input-abu"
-                                    required>
+                                <input type="text" id="edit_judul" name="edit_judul" class="form-control input-abu" required>
                             </div>
                         </div> <!-- end-col-md -->
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Date</small>
-                                <input type="date" id="edit_tanggal" name="edit_tanggal" class="form-control input-abu"
-                                    required>
+                                <input type="date" id="edit_tanggal" name="edit_tanggal" class="form-control input-abu" required>
                             </div>
 
                         </div> <!-- end-col-md -->
@@ -346,8 +339,7 @@
                         <div class="col-md">
                             <div class="form-group" style="display: none;" id="hide_subfitur">
                                 <small class="clight s13">Sub-Feature</small>
-                                <select class="form-control input-abu" name="edit_list_subfeature"
-                                    id="edit_list_subfeature">
+                                <select class="form-control input-abu" name="edit_list_subfeature" id="edit_list_subfeature">
                                     <option selected disabled> Loading ... </option>
                                 </select>
                             </div>
@@ -358,29 +350,25 @@
                         <div class="col-md-12" id="hide_fiturdeskripsi" style="display: none;">
                             <div class="form-group">
                                 <small class="clight s13">Feature Description</small>
-                                <input type="text" id="edit_deskripsi_fitur" name="edit_deskripsi_fitur"
-                                    class="form-control input-abu">
+                                <input type="text" id="edit_deskripsi_fitur" name="edit_deskripsi_fitur" class="form-control input-abu">
                             </div>
                         </div> <!-- end-col-md -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="clight s13">Condition</small>
-                                <input type="text" id="edit_kondisi" name="edit_kondisi" class="form-control input-abu"
-                                    required>
+                                <input type="text" id="edit_kondisi" name="edit_kondisi" class="form-control input-abu" required>
                             </div>
                         </div> <!-- end-col-md -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="clight s13">Analysis</small>
-                                <input type="text" id="edit_analisis" name="edit_analisis"
-                                    class="form-control input-abu" required>
+                                <input type="text" id="edit_analisis" name="edit_analisis" class="form-control input-abu" required>
                             </div>
                         </div> <!-- end-col-md -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="clight s13">Solution</small>
-                                <input type="text" id="edit_solusi" name="edit_solusi" class="form-control input-abu"
-                                    required>
+                                <input type="text" id="edit_solusi" name="edit_solusi" class="form-control input-abu" required>
                             </div>
                         </div> <!-- end-col-md -->
                     </div>
@@ -402,35 +390,6 @@
     </div>
 </div>
 
-
-<!-- MODAL DELETE-->
-<div class="modal fade" id="modal_detele_knowledge" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content" style="background-color: #ffffff; min-height: 250px;">
-            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                <center>
-                    <img src="/img/logout.png" id="img_signout_superadmin">
-                    <h4 class="cgrey">Logout Comfirmation</h4>
-                    <small class="clight">Are you sure, you want to exit ?</small>
-                </center>
-            </div>
-            <div class="modal-footer changepass" style="border: none; text-align: center;">
-                <center>
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> No
-                    </button>
-                    &nbsp;
-                    <a href="" type="button" class="btn btn-tosca btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Yes </a>
-                </center>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END MODAL LOGOUT -->
 
 @endsection
 @section('script')
@@ -609,10 +568,25 @@
             $("#modal_detail_knowledge").modal('show');
         });
 
-        $('#tabel_knowledge_support tbody').on('click', 'button.btn_delete_knowledge', function () {
-            var data = tabel.row($(this).parents('tr')).data();
-         $("#modal_detele_knowledge").modal();
-        });
+          $('#tabel_knowledge_support tbody').on('click', 'button.btn_delete_knowledge', function () {
+                var data = tabel.row($(this).parents('tr')).data();
+            swal({
+                  title: "Are you sure?",
+                  text: "Once deleted, you will not be able to recover this file!",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+                  .then((willDelete) => {
+                      if (willDelete) {
+                          swal("Poof! Your imaginary file has been deleted!", {
+                              icon: "success",
+                          });
+                      } else {
+                       swal.close();
+                      }
+                  });
+          });
 
     }
 

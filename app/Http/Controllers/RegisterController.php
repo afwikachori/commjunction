@@ -573,11 +573,12 @@ class RegisterController extends Controller
 
     public function requestOTP(Request $request)
     {
+        $auth_subs = session()->get('auth_subs');
+        $id_komunitas = $auth_subs[0]['id'];
         $data_lupapass =  [
             'email'        => $request['emailforgetadmin'],
-            'community_id' => "104"
+            'community_id' => $id_komunitas,
         ];
-        // dd($data_lupapass);
 
         session()->put('data_forgetpass_admin', $data_lupapass);
 
@@ -594,7 +595,7 @@ class RegisterController extends Controller
             $response = $client->request('POST', $url, [
                 'form_params'  => [
                     'email'        => $email,
-                    'community_id' => "104"
+                    'community_id' => $id_komunitas
                 ]
             ]);
 

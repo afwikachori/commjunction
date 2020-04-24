@@ -49,4 +49,10 @@
             <i class="mdi mdi-book-open-page-variant menu-icon"></i>
         </a>
     </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/support/subdomain">
+            <span class=" menu-title" lang="en">Subdomain</span>
+            <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+        </a>
+    </li>
 </ul>
