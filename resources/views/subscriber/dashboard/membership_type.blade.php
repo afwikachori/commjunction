@@ -10,30 +10,26 @@
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <button type="button" class="btn btn-tosca btn-sm"
+            {{-- <button type="button" class="btn btn-tosca btn-sm"
             style="min-width: 175px;"
             data-toggle="modal"
-            data-target="#modal_confirmpay_membership" lang="en">Payment Confirmation</button>
+            data-target="#modal_confirmpay_membership" lang="en">Payment Confirmation</button> --}}
         </nav>
     </div>
 </div>
 
 <div class="row" style="padding-left:8%; padding-right: 8%; padding-top: 5%;">
     <div class="col-12">
-        <div class="card">
-            <nav class="navbar nav-biru">
-            </nav>
-            <div class="card-body member">
-                <h4 class="tebal" lang="en">Choose your plan</h4>
-                <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en" data-lang-token="des_membership">Our Community Administrators are on their way to approve
-                    your account, please check
-                    our email!</p>
+        <div class="card" style="background-color: #ffffff00 !important;">
+            {{-- <div class="card-body member"> --}}
+                <h4 class="tebal" lang="en">Choose your Membership Plan</h4>
+                <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en" data-lang-token="please_choose_membership">Please choose one of the membership options provided by your Community</p>
                 <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
                     <div class="card-deck price_member" style="width: 100%;">
 
                     </div>
                 </div> <!-- end-row -->
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
 </div>

@@ -7,14 +7,13 @@
 <img src="/visual/vs-pricing.png" id="shadow-pricing">
 <a href="/admin/register2">
     <img border="0" src="/visual/left-arrow.png" class="panah-pricing">
-</a><a href="/admin/register2" class="clight back-pricing">Back to Register</a>
+</a><a href="/admin/register2" class="clight back-pricing" lang="en">Back to Register</a>
 
 <div class="container-fluid mg-pricing">
     <div class="row">
         <div class="col-md-5">
-            <h4 class="cgrey" lang="en">Choose your plan</h4>
-            <p class="cgrey2 s15" lang="en">Our Community Administrators are on their way to approve your account,
-                please check our email!</p>
+            <h4 class="cgrey" lang="en" lang="en">Choose your plan</h4>
+            <p class="cgrey2 s15" lang="en">Select our pricing plan that fits your Community Business</p>
         </div>
 
         <div class="col-sm"></div>
@@ -33,7 +32,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center" style="text-align: center;">
+    <div class="row justify-content-center" style="text-align: center; margin-top: 1em;">
         <div class="card-deck price-ajax" style="padding-left: 9%; padding-right: 9%;">
 
         </div>
@@ -145,34 +144,34 @@
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '<div class="hidetime1">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
-                        '<small class="h6">IDR</small></sup>' +
+                        '<small class="h6" lang="en">IDR</small></sup>' +
                         '<label class="card-harga cgrey">' +
                         '<strong>' + rupiah(item.grand_pricing) + '</strong></label>' +
-                        '<small class="clight"> /Once</small>' +
+                        '<small class="clight" lang="en"> /Once</small>' +
                         '</div>' +
                         '<div class="hidetime2">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
-                        '<small class="h6">IDR</small></sup>' +
+                        '<small class="h6" lang="en">IDR</small></sup>' +
                         '<label class="card-harga cgrey">' +
                         '<strong> ' + rupiah(item.price_monthly) + '</strong></label>' +
-                        '<small class="clight"> /Month</small>' +
+                        '<small class="clight" lang="en"> /Month</small>' +
                         '</div>' +
                         '<div class="hidetime3">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
-                        '<small class="h6">IDR</small></sup>' +
+                        '<small class="h6" lang="en">IDR</small></sup>' +
                         '<label class="card-harga cgrey">' +
                         '<strong>' + rupiah(item.price_annual) + '</strong></label>' +
-                        '<small class="clight"> /Year</small>' +
+                        '<small class="clight" lang="en"> /Year</small>' +
                         '</div>' +
-                        '<label class="coren s14">or choose another pricing time</label>' +
+                        '<label class="coren s14" lang="en">or choose another pricing time</label>' +
                         '<form method="POST" action="{{route('pricingkefitur')}}"> {{ csrf_field() }}' +
                             '<input type="hidden" name="idprice" value="' + idprice + '">' +
                             '<input type="hidden" name="harganya" value="' + item.grand_pricing + '">' +
                             '<input type="hidden" name="payment_time" class="isitime" value="">' +
-                            '<button type="submit" class="btn btn-sm clr-oren klik-pricing" style="margin-bottom: 0.5em;">Get Now</button>' +
+                            '<button type="submit" class="btn btn-sm clr-oren klik-pricing" style="margin-bottom: 0.5em;" lang="en">Get Now</button>' +
                             '</form>' +
                             '</center>' +
-                            '<h6 class="cgrey" style="margin-top:0.6em;">Package Include</h6>' +
+                            '<h6 class="cgrey" style="margin-top:0.6em;" lang="en">Package Include</h6>' +
                             '<div class="row" style="padding-left:25%;"><small style="text-align:left;">' + subfitur + '</small></div></div></div></div>';
                 });
                 $('.price-ajax').html(html);
@@ -181,6 +180,7 @@
                 }, 4000);
                 cekawalpricing();
                 get_session_pricing();
+                $("#time-pricing1").click();
             },
              error: function (result) {
                 console.log("Cant Show All Data Regis");

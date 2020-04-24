@@ -4,10 +4,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title" lang="en">Usertype Management</h3>
+        <h3 class="page-title" lang="en">User Type Management</h3>
     </div>
     <div class="col-md-6">
-        <label class="cgrey" lang="en">Manage your usertype information<label>
+        <label class="cgrey" lang="en">Manage your user type information<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">

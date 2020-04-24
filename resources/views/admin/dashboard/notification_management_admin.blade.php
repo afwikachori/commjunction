@@ -13,16 +13,9 @@
     </div>
     <div class="col-md-5" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <div class="row">
-                <div class="col-md" style="text-align: right;">
-                    <button type="button" class="btn btn-abu btn-sm" style="min-width: 170px;" data-toggle="modal"
-                        data-target="#modal_setting_notification" lang="en">Setting Notification</button>
-                </div>
-                <div class="col-md">
-                    <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
-                        data-target="#modal_send_notif_super" lang="en">Broadcast Notification</button>
-                </div>
-            </div>
+            <button type="button" class="btn btn-abu btn-sm" style="min-width: 170px;" data-toggle="modal"
+                data-target="#modal_setting_notification" lang="en">Setting Notification</button>
+
         </nav>
     </div>
 </div>
@@ -31,12 +24,15 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-            <div class="card-header putih" lang="en">Notification List</div>
+            <div class="card-header putih" lang="en">
+                <button type="button" class="btn btn-tosca btn-sm"  style="min-width: 170px;" data-toggle="modal"
+                 data-target="#modal_filter_notif_admin" lang="en">Generate Notification</button>
+                &nbsp; &nbsp;
+                <button type="button" class="btn btn-tosca2 btn-sm" style="min-width: 170px;" data-toggle="modal"
+                    data-target="#modal_send_notif_super" lang="en">Broadcast Notification</button>
+            </div>
 
             <div class="card-body">
-                <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
-                    data-toggle="modal" data-target="#modal_filter_notif_admin" lang="en">Generate Notification</button>
-
                 <table id="tabel_generate_notif_admin" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%; display: none;">
                     <thead>
@@ -227,7 +223,8 @@
                                 <small class="clight s13" lang="en">Broadcast Status</small>
                                 <div class="custom-control custom-switch" style="margin-top: 1em;">
                                     <input type="checkbox" class="custom-control-input" id="status_notif">
-                                    <label class="custom-control-label" for="status_notif" lang="en">Add Spesific User</label>
+                                    <label class="custom-control-label" for="status_notif" lang="en">Add Spesific
+                                        User</label>
                                 </div>
                                 <input type="hidden" id="idstatus_notif" name="idstatus_notif" value="2">
                             </div>
@@ -443,7 +440,7 @@
                         if (item.input_type == 1) {
                             inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
                         } else if (item.input_type == 2) {
-                             if (item.value == 1) {
+                            if (item.value == 1) {
                                 var one = 'checked';
                                 var two = '';
                             } else if (item.value == 2) {

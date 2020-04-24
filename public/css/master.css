@@ -249,6 +249,22 @@ top: 11.4%;
 bottom: 86.33%;
 }
 
+.backarrow-detail2{
+    position: relative;
+    top: 1.5em;
+    left: 6em;
+}
+.backarrow-detail2{
+    position: relative;
+    top: 1.5em;
+    left: 4em;
+}
+
+.registerback{
+    position: relative;
+    margin-top: 2em;
+    margin-left: 5em;
+}
 
 .backarrow-pay{
 position: fixed;
@@ -355,8 +371,8 @@ background-color: #fff !important;
 }
 
 .mg-detailfitur{
-  padding: 3em;
-  margin-top: 2em;
+  padding: 1.5em;
+  margin-top: 0em;
 }
 
 #jeniscom2{
@@ -388,10 +404,13 @@ top: 23px;
 }
 
 .img-subfitur{
-  width: 25% !important;
+  width: 30% !important;
   height: auto;
 }
 
+a {
+    text-decoration: none !important;
+}
 .btn_time_pricingq{
   margin-top: 2em !important;
   border-radius: 2rem !important;
@@ -470,7 +489,7 @@ border-radius: 10px;
 }
 
 .cd-pricing.active {
-box-shadow: 0px 0px 40px 10px rgb(255, 247, 170);
+/* box-shadow: 0px 0px 40px 10px rgb(255, 247, 170); */
 border: 5px solid #FF9A44;
 }
 
@@ -489,6 +508,16 @@ background-size: cover;
 
 .card-harga{
 font-size:27px;
+}
+
+.bordersubcard{
+  min-width: 11rem;
+    max-width: 12rem;
+    height: 8rem;
+    border: none;
+    /* border-color: #FF9A44; */
+      box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 3px 30px 0 rgba(0, 0, 0, 0);
+    border-radius : 10px;
 }
 
 .clr-oren{
@@ -1430,11 +1459,6 @@ width: 20%; height: auto;
   margin-top: 1em;
 }
 
-.img-subfitur{
-  width: 50%;
-  height: auto;
-  text-align: center;
-}
 
 .nav-subfitur{
   padding: .2rem 1rem !important;

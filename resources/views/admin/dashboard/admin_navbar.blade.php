@@ -32,7 +32,7 @@
                   <i class="mdi mdi mdi-brush mr-2 text-primary"></i><span lang="en">Profile Management</span></a>
                 <div class="dropdown-divider"></div>
                  <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout_admin" data-dismiss="modal">
-                  <i class="mdi mdi-logout mr-2 text-primary"></i> <span lang="en">Signout</span> </a>
+                  <i class="mdi mdi-logout mr-2 text-primary"></i> <span lang="en">Logout</span> </a>
 
 
               </div>
@@ -65,17 +65,11 @@
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
                 <a class="dropdown-item" href="/admin/settings" lang="en" lang="Community Setting">Community Setting</a>
                 <div class="dropdown-divider"></div>
-                   <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" >
-                    <span class="menu-title" lang="en" data-lang-token="Languages" lang="en">Languages</span>
-                    <i class="menu-arrow"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-left dropleft" aria-labelledby="subnav_bahasa">
-                        <a href="#" class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
                             <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>
-                        <a href="#" class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
+                        <a class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
                             <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
-                    </div>
               </div>
             </li>
 

@@ -64,8 +64,8 @@
 
   <div class="row">
   <div class="col-8" style="text-align: left;">
-    <h6 class="clight s15" style="margin-top: 1em;">Don't recieve OTP Code ?
-    <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend</a></h6>
+    <h6 class="clight s15" style="margin-top: 1em;">Didn't receive OTP code?
+    <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend OTP</a></h6>
   </div>
 
   <div class="col" style="text-align: right;">

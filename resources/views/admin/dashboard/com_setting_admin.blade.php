@@ -6,7 +6,7 @@
         <h3 class="page-title s22 cgrey" style="font-weight: bold;" lang="en">Community Setting</h3>
     </div>
     <div class="col-md-5">
-        <label class="cgrey" lang="en" style="margin-top: 0.5em;">Set up your community preparation<label>
+        <label class="cgrey" lang="en" style="margin-top: 0.5em;">Set Up Your Community<label>
     </div>
     <div class="col-md-4" style="text-align: right; margin-top: 0.5em;">
         <label class="cgrey2 s14" lang="en">Community Status</label> &nbsp; &nbsp;
@@ -18,7 +18,7 @@
 <div style="padding-left: 20%; padding-right: 20%;">
     <div class="divbutton">
         <button type="button" onclick="location.href ='/admin/editprofil'"
-         class="btn btn-tosca btn-sm" style="width: 120px;" lang="en">Edit</button>
+         class="btn btn-tosca btn-sm" style="width: 120px;" lang="en">Edit Info</button>
         &nbsp;
         <button type="button" onclick="location.href ='/admin/publish'"
         class="btn btn-tosca btn-sm" style="width: 120px;" lang="en">Publish</button>
@@ -60,7 +60,7 @@
                                 <p class="cgrey1 jenis_komunitas_adminloged">-</p>
                             </div>
                             <div class="form-group">
-                                <small class="clight mgb-05" lang="en">Date Created</small>
+                                <small class="clight mgb-05" lang="en">Registration Date</small>
                                 <p class="cgrey1 tanggalregis_komunitas">-</p>
                             </div>
                         </div><!-- end col-md -->
@@ -82,7 +82,7 @@
                             <div class="col-md-8">
                                 <div class="col-md-8"></div>
                                 <h6 class="cdgrey judulcomsetup" lang="en">Login & Registrasion</h6>
-                                <small class="clight" lang="en">Setting description & information</small>
+                                <small class="clight" lang="en">Set up your Community Login Page & Registration Customization</small>
                             </div>
                             <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/loginregis'"
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <h6 class="cdgrey judulcomsetup" lang="en">Membership Type</h6>
-                                <small class="clight" lang="en">Setting description & information</small>
+                                <small class="clight" lang="en">Set up your Membership Model</small>
                             </div>
                             <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/membership'"
@@ -106,7 +106,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <h6 class="cdgrey judulcomsetup" lang="en">Registrasion Data</h6>
-                                <small class="clight" lang="en">Setting description & information</small>
+                                <small class="clight" lang="en">Set your Community Custom Registration Questionaire Data</small>
                             </div>
                             <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/registrasion_data'"
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <h6 class="cdgrey judulcomsetup" lang="en">Subscriber Payment</h6>
-                                <small class="clight" lang="en">Setting description & information</small>
+                                <small class="clight" lang="en">Set your Subscriber Payment Options</small>
                             </div>
                             <div class="col-md-4" style="margin-bottom: 0.5em;">
                                 <button type="button" onclick="location.href ='/admin/settings/payment'"

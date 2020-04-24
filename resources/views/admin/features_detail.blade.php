@@ -5,34 +5,36 @@
 </nav>
 <img src="/visual/vs-pricing.png" id="shadow-fiturq">
 
+<div class="registerback">
 <a href="{{ route('session_backfitur') }}">
-    <img border="0" src="/visual/left-arrow.png" id="left-arrowregis">
-</a><a href="{{ route('session_backfitur') }}" class="clight backarrow" data-lang-token="backregis">Back to Register</a>
+    <img border="0" src="/visual/left-arrow.png"> &nbsp;&nbsp;&nbsp;&nbsp;
+</a><a href="{{ route('session_backfitur') }}" class="clight" data-lang-token="backregis" lang="en" data-lang-token="Back to Features">Back to Features</a>
+</div>
 
     <div class="mg-detailfitur">
         <div class="container">
             <div class="row">
-                <div class="col-5">
-                    <img src="/visual/ex-detail-fitur.png" id="subfitur_contoh" style="width: 450px;height: auto;">
+                <div class="col-md-5">
+                    <img src="/visual/ex-detail-fitur.png" id="subfitur_contoh" style="width:95%; height: auto;">
                 </div>
-                <div class="col"></div>
-                <div class="col-6">
-                    <h5 class="cgrey1"></h5>
+                <div class="col-md"></div>
+                <div class="col-md-6">
+                    <h5 class="cgrey1" id="txt_judulfitur"></h5>
                     <p class="clight" id="txt_deskripfitur"></p>
                     <input type="hidden" id="idfituradmin" name="idfituradmin" value="{{ $idfitur }}">
                 </div>
             </div>
 
-            <h4 class="h4 cgrey" id="txt_subfituradmin">Sub Feature</h4>
+            <h4 class="h4 cgrey" id="txt_subfituradmin" lang="en">Sub Feature</h4>
 
             <div class="row">
                 @foreach($data as $dt)
-                <div class="col-2" style="padding-top: 5px;">
-                    <div class="card" style="width: 10.5rem; height: 8rem; border-color: #FF9A44;">
+                <div class="col-md-2 col-sm-6" style="padding-top: 10px;">
+                    <div class="card bordersubcard">
                         <div class="card-body" style="padding: 0.8rem !important; text-align: center;">
-                            <img src="{{ env('CDN').$dt['logo'] }}" onerror="this.onerror=null;this.src='/img/fitur.png';"
+                            <img src="{{ env('CDN').$dt['logo'] }}" onerror="this.onerror=null;this.src='/img/fiturs.png';"
                             class="img-subfitur rounded-circle img-fluid"><br>
-                            <small class="h6 s13 coren"> {{ $dt['title'] }} </small><br>
+                            <small class="h6 s12 coren"> {{ $dt['title'] }} </small><br>
                             <small class="cgrey2 s12">{{ $dt['description'] }}</small>
                         </div>
                     </div>
@@ -49,9 +51,9 @@
         <div class="modal-content loadingq">
             <center>
                 <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
+                    <span class="sr-only" lang="en">Loading ...</span>
                 </div>
-                <p class="h6 iniloading">Loading . . .</p>
+                <p class="h6 iniloading" lang="en">Loading ...</p>
                 <center>
         </div>
     </div>
@@ -95,7 +97,7 @@
                 beforeSend: function () {
                 },
                 success: function (result) {
-
+console.log(result);
                     $.each(result.data, function (i, dt) {
                         $("#txt_judulfitur").html(dt.title);
                         $("#txt_deskripfitur").html(dt.description);

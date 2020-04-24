@@ -22,7 +22,7 @@
             </div>
             <div class="col">
                 <div class="sigin">
-                    <span lang="en" class="h6 cteal">Already member?</span>
+                    <span lang="en" class="h6 cteal" lang="en">Already member?</span>
                     <a href="/admin" class="h6" id="klikregister" lang="en" data-lang-token="registernow">&nbsp;Sign
                         In</a>
                 </div>
@@ -30,19 +30,18 @@
         </div>
 
         <div class="pdregis1">
-            <h3 lang="en" style="color: #4F4F4F; margin-right: -0.5em;">Register</h3>
-            <label lang="en" class="clight s15" data-lang-token="info-regis1">Let’s us understand more about you, please
-                fill your information to continue,  so you can using our app.</label>
+            <h3 lang="en" style="color: #4F4F4F; margin-right: -0.5em;" lang="en">Register</h3>
+            <label lang="en" class="clight s15" data-lang-token="info-regis1" lang="en">We would like to know more about your Community</label>
 
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link homeq disabled" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                        role="tab" aria-controls="nav-home" aria-selected="false" aria-disabled="disabled">Community
+                        role="tab" aria-controls="nav-home" aria-selected="false" aria-disabled="disabled" lang="en" data-lang-token="Community Information">Community
                         Information</a>
 
                     <a class="nav-item nav-link profileq active" id="nav-profile-tab" data-toggle="tab"
-                        href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">Personal
+                        href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true" lang="en" data-lang-token="Personal Information">Personal
                         Information</a>
                 </div>
             </nav>
@@ -59,7 +58,7 @@
                                 <input id="name_admin" type="text"
                                     class="form-control @error('name_admin') is-invalid @enderror" name="name_admin"
                                     value="{{ old('name_admin') }}" required autocomplete="name_admin" autofocus>
-                                <small lang="en" id="pesan_nameadmin" class="redhide">At least 3 character and Only
+                                <small lang="en" id="pesan_nameadmin" class="redhide" lang="en">At least 3 character and Only
                                     Letters!</small>
 
                                     @if($errors->has('name_admin'))
@@ -74,10 +73,8 @@
                                     class="form-control @error('username_admin') is-invalid @enderror"
                                     name="username_admin" value="{{ old('username_admin') }}" required
                                     autocomplete="username_admin">
-                                <small id="pesan_usernameadmin" lang="en" class="redhide">Mininum 6 character contain
-                                    Numbers and Letters!</small>
-                                <small id="pesan_usernameadmin2" lang="en" class="redhide">Username already taken! Try
-                                    another!</small>
+                                <small id="pesan_usernameadmin" lang="en" class="redhide">Mininum 6 character contain Numbers and Letters!</small>
+                                <small id="pesan_usernameadmin2" lang="en" class="redhide">Username already taken! Try another!</small>
                                 @if($errors->has('username_admin'))
                                 <small class="error_regis2" style="color: red;"
                                     lang="en">{{ $errors->first('username_admin')}} At least 6 characters contain
@@ -93,8 +90,7 @@
                                     value="{{ old('email_admin') }}" required autocomplete="email_admin"><small
                                     id="pesan_emailadmin" class="redhide" lang="en">Include '@' in format email
                                     address!</small>
-                                <small id="pesan_emailadmin2" class="redhide" lang="en">Email has been registered! Try
-                                    another</small>
+                                <small id="pesan_emailadmin2" class="redhide" lang="en">Email has been registered! Try another</small>
                                 @if($errors->has('email_admin'))
                                 <small class="error_regis2"
                                     style="color: red;">{{ $errors->first('email_admin')}}</small>
@@ -119,8 +115,7 @@
                                     </div>
                                 </div>
 
-                                <small id="pesan_passadmin" lang="en" class="redhide">Mininum 8 character contain
-                                    Numbers and Letters!</small>
+                                <small id="pesan_passadmin" lang="en" class="redhide" lang="en">Mininum 8 character contain Numbers and Letters!</small>
                                 @if($errors->has('password_admin'))
                                 <small class="error_regis2" style="color: red;">{{ $errors->first('password_admin')}}
                                     Must contain numbers and letters
@@ -148,8 +143,7 @@
                                     class="form-control @error('phone_admin') is-invalid @enderror" name="phone_admin"
                                     value="{{ old('phone_admin') }}" required autocomplete="phone_admin" autofocus>
                                 <small id="pesan_phone" class="redhide" lang="en">At least contains 10 Numbers!</small>
-                                <small id="pesan_phone2" class="redhide" lang="en">Number phone has registered! Try
-                                    another</small>
+                                <small id="pesan_phone2" class="redhide" lang="en">Number phone has registered! Try another</small>
 
                                 @if($errors->has('phone_admin'))
                                 <small class="error_regis2" style="color: red;">{{ $errors->first('phone_admin')}}
@@ -162,8 +156,7 @@
                                 <textarea id="alamat_admin" rows="1"
                                     class="form-control @error('alamat_admin') is-invalid @enderror" name="alamat_admin"
                                     required autocomplete="alamat_admin">{{ old('alamat_admin') }}</textarea>
-                                <small id="pesan_alamatadmin" class="redhide" lang="en">Input your detail
-                                    address!</small>
+                                <small id="pesan_alamatadmin" class="redhide" lang="en">Input your detail address!</small>
                                 @if($errors->has('alamat_admin'))
                                 <small class="error_regis2"
                                     style="color: red;">{{ $errors->first('alamat_admin')}}</small>
@@ -175,8 +168,7 @@
                                 <input id="password_confirm" type="password" value="{{ old('password_confirm') }}"
                                     class="form-control @error('password_confirm') is-invalid @enderror"
                                     name="password_confirm" required autocomplete="password_confirm">
-                                <small id="pconfirmpass" lang="en" class="redhide">Password & Confirm Password didnt
-                                    match!</small>
+                                <small id="pconfirmpass" lang="en" class="redhide" lang="en">Password & Confirm Password didn't match!</small>
                                 @if($errors->has('password_confirm'))
                                 <small class="error_regis2"
                                     style="color: red;">{{ $errors->first('password_confirm')}}</small>

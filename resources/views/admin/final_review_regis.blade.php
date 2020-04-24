@@ -6,16 +6,13 @@
 
 <a href="/admin/payment" class="review_back">
     <img border="0" src="/visual/left-arrow.png" id="left_backpay">
-</a><a href="/admin/payment" class="clight backarrow1 review_back">Back to Previous</a>
+</a><a href="/admin/payment" class="clight backarrow1 review_back" lang="en">Back to Previous</a>
 
 <div class="contain-pay">
     <div class="row">
         <div class="col-md">
-            <h3 class="cgrey" lang="en" id="judul_finalregis">Verify</h3>
-            <small class="clight" data-lang-token="reviewadmin">Here we are, that is the last step you have seen. Please
-                verify the data that
-                have you complete.
-            </small>
+            <h3 class="cgrey" lang="en" id="judul_finalregis" lang="en">Verify Your Information</h3>
+            <small class="clight" data-lang-token="reviewadmin">Final step for your Community Registration, please verify information details you already submitted</small>
             <br>
             <!-- <h6 style="margin-top: 1em; margin-bottom: 1em;" class="cgrey"> Personal Information</h6> -->
 
@@ -23,24 +20,24 @@
 
                 <div class="col-7">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Full Name</small>
+                        <small class="clight2 mgb-05" lang="en">Full Name</small>
                         <h6 class="cgrey1" id="fullname">-</h6>
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Address</small>
+                        <small class="clight2 mgb-05" lang="en">Address</small>
                         <h6 class="cgrey1" id="alamat">-</h6>
                     </div>
                 </div>
 
                 <div class="col-5">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Phone Number</small>
+                        <small class="clight2 mgb-05" lang="en">Phone Number</small>
                         <h6 class="cgrey1" id="phone">-</h6>
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Username</small>
+                        <small class="clight2 mgb-05" lang="en">Username</small>
                         <h6 class="cgrey1" id="username">-</h6>
                     </div>
                 </div>
@@ -49,13 +46,13 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Email</small>
+                        <small class="clight2 mgb-05" lang="en">Email</small>
                         <h6 class="cgrey1" id="email">-</h6>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Password</small>
+                        <small class="clight2 mgb-05" lang="en">Password</small>
                         <div class="row">
                             <div class="col-7">
                                 <input type="password" id="password_admin_review" readonly
@@ -75,19 +72,21 @@
             <div class="row" style="margin-top: -0.5em;">
                 <div class="col-md-7">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Community Name</small>
+                        <small class="clight2 mgb-05" lang="en">Community Name</small>
                         <h6 class="cgrey1" id="komunitas_name">-</h6>
                     </div>
 
                 </div>
                 <div class="col-md-5">
                     <div class="form-group" style="width: 185px;">
-                        <small class="clight2 mgb-05">Community Type</small>
+                        <small class="clight2 mgb-05" lang="en">Community Type</small>
                         <h6 class="cgrey1" id="etcjenis" style="display: none;">
                             -</h6>
+                            <h6 class="cgrey1" id="jenis_kom2">-</h6>
                         <select id="jenis_kom" class="form-control s13 review" name="jenis_kom" style="display: none;"
                             disabled>
                         </select>
+
                     </div>
 
                 </div>
@@ -95,7 +94,7 @@
 
             <div class="row">
                 <div class="form-group col-md-10">
-                    <small class="clight2 mgb-05">Description Community</small>
+                    <small class="clight2 mgb-05" lang="en">Description Community</small>
                     <h6 class="cgrey1 s13" id="deskripsi_kom">
                         -
                 </div>
@@ -105,10 +104,10 @@
         <div class="col-md">
             <div class="row">
                 <div class="col">
-                    <h5 class="cgrey">Selected Feature</h5>
+                    <h5 class="cgrey" lang="en">Selected Feature</h5>
                 </div>
                 <div class="col" style="text-align: right;">
-                    <h6 class="clight2 s14"><span id="hitungcentangq">0</span> Features Selected</h6>
+                    <h6 class="clight2 s14"><span id="hitungcentangq">0</span> &nbsp; <span lang="en">Features Selected</span></h6>
                 </div>
             </div>
 
@@ -119,31 +118,31 @@
                 </div> <!-- end-row -->
             </div> <!-- end-scrollmenu -->
 
-            <h6 style="margin-top: 1.5em; margin-bottom: 1em;" class="cgrey"> Payment Information</h6>
+            <h6 style="margin-top: 1.5em; margin-bottom: 1em;" class="cgrey" lang="en">Payment Information</h6>
 
             <div class="row" style="margin-top: 1em;">
                 <div class="col-6">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Pricing Time</small>
+                        <small class="clight2 mgb-05" lang="en">Pricing Time</small>
                         <h6 class="cgrey1" id="pricingtime">-
                         </h6>
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Preffered Price</small><br>
+                        <small class="clight2 mgb-05" lang="en">Price</small><br>
                         <span class="cgrey1 h6" id="hargaprice"></span>
                         <small id="satuanwaktu" style="color: #2d99f7;"></small>
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05 hidepayment">Payment Method</small>
+                        <small class="clight2 mgb-05 hidepayment" lang="en">Payment Method</small>
                         <h6 class="cgrey1" id="judulpay"></h6>
                     </div>
 
                     <form method="POST" id="form_create_community" action="{{route('FinalAdminRegis')}}">
                         {{ csrf_field() }}
                         <button type="submit" name="btn_finish_createcom" value="finish" class="btn btn-oren btn-sm"
-                            lang="en" style="width: 100px; margin-top: 1em;">Finish</button>
+                            lang="en" style="width: 100px; margin-top: 1em;" lang="en">Finish</button>
                     </form>
 
 
@@ -151,17 +150,17 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Package Title</small>
+                        <small class="clight2 mgb-05" lang="en">Package Title</small>
                         <h6 class="cgrey1" id="judulprice"></h6>
                     </div>
 
                     <div class="form-group">
-                        <small class="clight2 mgb-05">Package Description</small>
+                        <small class="clight2 mgb-05" lang="en">Package Description</small>
                         <h6 class="cgrey1" id="deskriprice"></h6>
                     </div>
 
                     <div class="form-group hidepayment">
-                        <small class="clight2 mgb-05">Bank Name</small>
+                        <small class="clight2 mgb-05" lang="en">Bank Name</small>
                         <div class="row">
                             <div class="col-4">
                                 <h6 class="cgrey1" id="bankname"></h6>
@@ -185,17 +184,17 @@
         <div class="col">
             <img src="/visual/commjuction.png" id="com_superadminlogin">
             <div class="textfooter-kiri">
-                <a href="" class="cgrey"><small>Privacy Police</small></a>
+                <a href="" class="cgrey"><small lang="en">Privacy Police</small></a>
                 &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="" class="cgrey"><small>Terms and Condition</small></a>
+                <a href="" class="cgrey"><small lang="en">Terms and Condition</small></a>
             </div>
         </div>
 
         <div class="col textfooter-kanan">
-            <a href="" class="cgrey h6 s13">Documentation</a>
+            <a href="" class="cgrey h6 s13" lang="en">Documentation</a>
             <span class="fa fa-circle" aria-hidden="true" style="color: #D96120;"></span>
             &nbsp; &nbsp; &nbsp; &nbsp;
-            <a href="" class="cgrey h6 s13">Support</a>
+            <a href="" class="cgrey h6 s13" lang="en">Support</a>
             <span class="fa fa-question" aria-hidden="true" style="color: #D96120;"></span>
         </div>
     </div>
@@ -249,16 +248,12 @@
                 if (komunitas.cust_jenis_comm != null) {
                     $("#etcjenis").html(komunitas.cust_jenis_comm);
                     $('#etcjenis').show();
-                    $('#jenis_kom').hide();
+                    $('#jenis_kom2').hide();
                 } else {
                     var idjenis = komunitas.jenis_comm_id;
                     get_jenis(idjenis);
-                    // swal(komunitas.jenis_comm_id);
-                    // $('#jenis_kom').val(komunitas.jenis_comm_id).attr("selected", "selected");
-                    // $('select[name="jenis_kom"]').val(idjenis);
-                    // $("#jenis_kom").val(komunitas.jenis_comm_id);
                     $('#etcjenis').hide();
-                    $('#jenis_kom').show();
+                    $('#jenis_kom2').show();
                 }
                 var idpricing = result.payment.pricing_id;
                 var timepricing = result.payment.payment_time;
@@ -323,6 +318,9 @@
 
                 $('#jenis_kom').val(idjenis);
                 $('select[name="jenis_kom"]').val(idjenis);
+                 var set = $("#jenis_kom option:selected").text();
+                 $("#jenis_kom2").html(set);
+
 
             }
         });

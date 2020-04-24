@@ -101,7 +101,7 @@
                   <i class="mdi mdi mdi-brush mr-2 text-primary"></i><div lang="en">Profile Management</div></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout_subscriber" data-dismiss="modal">
-                  <i class="mdi mdi-logout mr-2 text-primary"></i><div lang="en">Signout</div> </a>
+                  <i class="mdi mdi-logout mr-2 text-primary"></i><div lang="en">Logout</div> </a>
             </div>
         </li>
 
@@ -129,12 +129,18 @@
                 <i class="mdi mdi-settings"></i>
             </a>
 
+
+
             <div class="dropdown-menu navbar-dropdown dropdown-menu-right">
                 <a class="dropdown-item" href="" lang="en" data-lang-token="Settings">
                     Settings
                 </a>
                   <div class="dropdown-divider"></div>
-                    <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
+                   <a class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
+                            <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>
+                        <a class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
+                            <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
+                    {{-- <a class="dropdown-toggle dropdown-item" href="" id="subnav_bahasa" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" >
                     <span class="menu-title" lang="en" data-lang-token="Languages">Languages</span>
                     <i class="menu-arrow"></i>
@@ -144,7 +150,7 @@
                             <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>
                         <a class="dropdown-item langimg" onclick="window.lang.change('en'); return false;">
                             <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
-                    </div>
+                    </div> --}}
             </div>
         </li>
 

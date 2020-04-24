@@ -163,7 +163,7 @@ function session_admin_logged() {
                     $(".statuscomm").html('Newbie');
                     $(".statuscomm").addClass('badge-warning');
                 } else if (user.status == 2) {
-                    $("#comm_status_admin").html("Active");
+                    $("#comm_status_admin").html("Community Active");
                     $(".statuscomm").html('Active');
                     $(".statuscomm").addClass('badge-success');
                 } else { //status=0 belum aktif

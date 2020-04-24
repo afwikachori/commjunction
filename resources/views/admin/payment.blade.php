@@ -4,13 +4,12 @@
 <nav class="navbar navbar-light nav-oren">
 </nav>
 
-<a href="/admin/pricing">
+<a href="/admin/features">
     <img border="0" src="/visual/left-arrow.png" id="panah_pay">
-</a><a href="/admin/pricing" class="clight backarrow-pay" lang="en">Back to Previous</a>
+</a><a href="/admin/pricing" class="clight backarrow-pay" lang="en" data-lang-token="Back to Features">Back to Features</a>
 
 <div class="contain-pay">
-    <h3 class="cgrey" lang="en" id="pay_judul" style="margin-top: 0.5em; margin-bottom: 0.5em;" lang="en">Payment Method
-    </h3>
+    <h3 class="cgrey" lang="en" id="pay_judul" style="margin-top: 0.5em; margin-bottom: 0.5em;" lang="en">Payment Method</h3>
 
     <div class="row">
         <div class="col-md-6">
@@ -47,17 +46,17 @@
             <div class="col">
                 <img src="/visual/commjuction.png" id="com_superadminlogin">
                 <div class="textfooter-kiri">
-                    <a href="" class="cgrey"><small>Privacy Police</small></a>
+                    <a href="" class="cgrey"><small lang="en">Privacy Police</small></a>
                     &nbsp; &nbsp; &nbsp; &nbsp;
-                    <a href="" class="cgrey"><small>Terms and Condition</small></a>
+                    <a href="" class="cgrey"><small lang="en">Terms and Condition</small></a>
                 </div>
             </div>
 
             <div class="col textfooter-kanan">
-                <a href="" class="cgrey h6 s13">Documentation</a>
+                <a href="" class="cgrey h6 s13" lang="en">Documentation</a>
                 <span class="fa fa-circle" aria-hidden="true" style="color: #D96120;"></span>
                 &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="" class="cgrey h6 s13">Support</a>
+                <a href="" class="cgrey h6 s13" lang="en">Support</a>
                 <span class="fa fa-question" aria-hidden="true" style="color: #D96120;"></span>
             </div>
         </div>

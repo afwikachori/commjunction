@@ -6,7 +6,7 @@
        <img src="/visual/commjuction.png" id="commjuction-regis1">
        <img src="/visual/regis1.png" class="vs-regis">
        <center>
-       <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">Some detailed information your community needs</h5>
+       <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">"Don't Know, then don't love" - Indonesian Proverb</h5>
        </center>
     </div>
     <div class="col-8">
@@ -28,8 +28,8 @@
       </div>
 
       <div class="pdregis1">
-        <h3 lang="en" style="color: #4F4F4F; margin-right: -0.5em;">Register</h3>
-        <label lang="en" class="clight s15" data-lang-token="info-regis1">Let’s us understand more about you, please fill your information to continue,  so you can using our app.</label>
+        <h3 lang="en" style="color: #4F4F4F; margin-right: -0.5em;" lang="en">Community Registration</h3>
+        <label lang="en" class="clight s15" data-lang-token="info-regis1">We would like to know more about your Community</label>
 
 
 <nav>

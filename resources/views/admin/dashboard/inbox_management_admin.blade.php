@@ -10,8 +10,7 @@
     </div>
     <div class="col-md-4" style="text-align: right;">
         <nav aria-label="breadcrumb">
-            <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
-                data-target="#modal_send_inbox_admin" lang="en" data-lang-token="Broadcast Message">Broadcast Message</button>
+
         </nav>
     </div>
 </div>
@@ -20,7 +19,15 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-            <div class="card-header putih" lang="en">Message List</div>
+            <div class="card-header putih" lang="en">
+                <div class="row">
+                <span class="col-md" lang="en">Message List</span>
+                <div class="col-md" style="text-align: right;">
+                   <button type="button" class="btn btn-tosca2 btn-sm" style="min-width: 170px;" data-toggle="modal"
+                data-target="#modal_send_inbox_admin" lang="en" data-lang-token="Broadcast Message">Broadcast Message</button>
+                </div>
+            </div>
+            </div>
 
             <div class="card-body">
                 <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"

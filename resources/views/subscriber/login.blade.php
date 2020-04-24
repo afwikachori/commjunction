@@ -41,13 +41,13 @@
 </div>
 
 <div style="margin-top: 1em; margin-right: 1.5em; text-align: right;">
- <span lang="en" class="h6 cteal">didnt have account yet ?</span>
+ <span lang="en" class="h6 cteal">Didn't have account yet ?</span>
 <a href="/subscriber/register" class="h6" id="subsregisklik" lang="en" data-lang-token="registernow">Register Now</a>
 </div>
 
     <div class="container pdsubslogin">
-       <h2 lang="en" style="color: #4F4F4F;" lang="en">Login</h2>
-       <label lang="en" class="cgrey textlogin" lang="en">Please login to continue using this app</label>
+       <h2 lang="en" style="color: #4F4F4F;" lang="en">Welcome</h2>
+       <label lang="en" class="cgrey textlogin" lang="en">Please login to continue</label>
 
             <!-- login  Form -->
             <form method="POST" id="form_login_admin" action="{{route('LoginSubscriber')}}">

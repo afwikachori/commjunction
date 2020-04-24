@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-9">
                         <small class="clight" lang="en">Total Subscriber</small>
-                        <h4 class="cgrey-mid total_subs" lang="en">0 Person</h4>
+                        <h4 class="cgrey-mid total_subs" lang="en">0 Subscriber</h4>
                     </div>
                     <div class="col">
                         <i class="mdi mdi-human-handsup mdi-24px float-right top-ico cteal"></i>
@@ -136,7 +136,7 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title" lang="en">Chart Activity</h4>
+                <h4 class="card-title" lang="en">Community Activity</h4>
 
                 <canvas id="myChart"></canvas>
 
@@ -147,7 +147,7 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title" lang="en">Chart Transaction</h4>
+                <h4 class="card-title" lang="en">Community Transaction</h4>
                 <canvas id="myChartTransaction"></canvas>
             </div>
         </div>
@@ -270,7 +270,7 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title cteal" lang="en">Top Love News</h4>
+                <h4 class="card-title cteal" lang="en">Top Loved News</h4>
                 <table id="table_toploved_news" class="table table-hover dt-responsive" style="width:100%">
                     <thead>
                         <tr>
@@ -419,7 +419,7 @@
                 chart_transaction(result.chart_transaction);
 
                 $(".total_fituraktif").html(result.total_feature_active + " Features");
-                $(".total_subs").html(result.total_subscriber + " Person");
+                $(".total_subs").html(result.total_subscriber + " Subscriber");
                 $(".total_transaction_count").html(result.total_transaction_count + " Transaction");
                 $(".total_trans_number").html(result.total_transaction_number + " Transaction");
 

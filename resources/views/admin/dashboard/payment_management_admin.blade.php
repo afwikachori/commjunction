@@ -721,7 +721,7 @@
                 $("#detail_bankname").html(isi.payment_owner_name);
 
                 if(isi.level_status != 2 ){
-                    $(".isi_setting_subpay").html('<center><br><br><br><h4 class=clight>To setting up, Please Activate this payment first or see Active Payment Table</h4></center');
+                    $(".isi_setting_subpay").html('<center><br><br><br><h4 class="clight" lang="en">Please activate this payment to start setting</h4></center');
                 }else{
                     // alert('level stat : 2');
                      get_setting_subpayment_admin(isi.id);

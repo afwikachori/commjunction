@@ -6,8 +6,8 @@
       <img src="/visual/commjuction.png" id="login-left-commjuction">
 
     <div class="container cjudul">
-      <h3 lang="en" class="judullogin">Lets Get Started</h3>
-      <p class="desloginadmin" lang="en">Platform for your exclusive Community</p>
+      <h3 lang="en" class="judullogin">Let's Get Started</h3>
+      <p class="desloginadmin" lang="en">Your Community platform tailored to your very own needs</p>
     </div>
 
       <img src="/visual/loginadmin.png" id="img-loginadmin">
@@ -29,7 +29,7 @@
 </div>
 
 <div style="margin-top: 1em; margin-right: 1.5em; text-align: right;">
- <span lang="en" class="h6 cteal">didnt have community yet ?</span>
+ <span lang="en" class="h6 cteal">Didn't have community yet ?</span>
 <a href="/admin/register" class="h6" id="klikregister" lang="en" data-lang-token="registernow">Register Now</a>
 </div>
 

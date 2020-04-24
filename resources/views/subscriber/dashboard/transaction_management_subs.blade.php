@@ -26,7 +26,7 @@
                                     <h4 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseOne" role="button"
                                             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                            style="color:#0e6f73;" lang="en" data-lang-token="Choose Parameter First">Choose Parameter First &nbsp;
+                                            style="color:#0e6f73;" lang="en" data-lang-token="Select filter options">Select filter options &nbsp;
                                             <i class="mdi mdi-chevron-down cteal"></i>
                                         </a>
                                     </h4>

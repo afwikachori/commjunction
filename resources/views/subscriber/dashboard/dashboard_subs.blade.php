@@ -7,7 +7,7 @@
         <h3 class="cgrey" lang="en">Dashboard</h3>
     </div>
     <div class="col-md-10">
-        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Summary your apps performance<p>
+        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Your Community Overall Information<p>
     </div>
 </div>
 
@@ -30,13 +30,11 @@
             <img src="/visual/dash2.png" id="img-dash2" />
             <img src="/visual/dash1.png" class="card-img-absolute" style="width: 100%; position: absolute;" />
             <div class="card-body setnotifdash">
-                <h4 class="mb-3 s21" lang="en">Get your notification realtime with a new feature</h4>
-                <p class="s16 mb-3" style="width: 400px;" lang="en" data-lang-token="dash_realtime">
-                    You can get notification realtime to your application with a
-                    this feature,
-                    smart application with low cost .</p>
+                <h4 class="mb-3 s21" lang="en">Personalize your Profile</h4>
+                <p class="s16 mb-3" style="width: 400px;" lang="en" data-lang-token="dash_takemoment">
+                   Take a moment to personalize your profile information for other member to see</p>
                 <a href="/subscriber/dashboard_setting" type="button" id="btn_getnow" class="btn btn-white btn-sm"
-                    style="position: relative;" lang="en" data-lang-token="get_now">Get Now</a>
+                    style="position: relative;" lang="en" data-lang-token="Profile Management">Profile Management</a>
             </div>
         </div>
     </div>
@@ -87,7 +85,7 @@
 
 
 <div class="divkonco" style="display: none;">
-    <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Friend Sugestion</h4>
+    <h4 class="cgrey" style="margin-bottom: 1em;" lang="en">Friend Suggestion</h4>
     <div id="div_friendsugest">
         <!-- <div class="card konco">
             <div class="card-body color">
@@ -118,7 +116,7 @@
             <div class="card-header bg-pastel-red sumari>
                 <div class=" row">
                 <div class="col-9">
-                    <h4 class="cteal" lang="en">Last News</h4>
+                    <h4 class="cteal" lang="en">Latest News</h4>
                 </div>
                 <div class="col icon-atas">
                     <i class="mdi mdi-newspaper top-ico-right cteal"></i>
@@ -694,7 +692,7 @@
                 $("#nodata_last_news").show();
                 $("#isi_last_news").hide();
                 // console.log(result);
-                console.log("Cant Show Last News");
+                console.log("Cant Show Latest News");
             }
         });
     }

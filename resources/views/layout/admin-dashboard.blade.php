@@ -164,7 +164,7 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <small class="clight" lang="en">Fullname</small>
+                                    <small class="clight" lang="en">Full Name</small>
                                     <input type="text" id="name_admin" name="name_admin" class="form-control input-abu">
                                 </div>
                                 <div class="form-group">

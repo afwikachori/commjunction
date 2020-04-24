@@ -17,7 +17,7 @@
         <div class="card col-5" id="card-forgetadmin">
             <div class="card-body">
                 <h4 class="cgrey" lang="en">Forgot Password ?</h4>
-                <small class="clight">Enter the email address assosiated with you account</small>
+                <small class="clight">Enter your email address</small>
                 <br>
 
                 <form method="POST" id="form_forgetpass_admin" action="{{route('requestOTP')}}">{{ csrf_field() }}

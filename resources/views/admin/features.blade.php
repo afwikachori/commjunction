@@ -9,12 +9,12 @@
 
     <a href="/admin/pricing">
         <img border="0" src="/visual/left-arrow.png" class="panahkiri">
-    </a><a href="/admin/pricing" class="clight backarrow3">Back to Pricing</a>
+    </a><a href="/admin/pricing" class="clight backarrow3" lang="en" data-token-lang="Back to Pricing">Back to Pricing</a>
 
     <div class="mg-fituradmin">
         <div class="row">
             <div class="col-md-9">
-                <h4 class="cgrey h4" id="judul_fiturq" style="margin-bottom: 0.5em;">Choose Your Features</h4>
+                <h4 class="cgrey h4" id="judul_fiturq" style="margin-bottom: 0.5em;" lang="en">Choose Your Features</h4>
 
                 <input type="hidden" name="idaddfitur" id="idaddfitur" value="">
 
@@ -45,8 +45,8 @@
 
             </div> <!-- end-col 10 -->
 
-            <div class="col-3" id="div_popular" style="padding-left: 5%;">
-                <h4 class="cgrey h4" style="margin-bottom: 0.5em;">Popular</h4>
+            <div class="col-3" id="div_popular" style="padding-left: 5%; display: none;">
+                <h4 class="cgrey h4" style="margin-bottom: 0.5em;" lang="en">Popular</h4>
                 <div class="row">
                     <div class="col-3">
                         <center>
@@ -54,7 +54,7 @@
                                 style="width: 45px; height: auto;"></center>
                     </div>
                     <div class="col">
-                        <h6 class="clight s15" style="margin-top: 0.5em;">Name Featured</h6>
+                        <h6 class="clight s15" style="margin-top: 0.5em;" lang="en">Name Featured</h6>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
                                 style="width: 45px; height: auto;"></center>
                     </div>
                     <div class="col">
-                        <h6 class="clight s15" style="margin-top: 0.5em;">Name Featured</h6>
+                        <h6 class="clight s15" style="margin-top: 0.5em;" lang="en">Name Featured</h6>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 / <span id="total_fitur"> 0 </span>
             </span>
 
-            <button type="submit" id="next_pilihfitur" class="btn btn-oren s14 btn-md btn-block">Next</button>
+            <button type="submit" id="next_pilihfitur" class="btn btn-oren s14 btn-md btn-block" lang="en">Next</button>
         </center>
     </div>
 </form>
@@ -141,8 +141,8 @@
                             '</center>' +
                             '<div class="detail-fiturq">' +
                             '<a href="/admin/features_detail/' + item.id + '">' +
-                            '<small lang="en" class="txt_detail_fitur h6 s13"> More detail' +
-                            '<i class="fa fa-chevron-circle-right"' +
+                            '<small lang="en" class="txt_detail_fitur h6 s13" lang="en" data-token-lang="More detail">More detail' +
+                            '&nbsp;<i class="fa fa-chevron-circle-right"' +
                             'aria-hidden="true"></i></small></a>' +
                             '</div>' +
                             '</div>' +
