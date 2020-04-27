@@ -624,7 +624,8 @@ class RegisterController extends Controller
 
     public function NewPass_admin(Request $request)
     {
-        //     dd($request);
+        $auth_subs = session()->get('auth_subs');
+        $url_comname = $auth_subs[0]['name'];
 
         $request->validate([
             'newpass_admin' => 'required|min:8|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/|required_with:confirm_newpass|same:confirm_newpass',
@@ -636,10 +637,6 @@ class RegisterController extends Controller
             'digit-5' => 'required|numeric',
             'digit-6' => 'required|numeric',
         ]);
-
-        $ses_login = session()->get('session_subscriber_logged');
-        $subs = $ses_login['user'];
-        $url_comname = $subs['community_name'];
 
 
         try { //try-cath
@@ -658,20 +655,28 @@ class RegisterController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
-                alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500)->persistent('Done');
-                // return view('admin/login');
+            if (session()->has('auth_subs')) {
+                 alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500);
                 return redirect('subscriber/url/'.$url_comname);
+            } else {
+                alert()->success('Your password has been reset. Please login into url subscriber again', 'No Longer Data Url Subscriber')->autoclose(4500);
+                return redirect('/');
             }
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-
-            if ($status_error == 400) {
-                // dd('back 400');
-                alert()->error('Use the resend feature to send a new OTP', 'Your OTP is no longer valid !')->autoclose(4500)->persistent('Done');
-                return view('admin/otp_admin');
-            } //end-if
-        } //end-catch
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     } //end-function
 
 

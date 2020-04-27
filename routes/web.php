@@ -460,5 +460,7 @@ Route::prefix('support')->group(function () {
     Route::post('delete_knowledge_support', 'SupportCommjunction@delete_knowledge_support')->name('delete_knowledge_support');
     Route::post('change_status_subdomain', 'SupportCommjunction@change_status_subdomain')->name('change_status_subdomain');
     Route::post('get_list_admin_support', 'SupportCommjunction@get_list_admin_support')->name('get_list_admin_support');
+    Route::post('reset_pass_share_otp', 'SupportCommjunction@reset_pass_share_otp')->name('reset_pass_share_otp');
+
 
 });

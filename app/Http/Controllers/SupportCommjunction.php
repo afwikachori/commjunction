@@ -777,6 +777,54 @@ class SupportCommjunction extends Controller
     }
 
 
+    public function reset_pass_share_otp(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $input;
+        $url = env('SERVICE') . 'operationalsupportsystem/resetpassword';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
 
+
+        $bodyku = json_encode([
+            "community_id" => $input['id_komunitas'],
+            "user_type" => $input['user_tipe'],
+            "user_id" => $input['user_id'],
+            "data_otp" => $input['text_OTP'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully Force Reset Password', 'Reset!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 } //END-CLASS

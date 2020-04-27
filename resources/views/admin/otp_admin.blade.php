@@ -20,7 +20,8 @@
     <h4 class="cgrey" lang="en">OTP Verification</h4>
 
 
-<form method="POST" id="form-otp-fogetpass" style="margin-top: 1em;" action="{{route('NewPass_admin')}}">{{ csrf_field() }}
+<form method="POST" id="form-otp-fogetpass" style="margin-top: 1em;" action="{{route('NewPass_admin')}}">
+    {{ csrf_field() }}
  <small class="cgrey2">Enter OTP Code Bellow</small>
 <div class="digit-group" data-group-name="digits" style="margin-top: 0.5em;">
   <input type="text" id="digit-1" name="digit-1" data-next="digit-2" class="inputotp" autocomplete="off"/>
