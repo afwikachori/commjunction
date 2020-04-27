@@ -184,7 +184,8 @@
                             <div class="col-md-12">
                                 <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                     <div class="circle editpricing">
-                                        <img id="view_img_pricing" class="profile-pic editpricing rounded-circle img-fluid"
+                                        <img id="view_img_pricing"
+                                            class="profile-pic editpricing rounded-circle img-fluid"
                                             src="/img/focus.png">
                                     </div>
                                     <div class="p-image editpricing">
@@ -248,11 +249,16 @@
                             </div>
                             <div class="col-md-6" style="display: none;" id="hide_fitur_add">
                                 <small class="clight s13">Feature</small>
-                                <div id="hide_multi_add" style="display: none;">
-                                    <select id="multi_fiturpricing" name="multi_fiturpricing[]"
+
+                                <div id="hide_multi_add" style="display: none;overflow-y: auto;overflow-x: auto; height:190px;">
+                                    <div class="form-group" id="show_ceklist_fitur">
+
+
+                                    </div>
+                                    <!-- <select id="multi_fiturpricing" name="multi_fiturpricing[]"
                                         class="form-control input-abu" multiple="multiple">
 
-                                    </select>
+                                    </select> -->
                                 </div>
 
                                 <select id="fiturpricing" name="multi_fiturpricing" class="form-control input-abu">
@@ -296,15 +302,16 @@
 
                 </div> <!-- end-header -->
 
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px; padding-top: 0px;">
                     <div class="row">
                         <div class="col-md-12">
                             <input class="form-control input-abu" id="id_pricing_edit" name="id_pricing_edit"
                                 type="hidden">
                             <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                 <div class="circle editpricing">
-                                    <img id="view_img_pricing_edit" class="profile-pic editpricing rounded-circle img-fluid"
-                                        src="/img/focus.png"  onerror = "this.onerror=null;this.src='/img/kosong.png';">
+                                    <img id="view_img_pricing_edit"
+                                        class="profile-pic editpricing rounded-circle img-fluid" src="/img/focus.png"
+                                        onerror="this.onerror=null;this.src='/img/kosong.png';">
                                 </div>
                                 <div class="p-image editpricing">
                                     <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
@@ -379,11 +386,15 @@
                             </div>
                             <div style="display: none;" id="hide_fitur_edit">
                                 <small class="clight s13">Feature</small>
-                                <div id="hide_multi_edit" style="display: none;">
-                                    <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]"
+                                <div id="hide_multi_edit" style="display: none;overflow-y: auto;overflow-x: auto; height:140px;">
+                                        <div class="form-group" id="edit_show_ceklist_fitur">
+
+
+                                        </div>
+                                    <!-- <select id="edit_multi_fiturpricing" name="edit_multi_fiturpricing[]"
                                         class="form-control input-abu" multiple="multiple">
 
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <select id="fiturpricing_edit" name="edit_multi_fiturpricing"
                                     class="form-control input-abu">
@@ -393,7 +404,7 @@
                     </div>
                 </div> <!-- end-body -->
 
-                <div class="modal-footer" style="border: none; margin-bottom: 0.5em; margin-top: -1em;">
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em; margin-top: -0.5em;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
@@ -562,6 +573,7 @@
             },
             success: function (result) {
                 console.log(result);
+                $(".rmpricing").removeAttr("checked", "checked");
 
                 if (result.length == 0) {
                     var res = result;
@@ -616,14 +628,17 @@
                 }
 
                 // console.log(fiturs);
-// console.log(arf);
+                // console.log(arf);
                 $.each(fiturs.split(","), function (i, e) {
                     console.log(e);
-                    if (len == 1) {
-                        $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
+                    if (result.pricing_type == 2) {
+                         $("#fiturpricing_edit").val(e);
+                        //    $('select[name="fiturpricing_edit"]').val(e);
+                        // $("#fiturpricing_edit").val(e).attr("selected", "selected");
                     } else {
+                        $("#edit_fitur_"+e).attr("checked", "checked");
                         // $("#edit_multi_fiturpricing").val(e).attr("selected", "selected");
-                        $("#edit_multi_fiturpricing").val(e);
+
                     }
                 });
                 //end-edit
@@ -645,7 +660,7 @@
                     jum++;
                     fiturnya += '<li><small class="cgreyblue s14">' + item.feature_title + '</small></li>';
                 });
-
+                console.log(jum);
                 if (jum != 0) {
                     $("#total_fiturpricing").html(jum + ' Features');
                     $("#fitur_pricing").html(fiturnya);
@@ -736,25 +751,38 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
+                console.log(result);
 
-                $('#multi_fiturpricing').empty();
-                $('#multi_fiturpricing').append("<option disabled> Choose</option>");
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#multi_fiturpricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#multi_fiturpricing").html($('#multi_fiturpricing option').sort(function (x, y) {
-                    return $(x).text() < $(y).text() ? -1 : 1;
-                }));
+                var listfitur = '';
 
-                $("#multi_fiturpricing").get(0).selectedIndex = 0;
-                // $("#multi_fiturpricing").bsMultiSelect();  //multiselect
+                $.each(result, function (i, item) {
+                    listfitur += '<div class="form-check pricing">' +
+                        '<small class="form-check-label cgrey" data-toggle="tooltip" data-placement="top" title="'+item.description+'">' +
+                        '<input type="checkbox" class="form-check-input" id="fiturcek_'+item.id+'" name="multi_fiturpricing[]" value="' + item.id +'">' +
+                        item.title +'<i class="input-helper"></i></small></div >';
+                });
+                $("#show_ceklist_fitur").html(listfitur);
 
-                const Oldfitur = "{{old('multi_fiturpricing')}}";
+                // __________________________________________
 
-                if (Oldfitur !== '') {
-                    $('#multi_fiturpricing').val(Oldfitur);
-                }
+                // $('#multi_fiturpricing').empty();
+                // $('#multi_fiturpricing').append("<option disabled> Choose</option>");
+                // for (var i = result.length - 1; i >= 0; i--) {
+                //     $('#multi_fiturpricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                // }
+                // //Short Function Ascending//
+                // $("#multi_fiturpricing").html($('#multi_fiturpricing option').sort(function (x, y) {
+                //     return $(x).text() < $(y).text() ? -1 : 1;
+                // }));
+
+                // $("#multi_fiturpricing").get(0).selectedIndex = 0;
+                // // $("#multi_fiturpricing").bsMultiSelect();  //multiselect
+
+                // const Oldfitur = "{{old('multi_fiturpricing')}}";
+
+                // if (Oldfitur !== '') {
+                //     $('#multi_fiturpricing').val(Oldfitur);
+                // }
                 // _____________________________________________________________
 
                 $('#fiturpricing').empty();
@@ -775,24 +803,35 @@
                     $('#fiturpricing').val(Oldfiturq);
                 }
                 // _____________________________________________________________
-                $('#edit_multi_fiturpricing').empty();
-                $('#edit_multi_fiturpricing').append("<option disabled selected> Choose</option>");
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#edit_multi_fiturpricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#edit_multi_fiturpricing").html($('#edit_multi_fiturpricing option').sort(function (x, y) {
-                    return $(x).text() < $(y).text() ? -1 : 1;
-                }));
 
-                $("#edit_multi_fiturpricing").get(0).selectedIndex = 0;
-                // $("#edit_multi_fiturpricing").bsMultiSelect();  //multiselect
+                  var editfitur = '';
 
-                const Oldfitur2 = "{{old('edit_multi_fiturpricing')}}";
+                $.each(result, function (i, item) {
+                    editfitur += '<div class="form-check pricing">' +
+                        '<small class="form-check-label cgrey" data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
+                        '<input type="checkbox" class="form-check-input rmpricing" id="edit_fitur_' + item.id + '" name="edit_multi_fiturpricing[]" value="' + item.id + '">' +
+                        item.title + '<i class="input-helper"></i></small></div >';
+                });
+                $("#edit_show_ceklist_fitur").html(editfitur);
 
-                if (Oldfitur2 !== '') {
-                    $('#edit_multi_fiturpricing').val(Oldfitur);
-                }
+                // $('#edit_multi_fiturpricing').empty();
+                // $('#edit_multi_fiturpricing').append("<option disabled selected> Choose</option>");
+                // for (var i = result.length - 1; i >= 0; i--) {
+                //     $('#edit_multi_fiturpricing').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                // }
+                // //Short Function Ascending//
+                // $("#edit_multi_fiturpricing").html($('#edit_multi_fiturpricing option').sort(function (x, y) {
+                //     return $(x).text() < $(y).text() ? -1 : 1;
+                // }));
+
+                // $("#edit_multi_fiturpricing").get(0).selectedIndex = 0;
+                // // $("#edit_multi_fiturpricing").bsMultiSelect();  //multiselect
+
+                // const Oldfitur2 = "{{old('edit_multi_fiturpricing')}}";
+
+                // if (Oldfitur2 !== '') {
+                //     $('#edit_multi_fiturpricing').val(Oldfitur);
+                // }
                 // _____________________________________________________________
 
                 $('#fiturpricing_edit').empty();
