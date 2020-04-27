@@ -90,8 +90,8 @@
                     <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
                         <div class="row">
                             <div class="col-md-12">
-                                <img src="" class="rounded-circle img-fluid" id="img_logo_pricing"
-                                    onerror="this.onerror=null;this.src='/img/noimg.jpg';">
+                                <img src="/img/kosong.png" class="rounded-circle img-fluid" id="img_logo_pricing"
+                                    onerror="this.onerror=null;this.src='/img/kosong.png';">
                             </div>
                         </div>
 
@@ -183,11 +183,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
-                                    <div class="circle">
-                                        <img id="view_img_pricing" class="profile-pic rounded-circle img-fluid"
+                                    <div class="circle editpricing">
+                                        <img id="view_img_pricing" class="profile-pic editpricing rounded-circle img-fluid"
                                             src="/img/focus.png">
                                     </div>
-                                    <div class="p-image">
+                                    <div class="p-image editpricing">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
                                             style="width: 30px; height: 30px;">
                                             <i id="browse_img_pricing" class="mdi mdi-camera upload-button"></i>
@@ -284,12 +284,13 @@
 <div class="modal fade" id="modal_edit_pricing_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
+        <div class="modal-content" style="background-color: #ffffff; margin-top: -1em;">
             <form method="POST" id="form_edit_pricing_super" action="{{route('edit_pricing_super')}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
 
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%; border: none; padding-bottom: 0px;">
+                <div class="modal-header"
+                    style="padding-left: 5%;padding-right: 5%; border: none; padding-bottom: 0px;">
                     <h4 class="modal-title cgrey">Edit Pricing</h4>
                     <div class="pricing_status" style="text-align: right;"></div>
 
@@ -301,11 +302,11 @@
                             <input class="form-control input-abu" id="id_pricing_edit" name="id_pricing_edit"
                                 type="hidden">
                             <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
-                                <div class="circle">
-                                    <img id="view_img_pricing_edit" class="profile-pic rounded-circle img-fluid"
-                                        src="/img/focus.png">
+                                <div class="circle editpricing">
+                                    <img id="view_img_pricing_edit" class="profile-pic editpricing rounded-circle img-fluid"
+                                        src="/img/focus.png"  onerror = "this.onerror=null;this.src='/img/kosong.png';">
                                 </div>
-                                <div class="p-image">
+                                <div class="p-image editpricing">
                                     <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
                                         style="width: 30px; height: 30px;">
                                         <i id="browse_img_pricing_edit" class="mdi mdi-camera upload-button"></i>
@@ -417,7 +418,6 @@
         tabel_all_pricing_super();
 
         get_list_fitur_pricing();
-
 
         // tabel_tes();
     });  //end- document ready
@@ -561,8 +561,13 @@
                 "pricing_id": idku
             },
             success: function (result) {
-                console.log(result[0]);
-                var res = result[0];
+                console.log(result);
+
+                if (result.length == 0) {
+                    var res = result;
+                } else {
+                    var res = result[0];
+                }
 
                 var isitatus = '';
                 if (res.status == 0) {
@@ -572,11 +577,8 @@
                 }
 
                 if (res.icon != null) {
-                    $("#img_logo_pricing").attr("src", server_cdn + res.icon);
-                    $("#view_img_pricing_edit").attr("src", server_cdn + res.icon);
-                } else {
-                    $("#img_logo_pricing").attr("src", '/img/noimg.jpg');
-                    $("#view_img_pricing_edit").attr("src", '/img/noimg.jpg');
+                    $("#img_logo_pricing").attr("src", server_cdn + cekimage_cdn(res.icon));
+                    $("#view_img_pricing_edit").attr("src", server_cdn + cekimage_cdn(res.icon));
                 }
 
                 var arf = [];
@@ -613,13 +615,15 @@
                     $("#fiturpricing_edit").show();
                 }
 
-
+                // console.log(fiturs);
+// console.log(arf);
                 $.each(fiturs.split(","), function (i, e) {
+                    console.log(e);
                     if (len == 1) {
                         $("#fiturpricing_edit").val(fiturs).attr("selected", "selected");
                     } else {
-                        $("#edit_multi_fiturpricing").val(fiturs).attr("selected", "selected");
-                         $("#edit_multi_fiturpricing").val(arf);
+                        // $("#edit_multi_fiturpricing").val(e).attr("selected", "selected");
+                        $("#edit_multi_fiturpricing").val(e);
                     }
                 });
                 //end-edit
@@ -808,8 +812,6 @@
                 if (Oldfiturqedit !== '') {
                     $('#fiturpricing_edit').val(Oldfiturqedit);
                 }
-
-
 
             }
         });

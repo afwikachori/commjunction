@@ -244,7 +244,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <small class="clight s13">Analysis</small>
-                            <p class="cgrey2 s14" id="detail_analisi"> - </p>
+                            <p class="cgrey2 s14" id="detail_analisis"> - </p>
                         </div>
                     </div> <!-- end-col-md -->
                     <div class="col-md-12">
@@ -327,13 +327,13 @@
                             <div class="form-group">
                                 <small class="clight s13">Date</small>
                                 <input type="date" id="edit_tanggal" name="edit_tanggal" class="form-control input-abu"
-                                    required>
+                                 required>
                             </div>
 
                         </div> <!-- end-col-md -->
                     </div>
 
-                    <div class="row" id="hide_fitur" style="display: none;">
+                    <div class="row" id="hide_fitur2" style="display: none;">
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight s13">Feature</small>
@@ -344,7 +344,7 @@
                         </div> <!-- end-col-md -->
 
                         <div class="col-md">
-                            <div class="form-group" style="display: none;" id="hide_subfitur">
+                            <div class="form-group" style="display: none;" id="hide_subfitur2">
                                 <small class="clight s13">Sub-Feature</small>
                                 <select class="form-control input-abu" name="edit_list_subfeature"
                                     id="edit_list_subfeature">
@@ -355,7 +355,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12" id="hide_fiturdeskripsi" style="display: none;">
+                        <div class="col-md-12" id="hide_fiturdeskripsi2" style="display: none;">
                             <div class="form-group">
                                 <small class="clight s13">Feature Description</small>
                                 <input type="text" id="edit_deskripsi_fitur" name="edit_deskripsi_fitur"
@@ -384,6 +384,7 @@
                             </div>
                         </div> <!-- end-col-md -->
                     </div>
+                    <input type="hidden" id="edit_knowledge_id" name="edit_knowledge_id">
                 </div> <!-- end-body -->
 
                 <div class="modal-footer" style="border: none; padding-top: 1.5em">
@@ -411,20 +412,25 @@
             <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                 <center>
                     <img src="/img/logout.png" id="img_signout_superadmin">
-                    <h4 class="cgrey">Logout Comfirmation</h4>
-                    <small class="clight">Are you sure, you want to exit ?</small>
+                    <h4 class="cgrey">Delete Comfirmation</h4>
+                    <small class="clight">Are you sure, you want to delete ?</small>
                 </center>
             </div>
             <div class="modal-footer changepass" style="border: none; text-align: center;">
                 <center>
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> No
-                    </button>
-                    &nbsp;
-                    <a href="" type="button" class="btn btn-tosca btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Yes </a>
+
+                    <form method="POST" id="form_delete_knowledge" action="{{route('delete_knowledge_support')}}">
+                        {{ csrf_field() }}
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> No
+                        </button>
+                        &nbsp;
+                        <input type="hidden" id="id_knowledge" name="id_knowledge">
+                        <button type="submit" class="btn btn-tosca btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> Yes </button>
+                    </form>
                 </center>
             </div>
         </div>
@@ -607,11 +613,45 @@
             $("#detail_analisis").html(data.analisis);
             $("#detail_solusi").html(data.solusi);
             $("#modal_detail_knowledge").modal('show');
+            // _____________________________________________
+            $("#edit_knowledge_id").val(data.id);
+            if (data.feature != null && data.feature != undefined) {
+                $("#edit_list_feature").val(data.feature.id);
+                get_edit_list_subfeature_support(data.feature.id);
+
+            }
+            $("#edit_feature_type").val(data.feature_type);
+            $("#edit_error_level").val(data.error_level);
+            $("#edit_judul").val(data.title);
+            $("#edit_tanggal").val(formatDate(data.date));
+
+            if (data.feature_description != null && data.feature_description != undefined) {
+                $("#edit_deskripsi_fitur").val(data.feature_description);
+            }
+            $("#edit_kondisi").val(data.kondisi);
+            $("#edit_analisis").val(data.analisis);
+            $("#edit_solusi").val(data.solusi);
+
+            if (data.feature_type == 1) {
+                $("#hide_fitur2").show();
+                $("#hide_fiturdeskripsi2").hide();
+            } else {
+                $("#hide_fitur").hide();
+                $("#hide_fiturdeskripsi2").show();
+            }
+
+            if (data.sub_feature != null && data.sub_feature != undefined) {
+                $("#edit_list_subfeature").val(data.sub_feature.id).attr("selected","selected");
+                // $('select[name="edit_list_subfeature"]').val(69);
+                $("#hide_subfitur2").show();
+            }
+
         });
 
         $('#tabel_knowledge_support tbody').on('click', 'button.btn_delete_knowledge', function () {
             var data = tabel.row($(this).parents('tr')).data();
-         $("#modal_detele_knowledge").modal();
+            $("#id_knowledge").val(data.id);
+            $("#modal_detele_knowledge").modal();
         });
 
     }
@@ -630,7 +670,6 @@
             dataType: "json",
             success: function (result) {
                 // console.log(result);
-
                 $('#list_feature').empty();
                 $('#list_feature').append("<option disabled> Choose</option>");
 
@@ -643,10 +682,70 @@
                 }));
 
                 $("#list_feature").get(0).selectedIndex = 0;
+                // _________________________________________________
 
+                $('#edit_list_feature').empty();
+                $('#edit_list_feature').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#edit_list_feature').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+
+                $("#edit_list_feature").html($('#edit_list_feature option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#edit_list_feature").get(0).selectedIndex = 0;
             }
         });
     } //endfunction
+
+
+    $('#edit_list_feature').change(function () {
+        var item = $(this);
+        var id_fitur = item.val();
+
+        get_edit_list_subfeature_support(id_fitur);
+    });
+
+
+    function get_edit_list_subfeature_support(feature_id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "/support/get_list_subfeature_support",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "feature_id": feature_id
+            },
+            success: function (result) {
+                // console.log(result);
+
+                $("#hide_subfitur2").show();
+                $('#edit_list_subfeature').empty();
+                if (result.success == false || result.code == "CMQ01") {
+                    $('#edit_list_subfeature').append("<option disabled selected> No Data </option>");
+                } else {
+                    $('#edit_list_subfeature').append("<option disabled> Choose</option>");
+
+                    for (var i = result.length - 1; i >= 0; i--) {
+                        $('#edit_list_subfeature').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                    }
+                    //Short Function Ascending//
+                    $("#edit_list_subfeature").html($('#edit_list_subfeature option').sort(function (x, y) {
+                        return $(x).text() < $(y).text() ? -1 : 1;
+                    }));
+
+                    $("#edit_list_subfeature").get(0).selectedIndex = 0;
+                }
+            }
+        });
+    } //endfunction
+
 
 
     $('#list_feature').change(function () {
@@ -655,6 +754,8 @@
 
         get_list_subfeature_support(id_fitur);
     });
+
+
 
     function get_list_subfeature_support(feature_id) {
         $.ajaxSetup({
@@ -704,6 +805,19 @@
         } else {
             $("#hide_fitur").hide();
             $("#hide_fiturdeskripsi").show();
+        }
+    });
+
+    $('#edit_feature_type').change(function () {
+        var item = $(this);
+        var idtipe = item.val();
+
+        if (idtipe == 1) {
+            $("#hide_fitur2").show();
+            $("#hide_fiturdeskripsi2").hide();
+        } else {
+            $("#hide_fitur").hide();
+            $("#hide_fiturdeskripsi2").show();
         }
     });
 

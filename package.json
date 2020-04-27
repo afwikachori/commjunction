@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@yaireo/tagify": "^3.3.0",
+        "bootstrap-select": "^1.13.16",
         "chart.js": "^2.9.3",
         "dotenv": "^8.2.0",
         "sweetalert": "^2.1.2"

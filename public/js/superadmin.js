@@ -212,7 +212,7 @@ function formatDate(date) {
     if (day.length < 2)
         day = '0' + day;
 
-    return [day, month, year].join('/');
+    return [year,month, day ].join('-');
 }
 
 function dateFormat(tgl) {
@@ -445,7 +445,7 @@ function cekimage_cdn(img) {
             foto = img;
         }
     } else {
-        foto = '/img/fitur.png';
+        foto = '';
     }
 
     return foto;

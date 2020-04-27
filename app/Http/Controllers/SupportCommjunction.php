@@ -47,6 +47,10 @@ class SupportCommjunction extends Controller
         return view('support/subdomain_support');
     }
 
+    public function ResetPassSupportView()
+    {
+        return view('support/resetpass_support');
+    }
 
     public function get_list_komunitas_support(Request $request)
     {
@@ -217,6 +221,44 @@ class SupportCommjunction extends Controller
         $input = $request->all();
 
         $url = env('SERVICE') . 'operationalsupportsystem/listsubscriber';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+        $bodyku = json_encode([
+            "community_id" => (int) $input['community_id'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
+    public function get_list_admin_support(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+
+        $url = env('SERVICE') . 'operationalsupportsystem/listadmincommunity';
         $client = new \GuzzleHttp\Client();
         $headers = [
             'Content-Type' => 'application/json',
@@ -433,7 +475,7 @@ class SupportCommjunction extends Controller
                 $resImg = $req->change_reactive_subscriber($imageRequest, $url, $token);
 
                 if ($resImg['success'] == true) {
-                    alert()->success('Successfully update status subscriber', 'Updated!')->persistent('Done');
+                    alert()->success('Successfully update status subscriber', 'Updated!')->autoclose(4500);
                     return back();
                 }
             } catch (ClientException $errornya) {
@@ -541,7 +583,7 @@ class SupportCommjunction extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             if ($json['success'] == true) {
-                alert()->success('Successfully create new knowledge', 'Added!')->persistent('Done');
+                alert()->success('Successfully create new knowledge', 'Added!')->autoclose(4500);
                 return back();
             }
         } catch (ClientException $errornya) {
@@ -566,7 +608,7 @@ class SupportCommjunction extends Controller
     {
         $user_logged = session()->get('session_logged_superadmin');
         $input = $request->all();
-return $input;
+// return $input;
         $url = env('SERVICE') . 'operationalsupportsystem/editknowledge';
         $client = new \GuzzleHttp\Client();
         $headers = [
@@ -575,27 +617,28 @@ return $input;
         ];
 
         if ($request->has('list_feature')) {
-            $fitur =  $input['list_feature'];
+            $fitur =  $input['edit_list_feature'];
         } else {
             $fitur = "";
         }
         if ($request->has('list_subfeature')) {
-            $subfitur =  $input['list_subfeature'];
+            $subfitur =  $input['edit_list_subfeature'];
         } else {
             $subfitur = "";
         }
 
         $bodyku = json_encode([
-            "date" => $input['tanggal'],
+            "knowledge_id" => $input['edit_knowledge_id'],
+            "date" => $input['edit_tanggal'],
             "feature_id" => $fitur,
             "subfeature_id" => $subfitur,
-            "feature_type" => $input['feature_type'],
-            "feature_description" => $input['deskripsi_fitur'],
-            "kondisi" => $input['kondisi'],
-            "analisis" => $input['analisis'],
-            "solusi" => $input['solusi'],
-            "title" => $input['judul'],
-            "error_level" => $input['error_level'],
+            "feature_type" => $input['edit_feature_type'],
+            "feature_description" => $input['edit_deskripsi_fitur'],
+            "kondisi" => $input['edit_kondisi'],
+            "analisis" => $input['edit_analisis'],
+            "solusi" => $input['edit_solusi'],
+            "title" => $input['edit_judul'],
+            "error_level" => $input['edit_error_level'],
         ]);
 
         $datakirim = [
@@ -608,7 +651,7 @@ return $input;
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             if ($json['success'] == true) {
-                alert()->success('Successfully create new knowledge', 'Added!')->persistent('Done');
+                alert()->success('Successfully edit knowledge', 'Edited!')->autoclose(4500);
                 return back();
             }
         } catch (ClientException $errornya) {
@@ -627,5 +670,113 @@ return $input;
             return back();
         }
     }
+
+
+    public function delete_knowledge_support(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $input;
+        $url = env('SERVICE') . 'operationalsupportsystem/deleteknowledge';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+
+
+        $bodyku = json_encode([
+            "knowledge_id" => $input['id_knowledge'],
+        ]);
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully delete knowledge', 'Deleted!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
+
+    public function change_status_subdomain(Request $request)
+    {
+        $user_logged = session()->get('session_logged_superadmin');
+        $input = $request->all();
+        // return $input;
+
+        if($input['status_domain'] == "true"){
+            $statusdomain = true;
+        }else{
+            $statusdomain = false;
+        }
+
+        $url = env('SERVICE') . 'operationalsupportsystem/updatestatussubdomain';
+        $client = new \GuzzleHttp\Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $user_logged['access_token']
+        ];
+
+
+        $bodyku = json_encode([
+            "community_id" => (int)$input['id_community'],
+            "status" => $statusdomain,
+        ]);
+        // return $bodyku;
+
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            if ($json['success'] == true) {
+                alert()->success('Successfully change status domain', 'Status Updated!')->autoclose(4500);
+                return back();
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
+
+
 
 } //END-CLASS

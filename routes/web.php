@@ -440,6 +440,7 @@ Route::prefix('support')->group(function () {
     Route::get('/reactivate_deactivate', 'SupportCommjunction@ReactivateDeactivateView')->name('/reactivate_deactivate');
     Route::get('/knowledge', 'SupportCommjunction@knowledgeSupportView')->name('/knowledge');
     Route::get('/subdomain', 'SupportCommjunction@SubdomainSupportView')->name('/subdomain');
+    Route::get('/reset_pass', 'SupportCommjunction@ResetPassSupportView')->name('/reset_pass');
 
 
 
@@ -456,5 +457,8 @@ Route::prefix('support')->group(function () {
     Route::post('tabel_knowledge_support', 'SupportCommjunction@tabel_knowledge_support')->name('tabel_knowledge_support');
     Route::post('add_knowledge_support', 'SupportCommjunction@add_knowledge_support')->name('add_knowledge_support');
     Route::post('edit_knowledge_support', 'SupportCommjunction@edit_knowledge_support')->name('edit_knowledge_support');
+    Route::post('delete_knowledge_support', 'SupportCommjunction@delete_knowledge_support')->name('delete_knowledge_support');
+    Route::post('change_status_subdomain', 'SupportCommjunction@change_status_subdomain')->name('change_status_subdomain');
+    Route::post('get_list_admin_support', 'SupportCommjunction@get_list_admin_support')->name('get_list_admin_support');
 
 });

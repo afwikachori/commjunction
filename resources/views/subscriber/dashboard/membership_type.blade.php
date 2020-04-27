@@ -97,7 +97,7 @@
                     <img src="/visual/kananatas2.png" class="img_confirm1">
                     <img src="/visual/imgregis.png" class="img_confirm2">
 
-                    <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;" lang="en" data-lang-token="confirm_membership">Confirm your Membership Payment !</h3>
+                    <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;" lang="en" data-lang-token="confirm_membership">Confirm your Membership Payment</h3>
                     <br>
                     <div class="row">
                         <div class="col-5">

@@ -294,6 +294,8 @@
 
     <!-- plugins:js -->
     <script src="/js/jquery.3.2.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+
     <script src="/purple/vendors/js/vendor.bundle.base.js"></script>
     <script src="/purple/vendors/chart.js/Chart.min.js"></script>
     <script src="/purple/js/off-canvas.js"></script>
@@ -331,8 +333,7 @@
     <!-- js custum superadmin -->
     <script src="{{asset('js/superadmin.js')}}"></script>
 
-    <!-- js multiselect -->
-    {{-- <script src="/js/BsMultiSelect.js"></script> --}}
+
 
     <!-- Sweetalert -->
     <script src="/js/sweetalert.min.js"></script>

@@ -104,7 +104,7 @@
         <div class="col-md">
             <div class="row">
                 <div class="col">
-                    <h5 class="cgrey" lang="en">Selected Feature</h5>
+                    <h5 class="cgrey" lang="en">Feature</h5>
                 </div>
                 <div class="col" style="text-align: right;">
                     <h6 class="clight2 s14"><span id="hitungcentangq">0</span> &nbsp; <span lang="en">Features Selected</span></h6>

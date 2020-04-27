@@ -101,14 +101,14 @@
         </a>
     </li>
 
-      <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="/superadmin/notification_management">
             <span class="menu-title">Notification Management</span>
             <i class="mdi mdi-bell-ring menu-icon"></i>
         </a>
     </li>
 
-       <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="/superadmin/inbox_management">
             <span class="menu-title">Inbox Management</span>
             <i class="mdi mdi-message-text-outline menu-icon"></i>

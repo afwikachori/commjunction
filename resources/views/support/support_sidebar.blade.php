@@ -43,16 +43,22 @@
             <i class="mdi mdi-power-settings menu-icon"></i>
         </a>
     </li>
-      <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="/support/knowledge">
             <span class=" menu-title" lang="en">Knowledge</span>
             <i class="mdi mdi-book-open-page-variant menu-icon"></i>
         </a>
     </li>
-        <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="/support/subdomain">
             <span class=" menu-title" lang="en">Subdomain</span>
-            <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+            <i class="mdi mdi-domain menu-icon"></i>
         </a>
     </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/support/reset_pass">
+                <span class=" menu-title" lang="en">Reset Password</span>
+                <i class="mdi mdi-lock-outline menu-icon"></i>
+            </a>
+        </li>
 </ul>
