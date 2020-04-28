@@ -429,6 +429,38 @@
         get_random_otp();
     });
 
+
+function get_random_otp(params) {
+      $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/support/get_random_otp',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "user_type": $("#user_tipe").val(),
+                "community_id": $("#id_komunitas").val(),
+                "user_id": $("#user_id").val(),
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success == true) {
+                    swal("OTP Sent", "Successfully resend otp number to email user", "success");
+                } else {
+                    swal("Failed", result.message, "error");
+                }
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show detail login");
+            }
+        });
+}
 </script>
 
 @endsection
