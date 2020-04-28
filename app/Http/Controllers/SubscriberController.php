@@ -446,6 +446,7 @@ class SubscriberController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
+        // dd($datakirim);
 
         try {
             $response = $client->post($url, $datakirim);
@@ -1709,14 +1710,16 @@ use RequestHelper;
 
 
         $res_enkkrip = $this->encryptedPost($request, $req_input, $url);
-
-        // $helpers = new RequestHelper;
-        // $res_enkkrip = $helpers->encryptedPost($request, $req_input, $url);
-
-		return $res_enkkrip;
+        return $res_enkkrip. ':"wikates"}}';
+		// return json_encode($res_enkkrip);
 	}
 
 
 
 
 } //end-class
+
+// login
+// change password
+// register
+// forgot password

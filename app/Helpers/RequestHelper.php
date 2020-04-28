@@ -4,8 +4,9 @@ namespace App\Helpers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client as Client;
 
-use GuzzleHttp\Client;
+// use GuzzleHttp\Client;
 
 use Carbon\Carbon;
 
@@ -40,29 +41,36 @@ trait RequestHelper
         // dd($input);
         $body = $this->encrypt($input);
 
-        return $body;
+        $bodyku = json_encode([
+            "data"     => $body,
+        ]);
 
         $headers = [
-            'Authorization' => 'Bearer '.$this->getToken(true),
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
+            'Encrypt_rsa' => 'true'
         ];
 
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        // dd($datakirim);
+
         $client = new \GuzzleHttp\Client();
-        $request = $this->$client->post($endpoint, [
-            'json' => [
-                'data' => $body
-            ]
-        ]);
-        $encrypted = json_decode($request->getBody()->getContents(), true)['data'];
+        $request = $client->post($endpoint, $datakirim);
+        $response = $request->getBody()->getContents();
+        $dt_dekrip = json_decode($response, true);
 
-        $response = $this->decrypt($encrypted);
+        $encrypted = $this->decrypt($dt_dekrip['data'][0]);
 
-        return response()->json($response);
+        $dekrip = response()->json($encrypted);
+        return $encrypted;
     }
 
 
-    private function encrypt($plain){
-
+    private function encrypt($plain)
+    {
         $openPubKey = fopen($this->publicKeyPath, "r");
         $readPubKey = fread($openPubKey, 8192);
 
@@ -74,14 +82,16 @@ trait RequestHelper
 
         // loop through the long plain text, and divide by chunks
         $output = '';
-// dd($plain);
+
+        $plain = json_encode($plain);
+
         while ($plain) {
             $chunk = substr($plain, 0, $encChunkSize);
             $plain = substr($plain, $encChunkSize);
             $encrypted = '';
 
             if (!openssl_public_encrypt($chunk, $encrypted, $pubKey, OPENSSL_PKCS1_OAEP_PADDING)) {
-                die('Failed to decrypt data');
+                die('Failed to encrypt data');
             }
 
             $output .= $encrypted;
@@ -91,16 +101,22 @@ trait RequestHelper
         return base64_encode($output);
     }
 
-    private function decrypt($encrypted){
-        $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
 
+  private function decrypt($encrypted){
+        $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
+        // dd($encrypted);
+        // $encrypted = json_encode($encrypted);
+        // dd($encrypted);
         $encrypted = base64_decode($encrypted);
+        // dd($encrypted);
+
         $a_key = openssl_pkey_get_details($privateKey);
 
         // Decrypt the data in the small chunks
         $chunkSize = ceil($a_key['bits'] / 8);
         $output = '';
 
+        // $encrypted = json_encode($encrypted);
         while ($encrypted)
         {
             $chunk = substr($encrypted, 0, $chunkSize);
