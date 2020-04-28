@@ -9,14 +9,14 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
-// use App\Helpers\RequestHelper;
+use App\Helpers\RequestHelper;
 
 use Session;
 use Alert;
-
+// use RequestHelper;
 class SubscriberController extends Controller
 {
-    // use RequestHelper;
+
 
     public function loginView()
     {
@@ -1692,19 +1692,28 @@ class SubscriberController extends Controller
         }
     }
 
-
+use RequestHelper;
 	public function tes_enkrip(Request $request)
 	{
         $input = $request->all();
-        return $input;
-		// $input = [
-		// 	'user_id' => $request->user_id
-		// 	'password' => $request->password
-		// ];
+    // return $input;
 
-		// $req_enkrip = $this->encryptedPost(Request $request, $input, '/localhost/example')
 
-		// return $req_enkrip;
+        $url = env('SERVICE') . 'auth/commsubs';
+
+        $req_input =  [
+            'input'       => $input['input_login'],
+            'password'    => $input['pass_subs'],
+            'community_id' => $input['id_community']
+        ];
+
+
+        $res_enkkrip = $this->encryptedPost($request, $req_input, $url);
+
+        // $helpers = new RequestHelper;
+        // $res_enkkrip = $helpers->encryptedPost($request, $req_input, $url);
+
+		return $res_enkkrip;
 	}
 
 

@@ -23,8 +23,8 @@ trait RequestHelper
 
     public function __construct()
     {
-        $this->publicKeyPath = storage_path('keys/public.key');
-        $this->privateKeyPath = storage_path('keys/private.key');
+        $this->publicKeyPath = storage_path('keys/public.pem');
+        $this->privateKeyPath = storage_path('keys/private.pem');
 
         $this->client = new Client([
             'base_uri' => env('API_URL')
@@ -37,12 +37,17 @@ trait RequestHelper
 
     public function encryptedPost(Request $request, $input, $endpoint)
     {
-        $body = $this->encrypt($enc);
+        // dd($input);
+        $body = $this->encrypt($input);
+
+        return $body;
+
         $headers = [
             'Authorization' => 'Bearer '.$this->getToken(true),
             'Content-Type' => 'application/json'
         ];
 
+        $client = new \GuzzleHttp\Client();
         $request = $this->$client->post($endpoint, [
             'json' => [
                 'data' => $body
@@ -52,39 +57,42 @@ trait RequestHelper
 
         $response = $this->decrypt($encrypted);
 
-        return response()->json($result);
+        return response()->json($response);
     }
 
+
     private function encrypt($plain){
+
         $openPubKey = fopen($this->publicKeyPath, "r");
         $readPubKey = fread($openPubKey, 8192);
 
         $pubKey = openssl_pkey_get_public($readPubKey);
-        $pubKeyDetails = openssl_pkey_get_details($publicKey);
+        $pubKeyDetails = openssl_pkey_get_details($pubKey);
 
         // there are 11 bytes overhead for PKCS1 padding
         $encChunkSize = ceil($pubKeyDetails['bits'] / 8) - 11;
 
         // loop through the long plain text, and divide by chunks
         $output = '';
-
+dd($plain);
         while ($plain) {
             $chunk = substr($plain, 0, $encChunkSize);
             $plain = substr($plain, $encChunkSize);
             $encrypted = '';
 
-            if (!openssl_public_encrypt($chunk, $encrypted, $public_key, OPENSSL_PKCS1_OAEP_PADDING))
-                die('Failed to encrypt data');
+            if (!openssl_public_encrypt($chunk, $encrypted, $pubKey, OPENSSL_PKCS1_OAEP_PADDING)) {
+                die('Failed to decrypt data');
+            }
 
             $output .= $encrypted;
         }
 
-        openssl_free_key($public_key);
+        openssl_free_key($pubKey);
         return base64_encode($output);
     }
 
     private function decrypt($encrypted){
-        $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath)
+        $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
 
         $encrypted = base64_decode($encrypted);
         $a_key = openssl_pkey_get_details($privateKey);

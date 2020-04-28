@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <input type="hidden" class="server_cdn" value="{{ env('CDN') }}">
+        <input type="text" id="server_cdn" value="{{ env('CDN') }}">
     </div>
 
     <!-- MODAL LOADING AJAX -->
