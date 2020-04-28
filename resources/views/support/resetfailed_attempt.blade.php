@@ -1,5 +1,5 @@
 @extends('layout.support-master')
-@section('title', 'Reactivate/Deactivate ')
+@section('title', 'Reset Failed Attempt')
 @section('content')
 <div class="page-header">
     <h3 class="page-title">

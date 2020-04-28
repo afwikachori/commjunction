@@ -447,6 +447,7 @@ Route::prefix('support')->group(function () {
     Route::get('/subdomain', 'SupportCommjunction@SubdomainSupportView')->name('/subdomain');
     Route::get('/reset_pass', 'SupportCommjunction@ResetPassSupportView')->name('/reset_pass');
     Route::get('/reset_attempt', 'SupportCommjunction@ResetFailedAttemptSupportView')->name('/reset_attempt');
+    Route::get('/resend_mail', 'SupportCommjunction@ResendMailSupportView')->name('/resend_mail');
 
 
 
@@ -471,6 +472,14 @@ Route::prefix('support')->group(function () {
     Route::post('get_random_otp', 'SupportCommjunction@get_random_otp')->name('get_random_otp');
     Route::post('reset_attempt_otp', 'SupportCommjunction@reset_attempt_otp')->name('reset_attempt_otp');
     Route::post('reset_attempt_login', 'SupportCommjunction@reset_attempt_login')->name('reset_attempt_login');
+    Route::post('resend_mail_otp_admin', 'SupportCommjunction@resend_mail_otp_admin')->name('resend_mail_otp_admin');
+    Route::post('resend_invoice_payment_admin', 'SupportCommjunction@resend_invoice_payment_admin')->name('resend_invoice_payment_admin');
+    Route::post('resend_invoice_regis_community', 'SupportCommjunction@resend_invoice_regis_community')->name('resend_invoice_regis_community');
+    Route::post('resend_invoice_module_admin', 'SupportCommjunction@resend_invoice_module_admin')->name('resend_invoice_module_admin');
+    Route::post('resend_invoice_membership_subs', 'SupportCommjunction@resend_invoice_membership_subs')->name('resend_invoice_membership_subs');
+    Route::post('resend_membership_approv_subs', 'SupportCommjunction@resend_membership_approv_subs')->name('resend_membership_approv_subs');
+    Route::post('resend_mail_subs_approv', 'SupportCommjunction@resend_mail_subs_approv')->name('resend_mail_subs_approv');
+    Route::post('resend_mail_subs_nonaktif', 'SupportCommjunction@resend_mail_subs_nonaktif')->name('resend_mail_subs_nonaktif');
 
 
 

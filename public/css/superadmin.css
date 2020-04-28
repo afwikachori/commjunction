@@ -763,6 +763,9 @@ a.dt-button {
     min-height: 90px;
     min-width: 90px;
 }
+.mgb-1{
+    margin-bottom: 1em !important;
+}
 
 .circle.subpay {
     position: relative !important;

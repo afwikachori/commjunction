@@ -64,7 +64,13 @@
     <li class="nav-item">
         <a class="nav-link" href="/support/reset_attempt">
             <span class=" menu-title" lang="en">Reset Failed Attempt</span>
-            <i class="mdi mdi-redo menu-icon"></i>
+            <i class="mdi mdi-alert-outline menu-icon"></i>
+        </a>
+    </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/support/resend_mail">
+            <span class=" menu-title" lang="en">Resend Mail</span>
+            <i class="mdi mdi-email menu-icon"></i>
         </a>
     </li>
 </ul>
