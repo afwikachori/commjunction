@@ -76,7 +76,7 @@
             </div>
         </div>
     </div> <!-- container-scroller -->
-    <input type="hidden" id="server_cdn" value="http://192.168.172.15:3010">
+    <input type="hidden" id="server_cdn" value="{{ env('CDN') }}">
     <input type="hidden" class="id_komunitas">
     <input type="hidden" class="community_name">
 

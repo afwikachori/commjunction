@@ -74,7 +74,7 @@ trait RequestHelper
 
         // loop through the long plain text, and divide by chunks
         $output = '';
-dd($plain);
+// dd($plain);
         while ($plain) {
             $chunk = substr($plain, 0, $encChunkSize);
             $plain = substr($plain, $encChunkSize);

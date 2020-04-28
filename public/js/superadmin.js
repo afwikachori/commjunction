@@ -5,7 +5,9 @@
 //       lang.init({
 //           defaultLang: 'en'
 //       });
-var server_cdn = $("#server_cdn").val();
+// var server_cdn = $("#server_cdn").val();
+var server_cdn = 'http://192.168.172.15:3010';
+
 var ui = {
     popup: {
         show: function show(type, message, tittle) {

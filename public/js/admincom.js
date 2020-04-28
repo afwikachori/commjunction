@@ -14,7 +14,8 @@ lang.init({
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
 })();
 
-var server_cdn = $("#server_cdn").val();
+// var server_cdn = $("#server_cdn").val();
+var server_cdn = 'http://192.168.172.15:3010';
 var ui = {
     popup: {
         show: function show(type, message, tittle) {
