@@ -5,7 +5,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-settings"></i>
-        </span> Reactive or Deactive</h3>
+        </span>Reset Failed Attempt</h3>
 
 </div>
 
@@ -14,12 +14,21 @@
         <div class="card">
             <div class="card-body">
 
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <small class="clight s13">Choose Community</small>
+                        <select class="form-control list-blue" name="list_komunitas" id="list_komunitas" required>
+                            <option selected disabled> Loading ... </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
 
-                <div class="tabbable-line">
+                <div class="tabbable-line" style="margin-top: -2.2em;">
                     <ul class="nav nav-tabs ">
                         <li class="tab-subs active" id="tab_com">
                             <a href="#tab_default_1" data-toggle="tab">
-                                Community
+                                Admin
                             </a>
                         </li>
                         <li class="tab-subs" id="tab_subs">
@@ -31,35 +40,19 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_default_1">
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <small class="clight s13">Community Status</small>
-                                    <select class="form-control list-blue" name="status_komunitas" id="status_komunitas"
-                                        required>
-                                        <option selected disabled> Choose </option>
-                                        <option value="all" selected> All </option>
-                                        <option value="0"> Newly </option>
-                                        <option value="1"> First Login </option>
-                                        <option value="2"> Active </option>
-                                        <option value="3"> Published </option>
-                                        <option value="4"> Deactive </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br>
+
 
                             <!-- tabel all susbcriber -->
-                            <table id="tabel_komunitas_support"
+                            <table id="tabel_admin_komunitas"
                                 class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th><b>ID</b></th>
-                                        <th><b>Logo</b></th>
-                                        <th><b>Community Name</b></th>
-                                        <th><b>Description</b></th>
-                                        <th><b>Status</b></th>
-                                        <th><b>Date Created</b></th>
-                                        <th><b>Action</b></th>
+                                        <th><b>ID User</b></th>
+                                        <th><b>Photo</b></th>
+                                        <th><b>Full Name</b></th>
+                                        <th><b>username</b></th>
+                                        <th><b>Email</b></th>
+                                        <th><b>Reset Attempt</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -68,30 +61,19 @@
 
 
                         <div class="tab-pane" id="tab_default_2">
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <small class="clight s13">Choose Community</small>
-                                    <select class="form-control list-blue" name="list_komunitas" id="list_komunitas"
-                                        required>
-                                        <option selected disabled> Loading ... </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br>
+
 
                             <!-- tabel all susbcriber -->
                             <table id="tabel_subscriber" class="table table-hover table-striped dt-responsive nowrap"
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th><b>ID Subscriber</b></th>
+                                        <th><b>ID User</b></th>
                                         <th><b>Photo</b></th>
-                                        <th><b>Subcriber Name</b></th>
+                                        <th><b>Full Name</b></th>
                                         <th><b>username</b></th>
-                                        <th><b>Status</b></th>
-                                        <th><b>Created Date</b></th>
-                                        <th><b>Membership</b></th>
-                                        <th><b>Action</b></th>
+                                        <th><b>Email</b></th>
+                                        <th><b>Reset Attempt</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -260,198 +242,10 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-
-        get_dropdownlist_komunitas_support();
-        if ($('#status_komunitas').val() == "all") {
-            get_list_komunitas_support("all");
-        }
-
-
+        get_list_komunitas_support();
     });
 
-    $('#status_komunitas').change(function () {
-        var item = $(this);
-        var id_status = item.val();
-
-        get_list_komunitas_support(id_status);
-    });
-
-
-    function get_list_komunitas_support(id_status) {
-        $('#tabel_komunitas_support').DataTable().clear().destroy();
-        $('#tabel_komunitas_support').empty();
-
-        var tabel = $('#tabel_komunitas_support').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel', 'pdf', 'print', {
-                    text: 'JSON',
-                    action: function (e, dt, button, config) {
-                        var data = dt.buttons.exportData();
-
-                        $.fn.dataTable.fileSave(
-                            new Blob([JSON.stringify(data)]),
-                            'Export.json'
-                        );
-                    }
-                }
-            ],
-            responsive: true,
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: "/support/get_list_komunitas_support",
-                type: "POST",
-                dataSrc: '',
-                data: {
-                    "community_status": id_status
-                },
-                //   success: function (result) {
-                //     console.log('tabel com ');
-                //     console.log(result);
-                // },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_komunitas_support tbody').empty().append(nofound);
-                },
-            },
-            error: function (request, status, errorThrown) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                $('#tabel_komunitas_support tbody').empty().append(nofound);
-
-            },
-            columns: [
-                {
-                    mData: 'id',
-                    render: function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    mData: 'logo',
-                    render: function (data, type, row, meta) {
-                        var noimg = '/img/kosong.png'
-                        var pic = server_cdn + cekimage_cdn(data);
-                        return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
-
-                    }
-                },
-                {
-                    mData: 'name',
-                    render: function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    mData: 'description',
-                    render: function (data, type, row, meta) {
-                        return '<span class="s12 text-wrap">' + data + '</span>';
-                    }
-                },
-                {
-                    mData: 'status_title',
-                    render: function (data, type, row, meta) {
-                        return '<span class="s13 text-wrap width-300">' + data + '</span>';
-                    }
-                },
-                {
-                    mData: 'created_at',
-                    render: function (data, type, row, meta) {
-                        return dateFormat(data);
-                    }
-                },
-                {
-                    mData: 'status',
-                    render: function (data, type, row, meta) {
-                        if (data == 0) {
-                            return '<small class="cgrey s13">Newly</small>';
-                        } else if (data == 1) {
-                            return '<small class="cgrey s13">First Login</small>';
-                        } else {
-                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
-                                '<i class="mdi mdi-lead-pencil"></i>' +
-                                '</button>';
-                        }
-
-                    }
-                }
-            ],
-            columnDefs:
-                [
-                    {
-                        "data": null,
-                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-lead-pencil"></i></button>',
-                        "targets": -1
-                    }
-                ],
-
-        });
-
-        //DETAIL USERTYPE FROM DATATABLE
-        $('#tabel_komunitas_support tbody').on('click', 'button', function () {
-            $("#status_komunitas").val("");
-            $("#status_label_kom").html("");
-            var data = tabel.row($(this).parents('tr')).data();
-            console.log(data);
-
-            var stat = data.status;
-            var uistat = '';
-            if (stat == 4) {
-                $('#status_active').attr("checked", false);
-                uistat = '<small class="cgrey tebal"> Deactive </small>';
-            } else {
-                if (stat == 2) {
-                    uistat = '<small class="cblue tebal"> Active </small>';
-                } else if (stat == 3) {
-                    uistat = '<small class="cblue tebal"> Published </small>';
-                }
-                $('#status_active').attr("checked", true);
-            }
-            $("#status_label_kom").html(uistat);
-
-            $("#modal_update_active").modal('show');
-            $("#id_komunitas").val(data.id);
-        });
-
-
-        $("#status_active").on('change', function () {
-            if ($(this).is(':checked')) {
-                $("#status_label_kom").show();
-                $("#stat_deactive_kom").hide();
-            }
-            else {
-                $("#stat_deactive_kom").show();
-                $("#status_label_kom").hide();
-            }
-        });
-
-    } //endfunction
-
-
-
-    $("#file_acc_member").on('change', function () {
-
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#view_img_member').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(this.files[0]);
-            $('#view_img_member').show();
-        }
-    });
-
-    $("#browse_acc_member").on('click', function () {
-        $("#file_acc_member").click();
-    });
-
-
-    function get_dropdownlist_komunitas_support() {
+    function get_list_komunitas_support() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -467,6 +261,7 @@
             success: function (result) {
                 console.log(result);
 
+                $("#hide_status_kom").show();
                 $('#list_komunitas').empty();
                 if (result.success == false && result.code == "CMQ01") {
                     $('#list_komunitas').append("<option disabled selected> No Data </option>");
@@ -488,19 +283,16 @@
     } //endfunction
 
 
-
     $('#list_komunitas').change(function () {
         var item = $(this);
         var id_kom = item.val();
 
         get_list_subscriber_support(id_kom);
+        tabel_admin_komunitas(id_kom);
     });
 
 
-
-
     function get_list_subscriber_support(id_kom) {
-
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
@@ -573,54 +365,17 @@
                     }
                 },
                 {
-                    mData: 'status',
+                    mData: 'email',
                     render: function (data, type, row, meta) {
-                        if (data == 0) {
-                            return '<small class="cgrey s13 text-wrap width-100">Newly</small>';
-                        } else if (data == 1) {
-                            return '<small class="cgrey s13 text-wrap width-100">First Login</small>';
-                        } else if (data == 2) {
-                            return '<small class="cgrey s13 text-wrap width-100">Pending Membership</small>';
-                        } else if (data == 3) {
-                            return '<small class="cgrey s13 text-wrap width-100">Active</small>';
-                        } else {
-                            return '<small class="cgrey s13 text-wrap width-100">Deactive</small>';
-                        }
-
+                        return '<span class="s13">' + data + '</span>';
                     }
                 },
                 {
-                    mData: 'created_at',
+                    mData: null,
                     render: function (data, type, row, meta) {
-                        return '<span class="s13">' + dateFormat(data) + '</span>';
-                    }
-                },
-                {
-                    mData: 'membership',
-                    render: function (data, type, row, meta) {
-                        if (data != null) {
-                            return '<small class="cgrey s13">' + data.membership + '</small>';
-                        } else {
-                            return '<small class="cgrey s13"> - </small>';
-                        }
-
-                    }
-                },
-                {
-                    mData: 'status',
-                    render: function (data, type, row, meta) {
-                        if (data == 0) {
-                            return '<small class="cgrey s13">Newly</small>';
-                        } else if (data == 1) {
-                            return '<small class="cgrey s13">First Login</small>';
-                        } else if (data == 2) {
-                            return '<small class="cgrey s13">Pending Membership</small>';
-                        }else {
-                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
-                                '<i class="mdi mdi-lead-pencil"></i>' +
-                                '</button>';
-                        }
-
+                        return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp_subs">' +
+                            '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
+                            '<small>Login</small></button>';
                     }
                 }
             ],
@@ -636,60 +391,247 @@
         });
 
         //DETAIL USERTYPE FROM DATATABLE
-        $('#tabel_subscriber tbody').on('click', 'button', function () {
-            $("#status_subs").val("");
-            $("#status_label_subs").html("");
+        $('#tabel_subscriber tbody').on('click', 'button.btn_reset_otp_subs', function () {
             var data = tabel.row($(this).parents('tr')).data();
             console.log(data);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/support/reset_attempt_otp',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas").val(),
+                    "email": data.email
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        swal("Reset OTP", "Successfully reset otp number for subscriber", "success");
+                    } else {
+                        swal("Failed", result.message, "error");
+                    }
 
-            var stat = data.status;
-            var uistat = '';
-            if (stat == 4) {
-                $('#status_active_subs').attr("checked", false);
-                uistat = '<small class="cgrey tebal"> Deactive </small>';
-            } else {
-                uistat = '<small class="cblue tebal"> Active </small>';
-                 $('#status_active_subs').attr("checked", true);
-            }
-            $("#status_label_subs").html(uistat).show();
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show detail otp");
+                }
+            });
+        });
 
-        $("#modal_reactive_subscriber").modal('show');
-        $("#id_komunitas_subs").val(id_kom);
-        $("#id_subs").val(data.user_id);
-        $("#status_subs").val(data.status);
-    });
+        $('#tabel_subscriber tbody').on('click', 'button.btn_reset_login_subs', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/support/reset_attempt_login',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas").val(),
+                    "user_id": data.user_id,
+                    "user_type": "3"
 
-    $("#status_active_subs").on('change', function () {
-        if ($(this).is(':checked')) {
-            $("#status_label_subs").show();
-            $("#stat_deactive_subs").hide();
-        }
-        else {
-            $("#stat_deactive_subs").show();
-            $("#status_label_subs").hide();
-        }
-    });
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        swal("Reset Login Attempt", "Successfully reset login attempt for subscriber", "success");
+                    } else {
+                        swal("Failed", result.message, "error");
+                    }
 
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show detail login");
+                }
+            });
+        });
     } //endfunction
 
 
+    function tabel_admin_komunitas(id_kom) {
+        $('#tabel_admin_komunitas').DataTable().clear().destroy();
+        $('#tabel_admin_komunitas').empty();
 
-    $("#file_acc_subs").on('change', function () {
 
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#view_img_subs').attr('src', e.target.result);
-            }
+        $("#modal_generate_user").modal('hide');
+        $("#tabel_admin_komunitas").show();
 
-            reader.readAsDataURL(this.files[0]);
-            $('#view_img_subs').show();
-        }
-    });
+        var tabel = $('#tabel_admin_komunitas').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print', {
+                    text: 'JSON',
+                    action: function (e, dt, button, config) {
+                        var data = dt.buttons.exportData();
 
-    $("#browse_acc_subs").on('click', function () {
-        $("#file_acc_subs").click();
-    });
+                        $.fn.dataTable.fileSave(
+                            new Blob([JSON.stringify(data)]),
+                            'Export.json'
+                        );
+                    }
+                }
+            ],
+            responsive: true,
+            language: {
+                paginate: {
+                    next: '<i class="mdi mdi-chevron-right"></i>',
+                    previous: '<i class="mdi mdi-chevron-left">'
+                }
+            },
+            ajax: {
+                url: "/support/get_list_admin_support",
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": id_kom
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#tabel_admin_komunitas tbody').empty().append(nofound);
+                },
+            },
+            error: function (request, status, errorThrown) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_admin_komunitas tbody').empty().append(nofound);
+
+            },
+            columns: [
+                {
+                    mData: 'user_id',
+                    render: function (data, type, row, meta) {
+                        return '<span class="s13">' + data + '</span>';
+                    }
+                },
+                {
+                    mData: 'sso_picture',
+                    render: function (data, type, row, meta) {
+                        var noimg = '/img/kosong.png';
+                        var pic = server_cdn + cekimage_cdn(data);
+                        return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgsprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
+                    }
+                },
+                {
+                    mData: 'full_name',
+                    render: function (data, type, row, meta) {
+                        return '<span class="s13">' + data + '</span>';
+                    }
+                },
+                {
+                    mData: 'user_name',
+                    render: function (data, type, row, meta) {
+                        return '<span class="s13">' + data + '</span>';
+                    }
+                },
+                {
+                    mData: 'email',
+                    render: function (data, type, row, meta) {
+                        return '<span class="s13">' + data + '</span>';
+                    }
+                },
+                {
+                    mData: null,
+                    render: function (data, type, row, meta) {
+                        return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp">' +
+                            '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login">' +
+                            '<small>Login</small></button>';
+                    }
+                }
+            ],
+            columnDefs:
+                [
+                    {
+                        "data": null,
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                        "targets": -1
+                    }
+                ],
+
+        });
+
+        //DETAIL FROM DATATABLE
+        $('#tabel_admin_komunitas tbody').on('click', 'button.btn_reset_otp', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/support/reset_attempt_otp',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas").val(),
+                    "email": data.email
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        swal("Reset OTP", "Successfully reset otp number", "success");
+                    } else {
+                        swal("Failed", result.message, "error");
+                    }
+
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show detail otp");
+                }
+            });
+        });
+
+        $('#tabel_admin_komunitas tbody').on('click', 'button.btn_reset_login', function () {
+            var data = tabel.row($(this).parents('tr')).data();
+            console.log(data);
+             $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/support/reset_attempt_login',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas").val(),
+                    "user_id": data.user_id,
+                    "user_type": "2"
+
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        swal("Reset Login Attempt", "Successfully reset login attempt", "success");
+                    } else {
+                        swal("Failed", result.message, "error");
+                    }
+
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show detail login");
+                }
+            });
+        });
+    }
 
 
 

@@ -258,6 +258,8 @@ Route::prefix('subscriber')->group(function () {
     Route::get('/notification_management', 'SubscriberController@NotificationManagementViewSubs')->name('/notification_management');
     Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->name('/dashboard_setting');
 
+    Route::get('/tes_enkrip', 'SubscriberController@TesEnkripView')->name('/tes_enkrip');
+
 
 
     // MODULE ROUTE
@@ -282,6 +284,9 @@ Route::prefix('subscriber')->group(function () {
 
 
     //POST
+
+    Route::post('tes_enkrip', 'SubscriberController@tes_enkrip')->name('tes_enkrip');
+
     Route::post('add_friend_suggest_subs', 'SubscriberController@add_friend_suggest_subs')->name('add_friend_suggest_subs');
 
     Route::post('get_top_visit_club', 'SubscriberController@get_top_visit_club')->name('get_top_visit_club');
@@ -441,6 +446,7 @@ Route::prefix('support')->group(function () {
     Route::get('/knowledge', 'SupportCommjunction@knowledgeSupportView')->name('/knowledge');
     Route::get('/subdomain', 'SupportCommjunction@SubdomainSupportView')->name('/subdomain');
     Route::get('/reset_pass', 'SupportCommjunction@ResetPassSupportView')->name('/reset_pass');
+    Route::get('/reset_attempt', 'SupportCommjunction@ResetFailedAttemptSupportView')->name('/reset_attempt');
 
 
 
@@ -461,6 +467,11 @@ Route::prefix('support')->group(function () {
     Route::post('change_status_subdomain', 'SupportCommjunction@change_status_subdomain')->name('change_status_subdomain');
     Route::post('get_list_admin_support', 'SupportCommjunction@get_list_admin_support')->name('get_list_admin_support');
     Route::post('reset_pass_share_otp', 'SupportCommjunction@reset_pass_share_otp')->name('reset_pass_share_otp');
+    Route::post('reset_pass_share_otp', 'SupportCommjunction@reset_pass_share_otp')->name('reset_pass_share_otp');
+    Route::post('get_random_otp', 'SupportCommjunction@get_random_otp')->name('get_random_otp');
+    Route::post('reset_attempt_otp', 'SupportCommjunction@reset_attempt_otp')->name('reset_attempt_otp');
+    Route::post('reset_attempt_login', 'SupportCommjunction@reset_attempt_login')->name('reset_attempt_login');
+
 
 
 });

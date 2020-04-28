@@ -55,10 +55,16 @@
             <i class="mdi mdi-domain menu-icon"></i>
         </a>
     </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/support/reset_pass">
-                <span class=" menu-title" lang="en">Reset Password</span>
-                <i class="mdi mdi-lock-outline menu-icon"></i>
-            </a>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/support/reset_pass">
+            <span class=" menu-title" lang="en">Reset Password</span>
+            <i class="mdi mdi-lock-outline menu-icon"></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/support/reset_attempt">
+            <span class=" menu-title" lang="en">Reset Failed Attempt</span>
+            <i class="mdi mdi-redo menu-icon"></i>
+        </a>
+    </li>
 </ul>

@@ -35,6 +35,7 @@
                             <th><b> ID User </b></th>
                             <th><b> Photo </b></th>
                             <th><b> Full Name </b></th>
+                            <th><b> Email </b></th>
                             <th><b> Username </b></th>
                             <th><b> Action </b></th>
                         </tr>
@@ -99,8 +100,8 @@
                                 <small class="clight s13">User Type</small>
                                 <select class="form-control input-abu" name="user_type" id="user_type" required>
                                     <option selected disabled> Choose </option>
-                                    <option value="1"> Admin Community </option>
-                                    <option value="2"> Subscriber </option>
+                                    <option value="2"> Admin Community </option>
+                                    <option value="3"> Subscriber </option>
                                 </select>
                             </div>
                         </div> <!-- end-col-md -->
@@ -108,16 +109,16 @@
                         </div> <!-- end-col-md -->
                     </div>
                 </div> <!-- end-body -->
-                    <div class="modal-footer" style="border: none;padding-right: 30%; padding-bottom:5%; padding-top: 0px;">
-                        <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
-                            <i class="mdi mdi-close"></i> Cancel
-                        </button>
-                        &nbsp;
-                        <button type="submit" id="btn_generate_user" class="btn btn-teal btn-sm">
-                            <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Generate </button>
-                    </div> <!-- end-footer     -->
+                <div class="modal-footer" style="border: none; padding-top: 2em">
+                    <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="button" id="btn_generate_user" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Generate </button>
+                </div> <!-- end-footer     -->
             </form>
         </div> <!-- END-MDL CONTENT -->
 
@@ -125,6 +126,100 @@
 </div>
 
 
+<!-- MODAL DETAIL USER -->
+<div class="modal fade" id="modal_detail_user_reset" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="mod-header pad-5persen">
+                <img src="/visual/kananatas2.png" class="img-mdl-top">
+                <small class="modal-title cgrey2">Detail User</small>
+                <br>
+                <h4 class=" cblue">Force Reset Password</h4>
+                <nav aria-label="breadcrumb">
+
+                </nav>
+            </div>
+            <br>
+            <form method="POST" id="form_reset_pass" action="{{route('reset_pass_share_otp')}}">
+                {{ csrf_field() }}
+                <input type="hidden" id="id_komunitas" name="id_komunitas">
+                <input type="hidden" id="user_tipe" name="user_tipe">
+                <input type="hidden" id="user_id" name="user_id">
+
+
+                <div class="modal-body body250" style="padding-left: 1.5em;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="/img/kosong.png" onclick="clickImage(this)" id="imgsprev"
+                                class="img zoom rounded-circle"
+                                style="margin-left: auto; margin-right: auto; width: 100%;"
+                                onerror="this.onerror=null;this.src='/img/kosong.png';">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <small class="clight s13">ID User</small>
+                                <p class="cgrey s13" id="detail_iduser"></p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Full Name</small>
+                                        <p class="cgrey s13" id="detail_fullname"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <small class="clight s13">Email</small>
+                                        <p class="cgrey s13" id="detail_email"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <small class="clight s13">Username</small>
+                                        <p class="cgrey s13" id="detail_username"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <small class="clight s13">Resend OTP</small>
+                                        <button type="button" id="btn_send_otp" class="btn btn-tosca btn-sm">
+                                            <i class="mdi mdi-lock btn-icon-prepend">
+                                            </i> Send OTP </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4" style="padding-right: 0em;">
+                                <h6 class="cgrey2">OTP Number</h6>
+                                <small class="clight">Input OTP Number from User's Email</small>
+                            </div>
+                            <div class="col-md-4" style="padding-right: 0em;">
+                                <input type="text" id="text_OTP" name="text_OTP" class="form-control input-abu"
+                                    style="font-size: 20px; color: #50b7b9;">
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div> <!-- end-body -->
+                <div class="modal-footer" style="border: none; padding-top: 2em">
+                    <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Reset </button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
 
 
 
@@ -137,23 +232,13 @@
             get_list_komunitas_support("all");
         }
 
-        random_otp();
     });
-
-    // $("#btn_generate_specific").click(function () {
-    //     tabel_user_resetpass();
-    // });
-
-    function random_otp() {
-        var random = Math.floor(100000 + Math.random() * 900000);
-        $("#text_OTP").val(random);
-    }
 
 
     function tabel_user_resetpass(tipe) {
-        if (tipe == 1) {
+        if (tipe == 2) {
             var url_user = "/support/get_list_admin_support";
-        } else if (tipe == 2) {
+        } else if (tipe == 3) {
             var url_user = "/support/get_list_subscriber_support";
         }
         $('#tabel_user_resetpass').DataTable().clear().destroy();
@@ -226,6 +311,12 @@
                     }
                 },
                 {
+                    mData: 'email',
+                    render: function (data, type, row, meta) {
+                        return '<span class="s13">' + data + '</span>';
+                    }
+                },
+                {
                     mData: 'user_name',
                     render: function (data, type, row, meta) {
                         return '<span class="s13">' + data + '</span>';
@@ -256,6 +347,7 @@
             var data = tabel.row($(this).parents('tr')).data();
             console.log(data);
 
+
             $("#id_komunitas").val("");
             $("#user_tipe").val("");
             $("#user_id").val("");
@@ -263,6 +355,8 @@
             $("#detail_iduser").html(data.user_id);
             $("#detail_fullname").html(data.full_name);
             $("#detail_username").html(data.user_name);
+            $("#detail_email").html(data.email);
+
             if (data.sso_picture != null && data.sso_picture != undefined) {
                 $("#imgsprev").attr("src", server_cdn + cekimage_cdn(data.sso_picture));
             }
@@ -324,12 +418,16 @@
     } //endfunction
 
 
-    $('#user_type').change(function () {
-        var item = $(this);
-        var usertipe = item.val();
+    $("#btn_generate_user").click(function () {
+        var usertipe = $("#user_type").val();
+
         tabel_user_resetpass(usertipe);
     });
 
+
+    $("#btn_send_otp").click(function () {
+        get_random_otp();
+    });
 
 </script>
 

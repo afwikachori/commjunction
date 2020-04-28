@@ -9,12 +9,14 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
+// use App\Helpers\RequestHelper;
 
 use Session;
 use Alert;
 
 class SubscriberController extends Controller
 {
+    // use RequestHelper;
 
     public function loginView()
     {
@@ -67,6 +69,10 @@ class SubscriberController extends Controller
         return view('subscriber/dashboard/module_setting_subs');
     }
 
+    public function TesEnkripView()
+    {
+        return view('subscriber/tes_enkrip');
+    }
 
 
 
@@ -1687,7 +1693,19 @@ class SubscriberController extends Controller
     }
 
 
+	public function tes_enkrip(Request $request)
+	{
+        $input = $request->all();
+        return $input;
+		// $input = [
+		// 	'user_id' => $request->user_id
+		// 	'password' => $request->password
+		// ];
 
+		// $req_enkrip = $this->encryptedPost(Request $request, $input, '/localhost/example')
+
+		// return $req_enkrip;
+	}
 
 
 
