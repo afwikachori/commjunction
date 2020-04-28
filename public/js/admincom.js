@@ -85,6 +85,8 @@ function session_admin_logged() {
         success: function (result) {
             console.log(result);
             console.log("admin komunitas = " + result.access_token);
+            console.log("cdn : " + server_cdn);
+
 
             setTimeout(function () {
                 ui.popup.hideLoader();
@@ -99,29 +101,13 @@ function session_admin_logged() {
                 $(".email_komunitas").html(user.email);
 
                 if (user.community_logo != undefined || user.community_logo != null) {
-                    var oic = user.community_logo;
-                    var cekone = oic.slice(0, 1);
-                    var imgkom = '';
-                    if (cekone != "/") {
-                        imgkom = "/" + user.community_logo;
-                    } else {
-                        imgkom = user.community_logo;
-                    }
-                    $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(imgkom));
+
+                    $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(user.community_logo));
                 }
 
                 if (user.picture != undefined || user.picture != null) {
-                    var oic = user.picture;
-                    var cekone = oic.slice(0, 1);
-                    var picsubs = '';
-                    if (cekone != "/") {
-                        picsubs = "/" + user.picture;
-                    } else {
-                        picsubs = user.picture;
-                    }
-
-                    $(".foto_profil_admin").attr("src", server_cdn + cekimage_cdn(picsubs));
-                    $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(picsubs));
+                    $(".foto_profil_admin").attr("src", server_cdn + cekimage_cdn(user.picture));
+                    $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(user.picture));
                 }
 
                 $(".user_admin_logged").html(user.full_name);
@@ -247,19 +233,8 @@ function get_result_setup_comsetting() {
                 }
 
                 if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
-                    if (oic == undefined || oic == "undefined") {
-                        oic = "";
-                    } else {
-                        var oic = portal.data.image;
-                    }
-                    var cekone = oic.slice(0, 1);
-                    var imgportal = '';
-                    if (cekone != "/") {
-                        imgportal = "/" + portal.data.image;
-                    } else {
-                        imgportal = portal.data.image;
-                    }
-                    $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(imgportal));
+
+                    $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(portal.data.image));
                 }
                 if (portal.ready == true) {
                     $('#headline').attr("disabled", "disabled");
@@ -455,7 +430,7 @@ function get_initial_feature(datafitur) {
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-        '<img src="' + server_cdn + cekimage_cdn(imgk) + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
+        '<img src="' + server_cdn + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
             item.title + '</h6>' +

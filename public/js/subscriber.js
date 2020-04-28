@@ -90,21 +90,14 @@ function session_subscriber_logged() {
             }, 8000);
             console.log(result);
             console.log(result.access_token);
+            console.log("cdn : " + server_cdn);
 
             var user = result.user;
             get_list_notif_navbar(user.community_id);
             if (user.picture != undefined || user.picture != null) {
-                var oic = user.picture;
-                var cekone = oic.slice(0, 1);
-                var picsubs = '';
-                if (cekone != "/") {
-                    picsubs = "/" + user.picture;
-                } else {
-                    picsubs = user.picture;
-                }
-                // alert(server_cdn + picsubs);
-                $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(picsubs));
-                $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(picsubs));
+
+                $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(user.picture));
+                $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(user.picture));
             }
 
             $(".nama_komunitas").html(user.community_name);
