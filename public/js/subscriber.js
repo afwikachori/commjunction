@@ -56,6 +56,7 @@ var ui = {
 
 $(document).ready(function () {
     session_subscriber_logged();
+
 });
 
 // SESSION LOGIN SUBSVRIBER
@@ -102,8 +103,8 @@ function session_subscriber_logged() {
                     picsubs = user.picture;
                 }
                 // alert(server_cdn + picsubs);
-                $(".foto_profil_subs").attr("src", server_cdn + picsubs);
-                $("#view_edit_user").attr("src", server_cdn + picsubs);
+                $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(picsubs));
+                $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(picsubs));
             }
 
             $(".nama_komunitas").html(user.community_name);
@@ -144,6 +145,7 @@ function session_subscriber_logged() {
 
 
 
+            get_payment_initial();
 
         },
         error: function (result) {
@@ -347,7 +349,7 @@ function get_pricing_membership() {
                         '<div class="card-body">' +
                         '<center>' +
                         '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
-                        '<img src="' + server_cdn + item.icon + '"  class="rounded-circle img-fluid imgprice"' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.icon) + '"  class="rounded-circle img-fluid imgprice"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
                         '<div class="hidetime1">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
@@ -402,7 +404,7 @@ function get_payment_initial() {
                         '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
                         'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
-                        '<img src="' + server_cdn + itm.icon + '" class="imgepay" style="width: 10%; height: auto;"' +
+                    '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
                         '<span class="float-right">' +
                         '<i class="fa fa-chevron-right"></i>' +
@@ -665,3 +667,94 @@ function LogoutSubscriber() {
     // });
 }
 
+
+
+
+
+//subscriber membershitype
+function hidenlah_confirm_member() {
+    $("#detil_pay").css("display", "none");
+    $("#name_userpay").attr("disabled", 'disabled');
+    $("#fileup").attr("disabled", 'disabled');
+    $("#btn_confirmpay").css("display", "none");
+    $("#hidein-img").css("display", "none");
+
+}
+
+
+
+$('input#invoice_number').bind("change keyup input", function () {
+    var inin = $(this).val();
+    get_invoice_num(inin);
+});
+
+
+
+
+function get_invoice_num(input) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_invoice_num_membership',
+        data: {
+            "invoice_number": input,
+            "transaction_type_id": "3",
+            "community_id": $(".id_komunitas").val()
+        },
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                $("#isi_form").show();
+                var isi = result[0];
+                $("#detil_pay").fadeIn();
+                $("#name_userpay").removeAttr("disabled", 'disabled');
+                $("#fileup").removeAttr("disabled", 'disabled');
+                $("#btn_confirmpay").fadeIn();
+                var tf = isi.comm_payment_method;
+                $("#nominal_payment1").html("Rp &nbsp;&nbsp;" + rupiah(isi.grand_total));
+                $("#bank_receiver").html(tf.payment_bank_name);
+                $("#name_receiver").html(tf.payment_owner_name);
+                $("#bank_num").html(tf.payment_account);
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant invoice number");
+
+        }
+    });
+
+}
+
+
+
+var idku = $('#id_pop_payment').val();
+//showfile name upload icon
+$('#fileup').on('change', function () {
+    // menampilkan img
+    previewImgUpload("show_imgpay", this);
+    $("#hidein-img").fadeIn();
+
+    var fileName = $(this).val();
+    if (fileName.length > 30) {
+        var fileNameFst = fileName.substring(0, 30);
+        $(this).next('.custom-file-label').html(fileNameFst + "...");
+    } else {
+        $(this).next('.custom-file-label').html(fileName);
+    }
+});

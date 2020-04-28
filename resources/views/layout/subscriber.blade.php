@@ -283,8 +283,102 @@
     </div>
 
 
+    <!-- MODAL MEMBERSHIP PAY CONFIRMATION -->
+    <div id="modal_confirmpay_membership" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="modal_confirmpay_membership" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 65%; margin: auto;">
+                <form method="POST" id="form_confirm_membership_subs" action="{{route('confirm_pay_membership_subs')}}"
+                    enctype="multipart/form-data"> {{ csrf_field() }}
+                    <div class="modal-body"
+                        style="min-height: 365px; height: auto; padding-right: 10%; padding-left: 10%;">
 
+                        <img src="/visual/kananatas2.png" class="img_confirm1">
+                        <img src="/visual/imgregis.png" class="img_confirm2">
 
+                        <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;" lang="en"
+                            data-lang-token="confirm_membership">Confirm your Membership Payment</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="form-group row">
+                                    <label class="h6 cgrey" lang="en">Invoice Number</label>
+                                    <input id="invoice_number" type="text"
+                                        class="form-control @error('invoice_number') is-invalid @enderror"
+                                        name="invoice_number" value="{{ old('invoice_number') }}" required
+                                        autocomplete="invoice_number" placeholder="Paste Invoice Number"
+                                        style="background-color: #e9ecef; border-radius: 6px;">
+                                    @if($errors->has('invoice_number'))
+                                    <small style="color: red;">{{ $errors->first('invoice_number')}}</small>
+                                    @endif
+                                </div>
+                                <br>
+                                <div id="isi_form" style="display: none;">
+                                    <div class="form-group row">
+                                        <label class="h6 cgrey" lang="en">Image Of Payment</label>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input form-control @error('fileup') is-invalid @enderror"
+                                                name="fileup" value="{{ old('fileup') }}" required autocomplete="fileup"
+                                                id="fileup" required>
+                                            <label class="custom-file-label" for="fileup" style="text-align: left;"
+                                                lang="en">Choose file</label>
+
+                                            @if($errors->has('fileup'))
+                                            <small style="color: red;"><span lang="en">Extension is</span><i>.jpg /
+                                                    .jpeg /
+                                                    .PDF</i></small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end  col-4 -->
+                            <div class="col-1">
+                            </div>
+
+                            <div class="col-4" id="detil_pay">
+                                <div class="form-group" style="margin-top: 0.5em;">
+                                    <small class="clight2 mgb-05" lang="en">Total Payment</small>
+                                    <h6 class="cgrey1" id="nominal_payment1"></h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <small class="clight2 mgb-05" lang="en">Account Number</small>
+                                    <h6 class="cgrey1" id="bank_num"></h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <small class="clight2 mgb-05" lang="en">Bank Name</small>
+                                    <h6 class="cgrey1" id="bank_receiver"></h6>
+                                </div>
+
+                                <div class="form-group">
+                                    <small class="clight2 mgb-05" lang="en">Name Receiver</small>
+                                    <h6 class="cgrey1" id="name_receiver"></h6>
+                                </div>
+
+                                <div class="form-group" id="hidein-img" lang="en">
+                                    <small class="clight2 mgb-05" lang="en">Your Image Payment</small>
+                                    <br>
+                                    <img id="show_imgpay" class="img-fluid rounded float-left" src=""
+                                        data-toggle="tooltip" data-placement="right" title="Double Click to Preview"
+                                        style="width: 20%; margin-top: 0.3em; height: auto;display: none;"
+                                        onclick="clickImage(this)">
+                                </div>
+                            </div> <!-- end detail-pay -->
+                        </div> <!-- end row -->
+                    </div>
+                    <div class="modal-footer" style="border: none;">
+                        <img src="/visual/kiribawah2.png" class="img_confirm3">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="width: 110px;"
+                            lang="en">Close</button> &nbsp;
+                        <button type="submit" id="btn_confirmpay" class="btn btn-teal btn-sm" style="width: 110px;"
+                            lang="en">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
