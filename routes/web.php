@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-     dd(env('CDN'));
+    dd(env('CDN'));
     return view('welcome');
 });
 
@@ -481,7 +481,4 @@ Route::prefix('support')->group(function () {
     Route::post('resend_membership_approv_subs', 'SupportCommjunction@resend_membership_approv_subs')->name('resend_membership_approv_subs');
     Route::post('resend_mail_subs_approv', 'SupportCommjunction@resend_mail_subs_approv')->name('resend_mail_subs_approv');
     Route::post('resend_mail_subs_nonaktif', 'SupportCommjunction@resend_mail_subs_nonaktif')->name('resend_mail_subs_nonaktif');
-
-
-
 });

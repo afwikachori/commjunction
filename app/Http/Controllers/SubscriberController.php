@@ -88,47 +88,48 @@ class SubscriberController extends Controller
             'pass_subs' => 'required',
             'id_community' => 'required',
         ]);
+
         $input = $request->all();
+        $url = env('SERVICE') . 'auth/commsubs';
+        $client = new \GuzzleHttp\Client();
+        try {
+            // $response = $client->request('POST', $url, [
+            //     'form_params' => [
+            //         'input'       => $input['input_login'],
+            //         'password'    => $input['pass_subs'],
+            //         'community_id' => $input['id_community']
+            //     ]
+            // ]);
 
-        if ($input['input_login'] == 'afwika' && $input['pass_subs'] == 'afwika') {
-            return redirect('subscriber/dashboard');
-        } else {
-            $url = env('SERVICE') . 'auth/commsubs';
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
+            // $jsonlogin = $json['data'];
 
-            $client = new \GuzzleHttp\Client();
-            try {
-                $response = $client->request('POST', $url, [
-                    'form_params' => [
-                        'input'       => $input['input_login'],
-                        'password'    => $input['pass_subs'],
-                        'community_id' => $input['id_community']
-                    ]
-                ]);
+            $req_input =  [
+                'input'       => $input['input_login'],
+                'password'    => $input['pass_subs'],
+                'community_id' => $input['id_community']
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
+            // return $jsonlogin;
 
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
-                $jsonlogin = $json['data'];
-
-                session()->put('session_subscriber_logged', $jsonlogin);
-                // $user_logged = session()->get('session_subscriber_logged');
-                // dd($user_logged);
-                $user = $jsonlogin['user']['user_name'];
-                return redirect('subscriber/dashboard')->with('fullname', $user);
-            } catch (ClientException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ServerException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ConnectException $errornya) {
-                $error['status'] = 500;
-                $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            }
+            session()->put('session_subscriber_logged', $jsonlogin);
+            $user = $jsonlogin['user']['user_name'];
+            return redirect('subscriber/dashboard')->with('fullname', $user);
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     } //end-func
 
@@ -452,6 +453,7 @@ class SubscriberController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+
             if ($json['success'] == true) {
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
@@ -1093,7 +1095,7 @@ class SubscriberController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                 return back();
             }
-        } else{
+        } else {
             alert()->error('File is Required', 'Failed!')->autoclose(4500)->persistent('Done');
             return back();
         }
@@ -1452,8 +1454,7 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
-                return $json['data'];
-
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1495,8 +1496,7 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
-                return $json['data'];
-
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1693,9 +1693,8 @@ class SubscriberController extends Controller
         }
     }
 
-
-	public function tes_enkrip(Request $request)
-	{
+    public function tes_enkrip(Request $request)
+    {
         // dd(env('CDN'));
         $input = $request->all();
         $url = env('SERVICE') . 'auth/commsubs';
@@ -1707,14 +1706,10 @@ class SubscriberController extends Controller
         ];
 
 
-        $res_enkkrip = $this->encryptedPost($request, $req_input, $url);
+        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
 
         return $res_enkkrip;
-	}
-
-
-
-
+    }
 } //end-class
 
 // login

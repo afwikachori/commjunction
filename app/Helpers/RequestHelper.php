@@ -36,25 +36,30 @@ trait RequestHelper
         ]);
     }
 
-    public function encryptedPost(Request $request, $input, $endpoint)
+    public function encryptedPost(Request $request, $input, $endpoint, $token)
     {
-        // dd($input);
-        $body = $this->encrypt($input);
+        if($token == null){
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Encrypt_rsa' => 'true'
+            ];
+        }else{
+            $headers = [
+                'Content-Type' => 'application/json',
+               'Authorization' => $token,
+                'Encrypt_rsa' => 'true'
+            ];
+        }
 
+        $body = $this->encrypt($input);
         $bodyku = json_encode([
             "data"     => $body,
         ]);
-
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Encrypt_rsa' => 'true'
-        ];
 
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
         ];
-
         // dd($datakirim);
 
         $client = new \GuzzleHttp\Client();
