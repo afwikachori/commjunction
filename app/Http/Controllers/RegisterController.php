@@ -658,9 +658,8 @@ class RegisterController extends Controller
                 'password' => $request['newpass_admin'],
             ];
             $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
-            // return $jsonlogin;
+
             $respon = json_decode($jsonlogin, true);
-            // return $respon['success'];
             if ($respon['success'] == true) {
                 if (session()->has('auth_subs')) {
                     alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500);
