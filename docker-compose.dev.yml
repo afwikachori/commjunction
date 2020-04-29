@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: gitlab.vascomm.co.id:4567/commjunction/web-platform:latest_dev
     volumes:
-      - /home/apps/config_env/web_commj/.env:/var/ww/html/.env
+      - /home/apps/config_env/web_commj/.env:/var/www/html/.env
       - ./:/var/www/html
       - ./nginx-conf/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
