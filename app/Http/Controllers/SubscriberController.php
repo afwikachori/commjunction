@@ -112,7 +112,6 @@ class SubscriberController extends Controller
             ];
             $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
             // return $jsonlogin;
-
             session()->put('session_subscriber_logged', $jsonlogin);
             $user = $jsonlogin['user']['user_name'];
             return redirect('subscriber/dashboard')->with('fullname', $user);
@@ -430,31 +429,36 @@ class SubscriberController extends Controller
         // dd($request);
         $ses_login = session()->get('session_subscriber_logged');
         $input = $request->all();
-
         $url = env('SERVICE') . 'profilemanagement/changepassword';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
-            'old_password' => $input['old_pass_subs'],
-            'new_password' => $input['new_pass_subs']
-        ]);
+        // $client = new \GuzzleHttp\Client();
+        // $headers = [
+        //     'Content-Type' => 'application/json',
+        //     'Authorization' => $ses_login['access_token']
+        // ];
+        // $bodyku = json_encode([
+        //     'old_password' => $input['old_pass_subs'],
+        //     'new_password' => $input['new_pass_subs']
+        // ]);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
-        // dd($datakirim);
+        // $datakirim = [
+        //     'body' => $bodyku,
+        //     'headers' => $headers,
+        // ];
 
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+            // $response = $client->post($url, $datakirim);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
+            $req_input =  [
+                'old_password' => $input['old_pass_subs'],
+                'new_password' => $input['new_pass_subs']
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url,  $ses_login['access_token']);
+            $respon = json_decode($jsonlogin, true);
+            // return $respon['success'];
+            if ($respon['success'] == true) {
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
             }

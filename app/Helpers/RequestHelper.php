@@ -38,15 +38,15 @@ trait RequestHelper
 
     public function encryptedPost(Request $request, $input, $endpoint, $token)
     {
-        if($token == null){
+        if ($token == null) {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Encrypt_rsa' => 'true'
             ];
-        }else{
+        } else {
             $headers = [
                 'Content-Type' => 'application/json',
-               'Authorization' => $token,
+                'Authorization' => $token,
                 'Encrypt_rsa' => 'true'
             ];
         }
@@ -67,13 +67,22 @@ trait RequestHelper
         $response = $request->getBody()->getContents();
         $dt_dekrip = json_decode($response, true);
 
-        $data = '';
-        foreach ($dt_dekrip['data'] as $i => $dt) {
-            $encrypted = $this->decrypt(json_encode($dt_dekrip['data'][$i]));
-         $data .= $encrypted;
+        $leng =  count($dt_dekrip['data']);
+        if ($leng > 1) {
+            $data = '';
+            foreach ($dt_dekrip['data'] as $i => $dt) {
+                $encrypted = $this->decrypt(json_encode($dt_dekrip['data'][$i]));
+                $data .= $encrypted;
+            }
+        } else {
+            $data = $this->decrypt(json_encode($dt_dekrip['data']));
         }
 
-        return json_decode($data,true);
+        if ($data == '{}') {
+            return  json_encode(["success" => "true"]);
+        } else {
+            return json_decode($data, true);
+        }
     }
 
 
@@ -110,7 +119,8 @@ trait RequestHelper
     }
 
 
-  private function decrypt($encrypted){
+    private function decrypt($encrypted)
+    {
         $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
         // dd($encrypted);
         // $encrypted = json_encode($encrypted);
@@ -125,13 +135,11 @@ trait RequestHelper
         $output = '';
 
         // $encrypted = json_encode($encrypted);
-        while ($encrypted)
-        {
+        while ($encrypted) {
             $chunk = substr($encrypted, 0, $chunkSize);
             $encrypted = substr($encrypted, $chunkSize);
             $decrypted = '';
-            if (!openssl_private_decrypt($chunk, $decrypted, $privateKey, OPENSSL_PKCS1_OAEP_PADDING))
-            {
+            if (!openssl_private_decrypt($chunk, $decrypted, $privateKey, OPENSSL_PKCS1_OAEP_PADDING)) {
                 die('Failed to decrypt data');
             }
             $output .= $decrypted;

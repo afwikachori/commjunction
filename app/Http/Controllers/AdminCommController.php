@@ -9,12 +9,15 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
+use App\Helpers\RequestHelper;
+
 use Session;
 use Alert;
 use Helper;
 
 class AdminCommController extends Controller
 {
+    use RequestHelper;
 
     public function adminDashboardView()
     {
@@ -126,48 +129,53 @@ class AdminCommController extends Controller
         ]);
         $input = $request->all();
 
-        if ($input['useradmin'] == 'afwika' && $input['passadmin'] == 'afwika') {
-            return redirect('admin/dashboard');
-        } else {
-            $url = env('SERVICE') . 'auth/commadmin';
-            try {
-                $client = new \GuzzleHttp\Client();
-                $response = $client->request('POST', $url, [
-                    'form_params' => [
-                        'user_name'   => $input['useradmin'],
-                        'password'    => $input['passadmin']
-                    ]
-                ]);
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
-                // dd($json);
+        $url = env('SERVICE') . 'auth/commadmin';
+        try {
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->request('POST', $url, [
+            //     'form_params' => [
+            //         'user_name'   => $input['useradmin'],
+            //         'password'    => $input['passadmin']
+            //     ]
+            // ]);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
 
-                if ($json['success'] == true) {
-                    session()->put('session_admin_logged', $json['data']);
-                    $nameku = $json['data']['user']['full_name'];
+            $req_input =  [
+                'user_name'   => $input['useradmin'],
+                'password'    => $input['passadmin']
+            ];
 
-                    return redirect('admin/dashboard')->with('nama_admin', $nameku);
-                }
-            } catch (ClientException $exception) {
-                $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
-                // return $errorq;
+            $json = $this->encryptedPost($request, $req_input, $url, null);
+            // return $json;
 
-                if ($errorq['success'] == false) {
-                    alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back()->withInput();
-                }
-            } catch (ConnectException $errornya) {
+            session()->put('session_admin_logged', $json);
+            $nameku = $json['user']['full_name'];
 
-                $error['status'] = 500;
-                $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+            return redirect('admin/dashboard')->with('nama_admin', $nameku);
+        } catch (ClientException $exception) {
+            $errorq = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            // return $errorq;
 
-                if ($error == 500) {
-                    alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            if ($errorq['success'] == false) {
+                alert()->error($errorq['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
             }
-        } //end-if
+        } catch (ConnectException $errornya) {
+
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+
+            if ($error == 500) {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
     } //end-func
 
 
@@ -1319,27 +1327,34 @@ class AdminCommController extends Controller
         $input = $request->all();
 
         $url = env('SERVICE') . 'profilemanagement/changepassword';
-        $client = new \GuzzleHttp\Client();
+        // $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
-            'old_password' => $input['old_pass_admin'],
-            'new_password' => $input['new_pass_admin']
-        ]);
+        // $headers = [
+        //     'Content-Type' => 'application/json',
+        //     'Authorization' => $ses_login['access_token']
+        // ];
+        // $bodyku = json_encode([
+        //     'old_password' => $input['old_pass_admin'],
+        //     'new_password' => $input['new_pass_admin']
+        // ]);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
+        // $datakirim = [
+        //     'body' => $bodyku,
+        //     'headers' => $headers,
+        // ];
 
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
+            // $response = $client->post($url, $datakirim);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
+            $req_input =  [
+                'old_password' => $input['old_pass_admin'],
+                'new_password' => $input['new_pass_admin']
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, $ses_login['access_token']);
+            $respon = json_decode($jsonlogin, true);
+            // return $respon;
+            if ($respon['success'] == true) {
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
             }
@@ -1551,9 +1566,9 @@ class AdminCommController extends Controller
                 $paystatusjudul = "Membership Rejected";
             }
 
-            if($input['invoice_num_acc'] == "Free"){
+            if ($input['invoice_num_acc'] == "Free") {
                 $invnum = 0;
-            }else{
+            } else {
                 $invnum = $input['invoice_num_acc'];
             }
 
@@ -1589,7 +1604,7 @@ class AdminCommController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } else{
+        } else {
             alert()->error('File verification is required', 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2459,15 +2474,15 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
 
-        if($input['status'] == "true"){
+        if ($input['status'] == "true") {
             $tat = true;
-        }else{
+        } else {
             $tat = false;
         }
 
         $bodyku = json_encode([
-            "payment_id" => (int)$input['payment_id'],
-            "level_status" => (int)$input['level_status'],
+            "payment_id" => (int) $input['payment_id'],
+            "level_status" => (int) $input['level_status'],
             "status" => $tat
         ]);
 
@@ -3800,7 +3815,7 @@ class AdminCommController extends Controller
 
     public function edit_usertype_management_admin(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'nama_usertipe_edit' => 'required',
             'dekripsi_usertipe_edit' => 'required',
             'edit_subfitur' => 'required',
@@ -4057,8 +4072,4 @@ class AdminCommController extends Controller
             return $error;
         }
     }
-
-
-
-
 } //end-class
