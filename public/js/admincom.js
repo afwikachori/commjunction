@@ -1,5 +1,6 @@
 // onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 
+var server_cdn = '';
 // LANG -EN-ID
 var lang = new Lang();
 lang.dynamic('id', '/js/langpack/id.json');
@@ -14,8 +15,7 @@ lang.init({
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
 })();
 
-// var server_cdn = $("#server_cdn").val();
-var server_cdn = '{!! env("CDN") !!}';
+
 
 var ui = {
     popup: {
@@ -53,8 +53,8 @@ var ui = {
 };
 
 $(document).ready(function () {
+    server_cdn = $("#server_cdn").val();
     session_admin_logged();
-console.log(lang);
 });
 
 

@@ -8,8 +8,7 @@ lang.init({
 });
 
 
-// var server_cdn = $("#server_cdn").val();
-var server_cdn = '{!! env("CDN") !!}';
+var server_cdn = '';
 var ui = {
     popup: {
         show: function show(type, message, tittle) {
@@ -56,6 +55,7 @@ var ui = {
 })();
 
 $(document).ready(function () {
+    server_cdn = $("#server_cdn").val();
     session_subscriber_logged();
 
 });
