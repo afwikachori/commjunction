@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
+use App\Helpers\RequestHelper;
 
 use Session;
 use Alert;
@@ -18,6 +19,7 @@ use Helper;
 
 class SuperadminController extends Controller
 {
+    use RequestHelper;
 
     public function dashboarSuperView()
     {
@@ -174,25 +176,29 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $url = env('SERVICE') . 'auth/superadmin';
-        $client = new \GuzzleHttp\Client();
+        // $client = new \GuzzleHttp\Client();
 
         try {
-            $response = $client->request('POST', $url, [
-                'form_params' => [
-                    'user_name'   => $input['username_superadmin'],
+            // $response = $client->request('POST', $url, [
+            //     'form_params' => [
+            //         'user_name'   => $input['username_superadmin'],
+            //         'password'    => $input['pass_superadmin']
+            //     ]
+            // ]);
+
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
+            // $jsonlogin = $json['data'];
+            $req_input =  [
+                'user_name'   => $input['username_superadmin'],
                     'password'    => $input['pass_superadmin']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            $jsonlogin = $json['data'];
-
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
+            // return $jsonlogin;
             session()->put('session_logged_superadmin', $jsonlogin);
             $user_logged = session()->get('session_logged_superadmin');
 
             $user = $user_logged['user']['full_name'];
-            // $user = $jsonlogin['user'];
             return redirect('superadmin/dashboard')->with('fullname', $user);
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -3164,32 +3170,37 @@ class SuperadminController extends Controller
 
     public function change_password_superadmin(Request $request)
     {
-        // dd($request);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
 
         $url = env('SERVICE') . 'profilemanagement/changepassword';
-        $client = new \GuzzleHttp\Client();
+        // $client = new \GuzzleHttp\Client();
+        // $headers = [
+        //     'Content-Type' => 'application/json',
+        //     'Authorization' => $ses_login['access_token']
+        // ];
+        // $bodyku = json_encode([
+        //     'old_password' => $input['old_pass_super'],
+        //     'new_password' => $input['new_pass_super']
+        // ]);
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
-            'old_password' => $input['old_pass_super'],
-            'new_password' => $input['new_pass_super']
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
+        // $datakirim = [
+        //     'body' => $bodyku,
+        //     'headers' => $headers,
+        // ];
 
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
+            // $response = $client->post($url, $datakirim);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
+            $req_input =  [
+                'old_password' => $input['old_pass_super'],
+            'new_password' => $input['new_pass_super']
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url,  $ses_login['access_token']);
+            $respon = json_decode($jsonlogin, true);
+            // return $respon['success'];
+            if ($respon['success'] == true) {
                 alert()->success('Successfully to change password', 'Password Updated')->persistent('Done');
                 return back();
             }
