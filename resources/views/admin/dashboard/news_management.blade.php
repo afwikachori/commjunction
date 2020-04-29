@@ -261,6 +261,8 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
+         $('#toggle-headline').attr("disabled");
+         $('#toggle-status').attr("disabled");
         //get_all_news();
         tabel_news_management();
         tabel_tes();
@@ -455,9 +457,9 @@
                     mData: 'publish',
                     render: function (data, type, row, meta) {
                         if (data == 0) {
-                            return '<div class="unpublished">Unpublish</div>';
+                            return '<div class="label-off">Unpublish</div>';
                         } else {
-                            return '<div class="published">Published</div>';
+                            return '<div class="label-on">Published</div>';
                         }
                     }
                 },
@@ -465,9 +467,9 @@
                     mData: 'headline',
                     render: function (data, type, row, meta) {
                         if (data == false) {
-                            return '<div class="headline-status not-headline">Normal</div>';
+                            return '<div class="headline-off">Normal</div>';
                         } else {
-                            return '<div class="headline-status  headline">Headline</div>';
+                            return '<div class="headline-on">Headline</div>';
                         }
                     }
                 },
@@ -497,6 +499,8 @@
     }
 
     function edit_news_management(news_id) {
+           $('#toggle-headline').removeAttr("disabled");
+         $('#toggle-status').removeAttr("disabled");
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

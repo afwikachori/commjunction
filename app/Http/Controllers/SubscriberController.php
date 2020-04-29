@@ -1697,9 +1697,6 @@ use RequestHelper;
 	public function tes_enkrip(Request $request)
 	{
         $input = $request->all();
-    // return $input;
-
-
         $url = env('SERVICE') . 'auth/commsubs';
 
         $req_input =  [
@@ -1710,10 +1707,8 @@ use RequestHelper;
 
 
         $res_enkkrip = $this->encryptedPost($request, $req_input, $url);
-       dd($res_enkkrip);
-        // return $res_enkkrip;
-        // return $res_enkkrip. ':"wikates"}}';
-		// return json_encode($res_enkkrip);
+
+        return $res_enkkrip;
 	}
 
 
