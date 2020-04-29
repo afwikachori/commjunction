@@ -6,7 +6,7 @@
 //           defaultLang: 'en'
 //       });
 // var server_cdn = $("#server_cdn").val();
-var server_cdn = 'http://192.168.172.15:3010';
+var server_cdn = '{!! env("CDN") !!}';
 
 var ui = {
     popup: {
