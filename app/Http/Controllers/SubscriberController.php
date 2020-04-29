@@ -16,7 +16,7 @@ use Alert;
 // use RequestHelper;
 class SubscriberController extends Controller
 {
-
+    use RequestHelper;
 
     public function loginView()
     {
@@ -1693,9 +1693,10 @@ class SubscriberController extends Controller
         }
     }
 
-use RequestHelper;
+
 	public function tes_enkrip(Request $request)
 	{
+        // dd(env('CDN'));
         $input = $request->all();
         $url = env('SERVICE') . 'auth/commsubs';
 

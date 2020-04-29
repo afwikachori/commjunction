@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', function () {
+     dd(env('CDN'));
     return view('welcome');
 });
 
