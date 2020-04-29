@@ -1710,7 +1710,9 @@ use RequestHelper;
 
 
         $res_enkkrip = $this->encryptedPost($request, $req_input, $url);
-        return $res_enkkrip. ':"wikates"}}';
+       dd($res_enkkrip);
+        // return $res_enkkrip;
+        // return $res_enkkrip. ':"wikates"}}';
 		// return json_encode($res_enkkrip);
 	}
 

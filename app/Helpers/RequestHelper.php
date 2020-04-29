@@ -62,10 +62,13 @@ trait RequestHelper
         $response = $request->getBody()->getContents();
         $dt_dekrip = json_decode($response, true);
 
-        $encrypted = $this->decrypt($dt_dekrip['data'][0]);
+        $data = '';
+        foreach ($dt_dekrip['data'] as $i => $dt) {
+            $encrypted = $this->decrypt(json_encode($dt_dekrip['data'][$i]));
+         $data .= $encrypted;
+        }
 
-        $dekrip = response()->json($encrypted);
-        return $encrypted;
+        return json_decode($data,true);
     }
 
 
