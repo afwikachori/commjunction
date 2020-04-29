@@ -8,13 +8,14 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
+use App\Helpers\RequestHelper;
 use Session;
 use Alert;
 
 
 class RegisterController extends Controller
 {
-
+    use RequestHelper;
 
     public function ReviewAdminView()
     {
@@ -259,9 +260,9 @@ class RegisterController extends Controller
                 ]
             ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
-        return $json;
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -290,10 +291,10 @@ class RegisterController extends Controller
                 ]
             ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json;
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -323,10 +324,10 @@ class RegisterController extends Controller
                 ]
             ]);
 
-        $response = $response->getBody()->getContents();
-        $json = json_decode($response, true);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
 
-        return $json;
+            return $json;
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -639,28 +640,35 @@ class RegisterController extends Controller
         ]);
 
 
-        try { //try-cath
+        try {
             $otp_six = $request['digit-1'] . $request['digit-2'] . $request['digit-3'] . $request['digit-4'] . $request['digit-5'] . $request['digit-6'];
-
             $url = env('SERVICE') . 'auth/forgotpassword';
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->request('POST', $url, [
+            //     'form_params' => [
+            //         'otp' => $otp_six,
+            //         'password' => $request['newpass_admin'],
+            //     ]
+            // ]);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
 
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('POST', $url, [
-                'form_params' => [
-                    'otp' => $otp_six,
-                    'password' => $request['newpass_admin'],
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if (session()->has('auth_subs')) {
-                 alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500);
-                return redirect('subscriber/url/'.$url_comname);
-            } else {
-                alert()->success('Your password has been reset. Please login into url subscriber again', 'No Longer Data Url Subscriber')->autoclose(4500);
-                return redirect('/');
+            $req_input =  [
+                'otp' => $otp_six,
+                'password' => $request['newpass_admin'],
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
+            // return $jsonlogin;
+            $respon = json_decode($jsonlogin, true);
+            // return $respon['success'];
+            if ($respon['success'] == true) {
+                if (session()->has('auth_subs')) {
+                    alert()->success('Your password has been reset. Login using New Password.', 'Forgot Password Successful')->autoclose(4500);
+                    return redirect('subscriber/url/' . $url_comname);
+                } else {
+                    alert()->success('Your password has been reset. Please login into url subscriber again', 'No Longer Data Url Subscriber')->autoclose(4500);
+                    return redirect('/');
+                }
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -828,7 +836,6 @@ class RegisterController extends Controller
                 session()->forget('data_idpay');
                 session()->forget('id_pay_type');
 
-                // return view('admin/finish');
                 return view('admin/loading_creating');
             }
         } catch (ClientException $errornya) {

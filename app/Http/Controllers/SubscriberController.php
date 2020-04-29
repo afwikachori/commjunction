@@ -160,34 +160,42 @@ class SubscriberController extends Controller
 
         $input = $request->all(); // getdata form by name
         $url_comname = $input['name_community'];
-        // return $input;
+        $url = env('SERVICE') . 'registration/subscriber';
         try {
-            $url = env('SERVICE') . 'registration/subscriber';
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('POST', $url, [
-                'form_params' =>  [
-                    'full_name'     => $input['fullname_subs'],
-                    'notelp'        => $input['notlp_subs'],
-                    'email'         => $input['email_subs'],
-                    'user_name'     => $input['username_subs'],
-                    'password'      => $input['password_subs'],
-                    'community_id'  => $input['community_id'],
-                    "sso_type"      => $input['sso_type'],
-                    "sso_token"     => $input['sso_token']
-                ]
-            ]);
+            // $client = new \GuzzleHttp\Client();
+            // $response = $client->request('POST', $url, [
+            //     'form_params' =>  [
+            //         'full_name'     => $input['fullname_subs'],
+            //         'notelp'        => $input['notlp_subs'],
+            //         'email'         => $input['email_subs'],
+            //         'user_name'     => $input['username_subs'],
+            //         'password'      => $input['password_subs'],
+            //         'community_id'  => $input['community_id'],
+            //         "sso_type"      => $input['sso_type'],
+            //         "sso_token"     => $input['sso_token']
+            //     ]
+            // ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            // dd($json);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
+            $req_input =  [
+                'full_name'     => $input['fullname_subs'],
+                'notelp'        => $input['notlp_subs'],
+                'email'         => $input['email_subs'],
+                'user_name'     => $input['username_subs'],
+                'password'      => $input['password_subs'],
+                'community_id'  => $input['community_id'],
+                "sso_type"      => $input['sso_type'],
+                "sso_token"     => $input['sso_token']
+            ];
+
+            $respon = $this->encryptedPost($request, $req_input, $url, null);
+            // return $jsonlogin;
+            if ($respon['success'] == true) {
                 alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
                 $url_sukses = '/subscriber/url/' . $url_comname;
-
                 return back()->with('register_sukses', $url_sukses);
-
-                // return redirect('subscriber/url/'.$url_comname)->with('register_sukses', $url_sukses);
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);

@@ -38,6 +38,7 @@ trait RequestHelper
 
     public function encryptedPost(Request $request, $input, $endpoint, $token)
     {
+        // dd($input);
         if ($token == null) {
             $headers = [
                 'Content-Type' => 'application/json',
@@ -110,8 +111,7 @@ trait RequestHelper
             if (!openssl_public_encrypt($chunk, $encrypted, $pubKey, OPENSSL_PKCS1_OAEP_PADDING)) {
                 die('Failed to encrypt data');
             }
-
-            $output .= $encrypted;
+        $output .= $encrypted;
         }
 
         openssl_free_key($pubKey);

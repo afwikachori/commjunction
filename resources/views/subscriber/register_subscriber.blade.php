@@ -15,8 +15,7 @@
         <img src="/visual/commjuction.png" id="commjuction-regis1">
         <img src="/visual/loginadmin.png" class="vs-regis1">
         <center>
-            <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">Let us
-                understand more about you</h5>
+            <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">Let us understand more about you</h5>
         </center>
     </div>
     <div class="col-md-8">
@@ -31,7 +30,7 @@
             </div>
             <div class="col">
                 <div class="sigin">
-                    <span lang="en" class="h6 cteal">Already member?</span>
+                    <span lang="en" class="h6 cteal" lang="en">Already member?</span>
                     <a href="" class="h6" id="klik_login_subs" lang="en" data-lang-token="registernow">&nbsp;Sign In</a>
                 </div>
             </div>
@@ -40,7 +39,7 @@
 
         <div class="pdregis2">
             <div class="col-9 inforegis_subs">
-                <h2 lang="en" style="color: #4F4F4F;">Register</h3>
+                <h2 lang="en" style="color: #4F4F4F;" lang="en">Register</h3>
                     <label lang="en" class="clight2 s15" data-lang-token="info-regis1">Let’s us understand more about
                         you, please fill your information to continue,  so you can using our app.</label>
             </div>
@@ -53,11 +52,11 @@
 
                                 <a class="nav-item cus-a nav-link active" id="nav-personal-tab" data-toggle="tab"
                                     href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="true"
-                                    lang="en">Personal Information</a>
+                                    lang="en" data-lang-token="Personal Information">Personal Information</a>
 
                                 <a class="nav-item cus-a nav-link" id="nav-community-tab" data-toggle="tab"
                                     href="#nav-community" role="tab" aria-controls="nav-community" aria-selected="false"
-                                    lang="en">Community Information</a>
+                                    lang="en" data-lang-token="Community Information">Community Information</a>
 
                             </div>
                         </nav>
@@ -68,7 +67,7 @@
                                 <div class="row">
                                     <div class="col"></div>
                                     <div class="col-2" style="text-align: right;">
-                                        <small class="clight"><i>Step 1 / 2</i></small>
+                                        <small class="clight"><i lang="en">Step 1 / 2</i></small>
                                     </div>
                                 </div>
                                 <div class="container">
@@ -81,9 +80,7 @@
                                                 <input id="fullname_subs" type="text"
                                                     class="form-control @error('fullname_subs') is-invalid @enderror"
                                                     name="fullname_subs" value="{{ old('fullname_subs') }}" required>
-                                                <small lang="en" id="pesan_fullname" class="redhide">At least 3
-                                                    character and Only
-                                                    Letters!</small>
+                                                <small lang="en" id="pesan_fullname" class="redhide">At least 3 character and Only Letters!</small>
 
                                                 @if($errors->has('fullname_subs'))
                                                 <small class="error_fullname" style="color: red;">
@@ -101,11 +98,8 @@
                                                 <input id="notlp_subs" type="text"
                                                     class="form-control @error('notlp_subs') is-invalid @enderror"
                                                     name="notlp_subs" value="{{ old('notlp_subs') }}" required>
-                                                <small id="pesan_phoneformat" class="redhide" lang="en">At least
-                                                    contains 10 Numbers!</small>
-                                                <small id="pesan_phone" class="redhide" lang="en">Number phone has
-                                                    registered! Try
-                                                    another</small>
+                                                <small id="pesan_phoneformat" class="redhide" lang="en">At least contains 10 Numbers!</small>
+                                                <small id="pesan_phone" class="redhide" lang="en">Number phone has registered! Try another</small>
                                                 @if($errors->has('notlp_subs'))
                                                 <small class="error_phone" style="color: red;">
                                                     {{ $errors->first('notlp_subs')}}</small>
@@ -123,10 +117,8 @@
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     name="email_subs" value="{{ old('email_subs') }}" required
                                                     autocomplete="email_subs">
-                                                <small id="pesan_formatemail" class="redhide" lang="en">
-                                                    Include '@' in format email address!</small>
-                                                <small id="pesan_email" class="redhide" lang="en">
-                                                    Email has been registered! Try another</small>
+                                                <small id="pesan_formatemail" class="redhide" lang="en">Include '@' in format email address!</small>
+                                                <small id="pesan_email" class="redhide" lang="en">Email has been registered! Try another</small>
 
                                                 @if($errors->has('email_subs'))
                                                 <small class="error_email"
@@ -142,12 +134,8 @@
                                                 <input id="username_subs" type="text"
                                                     class="form-control @error('username_subs') is-invalid @enderror"
                                                     name="username_subs" value="{{ old('username_subs') }}" required>
-                                                <small id="pesan_usernameformat" lang="en" class="redhide">Mininum 6
-                                                    character contain
-                                                    Numbers and Letters!</small>
-                                                <small id="pesan_username" lang="en" class="redhide">Username already
-                                                    taken! Try
-                                                    another!</small>
+                                                <small id="pesan_usernameformat" lang="en" class="redhide">Mininum 6 character contain Numbers and Letters!</small>
+                                                <small id="pesan_username" lang="en" class="redhide">Username already taken! Try another!</small>
                                                 @if($errors->has('username_subs'))
                                                 <small class="error_username" style="color: red;">
                                                     {{ $errors->first('username_subs')}}</small>
@@ -159,8 +147,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group row">
-                                                <label for="password_subs" class="h6 cgrey s14"
-                                                    lang="en">Password</label>
+                                                <label for="password_subs" class="h6 cgrey s14" lang="en">Password</label>
                                                 <div class="input-group">
                                                     <input class="form-control" id="password_subs" type="password"
                                                         value="{{ old('password_subs') }}"
@@ -177,8 +164,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <small id="pesan_passformat" lang="en" class="redhide">Mininum 8
-                                                    character contain Numbers and Letters!</small>
+                                                <small id="pesan_passformat" lang="en" class="redhide">Mininum 8 character contain Numbers and Letters!</small>
 
                                                 @if($errors->has('password_subs'))
                                                 <small class="error_password"
@@ -194,15 +180,13 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group row">
-                                                <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm
-                                                    Password</label>
+                                                <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm Password</label>
 
                                                 <input id="passconfirm_subs" type="password"
                                                     value="{{ old('passconfirm_subs') }}"
                                                     class="form-control @error('passconfirm_subs') is-invalid @enderror"
                                                     name="passconfirm_subs" required autocomplete="passconfirm_subs">
-                                                <small id="pesan_passconfirm" lang="en" class="redhide">Password &
-                                                    Confirm Password didnt match!</small>
+                                                <small id="pesan_passconfirm" lang="en" class="redhide">Password & Confirm Password didnt match!</small>
 
                                                 @if($errors->has('passconfirm_subs'))
                                                 <small class="error_passconfirm"
@@ -227,7 +211,7 @@
                                         <div class="col">
                                             <div>
                                                 <div class="form-group row" style="display: none;">
-                                                    <label class="h6 clight s14" for="community_id" lang="en">Id
+                                                    <label class="h6 clight s14" for="community_id">Id
                                                         Community</label>
                                                     <input type="hidden" readonly class="form-control-plaintext"
                                                         id="community_id" name="community_id">
@@ -274,8 +258,7 @@
 
                                     <div class="row" style="margin-top: 2em;">
                                         <button type="button" class="btn btn-backregis1" lang="en"
-                                            onclick="back_pesonal()">Go
-                                            Back</button>
+                                            onclick="back_pesonal()">Go Back</button>
                                         &nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn btn-regissubs1" lang="en"
                                             id="btn_ke_review">Next</button>
@@ -292,15 +275,15 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                                <small class="clight s13">Full Name</small>
+                                <small class="clight s13" lang="en">Full Name</small>
                                 <p class="cgrey2 tebal" id="review_fullname"></p>
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Email</small>
+                                <small class="clight s13" lang="en">Email</small>
                                 <p class="cgrey2 tebal" id="review_email"></p>
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Password</small>
+                                <small class="clight s13" lang="en">Password</small>
                                 <div class="row">
                                     <div class="col-7">
                                         <input type="password" id="review_password" readonly
@@ -317,11 +300,11 @@
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
-                                <small class="clight s13">Phone Number</small>
+                                <small class="clight s13" lang="en">Phone Number</small>
                                 <p class="cgrey2 tebal" id="review_phone"></p>
                             </div>
                             <div class="form-group">
-                                <small class="clight s13">Username</small>
+                                <small class="clight s13" lang="en">Username</small>
                                 <p class="cgrey2 tebal" id="review_username"></p>
                             </div>
                         </div>
@@ -330,8 +313,7 @@
 
 
                     <div class="row" style="margin-top: 2em;">
-                        <button type="button" class="btn btn-backregis1" lang="en" onclick="back_show_form()">Go
-                            Back</button>
+                        <button type="button" class="btn btn-backregis1" lang="en" onclick="back_show_form()">Go Back</button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="submit" class="btn btn-regissubs1" lang="en" id="btn_ke_submit">Finish</button>
                     </div>
