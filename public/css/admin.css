@@ -214,8 +214,8 @@ background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
 
 
 .dash-img-profil{
-    height: 90px;
-    width: 90px;
+    height: 90px !important;
+    width: 90px !important;
 }
 
 .label-oren{
@@ -1575,12 +1575,6 @@ a.dt-button {
     color: white;
 }
 
-.dash-img-profil {
-    height: 35%;
-    width: 35%;
-    min-height: 90px;
-    min-width: 90px;
-}
 
 
 .bg-hijau {

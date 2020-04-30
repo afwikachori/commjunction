@@ -138,7 +138,7 @@
             <div class="card-header bg-pastel-red sumari>
                         <div class=" row">
                 <div class="col-9">
-                    <h4 class="cteal" lang="en">Most Love News</h4>
+                    <h4 class="cteal" lang="en">Most Loved News</h4>
                 </div>
                 <div class="col icon-atas">
                     <i class="mdi mdi-heart-outline top-ico-right cteal"></i>
@@ -234,7 +234,7 @@
 </div>
 
 
-
+{{--
 <div class="row">
     <div class="col-md-4 stretch-card grid-margin">
         <div class="card sumari">
@@ -289,7 +289,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 
@@ -672,14 +672,13 @@
                 if (result.success == false) {
                     $("#nodata_last_news").show();
                     $("#isi_last_news").hide();
-                    console.log(result);
+                    // console.log(result);
                 }
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small> &nbsp;&nbsp;&nbsp;' +
                         '<a href="/subscriber/detail_news/' + item.id + '">' +
-                        '<small class="clight s13">See Details</small></a><br>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
                         '<small class="cgrey s13">' + item.title + '</small><br>' +
                         '</li>';
                 });
@@ -726,8 +725,8 @@
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
                         '</div>' +
                         '<div class="col-md-10 pd-5px">' +
-                        '<small class="cblue s12">' + dateTime(item.createdAt) + '</small>&nbsp;&nbsp;' +
-                        '<a href="/subscriber/detail_news/' + item.id + '"><small class="clight">See Details</a></small>' +
+                        '<a href="/subscriber/detail_news/' + item.id + '">'+
+                        '<small class="cblue s12">' + dateTime(item.createdAt) + '</small></a>' +
                         '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
                         '</div></div>';
                 });
@@ -768,10 +767,9 @@
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small> &nbsp;&nbsp; &nbsp;' +
                         '<a href="/subscriber/detail_news/' + item.id + '">' +
-                        '<small class="clight s13">See Details</small></a><br>' +
-                        '<small class="cgrey mgtop-minus-1em s13>' + item.title + '</small><br>' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                        '<small class="cgrey s13">' + item.title + '</small><br>' +
                         '</li>';
                 });
                 $("#isi_topvisit_news").html(newsui);

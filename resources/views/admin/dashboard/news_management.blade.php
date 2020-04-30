@@ -346,11 +346,11 @@
             success: function (result) {
                 $msg = result.status;
                 // alert($msg);
-                if ($msg == 1) {
-                    swal("News Successfully Published");
-                } else {
-                    swal("News Successfully Disabled");
-                }
+                // if ($msg == 1) {
+                //     swal("News Successfully Published");
+                // } else {
+                //     swal("News Successfully Disabled");
+                // }
             },
             error: function (result) {
                 $msg = result.message;
@@ -378,11 +378,11 @@
             success: function (result) {
                 $msg = result.status;
                 //alert($msg);
-                if ($msg == true) {
-                    swal("News Set as Headline");
-                } else {
-                    swal("News Headline Disabled");
-                }
+                // if ($msg == true) {
+                //     swal("News Set as Headline");
+                // } else {
+                //     swal("News Headline Disabled");
+                // }
             },
             error: function (result) {
                 $msg = result.message;

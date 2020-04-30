@@ -22,7 +22,7 @@
 
 <form method="POST" id="form-otp-fogetpass" style="margin-top: 1em;" action="{{route('NewPass_admin')}}">
     {{ csrf_field() }}
- <small class="cgrey2">Enter OTP Code Bellow</small>
+ <small class="cgrey2" lang="en">Enter OTP Code Bellow</small>
 <div class="digit-group" data-group-name="digits" style="margin-top: 0.5em;">
   <input type="text" id="digit-1" name="digit-1" data-next="digit-2" class="inputotp" autocomplete="off"/>
   <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" class="inputotp" autocomplete="off"/>
@@ -65,7 +65,7 @@
 
   <div class="row">
   <div class="col-8" style="text-align: left;">
-    <h6 class="clight s15" style="margin-top: 1em;">Didn't receive OTP code?
+    <h6 class="clight s15" style="margin-top: 1em;"><span lang="en">Didn't receive OTP code?</span>
     <a href="{{ url('/session_resendotp') }}" class="cteal2 h6 s15" lang="en">Resend OTP</a></h6>
   </div>
 

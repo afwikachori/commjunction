@@ -17,7 +17,7 @@
         <div class="card col-5" id="card-forgetadmin">
             <div class="card-body">
                 <h4 class="cgrey" lang="en">Forgot Password ?</h4>
-                <small class="clight">Enter your email address</small>
+                <small class="clight" lang="en">Enter your email address</small>
                 <br>
 
                 <form method="POST" id="form_forgetpass_admin" action="{{route('requestOTP')}}">{{ csrf_field() }}
@@ -47,17 +47,17 @@
         <div class="col">
             <img src="/visual/commjuction.png" id="com_superadminlogin">
             <div class="textfooter-kiri">
-                <a href="" class="cgrey"><small>Privacy Police</small></a>
+                <a href="" class="cgrey"><small lang="en">Privacy Police</small></a>
                 &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="" class="cgrey"><small>Terms and Condition</small></a>
+                <a href="" class="cgrey"><small lang="en">Terms and Condition</small></a>
             </div>
         </div>
 
         <div class="col textfooter-kanan">
-            <a href="" class="cgrey h6 s13">Documentation</a>
+            <a href="" class="cgrey h6 s13" lang="en">Documentation</a>
             <span class="fa fa-circle" aria-hidden="true" style="color: #D96120;"></span>
             &nbsp; &nbsp; &nbsp; &nbsp;
-            <a href="" class="cgrey h6 s13">Support</a>
+            <a href="" class="cgrey h6 s13" lang="en">Support</a>
             <span class="fa fa-question" aria-hidden="true" style="color: #D96120;"></span>
         </div>
     </div>

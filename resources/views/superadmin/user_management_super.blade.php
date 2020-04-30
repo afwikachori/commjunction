@@ -51,7 +51,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: #ffffff;">
 
-<form method="POST" id="form_edit_usermanage" action="{{route('add_user_management_super')}}" enctype="multipart/form-data">
+<form method="POST" id="form_edit_usermanage" action="{{route('add_user_management_super')}}">
 {{ csrf_field() }}
 
 <div class="modal-header"  style="padding-left: 5%;padding-right: 5%;">

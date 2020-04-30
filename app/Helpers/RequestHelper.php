@@ -38,21 +38,28 @@ trait RequestHelper
 
     public function encryptedPost(Request $request, $input, $endpoint, $token)
     {
-        // dd($input);
         if ($token == null) {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Encrypt_rsa' => 'true'
             ];
+            $body = $this->encrypt($input);
+        }else if($token == "regis_admin"){
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Encrypt_rsa' => 'true'
+            ];
+            $body = $this->encrypt_regis($input);
         } else {
             $headers = [
                 'Content-Type' => 'application/json',
                 'Authorization' => $token,
                 'Encrypt_rsa' => 'true'
             ];
+            $body = $this->encrypt($input);
         }
 
-        $body = $this->encrypt($input);
+
         $bodyku = json_encode([
             "data"     => $body,
         ]);
@@ -85,6 +92,39 @@ trait RequestHelper
             return json_decode($data, true);
         }
     }
+
+
+    private function encrypt_regis($plain)
+    {
+        $openPubKey = fopen($this->publicKeyPath, "r");
+        $readPubKey = fread($openPubKey, 8192);
+
+        $pubKey = openssl_pkey_get_public($readPubKey);
+        $pubKeyDetails = openssl_pkey_get_details($pubKey);
+
+        // there are 11 bytes overhead for PKCS1 padding
+        $encChunkSize = ceil($pubKeyDetails['bits'] / 8) - 11;
+
+        // loop through the long plain text, and divide by chunks
+        $output = '';
+
+        $plain = json_encode($plain);
+
+        while ($plain) {
+            $chunk = substr($plain, 0, $encChunkSize);
+            $plain = substr($plain, $encChunkSize);
+            $encrypted = '';
+
+            if (!openssl_public_encrypt($chunk, $encrypted, $pubKey, OPENSSL_PKCS1_OAEP_PADDING)) {
+                die('Failed to encrypt data');
+            }
+            $output .= $encrypted;
+        }
+
+        openssl_free_key($pubKey);
+        return base64_encode($output);
+    }
+
 
 
     private function encrypt($plain)

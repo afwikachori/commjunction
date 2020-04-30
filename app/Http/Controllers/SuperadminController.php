@@ -3260,16 +3260,34 @@ class SuperadminController extends Controller
         // dd($request);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
-
         $url = env('SERVICE') . 'usermanagement/createuser';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        // $client = new \GuzzleHttp\Client();
+        // $headers = [
+        //     'Content-Type' => 'application/json',
+        //     'Authorization' => $ses_login['access_token']
+        // ];
 
-        $bodyku = json_encode([
+        // $bodyku = json_encode([
+        //     "full_name" => $input['name_user'],
+        //     "user_name" => $input['username_user'],
+        //     "notelp" => $input['phone_user'],
+        //     "email" => $input['email_user'],
+        //     "alamat" => $input['alamat_user'],
+        //     "usertype_id" => $input['user_tipe'],
+        //     "password" => $input['pass_user'],
+        // ]);
+
+        // $datakirim = [
+        //     'body' => $bodyku,
+        //     'headers' => $headers,
+        // ];
+
+        try {
+            // $response = $client->post($url, $datakirim);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
+            $req_input =  [
             "full_name" => $input['name_user'],
             "user_name" => $input['username_user'],
             "notelp" => $input['phone_user'],
@@ -3277,18 +3295,12 @@ class SuperadminController extends Controller
             "alamat" => $input['alamat_user'],
             "usertype_id" => $input['user_tipe'],
             "password" => $input['pass_user'],
-        ]);
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, $ses_login['access_token']);
+            $respon = json_decode($jsonlogin, true);
+            // return $respon['success'];
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
-
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
+            if ($respon['success'] == true) {
                 alert()->success('Successfully to add new user', 'Added')->persistent('Done');
                 return back();
             }

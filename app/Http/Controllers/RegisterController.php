@@ -605,7 +605,7 @@ class RegisterController extends Controller
 
 
             if ($json['success'] == true) {
-                alert()->success('We have sent an authentication Code to your email, please check your authentication code.', 'Authentication Code has been sent')->autoclose(4500)->persistent('Done');
+                alert()->success('An Authentication Code have been sent, please check your email', 'Success')->autoclose(4500);
                 return view('admin/otp_admin');
             }
         } catch (ClientException $exception) {
@@ -817,6 +817,11 @@ class RegisterController extends Controller
             ]);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+
+            // $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
+            // $json = json_decode($jsonlogin, true);
+            // return $json;
+
 
             if ($json['success'] == true) {
                 session()->forget('data_regis1');

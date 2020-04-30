@@ -607,6 +607,7 @@ class SubscriberController extends Controller
         }
     }
 
+
     public function tabel_transaksi_show(Request $request)
     {
         $ses_login = session()->get('session_subscriber_logged');
@@ -1718,7 +1719,7 @@ class SubscriberController extends Controller
         ];
 
 
-        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
+        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, "regis_admin");
 
         return $res_enkkrip;
     }
