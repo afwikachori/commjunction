@@ -863,17 +863,17 @@ class RegisterController extends Controller
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return redirect('admin/register');
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return redirect('admin/register');
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
             $error['succes'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+            return redirect('admin/register');
         }
     }
 
