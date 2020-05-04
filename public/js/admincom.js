@@ -8,12 +8,12 @@ lang.init({
     defaultLang:'en'
 });
 
-(function () {
-    window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
-    var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
-    ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
-})();
+// (function () {
+//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+// })();
 
 
 
@@ -182,99 +182,6 @@ function session_admin_logged() {
 }
 
 
-//COMMUNITY SETTING DATA
-function get_result_setup_comsetting() {
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: '/admin/get_result_setup_comsetting',
-        type: 'POST',
-        dataSrc: '',
-        timeout: 30000,
-        success: function (result) {
-            console.log(result);
-
-            if (result.success == false) {
-                if (result.status == 401 || result.message == "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/admin';
-                    }, 5000);
-                } else {
-                    ui.popup.show('warning', result.message, 'Warning');
-                }
-            } else {
-                var tipeform = result[0];
-                if (tipeform.data != null || tipeform.data != "" || tipeform.data != 0) {
-                    $('#form_tipe').val(tipeform.data).attr("selected", "selected");
-
-                    if (tipeform.ready == true) {
-                        $('#form_tipe').hide();
-                        var tip = '';
-                        if (tipeform.data == 1) {
-                            tip = 'Username & Password';
-                        } else if (tipeform.data == 2) {
-                            tip = 'Phone Number & Password';
-                        } else {
-                            tip = 'Email & Password';
-                        }
-                        $("#showtipeform").val(tip).show();
-                    }
-                }
-
-
-                var portal = result[1];
-                if (portal.data.headline_text != null || portal.data.headline_text != "" || portal.data.headline_text != 0) {
-                    $("#headline").val(portal.data.headline_text);
-                    $("#description_custom").val(portal.data.description);
-
-                }
-
-                if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
-
-                    $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(portal.data.image));
-                }
-                if (portal.ready == true) {
-                    $('#headline').attr("disabled", "disabled");
-                    $('#description_custom').attr("disabled", "disabled");
-                    $("#up_img_portal").hide();
-                    $(".img_portal").show();
-                }
-
-                var domain = result[2];
-                if (domain.data.subdomain != null || domain.data.subdomain == "") {
-                    $('#subdomain').val(domain.data.subdomain);
-                    if (domain.ready == true) {
-                        $('#subdomain').attr("disabled", "disabled");
-                    }
-                }
-
-
-                if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
-                    $("#btn_commset_login").attr("disabled", "disabled");
-                    $("#btn_commset_login").hide();
-                }
-
-                var membership = result[3];
-                $('#membership').val(membership.data).attr("selected", "selected");
-                if (membership.ready == true) {
-                    $("#membership").attr("disabled", "disabled");
-                    $("#btn_submit_memberset").hide();
-                } else {
-                    $("#btn_submit_memberset").show();
-                }
-            }
-        },
-        error: function (result) {
-            console.log(result);
-            console.log("Cant Show");
-        }
-    });
-}
 
 
 //GET LAST NOTIFICATION

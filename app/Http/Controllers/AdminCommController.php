@@ -29,9 +29,9 @@ class AdminCommController extends Controller
         return view('admin/login');
     }
 
-    public function comSettingView()
+    public function CommunitySettingsView()
     {
-        return view('admin/dashboard/com_setting_admin');
+        return view('admin/dashboard/community_setting');
     }
 
     public function publishAdminView()
@@ -44,25 +44,25 @@ class AdminCommController extends Controller
         return view('admin/dashboard/editprofil_admin');
     }
 
-    public function loginRegisAdminView()
-    {
-        return view('admin/dashboard/set_loginregis_admin');
-    }
+    // public function loginRegisAdminView()
+    // {
+    //     return view('admin/dashboard/set_loginregis_admin');
+    // }
 
-    public function membershipAdminView()
-    {
-        return view('admin/dashboard/set_membership_admin');
-    }
+    // public function membershipAdminView()
+    // {
+    //     return view('admin/dashboard/set_membership_admin');
+    // }
 
-    public function regisdataAdminView()
-    {
-        return view('admin/dashboard/set_regisdata_admin');
-    }
+    // public function regisdataAdminView()
+    // {
+    //     return view('admin/dashboard/set_regisdata_admin');
+    // }
 
-    public function SetpaymentAdminView()
-    {
-        return view('admin/dashboard/set_payment_admin');
-    }
+    // public function SetpaymentAdminView()
+    // {
+    //     return view('admin/dashboard/set_payment_admin');
+    // }
 
     public function SubsManagementView()
     {
@@ -711,6 +711,7 @@ class AdminCommController extends Controller
 
     public function setting_loginresgis_comm(Request $request)
     {
+        // dd($request);
         $input = $request->all();
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
@@ -718,83 +719,100 @@ class AdminCommController extends Controller
 
         $req = new RequestController;
         $fileimg = "";
-
-        if ($request->hasFile('fileup')) {
+        if ($request->hasFile('fileup') && $request->hasFile('fileup_logo')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
+            $img_icon = file_get_contents($request->file('fileup_logo')->getRealPath());
+            $filnam_logo = $request->file('fileup_logo')->getClientOriginalName();
+
             $input = $request->all(); // getdata form by name
             $imageRequest = [
-                "form_type"     => $input['form_tipe'],
                 "headline_text" => $input['headline'],
                 "description"   => $input['description_custom'],
-                "subdomain"     => $input['subdomain'],
-                "filename"      => $filnam,
-                "file"          => $imgku
+                "font_headline" => $input['font_headline'],
+                "font_link" => $input['font_link'],
+                "base_color" => $input['color_base'],
+                "accent_color" => $input['color_accent'],
+                "icon"      => $img_icon,
+                "file"          => $imgku,
+                "filename"  => $filnam,
+                "filename_logo"  => $filnam_logo,
             ];
-
-
-            $url = env('SERVICE') . 'commsetting/loginregister';
+            // dd($imageRequest);
+            $url = env('SERVICE') . 'commsetting/setcustominterface';
             try {
                 $resImg = $req->SettingLoginRegis($imageRequest, $url, $token);
-                // return $resImg;
 
                 if ($resImg['success'] == true) {
-                    alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
-                    return back();
+                    // alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
+                    // return back();
+                    if ($input['form_tipe'] != null && $input['subdomain'] != null) {
+                        $url_domain = env('SERVICE') . 'commsetting/setformtypeandsubdomain';
+                        $client = new \GuzzleHttp\Client();
+                        $headers = [
+                            'Content-Type' => 'application/json',
+                            'Authorization' => $ses_login['access_token']
+                        ];
+                        $bodyku = json_encode([
+                            "form_type"     => $input['form_tipe'],
+                            "subdomain"     => $input['subdomain'] . '.smartcomm.id',
+                        ]);
+
+                        $dtsend = [
+                            'body' => $bodyku,
+                            'headers' => $headers,
+                        ];
+
+                        try {
+                            $response = $client->post($url_domain, $dtsend);
+                            $response = $response->getBody()->getContents();
+                            $json = json_decode($response, true);
+                            if ($resImg['success'] == true) {
+                                alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
+                                return back();
+                            }
+                        } catch (ClientException $errornya) {
+                            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                            return back()->withInput();
+                        } catch (ServerException $errornya) {
+                            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                            return back()->withInput();
+                        } catch (ConnectException $errornya) {
+                            $error['status'] = 500;
+                            $error['message'] = "Server bermasalah";
+                            $error['succes'] = false;
+                            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                            return back()->withInput();
+                        }
+                    }else{
+                        alert()->error('Set Login type and Subdomain', 'Failed!')->persistent('Done');
+                        return back();
+                    }
                 }
             } catch (ClientException $errornya) {
                 $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                alert()->error($error['message'], 'Failed!')->persistent('Done');
                 return back();
             } catch (ServerException $errornya) {
                 $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                alert()->error($error['message'], 'Failed!')->persistent('Done');
                 return back();
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
                 $error['succes'] = false;
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                alert()->error($error['message'], 'Failed!')->persistent('Done');
                 return back();
             }
         } else { //END-IF  UPLOAD-IMAGE
-            $input = $request->all(); // getdata form by name
-            $imageRequest = [
-                "form_type"     => $input['optionsRadios'],
-                "headline_text" => $input['headline'],
-                "description"   => $input['description_custom'],
-                "subdomain"     => $input['subdomain'],
-                "filename"      => "",
-                "file"          => ""
-            ];
-
-
-            $url = env('SERVICE') . 'commsetting/loginregister';
-            try {
-                $resImg = $req->editProfilCommunity($imageRequest, $url, $token);
-                // return $resImg;
-
-                if ($resImg['success'] == true) {
-                    alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
-                    return back();
-                }
-            } catch (ClientException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ServerException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            } catch (ConnectException $errornya) {
-                $error['status'] = 500;
-                $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            }
+            alert()->error('File Logo & Image portal is Required', 'Failed!')->persistent('Done');
+            return back();
         } // endelse
+
+
     }
 
 
@@ -893,9 +911,9 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
-        $in = $request->except('_token');
+        $in = $request->except('_token', 'deskripsi_regis');
 
-        if ($input['tipedata_regis'] == "1" || $input['tipedata_regis'] == "2") {
+        if ($input['tipedata_regis'] == "2" || $input['tipedata_regis'] == "3" || $input['tipedata_regis'] == "4" || $input['tipedata_regis'] == "5") {
             $param_isi = [$input['question_regis'], $input['tipedata_regis']];
         } else {
             $param_isi = array_values($in);
@@ -907,7 +925,13 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode(['params' => $param_isi]);
+        $bodyku = json_encode([
+            'params' => $param_isi,
+            'title' => $input['question_regis'],
+            'description' => $input['deskripsi_regis']
+        ]);
+
+        // return $bodyku;
 
         $options = [
             'body' => $bodyku,
@@ -920,7 +944,7 @@ class AdminCommController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Succcessflly adding new question', 'Question Added !')->persistent('Done');
-                return redirect('/admin/settings/registrasion_data');
+                return redirect('/admin/community_setting');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -976,6 +1000,40 @@ class AdminCommController extends Controller
             return $error;
         }
     }
+
+
+    public function get_list_custum_inputipe()
+    {
+        $ses_login = session()->get('session_admin_logged');
+
+
+        $url = env('SERVICE') . 'commsetting/listcustominput';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
+
 
 
 
@@ -1083,22 +1141,32 @@ class AdminCommController extends Controller
     }
 
 
-    public function get_bank_pay()
+    public function get_bank_pay(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
 
-        $url = env('SERVICE') . 'commsetting/listbank';
+        // $url = env('SERVICE') . 'commsetting/listbank';
+        $url = env('SERVICE') . 'commsetting/listpaymentcommjunction';
         $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => $ses_login['access_token']
+        ];
+        $bodyku = json_encode([
+            'payment_type_id' => $input['payment_type_id']
+        ]);
 
+        $datakirim = [
+            'body' => $bodyku,
+            'headers' => $headers,
+        ];
+
+        try {
+            $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+
             return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1776,12 +1844,10 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            'payment_title' => $input['payment_name'],
             'payment_type_id' => $input['payment_tipe'],
             'payment_owner_name' => $input['rekening_name'],
             'no_rekening' => $input['rekening_number'],
-            'description' => [$input['deskripsi_paysubs']],
-            'bank_name' => $input['bank_name'],
+            'payment_method_id' => $input['bank_name'],
             'payment_time_limit' => $input['pay_time_limit'],
             'status' => $input['payment_status']
         ]);
@@ -1791,7 +1857,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
-
+// return $datakirim;
         try {
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
@@ -3282,9 +3348,9 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
-        $in = $request->except('_token', 'id_question');
+        $in = $request->except('_token', 'id_question', 'deskripsi_regis');
 
-        if ($input['edit_tipedata'] == "1" || $input['edit_tipedata'] == "2") {
+        if ($input['edit_tipedata'] == "2" || $input['edit_tipedata'] == "3" || $input['edit_tipedata'] == "4" || $input['edit_tipedata'] == "5") {
             $param_isi = [$input['edit_question'], $input['edit_tipedata']];
         } else {
             $param_isi = array_values($in);
@@ -3298,7 +3364,9 @@ class AdminCommController extends Controller
         ];
         $bodyku = json_encode([
             'params' => $param_isi,
-            "id"     =>  $input['id_question']
+            "id"     =>  $input['id_question'],
+            'title' => $input['edit_question'],
+            'description' => $input['edit_deskripsi_regis']
         ]);
         // return $bodyku;
         $options = [
@@ -3480,12 +3548,12 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            'payment_title' => $input['edit_payment_name'],
+            // 'payment_title' => $input['edit_payment_name'],
             'payment_type_id' => $input['edit_payment_tipe'],
             'payment_owner_name' => $input['edit_rekening_name'],
             'no_rekening' => $input['edit_rekening_number'],
-            'description' => [$input['edit_deskripsi_paysubs']],
-            'bank_name' => $input['edit_bank_name'],
+            // 'description' => [$input['edit_deskripsi_paysubs']],
+            'payment_method_id' => $input['edit_bank_name'],
             'payment_time_limit' => $input['edit_pay_time_limit'],
             'status' => $input['edit_payment_status'],
             'payment_id' => $input['id_subs_payment']

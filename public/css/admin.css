@@ -4,13 +4,12 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  font-family: arial !important;
 }
 
 
 * {
-    font-family: "SF Pro Display Regular",Calibri !important;
-     font-family: 'MyWebFont', Fallback, sans-serif;
+    font-family: "SF Pro Display Regular";
+     /* font-family: 'MyWebFont', Fallback, sans-serif; */
 }
 
 @font-face {
@@ -445,7 +444,7 @@ margin-bottom: 1.5em;
 }
 
 .btn-birumuda{
-  background: linear-gradient(117.13deg, #96DEDA 0%, #50C9C3 56.6%);
+  background: linear-gradient(117.13deg, #a7dff9 0%, #60c0ca 56.6%);
   border-radius: 6px;
   border: none;
   color: white;
@@ -839,6 +838,11 @@ background: linear-gradient(108.22deg, #eca64e -2.66%, #efce5d 102.89%);
   color: #BDBDBD !important;
 }
 
+.clight1{
+color: #8f9fab !important;
+}
+
+
 .cteal{
   color: #0E5F75;
 }
@@ -860,7 +864,7 @@ background: linear-gradient(108.22deg, #eca64e -2.66%, #efce5d 102.89%);
 }
 
 .cgrey2{
-  color: #8c8c8c;
+  color: #9c9c9c;
 }
 
 .cblue{
@@ -943,6 +947,11 @@ color: #719ca9;
 }
 
 
+
+
+
+
+
 /*SUBCRIBER MANAGEMEN TAB */
 .tabbable-panel {
   border:1px solid #eee;
@@ -955,6 +964,48 @@ border: none;
     position: relative;
     left: 78%;
 }
+
+
+/* COMMUNITY SETTING */
+.tabbable-line.comset{
+margin-top: 1.5em;
+}
+
+.tabbable-line.comset > .nav-tabs.comset {
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 0 !important;
+    font-weight: bold;
+}
+.tabbable-line.comset > .nav-tabs.comset > li.active {
+    border-bottom: 3px solid rgb(0, 108, 138);
+    position: relative;
+    width: 24% !important;
+    text-align: center;
+    color: rgb(0, 108, 138) !important;
+}
+.tabbable-line > .nav-tabs.comset > li {
+    margin-right: 5px;
+    text-align: center;
+    width: 24% !important;
+}
+.tabbable-line.comset > .nav-tabs.comset > li.open, .tabbable-line.comset > .nav-tabs.comset > li:hover {
+  border-bottom: 3px solid #50c9c3!important;
+  min-width: 100px;
+  text-align: center;
+}
+
+.tabbable-line.comset > .tab-content.comset {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 2px solid rgb(211, 211, 211);
+  padding: 15px 0;
+}
+
+/* END-COMMUNITY SETTING */
+
 
 /*//member*/
 .tabbable-line > .nav-tabs.member{
@@ -1388,6 +1439,15 @@ select.form-control {
     background-color: #f2edf300;
 }
 
+.btn-birumuda{
+  background: linear-gradient(117.13deg, #a7cff9 0%, #60acca 56.6%) !important;
+  border-radius: 10px !important;
+   min-width: 15%;
+  border: none;
+  color: white;
+}
+
+
 .btn-tosca {
     background: linear-gradient(125.96deg, #96deda 0%, #50c9c3 56.6%);
     color: white;
@@ -1432,12 +1492,6 @@ select.form-control {
 }
 
 
-.btn-birumuda {
-    background: linear-gradient(117.13deg, #96deda 0%, #50c9c3 56.6%);
-    border-radius: 6px;
-    border: none;
-    color: white;
-}
 
 .input-abu {
     border-radius: 10px !important;
@@ -2195,3 +2249,23 @@ float:right;
 
 
 /* NEWS DASHBOARD END OF CSS */
+
+
+input[type=color] {
+    display: none;
+}
+#color_front {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color:#ffbc42;
+  display:inline-block;
+}
+
+#color_front2 {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color:#80d7e0;
+  display:inline-block;
+}

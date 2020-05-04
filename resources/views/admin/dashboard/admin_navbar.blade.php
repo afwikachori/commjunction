@@ -63,7 +63,7 @@
               </a>
 
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="settingDropdown">
-                <a class="dropdown-item" href="/admin/settings" lang="en" lang="Community Setting">Community Setting</a>
+                <a class="dropdown-item" href="/admin/community_setting" lang="en" lang="Community Setting">Community Setting</a>
                 <div class="dropdown-divider"></div>
                    <div class="dropdown-divider"></div>
                    <a class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">

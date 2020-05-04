@@ -252,6 +252,44 @@ class SubscriberController extends Controller
     } //end-func
 
 
+    public function GetdataSubdomainSubscriber($domain)
+    {
+
+        $url = env('SERVICE') . 'auth/configcommsubdomain';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => [
+                    'subdomain' => $domain
+                ]
+            ]);
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+
+            $arr_auth = [];
+            array_push($arr_auth, $json['data']);
+            // return $arr_auth;
+
+            session()->put('auth_subs', $arr_auth);
+            // return redirect('subscriber')->with('subs_data', $arr_auth);
+            return view('subscriber/login')->with('subs_data', $arr_auth);
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return redirect('404');
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return view('404');
+        }
+    } //end-func
+
 
     public function ses_auth_subs()
     {
@@ -1719,7 +1757,7 @@ class SubscriberController extends Controller
         ];
 
 
-        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, "regis_admin");
+        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
 
         return $res_enkkrip;
     }

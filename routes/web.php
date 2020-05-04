@@ -48,16 +48,16 @@ Route::prefix('admin')->group(function () {
     Route::get('/news_management', 'ModuleController@NewsManagementView')->name('/news_management');
     Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
     Route::get('/get_detail_news/{id_news}', 'ModuleController@getDetailNews')->name('/get_detail_news');
+    Route::get('/community_setting', 'AdminCommController@CommunitySettingsView')->name('community_setting');
 
-
-    // admin/settings
-    Route::prefix('settings')->group(function () {
-        Route::get('/', 'AdminCommController@comSettingView')->name('settings');
-        Route::get('/loginregis', 'AdminCommController@loginRegisAdminView')->name('/loginregis');
-        Route::get('/membership', 'AdminCommController@membershipAdminView')->name('/membership');
-        Route::get('/registrasion_data', 'AdminCommController@regisdataAdminView')->name('/registrasion_data');
-        Route::get('/payment', 'AdminCommController@SetpaymentAdminView')->name('/payment');
-    }); //end-admin
+    // // admin/settings
+    // Route::prefix('settings')->group(function () {
+    //     Route::get('/', 'AdminCommController@comSettingView')->name('settings');
+    //     Route::get('/loginregis', 'AdminCommController@loginRegisAdminView')->name('/loginregis');
+    //     Route::get('/membership', 'AdminCommController@membershipAdminView')->name('/membership');
+    //     Route::get('/registrasion_data', 'AdminCommController@regisdataAdminView')->name('/registrasion_data');
+    //     Route::get('/payment', 'AdminCommController@SetpaymentAdminView')->name('/payment');
+    // }); //end-admin
 
     //POST
 
@@ -77,6 +77,7 @@ Route::prefix('admin')->group(function () {
 
 
 
+    Route::post('get_list_custum_inputipe', 'AdminCommController@get_list_custum_inputipe')->name('get_list_custum_inputipe');
     Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');
     Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
     Route::post('get_payment_module', 'AdminCommController@get_payment_module')->name('get_payment_module');
@@ -241,17 +242,15 @@ Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->
 Route::post('cek_valid_phone_subs', 'RegisterController@cek_valid_phone_subs')->name('cek_valid_phone_subs');
 Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_subs')->name('cek_valid_username_subs');
 
-
-
-
-
-
-
+Route::group(array('subscriber' => '{subdomain}.smartcom.id'), function () {
+    Route::get('/domain/{subdomain}', 'SubscriberController@GetdataSubdomainSubscriber');
+});
 
 // SUBSCRIBER - ROUTE
 Route::prefix('subscriber')->group(function () {
     Route::get('/', 'SubscriberController@loginView')->name('subscriber');
     Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
+
     Route::get('/dashboard', 'SubscriberController@DashboardSubsView')->name('/dashboard');
     Route::get('/membership', 'SubscriberController@MembershipSubsView')->name('/membership');
     Route::get('/inbox_management', 'SubscriberController@InboxManagementSubsView')->name('/inbox_management');

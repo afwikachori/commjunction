@@ -14,6 +14,7 @@
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
     <!-- CSS Files -->
+
     <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('purple/vendors/css/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="{{asset('purple/css/style.css')}}">
@@ -23,8 +24,6 @@
 
     <!-- toastr -->
     <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
-
-
 
 
 

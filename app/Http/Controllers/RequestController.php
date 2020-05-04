@@ -224,10 +224,6 @@ class RequestController extends Controller
             ],
             'multipart' => [
                 [
-                    'name'     => 'form_type',
-                    'contents' =>  $requestImage["form_type"]
-                ],
-                [
                     'name'     => 'headline_text',
                     'contents' =>  $requestImage["headline_text"]
                 ],
@@ -236,14 +232,31 @@ class RequestController extends Controller
                     'contents' =>  $requestImage["description"]
                 ],
                 [
-                    'name'     => 'subdomain',
-                    'contents' =>  $requestImage["subdomain"]
+                    'name'     => 'font_headline',
+                    'contents' =>  $requestImage["font_headline"]
+                ],
+                [
+                    'name'     => 'font_link',
+                    'contents' =>  $requestImage["font_link"]
+                ],
+                [
+                    'name'     => 'base_color',
+                    'contents' =>  $requestImage["base_color"]
+                ],
+                [
+                    'name'     => 'accent_color',
+                    'contents' =>  $requestImage["accent_color"]
                 ],
                 [
                     'name'      => 'file',
                     'contents'  => $requestImage["file"],
                     'filename'  => $requestImage["filename"]
-                ]
+                ],
+                [
+                    'name'      => 'icon',
+                    'contents'  => $requestImage["icon"],
+                    'filename'  => $requestImage["filename_logo"]
+                ],
             ],
 
         ]);

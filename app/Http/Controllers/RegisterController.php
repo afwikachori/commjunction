@@ -123,7 +123,7 @@ class RegisterController extends Controller
             'icon_com' => $validimg,
         ]);
 
-        ///UPLOAD IMAGE KE BACK-EN
+        ///////UPLOAD IMAGE KE BACK-EN
         $req = new RequestController;
         $filelogo = "";
 
@@ -139,9 +139,9 @@ class RegisterController extends Controller
 
             $url = env('SERVICE') . 'registration/uploadcomm';
 
+            try{
             $responseImage = $req->sendImage($imageRequest, $url);
 
-            // dd($responseImage);
             if ($responseImage['success'] != true) {
                 return back()->with('response', [
                     'status'   => 'error',
@@ -154,17 +154,37 @@ class RegisterController extends Controller
                 $reshasil = $responseImage['data'];
                 $filelogo = $reshasil['directory'];
             }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back()->withInput();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back()->withInput();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['succes'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back()->withInput();
+            }
         } else {
-
+            if (session()->has('data_regis1')) {
             $ses1 = session()->get('data_regis1');
             $filelogo = $ses1['logo'];
-        } //END  UPLOAD-IMAGE
+            }else{
+                alert()->error('File image is required', 'Failed')->autoclose(4500)->persistent('Done');
+                return back()->withInput();
+            }
+        }
 
 
         $input = $request->all(); // getdata form by name
         $data = [
             "name"            => $input['name_com'],
             "logo"            => $filelogo,
+            // "logo"            => "public/community/editc797fccc1a0e1a83a6991f94604c80b6b33c37656e2224bc342489175a539bd8.png",
             "description"     => $input['descrip_com'],
             "jenis_comm_id"   => $input['type_com'],
             "range_member"    => $input['range_member'],
@@ -807,21 +827,19 @@ class RegisterController extends Controller
             'feature'  => $ses4,
             'payment'  => $dtpay,
         ];
-        // return $datafinal;
 
         $url = env('SERVICE') . 'registration/adcommcreate';
         $client = new \GuzzleHttp\Client();
         try {
-            $response = $client->request('POST', $url, [
-                'form_params' => $datafinal
-            ]);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+            // $response = $client->request('POST', $url, [
+            //     'form_params' => $datafinal
+            // ]);
+            // $response = $response->getBody()->getContents();
+            // $json = json_decode($response, true);
 
-            // $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
-            // $json = json_decode($jsonlogin, true);
-            // return $json;
-
+            $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
+            // return $jsonlogin;
+            $json = json_decode($jsonlogin, true);
 
             if ($json['success'] == true) {
                 session()->forget('data_regis1');

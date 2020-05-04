@@ -18,8 +18,8 @@
 
     <div class="container subs_judul">
       <h2 class="cgrey">{{ $dt['name'] }}</h2>
-      <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5>
-      <p>{{ $dt['cust_portal_login']['description'] }}</p>
+      {{-- <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5> --}}
+      {{-- <p>{{ $dt['cust_portal_login']['description'] }}</p> --}}
     </div>
 
       <img src="/visual/loginadmin.png" id="login-img-subs">

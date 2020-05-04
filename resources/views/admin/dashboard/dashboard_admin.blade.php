@@ -405,8 +405,8 @@
             datatype: 'JSON',
             success: function (result) {
                 console.log(result);
-                if (result.status == 401 || result.message) {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                if (result.status == 401) {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized');
                     setTimeout(function () {
                         location.href = '/admin';
                     }, 6000);
@@ -631,7 +631,7 @@
                 }
             },
             ajax: {
-                url: '/admin/tabel_last_news',
+                url: 'tabel_last_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
@@ -674,7 +674,7 @@
                 }
             },
             ajax: {
-                url: '/admin/table_topvisit_news',
+                url: 'table_topvisit_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
@@ -717,7 +717,7 @@
                 }
             },
             ajax: {
-                url: '/admin/table_toploved_news',
+                url: 'table_toploved_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,

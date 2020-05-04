@@ -150,6 +150,7 @@
                 console.log(result);
             },
             error: function (result) {
+                console.log(result);
                 console.log("Cant tabel tes");
             }
         });

@@ -106,7 +106,7 @@ try{
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/news/listall';
         $client = new \GuzzleHttp\Client();
-
+try{
         $response = $client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -118,6 +118,18 @@ try{
         //dd($response);
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function LastNews()
@@ -143,11 +155,24 @@ try{
             'body' => $bodyku
 
         ];
+        try{
         $response = $client->post($url, $options);
         $response = $response->getBody()->getContents();
         //dd($response);
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function TopVisitNews()
@@ -172,12 +197,26 @@ try{
             'body' => $bodyku
 
         ];
+        try{
         $response = $client->post($url, $options);
         $response = $response->getBody()->getContents();
         //dd($response);
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
+
     public function TopLovedNews()
     {
         $ses_login = session()->get('session_admin_logged');
@@ -200,11 +239,24 @@ try{
             'body' => $bodyku
 
         ];
+        try{
         $response = $client->post($url, $options);
         $response = $response->getBody()->getContents();
         //dd($response);
         $json = json_decode($response, true);
         return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
     }
 
     public function getDetailNews($news_id)

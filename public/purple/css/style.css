@@ -1783,7 +1783,7 @@
   box-sizing: border-box; }
 
 html {
-  font-family: sans-serif;
+  font-family: "SF Pro Display Regular";
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
@@ -1793,7 +1793,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "SF Pro Display Regular";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -10061,28 +10061,22 @@ input:focus {
 
 /* Fonts */
 @font-face {
-  font-family: 'ubuntu-light';
-  src: url("../fonts/Ubuntu/Ubuntu-Light.eot");
+  font-family: 'sfpro-light';
+  src: url("../fonts/SFPro/sfpro-Light.eot");
   /* IE9 Compat Modes */
-  src: url("../fonts/Ubuntu/Ubuntu-Light.woff2") format("woff2"), url("../fonts/Ubuntu/Ubuntu-Light.woff") format("woff"), url("../fonts/Ubuntu/Ubuntu-Light.ttf") format("truetype"); }
+  src: url("../fonts/SFPro/sfpro-Light.woff2") format("woff2"), url("../fonts/SFPro/sfpro-Light.woff") format("woff"), url("../fonts/SFPro/sfpro-Light.ttf") format("truetype"); }
 
 @font-face {
-  font-family: 'ubuntu-regular';
-  src: url("../fonts/Ubuntu/Ubuntu-Regular.eot");
+  font-family: 'sfpro-regular';
+  src: url("../fonts/SFPro/sfpro-Regular.eot");
   /* IE9 Compat Modes */
-  src: url("../fonts/Ubuntu/Ubuntu-Regular.woff2") format("woff2"), url("../fonts/Ubuntu/Ubuntu-Regular.woff") format("woff"), url("../fonts/Ubuntu/Ubuntu-Regular.ttf") format("truetype"); }
+  src: url("../fonts/SFPro/sfpro-Regular.woff2") format("woff2"), url("../fonts/SFPro/sfpro-Regular.woff") format("woff"), url("../fonts/SFPro/sfpro-Regular.ttf") format("truetype"); }
 
 @font-face {
-  font-family: 'ubuntu-medium';
-  src: url("../fonts/Ubuntu/Ubuntu-Medium.eot");
+  font-family: 'sfpro-bold';
+  src: url("../fonts/SFPro/sfpro-Bold.eot");
   /* IE9 Compat Modes */
-  src: url("../fonts/Ubuntu/Ubuntu-Medium.woff2") format("woff2"), url("../fonts/Ubuntu/Ubuntu-Medium.woff") format("woff"), url("../fonts/Ubuntu/Ubuntu-Medium.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'ubuntu-bold';
-  src: url("../fonts/Ubuntu/Ubuntu-Bold.eot");
-  /* IE9 Compat Modes */
-  src: url("../fonts/Ubuntu/Ubuntu-Bold.woff2") format("woff2"), url("../fonts/Ubuntu/Ubuntu-Bold.woff") format("woff"), url("../fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype"); }
+  src: url("../fonts/SFPro/sfpro-Bold.woff2") format("woff2"), url("../fonts/SFPro/sfpro-Bold.woff") format("woff"), url("../fonts/SFPro/sfpro-Bold.ttf") format("truetype"); }
 
 .text-twitter {
   color: #2caae1; }
@@ -10147,14 +10141,14 @@ input:focus {
 /* Typography */
 body {
   font-size: 1rem;
-  font-family: "ubuntu-regular", sans-serif;
+  font-family: "sfpro-regular", sans-serif;
   font-weight: initial;
   line-height: normal;
   -webkit-font-smoothing: antialiased; }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "ubuntu-medium", sans-serif; }
+  font-family: "sfpro-regular", sans-serif; }
 
 p {
   font-size: 0.875rem; }
@@ -10295,7 +10289,7 @@ pre {
 code {
   padding: 5px;
   color: #fe7c96;
-  font-family: "ubuntu-light", sans-serif;
+  font-family: "sfpro-light", sans-serif;
   font-size: 0.875rem;
   border-radius: 4px; }
 
@@ -10331,7 +10325,7 @@ code {
   -webkit-transition: all 0.25s ease;
   -ms-transition: all 0.25s ease;
   font-size: calc(0.875rem - 0.05rem);
-  font-family: "ubuntu-regular", sans-serif; }
+  font-family: "sfpro-regular", sans-serif; }
   .footer a {
     color: #1bcfb4;
     font-size: inherit; }
@@ -10430,13 +10424,13 @@ code {
   flex-grow: 1; }
 
 .font-weight-light {
-  font-family: "ubuntu-light", sans-serif; }
+  font-family: "sfpro-light", sans-serif; }
 
 .font-weight-bold {
-  font-family: "ubuntu-bold", sans-serif; }
+  font-family: "sfpro-bold", sans-serif; }
 
 .font-weight-normal {
-  font-family: "ubuntu-regular", sans-serif; }
+  font-family: "sfpro-regular", sans-serif; }
 
 .image-grouped {
   display: -webkit-box;
@@ -10840,7 +10834,7 @@ code {
   font-weight: initial;
   line-height: 1;
   padding: .375rem .5625rem;
-  font-family: "ubuntu-medium", sans-serif; }
+  font-family: "sfpro-regular", sans-serif; }
   .badge.badge-pill {
     border-radius: 10rem; }
 
@@ -10969,7 +10963,7 @@ code {
 .btn {
   font-size: 0.875rem;
   line-height: 1;
-  font-family: "ubuntu-bold", sans-serif;
+  font-family: "sfpro-bold", sans-serif;
   /* Buttons with only icons */
   /* Buttons with icon and text */ }
   .btn i {
@@ -11895,16 +11889,16 @@ code {
     color: #343a40;
     margin-bottom: 0.75rem;
     text-transform: capitalize;
-    font-family: "ubuntu-medium", sans-serif;
+    font-family: "sfpro-regular", sans-serif;
     font-size: 1.125rem; }
   .card .card-subtitle {
-    font-family: "ubuntu-regular", sans-serif;
+    font-family: "sfpro-regular", sans-serif;
     margin-top: 0.625rem;
     margin-bottom: 0.625rem; }
   .card .card-description {
     color: #76838f;
     margin-bottom: 1.5rem;
-    font-family: "ubuntu-regular", sans-serif; }
+    font-family: "sfpro-regular", sans-serif; }
   .card.card-outline-success {
     border: 1px solid #1bcfb4; }
   .card.card-outline-primary {
@@ -12233,7 +12227,7 @@ code {
 
 .form-control {
   border: 1px solid #ebedf2;
-  font-family: "ubuntu-regular", sans-serif;
+  font-family: "sfpro-regular", sans-serif;
   font-size: 0.8125rem; }
   .form-control:focus {
     background-color: #ffffff;
@@ -12310,7 +12304,7 @@ select.form-control {
     -ms-flex-align: center;
     align-items: center;
     padding: 15px 15px;
-    font-family: "ubuntu-regular", sans-serif;
+    font-family: "sfpro-regular", sans-serif;
     font-size: 0.875rem; }
     .icons-list > div i {
       display: inline-block;
@@ -12548,7 +12542,7 @@ dl {
   .table thead th {
     border-top: 0;
     border-bottom-width: 1px;
-    font-family: "ubuntu-medium", sans-serif;
+    font-family: "sfpro-regular", sans-serif;
     font-weight: initial; }
     .table thead th i {
       margin-left: 0.325rem; }
@@ -12656,7 +12650,7 @@ dl {
 
 /* Navbar */
 .navbar {
-  font-family: "ubuntu-light", sans-serif;
+  font-family: "sfpro-light", sans-serif;
   background: #fff;
   transition: background 0.25s ease;
   -webkit-transition: background 0.25s ease;
@@ -12735,19 +12729,19 @@ dl {
       .navbar .navbar-menu-wrapper .search-field .input-group input:-ms-input-placeholder {
         font-size: 0.875rem;
         color: #9c9fa6;
-        font-family: "ubuntu-light", sans-serif; }
+        font-family: "sfpro-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input:-moz-placeholder {
         font-size: 0.875rem;
         color: #9c9fa6;
-        font-family: "ubuntu-light", sans-serif; }
+        font-family: "sfpro-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input::-moz-placeholder {
         font-size: 0.875rem;
         color: #9c9fa6;
-        font-family: "ubuntu-light", sans-serif; }
+        font-family: "sfpro-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input::-webkit-input-placeholder {
         font-size: 0.875rem;
         color: #9c9fa6;
-        font-family: "ubuntu-light", sans-serif; }
+        font-family: "sfpro-light", sans-serif; }
     .navbar .navbar-menu-wrapper .search-field .input-group i {
       font-size: 17px;
       margin-right: 0;
@@ -13036,7 +13030,7 @@ dl {
 .sidebar {
   min-height: calc(100vh - 70px);
   background: #ffffff;
-  font-family: "ubuntu-regular", sans-serif;
+  font-family: "sfpro-regular", sans-serif;
   padding: 0;
   width: 260px;
   z-index: 11;
@@ -13120,7 +13114,7 @@ dl {
         background: #ffffff; }
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
           color: #b66dff;
-          font-family: "ubuntu-medium", sans-serif; }
+          font-family: "sfpro-regular", sans-serif; }
         .sidebar .nav .nav-item.active > .nav-link i {
           color: #b66dff; }
       .sidebar .nav .nav-item:hover {

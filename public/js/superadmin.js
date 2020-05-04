@@ -49,12 +49,12 @@ $(document).ready(function () {
 });
 
 
-(function () {
-    window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
-    var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
-    ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
-})();
+// (function () {
+//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+// })();
 
 
 // SESSION LOGIN SUPEADMIN

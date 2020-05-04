@@ -285,6 +285,7 @@ class SuperadminController extends Controller
 
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+            // return $json;
             return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
