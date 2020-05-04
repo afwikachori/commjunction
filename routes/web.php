@@ -1,9 +1,16 @@
 <?php
-
-Route::get('/', function () {
-    // dd(env('CDN'));
-    return view('welcome');
+Route::domain('{subdomain}.smartcom.id')->group(function () {
+    Route::get('/', function ($subdomain) {
+        dd($subdomain);
+    });
+      // Route::get('/domain/{subdomain}', 'SubscriberController@GetdataSubdomainSubscriber');
 });
+
+
+// Route::get('/', function () {
+//     // dd(env('CDN'));
+//     return view('welcome');
+// });
 
 
 
@@ -16,14 +23,10 @@ Route::get('logout', 'RegisterController@logout');
 //404
 Route::get('404', 'RequestController@NotFoundView')->name('404');
 
+
 // ADMIN COMMUNITY
 Route::prefix('admin')->group(function () {
-
-    //REGISTER
     Route::get('/featurelist', 'RegisterController@FeatureListRegisterView')->name('/featurelist');
-
-
-    // GET
     Route::get('/', 'AdminCommController@login')->name('/');
     Route::get('/dashboard', 'AdminCommController@adminDashboardView')->name('/dashboard');
     Route::get('/publish', 'AdminCommController@publishAdminView')->name('/publish');
@@ -52,7 +55,6 @@ Route::prefix('admin')->group(function () {
 
 
     //POST
-
     // NEWS MODULE
     Route::post('/tabel_news_management', 'ModuleController@tabel_news_management')->name('/tabel_news_management');
     Route::post('/get_detail_news', 'ModuleController@getDetailNews')->name('/get_detail_news');
@@ -70,7 +72,6 @@ Route::prefix('admin')->group(function () {
 
 
     Route::post('get_status_com_publish', 'AdminCommController@get_status_com_publish')->name('get_status_com_publish');
-
     Route::post('get_list_custum_inputipe', 'AdminCommController@get_list_custum_inputipe')->name('get_list_custum_inputipe');
     Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');
     Route::post('setting_subpayment_admin', 'AdminCommController@setting_subpayment_admin')->name('setting_subpayment_admin');
@@ -236,9 +237,8 @@ Route::post('cek_valid_email_subs', 'RegisterController@cek_valid_email_subs')->
 Route::post('cek_valid_phone_subs', 'RegisterController@cek_valid_phone_subs')->name('cek_valid_phone_subs');
 Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_subs')->name('cek_valid_username_subs');
 
-Route::group(array('subscriber' => '{subdomain}.smartcom.id'), function () {
-    Route::get('/domain/{subdomain}', 'SubscriberController@GetdataSubdomainSubscriber');
-});
+
+
 
 // SUBSCRIBER - ROUTE
 Route::prefix('subscriber')->group(function () {

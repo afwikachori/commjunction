@@ -701,10 +701,13 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.status == 3 || result.status == 4) {
                     $("#btn_ke_commset_publish").hide();
                     $("#btn_ke_commset_publish").css("display", "none");
+                }else{
+                      $("#btn_ke_commset_publish").show();
+                    $("#btn_ke_commset_publish").css("display", "block");
                 }
 
                 if (result.status == 0) {

@@ -255,6 +255,7 @@ class SubscriberController extends Controller
     public function GetdataSubdomainSubscriber($domain)
     {
 
+        dd($domain);
         $url = env('SERVICE') . 'auth/configcommsubdomain';
         $client = new \GuzzleHttp\Client();
         try {

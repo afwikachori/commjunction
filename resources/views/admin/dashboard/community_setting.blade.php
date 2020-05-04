@@ -21,7 +21,7 @@
             lang="en">Edit Info</button>
             &nbsp;
         <button id="btn_ke_commset_publish" type="button" onclick="location.href ='/admin/publish'" class="btn btn-birumuda btn-sm"
-            style="width: 120px;" lang="en">Publish</button>
+            style="width: 120px; display: none" lang="en">Publish</button>
     </div>
 
 
