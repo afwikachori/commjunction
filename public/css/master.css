@@ -31,9 +31,6 @@ body::-webkit-scrollbar-thumb
   background:linear-gradient(to bottom, #fffcaf, #ffe7a7, #ffd4aa, #ffc3b2, #ffb6bc);
 }
 
-$color_base;
-$color_accent;
-
 
 
 /* google login admin community */

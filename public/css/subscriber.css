@@ -23,8 +23,7 @@ html, body {
   src: url("/font/sf_pro.ttf");
 }
 
-$color_base;
-$color_accent;
+
 
 
 body::-webkit-scrollbar-track

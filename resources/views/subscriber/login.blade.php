@@ -4,12 +4,6 @@
 @if (Session::has('auth_subs'))
 @foreach($subs_data as $dt)
 
-@section('css')
-<style type="text/css">
-$color_base: "{{ $dt['cust_portal_login']['base_color']}}";
-$color_accent: "{{ $dt['cust_portal_login']['accent_color']}}";
-</style>
-@endsection
 
 @section('content')
 <div class="row">
