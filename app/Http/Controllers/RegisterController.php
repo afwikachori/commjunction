@@ -839,8 +839,9 @@ class RegisterController extends Controller
 
             $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
             // return $jsonlogin;
-            $json = json_decode($jsonlogin, true);
-            if($json == true){
+            $hasil = json_decode($jsonlogin, true);
+            return $hasil;
+            if($hasil == true){
                 session()->forget('data_regis1');
                 session()->forget('data_regis1show');
                 session()->forget('data_idpay');
