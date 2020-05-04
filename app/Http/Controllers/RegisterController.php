@@ -839,8 +839,8 @@ class RegisterController extends Controller
 
             $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
             // return $jsonlogin;
-            // $json = json_decode($jsonlogin, true);
-
+            $json = json_decode($jsonlogin, true);
+            if($json == true){
                 session()->forget('data_regis1');
                 session()->forget('data_regis1show');
                 session()->forget('data_idpay');
@@ -857,7 +857,8 @@ class RegisterController extends Controller
                 session()->forget('data_idpay');
                 session()->forget('id_pay_type');
 
-                return view('admin/loading_creating');
+                return redirect('admin/loading');
+            }
 
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
