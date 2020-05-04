@@ -255,13 +255,13 @@ class SubscriberController extends Controller
     public function GetdataSubdomainSubscriber($domain)
     {
 
-        dd($domain);
+        $subdomain = $domain.'.smartcomm.id';
         $url = env('SERVICE') . 'auth/configcommsubdomain';
         $client = new \GuzzleHttp\Client();
         try {
             $response = $client->request('POST', $url, [
                 'form_params' => [
-                    'subdomain' => $domain
+                    'subdomain' => $subdomain
                 ]
             ]);
             $response = $response->getBody()->getContents();

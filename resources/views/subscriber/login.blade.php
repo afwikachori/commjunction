@@ -1,25 +1,37 @@
 @extends('layout.app')
 @section('title', 'Subscriber')
-@section('content')
-{{-- @foreach($subs_data as $dt)
-{{ $dt['cust_portal_login']['headline_text'] }}
-@endforeach --}}
-
-
 
 @if (Session::has('auth_subs'))
 @foreach($subs_data as $dt)
+
+@section('css')
+<style type="text/css">
+$color_base: "{{ $dt['cust_portal_login']['base_color']}}";
+$color_accent: "{{ $dt['cust_portal_login']['accent_color']}}";
+</style>
+@endsection
+
+@section('content')
 <div class="row">
     <div class="col-sm biruq">
-      <img src="{{ env('CDN') }}/{{ $dt['logo'] }}"
+        <div class="row">
+            <div class="col-md-6">
+   <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['icon'] }}"
+      id="img_icon_portal" class="img-fluid"
+      onerror = "this.onerror=null;this.src='/visual/commjuction.png';">
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+                 <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['image'] }}"
       id="login-left-commjuctioncdn" class="rounded-circle img-fluid"
-      onerror = "this.onerror=null;this.src='/visual/logo2.png';"
-      >
+      onerror = "this.onerror=null;this.src='/visual/logo2.png';">
+            </div>
+        </div>
+
 
     <div class="container subs_judul">
       <h2 class="cgrey">{{ $dt['name'] }}</h2>
-      {{-- <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5> --}}
-      {{-- <p>{{ $dt['cust_portal_login']['description'] }}</p> --}}
+      <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5>
+      <p>{{ $dt['cust_portal_login']['description'] }}</p>
     </div>
 
       <img src="/visual/loginadmin.png" id="login-img-subs">
@@ -122,12 +134,14 @@
     </div>
 </div>
   </div>
+@endsection
+
 @endforeach
 @else
   <script>window.location = "/404";</script>
 @endif
 
-@endsection
+
 
 @section('script')
 <script type="text/javascript">

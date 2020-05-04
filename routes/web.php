@@ -1,16 +1,16 @@
 <?php
-Route::domain('{subdomain}.smartcom.id')->group(function () {
-    Route::get('/', function ($subdomain) {
-        dd($subdomain);
-    });
-      // Route::get('/domain/{subdomain}', 'SubscriberController@GetdataSubdomainSubscriber');
+Route::domain('{subdomain}.smartcomm.id')->group(function () {
+    // Route::get('/', function ($subdomain) {
+    //     dd($subdomain);
+    // });
+      Route::get('/', 'SubscriberController@GetdataSubdomainSubscriber');
 });
 
 
-// Route::get('/', function () {
-//     // dd(env('CDN'));
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    // dd(env('CDN'));
+    return view('welcome');
+});
 
 
 

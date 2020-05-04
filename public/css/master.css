@@ -31,6 +31,10 @@ body::-webkit-scrollbar-thumb
   background:linear-gradient(to bottom, #fffcaf, #ffe7a7, #ffd4aa, #ffc3b2, #ffb6bc);
 }
 
+$color_base;
+$color_accent;
+
+
 
 /* google login admin community */
 .login .abcRioButton.abcRioButtonLightBlue{
@@ -109,7 +113,7 @@ top: 30px;
 position: absolute;
 width: 75px;
 height: 75px;
-left: 65px;
+right: 165px;
 top: 30px;
 }
 
@@ -195,6 +199,13 @@ border : 2px solid;
   min-height: 100vh;
  /* height: 100%;*/
   width: auto;
+}
+
+#img_icon_portal{
+        height: 45px !important;
+    position: absolute;
+    top: 40px;
+    left: 60px;
 }
 
 .full_height{
