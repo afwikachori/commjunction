@@ -17,6 +17,7 @@
                 <tr>
                     <th><b class="cgrey2" lang="en">ID Pay</b></th>
                     <th><b class="cgrey2" lang="en">Payment Title</b></th>
+                    <th><b class="cgrey2" lang="en">Account Name</b></th>
                     <th><b class="cgrey2" lang="en">Bank Name</b></th>
                     <th><b class="cgrey2" lang="en">Status</b></th>
                     <th><b class="cgrey2" lang="en">Action</b></th>
@@ -186,12 +187,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-12 form-group">
                         <small class="clight" lang="en">Description</small>
                         <p class="cgrey2" id="detail_deskripsi"></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -247,33 +248,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" class="form-control input-abu" id="id_subs_payment" name="id_subs_payment">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label lang="en">Payment Type</label>
-                                <select class="form-control input-abu" id="edit_payment_tipe" name="edit_payment_tipe">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label lang="en">Payment Status</label>
-                                <select class="form-control input-abu" id="edit_payment_status"
-                                    name="edit_payment_status" value="{{old('edit_payment_status')}}">
-                                    <option selected disabled lang="en">Choose</option>
-                                    <option value="1" lang="en">Active</option>
-                                    <option value="0" lang="en">Deactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label lang="en">Payment Name</label>
-                                <input type="text" id="edit_payment_name" name="edit_payment_name"
-                                    class="form-control input-abu">
-                            </div>
-                        </div> -->
-                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -289,37 +264,10 @@
                                     class="form-control input-abu">
                             </div>
                         </div>
-
-                        <!-- <div class="col-md-12 form-group">
-                            <small lang="en">Description</small>
-                            <textarea class="form-control input-abu" id="edit_deskripsi_paysubs"
-                                name="edit_deskripsi_paysubs" rows="2"></textarea>
-                        </div> -->
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label lang="en">Bank Name</label>
-                                <select class="form-control input-abu" id="edit_bank_name" name="edit_bank_name">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label lang="en">Payment Time Limit</label>
-                                <div class="row">
-                                    <div class="col-6" style="padding-right: 2px;">
-                                        <input type="text" class="form-control input-abu" id="edit_pay_time_limit"
-                                            name="edit_pay_time_limit" value="{{old('edit_pay_time_limit')}}">
-                                    </div>
-                                    <div class="col-6" style="text-align: left; padding-top: 10px;">
-                                        <small class="clight" style="margin-top: 1em; margin-left: -1em;"
-                                            lang="en">Days</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
+
                 </div> <!-- end-body -->
-                <div class="modal-footer" style="border: none; margin-top: -1.5em;">
+                <div class="modal-footer" style="border: none;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> <span lang="en">Cancel</span>

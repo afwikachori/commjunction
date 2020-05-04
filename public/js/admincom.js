@@ -5,7 +5,7 @@ var server_cdn = '';
 var lang = new Lang();
 lang.dynamic('id', '/js/langpack/id.json');
 lang.init({
-    defaultLang:'en'
+    defaultLang: 'en'
 });
 
 // (function () {
@@ -144,32 +144,39 @@ function session_admin_logged() {
                 $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(user.community_logo));
 
                 //initial login
-                if (user.status == 1) { //first-login
-                    get_initial_feature(result.feature); //isi data
+                if (user.status == 0) {
+                    $("#comm_status_admin").html("Newly");
+                } else if (user.status == 1) { //first-login
+                    get_initial_feature(result.my_feature); //isi data
                     $("#initial1").modal('show');
-                    $("#comm_status_admin").html("Verified - First Login");
-                    $(".statuscomm").html('Newbie');
-                    $(".statuscomm").addClass('badge-warning');
+                    $("#comm_status_admin").html("Newly");
                 } else if (user.status == 2) {
                     $("#comm_status_admin").html("Community Active");
-                    $(".statuscomm").html('Active');
-                    $(".statuscomm").addClass('badge-success');
-                } else { //status=0 belum aktif
-                    $(".statuscomm").html('Deactive');
-                    $(".statuscomm").addClass('badge-danger');
+                } else if (user.status == 3) { //status=0 belum aktif
+                    $("#btn_ke_commset_publish").hide();
+                    $("#comm_status_admin").html("Published");
+                } else {
+                    $("#btn_ke_commset_publish").hide();
                     swal("Your account not verified, please wait system or call Commjuction's Administrator", "Inactive", "error");
                     window.location.href = "/admin";
                 }
 
                 //cek membership pricing free or not
-                if (user.community_membership_type == 1){
+                if (user.community_membership_type == 1) {
                     // alert('free');
                     $(".input_pricemember").hide();
                     $("#harga_member").val(0);
-                }else{
+                } else {
                     // alert('paid');
                     $(".input_pricemember").show();
                 }
+
+                //PUBLISH COMMUNITY CEK
+                if (user.status_publish != undefined ) {
+                    $("#btn_ke_commset_publish").hide();
+                    $("#btn_ke_commset_publish").css("display","none");
+                }
+
 
 
 
@@ -228,43 +235,43 @@ function get_list_notif_navbar(idkom) {
                 }
             } else {
 
-            var isiku = '';
-            $.each(result, function (i, item) {
+                var isiku = '';
+                $.each(result, function (i, item) {
 
-                var d = new Date(item.created_at);
-                dformat = [d.getDate(), d.getMonth() + 1,
-                d.getFullYear()].join('/') + ' ' +
-                    [d.getHours(),
-                    d.getMinutes(),
-                    d.getSeconds()].join(':');
+                    var d = new Date(item.created_at);
+                    dformat = [d.getDate(), d.getMonth() + 1,
+                    d.getFullYear()].join('/') + ' ' +
+                        [d.getHours(),
+                        d.getMinutes(),
+                        d.getSeconds()].join(':');
 
-                var textArray = [
-                    'bg-success',
-                    'bg-info',
-                    'bg-danger',
-                    'bg-warning'
-                ];
-                var acak = Math.floor(Math.random() * textArray.length);
+                    var textArray = [
+                        'bg-success',
+                        'bg-info',
+                        'bg-danger',
+                        'bg-warning'
+                    ];
+                    var acak = Math.floor(Math.random() * textArray.length);
 
 
-                isiku += '<a class="dropdown-item preview-item notif">' +
-                    '<div class="preview-thumbnail medium">' +
-                    '<div class="preview-icon ' + textArray[acak] + '">' +
-                    '<i class="mdi mdi-bell-outline"></i>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-                    '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
-                    '</label> ' +
-                    '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
-                    '<small class="cbiru  mb-0">' + dformat + '</small > ' +
-                    '</div> ' +
-                    '</a> ' +
-                    '<div class="dropdown-divider"></div>';
-            });
-            $("#isi_notif_navbar").html(isiku);
+                    isiku += '<a class="dropdown-item preview-item notif">' +
+                        '<div class="preview-thumbnail medium">' +
+                        '<div class="preview-icon ' + textArray[acak] + '">' +
+                        '<i class="mdi mdi-bell-outline"></i>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                        '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
+                        '</label> ' +
+                        '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+                        '<small class="cbiru  mb-0">' + dformat + '</small > ' +
+                        '</div> ' +
+                        '</a> ' +
+                        '<div class="dropdown-divider"></div>';
+                });
+                $("#isi_notif_navbar").html(isiku);
                 $("#ada_notif").show();
-        }
+            }
         },
         error: function (result) {
             var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
@@ -329,17 +336,17 @@ function dateFormat(tgl) {
 
 
 function get_initial_feature(datafitur) {
-    var arr = [];
-    arr.push(datafitur);
 
     var html = '';
-    $.each(arr, function (i, item) {
+    $.each(datafitur, function (i, item) {
         // console.log(item.title);
         var imgk = cekimage_cdn(item.logo);
+        var noimg = '/img/fitur.png';
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-        '<img src="' + server_cdn + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;">' +
+            '<img src="' + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;"'+
+            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
             item.title + '</h6>' +
@@ -381,16 +388,16 @@ function IsEmail(email) {
 
 
 function clickImage(img) {
-    if(img != null && img != undefined){
-    var modal = document.getElementById("mdl-img-click");
-    var img = document.getElementById(img.id);
-    var modalImg = document.getElementById("mdl-img-view");
+    if (img != null && img != undefined) {
+        var modal = document.getElementById("mdl-img-click");
+        var img = document.getElementById(img.id);
+        var modalImg = document.getElementById("mdl-img-view");
 
-    img.onclick = function () {
-        $('#mdl-img-click').modal('show');
-        modalImg.src = this.src;
+        img.onclick = function () {
+            $('#mdl-img-click').modal('show');
+            modalImg.src = this.src;
+        }
     }
-}
 }
 
 function rupiah(val) {
@@ -481,7 +488,7 @@ function cekimage_cdn(img) {
         } else {
             foto = img;
         }
-    }else{
+    } else {
         foto = '';
     }
 

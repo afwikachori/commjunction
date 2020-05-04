@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-4" style="text-align: right; margin-top: 0.5em;">
         <label class="cgrey2 s14" lang="en">Community Status</label> &nbsp; &nbsp;
-        <span class="badge statuscomm bg-ijo melengkung6px" style="width: 80px;">Status</span>
+        <span class="badge statuscomm melengkung6px" style="width: 80px;">Status</span>
     </div>
 </div>
 <br>
@@ -19,8 +19,8 @@
     <div class="divbutton">
         <button type="button" onclick="location.href ='/admin/editprofil'" class="btn btn-tosca btn-sm" style="width: 120px;"
             lang="en">Edit Info</button>
-            &nbsp;&nbsp;
-        <button type="button" onclick="location.href ='/admin/publish'" class="btn btn-birumuda btn-sm"
+            &nbsp;
+        <button id="btn_ke_commset_publish" type="button" onclick="location.href ='/admin/publish'" class="btn btn-birumuda btn-sm"
             style="width: 120px;" lang="en">Publish</button>
     </div>
 

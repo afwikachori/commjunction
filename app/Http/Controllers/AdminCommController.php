@@ -421,8 +421,12 @@ class AdminCommController extends Controller
             $json = json_decode($response, true);
 
             if ($json['success'] == true) {
+                $stpublish = array("status_publish" => 3);
+                $status_publish =  array_merge($ses_login, $stpublish);
+                session()->put('session_admin_logged', $status_publish);
+
                 alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
-                return back();
+                return redirect('/admin/community_settings');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -847,7 +851,7 @@ class AdminCommController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
-                return redirect('/admin/settings/membership');
+                return redirect('/admin/community_settings');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -964,7 +968,36 @@ class AdminCommController extends Controller
     } //endfunc
 
 
+    public function get_status_com_publish()
+    {
+        $ses_login = session()->get('session_admin_logged');
 
+        $url = env('SERVICE') . 'commsetting/commstatus';
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
+
+            $response = $response->getBody()->getContents();
+            $json = json_decode($response, true);
+            return $json['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['succes'] = false;
+            return $error;
+        }
+    }
 
 
 
@@ -1865,7 +1898,7 @@ class AdminCommController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Successfully to add new payment method', 'Added')->persistent('Done');
-                return redirect('admin/settings/payment');
+                return back();
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1910,7 +1943,7 @@ class AdminCommController extends Controller
             // return $json;
             if ($json['success'] == true) {
                 alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
-                return redirect('admin/settings/payment');
+                return back();
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -3548,14 +3581,8 @@ class AdminCommController extends Controller
             'Authorization' => $ses_login['access_token']
         ];
         $bodyku = json_encode([
-            // 'payment_title' => $input['edit_payment_name'],
-            'payment_type_id' => $input['edit_payment_tipe'],
             'payment_owner_name' => $input['edit_rekening_name'],
             'no_rekening' => $input['edit_rekening_number'],
-            // 'description' => [$input['edit_deskripsi_paysubs']],
-            'payment_method_id' => $input['edit_bank_name'],
-            'payment_time_limit' => $input['edit_pay_time_limit'],
-            'status' => $input['edit_payment_status'],
             'payment_id' => $input['id_subs_payment']
         ]);
         // return $bodyku;

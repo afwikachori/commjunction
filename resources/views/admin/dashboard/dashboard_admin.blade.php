@@ -306,7 +306,7 @@
                     <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
-                    <button type="button" id="btn-initial1" class="btn btn-primary btn-sm" lang="en">Take a tour</button>
+                    <button type="button" id="btn-initial1" class="btn btn-teal btn-sm" lang="en">Take a tour</button>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -331,7 +331,7 @@
             </div> <!-- end-modal body -->
             <center>
                 <div class="modal-footer" id="mdl-footer-initialfitur">
-                    <button type="button" id="btn-initial2" class="btn btn-primary btn-sm" lang="en">Got it</button>
+                    <button type="button" id="btn-initial2" class="btn btn-teal btn-sm" lang="en">Got it</button>
                 </div>
             </center>
         </div>
@@ -352,7 +352,7 @@
                     <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
-                    <button type="button" id="btn-initial3" class="btn btn-primary btn-sm" lang="en">Finish</button>
+                    <a href="/admin/community_setting" type="button" id="btn-initial3" class="btn btn-teal btn-sm" lang="en">Finish</a>
                 </center>
             </div> <!-- end-modal body -->
         </div>

@@ -50,14 +50,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/get_detail_news/{id_news}', 'ModuleController@getDetailNews')->name('/get_detail_news');
     Route::get('/community_setting', 'AdminCommController@CommunitySettingsView')->name('community_setting');
 
-    // // admin/settings
-    // Route::prefix('settings')->group(function () {
-    //     Route::get('/', 'AdminCommController@comSettingView')->name('settings');
-    //     Route::get('/loginregis', 'AdminCommController@loginRegisAdminView')->name('/loginregis');
-    //     Route::get('/membership', 'AdminCommController@membershipAdminView')->name('/membership');
-    //     Route::get('/registrasion_data', 'AdminCommController@regisdataAdminView')->name('/registrasion_data');
-    //     Route::get('/payment', 'AdminCommController@SetpaymentAdminView')->name('/payment');
-    // }); //end-admin
 
     //POST
 
@@ -76,6 +68,8 @@ Route::prefix('admin')->group(function () {
     Route::post('publish_headline', 'ModuleController@PublishHeadline')->name('publish_headline');
 
 
+
+    Route::post('get_status_com_publish', 'AdminCommController@get_status_com_publish')->name('get_status_com_publish');
 
     Route::post('get_list_custum_inputipe', 'AdminCommController@get_list_custum_inputipe')->name('get_list_custum_inputipe');
     Route::post('get_list_notif_navbar', 'AdminCommController@get_list_notif_navbar')->name('get_list_notif_navbar');

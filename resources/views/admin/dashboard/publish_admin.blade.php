@@ -17,7 +17,7 @@
 <div class="row" style="padding-top:2%; padding-right:20%; padding-left:20%;">
  <div class="col-12">
   <div class="card">
-    <div class="card-body" style="min-height: 420px; height: auto;">
+    <div class="card-body" style="min-height: 420px; height: auto; margin-top: auto; margin-bottom: auto;">
     <div  id="isi_list_setting">
 
     </div>
@@ -59,6 +59,12 @@ $.ajax({
       datatype: 'JSON',
       success: function (result) {
       console.log(result);
+      var sukses= result.success;
+      var pesan = result.message;
+      if(sukses == false && pesan == "Internal Server Error"){
+          $("#isi_list_setting").html('<center><h2 class="clight">No Data Publish</h2></center>');
+          swal("Good job!", "Internal Server Error", "error");
+      }else{
       var isinya = '';
       var sready;
 
@@ -79,44 +85,25 @@ $.ajax({
         sready+
         '</div>'+
         '<div class="col-md-3">'+
-        '<button type="button" onclick="listsetting'+i+'()" class="btn btn-sm btn-tosca">Setting</button>'+
+        '<button type="button" onclick="listsetting()" class="btn btn-sm btn-tosca">Setting</button>'+
         '</div>'+
         '</div>';
       });
 
       $("#isi_list_setting").html(isinya);
-
+      }
       },
       error: function (result) {
-        console.log("Cant Data for preparing publish community");
+            $("#isi_list_setting").html('<center><h2 class="clight">No Data Publish</h2></center>');
+        console.log(result);
     }
 });
 }
 
 
-function listsetting0(){
+function listsetting(){
 //   alert("0 ");
-window.location = '/admin/settings/loginregis';
-}
-function listsetting1(){
-//   alert("1 ");
-  window.location = '/admin/settings/loginregis';
-}
-function listsetting2(){
-//   alert("2 ");
-  window.location = '/admin/settings/loginregis';
-}
-function listsetting3(){
-//   alert("3 ");
-  window.location = '/admin/settings/membership';
-}
-function listsetting4(){
-//   alert("4 ");
-  window.location = '/admin/settings/registrasion_data';
-}
-function listsetting5(){
-//   alert("5 ");
-  window.location = '/admin/settings/payment';
+window.location = '/admin/community_setting';
 }
 
 </script>

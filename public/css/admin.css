@@ -2269,3 +2269,11 @@ input[type=color] {
   background-color:#80d7e0;
   display:inline-block;
 }
+
+.badge-tosca{
+    background-color: #50b7b9 !important;
+}
+
+.badge-abu{
+    background-color: #aaa8a8 !important;
+}

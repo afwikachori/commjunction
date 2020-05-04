@@ -210,9 +210,9 @@
         tabel_list_regisdata();
         get_list_custum_inputipe();
         addRowRegisData();
-        //payment
+
         tabel_payment_community();
-        tabel_tes(); //payment cmmunity
+        get_status_com_publish();
 
         get_payment_tipe();
     });
@@ -271,7 +271,7 @@
                         $("#font_headline").css('font-family', portal.data.font_headline);
 
                         $("#font_link").val(portal.data.font_link);
-                          $("#font_link").css('font-family', portal.data.font_link);
+                        $("#font_link").css('font-family', portal.data.font_link);
 
                         $("#color_base").val(portal.data.base_color);
                         $("#color_accent").val(portal.data.accent_color);
@@ -298,6 +298,13 @@
                     if (portal.ready == true) {
                         $('#headline').attr("disabled", "disabled");
                         $('#description_custom').attr("disabled", "disabled");
+
+                        $("#colour").attr("disabled", "disabled");
+                        $("#colour2").attr("disabled", "disabled");
+
+                        $("#font_headline").attr("disabled", "disabled");
+                        $("#font_link").attr("disabled", "disabled");
+
                         $("#up_img_portal").hide();
                         $(".img_portal").show();
 
@@ -682,23 +689,43 @@
 
     }
 
-    //PAYMENT SUBSCRIBER
 
-    function tabel_tes() {
+    function get_status_com_publish() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/admin/tabel_payment_community',
+            url: '/admin/get_status_com_publish',
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
                 console.log(result);
+                if (result.status == 3 || result.status == 4) {
+                    $("#btn_ke_commset_publish").hide();
+                    $("#btn_ke_commset_publish").css("display", "none");
+                }
+
+                if (result.status == 0) {
+                    $(".statuscomm").html('Newly');
+                    $(".statuscomm").addClass('bg-abu');
+                } else if (result.status == 1) {
+                    $(".statuscomm").html('Newly');
+                    $(".statuscomm").addClass('bg-abu');
+                } else if (result.status == 2) {
+                    $(".statuscomm").html('Active');
+                    $(".statuscomm").addClass('bg-hijau');
+                } else if (result.status == 3) {
+                    $(".statuscomm").html('Published');
+                    $(".statuscomm").addClass('bg-biru');
+                } else if (result.status == 4) {
+                    $(".statuscomm").html('Deactive');
+                    $(".statuscomm").addClass('bg-merah');
+                }
             },
             error: function (result) {
-                console.log("Cant Show DataTable");
+                console.log("Cant Show status publish com");
             }
         });
     }
@@ -727,6 +754,7 @@
             columns: [
                 { mData: 'id' },
                 { mData: 'payment_title' },
+                { mData: 'payment_owner_name' },
                 { mData: 'payment_bank_name' },
                 {
                     mData: 'status',
@@ -772,7 +800,13 @@
             $("#detail_tipe_pay").html(pay.payment_title);
             $("#detail_owner").html(dt.payment_owner_name);
             $("#detail_no_rekening").html(dt.payment_account);
-            $("#detail_deskripsi").html(dt.description[0]);
+
+            var desui = '';
+            $.each(dt.description, function (i, item) {
+                desui += '<li>' + item + '</li>';
+            });
+            $("#detail_deskripsi").html('<ul>' + desui + '</ul>');
+
             $("#detail_bank").html(dt.payment_bank_name);
             $("#detail_timelimit").html(dt.payment_time_limit + " Days");
             if (dt.status == 0) {
@@ -784,20 +818,9 @@
             $("#modal_detail_paymentsubs").modal("show");
             // _________EDIT__________
             $("#id_subs_payment").val(dt.id);
-            $("#edit_payment_name").val(dt.payment_title);
+
             $("#edit_rekening_number").val(dt.payment_account);
             $("#edit_rekening_name").val(dt.payment_owner_name);
-            $("#edit_bank_name").val(dt.payment_bank_name);
-            // $("#edit_payment_tipe").text(pay.payment_title);
-            $("#edit_payment_tipe option").each(function () {
-                if ($(this).text() == pay.payment_title) {
-                    $(this).attr('selected', 'selected');
-                }
-            });
-            // alert(pay.payment_title);
-            $("#edit_payment_status").val(dt.status).attr("selected", "selected");
-            $("#edit_pay_time_limit").val(dt.payment_time_limit);
-            $("#edit_deskripsi_paysubs").text(dt.description[0]);
 
         });
 
@@ -829,19 +852,7 @@
                 }));
 
                 $("#payment_tipe").get(0).selectedIndex = 0;
-                // ______________________________________________________________________________
-                $('#edit_payment_tipe').empty();
-                $('#edit_payment_tipe').append("<option disabled> Choose </option>");
 
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#edit_payment_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].payment_title, "</option>"));
-                }
-
-                $("#edit_payment_tipe").html($('#edit_payment_tipe option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#edit_payment_tipe").get(0).selectedIndex = 0;
             }
         });
     } //endfunction
@@ -850,11 +861,6 @@
         var val = $(this).val();
         get_bank_pay(val);
 
-    });
-
-    $("#edit_payment_tipe").change(function (event) {
-        var val = $(this).val();
-        get_bank_pay_edit(val);
     });
 
 
@@ -891,37 +897,6 @@
     } //endfunction
 
 
-
-    //dropdown bank
-    function get_bank_pay_edit(id_paytipe) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/admin/get_bank_pay",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "payment_type_id": id_paytipe
-            },
-            success: function (result) {
-                $('#edit_bank_name').empty();
-                $('#edit_bank_name').append("<option disabled selected> Choose </option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#edit_bank_name').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].payment_title, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#edit_bank_name").html($('#edit_bank_name option').sort(function (x, y) {
-                    return $(x).text() < $(y).text() ? -1 : 1;
-                }));
-
-                $("#edit_bank_name").get(0).selectedIndex = 0;
-            }
-        });
-    } //endfunction
 
 
 

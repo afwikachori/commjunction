@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
-                    <button type="button" onclick="location.href ='/admin/settings'"
+                    <button type="button" onclick="location.href ='/admin/community_setting'"
                         class="btn btn-gradient-light btn-sm btn-fw melengkung8px">Cancel</button>
                     &nbsp;
                     <button type="submit" class="btn btn-teal btn-sm btn-fw">Save Editing</button>
