@@ -19,10 +19,15 @@ services:
     restart: always
     
     networks:
-      - commj_web
+      community :
+        aliases:
+          - commjunction
+
   
-networks:
-  commj_web:
-     driver: bridge
+ community:
+    name: community
+    driver: bridge
+
+
 
 
