@@ -17,16 +17,14 @@ services:
       - 9899:80
     tty: true
     restart: always
-    
     networks:
       community :
         aliases:
           - commjunction
 
-  
- community:
-    name: community
-    driver: bridge
+community:
+   name: community
+   driver: bridge
 
 
 
