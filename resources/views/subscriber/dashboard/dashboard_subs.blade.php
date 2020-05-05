@@ -673,7 +673,7 @@
                     $("#nodata_last_news").show();
                     $("#isi_last_news").hide();
                     // console.log(result);
-                }
+                }else{
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
@@ -685,6 +685,7 @@
                 $("#isi_last_news").html(newsui);
                 $("#nodata_last_news").hide();
                 $("#isi_last_news").show();
+            }
 
             },
             error: function (result) {
@@ -716,8 +717,7 @@
                 if (result.success == false) {
                     $("#nodata_love_news").show();
                     $("#isi_love_news").hide();
-                    console.log(result);
-                }
+                }else{
                 var loveui = '';
                 $.each(result, function (i, item) {
                     loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
@@ -733,6 +733,7 @@
                 $("#isi_love_news").html(loveui);
                 $("#nodata_love_news").hide();
                 $("#isi_love_news").show();
+            }
 
             },
             error: function (result) {
@@ -763,7 +764,7 @@
                 if (result.success == false) {
                     $("#nodata_topvisit_news").show();
                     $("#isi_topvisit_news").hide();
-                }
+                }else{
                 var newsui = '';
                 $.each(result, function (i, item) {
                     newsui += '<li>' +
@@ -775,6 +776,7 @@
                 $("#isi_topvisit_news").html(newsui);
                 $("#nodata_topvisit_news").hide();
                 $("#isi_topvisit_news").show();
+            }
             },
             error: function (result) {
                 console.log("Cant Show top visit news");

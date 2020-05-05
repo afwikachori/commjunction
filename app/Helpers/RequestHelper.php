@@ -164,37 +164,6 @@ trait RequestHelper
     private function encrypt_regis($plain)
     {
 
-        // $data = '';
-        // $arr = [];
-        // foreach ($plain as $i => $item) {
-        //     $encrypted = json_encode([$i => $item]);
-        //     if ($i == 'community') {
-        //         $res = '{' . substr($encrypted, 1);
-        //     } else {
-        //         $res = substr($encrypted, 1) . ',';
-        //     }
-
-
-
-        //     if ($i != 'payment') {
-        //         if ($i == 'admin') {
-        //             $res = substr($res, 0, -2) . ',';
-        //         } else if ($i == 'feature') {
-        //             $res = substr($res, 0, -2) . ',';
-        //         } else {
-        //             $res = substr($res, 0, -1) . ',';
-        //         }
-        //     } else {
-        //         $res = substr($res, 0, -1);
-        //     }
-        //     array_push($arr, $this->proses_enkrip($res));
-        //     // $data .= $this->proses_enkrip($res);
-        // }
-        // return $arr;
-        // ______________________
-
-
-        // dd($plain);
         $data = [];
         $n  = count($plain);
         $index = 0;

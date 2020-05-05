@@ -245,6 +245,20 @@
         $('#tabel_user_resetpass').empty();
 
 
+        var head = '<thead>' +
+                    '<tr>' +
+                    '<th><b>ID</b></th>' +
+                    '<th><b>User</b></th>' +
+                    '<th><b>Photo</b></th>' +
+                    '<th><b>Fullname</b></th>' +
+                    '<th><b>Email</b></th>' +
+                    '<th><b>Action</b></th>' +
+                    '</tr>' +
+                    '</thead>';
+
+        $('#tabel_user_resetpass').html(head);
+
+
         $("#modal_generate_user").modal('hide');
         $("#tabel_user_resetpass").show();
 

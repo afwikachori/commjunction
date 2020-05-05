@@ -261,7 +261,7 @@
 
     $(document).ready(function () {
 
-        get_dropdownlist_komunitas_support();
+
         if ($('#status_komunitas').val() == "all") {
             get_list_komunitas_support("all");
         }
@@ -278,8 +278,24 @@
 
 
     function get_list_komunitas_support(id_status) {
+         get_dropdownlist_komunitas_support();
+
         $('#tabel_komunitas_support').DataTable().clear().destroy();
         $('#tabel_komunitas_support').empty();
+
+        var heads = '<thead>' +
+                    '<tr>' +
+                    '<th><b>ID</b></th>' +
+                    '<th><b>Logo</b></th>' +
+                    '<th><b>Community Name</b></th>' +
+                    '<th><b>Description</b></th>' +
+                    '<th><b>Status</b></th>' +
+                    '<th><b>Date Created</b></th>' +
+                    '<th><b>Action</b></th>' +
+                    '</tr>' +
+                    '</thead>';
+
+        $('#tabel_komunitas_support').html(heads);
 
         var tabel = $('#tabel_komunitas_support').DataTable({
             dom: 'Bfrtip',
@@ -297,6 +313,7 @@
                 }
             ],
             responsive: true,
+            paging: false,
             fixedHeader: {
                 header: true,
             },
@@ -394,17 +411,6 @@
 
         });
 
-
-        // var isihead = '<tr>' +
-        //     '<th><b>ID</b></th>' +
-        //     '<th><b>Logo</b></th>' +
-        //     '<th><b>Community Name</b></th>' +
-        //     '<th><b>Description</b></th>' +
-        //     '<th><b>Status</b></th>' +
-        //     '<th><b>Date Created</b></th>' +
-        //     '<th><b>Action</b></th>' +
-        //     '</tr>';
-        // $('#tabel_komunitas_support thead').empty().append(isihead);
 
         //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_komunitas_support tbody').on('click', 'button', function () {
@@ -519,6 +525,19 @@
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
+        var heads = '<thead><tr>' +
+                    '<th><b>ID Subscriber</b></th>' +
+                    '<th><b>Photo</b></th>' +
+                    '<th><b>Subcriber Name</b></th>' +
+                    '<th><b>username</b></th>' +
+                    '<th><b>Status</b></th>' +
+                    '<th><b>Date Created</b></th>' +
+                    '<th><b>Membership</b></th>'+
+                    '<th><b>Action</b></th>' +
+                    '</tr></thead>';
+
+        $('#tabel_subscriber').html(heads);
+
 
         var tabel = $('#tabel_subscriber').DataTable({
             dom: 'Bfrtip',
@@ -536,6 +555,10 @@
                 }
             ],
             responsive: true,
+            paging: false,
+            fixedHeader: {
+                header: true,
+            },
             language: {
                 paginate: {
                     next: '<i class="mdi mdi-chevron-right"></i>',
