@@ -828,11 +828,13 @@ class RegisterController extends Controller
             'payment'  => $dtpay,
         ];
 
+        return $datafinal;
+
         $url = env('SERVICE') . 'registration/adcommcreate';
         try {
 
             $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
-            return $jsonlogin;
+
             $hasil = json_decode($jsonlogin, true);
             // return $hasil;
             if($hasil == true){
