@@ -446,6 +446,7 @@ Route::prefix('support')->group(function () {
 
 
     //POST
+
     Route::post('get_list_komunitas_support', 'SupportCommjunction@get_list_komunitas_support')->name('get_list_komunitas_support');
     Route::post('get_list_feature_support', 'SupportCommjunction@get_list_feature_support')->name('get_list_feature_support');
     Route::post('get_list_subfeature_support', 'SupportCommjunction@get_list_subfeature_support')->name('get_list_subfeature_support');

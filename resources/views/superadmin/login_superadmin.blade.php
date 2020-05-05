@@ -35,7 +35,7 @@
                     </center>
 
                     <form class="form-login-super" method="POST" id="form_registerfirst_admin"
-                        action="{{route('loginSuperadmin')}}" enctype="multipart/form-data">{{ csrf_field() }}
+                        action="{{route('loginSuperadmin')}}">{{ csrf_field() }}
                         <div class="form-group ">
                             <label for="username_superadmin" class="h6 s14" lang="en">Username</label>
                             <input type="text" name="username_superadmin" class="form-control" id="username_superadmin"

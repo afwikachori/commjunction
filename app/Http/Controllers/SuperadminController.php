@@ -219,12 +219,6 @@ class SuperadminController extends Controller
             $error['succes'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
-        } catch (FatalErrorException $errornya) {
-            alert()->error("Maximum execution time of 60 seconds exceeded", 'Failed!')->autoclose(4500);
-            return back();
-        } catch (Throwable  $errornya) {
-            alert()->error("Maximum execution time of 60 seconds exceeded", 'Failed!')->autoclose(4500);
-            return back();
         }
     }
 

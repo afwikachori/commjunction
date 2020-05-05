@@ -14,7 +14,7 @@
     <link rel="icon" href="/img/commjuction_icoweb.ico" />
 
 
-	<link rel="stylesheet" href="/css/jjsonviewer.css">
+    <link rel="stylesheet" href="/css/jjsonviewer.css">
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
@@ -42,7 +42,7 @@
     <div class="container-scroller">
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <!-- @include('support.support_navbar') -->
-               @include('superadmin.navbar')
+            @include('superadmin.navbar')
         </nav>
 
 
@@ -282,6 +282,66 @@
         </div>
     </div>
 
+    <!-- MODAL INPUT LOGIN SUPERADMIN-->
+    <div class="modal fade" id="modal_input_login_superadmin" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #ffffff; width: 400px;
+        min-height: 350px;">
+
+                <form method="POST" id="form_input_loginsuper" action="{{route('loginSuperadmin')}}">
+                    {{ csrf_field() }}
+
+                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                        <center>
+                            <img src="/visual/logo2.png" id="img_changepass">
+                        </center>
+                        <form class="form-login-super" method="POST" id="form_registerfirst_admin"
+                            action="{{route('loginSuperadmin')}}" enctype="multipart/form-data">{{ csrf_field() }}
+                            <div class="form-group ">
+                                <label for="username_superadmin" class="h6 s14" lang="en">Username</label>
+                                <input type="text" name="username_superadmin" class="form-control"
+                                    id="username_superadmin" value="{{ old('username_superadmin') }}"
+                                    placeholder="Username" lang="en">
+                            </div>
+
+                            <div class="form-group  mgtop-1">
+                                <label for="pass_superadmin" class="h6 s14" lang="en">Password</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="pass_superadmin" type="password"
+                                        placeholder="Password" lang="en" value="{{ old('pass_superadmin') }}"
+                                        class="form-control @error('pass_superadmin') is-invalid @enderror"
+                                        name="pass_superadmin" required autocomplete="pass_superadmin"
+                                        aria-describedby="btn_showpasssuper">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-light" type="button" id="btn_showpasssuper"
+                                            onclick="showPassSuper()" style="border-color: #ced4da;">
+                                            <span class="fa fa-eye" id="ico-mata-superadmin" aria-hidden="true"
+                                                style="color: #cbe5ff;"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div> <!-- end-body -->
+
+                    <div class="modal-footer changepass" style="border: none;">
+                        <center>
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                style="border-radius: 10px;">
+                                <i class="mdi mdi-close"></i> Cancel
+                            </button>
+                            &nbsp;
+                            <button type="submit" class="btn btn-tosca btn-sm">
+                                <i class="mdi mdi-check btn-icon-prepend">
+                                </i> Submit </button>
+                        </center>
+                    </div> <!-- end-footer     -->
+                </form>
+            </div> <!-- END-MDL CONTENT -->
+
+        </div>
+    </div>
+
 
 
 
@@ -324,7 +384,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
-	<script type="text/javascript" src="/js/jsonviewer/jjsonviewer.js"></script>
+    <script type="text/javascript" src="/js/jsonviewer/jjsonviewer.js"></script>
 
     <!-- Sweetalert -->
     <script src="{{asset('js/sweetalert.min.js')}}"></script>

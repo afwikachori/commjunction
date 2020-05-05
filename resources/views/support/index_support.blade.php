@@ -74,6 +74,30 @@
     $(document).ready(function () {
         $("#nav_minimize_sidebar").hide();
     });
+
+
+    function session_logged_superadmin() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/superadmin/session_logged_superadmin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Cant Show session superadmin");
+            }
+        });
+    }
+
+
     </script>
 
   </body>
