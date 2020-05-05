@@ -244,7 +244,7 @@
                                                 <center>
                                                     <img src="/img/loading1.gif" id="icon_comm_subs"
                                                         class="rounded-circle img-fluid"
-                                                        style="width: 50%; height: auto;"
+                                                        style="width: 50%; height: 50%;"
                                                         onerror="this.onerror=null;this.src='/visual/logo2.png';">
                                                 </center>
                                             </div>

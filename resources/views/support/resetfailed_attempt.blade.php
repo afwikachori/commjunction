@@ -296,6 +296,18 @@
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
+        var header = '<thead>' +
+            '<tr>' +
+            '<th><b>ID User</b></th>' +
+            '<th><b>Photo</b></th>' +
+            '<th><b>Full Name</b></th>' +
+            '<th><b>username</b></th>' +
+            '<th><b>Email</b></th>' +
+            '<th><b>Reset Attempt</b></th>' +
+            '</tr>' +
+            '</thead >';
+             $('#tabel_subscriber').html(header);
+
 
         var tabel = $('#tabel_subscriber').DataTable({
             dom: 'Bfrtip',
@@ -465,6 +477,17 @@
         $('#tabel_admin_komunitas').DataTable().clear().destroy();
         $('#tabel_admin_komunitas').empty();
 
+                var header = '<thead>' +
+            '<tr>' +
+            '<th><b>ID User</b></th>' +
+            '<th><b>Photo</b></th>' +
+            '<th><b>Full Name</b></th>' +
+            '<th><b>username</b></th>' +
+            '<th><b>Email</b></th>' +
+            '<th><b>Reset Attempt</b></th>' +
+            '</tr>' +
+            '</thead >';
+        $('#tabel_admin_komunitas').html(header);
 
         $("#modal_generate_user").modal('hide');
         $("#tabel_admin_komunitas").show();
@@ -600,7 +623,7 @@
         $('#tabel_admin_komunitas tbody').on('click', 'button.btn_reset_login', function () {
             var data = tabel.row($(this).parents('tr')).data();
             console.log(data);
-             $.ajaxSetup({
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }

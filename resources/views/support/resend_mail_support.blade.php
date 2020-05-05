@@ -259,6 +259,18 @@
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
+         var uihead = '<thead>' +
+            '<tr>' +
+            '<th><b>ID User</b></th>' +
+            '<th><b>Photo</b></th>' +
+            '<th><b>Full Name</b></th>' +
+            '<th><b>username</b></th>' +
+            '<th><b>Email</b></th>' +
+            '<th><b>Action</b></th>' +
+            '</tr>' +
+            '</thead>';
+        $('#tabel_subscriber').html(uihead);
+
 
         var tabel = $('#tabel_subscriber').DataTable({
             dom: 'Bfrtip',
@@ -387,6 +399,17 @@
         $('#tabel_admin_komunitas').DataTable().clear().destroy();
         $('#tabel_admin_komunitas').empty();
 
+        var uihead = '<thead>' +
+            '<tr>' +
+            '<th><b>ID User</b></th>' +
+            '<th><b>Photo</b></th>' +
+            '<th><b>Full Name</b></th>' +
+            '<th><b>username</b></th>' +
+            '<th><b>Email</b></th>' +
+            '<th><b>Action</b></th>' +
+            '</tr>' +
+            '</thead>';
+        $('#tabel_admin_komunitas').html(uihead);
 
         $("#modal_generate_user").modal('hide');
         $("#tabel_admin_komunitas").show();
