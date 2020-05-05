@@ -190,8 +190,10 @@ class SubscriberController extends Controller
                 "sso_token"     => $input['sso_token']
             ];
 
-            $respon = $this->encryptedPost($request, $req_input, $url, null);
-            // return $jsonlogin;
+            $respon_enkrp = $this->encryptedPost($request, $req_input, $url, null);
+            // return $respon;
+            $respon = json_decode($respon_enkrp, true);
+
             if ($respon['success'] == true) {
                 alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
                 $url_sukses = '/subscriber/url/' . $url_comname;

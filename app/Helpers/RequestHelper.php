@@ -84,8 +84,9 @@ trait RequestHelper
         $response = $request->getBody()->getContents();
         $dt_dekrip = json_decode($response, true);
 
-        $leng =  count($dt_dekrip['data']);
-        if ($leng > 1) {
+
+        // $leng =  count($dt_dekrip['data']);
+        if (is_array($dt_dekrip['data'])) {
             $data = '';
             foreach ($dt_dekrip['data'] as $i => $dt) {
                 $encrypted = $this->decrypt(json_encode($dt_dekrip['data'][$i]));
