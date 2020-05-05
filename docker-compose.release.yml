@@ -22,9 +22,11 @@ services:
         aliases:
           - commjunction
 
-community:
-   name: community
-   driver: bridge
+networks:
+  community:
+    name: community
+    driver: bridge
+
 
 
 
