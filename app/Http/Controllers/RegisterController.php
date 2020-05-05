@@ -829,16 +829,10 @@ class RegisterController extends Controller
         ];
 
         $url = env('SERVICE') . 'registration/adcommcreate';
-        $client = new \GuzzleHttp\Client();
         try {
-            // $response = $client->request('POST', $url, [
-            //     'form_params' => $datafinal
-            // ]);
-            // $response = $response->getBody()->getContents();
-            // $json = json_decode($response, true);
 
             $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
-            // return $jsonlogin;
+            return $jsonlogin;
             $hasil = json_decode($jsonlogin, true);
             // return $hasil;
             if($hasil == true){

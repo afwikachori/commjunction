@@ -110,7 +110,11 @@
                 $('#mdl-loadingajax').modal('show');
             },
             success: function (result) {
+
                 // console.log(result);
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
                 if (result.success == false || result.message == "pricing null") {
                     swal("Pricing is null!", "Choose your pricing first", "error")
                         .then((value) => {
