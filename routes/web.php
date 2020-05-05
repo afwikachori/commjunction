@@ -420,9 +420,11 @@ Route::prefix('superadmin')->group(function () {
     Route::post('change_password_superadmin', 'SuperadminController@change_password_superadmin')->name('change_password_superadmin');
     Route::post('add_user_management_super', 'SuperadminController@add_user_management_super')->name('add_user_management_super');
     Route::post('edit_user_management_super', 'SuperadminController@edit_user_management_super')->name('edit_user_management_super');
+    Route::post('get_session_logged_superadmin', 'SuperadminController@get_session_logged_superadmin')->name('get_session_logged_superadmin');
+
 });
 // ---- post : superadmin-----
-
+Route::post('InputloginSuperadmin', 'SuperadminController@InputloginSuperadmin')->name('InputloginSuperadmin');
 Route::post('loginSuperadmin', 'SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 Route::post('postAddUser', 'SuperadminController@postAddUser')->name('postAddUser');
 Route::post('session_logged_superadmin', 'SuperadminController@session_logged_superadmin')->name('session_logged_superadmin');

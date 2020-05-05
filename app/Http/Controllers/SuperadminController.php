@@ -222,6 +222,51 @@ class SuperadminController extends Controller
         }
     }
 
+    public function InputloginSuperadmin(Request $request)
+    {
+        $validator = $request->validate([
+            'username_superadmin'   => 'required',
+            'pass_superadmin' => 'required',
+        ]);
+
+        $input = $request->all();
+        $url = env('SERVICE') . 'auth/superadmin';
+
+
+        try {
+            $req_input =  [
+                'user_name'   => $input['username_superadmin'],
+                'password'    => $input['pass_superadmin']
+            ];
+            $jsonlogin = $this->encryptedPost($request, $req_input, $url, null);
+            // return $jsonlogin;
+            session()->put('session_logged_superadmin', $jsonlogin);
+            $user_logged = session()->get('session_logged_superadmin');
+
+            $user = $user_logged['user']['full_name'];
+            return redirect('support/inquiry_log');
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
+                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+                return redirect('support');
+            } else {
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            }
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['succes'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
 
     //SESSION LOGGED USER - DASHBOARD SUPERADMIN
     public function session_logged_superadmin()
@@ -231,6 +276,17 @@ class SuperadminController extends Controller
             return $ses_loggeduser;
         } else {
             return view("/superadmin");
+        }
+    }
+
+    //SESSION LOGGED USER - DASHBOARD SUPERADMIN
+    public function get_session_logged_superadmin()
+    {
+        if (session()->has('session_logged_superadmin')) {
+            $ses_loggeduser = session()->get('session_logged_superadmin');
+            return $ses_loggeduser;
+        } else {
+            return "session is null";
         }
     }
 
