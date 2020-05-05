@@ -828,7 +828,7 @@ class RegisterController extends Controller
             'payment'  => $dtpay,
         ];
 
-        return $datafinal;
+        // return $datafinal;
 
         $url = env('SERVICE') . 'registration/adcommcreate';
         try {
