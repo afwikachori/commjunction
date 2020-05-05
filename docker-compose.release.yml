@@ -20,7 +20,7 @@ services:
     networks:
       community :
         aliases:
-          - commjunction
+          - commjunction_web
 
 networks:
   community:
