@@ -163,7 +163,6 @@ trait RequestHelper
 
     private function encrypt_regis($plain)
     {
-
         $data = [];
         $n  = count($plain);
         $index = 0;

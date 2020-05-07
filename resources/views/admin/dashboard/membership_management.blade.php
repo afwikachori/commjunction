@@ -9,6 +9,9 @@
     <div class="col-md-5">
         <label class="cgrey" lang="en">Manage your membership type<label>
     </div>
+    <div class="col-md-5" style="text-align: right;">
+            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_create_membership" lang="en">Create Membership</button>
+    </div>
 </div>
 <br>
 
@@ -524,7 +527,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
 
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
@@ -579,8 +582,8 @@
                     $("#isi_membership_admin").html(parent_ui);
                 }
             },
-            error: function (error) {
-                ui.popup.show('error', error.message, 'Failed');
+            error: function (result) {
+                ui.popup.show('error', result.message, 'Failed');
                 console.log(result);
             }
         });

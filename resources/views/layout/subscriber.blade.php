@@ -382,6 +382,44 @@
 
 
 
+    <!-- MODAL DETAIL MEMBERSHIP TYPE  -->
+    <div class="modal fade bd-example-modal-sm" id="modal_detail_membership_subs" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <div class="modal-header" style="border: none;">
+                <p class="modal-title cgrey s13" lang="en">Detail Information</p>
+                <br>
+                <h4 class=" cblue" lang="en">Membership Type</h4>
+            </div>
+            <div class="modal-body" style="padding: 7%;">
+                <center>
+                <img src="" class="rounded-circle img-fluid imgprice" id="img_membershiptipe"
+                onerror="this.onerror=null;this.src='/img/fitur.png';" style="margin-bottom:0.7em;">
+                </center>
+                <div class="form-group">
+                    <small class="clight s13" lang="en">Title</small>
+                    <p class="cgrey s13" id="member_judul"></p>
+                </div>
+                <div class="form-group">
+                    <small class="clight s13" lang="en">Description</small>
+                    <p class="cgrey s13" id="member_deskripsi"></p>
+                </div>
+                <div class="form-group">
+                    <small class="clight s13" lang="en">Pricing</small>
+                    <p class="cgrey s13" id="member_harga"></p>
+                </div>
+            </div>
+            <div class="modal-footer" style="border: none;">
+                <button type="button" class="btn btn-abu btn-sm" data-dismiss="modal" lang="en">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 
     @else

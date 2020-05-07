@@ -494,7 +494,7 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 $('#subs_name').empty();
                 $('#subs_name').append("<option value='null'> Choose</option>");
 

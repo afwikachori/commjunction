@@ -245,7 +245,7 @@
                     }
                 } else {
                     var tipeform = result[0];
-                    if (tipeform != null || tipeform != "" || tipeform != 0) {
+                    if (tipeform.data != undefined && tipeform != null || tipeform != "" || tipeform != 0) {
                         $('#form_tipe').val(tipeform.data).attr("selected", "selected");
 
                         if (tipeform.ready == true) {
@@ -264,6 +264,7 @@
 
 
                     var portal = result[1];
+                    if(portal.data != undefined){
                     if (portal.data.headline_text != null && portal.data.headline_text != "" && portal.data.headline_text != undefined) {
                         $("#headline").val(portal.data.headline_text);
                         $("#description_custom").val(portal.data.description);
@@ -284,8 +285,9 @@
 
                         $("#color_front").css('background-color', portal.data.base_color);
                         $("#color_front2").css('background-color', portal.data.accent_color);
-
                     }
+
+
 
                     if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
                         $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(portal.data.image));
@@ -311,14 +313,17 @@
                         $("#up_logo_portal").hide();
                         $(".logo_portal").show();
                     }
+                }
 
                     var domain = result[2];
+                    if(domain.data != undefined){
                     if (domain.data.subdomain != null || domain.data.subdomain == "") {
                         $('#subdomain').val(domain.data.subdomain);
                         if (domain.ready == true && domain.data.subdomain != "") {
                             $('#subdomain').attr("disabled", "disabled");
                         }
                     }
+                }
 
 
                     if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
@@ -481,13 +486,23 @@
                         var tipedata = data[1];
                         var tp = '';
                         if (tipedata == 1) {
-                            tp = 'Input Text';
+                            tp = 'Radio Button';
                         } else if (tipedata == 2) {
-                            tp = 'Date Picker';
+                            tp = 'Input Number';
                         } else if (tipedata == 3) {
+                            tp = 'Input Text';
+
+                        } else if (tipedata == 4) {
+                            tp = 'Textarea';
+
+                        } else if (tipedata == 5) {
+                            tp = 'Input Date';
+
+                        } else if (tipedata == 6) {
                             tp = 'Checkbox';
-                        } else {
-                            tp = 'Radiobutton';
+
+                        }else {
+                            tp = 'Dropdown';
                         }
                         return tp;
                     }

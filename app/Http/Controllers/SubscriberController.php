@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
 use App\Helpers\RequestHelper;
+use App\Http\Controllers\SendRequestController;
 
 use Session;
 use Alert;
@@ -17,6 +18,7 @@ use Alert;
 class SubscriberController extends Controller
 {
     use RequestHelper;
+    use SendRequestController;
 
     public function loginView()
     {
@@ -1753,20 +1755,20 @@ class SubscriberController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'auth/commsubs';
 
-        $req_input =  [
+        $data =  [
             'input'       => $input['input_login'],
             'password'    => $input['pass_subs'],
             'community_id' => $input['id_community']
         ];
 
+        return $this->post_get_request($data, $url, false, null);
 
-        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
 
-        return $res_enkkrip;
+        // $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
+        // return $res_enkkrip;
+
+
+
     }
 } //end-class
 
-// login
-// change password
-// register
-// forgot password

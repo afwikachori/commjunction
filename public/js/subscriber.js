@@ -47,12 +47,12 @@ var ui = {
 };
 
 
-(function () {
-    window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
-    var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
-    ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
-})();
+// (function () {
+//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+// })();
 
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
@@ -151,7 +151,6 @@ function session_subscriber_logged() {
 
 // INITIAL LOGIN 2 - FITUR
 function get_initial_feature(datafitur) {
-    // console.log(datafitur);
     var showui = '';
     var jum = 0;
     $.each(datafitur, function (i, item) {
@@ -166,11 +165,11 @@ function get_initial_feature(datafitur) {
             'alt="circle-image" /> ' +
             '<div class="row">' +
             '<div class="col-md-3" style="padding-right:4px;">' +
-            '<img src="' + server_cdn +cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
+            '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
             'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
             '</div>' +
             '<div class="col-md-9" style="padding-left:5px;">' +
-            '<b><small>' + item.titile + '</small></b>' +
+            '<b><small>' + item.title + '</small></b>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -186,12 +185,15 @@ function get_initial_feature(datafitur) {
 
 // FORMAT PISAH UANG RUPIAH
 function rupiah(val) {
-    var bilangan = val;
-    var reverse = bilangan.toString().split('').reverse().join(''),
-        ribuan = reverse.match(/\d{1,3}/g);
-    ribuan = ribuan.join('.').split('').reverse().join('');
+    if (val != undefined) {
 
-    return ribuan;
+        var bilangan = val;
+        var reverse = bilangan.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+
+        return ribuan;
+    }
 }
 
 
@@ -241,7 +243,7 @@ function dateTime(tgl) {
     var d = new Date(tgl);
 
     dformat = [d.getDate(), d.getMonth() + 1,
-        d.getFullYear()].join('/') + ' &nbsp; ' +
+    d.getFullYear()].join('/') + ' &nbsp; ' +
         [d.getHours(),
         d.getMinutes(),
         d.getSeconds()].join(':');
@@ -322,8 +324,10 @@ function get_pricing_membership() {
         type: "POST",
         dataType: "json",
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             if (result.success == false) {
+                $('.price_member').hide();
+                $('#hide_membertipe').show();
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
@@ -342,9 +346,9 @@ function get_pricing_membership() {
                         '<div class="card cd-pricing pricing' + idprice + '">' +
                         '<div class="card-body">' +
                         '<center>' +
-                        '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
+                        '<h4 class="cgrey2 s20">' + item.membership + '</h4>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.icon) + '"  class="rounded-circle img-fluid imgprice"' +
-                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:0.7em;">' +
                         '<div class="hidetime1">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
                         '<small class="h6">IDR</small></sup>' +
@@ -352,9 +356,10 @@ function get_pricing_membership() {
                         '<strong>' + rupiah(item.pricing) + '</strong></label>' +
                         '<small class="clight" lang="en">/Once</small>' +
                         '</div>' +
-                        '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">'+
-                        'Get Now</button>' +
+                        '<small class="ctosca"><a class="detailmember" onclick="detail_membership_subs(' + i + ')"' +
+                        'lang="en" data-lang-token="More Information">More Information</a></small>' +
+                        '<br><button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 1em;"' +
+                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">Get Now</button>' +
                         '</center>' +
                         '</div></div></div>';
                 });
@@ -363,6 +368,37 @@ function get_pricing_membership() {
         }
     });
 }
+
+
+function detail_membership_subs(index) {
+    // alert(index);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_pricing_membership",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            var dt = result[index];
+            $("#modal_detail_membership_subs").modal("show");
+            $("#member_judul").html(dt.membership);
+            $("#member_deskripsi").html(dt.description);
+            $("#member_harga").html('Rp ' + rupiah(dt.pricing));
+
+            if (dt.image != undefined && dt.image != null) {
+                $("#img_membershiptipe").attr("src", server_cdn + cekimage_cdn(dt.image));
+            }
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+
 
 function get_payment_initial() {
     $("#btn_submit_paymethod").attr("disabled", "disabled");
@@ -377,7 +413,7 @@ function get_payment_initial() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             var text = '';
             var isibank = '';
 
@@ -398,7 +434,7 @@ function get_payment_initial() {
                         '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
                         'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
-                    '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
+                        '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
                         '<span class="float-right">' +
                         '<i class="fa fa-chevron-right"></i>' +
@@ -451,7 +487,7 @@ function pilih_payment_initial(dtmember) { //FREE
     var dt = dtmember.split('<>');
     $("#modal_initial_membership").modal('hide');
 
-    if (dt[1] != 0) {
+    if (dt[1] != 0 && dt[1] != undefined) {
         $("#modal_pay_initial").modal('show');
         $("#harga_member").html(rupiah(dt[1]));
         $("#id_membertype").val(dt[0]);
@@ -530,7 +566,7 @@ function get_list_notif_navbar(idkom) {
         timeout: 30000,
         success: function (result) {
             // console.log(result);
-        if (result.success == false) {
+            if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
@@ -542,43 +578,50 @@ function get_list_notif_navbar(idkom) {
                     $("#ada_notif").hide();
                 }
             } else {
-            var isiku = '';
-            $.each(result, function (i, item) {
+                if (result != undefined) {
+                    var isiku = '';
+                    $.each(result, function (i, item) {
 
-                var d = new Date(item.created_at);
-                dformat = [d.getDate(), d.getMonth() + 1,
-                d.getFullYear()].join('/') + ' ' +
-                    [d.getHours(),
-                    d.getMinutes(),
-                    d.getSeconds()].join(':');
+                        var d = new Date(item.created_at);
+                        dformat = [d.getDate(), d.getMonth() + 1,
+                        d.getFullYear()].join('/') + ' ' +
+                            [d.getHours(),
+                            d.getMinutes(),
+                            d.getSeconds()].join(':');
 
-                var textArray = [
-                    'bg-success',
-                    'bg-info',
-                    'bg-danger',
-                    'bg-warning'
-                ];
-                var acak = Math.floor(Math.random() * textArray.length);
+                        var textArray = [
+                            'bg-success',
+                            'bg-info',
+                            'bg-danger',
+                            'bg-warning'
+                        ];
+                        var acak = Math.floor(Math.random() * textArray.length);
 
 
-                isiku += '<a class="dropdown-item preview-item notif">' +
-                    '<div class="preview-thumbnail medium">' +
-                    '<div class="preview-icon ' + textArray[acak] + '">' +
-                    '<i class="mdi mdi-bell-outline"></i>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-                    '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
-                    '</label> ' +
-                    '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
-                    '<small class="cbiru  mb-0">' + dformat + '</small > ' +
-                    '</div> ' +
-                    '</a> ' +
-                    '<div class="dropdown-divider"></div>';
-            });
-            $("#isi_notif_navbar").html(isiku);
-            $("#ada_notif").show();
-        }
+                        isiku += '<a class="dropdown-item preview-item notif">' +
+                            '<div class="preview-thumbnail medium">' +
+                            '<div class="preview-icon ' + textArray[acak] + '">' +
+                            '<i class="mdi mdi-bell-outline"></i>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                            '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
+                            '</label> ' +
+                            '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+                            '<small class="cbiru  mb-0">' + dformat + '</small > ' +
+                            '</div> ' +
+                            '</a> ' +
+                            '<div class="dropdown-divider"></div>';
+                    });
+                    $("#isi_notif_navbar").html(isiku);
+                    $("#ada_notif").show();
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+
+            }
         },
         error: function (result) {
             var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
@@ -655,7 +698,7 @@ function LogoutSubscriber() {
         },
         error: function (result) {
             console.log(result);
-                location.href = '/subscriber/url/' + namakom;
+            location.href = '/subscriber/url/' + namakom;
         }
     });
     // });

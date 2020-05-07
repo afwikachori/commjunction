@@ -3,15 +3,15 @@
 @section('content')
 
 <div id="div_ignore">
-<div class="row">
-    <div class="col-md-2">
-        <h3 class="page-title" lang="en">Transaction Management</h3>
+    <div class="row">
+        <div class="col-md-2">
+            <h3 class="page-title" lang="en">Transaction Management</h3>
+        </div>
+        <div class="col-md-6">
+            <label class="cgrey" lang="en">Manage your transaction<label>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label class="cgrey" lang="en">Manage your transaction<label>
-    </div>
-</div>
-<br>
+    <br>
 
 
     <div class="row">
@@ -26,7 +26,8 @@
                                     <h4 class="mb-0">
                                         <a data-toggle="collapse" href="#collapseOne" role="button"
                                             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                            style="color:#0e6f73;" lang="en" data-lang-token="Select filter options">Select filter options &nbsp;
+                                            style="color:#0e6f73;" lang="en"
+                                            data-lang-token="Select filter options">Select filter options &nbsp;
                                             <i class="mdi mdi-chevron-down cteal"></i>
                                         </a>
                                     </h4>
@@ -119,7 +120,8 @@
                             <div class="col-md-8">
                                 <button type="button" id="btn_filter_trans" class="btn btn-tosca btn-sm"
                                     style="min-width: 120px; margin-bottom: 1em;" data-toggle="modal"
-                                    data-target="#modal_trasaksi_filter" data-dismiss="modal"><span lang="en">Filter</span></button>
+                                    data-target="#modal_trasaksi_filter" data-dismiss="modal"><span
+                                        lang="en">Filter</span></button>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
                                 <button type="button" id="reset_tbl_subsall"
@@ -128,9 +130,15 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row">
+                            <div id="show_card_transaksi" class="card-deck" style="margin-top: 2em; width: 100%;">
+
+                            </div>
+                        </div><!-- endrow -->
+
                         <!-- tabel -->
                         <table id="tabel_trans" class="table table-hover table-striped dt-responsive nowrap"
-                            style="width:100%">
+                            style="width:100%; display: none;">
                             <thead>
                                 <tr>
                                     <th><b lang="en">Invoice</b></th>
@@ -235,7 +243,8 @@
                                 &nbsp;
                                 <button type="button" class="btn btn-teal btn-sm" id="btn_download_detail"
                                     style="display: none;">
-                                    <i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Download</span></button>
+                                    <i class="mdi mdi-check btn-icon-prepend"></i><span
+                                        lang="en">Download</span></button>
                             </div>
                         </div>
 
@@ -251,8 +260,7 @@
                             <h5 class="cgrey tebal" lang="en">Payment Confirmation</h5>
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_confirm" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%; border-radius: 10px;"
-                                    data-toggle="tooltip"
+                                    style="height: 115px; width: 100%; border-radius: 10px;" data-toggle="tooltip"
                                     data-placement="right" title="Double Click to Preview Image"
                                     onerror="this.onerror=null;this.src='/img/noimg2.jpg';">
                             </div>
@@ -276,10 +284,9 @@
                             <h5 class="cgrey tebal" lang="en">Payment Verification</h5>
                             <div class="row" style="padding: 0 5% 0 5%;">
                                 <img src="/img/noimg2.jpg" id="img_pay_aprov" onclick="clickImage(this)"
-                                    style="height: 115px; width: 100%; border-radius: 10px;"
-                                    data-toggle="tooltip"
+                                    style="height: 115px; width: 100%; border-radius: 10px;" data-toggle="tooltip"
                                     data-placement="right" title="Double Click to Preview Image"
-                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';" >
+                                    onerror="this.onerror=null;this.src='/img/noimg2.jpg';">
                             </div>
                             <div class="row" style="margin-top: 0.5em;">
                                 <div class="col-md-4">
@@ -531,8 +538,96 @@
 
 
     $("#btn_showtable_transaksi").click(function (e) {
-        show_tabel_transaksi();
+        // show_tabel_transaksi();
+        show_card_transaksi();
     });
+
+
+    function show_card_transaksi() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/tabel_transaksi_show',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "komunitas": $("#komunitas").val(),
+                "tanggal_mulai": $("#tanggal_mulai").val(),
+                "tanggal_selesai": $("#tanggal_selesai").val(),
+                "tipe_trans": $("#tipe_trans").val(),
+                "status_trans": $("#status_trans").val(),
+                "subs_name": $("#subs_name").val()
+            },
+            success: function (result) {
+                console.log(result);
+
+                // created_at: "2020-04-14T03:05:42.000Z"
+                // grand_total: 25000
+                // invoice_number: "MBR20200414/174/839128"
+                // level_title: "Subscriber"
+                // name: "Wika Chori"
+                // status_title: "Pending"
+                // transaction: "Subscriber Transaction"
+                // transaction_type: "Membership Request"
+
+                if (result.length != 0) {
+                    var isiui = '';
+                    var num = 0;
+                    $.each(result, function (i, item) {
+                        console.log(item);
+                        num++;
+
+                        var dt = [item.invoice_number, item.payment_level, item.community_id];
+                        isiui +=
+                            '<div class="col-md-6 stretch-card ' +
+                            'grid-margin card-member' +
+                            'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                            '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                            '<div class="card-body member">' +
+                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                            '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                            'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                            'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                            '<div class="row">' +
+                            '<div class="col-md-4" style="padding:0px;">' +
+                            '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                            '</div>' +
+                            '<div class="col-md-8">' +
+                            '<small class="ctosca">Total</small>' +
+                            '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<small class="cteal">' + item.transaction_type + '</small>' +
+                            '<h4>' + item.transaction + '</h4>' +
+                            '<p class="ctosca">' + item.invoice_number + '</p>' +
+                            '</div>' +
+                            '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                            '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                            '</small>' +
+                            '</div>' +
+                            '</div></div></div></div>';
+                    });
+
+                    $("#show_card_transaksi").html(isiui);
+
+                    $(".showin_table_trans").show();
+                    $("#tab_transaction_param").hide();
+
+                }
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+    }
+
 
 
 
@@ -719,9 +814,9 @@
                 "community_id": trans[2],
             },
             success: function (result) {
-                 setTimeout(function () {
-                ui.popup.hideLoader();
-            }, 5000);
+                setTimeout(function () {
+                    ui.popup.hideLoader();
+                }, 5000);
                 console.log(result);
                 if (result.success == false) {
                     ui.popup.show('error', result.message, 'Error');
@@ -741,8 +836,8 @@
 
                     var uiku = '';
                     if (result.data_confirmation != "") {
-                        if(result.data_confirmation.file != null){
-                            $("#img_pay_confirm").attr("src",  server_cdn + cekimage_cdn(result.data_confirmation.file));
+                        if (result.data_confirmation.file != null) {
+                            $("#img_pay_confirm").attr("src", server_cdn + cekimage_cdn(result.data_confirmation.file));
                         }
                         $("#nama_confirm_trans").html(result.data_confirmation.created_by);
                         $("#date_confirm_trans").html(dateFormat(result.data_confirmation.created_at));
@@ -760,10 +855,10 @@
 
                     if (result.data_verification.length != 0) {
                         if (result.data_verification.file != undefined) {
-                            $("#img_pay_aprov").attr("src", server_cdn +  cekimage_cdn(rresult.data_verification.file));
+                            $("#img_pay_aprov").attr("src", server_cdn + cekimage_cdn(rresult.data_verification.file));
                         }
-                            $("#name_approv_trans").html(result.data_verification.verification_by);
-                            $("#date_approv_trans").html(dateFormat(result.data_verification.verification_at));
+                        $("#name_approv_trans").html(result.data_verification.verification_by);
+                        $("#date_approv_trans").html(dateFormat(result.data_verification.verification_at));
 
                     }
 

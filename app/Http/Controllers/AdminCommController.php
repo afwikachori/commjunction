@@ -426,7 +426,7 @@ class AdminCommController extends Controller
                 session()->put('session_admin_logged', $status_publish);
 
                 alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
-                return redirect('/admin/community_settings');
+                return redirect('/admin/community_setting');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -851,7 +851,7 @@ class AdminCommController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
-                return redirect('/admin/community_settings');
+                return redirect('/admin/community_setting');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);

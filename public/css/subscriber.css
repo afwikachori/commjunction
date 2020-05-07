@@ -405,6 +405,10 @@ font-size: 0.65rem !important;
 background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
 }
 
+.bg-gradient-abublue {
+    background: linear-gradient(106.53deg, #bde6ea 0%, #bcd1e4 56.6%);
+}
+
 .melengkung15px{
   border-radius: 15px !important;
 }
@@ -1150,11 +1154,20 @@ font-size: 23px;
 
 
 .imgprice{
-width: 60px;
+width: 50px;
 height: auto;
-margin-bottom: 1em;
+margin-bottom: 0.5em;
 }
 
+a.detailmember:hover{
+color: orange !important;
+}
+
+img.mediumsize{
+    width: 75px !important;
+    height: 75px !important;
+    margin-bottom: 1em;
+}
 
 
 

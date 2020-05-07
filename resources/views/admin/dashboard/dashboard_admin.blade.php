@@ -121,7 +121,8 @@
         <div class="card bg-gradient-success card-img-holder text-white">
             <div class="card-body">
                 <img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3" lang="en">Pending Subscriber <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3" lang="en">Pending Subscriber <i
+                        class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">0</h2>
                 {{-- <h6 class="card-text">Increased by 0%</h6> --}}
@@ -216,6 +217,17 @@
         <a href="/admin/news_management" id="other-news" lang="en" data-lang-token="">See Other News</a>
     </div>
 </div>
+<div class="row" id="hide_nodata_headline" style="display: none;">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body" style="text-align: center; height: 250px; margin-top: auto;
+        margin-bottom: auto;">
+                <br><br>
+                <h2 class="clight" lang="en">No Data Available</h2>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="headline_cont" class="row ">
 
     <div id="news_headline_cont">
@@ -289,6 +301,8 @@
     </div>
 </div>
 
+
+
 <!-- NEWS MODULE DASHBOARD END  -->
 
 
@@ -303,7 +317,8 @@
                 <center>
                     <img src="/visual/hore.png" id="img-initial1">
                     <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations !!!</h3>
-                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already
+                        succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
                     <button type="button" id="btn-initial1" class="btn btn-teal btn-sm" lang="en">Take a tour</button>
@@ -349,10 +364,12 @@
                 <center>
                     <img src="/visual/init3.png" id="img-initial3">
                     <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Ready For Action ?</h3>
-                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already succesfull register and you’re already member
+                    <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already
+                        succesfull register and you’re already member
                         of community . Let’s look what do you can explore !</p>
 
-                    <a href="/admin/community_setting" type="button" id="btn-initial3" class="btn btn-teal btn-sm" lang="en">Finish</a>
+                    <a href="/admin/community_setting" type="button" id="btn-initial3" class="btn btn-teal btn-sm"
+                        lang="en">Finish</a>
                 </center>
             </div> <!-- end-modal body -->
         </div>
@@ -436,7 +453,7 @@
 
             },
             error: function (result) {
-                ui.popup.show('warning', 'Couldnt get any respond for dashboard', 'Timeout');
+                ui.popup.show('warning', 'Couldnt get any response for dashboard', 'Timeout');
                 console.log(result);
             }
         });
@@ -588,31 +605,43 @@
             datatype: 'JSON',
             success: function (result) {
                 //console.log(result);
-                var isiheadline = '';
+                if (result.success == false) {
+                    if (result.status == 401 || result.message == "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/admin';
+                        }, 5000);
+                    } else {
+                        $("#hide_nodata_headline").show();
+                         $("#headline_cont").hide();
+                    }
+                } else {
+                    var isiheadline = '';
+                    $.each(result, function (i, item) {
+                        var noimg = '/visual/car1.png';
+                        $news_id = parseInt(item.id);
+                        var $headpic = server_cdn + cekimage_cdn(item.image);
+                        isiheadline += '<div class="stretch-card grid-margin news_headline_card">' +
+                            '<div class="card sumari">' +
+                            '<div class="card-body sumari">' +
+                            '<div class="row">' +
+                            '<div class="col-12">' +
+                            '<div class="news_pic_dash">' +
+                            '<img class="news_pic" src="' + $headpic + '" onerror="this.onerror=null;this.src=\'' + noimg + '\';">' +
+                            '</div>' +
+                            '<small class="clight">' + dateTime(item.createdAt) + '</small>' +
+                            '<h4 class="cgrey-mid total_fituraktif">' + item.title + '</h4>' +
+                            '<a href="/admin/get_detail_news/' + $news_id + '" class="news_readmore">Read More</a>' +
+                            '</div></div></div></div></div>';
+                    });
 
-
-                $.each(result, function (i, item) {
-                    var noimg = '/visual/car1.png';
-                    $news_id = parseInt(item.id);
-                    var $headpic = server_cdn + cekimage_cdn(item.image);
-                    isiheadline += '<div class="stretch-card grid-margin news_headline_card">' +
-                        '<div class="card sumari">' +
-                        '<div class="card-body sumari">' +
-                        '<div class="row">' +
-                        '<div class="col-12">' +
-                        '<div class="news_pic_dash">' +
-                        '<img class="news_pic" src="' + $headpic + '" onerror="this.onerror=null;this.src=\'' + noimg + '\';">' +
-                        '</div>' +
-                        '<small class="clight">' + dateTime(item.createdAt) + '</small>' +
-                        '<h4 class="cgrey-mid total_fituraktif">' + item.title + '</h4>' +
-                        '<a href="/admin/get_detail_news/' + $news_id + '" class="news_readmore">Read More</a>' +
-                        '</div></div></div></div></div>';
-                });
-
-                $("#news_headline_cont").html(isiheadline);
+                    $("#news_headline_cont").html(isiheadline);
+                }
             },
             error: function (result) {
-                console.log("Cant Show Headline News");
+                console.log(result);
+                $("#hide_nodata_headline").show();
+                $("#headline_cont").hide();
             }
         });
     }
@@ -644,7 +673,8 @@
                         return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
                     }
                 },
-                { mData: 'title' ,
+                {
+                    mData: 'title',
                     render: function (data, type, row, meta) {
                         return '<p class="s13 text-wrap width-200">' + data + '</p>';
                     }
@@ -664,7 +694,7 @@
         var noimg = '/img/kosong.png';
         var tabel = $('#table_topvisit_news').DataTable({
             responsive: true,
-              dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
+            dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-12'i><'col-sm-12'p>>",
             language: {
@@ -687,11 +717,12 @@
                         return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
                     }
                 },
-                { mData: 'title',
+                {
+                    mData: 'title',
                     render: function (data, type, row, meta) {
                         return '<p class="s13 text-wrap width-200">' + data + '</p>';
                     }
-                 },
+                },
                 {
                     mData: 'createdAt',
                     render: function (data, type, row, meta) {
@@ -707,7 +738,7 @@
         var noimg = '/img/kosong.png';
         var tabel = $('#table_toploved_news').DataTable({
             responsive: true,
-              dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
+            dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-12'i><'col-sm-12'p>>",
             language: {
@@ -730,7 +761,8 @@
                         return '<img src=' + server_cdn + data + '  class="news-list-box zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
                     }
                 },
-                { mData: 'title',
+                {
+                    mData: 'title',
                     render: function (data, type, row, meta) {
                         return '<p class="s13 text-wrap width-200">' + data + '</p>';
                     }
