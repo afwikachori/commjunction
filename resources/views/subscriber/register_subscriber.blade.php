@@ -240,14 +240,12 @@
                                 <div class="container" style="margin-top: 2em;">
                                     <div class="row">
                                         <div class="col-4">
-                                            <div class="form-group row">
                                                 <center>
                                                     <img src="/img/loading1.gif" id="icon_comm_subs"
                                                         class="rounded-circle img-fluid"
-                                                        style="width: 50%; height: 50%;"
+                                                        style="width: 50%; height: auto;"
                                                         onerror="this.onerror=null;this.src='/visual/logo2.png';">
                                                 </center>
-                                            </div>
                                         </div>
 
                                         <div class="col-8">
@@ -390,8 +388,9 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+
                 var result = result[0];
+                   console.log(result);
                 if (result != "") {
                     $("#community_id").val(result.id);
                     $("#icon_comm_subs").attr("src", cdn + cekimage_cdn(result.logo));

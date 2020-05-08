@@ -628,6 +628,91 @@
         });
     }
 
+    function filter_show_card_transaksi() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/tabel_transaksi_show',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                 "komunitas": $("#komunitas2").val(),
+                    "tanggal_mulai": $("#tanggal_mulai2").val(),
+                    "tanggal_selesai": $("#tanggal_selesai2").val(),
+                    "tipe_trans": $("#tipe_trans2").val(),
+                    "status_trans": $("#status_trans2").val(),
+                    "subs_name": $("#subs_name2").val()
+            },
+            success: function (result) {
+                console.log(result);
+
+                // created_at: "2020-04-14T03:05:42.000Z"
+                // grand_total: 25000
+                // invoice_number: "MBR20200414/174/839128"
+                // level_title: "Subscriber"
+                // name: "Wika Chori"
+                // status_title: "Pending"
+                // transaction: "Subscriber Transaction"
+                // transaction_type: "Membership Request"
+
+                if (result.length != 0) {
+                    var isiui = '';
+                    var num = 0;
+                    $.each(result, function (i, item) {
+                        console.log(item);
+                        num++;
+
+                        var dt = [item.invoice_number, item.payment_level, item.community_id];
+                        isiui +=
+                            '<div class="col-md-6 stretch-card ' +
+                            'grid-margin card-member' +
+                            'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                            '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                            '<div class="card-body member">' +
+                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                            '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                            'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                            'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                            '<div class="row">' +
+                            '<div class="col-md-4" style="padding:0px;">' +
+                            '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                            '</div>' +
+                            '<div class="col-md-8">' +
+                            '<small class="ctosca">Total</small>' +
+                            '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<small class="cteal">' + item.transaction_type + '</small>' +
+                            '<h4>' + item.transaction + '</h4>' +
+                            '<p class="ctosca">' + item.invoice_number + '</p>' +
+                            '</div>' +
+                            '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                            '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                            '</small>' +
+                            '</div>' +
+                            '</div></div></div></div>';
+                    });
+
+                    $("#show_card_transaksi").html(isiui);
+
+                    $(".showin_table_trans").show();
+                    $("#tab_transaction_param").hide();
+
+                }
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+    }
+
 
 
 
@@ -711,86 +796,87 @@
 
 
     $("#btn_filter_transaksi").click(function (e) {
+        filter_show_card_transaksi();
         // alert("filter");
-        resetparam_trans();
-        $('#tabel_trans').dataTable().fnClearTable();
-        $('#tabel_trans').dataTable().fnDestroy();
+        // resetparam_trans();
+        // $('#tabel_trans').dataTable().fnClearTable();
+        // $('#tabel_trans').dataTable().fnDestroy();
 
-        $(".showin_table_trans").show();
-        $("#tab_transaction_param").hide();
+        // $(".showin_table_trans").show();
+        // $("#tab_transaction_param").hide();
 
         $("#modal_trasaksi_filter").modal("hide");
 
 
-        var tabel = $('#tabel_trans').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel', 'pdf', 'print', {
-                    text: 'JSON',
-                    action: function (e, dt, button, config) {
-                        var data = dt.buttons.exportData();
+        // var tabel = $('#tabel_trans').DataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         'csv', 'excel', 'pdf', 'print', {
+        //             text: 'JSON',
+        //             action: function (e, dt, button, config) {
+        //                 var data = dt.buttons.exportData();
 
-                        $.fn.dataTable.fileSave(
-                            new Blob([JSON.stringify(data)]),
-                            'Export.json'
-                        );
-                    }
-                }
-            ],
-            responsive: true,
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: '/subscriber/tabel_transaksi_show',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                data: {
-                    "komunitas": $("#komunitas2").val(),
-                    "tanggal_mulai": $("#tanggal_mulai2").val(),
-                    "tanggal_selesai": $("#tanggal_selesai2").val(),
-                    "tipe_trans": $("#tipe_trans2").val(),
-                    "status_trans": $("#status_trans2").val(),
-                    "subs_name": $("#subs_name2").val()
-                },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    // $('#tabel_subscriber tbody').;
-                    $('#tabel_trans tbody').empty().append(nofound);
-                },
-            },
-            error: function (request, status, errorThrown) {
-                console.log(errorThrown);
-            },
-            columns: [
-                { mData: 'invoice_number' },
-                {
-                    mData: 'created_at',
-                    render: function (data, type, row, meta) {
-                        return dateFormat(data);
-                    }
-                },
-                { mData: 'name' },
-                { mData: 'transaction_type' },
-                { mData: 'status_title' },
-                {
-                    mData: 'id',
-                    render: function (data, type, row, meta) {
-                        var dt = [row.invoice_number, row.payment_level, row.community_id];
-                        // console.log(data);
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_transaksi_all(\'' + dt + '\')">' +
-                            '<i class="mdi mdi-eye"></i>' +
-                            '</button>';
-                    }
-                }
-            ],
+        //                 $.fn.dataTable.fileSave(
+        //                     new Blob([JSON.stringify(data)]),
+        //                     'Export.json'
+        //                 );
+        //             }
+        //         }
+        //     ],
+        //     responsive: true,
+        //     language: {
+        //         paginate: {
+        //             next: '<i class="mdi mdi-chevron-right"></i>',
+        //             previous: '<i class="mdi mdi-chevron-left">'
+        //         }
+        //     },
+        //     ajax: {
+        //         url: '/subscriber/tabel_transaksi_show',
+        //         type: 'POST',
+        //         dataSrc: '',
+        //         timeout: 30000,
+        //         data: {
+        //             "komunitas": $("#komunitas2").val(),
+        //             "tanggal_mulai": $("#tanggal_mulai2").val(),
+        //             "tanggal_selesai": $("#tanggal_selesai2").val(),
+        //             "tipe_trans": $("#tipe_trans2").val(),
+        //             "status_trans": $("#status_trans2").val(),
+        //             "subs_name": $("#subs_name2").val()
+        //         },
+        //         error: function (jqXHR, ajaxOptions, thrownError) {
+        //             var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+        //             // $('#tabel_subscriber tbody').;
+        //             $('#tabel_trans tbody').empty().append(nofound);
+        //         },
+        //     },
+        //     error: function (request, status, errorThrown) {
+        //         console.log(errorThrown);
+        //     },
+        //     columns: [
+        //         { mData: 'invoice_number' },
+        //         {
+        //             mData: 'created_at',
+        //             render: function (data, type, row, meta) {
+        //                 return dateFormat(data);
+        //             }
+        //         },
+        //         { mData: 'name' },
+        //         { mData: 'transaction_type' },
+        //         { mData: 'status_title' },
+        //         {
+        //             mData: 'id',
+        //             render: function (data, type, row, meta) {
+        //                 var dt = [row.invoice_number, row.payment_level, row.community_id];
+        //                 // console.log(data);
+        //                 return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+        //                     'onclick="detail_transaksi_all(\'' + dt + '\')">' +
+        //                     '<i class="mdi mdi-eye"></i>' +
+        //                     '</button>';
+        //             }
+        //         }
+        //     ],
 
-        });
+        // });
     });
 
 

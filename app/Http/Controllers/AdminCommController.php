@@ -791,7 +791,7 @@ class AdminCommController extends Controller
                             alert()->error($error['message'], 'Failed!')->autoclose(4500);
                             return back()->withInput();
                         }
-                    }else{
+                    } else {
                         alert()->error('Set Login type and Subdomain', 'Failed!')->persistent('Done');
                         return back();
                     }
@@ -1725,30 +1725,42 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
+
+        if ($input['approval'] == "true") {
+            $appv = true;
+            $textatus = 'Approved';
+        } else {
+            $appv = false;
+            $textatus = 'Rejected';
+        }
+
+
         $bodyku = json_encode([
             'user_id' => $input['id_subspending'],
-            'approval' => $input['approval'],
+            'approval' => $appv,
             'description' => $input['alasan_approv']
         ]);
 
-        if ($input['approval'] == "true") {
-            $textatus = 'Approved';
-        } else {
-            $textatus = 'Rejected';
-        }
 
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully give a approval', $textatus)->persistent('Done');
-                return redirect('admin/subs_management');
+
+        try {
+            if ($appv == false && $input['alasan_approv'] == null) {
+                alert()->error('Field reason for rejection is required', 'Can Not Null')->autoclose(4500);
+                return back();
+            } else {
+                $response = $client->post($url, $datakirim);
+                $response = $response->getBody()->getContents();
+                $json = json_decode($response, true);
+
+                if ($json['success'] == true) {
+                    alert()->success('Successfully give a approval', $textatus)->persistent('Done');
+                    return redirect('admin/subs_management');
+                }
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1890,7 +1902,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
-// return $datakirim;
+        // return $datakirim;
         try {
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
