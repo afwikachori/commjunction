@@ -15,8 +15,7 @@
         <img src="/visual/commjuction.png" id="commjuction-regis1">
         <img src="/visual/loginadmin.png" class="vs-regis1">
         <center>
-            <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">Let us
-                understand more about you</h5>
+            <h5 class="putih" lang="en" style="margin-left: 1.5em; margin-right: 1.5em; margin-top: 6em;">Let us understand more about you</h5>
         </center>
     </div>
     <div class="col-md-8">
@@ -81,8 +80,7 @@
                                                 <input id="fullname_subs" type="text"
                                                     class="form-control @error('fullname_subs') is-invalid @enderror"
                                                     name="fullname_subs" value="{{ old('fullname_subs') }}" required>
-                                                <small lang="en" id="pesan_fullname" class="redhide">At least 3
-                                                    character and Only Letters!</small>
+                                                <small lang="en" id="pesan_fullname" class="redhide">At least 3 character and Only Letters!</small>
 
                                                 @if($errors->has('fullname_subs'))
                                                 <small class="error_fullname" style="color: red;">
@@ -100,10 +98,8 @@
                                                 <input id="notlp_subs" type="text"
                                                     class="form-control @error('notlp_subs') is-invalid @enderror"
                                                     name="notlp_subs" value="{{ old('notlp_subs') }}" required>
-                                                <small id="pesan_phoneformat" class="redhide" lang="en">At least
-                                                    contains 10 Numbers!</small>
-                                                <small id="pesan_phone" class="redhide" lang="en">Number phone has
-                                                    registered! Try another</small>
+                                                <small id="pesan_phoneformat" class="redhide" lang="en">At least contains 10 Numbers!</small>
+                                                <small id="pesan_phone" class="redhide" lang="en">Number phone has registered! Try another</small>
                                                 @if($errors->has('notlp_subs'))
                                                 <small class="error_phone" style="color: red;">
                                                     {{ $errors->first('notlp_subs')}}</small>
@@ -121,10 +117,8 @@
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     name="email_subs" value="{{ old('email_subs') }}" required
                                                     autocomplete="email_subs">
-                                                <small id="pesan_formatemail" class="redhide" lang="en">Include '@' in
-                                                    format email address!</small>
-                                                <small id="pesan_email" class="redhide" lang="en">Email has been
-                                                    registered! Try another</small>
+                                                <small id="pesan_formatemail" class="redhide" lang="en">Include '@' in format email address!</small>
+                                                <small id="pesan_email" class="redhide" lang="en">Email has been registered! Try another</small>
 
                                                 @if($errors->has('email_subs'))
                                                 <small class="error_email"
@@ -140,10 +134,8 @@
                                                 <input id="username_subs" type="text"
                                                     class="form-control @error('username_subs') is-invalid @enderror"
                                                     name="username_subs" value="{{ old('username_subs') }}" required>
-                                                <small id="pesan_usernameformat" lang="en" class="redhide">Mininum 6
-                                                    character contain Numbers and Letters!</small>
-                                                <small id="pesan_username" lang="en" class="redhide">Username already
-                                                    taken! Try another!</small>
+                                                <small id="pesan_usernameformat" lang="en" class="redhide">Mininum 6 character contain Numbers and Letters!</small>
+                                                <small id="pesan_username" lang="en" class="redhide">Username already taken! Try another!</small>
                                                 @if($errors->has('username_subs'))
                                                 <small class="error_username" style="color: red;">
                                                     {{ $errors->first('username_subs')}}</small>
@@ -155,8 +147,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group row">
-                                                <label for="password_subs" class="h6 cgrey s14"
-                                                    lang="en">Password</label>
+                                                <label for="password_subs" class="h6 cgrey s14" lang="en">Password</label>
                                                 <div class="input-group">
                                                     <input class="form-control" id="password_subs" type="password"
                                                         value="{{ old('password_subs') }}"
@@ -173,8 +164,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <small id="pesan_passformat" lang="en" class="redhide">Mininum 8
-                                                    character contain Numbers and Letters!</small>
+                                                <small id="pesan_passformat" lang="en" class="redhide">Mininum 8 character contain Numbers and Letters!</small>
 
                                                 @if($errors->has('password_subs'))
                                                 <small class="error_password"
@@ -190,15 +180,13 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group row">
-                                                <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm
-                                                    Password</label>
+                                                <label for="passconfirm_subs" class="h6 cgrey s14" lang="en">Confirm Password</label>
 
                                                 <input id="passconfirm_subs" type="password"
                                                     value="{{ old('passconfirm_subs') }}"
                                                     class="form-control @error('passconfirm_subs') is-invalid @enderror"
                                                     name="passconfirm_subs" required autocomplete="passconfirm_subs">
-                                                <small id="pesan_passconfirm" lang="en" class="redhide">Password &
-                                                    Confirm Password didnt match!</small>
+                                                <small id="pesan_passconfirm" lang="en" class="redhide">Password & Confirm Password didnt match!</small>
 
                                                 @if($errors->has('passconfirm_subs'))
                                                 <small class="error_passconfirm"
@@ -252,11 +240,12 @@
                                 <div class="container" style="margin-top: 2em;">
                                     <div class="row">
                                         <div class="col-4">
-                                            <center>
-                                                <img src="/img/loading1.gif" id="icon_comm_subs"
-                                                    class="rounded-circle img-fluid" style="width: 50%; height: auto;"
-                                                    onerror="this.onerror=null;this.src='/visual/logo2.png';">
-                                            </center>
+                                                <center>
+                                                    <img src="/img/loading1.gif" id="icon_comm_subs"
+                                                        class="rounded-circle img-fluid"
+                                                        style="width: 50%; height: auto;"
+                                                        onerror="this.onerror=null;this.src='/visual/logo2.png';">
+                                                </center>
                                         </div>
 
                                         <div class="col-8">
@@ -322,8 +311,7 @@
 
 
                     <div class="row" style="margin-top: 2em;">
-                        <button type="button" class="btn btn-backregis1" lang="en" onclick="back_show_form()">Go
-                            Back</button>
+                        <button type="button" class="btn btn-backregis1" lang="en" onclick="back_show_form()">Go Back</button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="submit" class="btn btn-regissubs1" lang="en" id="btn_ke_submit">Finish</button>
                     </div>
@@ -402,7 +390,7 @@
             success: function (result) {
 
                 var result = result[0];
-                console.log(result);
+                   console.log(result);
                 if (result != "") {
                     $("#community_id").val(result.id);
                     $("#icon_comm_subs").attr("src", cdn + cekimage_cdn(result.logo));
@@ -540,13 +528,12 @@
                     $("#pesan_formatemail").hide();
                     $("#pesan_email").show();
                     $(".error_email").hide();
-                    $("#submit_personalsubs").attr("disabled", "disabled");
+
                 } else {
                     $("#email_subs").removeClass("is-invalid").addClass("is-valid");
                     $("#pesan_formatemail").hide();
                     $("#pesan_email").hide();
                     $(".error_email").hide();
-                     $("#submit_personalsubs").removeAttr("disabled", "disabled");
                 }
             },
             error: function (result) {
@@ -599,13 +586,11 @@
                     $("#pesan_phoneformat").hide();
                     $("#pesan_phone").hide();
                     $(".error_phone").hide();
-                     $("#submit_personalsubs").removeAttr("disabled", "disabled");
                 } else {
                     $("#notlp_subs").removeClass("is-valid").addClass("is-invalid");
                     $("#pesan_phoneformat").hide();
                     $("#pesan_phone").show();
                     $(".error_phone").hide();
-                     $("#submit_personalsubs").attr("disabled", "disabled");
                 }
             },
             error: function (result) {
@@ -658,13 +643,11 @@
                     $("#pesan_usernameformat").hide();
                     $("#pesan_username").hide();
                     $(".error_username").hide();
-                     $("#submit_personalsubs").removeAttr("disabled", "disabled");
                 } else {
                     $("#username_subs").removeClass("is-valid").addClass("is-invalid");
                     $("#pesan_usernameformat").hide();
                     $("#pesan_username").show();
                     $(".error_username").hide();
-                     $("#submit_personalsubs").attr("disabled", "disabled");
                 }
             },
             error: function (result) {
@@ -712,8 +695,23 @@
     });
 
 
-
-
+    let currForm1 = document.getElementById('form_regispersonal_subs');
+    currForm1.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener(('input'), () => {
+            if (input.checkValidity()) {
+                input.classList.remove('is-invalid')
+                input.classList.add('is-valid');
+                $("#submit_personalsubs").attr("disabled",false);
+            } else {
+                input.classList.remove('is-valid')
+                input.classList.add('is-invalid');
+            }
+            // var is_valid = $('.form-control').length === $('.form-control.is-valid').length;
+            var is_valid = 6 === $('.form-control.is-valid').length;
+            $("#submit_personalsubs").attr("disabled", !is_valid);
+            // console.log($('.form-control.is-valid').length +" ___________ "+  $('.form-control').length);
+        });
+    });
 
 </script>
 @endsection

@@ -30,7 +30,7 @@ trait SendRequestController
 
         // ------ $get -------
         // true = header + url
-        // false = ody + url
+        // false = header + body + url
         // "getdata" = body + url
         // null = url
 

@@ -128,7 +128,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -212,7 +212,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -252,7 +252,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return view('404');
         }
@@ -292,7 +292,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return view('404');
         }
@@ -339,7 +339,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     } //enfunc
@@ -413,7 +413,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -470,7 +470,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -527,7 +527,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -571,7 +571,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -616,7 +616,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -648,7 +648,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -699,7 +699,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -747,7 +747,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -866,7 +866,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -917,7 +917,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -952,7 +952,38 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
+            return $error;
+        }
+    }
+
+    public function show_my_membership(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'dashboard/membership';
+        $input = $request->all();
+
+        $token = $ses_login['access_token'];
+        $dataku = [
+            "membership_id" => $input['membership_id'],
+        ];
+
+        // return $input;
+
+        try {
+            $postdata = $this->post_get_request($dataku, $url, false, $token);
+            return $postdata['data'];
+
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['success'] = false;
             return $error;
         }
     }
@@ -985,7 +1016,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1035,7 +1066,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1094,7 +1125,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1144,7 +1175,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
 
                 alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                 return back();
@@ -1198,7 +1229,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1231,7 +1262,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1280,7 +1311,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1336,7 +1367,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1382,7 +1413,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1415,7 +1446,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1448,7 +1479,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1481,7 +1512,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1523,7 +1554,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1565,7 +1596,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1607,7 +1638,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1651,7 +1682,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1694,7 +1725,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1746,7 +1777,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
