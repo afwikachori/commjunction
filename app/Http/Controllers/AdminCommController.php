@@ -3099,7 +3099,13 @@ class AdminCommController extends Controller
         // return $input;
 
         $url = env('SERVICE') . 'membershipmanagement/createmembership';
+
+        if ($request->has('fitur_member')) {
         $fitur = $input['fitur_member'];
+        }else{
+            alert()->error('Features is required', 'Can Not Null!')->autoclose(4500);
+            return back();
+        }
         $hasilfitur = implode(",", $fitur);
 
         $req = new RequestController;
@@ -3129,16 +3135,12 @@ class AdminCommController extends Controller
         // dd($imageRequest);
 
         try {
-            if ($request->has('fitur_member')) {
                 $resImg = $req->create_membership_admin($imageRequest, $url, $token);
                 if ($resImg['success'] == true) {
                     alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
                     return back();
                 }
-            } else {
-                alert()->error('Features is required', 'Can Not Null!')->autoclose(4500);
-                return back();
-            }
+
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);

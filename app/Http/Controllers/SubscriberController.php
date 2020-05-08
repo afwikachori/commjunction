@@ -203,15 +203,18 @@ class SubscriberController extends Controller
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
             $error['succes'] = false;
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
