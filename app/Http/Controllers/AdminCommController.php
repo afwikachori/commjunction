@@ -3129,9 +3129,14 @@ class AdminCommController extends Controller
         // dd($imageRequest);
 
         try {
-            $resImg = $req->create_membership_admin($imageRequest, $url, $token);
-            if ($resImg['success'] == true) {
-                alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
+            if ($request->has('fitur_member')) {
+                $resImg = $req->create_membership_admin($imageRequest, $url, $token);
+                if ($resImg['success'] == true) {
+                    alert()->success('Successfully create new membership for Admin Community', 'Added!')->persistent('Done');
+                    return back();
+                }
+            } else {
+                alert()->error('Features is required', 'Can Not Null!')->autoclose(4500);
                 return back();
             }
         } catch (ClientException $errornya) {

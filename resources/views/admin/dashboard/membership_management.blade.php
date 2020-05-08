@@ -109,7 +109,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight" lang="en">Membership Title</small>
-                                <input type="text" id="judul_member" name="judul_member" class="form-control input-abu">
+                                <input type="text" id="judul_member" name="judul_member" class="form-control input-abu" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -123,7 +123,7 @@
                         <div class="col-md-12 form-group">
                             <small class="clight" lang="en">Description</small>
                             <textarea class="form-control input-abu" id="deskripsi_member" name="deskripsi_member"
-                                rows="2"></textarea>
+                                rows="2" required></textarea>
                         </div>
                     </div>
                     <div class="row">
