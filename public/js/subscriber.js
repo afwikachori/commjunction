@@ -95,6 +95,8 @@ function session_subscriber_logged() {
 
             var user = result.user;
             get_list_notif_navbar(user.community_id);
+            get_inbox_navbar();
+
             if (user.picture != undefined || user.picture != null) {
 
                 $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(user.picture));
@@ -249,8 +251,7 @@ function dateTime(tgl) {
     dformat = [d.getDate(), d.getMonth() + 1,
     d.getFullYear()].join('/') + ' &nbsp; ' +
         [d.getHours(),
-        d.getMinutes(),
-        d.getSeconds()].join(':');
+        d.getMinutes()].join(':');
 
     return dformat;
 }
@@ -330,7 +331,7 @@ function get_pricing_membership() {
         dataSrc: '',
         timeout: 40000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
 
             if (result.success == false) {
                 if ($("#membership_id").val() === 0) {
@@ -457,81 +458,75 @@ function detail_membership_subs(index) {
 
 
 // navbar inbox
-// function  get_inbox_navbar(params) {
+function  get_inbox_navbar() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_generate_inbox_subs',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+                    $("#isi_pesan_navbar").html(nonotif);
+                    $("#ada_inbox").hide();
+                }
+            } else {
+                if (result != undefined) {
+                    var avatar = [
+                        'avatar1', 'avatar2', 'avatar3', 'avatar4',
+                        'avatar5', 'avatar6', 'avatar7', 'avatar8'
+                    ];
+                    var num = Math.floor(Math.random() * avatar.length);
 
-//     $.ajaxSetup({
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//     });
-//     $.ajax({
-//         url: '',
-//         type: 'POST',
-//         dataSrc: '',
-//         timeout: 30000,
-//         success: function (result) {
-//             // console.log(result);
-//             if (result.success == false) {
-//                 if (result.status == 401 || result.message == "Unauthorized") {
-//                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-//                     setTimeout(function () {
-//                         location.href = '/subscriber/url/' + $(".community_name").val();
-//                     }, 5000);
-//                 } else {
-//                     var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
-//                     $("#isi_pesan_navbar").html(nonotif);
-//                     // $("#ada_notif").hide();
-//                 }
-//             } else {
-//                 if (result != undefined) {
-//                     var isiku = '';
-//                     $.each(result, function (i, item) {
+                    var isiku = '';
+                    var total = 0;
+                    $.each(result, function (i, item) {
+                        total++;
+                        isiku += '<a class="dropdown-item preview-item">'+
+                            '<div class="preview-thumbnail">' +
+                            '<img src="/img/avatar/' + avatar[num]+'.png" alt="image" class="profile-pic">' +
+                            '</div>' +
+                            '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center">' +
+                            '<span class="s14 tebal">' + item.message_type_title +' &nbsp; &nbsp;</small>' +
+                            '<span class="ctosca s13 mb-2">' + dateTime(item.created_at) + '</span><br>' +
+                            '<p class="cgrey2 s13 mt-1 mb-1"> from &nbsp; <b>' + item.created_by_title +'</b></p>'+
+                            '<small class="clight s14">' + item.title +'</small>'
+                            '</div>' +
+                            '</a><div class="dropdown-divider"></div>';
+                    });
+                    $("#total_inbox_navbar").html(total);
+                    $("#isi_pesan_navbar").html(isiku);
+                    $("#ada_inbox").show();
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+                    $("#isi_pesan_navbar").html(nonotif);
+                    $("#ada_inbox").hide();
+                }
 
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+            $("#isi_pesan_navbar").html(nonotif);
+            $("#ada_inbox").hide();
+            console.log("Cant Show Pesan Inbox");
+        }
+    });
 
-
-//                         var textArray = [
-//                             'bg-success',
-//                             'bg-info',
-//                             'bg-danger',
-//                             'bg-warning'
-//                         ];
-//                         var acak = Math.floor(Math.random() * textArray.length);
-
-
-//                         isiku += '<a class="dropdown-item preview-item notif">' +
-//                             '<div class="preview-thumbnail medium">' +
-//                             '<div class="preview-icon ' + textArray[acak] + '">' +
-//                             '<i class="mdi mdi-bell-outline"></i>' +
-//                             '</div>' +
-//                             '</div>' +
-//                             '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-//                             '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
-//                             '</label> ' +
-//                             '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
-//                             '<small class="cbiru  mb-0">' + dformat + '</small > ' +
-//                             '</div> ' +
-//                             '</a> ' +
-//                             '<div class="dropdown-divider"></div>';
-//                     });
-//                     $("#isi_notif_navbar").html(isiku);
-//                     // $("#ada_notif").show();
-//                 } else {
-//                     var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-//                     $("#isi_pesan_navbar").html(nonotif);
-//                     // $("#ada_notif").hide();
-//                 }
-
-//             }
-//         },
-//         error: function (result) {
-//             var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-//             $("#isi_notif_navbar").html(nonotif);
-//             $("#ada_notif").hide();
-//             console.log("Cant Show Navbar Notif");
-//         }
-//     });
-
-// }
+}
 
 
 function show_my_membership(idmember) {
@@ -550,7 +545,7 @@ function show_my_membership(idmember) {
             "membership_id": idmember,
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
 
             if (result.success == false) {
                 if ($("#membership_id").val() != 0) {
@@ -852,7 +847,7 @@ function get_list_notif_navbar(idkom) {
                             '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
                             '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
                             '</label> ' +
-                            '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+                            '<small class="text-gray ellipsis mb-1 mt-1"> ' + item.title + '</small > ' +
                             '<small class="cbiru  mb-0">' + dformat + '</small > ' +
                             '</div> ' +
                             '</a> ' +
@@ -926,7 +921,7 @@ function LogoutSubscriber() {
         dataType: "json",
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
 
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {

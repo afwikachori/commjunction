@@ -136,37 +136,19 @@
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
                 aria-expanded="false">
                 <i class="mdi mdi-email-outline"></i>
-                <span class="count-symbol bg-warning"></span>
+                <span class="count-symbol bg-warning"  id="ada_inbox" style="display: none;"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                aria-labelledby="messageDropdown">
+                aria-labelledby="messageDropdown" style="width: 270px;">
                 <h6 class="p-3 mb-0">Messages</h6>
                 <div class="dropdown-divider"></div>
                <div id="isi_pesan_navbar">
 
- <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="/img/kosong.png" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
-                    <p class="text-gray mb-0"> 1 Minutes ago </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="/img/kosong.png" alt="image" class="profile-pic">
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
-                    <p class="text-gray mb-0"> 15 Minutes ago </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-
                </div>
-                <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+                <div class="dropdown-divider"></div>
+                 <a href="/subscriber/inbox_management">
+                <h6 class="p-3 mb-0 text-center"><span id="total_inbox_navbar"> 0 </span> new messages</h6>
+                 </a>
             </div>
         </li>
 
