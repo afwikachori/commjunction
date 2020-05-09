@@ -31,7 +31,7 @@
                             <h1 class="clight" lang="en">No Data Available</h1>
                         </center>
                     </div>
-                    <div id="isi_card_inbox" class="card-deck" style="width: 100%; padding-left:5%; padding-right: 5%;">
+                    <div id="isi_card_inbox" class="card-deck" style="width: 100%; padding-left:10%; padding-right: 5%;">
 
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                    padding-left: 5%; padding-right: 5%;">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
                         style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
+                        <i class="mdi mdi-close"></i><span lang="en">Close</span>
                     </button>
                 </div>
             </form>

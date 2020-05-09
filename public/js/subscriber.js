@@ -506,8 +506,8 @@ function get_inbox_navbar() {
                             '<span class="s14 tebal">' + item.message_type_title + ' &nbsp; &nbsp;</small>' +
                             '<span class="ctosca s13 mb-2">' + dateTime(item.created_at) + '</span><br>' +
                             '<p class="cgrey2 s13 mt-1 mb-1"> from &nbsp; <b>' + item.created_by_title + '</b></p>' +
-                            '<small class="clight s14">' + item.title + '</small>'
-                        '</div>' +
+                            '<small class="clight s14">' + item.title + '</small>' +
+                            '</div>' +
                             '</a><div class="dropdown-divider"></div>';
                     });
                     $("#total_inbox_navbar").html(total);
@@ -543,14 +543,14 @@ function show_card_pesan_inbox_subs(result) {
             // console.log(item);
             var inidt = [item.id, item.level_status, item.community_id, item.status];
             isiui += '<div class="mb-3 col-md-6">' +
-                '<div class="row no-gutters" style="height:159px">' +
+                '<div class="row no-gutters" style="height:159px;">' +
                 '<div class="col-md-4">' +
                 '<img src="/img/inbox.jpg" class="img-stretch">' +
                 '</div>' +
                 '<div class="col-md-8 bg-gradient-abupurple" style="padding: 0px;border-radius: 0px 10px 10px 0px;">' +
                 '<div class="card-body nopadding">' +
                 '<span class="card-title">' + item.created_by_title + '</span> &nbsp;&nbsp;' +
-                '<br><span class="cteal mt-1 tebal s14">' + item.message_type_title + '</span>'+
+                '<br><span class="cteal mt-1 tebal s14">' + item.message_type_title + '</span>' +
                 '<span class="cgrey2 s13" > (' + item.sender_level_title + ')' +
                 '<p class="card-text">' + item.title + '</p>' +
                 '<div class="row">' +
@@ -569,7 +569,7 @@ function show_card_pesan_inbox_subs(result) {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '</div>' +
+                '</div><br>' +
                 '</div>';
         });
         $("#isi_card_inbox").html(isiui);
@@ -580,460 +580,223 @@ function show_card_pesan_inbox_subs(result) {
 
 
 
-    function show_my_membership(idmember) {
-        $('.hideisimember').hide();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/subscriber/show_my_membership",
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            data: {
-                "membership_id": idmember,
-            },
-            success: function (result) {
-                // console.log(result);
-
-                if (result.success == false) {
-                    if ($("#membership_id").val() != 0) {
-                        $('#hide_membertipe').show();
-                        $("#show_mymember").hide();
-                        if (result.status === 401 || result.message === "Unauthorized") {
-                            ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                            setTimeout(function () {
-                                location.href = '/subscriber/url/' + $(".community_name").val();
-                            }, 5000);
-                        } else {
-                            ui.popup.show('warning', result.message, 'Warning');
-                        }
-                    }
-                } else {
-                    var result = result[0];
-                    $("#member_judul2").html(result.membership);
-                    $("#member_deskripsi2").html(result.description);
-                    $("#member_harga2").html('Rp ' + rupiah(result.pricing));
-
-                    var html = '';
-                    var noimg = '/img/fitur.png';
-                    html += '<center><div class="col-md-12" style="margin-bottom:1.5em;">' +
-                        '<div class="card cd-pricing pricing">' +
-                        '<div class="card-body">' +
-                        '<center>' +
-                        '<h4 class="cgrey2 s20">' + result.membership + '</h4>' +
-                        '<img src="' + server_cdn + cekimage_cdn(result.icon) + '"  class="rounded-circle img-fluid imgprice"' +
-                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:1.2em;">' +
-                        '<div class="hidetime1">' +
-                        '<sup class="cgrey" style="font-size: 30px;">' +
-                        '<small class="h6">IDR</small></sup>' +
-                        '<label class="card-harga cgrey">' +
-                        '<strong>' + rupiah(result.pricing) + '</strong></label>' +
-                        '<small class="clight" lang="en">/Once</small>' +
-                        '</div><br><h6 class="cteal" lang="en">Description</h6>' +
-                        '<p class="clight s12">' + result.description + '</small>'
-                    '</center>' +
-                        '</div></div></div></center>';
-                    $('#isi_show_mymember').html(html);
-                    $("#show_mymember").show();
-                    $("#hide_membertipe").hide();
-
-                    var subf = '';
-                    var jum = 0;
-                    var noimg = '/img/fitur.png';
-
-                    $.each(result.feature, function (i, item) {
-                        var sub_ui = '';
-                        $.each(item.sub_features, function (i, subitem) {
-                            sub_ui += '<li><small class="cgrey2">' + subitem.title + '</small></li>';
-                        });
-                        jum++;
-                        subf += '<div class="row" style="margin-bottom:0.5em;">' +
-                            '<div class="col-md-6"' +
-                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
-                            'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
-                            '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
-                            '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important; min-width:200px;">' +
-                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
-                            'alt="circle-image" /> ' +
-                            '<div class="row">' +
-                            '<div class="col-md-3" style="padding-right:4px;">' +
-                            '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
-                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-                            '</div>' +
-                            '<div class="col-md-9">' +
-                            '<b><small>' + item.title + '</small></b><br>' +
-                            '<small class="cblue"> <b>' + jum + '</b> Subfeature</small>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="col-md-6 padsubmember">' +
-                            '<small class="cgrey s13">' + item.title + '</small>' +
-                            '<ul class="submember">' + sub_ui + '</ul>' +
-                            '</div></div>';
-                    });
-                    $("#show_feature_member2").html(subf);
-                    $("#total_fitur_member2").html(jum);
-
-                }
-            }, error: function (result) {
-                console.log(result);
-                $('.hideisimember').hide().fadeOut('fast');
-                $('#hide_membertipe').show();
-                $("#show_mymember").hide();
-            }
-        });
-    }
-
-
-
-    function get_payment_initial() {
-        $("#btn_submit_paymethod").attr("disabled", "disabled");
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/subscriber/get_payment_initial',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            success: function (result) {
-                // console.log(result);
-                var text = '';
-                var isibank = '';
-
-                var noimg = '/img/fitur.png';
-
-                $.each(result, function (i, item) {
-                    text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
-                        'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
-                    var deskrip = '';
-                    $.each(item.comm_payment_methods, function (i, itm) {
-                        $.each(itm.description, function (x, isides) {
-                            deskrip += '<li sytle="background-color:#fff;">' + isides + '</li>';
-                        });
-                        isibank +=
-                            '<div class="card border-oren hidendulu method' + item.id + '" id="cardpay' + itm.id + '">' +
-                            '<div class="card-header paybankmember" role="tab" sytle="background-color:#fff;">' +
-                            '<h6 class="mb-0 pdb1">' +
-                            '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
-                            'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
-                            'aria-controls="collapseOne' + itm.id + '">' +
-                            '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
-                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
-                            '<span class="float-right">' +
-                            '<i class="fa fa-chevron-right"></i>' +
-                            '</span>' +
-                            '</a></h6></div>' +
-                            '<div id="collapseOne' + itm.id + '" class="collapse" role="tabpanel">' +
-                            '<div class="card-block"><ul class="paybankmember">' + deskrip +
-                            '</ul></div></div></div>';
-                    });
-                });
-                $(".isi_method_pay").html(text);
-                $(".isi_show_bank").html(isibank);
-
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
-            }
-        });
-    }
-
-
-
-
-    function pilih_pay_bank(ini) {
-        $("#btn_submit_paymethod").attr("disabled", "disabled");
-        $(".hidendulu").removeClass('dipilih');
-        $('.btn-blueline').removeClass('active');
-        $("#" + ini.id).addClass('active');
-        $("." + ini.id).addClass('dipilih');
-        $("." + ini.id).removeClass('active');
-        $("#btn_submit_paymethod").attr("disabled", "disabled");
-    }
-
-
-    function pilihpay(idpay) {
-        $("#id_pay_initial").val(idpay);
-        $(".border-oren").removeClass("active");
-        $("#cardpay" + idpay).addClass("active");
-        $("#btn_pay_next").removeAttr("disabled");
-        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
-    }
-
-
-
-
-
-    function pilih_payment_initial(dtmember) { //FREE
-        $("#id_membertype").val("");
-        var dt = dtmember.split('<>');
-        $("#modal_initial_membership").modal('hide');
-
-        if (dt[1] != 0 && dt[1] != undefined) {
-            $("#modal_pay_initial").modal('show');
-            $("#harga_member").html(rupiah(dt[1]));
-            $("#id_membertype").val(dt[0]);
-        } else {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/subscriber/set_initial_membership_pay',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                data: {
-                    "id_membertype": dt[0],
-                    "id_pay_initial": "0",
-                },
-                success: function (result) {
-                    // console.log(result);
-                    if (result.success == false) {
-                        if (result.status == 401 || result.message == "Unauthorized") {
-                            ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                            setTimeout(function () {
-                                location.href = '/admin';
-                            }, 5000);
-                        } else {
-                            ui.popup.show('warning', result.message, 'Warning');
-                        }
-                    } else {
-                        swal("Successfully", "Waiting your membership confirmation from Administrator", "success");
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 3500);
-                    }
-                },
-                error: function (result) {
-                    console.log(result);
-                    console.log("Cant Show");
-                }
-            });
-
+function show_my_membership(idmember) {
+    $('.hideisimember').hide();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    }
+    });
+    $.ajax({
+        url: "/subscriber/show_my_membership",
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "membership_id": idmember,
+        },
+        success: function (result) {
+            // console.log(result);
 
-
-
-    //GET LAST NOTIFICATION
-    function get_list_notif_navbar(idkom) {
-        // alert(idkom);
-        var tday = new Date();
-        var d = new Date();
-        var today = formatDate(d.toLocaleDateString());
-        // console.log(today);
-        d.setMonth(d.getMonth() - 1);
-        var ago = formatDate(d.toLocaleDateString());
-        // console.log(ago);
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/subscriber/get_list_notif_navbar',
-            type: 'POST',
-            dataSrc: '',
-            data: {
-                "community_id": idkom,
-                "start_date": ago,
-                "end_date": today,
-                "read_status": "1", //1:notread 2:read
-                "notification_status": "receive", //send/receive
-                "limit": 5
-            },
-            timeout: 30000,
-            success: function (result) {
-                // console.log(result);
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
+            if (result.success == false) {
+                if ($("#membership_id").val() != 0) {
+                    $('#hide_membertipe').show();
+                    $("#show_mymember").hide();
+                    if (result.status === 401 || result.message === "Unauthorized") {
                         ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                         setTimeout(function () {
                             location.href = '/subscriber/url/' + $(".community_name").val();
                         }, 5000);
                     } else {
-                        var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-                        $("#isi_notif_navbar").html(nonotif);
-                        $("#ada_notif").hide();
-                    }
-                } else {
-                    if (result != undefined) {
-                        var isiku = '';
-                        $.each(result, function (i, item) {
-
-                            var d = new Date(item.created_at);
-                            dformat = [d.getDate(), d.getMonth() + 1,
-                            d.getFullYear()].join('/') + ' ' +
-                                [d.getHours(),
-                                d.getMinutes(),
-                                d.getSeconds()].join(':');
-
-                            var textArray = [
-                                'bg-success',
-                                'bg-info',
-                                'bg-danger',
-                                'bg-warning'
-                            ];
-                            var acak = Math.floor(Math.random() * textArray.length);
-
-
-                            isiku += '<a class="dropdown-item preview-item notif">' +
-                                '<div class="preview-thumbnail medium">' +
-                                '<div class="preview-icon ' + textArray[acak] + '">' +
-                                '<i class="mdi mdi-bell-outline"></i>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-                                '<label class="preview-subject tebal mb-1 s14">' + item.created_by_title +
-                                '</label> ' +
-                                '<small class="text-gray ellipsis mb-1 mt-1"> ' + item.title + '</small > ' +
-                                '<small class="cteal mt-1 mb-0">' + dformat + '</small > ' +
-                                '</div> ' +
-                                '</a> ' +
-                                '<div class="dropdown-divider"></div>';
-                        });
-                        $("#isi_notif_navbar").html(isiku);
-                        $("#ada_notif").show();
-                    } else {
-                        var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-                        $("#isi_notif_navbar").html(nonotif);
-                        $("#ada_notif").hide();
-                    }
-
-                }
-            },
-            error: function (result) {
-                var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-                $("#isi_notif_navbar").html(nonotif);
-                $("#ada_notif").hide();
-                console.log("Cant Show Navbar Notif");
-            }
-        });
-    }
-
-    function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
-
-
-    //show icon preview
-    function previewImgUpload(idhtml, input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#' + idhtml).show().attr('src', e.target.result);
-
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-
-    // LOGOUT SUBSCRIBER DASHBOARD
-    function LogoutSubscriber() {
-        var namakom = $(".community_name").val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            beforeSend: function beforeSend(jxqhr) {
-                $(".hide_load_log").show();
-                $("#text_logout").hide();
-            },
-            timeout: 20000,
-        });
-        $.ajax({
-            url: '/subscriber/LogoutSubscriber',
-            type: "POST",
-            dataType: "json",
-            timeout: 30000,
-            success: function (result) {
-                // console.log(result);
-
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/subscriber/url/' + namakom;
-                        }, 5000);
-                    } else {
                         ui.popup.show('warning', result.message, 'Warning');
                     }
-                } else {
-                    location.href = '/subscriber/url/' + namakom;
                 }
-            },
-            error: function (result) {
-                console.log(result);
-                location.href = '/subscriber/url/' + namakom;
+            } else {
+                var result = result[0];
+                $("#member_judul2").html(result.membership);
+                $("#member_deskripsi2").html(result.description);
+                $("#member_harga2").html('Rp ' + rupiah(result.pricing));
+
+                var html = '';
+                var noimg = '/img/fitur.png';
+                html += '<center><div class="col-md-12" style="margin-bottom:1.5em;">' +
+                    '<div class="card cd-pricing pricing">' +
+                    '<div class="card-body">' +
+                    '<center>' +
+                    '<h4 class="cgrey2 s20">' + result.membership + '</h4>' +
+                    '<img src="' + server_cdn + cekimage_cdn(result.icon) + '"  class="rounded-circle img-fluid imgprice"' +
+                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:1.2em;">' +
+                    '<div class="hidetime1">' +
+                    '<sup class="cgrey" style="font-size: 30px;">' +
+                    '<small class="h6">IDR</small></sup>' +
+                    '<label class="card-harga cgrey">' +
+                    '<strong>' + rupiah(result.pricing) + '</strong></label>' +
+                    '<small class="clight" lang="en">/Once</small>' +
+                    '</div><br><h6 class="cteal" lang="en">Description</h6>' +
+                    '<p class="clight s12">' + result.description + '</small>'
+                '</center>' +
+                    '</div></div></div></center>';
+                $('#isi_show_mymember').html(html);
+                $("#show_mymember").show();
+                $("#hide_membertipe").hide();
+
+                var subf = '';
+                var jum = 0;
+                var noimg = '/img/fitur.png';
+
+                $.each(result.feature, function (i, item) {
+                    var sub_ui = '';
+                    $.each(item.sub_features, function (i, subitem) {
+                        sub_ui += '<li><small class="cgrey2">' + subitem.title + '</small></li>';
+                    });
+                    jum++;
+                    subf += '<div class="row" style="margin-bottom:0.5em;">' +
+                        '<div class="col-md-6"' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                        'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                        '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
+                        '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important; min-width:200px;">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                        'alt="circle-image" /> ' +
+                        '<div class="row">' +
+                        '<div class="col-md-3" style="padding-right:4px;">' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        '</div>' +
+                        '<div class="col-md-9">' +
+                        '<b><small>' + item.title + '</small></b><br>' +
+                        '<small class="cblue"> <b>' + jum + '</b> Subfeature</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-md-6 padsubmember">' +
+                        '<small class="cgrey s13">' + item.title + '</small>' +
+                        '<ul class="submember">' + sub_ui + '</ul>' +
+                        '</div></div>';
+                });
+                $("#show_feature_member2").html(subf);
+                $("#total_fitur_member2").html(jum);
+
             }
-        });
-        // });
-    }
-
-
-
-
-
-    //subscriber membershitype
-    function hidenlah_confirm_member() {
-        $("#detil_pay").css("display", "none");
-        $("#name_userpay").attr("disabled", 'disabled');
-        $("#fileup").attr("disabled", 'disabled');
-        $("#btn_confirmpay").css("display", "none");
-        $("#hidein-img").css("display", "none");
-
-    }
-
-
-
-    $('input#invoice_number').bind("change keyup input", function () {
-        var inin = $(this).val();
-        get_invoice_num(inin);
+        }, error: function (result) {
+            console.log(result);
+            $('.hideisimember').hide().fadeOut('fast');
+            $('#hide_membertipe').show();
+            $("#show_mymember").hide();
+        }
     });
+}
+
+
+
+function get_payment_initial() {
+    $("#btn_submit_paymethod").attr("disabled", "disabled");
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_payment_initial',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            // console.log(result);
+            var text = '';
+            var isibank = '';
+
+            var noimg = '/img/fitur.png';
+
+            $.each(result, function (i, item) {
+                text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
+                    'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+                var deskrip = '';
+                $.each(item.comm_payment_methods, function (i, itm) {
+                    $.each(itm.description, function (x, isides) {
+                        deskrip += '<li sytle="background-color:#fff;">' + isides + '</li>';
+                    });
+                    isibank +=
+                        '<div class="card border-oren hidendulu method' + item.id + '" id="cardpay' + itm.id + '">' +
+                        '<div class="card-header paybankmember" role="tab" sytle="background-color:#fff;">' +
+                        '<h6 class="mb-0 pdb1">' +
+                        '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
+                        'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
+                        'aria-controls="collapseOne' + itm.id + '">' +
+                        '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
+                        '<span class="float-right">' +
+                        '<i class="fa fa-chevron-right"></i>' +
+                        '</span>' +
+                        '</a></h6></div>' +
+                        '<div id="collapseOne' + itm.id + '" class="collapse" role="tabpanel">' +
+                        '<div class="card-block"><ul class="paybankmember">' + deskrip +
+                        '</ul></div></div></div>';
+                });
+            });
+            $(".isi_method_pay").html(text);
+            $(".isi_show_bank").html(isibank);
+
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
 
 
 
 
-    function get_invoice_num(input) {
+function pilih_pay_bank(ini) {
+    $("#btn_submit_paymethod").attr("disabled", "disabled");
+    $(".hidendulu").removeClass('dipilih');
+    $('.btn-blueline').removeClass('active');
+    $("#" + ini.id).addClass('active');
+    $("." + ini.id).addClass('dipilih');
+    $("." + ini.id).removeClass('active');
+    $("#btn_submit_paymethod").attr("disabled", "disabled");
+}
+
+
+function pilihpay(idpay) {
+    $("#id_pay_initial").val(idpay);
+    $(".border-oren").removeClass("active");
+    $("#cardpay" + idpay).addClass("active");
+    $("#btn_pay_next").removeAttr("disabled");
+    $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+}
+
+
+
+
+
+function pilih_payment_initial(dtmember) { //FREE
+    $("#id_membertype").val("");
+    var dt = dtmember.split('<>');
+    $("#modal_initial_membership").modal('hide');
+
+    if (dt[1] != 0 && dt[1] != undefined) {
+        $("#modal_pay_initial").modal('show');
+        $("#harga_member").html(rupiah(dt[1]));
+        $("#id_membertype").val(dt[0]);
+    } else {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/subscriber/get_invoice_num_membership',
-            data: {
-                "invoice_number": input,
-                "transaction_type_id": "3",
-                "community_id": $(".id_komunitas").val()
-            },
+            url: '/subscriber/set_initial_membership_pay',
             type: 'POST',
-            datatype: 'JSON',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "id_membertype": dt[0],
+                "id_pay_initial": "0",
+            },
             success: function (result) {
                 // console.log(result);
                 if (result.success == false) {
@@ -1046,43 +809,280 @@ function show_card_pesan_inbox_subs(result) {
                         ui.popup.show('warning', result.message, 'Warning');
                     }
                 } else {
-                    $("#isi_form").show();
-                    var isi = result[0];
-                    $("#detil_pay").fadeIn();
-                    $("#name_userpay").removeAttr("disabled", 'disabled');
-                    $("#fileup").removeAttr("disabled", 'disabled');
-                    $("#btn_confirmpay").fadeIn();
-                    var tf = isi.comm_payment_method;
-                    $("#nominal_payment1").html("Rp &nbsp;&nbsp;" + rupiah(isi.grand_total));
-                    $("#bank_receiver").html(tf.payment_bank_name);
-                    $("#name_receiver").html(tf.payment_owner_name);
-                    $("#bank_num").html(tf.payment_account);
-
+                    swal("Successfully", "Waiting your membership confirmation from Administrator", "success");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3500);
                 }
             },
             error: function (result) {
                 console.log(result);
-                console.log("Cant invoice number");
-
+                console.log("Cant Show");
             }
         });
 
     }
+}
 
 
 
-    var idku = $('#id_pop_payment').val();
-    //showfile name upload icon
-    $('#fileup').on('change', function () {
-        // menampilkan img
-        previewImgUpload("show_imgpay", this);
-        $("#hidein-img").fadeIn();
+//GET LAST NOTIFICATION
+function get_list_notif_navbar(idkom) {
+    // alert(idkom);
+    var tday = new Date();
+    var d = new Date();
+    var today = formatDate(d.toLocaleDateString());
+    // console.log(today);
+    d.setMonth(d.getMonth() - 1);
+    var ago = formatDate(d.toLocaleDateString());
+    // console.log(ago);
 
-        var fileName = $(this).val();
-        if (fileName.length > 30) {
-            var fileNameFst = fileName.substring(0, 30);
-            $(this).next('.custom-file-label').html(fileNameFst + "...");
-        } else {
-            $(this).next('.custom-file-label').html(fileName);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $.ajax({
+        url: '/subscriber/get_list_notif_navbar',
+        type: 'POST',
+        dataSrc: '',
+        data: {
+            "community_id": idkom,
+            "start_date": ago,
+            "end_date": today,
+            "read_status": "1", //1:notread 2:read
+            "notification_status": "receive", //send/receive
+            "limit": 5
+        },
+        timeout: 30000,
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+            } else {
+                if (result != undefined) {
+                    var isiku = '';
+                    $.each(result, function (i, item) {
+
+                        var d = new Date(item.created_at);
+                        dformat = [d.getDate(), d.getMonth() + 1,
+                        d.getFullYear()].join('/') + ' ' +
+                            [d.getHours(),
+                            d.getMinutes(),
+                            d.getSeconds()].join(':');
+
+                        var textArray = [
+                            'bg-success',
+                            'bg-info',
+                            'bg-danger',
+                            'bg-warning'
+                        ];
+                        var acak = Math.floor(Math.random() * textArray.length);
+
+
+                        isiku += '<a class="dropdown-item preview-item notif">' +
+                            '<div class="preview-thumbnail medium">' +
+                            '<div class="preview-icon ' + textArray[acak] + '">' +
+                            '<i class="mdi mdi-bell-outline"></i>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                            '<label class="preview-subject tebal mb-1 s14">' + item.created_by_title +
+                            '</label> ' +
+                            '<small class="text-gray ellipsis mb-1 mt-1"> ' + item.title + '</small > ' +
+                            '<small class="cteal mt-1 mb-0">' + dformat + '</small > ' +
+                            '</div> ' +
+                            '</a> ' +
+                            '<div class="dropdown-divider"></div>';
+                    });
+                    $("#isi_notif_navbar").html(isiku);
+                    $("#ada_notif").show();
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+
+            }
+        },
+        error: function (result) {
+            var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+            $("#isi_notif_navbar").html(nonotif);
+            $("#ada_notif").hide();
+            console.log("Cant Show Navbar Notif");
+        }
+    });
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
+//show icon preview
+function previewImgUpload(idhtml, input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#' + idhtml).show().attr('src', e.target.result);
+
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+// LOGOUT SUBSCRIBER DASHBOARD
+function LogoutSubscriber() {
+    var namakom = $(".community_name").val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function beforeSend(jxqhr) {
+            $(".hide_load_log").show();
+            $("#text_logout").hide();
+        },
+        timeout: 20000,
+    });
+    $.ajax({
+        url: '/subscriber/LogoutSubscriber',
+        type: "POST",
+        dataType: "json",
+        timeout: 30000,
+        success: function (result) {
+            // console.log(result);
+
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + namakom;
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                location.href = '/subscriber/url/' + namakom;
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            location.href = '/subscriber/url/' + namakom;
+        }
+    });
+    // });
+}
+
+
+
+
+
+//subscriber membershitype
+function hidenlah_confirm_member() {
+    $("#detil_pay").css("display", "none");
+    $("#name_userpay").attr("disabled", 'disabled');
+    $("#fileup").attr("disabled", 'disabled');
+    $("#btn_confirmpay").css("display", "none");
+    $("#hidein-img").css("display", "none");
+
+}
+
+
+
+$('input#invoice_number').bind("change keyup input", function () {
+    var inin = $(this).val();
+    get_invoice_num(inin);
+});
+
+
+
+
+function get_invoice_num(input) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_invoice_num_membership',
+        data: {
+            "invoice_number": input,
+            "transaction_type_id": "3",
+            "community_id": $(".id_komunitas").val()
+        },
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                $("#isi_form").show();
+                var isi = result[0];
+                $("#detil_pay").fadeIn();
+                $("#name_userpay").removeAttr("disabled", 'disabled');
+                $("#fileup").removeAttr("disabled", 'disabled');
+                $("#btn_confirmpay").fadeIn();
+                var tf = isi.comm_payment_method;
+                $("#nominal_payment1").html("Rp &nbsp;&nbsp;" + rupiah(isi.grand_total));
+                $("#bank_receiver").html(tf.payment_bank_name);
+                $("#name_receiver").html(tf.payment_owner_name);
+                $("#bank_num").html(tf.payment_account);
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant invoice number");
+
+        }
+    });
+
+}
+
+
+
+var idku = $('#id_pop_payment').val();
+//showfile name upload icon
+$('#fileup').on('change', function () {
+    // menampilkan img
+    previewImgUpload("show_imgpay", this);
+    $("#hidein-img").fadeIn();
+
+    var fileName = $(this).val();
+    if (fileName.length > 30) {
+        var fileNameFst = fileName.substring(0, 30);
+        $(this).next('.custom-file-label').html(fileNameFst + "...");
+    } else {
+        $(this).next('.custom-file-label').html(fileName);
+    }
+});
