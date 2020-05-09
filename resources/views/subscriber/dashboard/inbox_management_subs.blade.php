@@ -22,9 +22,21 @@
         <div class="card" style="min-height: 450px;">
             <div class="card-header putih" lang="en">Message List</div>
 
-            <div class="card-body">
+            <div class="card-body" style="padding-right: 10%; padding-left: 10%;">
+                <div class="row">
+                    <div id="nodata_card_inbox" class="col-md-12"
+                        style="margin-right: auto; margin-left: auto; height: 300px;">
+                        <center>
+                            <br><br><br><br><br>
+                            <h1 class="clight" lang="en">No Data Available</h1>
+                        </center>
+                    </div>
+                    <div id="isi_card_inbox" class="card-deck" style="width: 100%; padding-left:5%; padding-right: 5%;">
 
-                <table id="tabel_inbox_message_subs" class="table table-hover table-striped dt-responsive nowrap"
+                    </div>
+                </div>
+
+                <!-- <table id="tabel_inbox_message_subs" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%;">
                     <thead>
                         <tr>
@@ -38,7 +50,7 @@
                             <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
@@ -216,33 +228,73 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
-        tabel_inbox_message_subs();
+        // tabel_inbox_message_subs();
+        // show_card_pesan_inbox();
     });
 
-    function tabel_tes() {
+    function show_card_pesan_inbox() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: '/subscriber/tabel_generate_inbox_subs',
+             url: '/subscriber/tabel_generate_inbox_subs',
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
-            data: {
-                "community_id": $("#list_komunitas_inbox").val(),
-                "start_date": $("#tanggal_mulai2").val(),
-                "end_date": $("#tanggal_selesai2").val(),
-                "filter_title": $("#filter_judul").val(),
-                "message_type": $("#tipe_pesan").val(),
-            },
             success: function (result) {
                 console.log(result);
+                if (result.success === false) {
+                    $("#isi_card_inbox").hide();
+                    $("#nodata_card_inbox").show();
+                } else {
+
+                    if (result.length != 0) {
+                        var isiui = '';
+                        $.each(result, function (i, item) {
+                            console.log(item);
+                            var inidt = [item.id, item.level_status, item.community_id, item.status];
+                            isiui += '<div class="mb-3 col-md-6">' +
+                                '<div class="row no-gutters">' +
+                                '<div class="col-md-4">' +
+                                '<img src="/img/inbox.jpg" class="img-stretch">' +
+                                '</div>' +
+                                '<div class="col-md-8 bg-gradient-abupurple" style="padding: 0px;">' +
+                                '<div class="card-body nopadding">' +
+                                '<span class="card-title">' + item.created_by_title + '</span> &nbsp;&nbsp;' +
+                                '<span class="cgrey2 s13"> (' + item.sender_level_title + ') </span>' +
+                                '<h6 class="cteal mt-2">'+ item.message_type_title +'</h6>'+
+                                '<p class="card-text">' + item.title + '</p>' +
+                                '<div class="row">' +
+                                '<div class="col-md-7">' +
+                                '<p class="card-text">' +
+                                '<small class="ctosca">' + dateTime(item.created_at) + '</small>' +
+                                '</p>' +
+                                '</div>' +
+                                '<div class="col-md-5 nopadding">' +
+                                '<button type="button" class="btn btn-purpleabu btn-sm melengkung10px"' +
+                                'onclick="detail_message_inbox_admin(\'' + inidt + '\')">' +
+                                '<i class="mdi mdi-eye btn-icon-prepend">' +
+                                '</i> <span lang="en"> Detail</span>' +
+                                '</button>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        $("#isi_card_inbox").html(isiui);
+                        $("#nodata_card_inbox").hide();
+
+                    }
+                }
             },
             error: function (result) {
                 console.log(result);
-                console.log("Cant Show");
+                $("#isi_card_inbox").hide();
+                $("#nodata_card_inbox").show();
             }
         });
     }
@@ -385,6 +437,9 @@
             },
             success: function (result) {
                 console.log(result);
+                setTimeout(function () {
+                    ui.popup.hideLoader();
+                }, 3000);
                 var res = result;
                 $("#modal_detail_message_inbox").modal('show');
                 $("#detail_judul ").html(res.title);

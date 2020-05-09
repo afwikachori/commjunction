@@ -409,6 +409,10 @@ background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
     background: linear-gradient(106.53deg, #bde6ea 0%, #bcd1e4 56.6%);
 }
 
+.bg-gradient-abupurple {
+    background: linear-gradient(129.53deg, #efe4f2 30%, #ddcfff 90%);
+}
+
 .melengkung15px{
   border-radius: 15px !important;
 }
@@ -554,6 +558,17 @@ margin-bottom: 1.5em;
     border-radius: 10px;
     border: none;
 }
+
+.btn-purpleabu {
+    background: linear-gradient(125.96deg, #a9a4cd 0%, #8093d8 56.6%);
+    color: white;
+    min-width: 15%;
+    border-radius: 10px;
+    border: none;
+}
+
+
+
 .btn-abu {
     background: linear-gradient(125.96deg, #ded0d0 0%, #c3cdd6 56.6%);
     color: white;
@@ -1707,8 +1722,20 @@ ul.submember li {
 }
 
 
+.img-stretch{
+    width: auto;
+    height: 170px;
+    position: absolute;
+    right: 0;
+}
 
+.card .card-body.nopadding{
+    padding: 1rem !important;
+}
 
+.nopadding{
+    padding: 0px;
+}
 
 
 

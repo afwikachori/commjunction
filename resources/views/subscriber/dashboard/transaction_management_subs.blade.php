@@ -565,15 +565,6 @@
             success: function (result) {
                 console.log(result);
 
-                // created_at: "2020-04-14T03:05:42.000Z"
-                // grand_total: 25000
-                // invoice_number: "MBR20200414/174/839128"
-                // level_title: "Subscriber"
-                // name: "Wika Chori"
-                // status_title: "Pending"
-                // transaction: "Subscriber Transaction"
-                // transaction_type: "Membership Request"
-
                 if (result.length != 0) {
                     var isiui = '';
                     var num = 0;
