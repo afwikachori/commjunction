@@ -44,7 +44,13 @@
                                 </div>
                             </div>
                             <div class="row">
-
+                                <div id="nodata_module_active"
+                                    style="display: none; min-height: 230px; margin-left: auto; margin-right: auto;">
+                                    <br><br><br>
+                                    <center>
+                                        <h1 class="clight" lang="en">No Data Available</h1>
+                                    </center>
+                                </div>
                                 <div id="show_module_active" class="card-deck">
 
                                 </div>
@@ -59,6 +65,13 @@
 
 
                             <div class="row" style="margin-top: 1.5em;">
+                                <div id="nodata_module_all"
+                                    style="display: none; min-height: 230px; margin-left: auto; margin-right: auto;">
+                                    <br><br><br>
+                                    <center>
+                                        <h1 class="clight" lang="en">No Data Available</h1>
+                                    </center>
+                                </div>
                                 <div id="show_module_all" class="card-deck">
 
                                 </div>
@@ -134,7 +147,8 @@
                                             class="rounded-circle img-fluid img-fitur-module" alt="">
                                     </div>
                                     <div class="col-md-7 kiri">
-                                        <h4 class="cwhite" style="margin-top: 0.5em;" id="module_name1" lang="en">Module Title</h4>
+                                        <h4 class="cwhite" style="margin-top: 0.5em;" id="module_name1" lang="en">Module
+                                            Title</h4>
                                     </div>
                                 </div>
                             </div>
@@ -230,8 +244,8 @@
                         <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                     </button>
                     &nbsp;
-                    <button type="button" id="btn_aktivasi_showhide" onclick="cek_pay_module(this)"
-                    data-dismiss="modal" class="btn btn-teal btn-sm" style="display: none;">
+                    <button type="button" id="btn_aktivasi_showhide" onclick="cek_pay_module(this)" data-dismiss="modal"
+                        class="btn btn-teal btn-sm" style="display: none;">
                         <i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Activate</span></button>
                 </center>
             </div> <!-- end-footer     -->
@@ -242,8 +256,8 @@
 
 
 <!-- MODAL PAYMENT MODULE -->
-<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modal_pay_module" aria-hidden="true">
+<div id="modal_pay_module" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_pay_module"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width: 65%; margin: auto;">
             <form method="POST" id="form_aktivasi_module" action="{{route('aktifasi_module_admincomm')}}">
@@ -264,9 +278,9 @@
                             </select>
                         </div>
                         <div class="col-md-8" style="margin-top: auto; margin-bottom: auto;">
-                        <span class="h5 cblue" id="text_sekali" style="display: none;"> </span>
-                        <span class="h5 cblue" id="text_bulanan" style="display: none;"> </span>
-                        <span class="h5 cblue" id="text_tahunan" style="display: none;"> </span>
+                            <span class="h5 cblue" id="text_sekali" style="display: none;"> </span>
+                            <span class="h5 cblue" id="text_bulanan" style="display: none;"> </span>
+                            <span class="h5 cblue" id="text_tahunan" style="display: none;"> </span>
                         </div>
                     </div>
                     <br>
@@ -283,7 +297,8 @@
                         <div class="col-md-5">
                             <h6 class="h6 clight" style="margin-bottom:1em;" lang="en">Bank Transfer</h6>
                             <div id="isi_show_bank" class="collapse-accordion" role="tablist"
-                                aria-multiselectable="true">
+                                aria-multiselectable="true"
+                                style="overflow-y: auto; overflow-x: hidden; height:230px; padding-right: 12px;">
 
                             </div>
                         </div>
@@ -293,7 +308,8 @@
                 <input type="hidden" name="id_pay_method_module" id="id_pay_method_module">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" lang="en">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod" lang="en">Submit</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod"
+                        lang="en">Submit</button>
                 </div>
             </form>
         </div>
@@ -326,43 +342,45 @@
             datatype: 'JSON',
             success: function (result) {
                 // console.log(result);
-
-                var isiui = '';
-                var num = 0;
-                $.each(result, function (i, item) {
-                    // console.log(item);
-                    num++;
-                    var noimg = '/img/fitur.png';
-                    var logo = server_cdn + item.logo;
-                    isiui +=
-                        '<div class="col-md-4 stretch-card ' +
-                        'grid-margin card-member' +
-                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
-                        '<div class="card bg-gradient-blue card-img-holder text-white member">' +
-                        '<div class="card-body member">' +
-                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
-                        'style="padding: 0.3rem 0.5rem;"' +
-                        'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-                        '<div class="row">' +
-                        '<div class="col-md-12">' +
-                        '<small class="cteal">' + item.feature_type_title + '</small>' +
-                        '<h4>' + item.title + '</h4>' +
-                        '</div>' +
-                        '<div class="col-md-12" style="text-align: right;">' +
-                        '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
-                        'onclick="get_list_setting_module(' + item.feature_id + ')">' +
-                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                        ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                        '</small></button>' +
-                        '</div>' +
-                        '</div></div></div></div>';
-                });
-
-                $("#show_module_active").html(isiui);
-                $("#total_module_active").html(num + " Modules");
-
+                if (result.success === false) {
+                    $("#nodata_module_active").show();
+                    $("#show_module_active").hide();
+                } else {
+                    var isiui = '';
+                    var num = 0;
+                    $.each(result, function (i, item) {
+                        num++;
+                        var noimg = '/img/fitur.png';
+                        var logo = server_cdn + item.logo;
+                        isiui +=
+                            '<div class="col-md-4 stretch-card ' +
+                            'grid-margin card-member' +
+                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
+                            '<div class="card bg-gradient-blue card-img-holder text-white member">' +
+                            '<div class="card-body member">' +
+                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                            '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                            'style="padding: 0.3rem 0.5rem;"' +
+                            'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
+                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<small class="cteal">' + item.feature_type_title + '</small>' +
+                            '<h4>' + item.title + '</h4>' +
+                            '</div>' +
+                            '<div class="col-md-12" style="text-align: right;">' +
+                            '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                            'onclick="get_list_setting_module(' + item.feature_id + ')">' +
+                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                            ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                            '</small></button>' +
+                            '</div>' +
+                            '</div></div></div></div>';
+                    });
+                    $("#nodata_module_active").hide();
+                    $("#show_module_active").html(isiui);
+                    $("#total_module_active").html(num + " Modules");
+                }
             },
             error: function (result) {
                 console.log("Cant Show Module List");
@@ -457,60 +475,65 @@
             datatype: 'JSON',
             success: function (result) {
                 // console.log(result);
-                var isiui = '';
-                var nomer = 0;
-                $.each(result, function (i, item) {
-                    var noimg = '/img/fitur.png';
-                    nomer++;
-                    var logo = server_cdn + item.logo;
-                    if (item.status == true) {
-                        isiui +=
-                            '<div class="col-md-4 stretch-card ' +
-                            'grid-margin card-member' +
-                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
-                            '<div class="card bg-gradient-blue card-img-holder text-white member">' +
-                            '<div class="card-body member">' +
-                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                            '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
-                            'style="padding: 0.3rem 0.5rem;"' +
-                            'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
-                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-                            '<div class="row">' +
-                            '<div class="col-md-12">' +
-                            '<small class="cteal">' + item.feature_type_title + '</small>' +
-                            '<h4>' + item.title + '</h4>' +
-                            '</div>' +
-                            '<div class="col-md-12" style="text-align: right;">' +
-                            '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
-                            'onclick="get_list_setting_module(' + item.feature_id + ')">' +
-                            '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
-                            ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
-                            '</small></button>' +
-                            '</div>' +
-                            '</div></div></div></div>';
-                    } else {
-                        isiui += '<div class="col-md-4 stretch-card ' +
-                            'grid-margin card-member' +
-                            'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
-                            '<div class="card bg-gradient-blue card-img-holder text-white member">' +
-                            '<div class="card-body member">' +
-                            '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                            '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
-                            '<div class="row">' +
-                            '<div class="col-md-7">' +
-                            '<small class="cteal">' + item.feature_type_title + '</small>' +
-                            '<h4>' + item.title + '</h4>' +
-                            '</div>' +
-                            '<div class="col-md-5" style="text-align: right;">' +
-                            '<button class="btn btn-sm btn-ready-card"' +
-                            'onclick="detail_module_all(\'' + item.feature_id + '\')">Active</button>' +
-                            '</div>' +
-                            '</div></div></div></div>';
-                    }
-
-                });
-                $("#total_module").html(nomer + " Modules");
-                $("#show_module_all").html(isiui);
+                if (result.success === false) {
+                    $("#nodata_module_all").show();
+                    $("#show_module_all").hide();
+                } else {
+                    var isiui = '';
+                    var nomer = 0;
+                    $.each(result, function (i, item) {
+                        var noimg = '/img/fitur.png';
+                        nomer++;
+                        var logo = server_cdn + item.logo;
+                        if (item.status == true) {
+                            isiui +=
+                                '<div class="col-md-4 stretch-card ' +
+                                'grid-margin card-member' +
+                                'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
+                                '<div class="card bg-gradient-blue card-img-holder text-white member">' +
+                                '<div class="card-body member">' +
+                                '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                                '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                                'style="padding: 0.3rem 0.5rem;"' +
+                                'onclick="detail_module_all(\'' + item.feature_id + '\')">Ready</button>' +
+                                '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                                '<div class="row">' +
+                                '<div class="col-md-12">' +
+                                '<small class="cteal">' + item.feature_type_title + '</small>' +
+                                '<h4>' + item.title + '</h4>' +
+                                '</div>' +
+                                '<div class="col-md-12" style="text-align: right;">' +
+                                '<button type="button" class="a_setmodule" style="border: none; background: #ffffff00;"' +
+                                'onclick="get_list_setting_module(' + item.feature_id + ')">' +
+                                '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Setting' +
+                                ' &nbsp;<i class="mdi mdi-circle" aria-hidden="true"></i>' +
+                                '</small></button>' +
+                                '</div>' +
+                                '</div></div></div></div>';
+                        } else {
+                            isiui += '<div class="col-md-4 stretch-card ' +
+                                'grid-margin card-member' +
+                                'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
+                                '<div class="card bg-gradient-blue card-img-holder text-white member">' +
+                                '<div class="card-body member">' +
+                                '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                                '<img src="' + logo + '" class="rounded-circle img-fluid img-card" onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                                '<div class="row">' +
+                                '<div class="col-md-7">' +
+                                '<small class="cteal">' + item.feature_type_title + '</small>' +
+                                '<h4>' + item.title + '</h4>' +
+                                '</div>' +
+                                '<div class="col-md-5" style="text-align: right;">' +
+                                '<button class="btn btn-sm btn-ready-card"' +
+                                'onclick="detail_module_all(\'' + item.feature_id + '\')">Active</button>' +
+                                '</div>' +
+                                '</div></div></div></div>';
+                        }
+                    });
+                    $("#nodata_module_all").hide();
+                    $("#total_module").html(nomer + " Modules");
+                    $("#show_module_all").html(isiui);
+                }
 
             },
             error: function (result) {
@@ -576,14 +599,14 @@
 
                     if (dt.price_monthly != 0) {
                         $("#harga_bulanan").html("Rp " + rupiah(dt.price_monthly));
-                         $("#text_bulanan").html(rupiah(dt.price_monthly)+ '&nbsp; <small class="clight"> / Month</small>');
+                        $("#text_bulanan").html(rupiah(dt.price_monthly) + '&nbsp; <small class="clight"> / Month</small>');
                     } else {
                         $("#harga_bulanan").html('<center class="tebal cgrey">Free');
                     }
 
                     if (dt.grand_pricing != 0) {
                         $("#harga_grand").html("Rp " + rupiah(dt.grand_pricing));
-                         $("#text_sekali").html(rupiah(dt.grand_pricing) + '&nbsp; <small class="clight"> / Once</small>');
+                        $("#text_sekali").html(rupiah(dt.grand_pricing) + '&nbsp; <small class="clight"> / Once</small>');
                     } else {
                         $("#harga_grand").html('<center class="tebal cgrey">Free');
                     }
@@ -645,6 +668,7 @@
             timeout: 30000,
             success: function (result) {
                 console.log(result);
+
                 var text = '';
                 var isibank = '';
 
@@ -711,9 +735,9 @@
         var dipilih = this.value;
 
         if (dipilih == 1) {
-           $("#text_sekali").show();
+            $("#text_sekali").show();
             $("#text_bulanan").hide();
-             $("#text_tahunan").hide();
+            $("#text_tahunan").hide();
         } else if (dipilih == 2) {
             $("#text_sekali").hide();
             $("#text_bulanan").show();
@@ -727,10 +751,10 @@
 
 
     function cek_pay_module(hrg) {
-        if(hrg.value != 0){
+        if (hrg.value != 0) {
             $("#modal_pay_module").modal('show');
-        }else{
-             $.ajaxSetup({
+        } else {
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -747,7 +771,7 @@
                 },
                 success: function (result) {
                     console.log(result);
-                      if (result.success == false) {
+                    if (result.success == false) {
                         if (result.status == 401 || result.message == "Unauthorized") {
                             ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                             setTimeout(function () {
@@ -757,10 +781,10 @@
                             ui.popup.show('warning', result.message, 'Warning');
                         }
                     } else {
-                        swal("Activated Free Module!","Successfully Add Module Feature", "success");
+                        swal("Activated Free Module!", "Successfully Add Module Feature", "success");
                         setTimeout(function () {
                             window.location.reload();
-                          }, 2000);
+                        }, 2000);
                     }
                 },
                 error: function (result) {

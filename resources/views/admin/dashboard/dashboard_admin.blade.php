@@ -613,7 +613,7 @@
                         }, 5000);
                     } else {
                         $("#hide_nodata_headline").show();
-                         $("#headline_cont").hide();
+                        $("#headline_cont").hide();
                     }
                 } else {
                     var isiheadline = '';
@@ -653,17 +653,20 @@
             dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-12'i><'col-sm-12'p>>",
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": false,
+            "bAutoWidth": false,
             ajax: {
                 url: 'tabel_last_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#table_last_news tbody').empty().append(nofound);
+                },
             },
             columns: [
                 {
@@ -697,17 +700,20 @@
             dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-12'i><'col-sm-12'p>>",
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": false,
+            "bAutoWidth": false,
             ajax: {
                 url: 'table_topvisit_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#table_topvisit_news tbody').empty().append(nofound);
+                },
             },
             columns: [
                 {
@@ -741,17 +747,20 @@
             dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-12'i><'col-sm-12'p>>",
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": false,
+            "bAutoWidth": false,
             ajax: {
                 url: 'table_toploved_news',
                 type: 'POST',
                 dataSrc: '',
                 timeout: 30000,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                    $('#table_toploved_news tbody').empty().append(nofound);
+                },
             },
             columns: [
                 {

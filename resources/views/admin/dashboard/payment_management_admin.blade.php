@@ -365,7 +365,7 @@
                         <div class="col-md-5">
                             <h6 class="h6 cgrey2" style="margin-bottom:1em;">Bank Transfer</h6>
                             <div id="isi_show_bank" class="collapse-accordion" role="tablist"
-                                aria-multiselectable="true">
+                                aria-multiselectable="true" style="overflow-y: auto; overflow-x: hidden; height:230px; padding-right: 12px;">
 
                             </div>
                         </div>

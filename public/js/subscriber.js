@@ -456,6 +456,84 @@ function detail_membership_subs(index) {
 }
 
 
+// navbar inbox
+// function  get_inbox_navbar(params) {
+
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//     $.ajax({
+//         url: '',
+//         type: 'POST',
+//         dataSrc: '',
+//         timeout: 30000,
+//         success: function (result) {
+//             // console.log(result);
+//             if (result.success == false) {
+//                 if (result.status == 401 || result.message == "Unauthorized") {
+//                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+//                     setTimeout(function () {
+//                         location.href = '/subscriber/url/' + $(".community_name").val();
+//                     }, 5000);
+//                 } else {
+//                     var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+//                     $("#isi_pesan_navbar").html(nonotif);
+//                     // $("#ada_notif").hide();
+//                 }
+//             } else {
+//                 if (result != undefined) {
+//                     var isiku = '';
+//                     $.each(result, function (i, item) {
+
+
+
+//                         var textArray = [
+//                             'bg-success',
+//                             'bg-info',
+//                             'bg-danger',
+//                             'bg-warning'
+//                         ];
+//                         var acak = Math.floor(Math.random() * textArray.length);
+
+
+//                         isiku += '<a class="dropdown-item preview-item notif">' +
+//                             '<div class="preview-thumbnail medium">' +
+//                             '<div class="preview-icon ' + textArray[acak] + '">' +
+//                             '<i class="mdi mdi-bell-outline"></i>' +
+//                             '</div>' +
+//                             '</div>' +
+//                             '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+//                             '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
+//                             '</label> ' +
+//                             '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
+//                             '<small class="cbiru  mb-0">' + dformat + '</small > ' +
+//                             '</div> ' +
+//                             '</a> ' +
+//                             '<div class="dropdown-divider"></div>';
+//                     });
+//                     $("#isi_notif_navbar").html(isiku);
+//                     // $("#ada_notif").show();
+//                 } else {
+//                     var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+//                     $("#isi_pesan_navbar").html(nonotif);
+//                     // $("#ada_notif").hide();
+//                 }
+
+//             }
+//         },
+//         error: function (result) {
+//             var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+//             $("#isi_notif_navbar").html(nonotif);
+//             $("#ada_notif").hide();
+//             console.log("Cant Show Navbar Notif");
+//         }
+//     });
+
+// }
+
+
 function show_my_membership(idmember) {
     $('.hideisimember').hide();
     $.ajaxSetup({
@@ -737,7 +815,7 @@ function get_list_notif_navbar(idkom) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
-                        location.href = '/admin';
+                        location.href = '/subscriber/url/' + $(".community_name").val();
                     }, 5000);
                 } else {
                     var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';

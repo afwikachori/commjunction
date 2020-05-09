@@ -1591,11 +1591,27 @@ width: 100%;
 .news_pic_container{
   overflow:hidden;
   width:200px;
-  height:174px;
+  height:175px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0px;
+  background-color: rgb(204, 208, 212);
 }
+
+.picimg_news{
+    height: 100%;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
 .news-title{
     margin: 0 auto;
-    color:#96deda;
+    color:#62d0d0;
+    margin-top: 0.5em;
   }
   .author_name{
     font-style: italic;

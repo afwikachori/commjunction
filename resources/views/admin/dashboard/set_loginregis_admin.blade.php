@@ -132,9 +132,9 @@
                                     <input type='color' class='bar' id='colour' onchange="getcolour(this)">
                                 </div>
                                 <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
-                                    <p id="output-color" class="clight">#ffbc42</p>
+                                    <p id="output-color" class="clight">#a1bcca</p>
                                 </div>
-                                <input type="hidden" id="color_base" name="color_base">
+                                <input type="hidden" id="color_base" name="color_base" value="#a1bcca">
                             </div>
                         </div>
                     </div>
@@ -152,9 +152,9 @@
                                     <input type='color' class='bar' id='colour2' onchange="getcolour_accent(this)">
                                 </div>
                                 <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
-                                    <p id="output-color2" class="clight">#80d7e0</p>
+                                    <p id="output-color2" class="clight">#ade2db</p>
                                 </div>
-                                <input type="hidden" id="color_accent" name="color_accent">
+                                <input type="hidden" id="color_accent" name="color_accent" value="#ade2db">
                             </div>
                         </div>
                     </div>

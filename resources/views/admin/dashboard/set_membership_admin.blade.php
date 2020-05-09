@@ -21,11 +21,6 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none; margin-bottom: 1em;">
-                    <button type="button" onclick="location.href ='/admin/settings'" class="btn btn-light btn-sm"
-                        data-dismiss="modal" style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> <span lang="en">Back</span>
-                    </button>
-                    &nbsp;
                     <button type="submit" id="btn_submit_memberset" class="btn btn-teal btn-sm melengkung10px"
                         style="display: none; margin-right: 1em;">
                         <i class="mdi mdi-check btn-icon-prepend">
