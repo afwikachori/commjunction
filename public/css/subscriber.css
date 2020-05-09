@@ -1686,7 +1686,7 @@ width: 100%;
     opacity: 0.3;
 }
 
-#show_feature_memberul li, ol li, dl li {
+ul.submember li {
     line-height: 1.4 !important;
 }
 

@@ -141,7 +141,7 @@ function session_subscriber_logged() {
 
             //show membership
             $("#membership_id").val(user.membership_id);
-            if (user.membership_id != 0){
+            if (user.membership_id != 0) {
                 show_my_membership(user.membership_id);
             }
 
@@ -333,15 +333,17 @@ function get_pricing_membership() {
             console.log(result);
 
             if (result.success == false) {
-                $('.hideisimember').hide().fadeOut('fast');
-                $('#hide_membertipe').show();
-                if (result.status === 401 || result.message === "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/subscriber/url/' + $(".community_name").val();
-                    }, 5000);
-                } else {
-                    ui.popup.show('warning', result.message, 'Warning');
+                if ($("#membership_id").val() === 0) {
+                    $('.hideisimember').hide().fadeOut('fast');
+                    $('#hide_membertipe').show();
+                    if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 }
             } else {
                 var html = '';
@@ -372,11 +374,14 @@ function get_pricing_membership() {
                 });
                 $('.price_member').html(html);
                 $("hideisimember").show();
+                $("#hide_membertipe").hide();
+                $("#show_mymember").hide();
             }
         }, error: function (result) {
             console.log(result);
             $('.hideisimember').hide().fadeOut('fast');
             $('#hide_membertipe').show();
+            $("#show_mymember").hide();
         }
     });
 }
@@ -470,56 +475,92 @@ function show_my_membership(idmember) {
             console.log(result);
 
             if (result.success == false) {
-                $('#hide_membertipe').show();
-                if (result.status === 401 || result.message === "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/subscriber/url/' + $(".community_name").val();
-                    }, 5000);
-                } else {
-                    ui.popup.show('warning', result.message, 'Warning');
+                if ($("#membership_id").val() != 0) {
+                    $('#hide_membertipe').show();
+                    $("#show_mymember").hide();
+                    if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 }
             } else {
+                var result = result[0];
                 $("#member_judul2").html(result.membership);
                 $("#member_deskripsi2").html(result.description);
                 $("#member_harga2").html('Rp ' + rupiah(result.pricing));
 
-                if (result.image != undefined && result.image != null && result.image != 0) {
-                    $("#img_membershiptipe2").attr("src", server_cdn + cekimage_cdn(result.image));
-                }
                 var html = '';
                 var noimg = '/img/fitur.png';
-                $.each(result, function (i, item) {
-                    // console.log(item);
-                    var idprice = item.id;
-                    html += '<div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom:1.5em;">' +
-                        '<div class="card cd-pricing pricing' + idprice + '">' +
-                        '<div class="card-body">' +
-                        '<center>' +
-                        '<h4 class="cgrey2 s20">' + item.membership + '</h4>' +
-                        '<img src="' + server_cdn + cekimage_cdn(item.icon) + '"  class="rounded-circle img-fluid imgprice"' +
-                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:0.7em;">' +
-                        '<div class="hidetime1">' +
-                        '<sup class="cgrey" style="font-size: 30px;">' +
-                        '<small class="h6">IDR</small></sup>' +
-                        '<label class="card-harga cgrey">' +
-                        '<strong>' + rupiah(item.pricing) + '</strong></label>' +
-                        '<small class="clight" lang="en">/Once</small>' +
-                        '</div>' +
-                        '<small class="ctosca"><a class="detailmember" onclick="detail_membership_subs(' + i + ')"' +
-                        'lang="en" data-lang-token="More Information">More Information</a></small>' +
-                        '<br><button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 1em;"' +
-                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">Get Now</button>' +
-                        '</center>' +
-                        '</div></div></div>';
-                });
+                html += '<center><div class="col-md-12" style="margin-bottom:1.5em;">' +
+                    '<div class="card cd-pricing pricing">' +
+                    '<div class="card-body">' +
+                    '<center>' +
+                    '<h4 class="cgrey2 s20">' + result.membership + '</h4>' +
+                    '<img src="' + server_cdn + cekimage_cdn(result.icon) + '"  class="rounded-circle img-fluid imgprice"' +
+                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:1.2em;">' +
+                    '<div class="hidetime1">' +
+                    '<sup class="cgrey" style="font-size: 30px;">' +
+                    '<small class="h6">IDR</small></sup>' +
+                    '<label class="card-harga cgrey">' +
+                    '<strong>' + rupiah(result.pricing) + '</strong></label>' +
+                    '<small class="clight" lang="en">/Once</small>' +
+                    '</div><br><h6 class="cteal" lang="en">Description</h6>' +
+                    '<p class="clight s12">' + result.description + '</small>'
+                '</center>' +
+                    '</div></div></div></center>';
                 $('#isi_show_mymember').html(html);
                 $("#show_mymember").show();
+                $("#hide_membertipe").hide();
+
+                var subf = '';
+                var jum = 0;
+                var noimg = '/img/fitur.png';
+
+                $.each(result.feature, function (i, item) {
+                    var sub_ui = '';
+                    $.each(item.sub_features, function (i, subitem) {
+                        sub_ui += '<li><small class="cgrey2">' + subitem.title + '</small></li>';
+                    });
+                    jum++;
+                    subf += '<div class="row" style="margin-bottom:0.5em;">' +
+                        '<div class="col-md-6"' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                        'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                        '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
+                        '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important; min-width:200px;">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                        'alt="circle-image" /> ' +
+                        '<div class="row">' +
+                        '<div class="col-md-3" style="padding-right:4px;">' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        '</div>' +
+                        '<div class="col-md-9">' +
+                        '<b><small>' + item.title + '</small></b><br>' +
+                        '<small class="cblue"> <b>' + jum + '</b> Subfeature</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-md-6 padsubmember">' +
+                        '<small class="cgrey s13">' + item.title + '</small>' +
+                        '<ul class="submember">' + sub_ui + '</ul>' +
+                        '</div></div>';
+                });
+                $("#show_feature_member2").html(subf);
+                $("#total_fitur_member2").html(jum);
+
             }
         }, error: function (result) {
             console.log(result);
             $('.hideisimember').hide().fadeOut('fast');
             $('#hide_membertipe').show();
+            $("#show_mymember").hide();
         }
     });
 }

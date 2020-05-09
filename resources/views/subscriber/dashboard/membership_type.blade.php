@@ -42,46 +42,45 @@
     </div>
 </div>
 
+
 <div class="row" id="show_mymember" style="display: none;">
-    <div class="col-6">
+    <div class="col-md-5" style="padding-left: 10%; padding-top: 4%;">
+
         <div class="card-deck" id="isi_show_mymember" style="width: 100%; margin: auto;">
 
         </div>
     </div>
-    <div class="col-6">
-        <img src="/img/default.png" class="rounded-circle img-fluid" id="img_membershiptipe2"
-            onerror="this.onerror=null;this.src='/img/default.png';"
-            style="margin-bottom:0.7em; width: 65px; height: 65px;">
-
+    <div class="col-md-7">
+        <br><br>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <small class="clight s13" lang="en">Title</small>
+                     <h6 class="ctosca s13 tebal" lang="en">Title</h6>
                     <p class="cgrey s14" id="member_judul2"></p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <small class="clight s13" lang="en">Pricing</small>
+                     <h6 class="ctosca s13 tebal" lang="en">Pricing</h6>
                     <p class="cgrey s14" id="member_harga2"></p>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <small class="clight s13" lang="en">Description</small>
+             <h6 class="ctosca s13 tebal" lang="en">Description</h6>
             <p class="cgrey s14" id="member_deskripsi2"></p>
         </div>
 
         <div class="form-group">
             <div class="row">
                 <div class="col-12">
-                    <small class="clight">Features : </small> &nbsp;
+                     <small class="ctosca s13 tebal">Features : </small> &nbsp;
                     <small class="ctosca s15" id="total_fitur_member2"> 0</small>
                 </div>
             </div>
             <div class="card-deck" id="show_feature_member2"
-                style="margin-top: 0.5em; width: 100%; overflow-y: auto; overflow-x: hidden; height:170px;">
+                style="margin-top: 0.5em; width: 100%; overflow-y: auto; overflow-x: hidden; height:245px;">
 
             </div>
         </div>
