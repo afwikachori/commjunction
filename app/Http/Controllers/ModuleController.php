@@ -74,18 +74,18 @@ class ModuleController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'module/news/listall';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        //dd($response);
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            //dd($response);
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -102,22 +102,21 @@ try{
 
     public function table_news_list()
     {
-
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/news/listall';
         $client = new \GuzzleHttp\Client();
-try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        //dd($response);
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            //dd($response);
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -155,12 +154,12 @@ try{
             'body' => $bodyku
 
         ];
-        try{
-        $response = $client->post($url, $options);
-        $response = $response->getBody()->getContents();
-        //dd($response);
-        $json = json_decode($response, true);
-        return $json['data'];
+        try {
+            $response = $client->post($url, $options);
+            $response = $response->getBody()->getContents();
+            //dd($response);
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -197,12 +196,12 @@ try{
             'body' => $bodyku
 
         ];
-        try{
-        $response = $client->post($url, $options);
-        $response = $response->getBody()->getContents();
+        try {
+            $response = $client->post($url, $options);
+            $response = $response->getBody()->getContents();
 
-        $json = json_decode($response, true);
-        return $json['data'];
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -239,12 +238,12 @@ try{
             'body' => $bodyku
 
         ];
-        try{
-        $response = $client->post($url, $options);
-        $response = $response->getBody()->getContents();
-        //dd($response);
-        $json = json_decode($response, true);
-        return $json['data'];
+        try {
+            $response = $client->post($url, $options);
+            $response = $response->getBody()->getContents();
+            //dd($response);
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -705,18 +704,18 @@ try{
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/friend/viewfriendlist';
         $client = new \GuzzleHttp\Client();
-        try{
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $ses_login['access_token']
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $ses_login['access_token']
+                ]
+            ]);
 
-        $response = $response->getBody()->getContents();
-        //dd($response);
-        $json = json_decode($response, true);
-        return $json['data'];
+            $response = $response->getBody()->getContents();
+            //dd($response);
+            $json = json_decode($response, true);
+            return $json['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -729,7 +728,6 @@ try{
             $error['success'] = false;
             return $error;
         }
-
     }
 
     public function friendProfile($friend_id)

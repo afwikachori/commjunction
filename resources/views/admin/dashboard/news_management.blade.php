@@ -405,6 +405,14 @@
             datatype: 'JSON',
             success: function (result) {
                 console.log(result);
+                if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
             },
             error: function (result) {
                 console.log("Cant Show");

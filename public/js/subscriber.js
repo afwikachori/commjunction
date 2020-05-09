@@ -470,7 +470,7 @@ function get_inbox_navbar() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -540,7 +540,7 @@ function show_card_pesan_inbox_subs(result) {
     if (result.length != 0) {
         var isiui = '';
         $.each(result, function (i, item) {
-            console.log(item);
+            // console.log(item);
             var inidt = [item.id, item.level_status, item.community_id, item.status];
             isiui += '<div class="mb-3 col-md-6">' +
                 '<div class="row no-gutters" style="height:159px">' +

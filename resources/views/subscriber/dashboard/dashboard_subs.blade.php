@@ -7,7 +7,8 @@
         <h3 class="cgrey" lang="en">Dashboard</h3>
     </div>
     <div class="col-md-10">
-        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Your Community Overall Information<p>
+        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Your Community Overall Information
+        <p>
     </div>
 </div>
 
@@ -20,8 +21,8 @@
                         class="mdi mdi-book-open-page-variant cwhite cwhite mdi-24px float-right"></i>
                 </h4>
                 <h1 class="total_news"> 0 </h1>
-                <span class="mb-5" lang="en"News</span>
-                <!-- <h6 class="card-text">Decreased by 0%</h6> -->
+                <span class="mb-5" lang="en" News</span>
+                    <!-- <h6 class="card-text">Decreased by 0%</h6> -->
             </div>
         </div>
     </div>
@@ -382,10 +383,10 @@
         <div class="modal-content membership">
             <div class="modal-body">
                 <div class="row justify-content-center" style="text-align: center;">
-                     <div style="text-align: center; display: none;" id="hide_membertipe">
-                    <br><br><br>
-                    <h2 class="cligt" lang="en">No Data Available</h2>
-                </div>
+                    <div style="text-align: center; display: none;" id="hide_membertipe">
+                        <br><br><br>
+                        <h2 class="cligt" lang="en">No Data Available</h2>
+                    </div>
                     <div class="card-deck price_member" style="padding-left: 6%; padding-right: 3%; width: 100%;">
 
                     </div>
@@ -524,7 +525,7 @@
 
                             berita += '<div class="col-md-6 stretch-card grid-margin">' +
                                 '<div class="card" style="height:217px;">' +
-                                '<img src="http://' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
+                                '<img src="'+ server_cdn + imge + '" class="card-img-top card-dashsub"' +
                                 'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
                                 'style="border-radius: 8px 8px 0px 0px;">' +
                                 '<div class="card-body card-dashsub">' +

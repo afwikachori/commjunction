@@ -106,7 +106,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
-            <form method="POST" id="form_send_message" action="{{route('friend_send_message')}}">
+            <form method="POST" id="form_find_friend">
                 {{ csrf_field() }}
 
 
@@ -121,15 +121,15 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <small class="clight">Subject</small>
-                                <input type="text" id="subject" name="subject"
+                                <input type="text" id="subject2" name="subject2"
                                     class="form-control input-abu melengkung10px" required>
                             </div>
                             <div class="form-group">
                                 <small class="clight">Message</small>
-                                <textarea class="form-control input-abu" label="Konten" req="" id="news_add_content"
+                                <textarea class="form-control input-abu" label="Konten2" req="" id="news_add_content2"
                                     name="message"></textarea>
                             </div>
-                            <input type="hidden" id="friend_id" name="friend_id" class="form-control input-abu">
+                            <input type="hidden" id="friend_id2" name="friend_id2" class="form-control input-abu">
                         </div>
                     </div>
                 </div> <!-- end-body -->
@@ -199,37 +199,53 @@
                 if (result.success === false) {
                     $("#nodata_news").show();
                     $("#news_container").hide();
+                    if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 } else {
-                    var newslist = '';
-                    var jumlah = 0;
-                    var nofoto = '/img/artikel.jpg';
+                    if (result != "News Empty") {
+                        var newslist = '';
+                        var jumlah = 0;
+                        var nofoto = '/img/artikel.jpg';
 
-                    $.each(result, function (i, item) {
-                        jumlah++;
-                        $news_id = parseInt(item.id);
-                        // $date=item.author_name;
+                        $.each(result, function (i, item) {
+                            jumlah++;
+                            $news_id = parseInt(item.id);
+                            // $date=item.author_name;
 
-                        var headpic = server_cdn + cekimage_cdn(item.image);
-                        newslist += '<div class="news-card" id="' + item.id + '">' +
-                            '<div class="row"><div class="col-md-6 news_pic_container">' +
-                            '<img src="' + headpic + '" class="img-fluid picimg_news"' +
-                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"></div>' +
-                            '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
-                            '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
-                            '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
-                            '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
-                            'See Detail' +
-                            '</a></div>' +
-                            '</div>' +
-                            '</div>';
-                    });
-                    $("#nodata_news").hide();
-                    $("#news_container").html(newslist);
+                            var headpic = server_cdn + cekimage_cdn(item.image);
+                            newslist += '<div class="news-card" id="' + item.id + '">' +
+                                '<div class="row"><div class="col-md-6 news_pic_container">' +
+                                '<img src="' + headpic + '" class="img-fluid picimg_news"' +
+                                'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"></div>' +
+                                '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
+                                '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
+                                '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
+                                '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
+                                'See Detail' +
+                                '</a></div>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        $("#nodata_news").hide();
+                        $("#news_container").html(newslist);
+                    }else{
+                          $("#nodata_news").show();
+                        $("#news_container").hide();
+                    }
+
                 }
             },
             error: function (result) {
                 console.log(result);
-                console.log("Cant Show");
+                console.log("Cant Show News");
+                   $("#nodata_news").show();
+                $("#news_container").hide();
             }
         });
     }
