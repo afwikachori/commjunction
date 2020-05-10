@@ -192,8 +192,9 @@ border : 2px solid;
 
 #img_portal_bg{
 position: absolute;
-height: 100%;
+height: auto;
 width: 100%;
+margin: auto;
 }
 
 .biruq{
