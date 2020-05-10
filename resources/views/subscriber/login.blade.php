@@ -12,7 +12,7 @@
         onerror="this.onerror=null;this.src='/visual/bg_subs.png';">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 relativeini">
                 <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['icon'] }}" id="img_icon_portal"
                     class="img-fluid" onerror="this.onerror=null;this.src='/visual/commjuction.png';">
             </div>
@@ -24,9 +24,9 @@
 
 
         <div class="container subs_judul">
-            <h2 class="cgrey">{{ $dt['name'] }}</h2>
-            <h5>{{ $dt['cust_portal_login']['headline_text']}}</h5>
-            <p>{{ $dt['cust_portal_login']['description'] }}</p>
+            <h2 class="cgrey2 relativepos">{{ $dt['name'] }}</h2>
+            <h5 class="relativeini">{{ $dt['cust_portal_login']['headline_text']}}</h5>
+            <p class="relativeini">{{ $dt['cust_portal_login']['description'] }}</p>
         </div>
 
         <!-- <img src="/visual/loginadmin.png" id="login-img-subs"> -->
