@@ -1049,9 +1049,9 @@ position: relative;
     border-radius: 0px 0px 8px 8px;
 }
 
-img.card-dashsub{
+/* img.card-dashsub{
     height: 110px;
-}
+} */
 
 
 .card .card-body.color {
@@ -1621,10 +1621,10 @@ width: 100%;
     position: relative;
 }
 
-.card-dashub{
+/* .card-dashub{
     position:absolute;
     transform:translate(0, -50%);
-}
+} */
 
 .picimg_news{
     height: 100%;

@@ -525,9 +525,10 @@
 
                             berita += '<div class="col-md-6 stretch-card grid-margin">' +
                                 '<div class="card" style="height:217px;">' +
-                             '<div class="card" class="imgsub-cont"><img src="' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
-                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
-                            'style="border-radius: 8px 8px 0px 0px;"></div>' +
+                                '<div class="imgsub-cont">'+
+                                '<img src="' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
+                                'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
+                                'style="border-radius: 8px 8px 0px 0px;"></div>' +
                                 '<div class="card-body card-dashsub">' +
                                 '<small class="card-text text-wrap">' + item.title +
                                 '</small>' +
