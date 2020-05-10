@@ -1615,6 +1615,17 @@ width: 100%;
   background-color: rgb(204, 208, 212);
 }
 
+.imgsub-cont{
+    height: 110px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-dashub{
+    position:absolute;
+    transform:translate(0, -50%);
+}
+
 .picimg_news{
     height: 100%;
     width: 100%;

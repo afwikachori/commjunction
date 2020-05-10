@@ -525,9 +525,9 @@
 
                             berita += '<div class="col-md-6 stretch-card grid-margin">' +
                                 '<div class="card" style="height:217px;">' +
-                                '<img src="'+ server_cdn + imge + '" class="card-img-top card-dashsub"' +
-                                'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
-                                'style="border-radius: 8px 8px 0px 0px;">' +
+                             '<div class="card" class="imgsub-cont"><img src="' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
+                            'style="border-radius: 8px 8px 0px 0px;"></div>' +
                                 '<div class="card-body card-dashsub">' +
                                 '<small class="card-text text-wrap">' + item.title +
                                 '</small>' +
@@ -539,7 +539,7 @@
                                 dateTime(item.createdAt) + '</small></p>' +
                                 '</div>' +
                                 '<div class="col-md-4" style="text-align: right;">' +
-                                '<p class="card-text"><small class="text-muted">' + item.scala + '</small>' +
+                                '<p class="card-text"><small class="text-muted">' + item.scala + '</small> &nbsp; &nbsp;' +
                                 '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
                                 '</div>' +
                                 '</div>' +
