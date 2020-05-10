@@ -1299,21 +1299,27 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
-
+        $input = $request->all(); // getdata form by name
         $req = new RequestController;
         $fileimg = "";
+
+        if ($request->hasFile('alamat_admin')) {
+            $alamat = $input['alamat_admin'];
+        } else {
+            $alamat = "null";
+        }
 
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
+
             $imageRequest = [
                 "user_name" => $input['username_admin'],
                 "full_name" => $input['name_admin'],
                 "notelp" => $input['phone_admin'],
                 "email" => $input['email_admin'],
-                "alamat" => $input['alamat_admin'],
+                "alamat" => $alamat,
                 "filename" => $filnam,
                 "file" => $imgku
             ];
@@ -1368,7 +1374,7 @@ class AdminCommController extends Controller
                 "full_name" => $input['name_admin'],
                 "notelp" => $input['phone_admin'],
                 "email" => $input['email_admin'],
-                "alamat" => $input['alamat_admin'],
+                "alamat" => $alamat,
                 "filename"    => "",
                 "file"        => ""
             ];
@@ -4173,6 +4179,7 @@ class AdminCommController extends Controller
             "read_status"   => $input['read_status'],
             "notification_status" => $input['notification_status'],
             "limit"         => $input['limit'],
+            "notification_type" => "1"
         ]);
 
         // return $bodyku;

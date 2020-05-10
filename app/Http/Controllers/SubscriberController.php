@@ -348,6 +348,7 @@ class SubscriberController extends Controller
     public function edit_profile_subs(Request $request)
     {
         // dd($request);
+        $input = $request->all(); // getdata form by name
         $ses_login = session()->get('session_subscriber_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
@@ -355,17 +356,24 @@ class SubscriberController extends Controller
         $req = new RequestController;
         $fileimg = "";
 
+
+        if ($request->hasFile('alamat_subs')) {
+            $alamat = $input['alamat_subs'];
+        } else {
+            $alamat = "null";
+        }
+
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
+
             $imageRequest = [
                 "user_name" => $input['username_subs'],
                 "full_name" => $input['name_subs'],
                 "notelp" => $input['phone_subs'],
                 "email" => $input['email_subs'],
-                "alamat" => $input['alamat_subs'],
+                "alamat" => $alamat,
                 "filename" => $filnam,
                 "file" => $imgku
             ];
@@ -424,7 +432,7 @@ class SubscriberController extends Controller
                 "full_name" => $input['name_subs'],
                 "notelp" => $input['phone_subs'],
                 "email" => $input['email_subs'],
-                "alamat" => $input['alamat_subs'],
+                "alamat" => $alamat,
                 "filename"    => "",
                 "file"        => ""
             ];
@@ -1088,13 +1096,11 @@ class SubscriberController extends Controller
         if ($input['limit'] == 000) {
             $dtnotif = [
                 "read_status"   => $input['read_status'],
-                "notification_type" => "1",
             ];
         } else {
             $dtnotif = [
                 "read_status"       => $input['read_status'],
                 "limit"             => $input['limit'],
-                "notification_type" => "1",
             ];
         }
 
