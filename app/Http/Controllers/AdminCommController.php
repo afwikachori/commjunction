@@ -2377,6 +2377,15 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
+        $validator = $request->validate([
+            'judul_notif' => 'required',
+            'usertipe_notif' => 'required',
+            'deksripsi_notif' => 'required',
+            'subtipe_notif' => 'required',
+            'tipenotif' => 'required',
+        ]);
+
+
         $url = env('SERVICE') . 'notificationmanagement/sendnotification';
         $client = new \GuzzleHttp\Client();
 

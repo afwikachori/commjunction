@@ -25,8 +25,8 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
             <div class="card-header putih" lang="en">
-                <button type="button" class="btn btn-tosca btn-sm"  style="min-width: 170px;" data-toggle="modal"
-                 data-target="#modal_filter_notif_admin" lang="en">Generate Notification</button>
+                <button type="button" class="btn btn-tosca btn-sm" style="min-width: 170px;" data-toggle="modal"
+                    data-target="#modal_filter_notif_admin" lang="en">Generate Notification</button>
                 &nbsp; &nbsp;
                 <button type="button" class="btn btn-tosca2 btn-sm" style="min-width: 170px;" data-toggle="modal"
                     data-target="#modal_send_notif_super" lang="en">Broadcast Notification</button>
@@ -136,6 +136,8 @@
     </div>
 </div>
 
+
+
 <!-- MODAL ADD SEND NOTIFICATION-->
 <div class="modal fade" id="modal_send_notif_super" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -151,19 +153,31 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13" lang="en">Notification Title</small>
-                                <input type="text" id="judul_notif" name="judul_notif" class="form-control input-abu">
+                                <input type="text" id="judul_notif" name="judul_notif" class="form-control input-abu"
+                                    value="{{ old('judul_notif') }}" required>
                             </div>
+                            @if($errors->has('judul_notif'))
+                            <small style="color: red;">{{ $errors->first('judul_notif')}}
+                            </small>
+                            <input type="hidden" value="error" class="err_notif">
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13" lang="en">User Type</small>
-                                <select class="form-control input-abu" name="usertipe_notif" id="usertipe_notif">
+                                <select class="form-control input-abu" name="usertipe_notif" id="usertipe_notif"
+                                    required>
                                     <option selected disabled lang="en">Choose</option>
-                                    <option value="1" lang="en">Admin Commjuction</option>
-                                    <option value="2" lang="en">Admin Community</option>
-                                    <option value="3" lang="en">Subscriber</option>
+                                    <!-- <option value="1" {{ old('usertipe_notif') == 1 ? 'selected' : '' }} lang="en">Admin Commjuction</option> -->
+                                    <option value="2" {{ old('usertipe_notif') == 2 ? 'selected' : '' }} lang="en">Admin Community</option>
+                                    <option value="3" {{ old('usertipe_notif') == 3 ? 'selected' : '' }} lang="en">Subscriber</option>
                                 </select>
                             </div>
+                            @if($errors->has('usertipe_notif'))
+                            <small style="color: red;">{{ $errors->first('usertipe_notif')}}
+                            </small>
+                        <input type="hidden" value="error" class="err_notif">
+                            @endif
                         </div>
                     </div>
 
@@ -172,21 +186,31 @@
                             <div class="form-group">
                                 <small class="clight s13" lang="en">Notification Description</small>
                                 <textarea type="text" id="deksripsi_notif" name="deksripsi_notif"
-                                    class="form-control input-abu" rows="2"></textarea>
+                                    class="form-control input-abu" rows="2" required>{{ old('deksripsi_notif') }}</textarea>
                             </div>
+                            @if($errors->has('deksripsi_notif'))
+                            <small style="color: red;">{{ $errors->first('deksripsi_notif')}}
+                            </small>
+                        <input type="hidden" value="error" class="err_notif">
+                            @endif
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <small class="clight s13" lang="en">Notification Sub-Type</small>
-                            <select class="form-control input-abu" name="subtipe_notif" id="subtipe_notif">
+                            <select class="form-control input-abu" name="subtipe_notif" id="subtipe_notif" required>
                                 <option selected disabled lang="en">Choose</option>
-                                <option value="1" lang="en">System</option>
-                                <option value="2" lang="en">Module</option>
-                                <option value="3" lang="en">Single</option>
-                                <option value="4" lang="en">Broadcast</option>
+                                <option value="1" {{ old('subtipe_notif') == 1 ? 'selected' : '' }} lang="en">System</option>
+                                <option value="2" {{ old('subtipe_notif') == 2 ? 'selected' : '' }} lang="en">Module</option>
+                                <option value="3" {{ old('subtipe_notif') == 3 ? 'selected' : '' }} lang="en">Single</option>
+                                <option value="4" {{ old('subtipe_notif') == 4 ? 'selected' : '' }} lang="en">Broadcast</option>
                             </select>
+                            @if($errors->has('subtipe_notif'))
+                            <small style="color: red;">{{ $errors->first('subtipe_notif')}}
+                            </small>
+                        <input type="hidden" value="error" class="err_notif">
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" style="display: none;">
@@ -203,10 +227,15 @@
                                 <small class="clight s13" lang="en">Notification Type</small>
                                 <select class="form-control input-abu" name="tipenotif" id="tipenotif">
                                     <option selected disabled lang="en">Choose</option>
-                                    <option value="1" lang="en">Push Notification</option>
-                                    <option value="2" lang="en">Mail Notification</option>
+                                    <option value="1" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Push Notification</option>
+                                    <option value="2" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Mail Notification</option>
                                 </select>
                             </div>
+                            @if($errors->has('tipenotif'))
+                            <small style="color: red;">{{ $errors->first('tipenotif')}}
+                            </small>
+                        <input type="hidden" value="error" class="err_notif">
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" id="hide_urlnotif" style="display: none;">
@@ -406,6 +435,12 @@
 <script type="text/javascript">
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
+        var err_notif = $(".err_notif").val();
+        if (err_notif != "" && err_notif != undefined) {
+            swal("Cant Null !", "Please Fill and Check All Fields", "error").then((value) => {
+                $("#modal_send_notif_super").modal('show');
+            });
+        }
         get_list_setting_notif_admin();
     });
 
@@ -429,7 +464,7 @@
                             location.href = '/admin';
                         }, 5000);
                     } else {
-                        ui.popup.show('warning', result.message, 'Warning');
+                        ui.popup.show('warning', result.message, 'Warning Setting Notification');
                     }
                 } else {
                     var uiku = '';
@@ -499,7 +534,7 @@
     function cek_param_list_user() {
         var comm = $("#komunitas_notif").val();
         var usertipe = $("#usertipe_notif").val();
-        if (comm == null || usertipe == null) {
+        if (comm === null && usertipe === null) {
             $("#status_notif").attr("disabled", "disabled");
             swal("Cant Null", "User Type and Community cant be null", "warning");
         } else {
