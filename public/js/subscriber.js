@@ -145,6 +145,8 @@ function session_subscriber_logged() {
             $("#membership_id").val(user.membership_id);
             if (user.membership_id != 0) {
                 show_my_membership(user.membership_id);
+            }else{
+                get_pricing_membership();
             }
 
         },
@@ -331,7 +333,7 @@ function get_pricing_membership() {
         dataSrc: '',
         timeout: 40000,
         success: function (result) {
-            // console.log(result);
+            console.log(result);
 
             if (result.success == false) {
                 if ($("#membership_id").val() === 0) {

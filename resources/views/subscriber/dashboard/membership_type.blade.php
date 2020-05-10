@@ -24,17 +24,17 @@
     <h1 class="clight" lang="en">No Data Available</h1>
 </div>
 
-<div class="row hideisimember" style="padding-left:8%; padding-right: 8%; padding-top: 5%; display: none;">
-    <div class="col-12 hideisimember">
+<div class="row hideisimember" style="padding-left:8%; padding-right: 8%; padding-top: 5%;">
+    <div class="col-12">
         <div class="card" style="background-color: #ffffff00 !important;">
-            <h4 class="tebal hideisimember" lang="en">Choose your Membership Plan</h4>
-            <p class="cgrey2 hideisimember" style="margin-bottom: 0.5em;" lang="en"
+            <h4 class="tebal" lang="en">Choose your Membership Plan</h4>
+            <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en"
                 data-lang-token="please_choose_membership">Please
                 choose one of the membership options provided by your Community</p>
 
             <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
 
-                <div class="card-deck price_member hideisimember" style="width: 100%;">
+                <div class="card-deck price_member" style="width: 100%;">
 
                 </div>
             </div> <!-- end-row -->
@@ -147,7 +147,7 @@
 <script type="text/javascript">
     var server_cdn = $(".server_cdn").val();
     $(document).ready(function () {
-        get_pricing_membership();
+        // get_pricing_membership();
 
     });
 

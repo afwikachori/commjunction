@@ -453,7 +453,7 @@
     var no_data = '';
 
     $(document).ready(function () {
-        get_pricing_membership();
+        // get_pricing_membership();
         get_payment_initial();
 
         get_dashboard_news();
