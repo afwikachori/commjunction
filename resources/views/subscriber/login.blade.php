@@ -6,7 +6,7 @@
 
 
 @section('content')
-<div class="row">
+<div class="row" style="overflow: hidden;">
     <div class="col-md-8 biruq">
         <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['image'] }}" id="img_portal_bg"
         onerror="this.onerror=null;this.src='/visual/bg_subs.png';">
