@@ -610,8 +610,20 @@ class ModuleController extends Controller
                     alert()->success('Change News Success')->persistent('Done');
                     return back();
                 }
-            } catch (ClientException $exception) {
-                dd($exception);
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(3500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Internal Server Error";
+                $error['success'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
         } // endelse
     }
@@ -672,7 +684,6 @@ class ModuleController extends Controller
                 return back();
             }
         } catch (ClientException $errornya) {
-            dd($errornya);
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
