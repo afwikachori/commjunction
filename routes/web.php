@@ -226,6 +226,9 @@ Route::post('getSelectedPrice', 'RegisterController@getSelectedPrice')->name('ge
 Route::post('getSelectedPayment', 'RegisterController@getSelectedPayment')->name('getSelectedPayment');
 // FINAL ADMIN REGISTRASION
 Route::post('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
+
+Route::post('cek_payment_free_or_not', 'RegisterController@cek_payment_free_or_not')->name('cek_payment_free_or_not');
+
 // LOADING _ FINISH
 Route::get('admin/loading', 'RegisterController@loadingcreatingView')->name('admin/loading');
 Route::get('admin/finish', 'RegisterController@finishView')->name('finishView');

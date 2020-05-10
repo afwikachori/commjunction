@@ -373,13 +373,25 @@ class RegisterController extends Controller
     public function get_pricing_com()
     {
         $url = env('SERVICE') . 'registration/pricing';
-
+try{
         $client = new \GuzzleHttp\Client();
         $request = $client->post($url);
         $response = $request->getBody();
         $json = json_decode($response, true);
 
         return ($json);
+         } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['success'] = false;
+            return $error;
+        }
     }
 
 
@@ -767,6 +779,15 @@ class RegisterController extends Controller
         }
     }
 
+    public function cek_payment_free_or_not()
+    {
+        if (session()->has('data_idpay')) {
+            $id_payment = session()->get('data_idpay');
+            return $id_payment;
+        }else{
+            return "nosession";
+        }
+    }
 
     public function getpayment_method(Request $request)
     {
@@ -828,7 +849,6 @@ class RegisterController extends Controller
             'payment'  => $dtpay,
         ];
 
-        // return $datafinal;
 
         $url = env('SERVICE') . 'registration/adcommcreate';
         try {

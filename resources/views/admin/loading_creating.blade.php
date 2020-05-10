@@ -20,5 +20,6 @@ $( document ).ready(function() {
     }, 5000); //will call the function after 2 secs.
 });
 
+
 </script>
 @endsection
