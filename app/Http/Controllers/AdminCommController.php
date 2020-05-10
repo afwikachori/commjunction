@@ -1657,7 +1657,7 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $input = $request->all(); // getdata req
-
+        // return $input;
         $req = new RequestController;
         $fileimg = "";
 
@@ -1665,13 +1665,18 @@ class AdminCommController extends Controller
 
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
-            if ($request->input('action') == 'approve') {
+
+            $paystatusjudul = "";
+            $paystatus = "";
+
+            if ($input['action'] == 'approve') {
                 $paystatus = "2";
                 $paystatusjudul = "Membership Approved";
-            } else if ($request->input('action') == 'reject') {
+            } else if ($input['action'] == 'reject') {
                 $paystatus = "3";
                 $paystatusjudul = "Membership Rejected";
             }
+
 
             if ($input['invoice_num_acc'] == "Free") {
                 $invnum = 0;
@@ -1688,6 +1693,8 @@ class AdminCommController extends Controller
                 "filename"       => $filnam,
                 "file"           => $imgku
             ];
+
+            // dd($imageRequest);
 
             $url = env('SERVICE') . 'membershipmanagement/approvalmembership';
             try {
