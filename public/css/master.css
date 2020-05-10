@@ -68,6 +68,7 @@ border:none;
     height: auto;
     left: 0px;
     top: 40%;
+    opacity: 0.3;
 }
 
 #img-loginadmin{
@@ -189,6 +190,11 @@ border : 2px solid;
   padding: 1rem 1rem 1rem 1rem;
 }
 
+#img_portal_bg{
+position: absolute;
+height: 100%;
+width: 100%;
+}
 
 .biruq{
   background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
