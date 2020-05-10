@@ -523,11 +523,38 @@
     }
 
 
-
+        function tabel_tes() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/admin/tabel_generate_notification_admin',
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "community_id": $("#list_komunitas_notif").val(),
+                    "start_date": $("#tanggal_mulai2").val(),
+                    "end_date": $("#tanggal_selesai2").val(),
+                    "filter_title": $("#list_judul_notif").val(),
+                    "notification_sub_type": $("#tipe_notif").val(),
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                    console.log("Cant Show Tabel");
+                }
+            });
+        }
 
 
     $("#btn_generate_notif_admin").click(function () {
         tabel_generate_notif_admin();
+        tabel_tes();
     });
 
 
