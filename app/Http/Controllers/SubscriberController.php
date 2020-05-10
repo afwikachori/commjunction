@@ -1088,11 +1088,13 @@ class SubscriberController extends Controller
         if ($input['limit'] == 000) {
             $dtnotif = [
                 "read_status"   => $input['read_status'],
+                "notification_type" => "1",
             ];
         } else {
             $dtnotif = [
-                "read_status"   => $input['read_status'],
-                "limit"         => $input['limit'],
+                "read_status"       => $input['read_status'],
+                "limit"             => $input['limit'],
+                "notification_type" => "1",
             ];
         }
 
