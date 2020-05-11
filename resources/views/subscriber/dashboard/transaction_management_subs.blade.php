@@ -496,13 +496,19 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 $('#subs_name').empty();
                 $('#subs_name').append("<option value='null'> Choose</option>");
 
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#subs_name').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].full_name, "</option>"));
-                }
+                var isilist = '';
+                 $.each(result, function (i, item) {
+                    isilist += '<option style="background-image:url(img/kosong.png);" value="'+item.id+'">'+item.full_name+'</option>';
+                 });
+                 $('#subs_name').html(isilist);
+
+                // for (var i = result.length - 1; i >= 0; i--) {
+                //     $('#subs_name').append('<option  style="" value=\''.concat(result[i].id, '\'>').concat(result[i].full_name, '</option>'));
+                // }
                 //Short Function Ascending//
                 $("#subs_name").html($('#subs_name option').sort(function (x, y) {
                     return $(y).val() < $(x).val() ? -1 : 1;

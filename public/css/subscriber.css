@@ -401,6 +401,10 @@ font-size: 0.65rem !important;
 
 }
 
+.bg-gradient-kuning{
+    background: linear-gradient(106.53deg, #fffef5 0%, #fffef5 56.6%);
+}
+
 .bg-gradient-blue{
 background: linear-gradient(106.53deg, #91e4e0 0%, #80d8d4 56.6%);
 }
@@ -1511,6 +1515,10 @@ height: 55px;
     padding: 4px;
 }
 
+.bg-absolut{
+    position: absolute;
+}
+
 .center{
     margin: auto;
 }
@@ -1519,6 +1527,7 @@ height: 55px;
     border-radius: 20px;
     margin-bottom: 1em;
     width: 150px;
+    min-height: 160px;
     height: auto;
      display: inline-block;
      margin-right: 1.2em;

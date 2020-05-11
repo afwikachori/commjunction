@@ -208,7 +208,7 @@ margin: auto;
 }
 
 .biruq{
-  background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
+  background: linear-gradient(180deg, #6F86D6 0%, #48C6EF 100%);
   max-height: 1200px;
   min-height: 100vh;
  /* height: 100%;*/

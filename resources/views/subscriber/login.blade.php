@@ -7,7 +7,8 @@
 
 @section('content')
 <div class="row" style="overflow: hidden;">
-    <div class="col-md-8 biruq">
+    <div class="col-md-8 biruq"
+style="background:{{$dt['maincolor']}} !important;">
         <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['image'] }}" id="img_portal_bg"
         onerror="this.onerror=null;this.src='/visual/bg_subs.png';">
 

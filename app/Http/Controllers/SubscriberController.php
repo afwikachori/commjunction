@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
 use App\Helpers\RequestHelper;
 use App\Http\Controllers\SendRequestController;
+use League\ColorExtractor\Palette;
 
 use Session;
 use Alert;
@@ -234,10 +235,30 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
+            $portal = $json['data']['cust_portal_login']['image'];
+            $bgportal = env('CDN') . '/' . $portal;
             $arr_auth = [];
-            array_push($arr_auth, $json['data']);
-            // return $arr_auth;
 
+            $im = @imagecreatefromjpeg($bgportal);
+            /* See if it failed */
+            if (!$im) {
+                $bgportal = asset('img/bg_subs.jpg');
+            } else {
+                $bgportal = env('CDN') .'/'. $portal;
+            }
+
+            $image = imagecreatefromjpeg($bgportal);
+            $thumb = imagecreatetruecolor(1, 1);
+            imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
+
+            $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
+            $maincolor = '#' . $mainColor;
+
+            $new =  array_merge(["maincolor" => $maincolor], $json['data']);
+            array_push($arr_auth, $new);
+
+
+            // return $arr_auth;
             session()->put('auth_subs', $arr_auth);
             // return redirect('subscriber')->with('subs_data', $arr_auth);
             return view('subscriber/login')->with('subs_data', $arr_auth);
@@ -262,7 +283,7 @@ class SubscriberController extends Controller
     public function GetdataSubdomainSubscriber($domain)
     {
 
-        $subdomain = $domain.'.smartcomm.id';
+        $subdomain = $domain . '.smartcomm.id';
         $url = env('SERVICE') . 'auth/configcommsubdomain';
         $client = new \GuzzleHttp\Client();
         try {
@@ -987,7 +1008,6 @@ class SubscriberController extends Controller
         try {
             $postdata = $this->post_get_request($dataku, $url, false, $token);
             return $postdata['data'];
-
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1819,4 +1839,3 @@ class SubscriberController extends Controller
 
     }
 } //end-class
-
