@@ -15,7 +15,7 @@
             <button class="btn btn-secondary dropdown-toggle btn-tosca btn-sm" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" lang="en">Add News</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_add_news" lang="en">Manual Add News</a>
+                <a id="btn_add_news" class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_add_news" lang="en">Manual Add News</a>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_scrape_news" lang="en">Scrape News</a>
             </div>
         </div>
@@ -405,6 +405,14 @@
             datatype: 'JSON',
             success: function (result) {
                 console.log(result);
+                if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
             },
             error: function (result) {
                 console.log("Cant Show");

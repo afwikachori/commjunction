@@ -83,7 +83,7 @@
     <li class="nav-item">
         <a class="nav-link" href="/admin/inbox_management">
             <span class="menu-title" lang="en">Inbox Management</span>
-            <i class="mdi mdi-message-text-outline menu-icon"></i>
+            <i class="mdi mdi-email menu-icon"></i>
         </a>
     </li>
 

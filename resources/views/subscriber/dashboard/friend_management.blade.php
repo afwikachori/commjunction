@@ -21,7 +21,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="divkonco">
+        <div class="divkonco pagefriend">
             <div id="suggestion_list" class="suggestionlist">
 
             </div>
@@ -246,6 +246,9 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
+                if(result.success === false){
+                    $(".divkonco.pagefriend").hide();
+                }else{
                 var suggestionlist = '';
                 var jumlah = 0;
                 var nofoto = '/img/kosong.png';
@@ -280,6 +283,7 @@
                 });
 
                 $("#suggestion_list").html(suggestionlist);
+            }
             },
             error: function (result) {
                 console.log("Cant Show");

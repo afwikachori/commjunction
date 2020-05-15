@@ -226,6 +226,9 @@ Route::post('getSelectedPrice', 'RegisterController@getSelectedPrice')->name('ge
 Route::post('getSelectedPayment', 'RegisterController@getSelectedPayment')->name('getSelectedPayment');
 // FINAL ADMIN REGISTRASION
 Route::post('FinalAdminRegis', 'RegisterController@FinalAdminRegis')->name('FinalAdminRegis');
+
+Route::post('cek_payment_free_or_not', 'RegisterController@cek_payment_free_or_not')->name('cek_payment_free_or_not');
+
 // LOADING _ FINISH
 Route::get('admin/loading', 'RegisterController@loadingcreatingView')->name('admin/loading');
 Route::get('admin/finish', 'RegisterController@finishView')->name('finishView');
@@ -302,6 +305,7 @@ Route::prefix('subscriber')->group(function () {
     Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
     Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
     Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
+        Route::post('show_my_membership', 'SubscriberController@show_my_membership')->name('show_my_membership');
     Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
     Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');
     Route::post('get_list_subscriber_inbox', 'SubscriberController@get_list_subscriber_inbox')->name('get_list_subscriber_inbox');
@@ -420,9 +424,11 @@ Route::prefix('superadmin')->group(function () {
     Route::post('change_password_superadmin', 'SuperadminController@change_password_superadmin')->name('change_password_superadmin');
     Route::post('add_user_management_super', 'SuperadminController@add_user_management_super')->name('add_user_management_super');
     Route::post('edit_user_management_super', 'SuperadminController@edit_user_management_super')->name('edit_user_management_super');
+    Route::post('get_session_logged_superadmin', 'SuperadminController@get_session_logged_superadmin')->name('get_session_logged_superadmin');
+
 });
 // ---- post : superadmin-----
-
+Route::post('InputloginSuperadmin', 'SuperadminController@InputloginSuperadmin')->name('InputloginSuperadmin');
 Route::post('loginSuperadmin', 'SuperadminController@loginSuperadmin')->name('loginSuperadmin');
 Route::post('postAddUser', 'SuperadminController@postAddUser')->name('postAddUser');
 Route::post('session_logged_superadmin', 'SuperadminController@session_logged_superadmin')->name('session_logged_superadmin');

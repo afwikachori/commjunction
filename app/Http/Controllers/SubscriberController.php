@@ -10,6 +10,8 @@ use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\BadResponseException;
 use App\Helpers\RequestHelper;
+use App\Http\Controllers\SendRequestController;
+use League\ColorExtractor\Palette;
 
 use Session;
 use Alert;
@@ -17,6 +19,7 @@ use Alert;
 class SubscriberController extends Controller
 {
     use RequestHelper;
+    use SendRequestController;
 
     public function loginView()
     {
@@ -126,7 +129,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -190,8 +193,10 @@ class SubscriberController extends Controller
                 "sso_token"     => $input['sso_token']
             ];
 
-            $respon = $this->encryptedPost($request, $req_input, $url, null);
-            // return $jsonlogin;
+            $respon_enkrp = $this->encryptedPost($request, $req_input, $url, null);
+            // return $respon;
+            $respon = json_decode($respon_enkrp, true);
+
             if ($respon['success'] == true) {
                 alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
                 $url_sukses = '/subscriber/url/' . $url_comname;
@@ -199,15 +204,18 @@ class SubscriberController extends Controller
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(3500);
+            return back();
         } catch (ServerException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
-            return $error;
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -227,10 +235,30 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
 
+            $portal = $json['data']['cust_portal_login']['image'];
+            $bgportal = env('CDN') . '/' . $portal;
             $arr_auth = [];
-            array_push($arr_auth, $json['data']);
-            // return $arr_auth;
 
+            $im = @imagecreatefromjpeg($bgportal);
+            /* See if it failed */
+            if (!$im) {
+                $bgportal = asset('img/bg_subs.jpg');
+            } else {
+                $bgportal = env('CDN') .'/'. $portal;
+            }
+
+            $image = imagecreatefromjpeg($bgportal);
+            $thumb = imagecreatetruecolor(1, 1);
+            imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
+
+            $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
+            $maincolor = '#' . $mainColor;
+
+            $new =  array_merge(["maincolor" => $maincolor], $json['data']);
+            array_push($arr_auth, $new);
+
+
+            // return $arr_auth;
             session()->put('auth_subs', $arr_auth);
             // return redirect('subscriber')->with('subs_data', $arr_auth);
             return view('subscriber/login')->with('subs_data', $arr_auth);
@@ -245,7 +273,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return view('404');
         }
@@ -255,7 +283,7 @@ class SubscriberController extends Controller
     public function GetdataSubdomainSubscriber($domain)
     {
 
-        $subdomain = $domain.'.smartcomm.id';
+        $subdomain = $domain . '.smartcomm.id';
         $url = env('SERVICE') . 'auth/configcommsubdomain';
         $client = new \GuzzleHttp\Client();
         try {
@@ -285,7 +313,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return view('404');
         }
@@ -332,7 +360,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     } //enfunc
@@ -341,6 +369,7 @@ class SubscriberController extends Controller
     public function edit_profile_subs(Request $request)
     {
         // dd($request);
+        $input = $request->all(); // getdata form by name
         $ses_login = session()->get('session_subscriber_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
@@ -348,17 +377,24 @@ class SubscriberController extends Controller
         $req = new RequestController;
         $fileimg = "";
 
+
+        if ($request->hasFile('alamat_subs')) {
+            $alamat = $input['alamat_subs'];
+        } else {
+            $alamat = "null";
+        }
+
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
+
             $imageRequest = [
                 "user_name" => $input['username_subs'],
                 "full_name" => $input['name_subs'],
                 "notelp" => $input['phone_subs'],
                 "email" => $input['email_subs'],
-                "alamat" => $input['alamat_subs'],
+                "alamat" => $alamat,
                 "filename" => $filnam,
                 "file" => $imgku
             ];
@@ -406,7 +442,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -417,7 +453,7 @@ class SubscriberController extends Controller
                 "full_name" => $input['name_subs'],
                 "notelp" => $input['phone_subs'],
                 "email" => $input['email_subs'],
-                "alamat" => $input['alamat_subs'],
+                "alamat" => $alamat,
                 "filename"    => "",
                 "file"        => ""
             ];
@@ -463,7 +499,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -520,7 +556,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -564,7 +600,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -609,7 +645,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -641,7 +677,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -692,7 +728,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -740,7 +776,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -775,11 +811,17 @@ class SubscriberController extends Controller
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
             return $json['data'];
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['success'] = false;
+            return $error;
         }
     }
 
@@ -859,7 +901,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -910,7 +952,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -945,7 +987,37 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
+            return $error;
+        }
+    }
+
+    public function show_my_membership(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'dashboard/membership';
+        $input = $request->all();
+
+        $token = $ses_login['access_token'];
+        $dataku = [
+            "membership_id" => $input['membership_id'],
+        ];
+
+        // return $input;
+
+        try {
+            $postdata = $this->post_get_request($dataku, $url, false, $token);
+            return $postdata['data'];
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['success'] = false;
             return $error;
         }
     }
@@ -978,7 +1050,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1028,7 +1100,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1047,8 +1119,8 @@ class SubscriberController extends Controller
             ];
         } else {
             $dtnotif = [
-                "read_status"   => $input['read_status'],
-                "limit"         => $input['limit'],
+                "read_status"       => $input['read_status'],
+                "limit"             => $input['limit'],
             ];
         }
 
@@ -1087,7 +1159,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1137,7 +1209,7 @@ class SubscriberController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Internal Server Error";
-                $error['succes'] = false;
+                $error['success'] = false;
 
                 alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
                 return back();
@@ -1191,7 +1263,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1224,7 +1296,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1273,7 +1345,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1329,7 +1401,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1375,7 +1447,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1408,7 +1480,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1441,7 +1513,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1474,7 +1546,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1516,7 +1588,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1558,7 +1630,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1600,7 +1672,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1644,7 +1716,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1687,7 +1759,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1739,7 +1811,7 @@ class SubscriberController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1751,20 +1823,19 @@ class SubscriberController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'auth/commsubs';
 
-        $req_input =  [
+        $data =  [
             'input'       => $input['input_login'],
             'password'    => $input['pass_subs'],
             'community_id' => $input['id_community']
         ];
 
+        return $this->post_get_request($data, $url, false, null);
 
-        $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
 
-        return $res_enkkrip;
+        // $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
+        // return $res_enkkrip;
+
+
+
     }
 } //end-class
-
-// login
-// change password
-// register
-// forgot password

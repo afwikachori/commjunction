@@ -25,7 +25,7 @@
 
 <div class="card-body">
 <div class="news-middle">
-<img src="{{' + server_cdn + $image '}}" class="img-mid" onerror = "this.onerror=null;this.src='/visual/car1.png';">
+<img src="{{ env('CDN') }}/{{$image}}" class="img-mid" onerror = "this.onerror=null;this.src='/visual/car1.png';">
 </div>
 
 <div class="row">

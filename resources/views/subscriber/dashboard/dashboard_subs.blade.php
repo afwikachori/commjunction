@@ -7,7 +7,8 @@
         <h3 class="cgrey" lang="en">Dashboard</h3>
     </div>
     <div class="col-md-10">
-        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Your Community Overall Information<p>
+        <p class="clight" lang="en" data-lang-token="sumary_dashboard">Your Community Overall Information
+        <p>
     </div>
 </div>
 
@@ -20,8 +21,8 @@
                         class="mdi mdi-book-open-page-variant cwhite cwhite mdi-24px float-right"></i>
                 </h4>
                 <h1 class="total_news"> 0 </h1>
-                <span class="mb-5"> News</span>
-                <!-- <h6 class="card-text">Decreased by 0%</h6> -->
+                <span class="mb-5" lang="en" News</span>
+                    <!-- <h6 class="card-text">Decreased by 0%</h6> -->
             </div>
         </div>
     </div>
@@ -32,7 +33,7 @@
             <div class="card-body setnotifdash">
                 <h4 class="mb-3 s21" lang="en">Personalize your Profile</h4>
                 <p class="s16 mb-3" style="width: 400px;" lang="en" data-lang-token="dash_takemoment">
-                   Take a moment to personalize your profile information for other member to see</p>
+                    Take a moment to personalize your profile information for other member to see</p>
                 <a href="/subscriber/dashboard_setting" type="button" id="btn_getnow" class="btn btn-white btn-sm"
                     style="position: relative;" lang="en" data-lang-token="Profile Management">Profile Management</a>
             </div>
@@ -302,7 +303,7 @@
             <div class="modal-body">
                 <center>
                     <img src="/visual/hore.png" id="img-initial1">
-                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations !!!</h3>
+                    <h3 class="cgrey" style="margin-bottom: 0.5em;" lang="en">Congratulations!</h3>
                     <p class="clight s14" lang="en" data-lang-token="initial_selamat">Congratulations ! You’re already
                         succesfull register and you’re already
                         member of community . Let’s look what do you can explore !</p>
@@ -382,6 +383,10 @@
         <div class="modal-content membership">
             <div class="modal-body">
                 <div class="row justify-content-center" style="text-align: center;">
+                    <div style="text-align: center; display: none;" id="hide_membertipe">
+                        <br><br><br>
+                        <h2 class="cligt" lang="en">No Data Available</h2>
+                    </div>
                     <div class="card-deck price_member" style="padding-left: 6%; padding-right: 3%; width: 100%;">
 
                     </div>
@@ -448,7 +453,7 @@
     var no_data = '';
 
     $(document).ready(function () {
-        get_pricing_membership();
+        // get_pricing_membership();
         get_payment_initial();
 
         get_dashboard_news();
@@ -511,38 +516,41 @@
                 if (result.success == false) {
                     $("#nodata_dash_artikel").show();
                     $("#idashbord_news").hide();
-                    console.log(result.message);
                 } else {
-                    var berita = '';
-                    $.each(result, function (i, item) {
-                        var imge = cekimage_cdn(item.image);
-                        var noimgnews = '/img/car1.png';
+                    if (result != undefined) {
+                        var berita = '';
+                        $.each(result, function (i, item) {
+                            var imge = cekimage_cdn(item.image);
+                            var noimgnews = '/img/car1.png';
 
-                        berita += '<div class="col-md-6 stretch-card grid-margin">' +
-                            '<div class="card" style="height:217px;">' +
-                            '<img src="http://' + server_cdn + imge + '" class="card-img-top card-dashsub"' +
-                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
-                            'style="border-radius: 8px 8px 0px 0px;">' +
-                            '<div class="card-body card-dashsub">' +
-                            '<small class="card-text text-wrap">' + item.title +
-                            '</small>' +
-                            '</div>' +
-                            '<div class="card-footer card-dashsub">' +
-                            '<div class="row">' +
-                            '<div class="col-md-8">' +
-                            '<p class="card-text"><small class="text-muted">' +
-                            dateTime(item.createdAt) + '</small></p>' +
-                            '</div>' +
-                            '<div class="col-md-4" style="text-align: right;">' +
-                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small>'+
-                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div></div></div>';
-                    });
-                    $("#idashbord_news").html(berita);
-                    $("#nodata_dash_artikel").hide();
-                    $("#idashbord_news").show();
+                            berita += '<div class="col-md-6 stretch-card grid-margin">' +
+                                '<div class="card" style="height:217px;">' +
+                                '<div class="imgsub-cont">'+
+                                '<img src="' + server_cdn + imge + '" class="card-img-top artikeldash"' +
+                                'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
+                                'style="border-radius: 8px 8px 0px 0px;"></div>' +
+                                '<div class="card-body card-dashsub">' +
+                                '<small class="card-text text-wrap">' + item.title +
+                                '</small>' +
+                                '</div>' +
+                                '<div class="card-footer card-dashsub">' +
+                                '<div class="row">' +
+                                '<div class="col-md-8">' +
+                                '<p class="card-text"><small class="text-muted">' +
+                                dateTime(item.createdAt) + '</small></p>' +
+                                '</div>' +
+                                '<div class="col-md-4" style="text-align: right;">' +
+                                '<p class="card-text"><small class="text-muted">' + item.scala + '</small> &nbsp; &nbsp;' +
+                                '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div></div></div>';
+                        });
+                        $("#idashbord_news").html(berita);
+                        $("#nodata_dash_artikel").hide();
+                        $("#idashbord_news").show();
+                    }
+
                 }
 
             },
@@ -573,7 +581,9 @@
                     $(".total_friend").html("0");
                     console.log(result);
                 } else {
-                    $(".total_friend").html(result.total_friend);
+                    if (result.total_friend != undefined) {
+                        $(".total_friend").html(result.total_friend);
+                    }
                 }
             },
             error: function (result) {
@@ -599,42 +609,44 @@
                 "limit": 10,
             },
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.success == false) {
-                    console.log(result);
                     $(".divkonco").hide();
                 } else {
-                    var nofoto = '/img/kosong.png';
-                    var isiui = '';
-                    var jumlah = 0;
-                    $.each(result, function (i, item) {
-                        jumlah++;
-                        isiui += '<div class="card konco" id="' + item.user_id + '">' +
-                            '<div class="card-body color">' +
-                            '<div class="close_konco">' +
-                            '<button type="button" class="close cgrey2" aria-label="Close"' +
-                            'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
-                            '<span aria-hidden="true">&times;</span>' +
-                            '</button>' +
-                            '</div>' +
-                            '<form method="POST" id="form_add_friend" action="{{route('add_friend_suggest_subs')}}">'+
-                            '{{ csrf_field() }}'+
-                            '<center>' +
-                            '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
-                            '<input type="hidden" value="' + item.user_id + '" name="user_id_subs">' +
-                            '<button type="submit" class="btn btn-tosca btn-sm konco">' +
-                            '<i class="mdi mdi-account-plus"></i> &nbsp; <span lang="en">Add</span>' +
-                            '</button>' +
-                            '<center>' +
-                            '</form>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                    });
-                    $(".divkonco").show();
-                    $("#div_friendsugest").html(isiui);
+                    if (result != undefined) {
+                        var nofoto = '/img/kosong.png';
+                        var isiui = '';
+                        var jumlah = 0;
+                        $.each(result, function (i, item) {
+                            jumlah++;
+                            isiui += '<div class="card konco" id="' + item.user_id + '">' +
+                                '<div class="card-body color">' +
+                                '<div class="close_konco">' +
+                                '<button type="button" class="close cgrey2" aria-label="Close"' +
+                                'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                                '<span aria-hidden="true">&times;</span>' +
+                                '</button>' +
+                                '</div>' +
+                                '<form method="POST" id="form_add_friend" action="{{route('add_friend_suggest_subs')}}">' +
+                                    '{{ csrf_field() }}' +
+                                    '<center>' +
+                                    '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                                    'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                                    '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                                    '<input type="hidden" value="' + item.user_id + '" name="user_id_subs">' +
+                                    '<button type="submit" class="btn btn-tosca btn-sm konco">' +
+                                    '<i class="mdi mdi-account-plus"></i> &nbsp; <span lang="en">Add</span>' +
+                                    '</button>' +
+                                    '<center>' +
+                                    '</form>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                        });
+                        $(".divkonco").show();
+                        $("#div_friendsugest").html(isiui);
+                    }
+
                 }
             },
             error: function (result) {
@@ -673,18 +685,19 @@
                     $("#nodata_last_news").show();
                     $("#isi_last_news").hide();
                     // console.log(result);
+                } else {
+                    var newsui = '';
+                    $.each(result, function (i, item) {
+                        newsui += '<li>' +
+                            '<a href="/subscriber/detail_news/' + item.id + '">' +
+                            '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                            '<small class="cgrey s13">' + item.title + '</small><br>' +
+                            '</li>';
+                    });
+                    $("#isi_last_news").html(newsui);
+                    $("#nodata_last_news").hide();
+                    $("#isi_last_news").show();
                 }
-                var newsui = '';
-                $.each(result, function (i, item) {
-                    newsui += '<li>' +
-                        '<a href="/subscriber/detail_news/' + item.id + '">' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
-                        '<small class="cgrey s13">' + item.title + '</small><br>' +
-                        '</li>';
-                });
-                $("#isi_last_news").html(newsui);
-                $("#nodata_last_news").hide();
-                $("#isi_last_news").show();
 
             },
             error: function (result) {
@@ -716,23 +729,30 @@
                 if (result.success == false) {
                     $("#nodata_love_news").show();
                     $("#isi_love_news").hide();
-                    console.log(result);
+                } else {
+                    if (result != undefined) {
+
+                        var loveui = '';
+                        $.each(result, function (i, item) {
+                            loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
+                                '<center><img src="http://' + server_cdn + cekimage_cdn(item.image) + '" class="rounded-circle img-fluid mb-2 lovenews"' +
+                                'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
+                                '</div>' +
+                                '<div class="col-md-10 pd-5px">' +
+                                '<a href="/subscriber/detail_news/' + item.id + '">' +
+                                '<small class="cblue s12">' + dateTime(item.createdAt) + '</small></a>' +
+                                '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
+                                '</div></div>';
+                        });
+                        $("#isi_love_news").html(loveui);
+                        $("#nodata_love_news").hide();
+                        $("#isi_love_news").show();
+                    } else {
+                        $("#nodata_love_news").show();
+                        $("#isi_love_news").hide();
+                    }
+
                 }
-                var loveui = '';
-                $.each(result, function (i, item) {
-                    loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
-                        '<center><img src="http://' + server_cdn + cekimage_cdn(item.image) + '" class="rounded-circle img-fluid mb-2 lovenews"' +
-                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
-                        '</div>' +
-                        '<div class="col-md-10 pd-5px">' +
-                        '<a href="/subscriber/detail_news/' + item.id + '">'+
-                        '<small class="cblue s12">' + dateTime(item.createdAt) + '</small></a>' +
-                        '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
-                        '</div></div>';
-                });
-                $("#isi_love_news").html(loveui);
-                $("#nodata_love_news").hide();
-                $("#isi_love_news").show();
 
             },
             error: function (result) {
@@ -763,18 +783,24 @@
                 if (result.success == false) {
                     $("#nodata_topvisit_news").show();
                     $("#isi_topvisit_news").hide();
+                } else {
+                    if (result != undefined) {
+                        var newsui = '';
+                        $.each(result, function (i, item) {
+                            newsui += '<li>' +
+                                '<a href="/subscriber/detail_news/' + item.id + '">' +
+                                '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                                '<small class="cgrey s13">' + item.title + '</small><br>' +
+                                '</li>';
+                        });
+                        $("#isi_topvisit_news").html(newsui);
+                        $("#nodata_topvisit_news").hide();
+                        $("#isi_topvisit_news").show();
+                    } else {
+                        $("#nodata_topvisit_news").show();
+                        $("#isi_topvisit_news").hide();
+                    }
                 }
-                var newsui = '';
-                $.each(result, function (i, item) {
-                    newsui += '<li>' +
-                        '<a href="/subscriber/detail_news/' + item.id + '">' +
-                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
-                        '<small class="cgrey s13">' + item.title + '</small><br>' +
-                        '</li>';
-                });
-                $("#isi_topvisit_news").html(newsui);
-                $("#nodata_topvisit_news").hide();
-                $("#isi_topvisit_news").show();
             },
             error: function (result) {
                 console.log("Cant Show top visit news");
@@ -864,7 +890,7 @@
                 "limit": 4,
             },
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == false) {
                     console.log(result);
                     $("#topclubvisit_nodata").show();

@@ -68,6 +68,7 @@ border:none;
     height: auto;
     left: 0px;
     top: 40%;
+    opacity: 0.3;
 }
 
 #img-loginadmin{
@@ -114,6 +115,15 @@ right: 165px;
 top: 30px;
 }
 
+.relativeini{
+    position: relative !important;
+    color: #c5c5c5 !important;
+}
+
+.relativepos{
+    position: relative !important;
+}
+
 
 .cjudul{
   margin-left: 2em;
@@ -125,6 +135,7 @@ top: 30px;
   margin-left: 2em;
   color: white;
   margin-top: 7em;
+  position: relative;
 }
 
 #loginadmincom{
@@ -189,13 +200,20 @@ border : 2px solid;
   padding: 1rem 1rem 1rem 1rem;
 }
 
+#img_portal_bg{
+position: absolute;
+height: auto;
+width: 100%;
+margin: auto;
+}
 
 .biruq{
-  background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
+  background: linear-gradient(180deg, #6F86D6 0%, #48C6EF 100%);
   max-height: 1200px;
   min-height: 100vh;
  /* height: 100%;*/
   width: auto;
+  overflow: hidden !important;
 }
 
 #img_icon_portal{

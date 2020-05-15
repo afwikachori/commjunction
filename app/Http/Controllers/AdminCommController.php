@@ -165,7 +165,7 @@ class AdminCommController extends Controller
 
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
 
             if ($error == 500) {
                 alert()->error($error['message'], 'Failed!')->autoclose(4500)->persistent('Done');
@@ -222,7 +222,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         } catch (BadResponseException  $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -259,7 +259,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         } catch (BadResponseException  $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -322,7 +322,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     } //end-func
@@ -397,7 +397,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -426,7 +426,7 @@ class AdminCommController extends Controller
                 session()->put('session_admin_logged', $status_publish);
 
                 alert()->success('Succcessflly to pulish your community, enjoy with your subscribers', 'Published !')->persistent('Done');
-                return redirect('/admin/community_settings');
+                return redirect('/admin/community_setting');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -439,7 +439,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -507,7 +507,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -582,7 +582,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -651,7 +651,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -704,7 +704,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -787,11 +787,11 @@ class AdminCommController extends Controller
                         } catch (ConnectException $errornya) {
                             $error['status'] = 500;
                             $error['message'] = "Server bermasalah";
-                            $error['succes'] = false;
+                            $error['success'] = false;
                             alert()->error($error['message'], 'Failed!')->autoclose(4500);
                             return back()->withInput();
                         }
-                    }else{
+                    } else {
                         alert()->error('Set Login type and Subdomain', 'Failed!')->persistent('Done');
                         return back();
                     }
@@ -807,7 +807,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->persistent('Done');
                 return back();
             }
@@ -851,7 +851,7 @@ class AdminCommController extends Controller
 
             if ($json['success'] == true) {
                 alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
-                return redirect('/admin/community_settings');
+                return redirect('/admin/community_setting');
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -864,7 +864,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -903,7 +903,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -961,7 +961,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -994,7 +994,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1029,7 +1029,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1062,7 +1062,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1103,7 +1103,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1135,7 +1135,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1168,7 +1168,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1210,7 +1210,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1246,7 +1246,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1287,7 +1287,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1299,21 +1299,27 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
-
+        $input = $request->all(); // getdata form by name
         $req = new RequestController;
         $fileimg = "";
+
+        if ($request->hasFile('alamat_admin')) {
+            $alamat = $input['alamat_admin'];
+        } else {
+            $alamat = "null";
+        }
 
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
+
             $imageRequest = [
                 "user_name" => $input['username_admin'],
                 "full_name" => $input['name_admin'],
                 "notelp" => $input['phone_admin'],
                 "email" => $input['email_admin'],
-                "alamat" => $input['alamat_admin'],
+                "alamat" => $alamat,
                 "filename" => $filnam,
                 "file" => $imgku
             ];
@@ -1357,7 +1363,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -1368,7 +1374,7 @@ class AdminCommController extends Controller
                 "full_name" => $input['name_admin'],
                 "notelp" => $input['phone_admin'],
                 "email" => $input['email_admin'],
-                "alamat" => $input['alamat_admin'],
+                "alamat" => $alamat,
                 "filename"    => "",
                 "file"        => ""
             ];
@@ -1412,7 +1418,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -1470,7 +1476,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1504,7 +1510,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1539,7 +1545,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1593,7 +1599,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1638,7 +1644,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1651,7 +1657,7 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $input = $request->all(); // getdata req
-
+        // return $input;
         $req = new RequestController;
         $fileimg = "";
 
@@ -1659,13 +1665,18 @@ class AdminCommController extends Controller
 
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
-            if ($request->input('action') == 'approve') {
+
+            $paystatusjudul = "";
+            $paystatus = "";
+
+            if ($input['action'] == 'approve') {
                 $paystatus = "2";
                 $paystatusjudul = "Membership Approved";
-            } else if ($request->input('action') == 'reject') {
+            } else if ($input['action'] == 'reject') {
                 $paystatus = "3";
                 $paystatusjudul = "Membership Rejected";
             }
+
 
             if ($input['invoice_num_acc'] == "Free") {
                 $invnum = 0;
@@ -1682,6 +1693,8 @@ class AdminCommController extends Controller
                 "filename"       => $filnam,
                 "file"           => $imgku
             ];
+
+            // dd($imageRequest);
 
             $url = env('SERVICE') . 'membershipmanagement/approvalmembership';
             try {
@@ -1701,7 +1714,7 @@ class AdminCommController extends Controller
             } catch (ConnectException $errornya) {
                 $error['status'] = 500;
                 $error['message'] = "Server bermasalah";
-                $error['succes'] = false;
+                $error['success'] = false;
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
@@ -1725,30 +1738,42 @@ class AdminCommController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
+
+        if ($input['approval'] == "true") {
+            $appv = true;
+            $textatus = 'Approved';
+        } else {
+            $appv = false;
+            $textatus = 'Rejected';
+        }
+
+
         $bodyku = json_encode([
             'user_id' => $input['id_subspending'],
-            'approval' => $input['approval'],
+            'approval' => $appv,
             'description' => $input['alasan_approv']
         ]);
 
-        if ($input['approval'] == "true") {
-            $textatus = 'Approved';
-        } else {
-            $textatus = 'Rejected';
-        }
 
         $datakirim = [
             'body' => $bodyku,
             'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully give a approval', $textatus)->persistent('Done');
-                return redirect('admin/subs_management');
+
+        try {
+            if ($appv == false && $input['alasan_approv'] == null) {
+                alert()->error('Field reason for rejection is required', 'Can Not Null')->autoclose(4500);
+                return back();
+            } else {
+                $response = $client->post($url, $datakirim);
+                $response = $response->getBody()->getContents();
+                $json = json_decode($response, true);
+
+                if ($json['success'] == true) {
+                    alert()->success('Successfully give a approval', $textatus)->persistent('Done');
+                    return redirect('admin/subs_management');
+                }
             }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1761,7 +1786,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1804,7 +1829,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -1857,7 +1882,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1890,7 +1915,7 @@ class AdminCommController extends Controller
             'body' => $bodyku,
             'headers' => $headers,
         ];
-// return $datakirim;
+        // return $datakirim;
         try {
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
@@ -1911,7 +1936,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1956,7 +1981,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1990,7 +2015,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2023,7 +2048,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2062,7 +2087,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2109,7 +2134,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2144,7 +2169,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2177,7 +2202,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2225,7 +2250,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2275,7 +2300,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2322,7 +2347,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2355,7 +2380,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2364,6 +2389,15 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
+
+        $validator = $request->validate([
+            'judul_notif' => 'required',
+            'usertipe_notif' => 'required',
+            'deksripsi_notif' => 'required',
+            'subtipe_notif' => 'required',
+            'tipenotif' => 'required',
+        ]);
+
 
         $url = env('SERVICE') . 'notificationmanagement/sendnotification';
         $client = new \GuzzleHttp\Client();
@@ -2423,7 +2457,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2480,7 +2514,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2519,7 +2553,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2556,7 +2590,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2610,7 +2644,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2655,7 +2689,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2705,7 +2739,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2752,7 +2786,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2833,7 +2867,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -2893,7 +2927,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2940,7 +2974,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2991,7 +3025,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3035,7 +3069,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3072,7 +3106,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3087,7 +3121,13 @@ class AdminCommController extends Controller
         // return $input;
 
         $url = env('SERVICE') . 'membershipmanagement/createmembership';
-        $fitur = $input['fitur_member'];
+
+        if ($request->has('fitur_member')) {
+            $fitur = $input['fitur_member'];
+        } else {
+            alert()->error('Features is required', 'Can Not Null!')->autoclose(4500);
+            return back();
+        }
         $hasilfitur = implode(",", $fitur);
 
         $req = new RequestController;
@@ -3133,7 +3173,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3167,7 +3207,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3199,7 +3239,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3261,7 +3301,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3293,7 +3333,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3325,7 +3365,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3371,7 +3411,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3383,10 +3423,15 @@ class AdminCommController extends Controller
         $input = $request->all();
         $in = $request->except('_token', 'id_question', 'deskripsi_regis');
 
-        if ($input['edit_tipedata'] == "2" || $input['edit_tipedata'] == "3" || $input['edit_tipedata'] == "4" || $input['edit_tipedata'] == "5") {
-            $param_isi = [$input['edit_question'], $input['edit_tipedata']];
+        if ($request->hasFile('edit_tipedata')) {
+            if ($input['edit_tipedata'] == "2" || $input['edit_tipedata'] == "3" || $input['edit_tipedata'] == "4" || $input['edit_tipedata'] == "5") {
+                $param_isi = [$input['edit_question'], $input['edit_tipedata']];
+            } else {
+                $param_isi = array_values($in);
+            }
         } else {
-            $param_isi = array_values($in);
+            alert()->error('Input Type is Required', 'Can Not Null!')->autoclose(4000);
+            return back();
         }
 
         $url = env('SERVICE') . 'commsetting/editregistrationdata';
@@ -3425,7 +3470,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3477,7 +3522,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3523,7 +3568,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3563,7 +3608,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3612,7 +3657,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3662,7 +3707,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3706,7 +3751,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3738,7 +3783,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3769,7 +3814,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3815,7 +3860,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3846,7 +3891,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -3901,7 +3946,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -3969,7 +4014,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -4024,7 +4069,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -4058,7 +4103,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }
@@ -4116,7 +4161,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
-            $error['succes'] = false;
+            $error['success'] = false;
             alert()->error($error['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -4141,6 +4186,7 @@ class AdminCommController extends Controller
             "read_status"   => $input['read_status'],
             "notification_status" => $input['notification_status'],
             "limit"         => $input['limit'],
+            "notification_type" => "1"
         ]);
 
         // return $bodyku;
@@ -4163,7 +4209,7 @@ class AdminCommController extends Controller
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Internal Server Error";
-            $error['succes'] = false;
+            $error['success'] = false;
             return $error;
         }
     }

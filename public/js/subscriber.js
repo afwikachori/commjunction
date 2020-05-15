@@ -47,12 +47,12 @@ var ui = {
 };
 
 
-(function () {
-    window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
-    var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
-    ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
-})();
+// (function () {
+//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
+//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
+//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
+//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
+// })();
 
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
@@ -95,6 +95,8 @@ function session_subscriber_logged() {
 
             var user = result.user;
             get_list_notif_navbar(user.community_id);
+            get_inbox_navbar();
+
             if (user.picture != undefined || user.picture != null) {
 
                 $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(user.picture));
@@ -137,9 +139,15 @@ function session_subscriber_logged() {
                 window.location.href = "/subscriber/url/" + community_name;
             }
 
-
-
             get_payment_initial();
+
+            //show membership
+            $("#membership_id").val(user.membership_id);
+            if (user.membership_id != 0) {
+                show_my_membership(user.membership_id);
+            }else{
+                get_pricing_membership();
+            }
 
         },
         error: function (result) {
@@ -151,7 +159,6 @@ function session_subscriber_logged() {
 
 // INITIAL LOGIN 2 - FITUR
 function get_initial_feature(datafitur) {
-    // console.log(datafitur);
     var showui = '';
     var jum = 0;
     $.each(datafitur, function (i, item) {
@@ -166,11 +173,11 @@ function get_initial_feature(datafitur) {
             'alt="circle-image" /> ' +
             '<div class="row">' +
             '<div class="col-md-3" style="padding-right:4px;">' +
-            '<img src="' + server_cdn +cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
+            '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card3"' +
             'onerror = "this.onerror=null;this.src=\' /img/fitur.png \';">' +
             '</div>' +
             '<div class="col-md-9" style="padding-left:5px;">' +
-            '<b><small>' + item.titile + '</small></b>' +
+            '<b><small>' + item.title + '</small></b>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -186,12 +193,15 @@ function get_initial_feature(datafitur) {
 
 // FORMAT PISAH UANG RUPIAH
 function rupiah(val) {
-    var bilangan = val;
-    var reverse = bilangan.toString().split('').reverse().join(''),
-        ribuan = reverse.match(/\d{1,3}/g);
-    ribuan = ribuan.join('.').split('').reverse().join('');
+    if (val != undefined) {
 
-    return ribuan;
+        var bilangan = val;
+        var reverse = bilangan.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+
+        return ribuan;
+    }
 }
 
 
@@ -241,10 +251,9 @@ function dateTime(tgl) {
     var d = new Date(tgl);
 
     dformat = [d.getDate(), d.getMonth() + 1,
-        d.getFullYear()].join('/') + ' &nbsp; ' +
+    d.getFullYear()].join('/') + ' &nbsp; ' +
         [d.getHours(),
-        d.getMinutes(),
-        d.getSeconds()].join(':');
+        d.getMinutes()].join(':');
 
     return dformat;
 }
@@ -312,6 +321,7 @@ function cekimage_cdn(img) {
 
 
 function get_pricing_membership() {
+    $("#show_mymember").hide();
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -319,18 +329,24 @@ function get_pricing_membership() {
     });
     $.ajax({
         url: "/subscriber/get_pricing_membership",
-        type: "POST",
-        dataType: "json",
+        type: 'POST',
+        dataSrc: '',
+        timeout: 40000,
         success: function (result) {
-            // console.log(result);
+            console.log(result);
+
             if (result.success == false) {
-                if (result.status == 401 || result.message == "Unauthorized") {
-                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                    setTimeout(function () {
-                        location.href = '/subscriber/url/' + $(".community_name").val();
-                    }, 5000);
-                } else {
-                    ui.popup.show('warning', result.message, 'Warning');
+                if ($("#membership_id").val() === 0) {
+                    $('.hideisimember').hide().fadeOut('fast');
+                    $('#hide_membertipe').show();
+                    if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
                 }
             } else {
                 var html = '';
@@ -342,9 +358,9 @@ function get_pricing_membership() {
                         '<div class="card cd-pricing pricing' + idprice + '">' +
                         '<div class="card-body">' +
                         '<center>' +
-                        '<h4 class="cgrey2 s20" style="margin-top: 0.5em;">' + item.membership + '</h4>' +
+                        '<h4 class="cgrey2 s20">' + item.membership + '</h4>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.icon) + '"  class="rounded-circle img-fluid imgprice"' +
-                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:0.7em;">' +
                         '<div class="hidetime1">' +
                         '<sup class="cgrey" style="font-size: 30px;">' +
                         '<small class="h6">IDR</small></sup>' +
@@ -352,17 +368,330 @@ function get_pricing_membership() {
                         '<strong>' + rupiah(item.pricing) + '</strong></label>' +
                         '<small class="clight" lang="en">/Once</small>' +
                         '</div>' +
-                        '<button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 0.5em;"' +
-                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">'+
-                        'Get Now</button>' +
+                        '<small class="ctosca"><a class="detailmember" onclick="detail_membership_subs(' + i + ')"' +
+                        'lang="en" data-lang-token="More Information">More Information</a></small>' +
+                        '<br><button type="submit" class="btn clr-blue klik-pricing" style="margin-top: 1em;"' +
+                        'onclick="pilih_payment_initial(\'' + idprice + '<>' + item.pricing + '\')" lang="en">Get Now</button>' +
                         '</center>' +
                         '</div></div></div>';
                 });
                 $('.price_member').html(html);
+                $("hideisimember").show();
+                $("#hide_membertipe").hide();
+                $("#show_mymember").hide();
             }
+        }, error: function (result) {
+            console.log(result);
+            $('.hideisimember').hide().fadeOut('fast');
+            $('#hide_membertipe').show();
+            $("#show_mymember").hide();
         }
     });
 }
+
+
+function detail_membership_subs(index) {
+    // alert(index);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_pricing_membership",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            var dt = result[index];
+            $("#member_judul").html(dt.membership);
+            $("#member_deskripsi").html(dt.description);
+            $("#member_harga").html('Rp ' + rupiah(dt.pricing));
+
+            if (dt.image != undefined && dt.image != null && dt.image != 0) {
+                $("#img_membershiptipe").attr("src", server_cdn + cekimage_cdn(dt.image));
+            }
+            var subf = '';
+            var jum = 0;
+            var noimg = '/img/fitur.png';
+
+            $.each(dt.feature, function (i, item) {
+                var sub_ui = '';
+                $.each(item.sub_features, function (i, subitem) {
+                    sub_ui +=
+                        '<li><small class="clight">' + subitem.title + '</small></li>';
+                });
+                jum++;
+                subf += '<div class="row" style="margin-bottom:0.5em;">' +
+                    '<div class="col-md-6"' +
+                    'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                    'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                    '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
+                    '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important; min-width:200px;">' +
+                    '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                    'alt="circle-image" /> ' +
+                    '<div class="row">' +
+                    '<div class="col-md-3" style="padding-right:4px;">' +
+                    '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
+                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                    '</div>' +
+                    '<div class="col-md-9">' +
+                    '<b><small>' + item.title + '</small></b><br>' +
+                    '<small class="cblue"> <b>' + jum + '</b> Subfeature</small>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-md-6 padsubmember">' +
+                    '<small class="cgrey2 s13">' + item.title + '</small>' +
+                    '<ul class="submember">' + sub_ui + '</ul>' +
+                    '</div></div>';
+            });
+            $("#show_feature_member").html(subf);
+            $("#total_fitur_member").html(jum);
+
+            $("#modal_detail_membership_subs").modal("show");
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+
+// navbar inbox
+function get_inbox_navbar() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_generate_inbox_subs',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+                    $("#isi_pesan_navbar").html(nonotif);
+                    $("#ada_inbox").hide();
+
+                    $("#isi_card_inbox").hide();
+                    $("#nodata_card_inbox").show();
+                }
+            } else {
+                show_card_pesan_inbox_subs(result);
+                if (result != undefined) {
+                    var avatar = [
+                        'avatar1', 'avatar2', 'avatar3', 'avatar4',
+                        'avatar5', 'avatar6', 'avatar7', 'avatar8'
+                    ];
+                    var num = Math.floor(Math.random() * avatar.length);
+
+                    var isiku = '';
+                    var total = 0;
+                    $.each(result, function (i, item) {
+                        total++;
+                        isiku += '<a class="dropdown-item preview-item">' +
+                            '<div class="preview-thumbnail">' +
+                            '<img src="/img/avatar/' + avatar[num] + '.png" alt="image" class="profile-pic">' +
+                            '</div>' +
+                            '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center">' +
+                            '<span class="s14 tebal">' + item.message_type_title + ' &nbsp; &nbsp;</small>' +
+                            '<span class="ctosca s13 mb-2">' + dateTime(item.created_at) + '</span><br>' +
+                            '<p class="cgrey2 s13 mt-1 mb-1"> from &nbsp; <b>' + item.created_by_title + '</b></p>' +
+                            '<small class="clight s14">' + item.title + '</small>' +
+                            '</div>' +
+                            '</a><div class="dropdown-divider"></div>';
+                    });
+                    $("#total_inbox_navbar").html(total);
+                    $("#isi_pesan_navbar").html(isiku);
+                    $("#ada_inbox").show();
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+                    $("#isi_pesan_navbar").html(nonotif);
+                    $("#ada_inbox").hide();
+                }
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            var nonotif = '<center><br><h3 class="clight">No Inbox Message</h3><br></center>';
+            $("#isi_pesan_navbar").html(nonotif);
+            $("#ada_inbox").hide();
+
+            $("#isi_card_inbox").hide();
+            $("#nodata_card_inbox").show();
+            console.log("Cant Show Pesan Inbox");
+        }
+    });
+
+}
+
+
+function show_card_pesan_inbox_subs(result) {
+    if (result.length != 0) {
+        var isiui = '';
+        $.each(result, function (i, item) {
+            // console.log(item);
+            var inidt = [item.id, item.level_status, item.community_id, item.status];
+            isiui += '<div class="mb-3 col-md-6">' +
+                '<div class="row no-gutters" style="height:159px;">' +
+                '<div class="col-md-4">' +
+                '<img src="/img/inbox.jpg" class="img-stretch">' +
+                '</div>' +
+                '<div class="col-md-8 bg-gradient-abupurple" style="padding: 0px;border-radius: 0px 10px 10px 0px;">' +
+                '<div class="card-body nopadding">' +
+                '<span class="card-title">' + item.created_by_title + '</span> &nbsp;&nbsp;' +
+                '<br><span class="cteal mt-1 tebal s14">' + item.message_type_title + '</span>' +
+                '<span class="cgrey2 s13" > (' + item.sender_level_title + ')' +
+                '<p class="card-text">' + item.title + '</p>' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '<p class="card-text">' +
+                '<small class="ctosca">' + dateTime(item.created_at) + '</small>' +
+                '</p>' +
+                '</div>' +
+                '<div class="col-md-6 nopadding">' +
+                '<button type="button" class="btn btn-purpleabu btn-sm melengkung10px"' +
+                'onclick="detail_message_inbox_admin(\'' + inidt + '\')">' +
+                '<i class="mdi mdi-eye btn-icon-prepend">' +
+                '</i> <span lang="en"> Detail</span>' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div><br>' +
+                '</div>';
+        });
+        $("#isi_card_inbox").html(isiui);
+        $("#nodata_card_inbox").hide();
+    }
+}
+
+
+
+
+function show_my_membership(idmember) {
+    $('.hideisimember').hide();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/show_my_membership",
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "membership_id": idmember,
+        },
+        success: function (result) {
+            // console.log(result);
+
+            if (result.success == false) {
+                if ($("#membership_id").val() != 0) {
+                    $('#hide_membertipe').show();
+                    $("#show_mymember").hide();
+                    if (result.status === 401 || result.message === "Unauthorized") {
+                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                        setTimeout(function () {
+                            location.href = '/subscriber/url/' + $(".community_name").val();
+                        }, 5000);
+                    } else {
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
+                }
+            } else {
+                var result = result[0];
+                $("#member_judul2").html(result.membership);
+                $("#member_deskripsi2").html(result.description);
+                $("#member_harga2").html('Rp ' + rupiah(result.pricing));
+
+                var html = '';
+                var noimg = '/img/fitur.png';
+                html += '<center><div class="col-md-12" style="margin-bottom:1.5em;">' +
+                    '<div class="card cd-pricing pricing">' +
+                    '<div class="card-body">' +
+                    '<center>' +
+                    '<h4 class="cgrey2 s20">' + result.membership + '</h4>' +
+                    '<img src="' + server_cdn + cekimage_cdn(result.icon) + '"  class="rounded-circle img-fluid imgprice"' +
+                    'onerror = "this.onerror=null;this.src=\'' + noimg + '\';" style="margin-bottom:1.2em;">' +
+                    '<div class="hidetime1">' +
+                    '<sup class="cgrey" style="font-size: 30px;">' +
+                    '<small class="h6">IDR</small></sup>' +
+                    '<label class="card-harga cgrey">' +
+                    '<strong>' + rupiah(result.pricing) + '</strong></label>' +
+                    '<small class="clight" lang="en">/Once</small>' +
+                    '</div><br><h6 class="cteal" lang="en">Description</h6>' +
+                    '<p class="clight s12">' + result.description + '</small>'
+                '</center>' +
+                    '</div></div></div></center>';
+                $('#isi_show_mymember').html(html);
+                $("#show_mymember").show();
+                $("#hide_membertipe").hide();
+
+                var subf = '';
+                var jum = 0;
+                var noimg = '/img/fitur.png';
+
+                $.each(result.feature, function (i, item) {
+                    var sub_ui = '';
+                    $.each(item.sub_features, function (i, subitem) {
+                        sub_ui += '<li><small class="cgrey2">' + subitem.title + '</small></li>';
+                    });
+                    jum++;
+                    subf += '<div class="row" style="margin-bottom:0.5em;">' +
+                        '<div class="col-md-6"' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
+                        'style = "margin-right: -2em; margin-bottom: 0.5em;" >' +
+                        '<div class="card bg-gradient-blue card-img-holder text-white submember">' +
+                        '<div class="card-body" style="padding: 1rem 0.5rem 0.5rem 0.5rem !important; min-width:200px;">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
+                        'alt="circle-image" /> ' +
+                        '<div class="row">' +
+                        '<div class="col-md-3" style="padding-right:4px;">' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.logo) + '" class="rounded-circle img-fluid img-card2"' +
+                        'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
+                        '</div>' +
+                        '<div class="col-md-9">' +
+                        '<b><small>' + item.title + '</small></b><br>' +
+                        '<small class="cblue"> <b>' + jum + '</b> Subfeature</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-md-6 padsubmember">' +
+                        '<small class="cgrey s13">' + item.title + '</small>' +
+                        '<ul class="submember">' + sub_ui + '</ul>' +
+                        '</div></div>';
+                });
+                $("#show_feature_member2").html(subf);
+                $("#total_fitur_member2").html(jum);
+
+            }
+        }, error: function (result) {
+            console.log(result);
+            $('.hideisimember').hide().fadeOut('fast');
+            $('#hide_membertipe').show();
+            $("#show_mymember").hide();
+        }
+    });
+}
+
+
 
 function get_payment_initial() {
     $("#btn_submit_paymethod").attr("disabled", "disabled");
@@ -377,7 +706,7 @@ function get_payment_initial() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             var text = '';
             var isibank = '';
 
@@ -398,7 +727,7 @@ function get_payment_initial() {
                         '<a data-toggle="collapse" data-parent=".isi_show_bank" href="#collapseOne' + itm.id + '" ' +
                         'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
-                    '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
+                        '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
                         '<span class="float-right">' +
                         '<i class="fa fa-chevron-right"></i>' +
@@ -451,7 +780,7 @@ function pilih_payment_initial(dtmember) { //FREE
     var dt = dtmember.split('<>');
     $("#modal_initial_membership").modal('hide');
 
-    if (dt[1] != 0) {
+    if (dt[1] != 0 && dt[1] != undefined) {
         $("#modal_pay_initial").modal('show');
         $("#harga_member").html(rupiah(dt[1]));
         $("#id_membertype").val(dt[0]);
@@ -530,11 +859,11 @@ function get_list_notif_navbar(idkom) {
         timeout: 30000,
         success: function (result) {
             // console.log(result);
-        if (result.success == false) {
+            if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
-                        location.href = '/admin';
+                        location.href = '/subscriber/url/' + $(".community_name").val();
                     }, 5000);
                 } else {
                     var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
@@ -542,43 +871,50 @@ function get_list_notif_navbar(idkom) {
                     $("#ada_notif").hide();
                 }
             } else {
-            var isiku = '';
-            $.each(result, function (i, item) {
+                if (result != undefined) {
+                    var isiku = '';
+                    $.each(result, function (i, item) {
 
-                var d = new Date(item.created_at);
-                dformat = [d.getDate(), d.getMonth() + 1,
-                d.getFullYear()].join('/') + ' ' +
-                    [d.getHours(),
-                    d.getMinutes(),
-                    d.getSeconds()].join(':');
+                        var d = new Date(item.created_at);
+                        dformat = [d.getDate(), d.getMonth() + 1,
+                        d.getFullYear()].join('/') + ' ' +
+                            [d.getHours(),
+                            d.getMinutes(),
+                            d.getSeconds()].join(':');
 
-                var textArray = [
-                    'bg-success',
-                    'bg-info',
-                    'bg-danger',
-                    'bg-warning'
-                ];
-                var acak = Math.floor(Math.random() * textArray.length);
+                        var textArray = [
+                            'bg-success',
+                            'bg-info',
+                            'bg-danger',
+                            'bg-warning'
+                        ];
+                        var acak = Math.floor(Math.random() * textArray.length);
 
 
-                isiku += '<a class="dropdown-item preview-item notif">' +
-                    '<div class="preview-thumbnail medium">' +
-                    '<div class="preview-icon ' + textArray[acak] + '">' +
-                    '<i class="mdi mdi-bell-outline"></i>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
-                    '<label class="preview-subject font-weight-normal mb-1 s14">' + item.created_by_title +
-                    '</label> ' +
-                    '<small class="text-gray ellipsis mb-1"> ' + item.title + '</small > ' +
-                    '<small class="cbiru  mb-0">' + dformat + '</small > ' +
-                    '</div> ' +
-                    '</a> ' +
-                    '<div class="dropdown-divider"></div>';
-            });
-            $("#isi_notif_navbar").html(isiku);
-            $("#ada_notif").show();
-        }
+                        isiku += '<a class="dropdown-item preview-item notif">' +
+                            '<div class="preview-thumbnail medium">' +
+                            '<div class="preview-icon ' + textArray[acak] + '">' +
+                            '<i class="mdi mdi-bell-outline"></i>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center"> ' +
+                            '<label class="preview-subject tebal mb-1 s14">' + item.created_by_title +
+                            '</label> ' +
+                            '<small class="text-gray ellipsis mb-1 mt-1"> ' + item.title + '</small > ' +
+                            '<small class="cteal mt-1 mb-0">' + dformat + '</small > ' +
+                            '</div> ' +
+                            '</a> ' +
+                            '<div class="dropdown-divider"></div>';
+                    });
+                    $("#isi_notif_navbar").html(isiku);
+                    $("#ada_notif").show();
+                } else {
+                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                    $("#isi_notif_navbar").html(nonotif);
+                    $("#ada_notif").hide();
+                }
+
+            }
         },
         error: function (result) {
             var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
@@ -638,7 +974,7 @@ function LogoutSubscriber() {
         dataType: "json",
         timeout: 30000,
         success: function (result) {
-            console.log(result);
+            // console.log(result);
 
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
@@ -655,7 +991,7 @@ function LogoutSubscriber() {
         },
         error: function (result) {
             console.log(result);
-                location.href = '/subscriber/url/' + namakom;
+            location.href = '/subscriber/url/' + namakom;
         }
     });
     // });

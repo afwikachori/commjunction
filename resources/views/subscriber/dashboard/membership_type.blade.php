@@ -14,22 +14,75 @@
             style="min-width: 175px;"
             data-toggle="modal"
             data-target="#modal_confirmpay_membership" lang="en">Payment Confirmation</button> --}}
+            <input type="hidden" id="membership_id">
         </nav>
     </div>
 </div>
 
-<div class="row" style="padding-left:8%; padding-right: 8%; padding-top: 5%;">
+<div style="text-align: center; display: none;" id="hide_membertipe">
+    <br><br><br><br><br><br>
+    <h1 class="clight" lang="en">No Data Available</h1>
+</div>
+
+<div class="row hideisimember" style="padding-left:8%; padding-right: 8%; padding-top: 5%;">
     <div class="col-12">
         <div class="card" style="background-color: #ffffff00 !important;">
-            {{-- <div class="card-body member"> --}}
-                <h4 class="tebal" lang="en">Choose your Membership Plan</h4>
-                <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en" data-lang-token="please_choose_membership">Please choose one of the membership options provided by your Community</p>
-                <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
-                    <div class="card-deck price_member" style="width: 100%;">
+            <h4 class="tebal" lang="en">Choose your Membership Plan</h4>
+            <p class="cgrey2" style="margin-bottom: 0.5em;" lang="en"
+                data-lang-token="please_choose_membership">Please
+                choose one of the membership options provided by your Community</p>
 
-                    </div>
-                </div> <!-- end-row -->
-            {{-- </div> --}}
+            <div class="row justify-content-center" style="text-align: center; padding-left:2%; padding-right: 3%;">
+
+                <div class="card-deck price_member" style="width: 100%;">
+
+                </div>
+            </div> <!-- end-row -->
+        </div>
+    </div>
+</div>
+
+
+<div class="row" id="show_mymember" style="display: none;">
+    <div class="col-md-5" style="padding-left: 10%; padding-top: 4%;">
+
+        <div class="card-deck" id="isi_show_mymember" style="width: 100%; margin: auto;">
+
+        </div>
+    </div>
+    <div class="col-md-7">
+        <br><br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                     <h6 class="ctosca s13 tebal" lang="en">Title</h6>
+                    <p class="cgrey s14" id="member_judul2"></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                     <h6 class="ctosca s13 tebal" lang="en">Pricing</h6>
+                    <p class="cgrey s14" id="member_harga2"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+             <h6 class="ctosca s13 tebal" lang="en">Description</h6>
+            <p class="cgrey s14" id="member_deskripsi2"></p>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-12">
+                     <small class="ctosca s13 tebal">Features : </small> &nbsp;
+                    <small class="ctosca s15" id="total_fitur_member2"> 0</small>
+                </div>
+            </div>
+            <div class="card-deck" id="show_feature_member2"
+                style="margin-top: 0.5em; width: 100%; overflow-y: auto; overflow-x: hidden; height:245px;">
+
+            </div>
         </div>
     </div>
 </div>
@@ -65,7 +118,8 @@
                         </div>
 
                         <div class="col-md-5">
-                            <div class="isi_show_bank" class="collapse-accordion" role="tablist" aria-multiselectable="true">
+                            <div class="isi_show_bank" class="collapse-accordion" role="tablist"
+                                aria-multiselectable="true">
 
                             </div>
                         </div>
@@ -76,7 +130,8 @@
                 <input type="hidden" name="id_membertype" id="id_membertype">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" lang="en">Close</button>
-                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod" lang="en">Submit</button>
+                    <button type="submit" class="btn btn-teal btn-sm" id="btn_submit_paymethod"
+                        lang="en">Submit</button>
                 </div>
             </form>
         </div>
@@ -85,110 +140,18 @@
 
 
 
-{{-- <!-- MODAL MEMBERSHIP PAY CONFIRMATION -->
-<div id="modal_confirmpay_membership" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="modal_confirmpay_membership" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="width: 65%; margin: auto;">
-            <form method="POST" id="form_confirm_membership_subs" action="{{route('confirm_pay_membership_subs')}}"
-                enctype="multipart/form-data"> {{ csrf_field() }}
-                <div class="modal-body" style="min-height: 365px; height: auto; padding-right: 10%; padding-left: 10%;">
 
-                    <img src="/visual/kananatas2.png" class="img_confirm1">
-                    <img src="/visual/imgregis.png" class="img_confirm2">
-
-                    <h3 style="margin-top: 1.3em; margin-bottom: 1em; margin-left: -15px;" lang="en" data-lang-token="confirm_membership">Confirm your Membership Payment</h3>
-                    <br>
-                    <div class="row">
-                        <div class="col-5">
-                            <div class="form-group row">
-                                <label class="h6 cgrey" lang="en">Invoice Number</label>
-                                <input id="invoice_number" type="text"
-                                    class="form-control @error('invoice_number') is-invalid @enderror"
-                                    name="invoice_number" value="{{ old('invoice_number') }}" required
-                                    autocomplete="invoice_number" placeholder="Paste Invoice Number"
-                                    style="background-color: #e9ecef; border-radius: 6px;">
-                                @if($errors->has('invoice_number'))
-                                <small style="color: red;">{{ $errors->first('invoice_number')}}</small>
-                                @endif
-                            </div>
-                            <br>
-                            <div id="isi_form" style="display: none;">
-                                <div class="form-group row">
-                                    <label class="h6 cgrey" lang="en">Image Of Payment</label>
-                                    <div class="custom-file">
-                                        <input type="file"
-                                            class="custom-file-input form-control @error('fileup') is-invalid @enderror"
-                                            name="fileup" value="{{ old('fileup') }}" required autocomplete="fileup"
-                                            id="fileup" required>
-                                        <label class="custom-file-label" for="fileup" style="text-align: left;" lang="en">Choose file</label>
-
-                                        @if($errors->has('fileup'))
-                                        <small style="color: red;"><span lang="en">Extension is</span><i>.jpg / .jpeg /
-                                                .PDF</i></small>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- end  col-4 -->
-                        <div class="col-1">
-                        </div>
-
-                        <div class="col-4" id="detil_pay">
-                            <div class="form-group" style="margin-top: 0.5em;">
-                                <small class="clight2 mgb-05" lang="en">Total Payment</small>
-                                <h6 class="cgrey1" id="nominal_payment1"></h6>
-                            </div>
-
-                            <div class="form-group">
-                                <small class="clight2 mgb-05" lang="en">Account Number</small>
-                                <h6 class="cgrey1" id="bank_num"></h6>
-                            </div>
-
-                            <div class="form-group">
-                                <small class="clight2 mgb-05" lang="en">Bank Name</small>
-                                <h6 class="cgrey1" id="bank_receiver"></h6>
-                            </div>
-
-                            <div class="form-group">
-                                <small class="clight2 mgb-05" lang="en">Name Receiver</small>
-                                <h6 class="cgrey1" id="name_receiver"></h6>
-                            </div>
-
-                            <div class="form-group" id="hidein-img" lang="en">
-                                <small class="clight2 mgb-05" lang="en">Your Image Payment</small>
-                                <br>
-                                <img id="show_imgpay" class="img-fluid rounded float-left" src="" data-toggle="tooltip"
-                                    data-placement="right" title="Double Click to Preview"
-                                    style="width: 20%; margin-top: 0.3em; height: auto;display: none;"
-                                    onclick="clickImage(this)">
-                            </div>
-                        </div> <!-- end detail-pay -->
-                    </div> <!-- end row -->
-                </div>
-                <div class="modal-footer" style="border: none;">
-                    <img src="/visual/kiribawah2.png" class="img_confirm3">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="width: 110px;" lang="en">Close</button> &nbsp;
-                    <button type="submit" id="btn_confirmpay" class="btn btn-teal btn-sm"
-                        style="width: 110px;" lang="en">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
 
 @endsection
 @section('script')
 <script type="text/javascript">
     var server_cdn = $(".server_cdn").val();
     $(document).ready(function () {
-        // hidenlah_confirm_member();
-
-        get_pricing_membership();
-        // get_payment_initial();
+        // get_pricing_membership();
 
     });
+
+
 
     // function hidenlah_confirm_member() {
     //     $("#detil_pay").css("display", "none");

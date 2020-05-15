@@ -441,20 +441,29 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
+                console.log(result);
 
-                $('#membership_tipe').empty();
-                $('#membership_tipe').append("<option disabled> Choose </option>");
+                if (result.success == false) {
+                    $('#membership_tipe').empty();
+                    $('#membership_tipe').append("<option disabled lang='en'>No Data</option>");
+                } else {
+                    $('#membership_tipe').empty();
+                    $('#membership_tipe').append("<option disabled> Choose </option>");
 
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#membership_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].membership, "</option>"));
+                    for (var i = result.length - 1; i >= 0; i--) {
+                        $('#membership_tipe').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].membership, "</option>"));
+                    }
+                    //Short Function Ascending//
+                    $("#membership_tipe").html($('#membership_tipe option').sort(function (x, y) {
+                        return $(y).val() < $(x).val() ? -1 : 1;
+                    }));
+
+                    $("#membership_tipe").get(0).selectedIndex = 0;
                 }
-                //Short Function Ascending//
-                $("#membership_tipe").html($('#membership_tipe option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
 
-                $("#membership_tipe").get(0).selectedIndex = 0;
-
+            },
+            error: function (result) {
+                console.log(result);
             }
         });
     } //endfunction

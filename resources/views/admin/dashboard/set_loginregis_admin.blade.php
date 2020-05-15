@@ -44,6 +44,10 @@
                                 onclick="clickImage(this)" data-toggle="tooltip" data-placement="right"
                                 title="Double Click to View Image"
                                 onerror="this.onerror=null;this.src='/img/kosong.png';">
+                            <a id="edit_img_portal"><small class="ctosca tebal">Edit</small></a>
+                            <a id="cancel_img_portal" style="display: none;"><small
+                                    class="clight tebal">Cancel</small></a>
+
                             <div class="form-group" id="up_img_portal">
                                 <input type="file" id="fileup" name="fileup" class="file-upload-default">
                                 <div class="input-group col-xs-12">
@@ -72,6 +76,10 @@
                                 style="display: none; width: auto; height:40px;" onclick="clickImage(this)"
                                 data-toggle="tooltip" data-placement="right" title="Double Click to View Image"
                                 onerror="this.onerror=null;this.src='/img/kosong.png';">
+                            <a id="edit_icon_portal"><small class="ctosca tebal">Edit</small></a>
+                            <a id="cancel_icon_portal" style="display: none;"><small
+                                    class="clight tebal">Cancel</small></a>
+
                             <div class="form-group" id="up_logo_portal">
                                 <input type="file" id="fileup_logo" name="fileup_logo" class="file-upload-default">
                                 <div class="input-group col-xs-12">
@@ -132,9 +140,9 @@
                                     <input type='color' class='bar' id='colour' onchange="getcolour(this)">
                                 </div>
                                 <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
-                                    <p id="output-color" class="clight">#ffbc42</p>
+                                    <p id="output-color" class="clight">#a1bcca</p>
                                 </div>
-                                <input type="hidden" id="color_base" name="color_base">
+                                <input type="hidden" id="color_base" name="color_base" value="#a1bcca">
                             </div>
                         </div>
                     </div>
@@ -152,9 +160,9 @@
                                     <input type='color' class='bar' id='colour2' onchange="getcolour_accent(this)">
                                 </div>
                                 <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
-                                    <p id="output-color2" class="clight">#80d7e0</p>
+                                    <p id="output-color2" class="clight">#ade2db</p>
                                 </div>
-                                <input type="hidden" id="color_accent" name="color_accent">
+                                <input type="hidden" id="color_accent" name="color_accent" value="#ade2db">
                             </div>
                         </div>
                     </div>
@@ -245,7 +253,7 @@
                     }
                 } else {
                     var tipeform = result[0];
-                    if (tipeform != null || tipeform != "" || tipeform != 0) {
+                    if (tipeform.data != undefined && tipeform != null || tipeform != "" || tipeform != 0) {
                         $('#form_tipe').val(tipeform.data).attr("selected", "selected");
 
                         if (tipeform.ready == true) {
@@ -264,67 +272,98 @@
 
 
                     var portal = result[1];
-                    if (portal.data.headline_text != null && portal.data.headline_text != "" && portal.data.headline_text != undefined) {
-                        $("#headline").val(portal.data.headline_text);
-                        $("#description_custom").val(portal.data.description);
-                        $("#font_headline").val(portal.data.font_headline);
-                        $("#font_headline").css('font-family', portal.data.font_headline);
+                    if (portal.data != undefined) {
+                        if (portal.data.headline_text != null && portal.data.headline_text != "" && portal.data.headline_text != undefined) {
+                            $("#headline").val(portal.data.headline_text);
+                            $("#description_custom").val(portal.data.description);
+                            $("#font_headline").val(portal.data.font_headline);
+                            $("#font_headline").css('font-family', portal.data.font_headline);
 
-                        $("#font_link").val(portal.data.font_link);
-                        $("#font_link").css('font-family', portal.data.font_link);
+                            $("#font_link").val(portal.data.font_link);
+                            $("#font_link").css('font-family', portal.data.font_link);
 
-                        $("#color_base").val(portal.data.base_color);
-                        $("#color_accent").val(portal.data.accent_color);
+                            $("#color_base").val(portal.data.base_color);
+                            $("#color_accent").val(portal.data.accent_color);
 
-                        $("#colour").val(portal.data.base_color);
-                        $("#colour2").val(portal.data.accent_color);
+                            $("#colour").val(portal.data.base_color);
+                            $("#colour2").val(portal.data.accent_color);
 
-                        $("#output-color").html(portal.data.base_color);
-                        $("#output-color2").html(portal.data.accent_color);
+                            $("#output-color").html(portal.data.base_color);
+                            $("#output-color2").html(portal.data.accent_color);
 
-                        $("#color_front").css('background-color', portal.data.base_color);
-                        $("#color_front2").css('background-color', portal.data.accent_color);
+                            $("#color_front").css('background-color', portal.data.base_color);
+                            $("#color_front2").css('background-color', portal.data.accent_color);
+                        }
 
-                    }
 
-                    if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
-                        $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(portal.data.image));
-                    }
 
-                    if (portal.data.icon != undefined || portal.data.icon != null || portal.data.icon != 0) {
-                        $("#img_logo_portal").attr("src", server_cdn + cekimage_cdn(portal.data.icon));
-                    }
+                        if (portal.data.image != undefined || portal.data.image != null || portal.data.image != 0) {
+                            $("#img_portal_admin").attr("src", server_cdn + cekimage_cdn(portal.data.image));
+                        }
 
-                    if (portal.ready == true) {
-                        $('#headline').attr("disabled", "disabled");
-                        $('#description_custom').attr("disabled", "disabled");
+                        if (portal.data.icon != undefined || portal.data.icon != null || portal.data.icon != 0) {
+                            $("#img_logo_portal").attr("src", server_cdn + cekimage_cdn(portal.data.icon));
+                        }
 
-                        $("#colour").attr("disabled", "disabled");
-                        $("#colour2").attr("disabled", "disabled");
+                        if (portal.ready == true) {
+                            // $('#headline').attr("disabled", "disabled");
+                            // $('#description_custom').attr("disabled", "disabled");
 
-                        $("#font_headline").attr("disabled", "disabled");
-                        $("#font_link").attr("disabled", "disabled");
+                            // $("#colour").attr("disabled", "disabled");
+                            // $("#colour2").attr("disabled", "disabled");
 
-                        $("#up_img_portal").hide();
-                        $(".img_portal").show();
+                            // $("#font_headline").attr("disabled", "disabled");
+                            // $("#font_link").attr("disabled", "disabled");
 
-                        $("#up_logo_portal").hide();
-                        $(".logo_portal").show();
+                            $("#up_img_portal").hide();
+                            $(".img_portal").show();
+
+                            $("#up_logo_portal").hide();
+                            $(".logo_portal").show();
+                        }
+
+                        $("#edit_img_portal").click(function (event) {
+                            $("#up_img_portal").show();
+                            $(".img_portal").hide();
+                            $("#cancel_img_portal").show();
+                            $("#edit_img_portal").hide();
+                        });
+
+                        $("#cancel_img_portal").click(function (event) {
+                            $("#up_img_portal").hide();
+                            $(".img_portal").show();
+                            $("#edit_img_portal").hide();
+                        });
+
+
+                        $("#edit_icon_portal").click(function (event) {
+                            $("#up_logo_portal").show();
+                            $(".logo_portal").hide();
+                            $("#cancel_icon_portal").show();
+                            $("#edit_icon_portal").hide();
+                        });
+                        $("#cancel_icon_portal").click(function (event) {
+                            $("#up_logo_portal").hide();
+                            $(".logo_portal").show();
+                            $("#edit_icon_portal").hide();
+                        });
                     }
 
                     var domain = result[2];
-                    if (domain.data.subdomain != null || domain.data.subdomain == "") {
-                        $('#subdomain').val(domain.data.subdomain);
-                        if (domain.ready == true && domain.data.subdomain != "") {
-                            $('#subdomain').attr("disabled", "disabled");
+                    if (domain.data != undefined) {
+                        if (domain.data.subdomain != null || domain.data.subdomain == "") {
+                            $('#subdomain').val(domain.data.subdomain);
+                            // if (domain.ready == true && domain.data.subdomain != "") {
+                            //     $('#subdomain').attr("disabled", "disabled");
+                            // }
                         }
                     }
 
 
-                    if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
-                        $("#btn_commset_login").attr("disabled", "disabled");
-                        $("#btn_commset_login").hide();
-                    }
+                    // if (tipeform.ready == true && portal.ready == true && domain.ready == true) {
+                    //     $("#btn_commset_login").attr("disabled", "disabled");
+                    //     $("#btn_commset_login").hide();
+                    // }
 
                     var membership = result[3];
                     $('#membership').val(membership.data).attr("selected", "selected");
@@ -481,13 +520,23 @@
                         var tipedata = data[1];
                         var tp = '';
                         if (tipedata == 1) {
-                            tp = 'Input Text';
+                            tp = 'Radio Button';
                         } else if (tipedata == 2) {
-                            tp = 'Date Picker';
+                            tp = 'Input Number';
                         } else if (tipedata == 3) {
+                            tp = 'Input Text';
+
+                        } else if (tipedata == 4) {
+                            tp = 'Textarea';
+
+                        } else if (tipedata == 5) {
+                            tp = 'Input Date';
+
+                        } else if (tipedata == 6) {
                             tp = 'Checkbox';
+
                         } else {
-                            tp = 'Radiobutton';
+                            tp = 'Dropdown';
                         }
                         return tp;
                     }
@@ -705,8 +754,8 @@
                 if (result.status == 3 || result.status == 4) {
                     $("#btn_ke_commset_publish").hide();
                     $("#btn_ke_commset_publish").css("display", "none");
-                }else{
-                      $("#btn_ke_commset_publish").show();
+                } else {
+                    $("#btn_ke_commset_publish").show();
                     $("#btn_ke_commset_publish").css("display", "block");
                 }
 

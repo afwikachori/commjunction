@@ -89,97 +89,106 @@ function session_admin_logged() {
             console.log("admin komunitas = " + result.access_token);
             console.log("cdn : " + server_cdn);
 
-
             setTimeout(function () {
                 ui.popup.hideLoader();
             }, 8000);
 
-            var user = result.user;
-            get_list_notif_navbar(user.community_id);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
 
-            if (result != "") {
-                $(".username_komunitas").html(user.user_name);
-                $(".phone_komunitas").html(user.notelp);
-                $(".email_komunitas").html(user.email);
+                var user = result.user;
+                get_list_notif_navbar(user.community_id);
 
-                if (user.community_logo != undefined || user.community_logo != null) {
+                if (result != "") {
+                    $(".username_komunitas").html(user.user_name);
+                    $(".phone_komunitas").html(user.notelp);
+                    $(".email_komunitas").html(user.email);
+
+                    if (user.community_logo != undefined || user.community_logo != null) {
+
+                        $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(user.community_logo));
+                    }
+
+                    if (user.picture != undefined || user.picture != null) {
+                        $(".foto_profil_admin").attr("src", server_cdn + cekimage_cdn(user.picture));
+                        $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(user.picture));
+                    }
+
+                    $(".user_admin_logged").html(user.full_name);
+                    $(".jenis_komunitas_adminloged").html(user.community_type);
+                    $(".judul_komunitas").html(user.community_name);
+                    $(".deskripsi_komunitas").html(user.community_description);
+                    $(".alamat_admin_komunitas").html(user.alamat);
+                    $(".tanggalregis_komunitas").html(formatDate(user.community_created));
+
+                    //edit profile admin
+                    $("#name_admin").val(user.full_name);
+                    $("#username_admin").val(user.user_name);
+                    $("#phone_admin").val(user.notelp);
+                    $("#email_admin").val(user.email);
+                    $("#alamat_admin").val(user.alamat);
+
+                    //transaction managemeng : id community (filter)
+                    $(".id_komunitas_login").val(user.community_id);
+                    $("#komunitas").val(user.community_id);
+                    $("#komunitas2").val(user.community_id);
+                    $("#list_komunitas_notif").val(user.community_id);
+                    $(".nama_komunitas").html(user.community_name);
+
+                    //Notif management
+                    $("#komunitas_notif").val(user.community_id);
+
+                    //edit-profil comm
+                    $("#edit_namacom").val(user.community_name);
+                    $("#edit_deskripsicom").val(user.community_description);
+                    $("#edit_idcom").val(user.user_id);
 
                     $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(user.community_logo));
+
+                    //initial login
+                    if (user.status == 0) {
+                        $("#comm_status_admin").html("Newly");
+                    } else if (user.status == 1) { //first-login
+                        get_initial_feature(result.my_feature); //isi data
+                        $("#initial1").modal('show');
+                        $("#comm_status_admin").html("Newly");
+                    } else if (user.status == 2) {
+                        $("#comm_status_admin").html("Community Active");
+                    } else if (user.status == 3) { //status=0 belum aktif
+                        $("#btn_ke_commset_publish").hide();
+                        $("#comm_status_admin").html("Published");
+                    } else {
+                        $("#btn_ke_commset_publish").hide();
+                        swal("Your account not verified, please wait system or call Commjuction's Administrator", "Inactive", "error");
+                        window.location.href = "/admin";
+                    }
+
+                    //cek membership pricing free or not
+                    if (user.community_membership_type == 1) {
+                        // alert('free');
+                        $(".input_pricemember").hide();
+                        $("#harga_member").val(0);
+                    } else {
+                        // alert('paid');
+                        $(".input_pricemember").show();
+                    }
+
+                    //PUBLISH COMMUNITY CEK
+                    if (user.status_publish != undefined) {
+                        $("#btn_ke_commset_publish").hide();
+                        $("#btn_ke_commset_publish").css("display", "none");
+                    }
+
+
                 }
-
-                if (user.picture != undefined || user.picture != null) {
-                    $(".foto_profil_admin").attr("src", server_cdn + cekimage_cdn(user.picture));
-                    $("#view_edit_user").attr("src", server_cdn + cekimage_cdn(user.picture));
-                }
-
-                $(".user_admin_logged").html(user.full_name);
-                $(".jenis_komunitas_adminloged").html(user.community_type);
-                $(".judul_komunitas").html(user.community_name);
-                $(".deskripsi_komunitas").html(user.community_description);
-                $(".alamat_admin_komunitas").html(user.alamat);
-                $(".tanggalregis_komunitas").html(formatDate(user.community_created));
-
-                //edit profile admin
-                $("#name_admin").val(user.full_name);
-                $("#username_admin").val(user.user_name);
-                $("#phone_admin").val(user.notelp);
-                $("#email_admin").val(user.email);
-                $("#alamat_admin").val(user.alamat);
-
-                //transaction managemeng : id community (filter)
-                $(".id_komunitas_login").val(user.community_id);
-                $("#komunitas").val(user.community_id);
-                $("#komunitas2").val(user.community_id);
-                $("#list_komunitas_notif").val(user.community_id);
-                $(".nama_komunitas").html(user.community_name);
-
-                //Notif management
-                $("#komunitas_notif").val(user.community_id);
-
-                //edit-profil comm
-                $("#edit_namacom").val(user.community_name);
-                $("#edit_deskripsicom").val(user.community_description);
-                $("#edit_idcom").val(user.user_id);
-
-                $(".logo_komunitas").attr("src", server_cdn + cekimage_cdn(user.community_logo));
-
-                //initial login
-                if (user.status == 0) {
-                    $("#comm_status_admin").html("Newly");
-                } else if (user.status == 1) { //first-login
-                    get_initial_feature(result.my_feature); //isi data
-                    $("#initial1").modal('show');
-                    $("#comm_status_admin").html("Newly");
-                } else if (user.status == 2) {
-                    $("#comm_status_admin").html("Community Active");
-                } else if (user.status == 3) { //status=0 belum aktif
-                    $("#btn_ke_commset_publish").hide();
-                    $("#comm_status_admin").html("Published");
-                } else {
-                    $("#btn_ke_commset_publish").hide();
-                    swal("Your account not verified, please wait system or call Commjuction's Administrator", "Inactive", "error");
-                    window.location.href = "/admin";
-                }
-
-                //cek membership pricing free or not
-                if (user.community_membership_type == 1) {
-                    // alert('free');
-                    $(".input_pricemember").hide();
-                    $("#harga_member").val(0);
-                } else {
-                    // alert('paid');
-                    $(".input_pricemember").show();
-                }
-
-                //PUBLISH COMMUNITY CEK
-                if (user.status_publish != undefined ) {
-                    $("#btn_ke_commset_publish").hide();
-                    $("#btn_ke_commset_publish").css("display","none");
-                }
-
-
-
-
             }
         },
         error: function (result) {
@@ -345,7 +354,7 @@ function get_initial_feature(datafitur) {
         html +=
             '<div class="col-md-6 mgku-1">' +
             '<div class="media">' +
-            '<img src="' + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;"'+
+            '<img src="' + imgk + '" class="align-self-center mr-3 rounded-circle" style="width: 10%; height: auto;"' +
             'onerror = "this.onerror=null;this.src=\'' + noimg + '\';">' +
             '<div class="media-body">' +
             '<h6 class="s13 cgrey" style="margin-bottom: 0em;">' +
@@ -519,3 +528,65 @@ $(document).on('change', '.tree input[type=checkbox]', function (e) {
     $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
     e.stopPropagation();
 });
+
+
+
+//CEK PUPBLISH COMMUNITY SETTING
+
+function cek_prepare_publish() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/admin/cek_prepare_publish',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            console.log(result);
+
+            if (result.success == false) {
+                $("#isi_list_setting").html('<center><br><br><h2 class="clight">No Data Publish</h2></center>');
+                ui.popup.show('warning', result.message, 'Warning');
+            } else {
+                var isinya = '';
+                var sready;
+
+                $.each(result, function (i, item) {
+
+                    if (item.ready == true) {
+                        sready = '<small class="cgreen">Ready</small>';
+                    } else {
+                        sready = '<small class="cred">Not Ready</small>';
+                    }
+
+                    isinya += '<div class="row" style="margin-bottom:1em;">' +
+                        '<div class="col-md-6">' +
+                        '<h6 class="cdgrey judulcomsetup">' + item.type + '</h6>' +
+                        '<small class="clight">' + item.name + '</small>' +
+                        '</div>' +
+                        '<div class="col-md-3" style="text-align:right; margin-top:0.5em;">' +
+                        sready +
+                        '</div>' +
+                        '<div class="col-md-3">' +
+                        '<button type="button" onclick="listsetting()" class="btn btn-sm btn-tosca">Setting</button>' +
+                        '</div>' +
+                        '</div>';
+                });
+
+                $("#isi_list_setting").html(isinya);
+            }
+        },
+        error: function (result) {
+            $("#isi_list_setting").html('<center><h2 class="clight">No Data Publish</h2></center>');
+            console.log(result);
+        }
+    });
+}
+
+
+function listsetting() {
+    //   alert("0 ");
+    window.location = '/admin/community_setting';
+}

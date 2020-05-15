@@ -204,18 +204,18 @@
                 <h4 class=" cblue">Activity Log</h4>
             </div>
 
-
-
-            <div class="modal-body" style="height: auto;">
+            <div class="modal-body" style="height: auto; padding: 5%;">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <small class="clight s13">Title</small>
-                            <p class="cgrey" id="detail_judul"></p>
+                            <p class="cgrey" id="detail_judul">-</p>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <small class="clight s13">Description</small>
-                            <p class="cgrey" id="detail_dekripsi"></p>
+                            <small class="clight s13">Module</small>
+                            <p class="cgrey" id="detail_module">-</p>
                         </div>
                     </div>
                 </div>
@@ -223,35 +223,90 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <small class="clight s13">Message Type</small>
-                            <p class="cgrey" id="detail_tipepesan"></p>
+                            <small class="clight s13">Endpoint</small>
+                            <p class="cgrey s12" id="detail_endpoint"></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <small class="clight s13">Community Name</small>
-                            <p class="cgrey" id="detail_komunitas"></p>
+                            <small class="clight s13">Ip Address</small>
+                            <p class="cgrey" id="detail_ip"></p>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Status Request</small>
+                            <p class="cgrey" id="detail_status"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Log Status</small>
+                            <p class="cgrey" id="detail_log_status"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Username</small>
+                            <p class="cgrey" id="detail_username"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">User Id</small>
+                            <p class="cgrey s12" id="detail_userid"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">User Level</small>
+                            <p class="cgrey" id="detail_level"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <small class="clight s13">Elapsed Time</small>
+                            <p class="cgrey" id="detail_elapsed"></p>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <small class="clight s13">Created Date</small>
-                            <p class="cgrey s11" id="detail_date"></p>
+                            <p class="cgrey s13" id="detail_date"></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <small class="clight">Created By</small>
-                            <p class="cgrey" id="detail_by"></p>
+                            <small class="clight">Time</small>
+                            <p class="cgrey" id="detail_time"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <small class="clight s13">Request</small>
+                            <p class="cgrey s11" id="detail_request"></p>
                         </div>
                     </div>
                 </div>
 
                 <small class="clight s13">Response Log</small>
-                <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 180px;
+                <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 130px;
                              border-radius: 10px; width: 100%; margin-top: 0.5em;
                             padding: 1%;">
                     <div class="cgrey s11 jjson" id="detail_response"></div>
@@ -262,7 +317,7 @@
                    padding-left: 5%; padding-right: 5%;">
                 <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                    <i class="mdi mdi-close"></i> Cancel
+                    <i class="mdi mdi-close"></i> Close
                 </button>
             </div>
         </div>
@@ -276,10 +331,8 @@
     var server_cdn = '{{ env("CDN") }}';
     $(document).ready(function () {
 
+        get_list_komunitas_support($('#status_komunitas').val());
 
-        if ($('#status_komunitas').val() == "all") {
-            get_list_komunitas_support("all");
-        }
     });
 
     function tabel_tes() {
@@ -442,11 +495,10 @@
             console.log(data);
             $("#modal_detail_log_activity").modal('show');
 
-            // activity: "List All News"
+            // : "List All News"
             // date: "2020-04-20T13:15:53.641Z"
             // elapsed_time: "21"
             // endpoint: "/api/module/news/listall"
-            // feature_id: "14"
             // ip: "4.6.6.126"
             // log_status: "Log Success"
             // module: "News Module"
@@ -461,14 +513,27 @@
             // _id: "5e9da0893205c90011f2323e"
 
             $("#detail_response").jJsonViewer(data.response);
-
-            // $("#").html();
-            // $("#").html();
-            // $("#").html();
-            // $("#").html();
-            // $("#").html();
-            // $("#").html();
-            // $("#").html();
+            $("#detail_judul").html(data.activity);
+            $("#detail_date").html(dateTime(data.date));
+            $("#detail_endpoint").html(data.endpoint);
+            $("#detail_ip").html(data.ip);
+            $("#detail_log_status").html(data.log_status);
+            $("#detail_module").html(data.module);
+            $("#detail_request").html(data.request);
+            $("#detail_status").html(data.status);
+            $("#detail_username").html(data.user_name);
+            $("#detail_userid").html(data.user_id);
+            var lv = '';
+            if (data.user_level == 1) {
+                lv = 'Admin Commjunction';
+            } else if (data.user_level == 2) {
+                lv = 'Admin Community';
+            } else {
+                lv = 'Subscriber';
+            }
+            $("#detail_level").html(lv);
+            $("#detail_elapsed").html(data.elapsed_time);
+            $("#detail_time").html(data.time);
 
 
         });

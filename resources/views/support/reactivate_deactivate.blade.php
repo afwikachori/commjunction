@@ -261,7 +261,7 @@
 
     $(document).ready(function () {
 
-        get_dropdownlist_komunitas_support();
+
         if ($('#status_komunitas').val() == "all") {
             get_list_komunitas_support("all");
         }
@@ -278,8 +278,24 @@
 
 
     function get_list_komunitas_support(id_status) {
+         get_dropdownlist_komunitas_support();
+
         $('#tabel_komunitas_support').DataTable().clear().destroy();
         $('#tabel_komunitas_support').empty();
+
+        var heads = '<thead>' +
+                    '<tr>' +
+                    '<th><b>ID</b></th>' +
+                    '<th><b>Logo</b></th>' +
+                    '<th><b>Community Name</b></th>' +
+                    '<th><b>Description</b></th>' +
+                    '<th><b>Status</b></th>' +
+                    '<th><b>Date Created</b></th>' +
+                    '<th><b>Action</b></th>' +
+                    '</tr>' +
+                    '</thead>';
+
+        $('#tabel_komunitas_support').html(heads);
 
         var tabel = $('#tabel_komunitas_support').DataTable({
             dom: 'Bfrtip',
@@ -297,6 +313,10 @@
                 }
             ],
             responsive: true,
+            paging: false,
+            fixedHeader: {
+                header: true,
+            },
             language: {
                 paginate: {
                     next: '<i class="mdi mdi-chevron-right"></i>',
@@ -390,6 +410,7 @@
                 ],
 
         });
+
 
         //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_komunitas_support tbody').on('click', 'button', function () {
@@ -504,6 +525,19 @@
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
+        var heads = '<thead><tr>' +
+                    '<th><b>ID Subscriber</b></th>' +
+                    '<th><b>Photo</b></th>' +
+                    '<th><b>Subcriber Name</b></th>' +
+                    '<th><b>username</b></th>' +
+                    '<th><b>Status</b></th>' +
+                    '<th><b>Date Created</b></th>' +
+                    '<th><b>Membership</b></th>'+
+                    '<th><b>Action</b></th>' +
+                    '</tr></thead>';
+
+        $('#tabel_subscriber').html(heads);
+
 
         var tabel = $('#tabel_subscriber').DataTable({
             dom: 'Bfrtip',
@@ -521,6 +555,10 @@
                 }
             ],
             responsive: true,
+            paging: false,
+            fixedHeader: {
+                header: true,
+            },
             language: {
                 paginate: {
                     next: '<i class="mdi mdi-chevron-right"></i>',
@@ -615,7 +653,7 @@
                             return '<small class="cgrey s13">First Login</small>';
                         } else if (data == 2) {
                             return '<small class="cgrey s13">Pending Membership</small>';
-                        }else {
+                        } else {
                             return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                                 '<i class="mdi mdi-lead-pencil"></i>' +
                                 '</button>';
@@ -635,6 +673,7 @@
 
         });
 
+
         //DETAIL USERTYPE FROM DATATABLE
         $('#tabel_subscriber tbody').on('click', 'button', function () {
             $("#status_subs").val("");
@@ -649,26 +688,26 @@
                 uistat = '<small class="cgrey tebal"> Deactive </small>';
             } else {
                 uistat = '<small class="cblue tebal"> Active </small>';
-                 $('#status_active_subs').attr("checked", true);
+                $('#status_active_subs').attr("checked", true);
             }
             $("#status_label_subs").html(uistat).show();
 
-        $("#modal_reactive_subscriber").modal('show');
-        $("#id_komunitas_subs").val(id_kom);
-        $("#id_subs").val(data.user_id);
-        $("#status_subs").val(data.status);
-    });
+            $("#modal_reactive_subscriber").modal('show');
+            $("#id_komunitas_subs").val(id_kom);
+            $("#id_subs").val(data.user_id);
+            $("#status_subs").val(data.status);
+        });
 
-    $("#status_active_subs").on('change', function () {
-        if ($(this).is(':checked')) {
-            $("#status_label_subs").show();
-            $("#stat_deactive_subs").hide();
-        }
-        else {
-            $("#stat_deactive_subs").show();
-            $("#status_label_subs").hide();
-        }
-    });
+        $("#status_active_subs").on('change', function () {
+            if ($(this).is(':checked')) {
+                $("#status_label_subs").show();
+                $("#stat_deactive_subs").hide();
+            }
+            else {
+                $("#stat_deactive_subs").show();
+                $("#status_label_subs").hide();
+            }
+        });
 
     } //endfunction
 

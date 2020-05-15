@@ -9,6 +9,9 @@
     <div class="col-md-5">
         <label class="cgrey" lang="en">Manage your membership type<label>
     </div>
+    <div class="col-md-5" style="text-align: right;">
+            <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_create_membership" lang="en">Create Membership</button>
+    </div>
 </div>
 <br>
 
@@ -106,7 +109,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight" lang="en">Membership Title</small>
-                                <input type="text" id="judul_member" name="judul_member" class="form-control input-abu">
+                                <input type="text" id="judul_member" name="judul_member" class="form-control input-abu" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -120,7 +123,7 @@
                         <div class="col-md-12 form-group">
                             <small class="clight" lang="en">Description</small>
                             <textarea class="form-control input-abu" id="deskripsi_member" name="deskripsi_member"
-                                rows="2"></textarea>
+                                rows="2" required></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -524,7 +527,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
 
                 if (result.success == false) {
                     if (result.status == 401 || result.message == "Unauthorized") {
@@ -579,8 +582,8 @@
                     $("#isi_membership_admin").html(parent_ui);
                 }
             },
-            error: function (error) {
-                ui.popup.show('error', error.message, 'Failed');
+            error: function (result) {
+                ui.popup.show('error', result.message, 'Failed');
                 console.log(result);
             }
         });

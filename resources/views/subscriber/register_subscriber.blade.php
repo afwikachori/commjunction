@@ -240,14 +240,12 @@
                                 <div class="container" style="margin-top: 2em;">
                                     <div class="row">
                                         <div class="col-4">
-                                            <div class="form-group row">
                                                 <center>
                                                     <img src="/img/loading1.gif" id="icon_comm_subs"
                                                         class="rounded-circle img-fluid"
                                                         style="width: 50%; height: auto;"
                                                         onerror="this.onerror=null;this.src='/visual/logo2.png';">
                                                 </center>
-                                            </div>
                                         </div>
 
                                         <div class="col-8">
@@ -390,8 +388,9 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+
                 var result = result[0];
+                   console.log(result);
                 if (result != "") {
                     $("#community_id").val(result.id);
                     $("#icon_comm_subs").attr("src", cdn + cekimage_cdn(result.logo));
@@ -523,7 +522,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == false) {
                     $("#email_subs").removeClass("is-valid").addClass("is-invalid");
                     $("#pesan_formatemail").hide();
@@ -581,7 +580,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == true) {
                     $("#notlp_subs").removeClass("is-invalid").addClass("is-valid");
                     $("#pesan_phoneformat").hide();
@@ -638,7 +637,7 @@
             type: 'POST',
             datatype: 'JSON',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == true) {
                     $("#username_subs").removeClass("is-invalid").addClass("is-valid");
                     $("#pesan_usernameformat").hide();
@@ -696,8 +695,23 @@
     });
 
 
-
-
+    let currForm1 = document.getElementById('form_regispersonal_subs');
+    currForm1.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener(('input'), () => {
+            if (input.checkValidity()) {
+                input.classList.remove('is-invalid')
+                input.classList.add('is-valid');
+                $("#submit_personalsubs").attr("disabled",false);
+            } else {
+                input.classList.remove('is-valid')
+                input.classList.add('is-invalid');
+            }
+            // var is_valid = $('.form-control').length === $('.form-control.is-valid').length;
+            var is_valid = 6 === $('.form-control.is-valid').length;
+            $("#submit_personalsubs").attr("disabled", !is_valid);
+            // console.log($('.form-control.is-valid').length +" ___________ "+  $('.form-control').length);
+        });
+    });
 
 </script>
 @endsection

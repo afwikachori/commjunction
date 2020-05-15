@@ -382,6 +382,73 @@
 
 
 
+    <!-- MODAL DETAIL MEMBERSHIP TYPE  -->
+    <div class="modal fade" id="modal_detail_membership_subs" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="width: 100%; max-width: 550px;">
+            <div class="modal-content" style="background-color: #ffffff;">
+                <div style="padding: 5%; padding-bottom: 0% !important;">
+                    <img src="/visual/kananatas2.png" class="img-mdl-top">
+                    <small class="modal-title cgrey2">Detail Information</small>
+                    <br>
+                    <h4 class=" cblue">Membership Type</h4>
+                </div>
+
+                <div class="modal-body" style="height: auto; padding-left: 5% !important;
+            padding-right: 5% !important; padding-top:1%;">
+                    <center>
+                        <img src="/img/default.png" class="rounded-circle img-fluid" id="img_membershiptipe"
+                            onerror="this.onerror=null;this.src='/img/default.png';"
+                             style="margin-bottom:0.7em; width: 65px; height: 65px;">
+                    </center>
+                    <div class="row">
+                         <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <small class="clight s13" lang="en">Title</small>
+                                <p class="cgrey s14" id="member_judul"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight s13" lang="en">Pricing</small>
+                                <p class="cgrey s14" id="member_harga"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <small class="clight s13" lang="en">Description</small>
+                        <p class="cgrey s14" id="member_deskripsi"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="clight">Features : </small> &nbsp;
+                                <small class="ctosca s15" id="total_fitur_member"> 0</small>
+                            </div>
+                        </div>
+                        <div class="card-deck" id="show_feature_member"
+                            style="margin-top: 0.5em; width: 100%; overflow-y: auto; overflow-x: hidden; height:170px;">
+
+                        </div>
+                    </div>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none; margin-bottom: 0.5em;
+                   padding-left: 5%; padding-right: 5%;">
+                    <img src="/visual/kiribawah2.png" class="img-mdl-bottom">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 6px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
     @else

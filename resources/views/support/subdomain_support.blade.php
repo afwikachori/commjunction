@@ -150,6 +150,19 @@
         $('#tabel_komunitas_support').DataTable().clear().destroy();
         $('#tabel_komunitas_support').empty();
 
+        var thead = '<tr>' +
+            '<th><b>ID</b></th>' +
+            '<th><b>Logo</b></th>' +
+            '<th><b>Community Name</b></th>' +
+            '<th><b>Subdomain</b></th>' +
+            '<th><b>Status Subdomain</b></th>' +
+            '<th><b>Status</b></th>' +
+            '<th><b>Date Created</b></th>' +
+            '<th><b>Action</b></th>' +
+            '</tr>';
+
+        $('#tabel_komunitas_support').html(thead);
+
         var tabel = $('#tabel_komunitas_support').DataTable({
             dom: 'Bfrtip',
             buttons: [
@@ -221,7 +234,7 @@
                         if (data == null || data == "null") {
                             return '<center><span class="s12 text-wrap"> - </span></center>';
                         } else {
-                            return '<span class="s12 text-wrap">' + data + '</span>';
+                            return '<span class="s12">' + data + '</span>';
                         }
 
                     }
@@ -231,7 +244,7 @@
                     render: function (data, type, row, meta) {
                         if (data == "Pending") {
                             return '<label class="badge bg-abu cwhite">' + data + '</label>';
-                        } else if ( data == "Accept") {
+                        } else if (data == "Accept") {
                             return '<label class="badge bg-tosca cwhite"> Accept </label>';
                         } else {
                             return '<label class="badge bg-red cwhite"> Reject </label>';
@@ -242,7 +255,7 @@
                 {
                     mData: 'status_title',
                     render: function (data, type, row, meta) {
-                        return '<span class="s13 text-wrap width-300">' + data + '</span>';
+                        return '<span class="s13">' + data + '</span>';
                     }
                 },
                 {
@@ -256,8 +269,8 @@
                     render: function (data, type, row, meta) {
                         if (data == 0) {
                             return '<small class="cgrey s13">Newly</small>';
-                        // } else if (data == 1) {
-                        //     return '<small class="cgrey s13">First Login</small>';
+                            // } else if (data == 1) {
+                            //     return '<small class="cgrey s13">First Login</small>';
                         } else {
                             return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
                                 '<i class="mdi mdi-lead-pencil"></i>' +

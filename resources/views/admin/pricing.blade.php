@@ -183,7 +183,8 @@
                 $("#time-pricing1").click();
             },
              error: function (result) {
-                console.log("Cant Show All Data Regis");
+                 console.log(result);
+                console.log("Cant Show Data Pricing");
             },
         });
     }

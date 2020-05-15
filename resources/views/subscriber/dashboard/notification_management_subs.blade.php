@@ -21,8 +21,30 @@
     </div>
 </div>
 <!-- </div> -->
-<br>
+<br><br>
 <div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-tosca btn-sm" style="margin-top: 0.5em; margin-bottom: 2em;" data-toggle="modal"
+            data-target="#modal_filter_notif_subs">
+            Filter Notification</button>
+        </div>
+</div>
+
+<div class="row">
+    <div id="nodata_card_notif" class="col-md-12" style="margin-right: auto; margin-left: auto; height: 300px;">
+        <center>
+            <br><br><br><br><br>
+            <h1 class="clight" lang="en">No Data Available</h1>
+        </center>
+    </div>
+
+    <div id="isi_card_notif" class="card-deck" style="width: 100%;">
+
+    </div>
+</div>
+
+
+<!-- <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body memberku">
@@ -49,7 +71,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+
 
 
 <!-- MODAL Filter NOTIFICATION-->
@@ -97,8 +121,6 @@
 </div>
 
 
-
-
 <!-- MODAL DETAIL NOTIFICATION-->
 <div class="modal fade" id="modal_detail_notif" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -121,7 +143,7 @@
                             <h6 class="cgrey">Notification Content</h6>
                             <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
                              border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%;">
+                            padding: 5%; height: 300px; overflow-y: scroll;">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -252,13 +274,98 @@
     $(document).ready(function () {
 
         get_list_setting_notif_subs();
-        tabel_notif_unread();
+        // tabel_notif_unread();
+        show_card_notification();
     });
+
+    function show_card_notification() {
+        $('#modal_filter_notif_subs').modal('hide');
+        var filter = $("#filter_read").val();
+
+        if (filter != "") {
+            var read = filter;
+            var limit = 000;
+        } else {
+            var read = "1";
+            var limit = 10;
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/subscriber/get_list_notif_navbar',
+            type: 'POST',
+            dataSrc: '',
+            data: {
+                "read_status": read, //1:notread 2:read
+                "limit": limit
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.success === false) {
+                    $("#isi_card_notif").hide();
+                    $("#nodata_card_notif").show();
+
+                } else {
+                    if (result.length != 0) {
+                        var isiui = '';
+                        $.each(result, function (i, item) {
+                            var inidt = [item.id, item.level_status, item.community_id];
+                            isiui += '<div class="col-md-4 stretch-card grid-margin">' +
+                                '<div class="card sumari bg-gradient-kuning">' +
+                                '<div class="card-body sumari">' +
+                                '<div class="row">' +
+                                '<div class="col-9"></div>' +
+                                '<div class="col">' +
+                                '<i class="mdi mdi-bell-outline mdi-24px float-right top-ico ctosca"></i>' +
+                                '</div>' +
+                                '</div>' +
+
+                                '<div class="row">' +
+                                '<div class="col-md-12">' +
+                                '<span class="ctosca s15 tebal" lang="en">' + item.title + '</span>  &nbsp;'+
+                                '<span class="cteal s13">(' + item.notification_sub_type_title + ')</span><br>' +
+                                '<small class="cgrey2 mt-2">from : </small><br>' +
+                                '<small class="cgrey tebal">' + item.sender_level_title + '</small> &nbsp;&nbsp;' +
+                                '/ <small class="cgrey2">' + item.created_by_title + '</small><br>' +
+                                '<small class="clight mt-2 tebal">' + dateTime(item.created_at) + '</small><br>' +
+                                '</div></div>'+
+                                '<div class="row mt-3 mb-4">' +
+                                '<div class="col-md-7"><small class="cteal">' + item.read_status_title + '</small></div>' +
+                                '<div class="col-md-5" style="text-align:right;">' +
+                                '<a type="button" class="btn btn-tosca btn-sm konco2"' +
+                                'onclick="detail_notif_subs(\'' + inidt + '\')">' +
+                                '<small class="cwhite" lang="en"><i class="mdi mdi-eye btn-icon-prepend"></i> &nbsp; Detail</small></a>' +
+                                '</div>' +
+                                '</div>' +
+
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        $("#isi_card_notif").html(isiui);
+                        $("#nodata_card_notif").hide();
+
+                    }
+                }
+            },
+            error: function (result) {
+                console.log(result);
+                $("#isi_card_notif").hide();
+                $("#nodata_card_notif").show();
+            }
+        });
+    }
+
 
 
 
     $("#btn_generate_notif_admin").click(function () {
-        tabel_notif_unread();
+        // tabel_notif_unread();
+        show_card_notification();
     });
 
 
@@ -266,12 +373,12 @@
     function tabel_notif_unread() {
         var filter = $("#filter_read").val();
 
-        if(filter != ""){
+        if (filter != "") {
             var read = filter;
             var limit = 000;
-        }else{
-             var read = "1";
-             var limit = 10;
+        } else {
+            var read = "1";
+            var limit = 10;
         }
 
         var tday = new Date();
@@ -337,7 +444,7 @@
 
         });
 
-         $("#filter_read").val("");
+        $("#filter_read").val("");
 
     }
 
