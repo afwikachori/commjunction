@@ -57,6 +57,7 @@ var ui = {
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
     session_subscriber_logged();
+    init_ready();
 
 });
 
@@ -145,7 +146,7 @@ function session_subscriber_logged() {
             $("#membership_id").val(user.membership_id);
             if (user.membership_id != 0) {
                 show_my_membership(user.membership_id);
-            }else{
+            } else {
                 get_pricing_membership();
             }
 
@@ -584,6 +585,7 @@ function show_card_pesan_inbox_subs(result) {
 
 function show_my_membership(idmember) {
     $('.hideisimember').hide();
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -596,6 +598,7 @@ function show_my_membership(idmember) {
         timeout: 30000,
         data: {
             "membership_id": idmember,
+            "_token": token,
         },
         success: function (result) {
             // console.log(result);
@@ -1088,3 +1091,323 @@ $('#fileup').on('change', function () {
         $(this).next('.custom-file-label').html(fileName);
     }
 });
+
+
+function init_ready() {
+    if ($("#page_news_management_subs").length != 0) {
+        table_news_list();
+    }
+
+    if ($("#page_friends_subs").length != 0) {
+        suggestion_list();
+        tabel_friend_list();
+        tabel_tes_friends();
+    }
+}
+
+
+
+/// ------ NEWS MANAGEMENT  -----------
+function table_news_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/table_news_list',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success === false) {
+                $("#nodata_news").show();
+                $("#news_container").hide();
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                if (result != "News Empty") {
+                    var newslist = '';
+                    var jumlah = 0;
+                    var nofoto = '/img/artikel.jpg';
+
+                    $.each(result, function (i, item) {
+                        jumlah++;
+                        $news_id = parseInt(item.id);
+                        // $date=item.author_name;
+
+                        var headpic = server_cdn + cekimage_cdn(item.image);
+                        newslist += '<div class="news-card" id="' + item.id + '">' +
+                            '<div class="row"><div class="col-md-6 news_pic_container">' +
+                            '<img src="' + headpic + '" class="img-fluid picimg_news"' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"></div>' +
+                            '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
+                            '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
+                            '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
+                            '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
+                            'See Detail' +
+                            '</a></div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#nodata_news").hide();
+                    $("#news_container").html(newslist);
+                } else {
+                    $("#nodata_news").show();
+                    $("#news_container").hide();
+                }
+
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show News");
+            console.log(result);
+            $("#nodata_news").show();
+            $("#news_container").hide();
+        }
+    });
+}
+
+function showPassword() {
+    var a = document.getElementById("confirmpass_user");
+    if (a.type == "password") {
+        a.type = "text";
+    } else {
+        a.type = "password";
+    }
+}
+
+function send_message(friend_id) {
+    $friend_id = friend_id;
+    $("#modal_send_message").modal("show");
+    $("#friend_id").val($friend_id);
+};
+
+function send_whatsapp(friend_id) {
+    $friend_id = friend_id;
+    $phonum = +628123229810;
+    $pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+
+}
+/// -------- END NEW MANAGEMENT -----------
+
+
+
+///---------- FRIEND MANAGEMENT SUBS ---------
+function tabel_tes_friends() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_friend_management',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (result) {
+            console.log("Cant Show");
+        }
+    });
+}
+
+function tabel_friend_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_friend_manage').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_friend_management',
+            type: 'POST',
+            dataSrc: '',
+            data : {
+                "_token" : token
+            },
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                $('#tabel_friend_manage tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            {
+                mData: 'image',
+                render: function (data, type, row, meta) {
+                    // console.log(data);
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                }
+            },
+            { mData: 'full_name' },
+            {
+                mData: 'friend_id',
+                render: function (data, type, row, meta) {
+                    return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye matadetail"></i></a>' +
+                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<i class="mdi mdi-email matadetail"></i></i></a>' +
+                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + data + '")>' +
+                        '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
+                }
+            }
+        ],
+
+    });
+}
+
+function suggestion_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_sugestion',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if(result.length == 0){
+                $(".divkonco.pagefriend").hide();
+            }
+            if (result.success === false) {
+                $(".divkonco.pagefriend").hide();
+            } else {
+                var suggestionlist = '';
+                var jumlah = 0;
+                var nofoto = '/img/kosong.png';
+
+                $.each(result, function (i, item) {
+                    jumlah++;
+                    $news_id = parseInt(item.id);
+                    var $headpic = server_cdn + cekimage_cdn(item.image);
+
+                    suggestionlist += '<div class="card konco" id="' + item.user_id + '">' +
+                        '<div class="card-body color">' +
+                        '<div class="close_konco">' +
+                        '<button type="button" class="close cgrey2" aria-label="Close"' +
+                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>' +
+                        '<center>' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                        '</button>' +
+                        '<center>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+
+                $("#suggestion_list").html(suggestionlist);
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show");
+        }
+    });
+}
+
+function add_friend_suggest_subs(idsubs) {
+    alert(idsubs);
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/add_friend_suggest_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "user_id_subs": idsubs
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                swal("Yeay!", "Friend has been added", "success");
+                location.reload();
+            }
+        },
+        error: function (result) {
+            swal("Sorry!","Failed to add new friend", "error");
+            console.log(error);
+        }
+    });
+}
+
+function showPassword() {
+    var a = document.getElementById("confirmpass_user");
+    if (a.type == "password") {
+        a.type = "text";
+    } else {
+        a.type = "password";
+    }
+}
+
+function send_message(friend_id) {
+    $friend_id = friend_id;
+    $("#modal_send_message_subs").modal("show");
+    $("#friend_id").val($friend_id);
+    // var editor = new nicEditor({iconsPath : '/img//nicEditorIcons.gif'}).panelInstance('news_edit_content');
+    //  $('.nicEdit-panelContain').parent().width('100%');
+    // $('.nicEdit-main').parent().width('98%');
+    // $('.nicEdit-main').width('98%');
+    // $('.nicEdit-main').height('200px');
+
+    // var content  = nicEditors.findEditor('news_edit_content');
+    //       content.setContent(res.content);
+    //       $('textarea[name=news_edit_content]').val(res.content);
+
+    //$("#news_picture").attr("src", server_cdn+res.image);
+    // $("#news_picture").attr("src", server_cdn+res.image);
+    //   $("#edit_title").val(res.title);
+    //   $("#id_news").val(res.id);
+    //   $("#toggle-status").val(res.id);
+    //   $("#toggle-headline").val(res.id);
+};
+
+function send_whatsapp(friend_id) {
+    $friend_id = friend_id;
+    $phonum = +628123229810;
+    $pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+
+}
+///---------- FRIEND MANAGEMENT SUBS ---------

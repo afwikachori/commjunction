@@ -162,25 +162,24 @@ class SubscriberController extends Controller
         ]);
 
         $input = $request->all(); // getdata form by name
+
+        $datain =  $request->except('_token', 'fullname_subs', 'notlp_subs', 'email_subs', 'username_subs', 'password_subs', 'passconfirm_subs', 'name_community', 'sso_type', 'sso_token', 'community_id');
+
+        // return $datain;
+        $dtin = array_chunk($datain, 2);
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "param_id" => $dt[0],
+                "value" => $dt[1],
+            ];
+            array_push($data, $dataArray);
+        }
+        // return $data;
+
         $url_comname = $input['name_community'];
         $url = env('SERVICE') . 'registration/subscriber';
         try {
-            // $client = new \GuzzleHttp\Client();
-            // $response = $client->request('POST', $url, [
-            //     'form_params' =>  [
-            //         'full_name'     => $input['fullname_subs'],
-            //         'notelp'        => $input['notlp_subs'],
-            //         'email'         => $input['email_subs'],
-            //         'user_name'     => $input['username_subs'],
-            //         'password'      => $input['password_subs'],
-            //         'community_id'  => $input['community_id'],
-            //         "sso_type"      => $input['sso_type'],
-            //         "sso_token"     => $input['sso_token']
-            //     ]
-            // ]);
-
-            // $response = $response->getBody()->getContents();
-            // $json = json_decode($response, true);
 
             $req_input =  [
                 'full_name'     => $input['fullname_subs'],
@@ -190,11 +189,12 @@ class SubscriberController extends Controller
                 'password'      => $input['password_subs'],
                 'community_id'  => $input['community_id'],
                 "sso_type"      => $input['sso_type'],
-                "sso_token"     => $input['sso_token']
+                "sso_token"     => $input['sso_token'],
+                "custom_input"  => $data
             ];
 
-            $respon_enkrp = $this->encryptedPost($request, $req_input, $url, null);
-            // return $respon;
+            $respon_enkrp = $this->encryptedPost($request, $req_input, $url, "array");
+            // return $respon_enkrp;
             $respon = json_decode($respon_enkrp, true);
 
             if ($respon['success'] == true) {
@@ -246,6 +246,7 @@ class SubscriberController extends Controller
             } else {
                 $bgportal = env('CDN') .'/'. $portal;
             }
+            // require $bgportal;
 
             $image = imagecreatefromjpeg($bgportal);
             $thumb = imagecreatetruecolor(1, 1);
@@ -997,6 +998,7 @@ class SubscriberController extends Controller
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'dashboard/membership';
         $input = $request->all();
+        $csrf = $input['_token'];
 
         $token = $ses_login['access_token'];
         $dataku = [
@@ -1006,7 +1008,7 @@ class SubscriberController extends Controller
         // return $input;
 
         try {
-            $postdata = $this->post_get_request($dataku, $url, false, $token);
+            $postdata = $this->post_get_request($dataku, $url, false, $token, $csrf);
             return $postdata['data'];
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
@@ -1519,36 +1521,44 @@ class SubscriberController extends Controller
     }
 
 
-    public function get_friends_sugestion()
+    public function get_friends_sugestion(Request $request)
     {
         $ses_login = session()->get('session_subscriber_logged');
-
         $url = env('SERVICE') . 'module/friend/friendsugest';
-        $client = new \GuzzleHttp\Client();
 
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
+
+        // $client = new \GuzzleHttp\Client();
+        // try {
+        //     $response = $client->request('POST', $url, [
+        //         'headers' => [
+        //             'Content-Type' => 'application/json',
+        //             'Authorization' => $ses_login['access_token']
+        //         ]
+        //     ]);
+
+        //     $response = $response->getBody()->getContents();
+        //     $json = json_decode($response, true);
+        //     return $json['data'];
+        // } catch (ClientException $errornya) {
+        //     $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+        //     return $error;
+        // } catch (ServerException $errornya) {
+        //     $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+        //     return $error;
+        // } catch (ConnectException $errornya) {
+        //     $error['status'] = 500;
+        //     $error['message'] = "Internal Server Error";
+        //     $error['success'] = false;
+        //     return $error;
+        // }
     }
 
 
@@ -1771,56 +1781,28 @@ class SubscriberController extends Controller
     public function add_friend_suggest_subs(Request $request)
     {
         $ses_login = session()->get('session_subscriber_logged');
-        $input = $request->all();
         $url = env('SERVICE') . 'module/friend/addfriend';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
 
-        // dd($input);
-
-        $bodyku = json_encode([
+        $input = $request->all();
+        $body =[
             "user_id"     => $input['user_id_subs'],
-        ]);
-
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
+        $csrf = $input['_token'];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                alert()->success('Add friend request successfully sent', 'Sent')->autoclose(4000);
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(3500);
-            return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
+
     }
 
     public function tes_enkrip(Request $request)
     {
         // dd(env('CDN'));
         $input = $request->all();
+        $csrf = $input['_token'];
         $url = env('SERVICE') . 'auth/commsubs';
 
         $data =  [
@@ -1829,7 +1811,7 @@ class SubscriberController extends Controller
             'community_id' => $input['id_community']
         ];
 
-        return $this->post_get_request($data, $url, false, null);
+        return $this->post_get_request($data, $url, false, null, $csrf);
 
 
         // $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);

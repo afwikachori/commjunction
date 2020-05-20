@@ -16,6 +16,7 @@
             </div>
 
 <div class="row">
+    <div id="page_edit_subs_management"></div>
  <div class="col-md-8">
   <div class="card" style="min-height: 485px;">
   <div class="card-header putih">
@@ -95,25 +96,25 @@ zz
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
       <div class="form-group mb-1half">
         <label class="cgrey1 tebal">Activiyt Satu </label>
         <br>
-        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small> 
+        <small class="clight">Lorem ipsum notifikasi test lorem ipsum lorem lorem ipsum notif</small>
       </div>
 
 
@@ -127,17 +128,4 @@ zz
 
 
 @endsection
-@section('script')
-<script type="text/javascript">
-var server_cdn = '{{ env("CDN") }}';
-$(document).ready(function () {
 
-file_browser_profil();
-
-});
-
-
-
-</script>
-
-@endsection

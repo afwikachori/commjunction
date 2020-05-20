@@ -12,19 +12,24 @@ use GuzzleHttp\Exception\ConnectException;
 trait SendRequestController
 {
 
-    function post_get_request($data, $url, $get, $token)
+    function post_get_request($data, $url, $get, $token, $csrf)
     {
 
         $client = new \GuzzleHttp\Client();
 
         $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $token
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $token
+            ]
         ];
 
         $datakirim = [
             'body' => json_encode($data),
-            'headers' => $headers,
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => $token
+            ]
         ];
 
 
@@ -36,12 +41,12 @@ trait SendRequestController
 
         try {
             if ($get == true) {
-                $response = $client->request('POST', $url, [$headers]);
-            } else if($get == false) {
+                $response = $client->post($url, $headers);
+            } else if ($get == false) {
                 $response = $client->post($url, $datakirim);
-            }else if($get == "getdata"){
+            } else if ($get == "getdata") {
                 $response = $client->post($url, ['form_params'  => $data]);
-            }else{
+            } else {
                 $response = $client->post($url);
             }
 
@@ -63,8 +68,4 @@ trait SendRequestController
             return $error;
         }
     }
-
-
-
-
 } //end-traits

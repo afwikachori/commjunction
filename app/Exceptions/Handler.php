@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Alert;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -44,8 +46,11 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
+
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+        // alert()->error('Request Timeout', 'Sorry!')->autoclose(4500);
+        // return back();
     }
 }

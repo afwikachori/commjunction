@@ -51,14 +51,27 @@ trait RequestHelper
                 'Encrypt_rsa' => 'true'
             ];
             $bodyregis = $this->encrypt_regis($input);
-            // return $bodyregis;
+
             $body = $bodyregis;
-            // $hasil = '';
-            // foreach ($body  as $i) {
-            //     $dekrip = $this->dekrip_proses(json_encode($i));
-            //     $hasil .= $dekrip;
-            // }
-            // return $hasil;
+        } else if ($token == "array") {
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Encrypt_rsa' => 'true'
+            ];
+            $stringcek = json_encode($input);
+            if (strlen($stringcek) >= 300) {
+                $bodyregis = $this->encrypt_array($input);
+                // return $bodyregis;
+                $body = $bodyregis;
+                // $hasil = '';
+                // foreach ($body  as $i) {
+                //     $dekrip = $this->dekrip_proses(json_encode($i));
+                //     $hasil .= $dekrip;
+                // }
+                // return $hasil;
+            }else{
+                $body = $this->encrypt($input);
+            }
         } else {
             $headers = [
                 'Content-Type' => 'application/json',
@@ -172,15 +185,15 @@ trait RequestHelper
             $encode = json_encode($list);
 
             if ($i == 'community') {
-                $first =  '{'.substr($encode, 1);
+                $first =  '{' . substr($encode, 1);
             } else {
                 $first =  substr($encode, 1);
             }
 
-            if($i == 'payment'){
-                $last = substr($first, 0, -1).'}';
-            }else{
-                 $last = substr($first, 0, -1);
+            if ($i == 'payment') {
+                $last = substr($first, 0, -1) . '}';
+            } else {
+                $last = substr($first, 0, -1);
             }
 
             if ($index != $n) $last .= ',';
@@ -188,6 +201,21 @@ trait RequestHelper
             array_push($data, $encrypted);
         }
         return $data;
+    }
+
+    private function encrypt_array($plain)
+    {
+
+        $jcode = json_encode($plain);
+        $output = '';
+        $hasil = [];
+        $pecah = str_split($jcode, 200);
+        foreach ($pecah as $i => $dt) {
+            $encrypted = $this->proses_enkrip($pecah[$i]);
+            array_push($hasil, $encrypted);
+            // $output .= $encrypted;
+        }
+        return $hasil;
     }
 
 

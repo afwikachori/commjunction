@@ -77,58 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div id="community_setting_link" style="margin-top: 2em; padding-left: 10%;">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="col-md-8"></div>
-                                <h6 class="cdgrey judulcomsetup" lang="en">Login & Registrasion</h6>
-                                <small class="clight" lang="en">Set up your Community Login Page & Registration
-                                    Customization</small>
-                            </div>
-                            <div class="col-md-4" style="margin-bottom: 0.5em;">
-                                <button type="button" onclick="location.href ='/admin/settings/loginregis'"
-                                    class="btn btn-tosca btn-sm btncomset"><small lang="en">Go Setting</small></button>
-                            </div>
-                        </div>
-                        <br>
 
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="cdgrey judulcomsetup" lang="en">Membership Type</h6>
-                                <small class="clight" lang="en">Set up your Membership Model</small>
-                            </div>
-                            <div class="col-md-4" style="margin-bottom: 0.5em;">
-                                <button type="button" onclick="location.href ='/admin/settings/membership'"
-                                    class="btn btn-tosca btn-sm btncomset"><small lang="en">Go Setting</small></button>
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="cdgrey judulcomsetup" lang="en">Registrasion Data</h6>
-                                <small class="clight" lang="en">Set your Community Custom Registration Questionaire
-                                    Data</small>
-                            </div>
-                            <div class="col-md-4" style="margin-bottom: 0.5em;">
-                                <button type="button" onclick="location.href ='/admin/settings/registrasion_data'"
-                                    class="btn btn-tosca btn-sm btncomset"><small lang="en">Go Setting</small></button>
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="cdgrey judulcomsetup" lang="en">Subscriber Payment</h6>
-                                <small class="clight" lang="en">Set your Subscriber Payment Options</small>
-                            </div>
-                            <div class="col-md-4" style="margin-bottom: 0.5em;">
-                                <button type="button" onclick="location.href ='/admin/settings/payment'"
-                                    class="btn btn-tosca btn-sm btncomset"><small lang="en">Go Setting</small></button>
-                            </div>
-                        </div>
-                        <br>
-                    </div> -->
                 </div>
             </div> <!-- end-col-12 -->
         </div>
@@ -193,19 +142,5 @@
 
 </div>
 </div>
-
-@endsection
-
-@section('script')
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-    });
-
-
-
-
-</script>
 
 @endsection
