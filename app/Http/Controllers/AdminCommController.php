@@ -198,60 +198,33 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
-        $client = new \GuzzleHttp\Client();
-        // return $input;
-        try {
-            if ($request['subs_datemulai'] != null && $request['subs_dateselesai'] != null) {
 
-                $urlx = env('SERVICE') . 'subsmanagement/filtersubsbydate';
-                $headers = [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ];
-                $bodyku = json_encode([
-                    'start_date'   => $input['subs_datemulai'],
-                    'end_date'    => $input['subs_dateselesai']
-                ]);
-                $options = [
-                    'body' => $bodyku,
-                    'headers' => $headers,
-                ];
+        if ($request['subs_datemulai'] != null && $request['subs_dateselesai'] != null) {
+            $urlx = env('SERVICE') . 'subsmanagement/filtersubsbydate';
 
-                $response = $client->post($urlx, $options);
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
+            $body = json_encode([
+                'start_date'   => $input['subs_datemulai'],
+                'end_date'    => $input['subs_dateselesai']
+            ]);
+            $csrf = $input['_token'];
+
+            $json = $this->post_get_request($body, $urlx, false, $ses_login['access_token'], $csrf);
+            if ($json['success'] == true) {
                 return $json['data'];
-            } else { //data-all
-                $url = env('SERVICE') . 'subsmanagement/listsubs';
-                $response = $client->request('POST', $url, [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Authorization' => $ses_login['access_token']
-                    ]
-                ]);
-
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
-                return $json['data'];
-            } //end-else
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
             } else {
-                return $error;
+                return $json;
             }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
-        }
-    } //end-func
+        } else { //data-all
+            $url2 = env('SERVICE') . 'subsmanagement/listsubs';
+            $csrf = $input['_token'];
+            $json = $this->post_get_request(null, $url2, true, $ses_login['access_token'], $csrf);
+            if ($json['success'] == true) {
+                return $json['data'];
+            } else {
+                return $json;
+            }
+        } //end-else
+    }
 
 
 
@@ -259,72 +232,38 @@ class AdminCommController extends Controller
     public function filter_membership_subs(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-        $client = new \GuzzleHttp\Client();
+        $url = env('SERVICE') . 'subsmanagement/filtersubsbymembership';
 
-        $urlx = env('SERVICE') . 'subsmanagement/filtersubsbymembership';
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = json_encode([
             'membership_id'   => $input['membership'],
         ]);
-        $options = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
 
-        try {
-            $response = $client->post($urlx, $options);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            }
+        } else {
+            return $json;
         }
     }
 
 
 
-    public function tabel_subs_pending()
+    public function tabel_subs_pending(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
-        // return $ses_login['access_token'];
-
         $url = env('SERVICE') . 'subsmanagement/listsubspending';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -893,36 +832,18 @@ class AdminCommController extends Controller
 
 
 
-    public function get_list_membership_admin()
+    public function get_list_membership_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        // return $ses_login;
-        // return $ses_login['access_token'];
-
         $url = env('SERVICE') . 'membershipmanagement/listmembership';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -945,73 +866,34 @@ class AdminCommController extends Controller
 
 
 
-    public function tabel_req_membership()
+    public function tabel_req_membership(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'membershipmanagement/membershipreq';
 
-        $client = new \GuzzleHttp\Client();
-
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
-    public function get_membership_subs()
+    public function get_membership_subs(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'subsmanagement/membership';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -1073,47 +955,26 @@ class AdminCommController extends Controller
     public function get_detail_membership_req(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'membershipmanagement/detailmembershipreq';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             'user_id' => $input['user_id']
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
 
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
     public function edit_profile_admincom(Request $request)
     {
-        // dd($request);
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
@@ -1247,26 +1108,11 @@ class AdminCommController extends Controller
 
     public function change_password_admincom(Request $request)
     {
-        // dd($request);
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
         $url = env('SERVICE') . 'profilemanagement/changepassword';
-        // $client = new \GuzzleHttp\Client();
 
-        // $headers = [
-        //     'Content-Type' => 'application/json',
-        //     'Authorization' => $ses_login['access_token']
-        // ];
-        // $bodyku = json_encode([
-        //     'old_password' => $input['old_pass_admin'],
-        //     'new_password' => $input['new_pass_admin']
-        // ]);
-
-        // $datakirim = [
-        //     'body' => $bodyku,
-        //     'headers' => $headers,
-        // ];
 
         try {
             // $response = $client->post($url, $datakirim);
@@ -1302,69 +1148,35 @@ class AdminCommController extends Controller
 
 
 
-    public function tabel_user_management()
+    public function tabel_user_management(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'usermanagement/listuser';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
 
 
-    public function get_user_tipe_manage()
+    public function get_user_tipe_manage(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'usermanagement/listusertype';
-        $client = new \GuzzleHttp\Client();
-
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -1372,18 +1184,14 @@ class AdminCommController extends Controller
 
     public function add_user_management(Request $request)
     {
-        // dd($request);
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'usermanagement/createuser';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "full_name" => $input['name_user'],
             "user_name" => $input['username_user'],
             "notelp" => $input['phone_user'],
@@ -1391,34 +1199,14 @@ class AdminCommController extends Controller
             "alamat" => $input['alamat_user'],
             "usertype_id" => $input['user_tipe'],
             "password" => $input['pass_user'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
-                alert()->success('Successfully to add new user', 'Added')->persistent('Done');
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back()->withInput();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Successfully to add new user', 'Added')->persistent('Done');
             return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -1429,41 +1217,21 @@ class AdminCommController extends Controller
     public function nonaktif_status_subs(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'subsmanagement/nonactivesubs';
-        $client = new \GuzzleHttp\Client();
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
+        $body = [
+            'user_id' => $input['idsubs']
         ];
-        $bodyku = json_encode(['user_id' => $input['idsubs']]);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
-                return redirect('admin/subs_management');
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
+            return redirect('admin/subs_management');
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1508,6 +1276,7 @@ class AdminCommController extends Controller
                 "password"       => $input['acc_password'],
                 "subscriber_id"  => $input['id_subs_acc'],
                 "cancel_description" => $input['acc_komen'],
+                "_token"         => $input['_token'],
                 "filename"       => $filnam,
                 "file"           => $imgku
             ];
@@ -1547,15 +1316,10 @@ class AdminCommController extends Controller
     public function approval_pending_subs(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'subsmanagement/approvalsubs';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        $input = $request->all();
+        $csrf = $input['_token'];
 
         if ($input['approval'] == "true") {
             $appv = true;
@@ -1565,48 +1329,25 @@ class AdminCommController extends Controller
             $textatus = 'Rejected';
         }
 
-
-        $bodyku = json_encode([
-            'user_id' => $input['id_subspending'],
-            'approval' => $appv,
-            'description' => $input['alasan_approv']
-        ]);
-
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
+        if ($appv == false && $input['alasan_approv'] == null) {
+            alert()->error('Field reason for rejection is required', 'Can Not Null')->autoclose(4500);
+            return back();
+        } else {
+            $body = [
+                'user_id' => $input['id_subspending'],
+                'approval' => $appv,
+                'description' => $input['alasan_approv']
+            ];
 
 
-        try {
-            if ($appv == false && $input['alasan_approv'] == null) {
-                alert()->error('Field reason for rejection is required', 'Can Not Null')->autoclose(4500);
-                return back();
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+            if ($json['success'] == true) {
+                alert()->success('Successfully give a approval', $textatus)->persistent('Done');
+                return redirect('admin/subs_management');
             } else {
-                $response = $client->post($url, $datakirim);
-                $response = $response->getBody()->getContents();
-                $json = json_decode($response, true);
-
-                if ($json['success'] == true) {
-                    alert()->success('Successfully give a approval', $textatus)->persistent('Done');
-                    return redirect('admin/subs_management');
-                }
+                alert()->error($json['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
         }
     }
 
@@ -1617,38 +1358,20 @@ class AdminCommController extends Controller
     public function detail_user_management(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'usermanagement/detailuser';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'user_id' => $input['user_id']
         ];
-        $bodyku = json_encode(['user_id' => $input['user_id']]);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -1657,51 +1380,24 @@ class AdminCommController extends Controller
 
     public function edit_user_management(Request $request)
     {
-        // dd($request);
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'usermanagement/edituser';
-        $client = new \GuzzleHttp\Client();
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $body = [
             "user_id" => $input['idnya_user'],
             "notelp" => $input['edit_phone'],
             "email" => $input['edit_email'],
             "usertype_id" => $input['user_tipe_edit'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
-                alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
             return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -1807,67 +1503,35 @@ class AdminCommController extends Controller
 
 
 
-    public function get_active_module_list()
+    public function get_active_module_list(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'modulemanagement/activemodule';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
 
-    public function get_all_module_list()
+    public function get_all_module_list(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'modulemanagement/allmodule';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -1875,38 +1539,20 @@ class AdminCommController extends Controller
     public function detail_module_all(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'modulemanagement/detailmodule';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'feature_id' => $input['feature_id']
         ];
-        $bodyku = json_encode(['feature_id' => $input['feature_id']]);
 
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
-        ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -1914,46 +1560,23 @@ class AdminCommController extends Controller
     public function aktifasi_module_admincomm(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'modulemanagement/addmodule';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             'feature_id' => $input['id_modulefitur'],
             'payment_time' => $input['payment_time_module'],
             'payment_method_id' => $input['id_pay_method_module']
-        ]);
-        // return $bodyku;
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully Add Module Feature', 'Activated')->persistent('Done');
-                return redirect('admin/module_management');
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Successfully Add Module Feature', 'Activated')->persistent('Done');
+            return redirect('admin/module_management');
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -2061,49 +1684,24 @@ class AdminCommController extends Controller
     public function tabel_generate_notification_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
-        // $url = '21.0.0.108:2312/api/notificationmanagement/listnotification';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             'community_id' => $input['community_id'],
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
             'filter_title'  => $input['filter_title'],
             'notification_sub_type' => $input['notification_sub_type'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -2112,78 +1710,39 @@ class AdminCommController extends Controller
     public function detail_generate_notif_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'notificationmanagement/detailnotification';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "notification_id" => $input['notification_id'],
             "level_status" => $input['level_status'],
             "community_id" => $input['community_id']
-        ]);
-        // return $bodyku;
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
+
     }
 
 
-    public function get_list_setting_notif_admin()
+    public function get_list_setting_notif_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'notificationmanagement/listsetting';
-        $client = new \GuzzleHttp\Client();
 
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -2323,91 +1882,44 @@ class AdminCommController extends Controller
     }
 
 
-    public function tabel_payment_all_admin()
+    public function tabel_payment_all_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'paymentmanagement/listall';
         $client = new \GuzzleHttp\Client();
 
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
-    public function tabel_payment_active_admin()
+    public function tabel_payment_active_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'paymentmanagement/listallactive';
-        $client = new \GuzzleHttp\Client();
 
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
     public function detail_payment_all_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'paymentmanagement/detail';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+
+        $input = $request->all();
+        $csrf = $input['_token'];
 
         if ($input['status'] == "true") {
             $tat = true;
@@ -2415,39 +1927,17 @@ class AdminCommController extends Controller
             $tat = false;
         }
 
-        $bodyku = json_encode([
+        $body = [
             "payment_id" => (int) $input['payment_id'],
             "level_status" => (int) $input['level_status'],
             "status" => $tat
-        ]);
-
-        // return $bodyku;
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -2455,44 +1945,20 @@ class AdminCommController extends Controller
     public function get_setting_subpayment_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-        // return $input;
-
         $url = env('SERVICE') . 'paymentmanagement/listsetting';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "payment_method_id" => $input['payment_method_id'],
-            // "payment_method_id" => "5",
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
     }
 
@@ -2550,80 +2016,45 @@ class AdminCommController extends Controller
     public function tabel_generate_inbox_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'inboxmanagement/listmessage';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $bodyku = json_encode([
+        $body = [
             'community_id' => $input['community_id'],
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
             'filter_title'  => $input['filter_title'],
             'message_type' => $input['message_type'],
-        ]);
-
-        // return $bodyku;
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
     public function get_list_subscriber_inbox_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'inboxmanagement/listusers';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "user_type" => $input['user_type'],
             "community_id" => $input['community_id'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            }
+        } else {
+            return $json;
         }
     }
 
@@ -2631,46 +2062,22 @@ class AdminCommController extends Controller
     public function detail_generate_message_inbox_super_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'inboxmanagement/detailmessage';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
 
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "message_id" => $input['message_id'],
             "level_status" => $input['level_status'],
             "community_id" => $input['community_id']
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -2837,79 +2244,36 @@ class AdminCommController extends Controller
     public function get_list_setting_module_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'modulemanagement/listsetting';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "feature_id" => $input['feature_id'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
     }
 
 
-    public function tabel_usertype_admin()
+    public function tabel_usertype_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'usertype/listusertype';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $exception) {
-            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
-            $status_error = $exception->getCode();
-            if ($status_error == 500) {
-                return json_encode('Data Not Found');
-            } else {
-                return $error;
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -2920,7 +2284,6 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $input = $request->all();
-        // return $input;
 
         $url = env('SERVICE') . 'membershipmanagement/createmembership';
 
@@ -2943,6 +2306,7 @@ class AdminCommController extends Controller
                 "subfeature_id"        => $hasilfitur,
                 "pricing"           => $input['harga_member'],
                 "description"       => $input['deskripsi_member'],
+                "_token"            => $input['_token'],
                 "filename"          => $filnam,
                 "file"              => $imgku
             ];
@@ -2952,6 +2316,7 @@ class AdminCommController extends Controller
                 "subfeature_id"        => $hasilfitur,
                 "pricing"           => $input['harga_member'],
                 "description"       => $input['deskripsi_member'],
+                "_token"            => $input['_token'],
                 "filename"          => "",
                 "file"              => "",
             ];
@@ -2983,66 +2348,33 @@ class AdminCommController extends Controller
 
 
 
-    public function get_listfitur_usertype_ceklist()
+    public function get_listfitur_usertype_ceklist(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'usertype/listfeature';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
-    public function get_list_fitur_membership_admin()
+    public function get_list_fitur_membership_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'membershipmanagement/listfeature';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -3056,7 +2388,10 @@ class AdminCommController extends Controller
         ]);
 
         $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'usertype/create';
+
         $input = $request->all();
+        $csrf = $input['_token'];
 
         $subftr = [];
         foreach ($input['subfitur'] as $i => $dt) {
@@ -3065,46 +2400,18 @@ class AdminCommController extends Controller
             ];
             array_push($subftr, $dataArray);
         }
-
-        $url = env('SERVICE') . 'usertype/create';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $body = [
             'title' => $input['nama_usertipe'],
             'description' => $input['dekripsi_usertipe'],
             'subfeature' => $subftr,
-
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully Add User Type', 'Added!')->autoclose(4500);
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success($json['message'], 'Successfully!')->autoclose(4500);
             return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -3141,34 +2448,17 @@ class AdminCommController extends Controller
     }
 
 
-    public function get_list_transaction_tipe()
+    public function get_list_transaction_tipe(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'transmanagement/listtransactiontype';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
-
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -3179,42 +2469,19 @@ class AdminCommController extends Controller
         $input = $request->all();
         $user = $ses_login['user'];
         $comid = $user['community_id'];
-
         $url = env('SERVICE') . 'transmanagement/listsubscriber';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $csrf = $input['_token'];
+        $body = [
             'community_id' => $comid
 
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
     }
 
@@ -3287,136 +2554,66 @@ class AdminCommController extends Controller
     public function tabel_transaksi_show(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-        // return $ses_login['access_token'];
-
         $url = env('SERVICE') . 'transmanagement/listall';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $body = [
             "start_date" => $input['tanggal_mulai'],
             "end_date" => $input['tanggal_selesai'],
             "community_id" => $input['komunitas'],
             "transaction_type_id" => $input['tipe_trans'],
             "subscriber_id" => $input['subs_name'],
             "transaction_status" => $input['status_trans']
-        ]);
-        // return $bodyku;
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
     public function detail_transaksi_superadmin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'transmanagement/detail';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "invoice_number" => $input['invoice_number'],
             "community_id" => $input['community_id'],
             "payment_level" => $input['payment_level']
-        ]);
-        // return $bodyku;
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
     public function get_list_user_notif_super(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'notificationmanagement/listusers';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
             "user_type" => $input['user_type'],
             "community_id" => $input['community_id'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -3474,48 +2671,25 @@ class AdminCommController extends Controller
     public function tabel_report_transaksi_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
-        // return $input;
-
         $url = env('SERVICE') . 'reportmanagement/commreporttrans';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $bodyku = json_encode([
+        $body = [
             "start_date"  => $input['start_date'],
             "end_date"  => $input['end_date'],
             "transaction_type_id"  => $input['transaction_type_id'],
             "transaction_status"  => $input['transaction_status'],
             "min_transaction"  => $input['min_transaction'],
             "max_transaction"  => $input['max_transaction'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -3523,152 +2697,75 @@ class AdminCommController extends Controller
     public function tabel_concile_report_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
         $url = env('SERVICE') . 'reportmanagement/commreconcile';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $bodyku = json_encode([
+        $body = [
             "transaction_type_id"  => $input['transaction_type_id'],
             "month" => $input['month'],
             "year" => $input['year'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
 
-    public function get_list_transaction_type_admin()
+    public function get_list_transaction_type_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'reportmanagement/transactiontype';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
-    public function get_list_subscriber_report()
+    public function get_list_subscriber_report(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-
         $url = env('SERVICE') . 'reportmanagement/listsubscriber';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
     public function tabel_report_subscriber_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
-        // return $input;
-
         $url = env('SERVICE') . 'reportmanagement/subscriber';
-        $client = new \GuzzleHttp\Client();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+        $input = $request->all();
+        $csrf = $input['_token'];
 
-        $bodyku = json_encode([
+        $body = [
             "start_date"  => $input['start_date'],
             "end_date"  => $input['end_date'],
             "subscriber_id"  => $input['subscriber_id'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
             return $json['data'];
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        } else {
+            return $json;
         }
     }
 
@@ -3691,9 +2788,10 @@ class AdminCommController extends Controller
     public function send_setting_module_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'modulemanagement/settingmodule';
+
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 2);
-
         $data = [];
         foreach ($dtin as $i => $dt) {
             $dataArray = [
@@ -3702,43 +2800,18 @@ class AdminCommController extends Controller
             ];
             array_push($data, $dataArray);
         }
-
-        $url = env('SERVICE') . 'modulemanagement/settingmodule';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode(["data_setting" => $data]);
-        // return $bodyku;
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $body = [
+            "data_setting" => $data
         ];
 
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                alert()->success('Successfully Setting up Module', 'Succesfully')->persistent('Done');
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Successfully Setting up Module', 'Succesfully')->persistent('Done');
             return back();
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
-            return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -3752,9 +2825,12 @@ class AdminCommController extends Controller
             'edit_subfitur' => 'required',
         ]);
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-        // return $input;
+        $url = env('SERVICE') . 'usertype/edit';
         $subftr = [];
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
         foreach ($input['edit_subfitur'] as $i => $dt) {
             $dataArray = [
                 'subfeature_id'       => $dt
@@ -3762,51 +2838,19 @@ class AdminCommController extends Controller
             array_push($subftr, $dataArray);
         }
 
-        $url = env('SERVICE') . 'usertype/edit';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
-        $bodyku = json_encode([
+        $body = [
             'usertype_id' => $input['idfitur_usertype_edit'],
             'title' => $input['nama_usertipe_edit'],
             'description' => $input['dekripsi_usertipe_edit'],
             'subfeature' => $subftr,
 
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
-            if ($json['success'] == true) {
-                alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
-                return back();
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            if ($error["status"] == 401 || $error["message"] == "Unauthorized") {
-                alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
-                return redirect('admin');
-            } else {
-                alert()->error($error['message'], 'Failed!')->autoclose(4500);
-                return back();
-            }
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
             return back();
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Server bermasalah";
-            $error['success'] = false;
-            alert()->error($error['message'], 'Failed!')->autoclose(4500);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
     }
@@ -3815,16 +2859,10 @@ class AdminCommController extends Controller
     public function detail_tabel_subpayment(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        $input = $request->all();
-
-        // return $input;
-
         $url = env('SERVICE') . 'paymentmanagement/detailsubpayment';
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
+
+        $input = $request->all();
+        $csrf = $input['_token'];
 
         if ($input['status'] == "true") {
             $stat = true;
@@ -3832,70 +2870,33 @@ class AdminCommController extends Controller
             $stat = false;
         }
 
-        $bodyku = json_encode([
+        $body = [
             "subpayment_id" => (int) $input['subpayment_id'],
             "level_status" => (int) $input['level_status'],
             "status" => $stat
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
-        try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            return $json['data'];
 
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
     }
 
 
-    public function get_payment_module()
+    public function get_payment_module(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
-        // return $input;
         $url = env('SERVICE') . 'modulemanagement/paymenttype';
-        $client = new \GuzzleHttp\Client();
-        try {
-            $response = $client->request('POST', $url, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => $ses_login['access_token']
-                ]
-            ]);
 
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            if ($json['success'] == true) {
-                return $json['data'];
-            }
-        } catch (ClientException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ServerException $errornya) {
-            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-            return $error;
-        } catch (ConnectException $errornya) {
-            $error['status'] = 500;
-            $error['message'] = "Internal Server Error";
-            $error['success'] = false;
-            return $error;
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
         }
     }
 
@@ -3983,13 +2984,4 @@ class AdminCommController extends Controller
             return $json;
         }
     }
-
-
-
-
-
-
-
-
-
 } //end-class

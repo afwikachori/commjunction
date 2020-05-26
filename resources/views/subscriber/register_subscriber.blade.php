@@ -475,7 +475,15 @@
                     $("#deskripsi_comm").html(result.description);
                     $("#name_community").val(result.name);
 
-                    get_custom_regis(result.registration_data);
+                    if (result.registration_data.length != 0) {
+                        get_custom_regis(result.registration_data);
+                    } else {
+
+                        $("#custom_input_regis").html('<center><br><br><br><h2 class="clight">No data custom input</h2></center>');
+                        $("#isi_review_custominput").hide();
+
+                    }
+
                 }
             },
             error: function (result) {
