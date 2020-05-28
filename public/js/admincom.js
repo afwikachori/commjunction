@@ -1573,6 +1573,8 @@ function get_result_setup_comsetting() {
                     }
                 }
 
+                $("#cek_form_subdomain").val(tipeform.ready);
+
 
                 var portal = result[1];
                 if (portal.data != undefined) {
@@ -1587,15 +1589,23 @@ function get_result_setup_comsetting() {
 
                         $("#color_base").val(portal.data.base_color);
                         $("#color_accent").val(portal.data.accent_color);
+                        $("#color_bgcolor").val(portal.data.background_color);
+                        $("#color_navbar").val(portal.data.navbar_color);
 
                         $("#colour").val(portal.data.base_color);
                         $("#colour2").val(portal.data.accent_color);
+                        $("#colour3").val(portal.data.background_color);
+                        $("#colour4").val(portal.data.navbar_color);
 
                         $("#output-color").html(portal.data.base_color);
                         $("#output-color2").html(portal.data.accent_color);
+                        $("#output-color3").html(portal.data.background_color);
+                        $("#output-color4").html(portal.data.navbar_color);
 
                         $("#color_front").css('background-color', portal.data.base_color);
                         $("#color_front2").css('background-color', portal.data.accent_color);
+                        $("#color_front3").css('background-color', portal.data.background_color);
+                        $("#color_front4").css('background-color', portal.data.navbar_color);
                     }
 
 
@@ -1705,6 +1715,26 @@ function color_and_font() {
     });
 
 
+    $("#colour3").change(function (event) {
+        // console.log($(this).val());
+        $("#color_front3").css('background-color', $(this).val());
+    });
+
+    $("#color_front3").click(function (event) {
+        $("#colour3").click();
+    });
+
+
+    $("#colour4").change(function (event) {
+        // console.log($(this).val());
+        $("#color_front4").css('background-color', $(this).val());
+    });
+
+    $("#color_front4").click(function (event) {
+        $("#colour4").click();
+    });
+
+
 
     var input = document.getElementById('colour');
     input.addEventListener('change', getcolour);
@@ -1721,6 +1751,22 @@ function color_and_font() {
         var colr = this.value;
         $("#output-color2").html(colr);
         $("#color_accent").val(colr);
+    }
+
+    var input = document.getElementById('colour3');
+    input.addEventListener('change', getcolour_bgcolor);
+    function getcolour_bgcolor(colr) {
+        var colr = this.value;
+        $("#output-color3").html(colr);
+        $("#color_bgcolor").val(colr);
+    }
+
+    var input = document.getElementById('colour4');
+    input.addEventListener('change', getcolour_bgcolor);
+    function getcolour_navbar(colr) {
+        var colr = this.value;
+        $("#output-color4").html(colr);
+        $("#color_navbar").val(colr);
     }
 
 

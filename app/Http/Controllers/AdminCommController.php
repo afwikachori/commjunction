@@ -568,7 +568,7 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         // return $input;
-
+        $url = env('SERVICE') . 'commsetting/setcustominterface';
         $req = new RequestController;
         $fileimg = "";
         if ($request->hasFile('fileup') && $request->hasFile('fileup_logo')) {
@@ -577,28 +577,49 @@ class AdminCommController extends Controller
 
             $img_icon = file_get_contents($request->file('fileup_logo')->getRealPath());
             $filnam_logo = $request->file('fileup_logo')->getClientOriginalName();
+        } else if ($request->hasFile('fileup')) {
+            $imgku = file_get_contents($request->file('fileup')->getRealPath());
+            $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
-            $imageRequest = [
-                "headline_text" => $input['headline'],
-                "description"   => $input['description_custom'],
-                "font_headline" => $input['font_headline'],
-                "font_link" => $input['font_link'],
-                "base_color" => $input['color_base'],
-                "accent_color" => $input['color_accent'],
-                "icon"      => $img_icon,
-                "file"          => $imgku,
-                "filename"  => $filnam,
-                "filename_logo"  => $filnam_logo,
-            ];
-            // dd($imageRequest);
-            $url = env('SERVICE') . 'commsetting/setcustominterface';
-            try {
-                $resImg = $req->SettingLoginRegis($imageRequest, $url, $token);
+            $img_icon = '';
+            $filnam_logo = '';
+        } else if ($request->hasFile('fileup_logo')) {
+            $imgku = '';
+            $filnam = '';
 
-                if ($resImg['success'] == true) {
-                    // alert()->success('Successfully setting login and registrasion, setup domain being process', 'Done!')->persistent('Done');
-                    // return back();
+            $img_icon = file_get_contents($request->file('fileup_logo')->getRealPath());
+            $filnam_logo = $request->file('fileup_logo')->getClientOriginalName();
+        }else{
+            $imgku = '';
+            $filnam = '';
+
+            $img_icon = '';
+            $filnam_logo = '';
+        }
+
+        $imageRequest = [
+            "headline_text" => $input['headline'],
+            "description"   => $input['description_custom'],
+            "font_headline" => $input['font_headline'],
+            "font_link" => $input['font_link'],
+            "base_color" => $input['color_base'],
+            "accent_color" => $input['color_accent'],
+            "background_color" => $input['color_bgcolor'],
+            "navbar_color" => $input['color_navbar'],
+            "icon"      => $img_icon,
+            "file"          => $imgku,
+            "filename"  => $filnam,
+            "filename_logo"  => $filnam_logo,
+        ];
+
+        // return $imageRequest;
+
+        try {
+            $resImg = $req->SettingLoginRegis($imageRequest, $url, $token);
+
+            if ($resImg['success'] == true) {
+
+                if ($input['cek_form_subdomain'] != true) {
                     if ($input['form_tipe'] != null && $input['subdomain'] != null) {
                         $url_domain = env('SERVICE') . 'commsetting/setformtypeandsubdomain';
                         $client = new \GuzzleHttp\Client();
@@ -643,28 +664,26 @@ class AdminCommController extends Controller
                         alert()->error('Set Login type and Subdomain', 'Failed!')->persistent('Done');
                         return back();
                     }
+                }else{
+                    alert()->success('Successfully setting login and registrasion', 'Done!')->persistent('Done');
+                    return back();
                 }
-            } catch (ClientException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->persistent('Done');
-                return back();
-            } catch (ServerException $errornya) {
-                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
-                alert()->error($error['message'], 'Failed!')->persistent('Done');
-                return back();
-            } catch (ConnectException $errornya) {
-                $error['status'] = 500;
-                $error['message'] = "Server bermasalah";
-                $error['success'] = false;
-                alert()->error($error['message'], 'Failed!')->persistent('Done');
-                return back();
             }
-        } else { //END-IF  UPLOAD-IMAGE
-            alert()->error('File Logo & Image portal is Required', 'Failed!')->persistent('Done');
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->persistent('Done');
             return back();
-        } // endelse
-
-
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            alert()->error($error['message'], 'Failed!')->persistent('Done');
+            return back();
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed!')->persistent('Done');
+            return back();
+        }
     }
 
 
@@ -1662,10 +1681,10 @@ class AdminCommController extends Controller
             "data_setting" => $data
         ];
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
-            if ($json['success'] == true) {
-                alert()->success('Successfully Setting Notification', 'Done!')->autoclose(4500);
-                return back();
-            }else{
+        if ($json['success'] == true) {
+            alert()->success('Successfully Setting Notification', 'Done!')->autoclose(4500);
+            return back();
+        } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1773,10 +1792,10 @@ class AdminCommController extends Controller
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully Activated Payment', 'Done!')->autoclose(4500);
-                return back();
-            }else{
+        if ($json['success'] == true) {
+            alert()->success('Successfully Activated Payment', 'Done!')->autoclose(4500);
+            return back();
+        } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -1874,10 +1893,10 @@ class AdminCommController extends Controller
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
 
-            if ($json['success'] == true) {
-                alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
-                return back();
-            }else{
+        if ($json['success'] == true) {
+            alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
+            return back();
+        } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
@@ -2725,10 +2744,4 @@ class AdminCommController extends Controller
             return $json;
         }
     }
-
-
-
-
-
-
 } //end-class

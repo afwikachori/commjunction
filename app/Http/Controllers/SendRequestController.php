@@ -64,6 +64,7 @@ trait SendRequestController
         } catch (ConnectException $errornya) {
             $error['status'] = 500;
             $error['message'] = "Server bermasalah";
+            $error['success'] = false;
             $error['error'] = true;
             return $error;
         }

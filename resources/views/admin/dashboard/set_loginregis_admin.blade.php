@@ -166,6 +166,47 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-7">
+                            <h6 class="cgrey2 judulcomsetup" lang="en">Background Color</h6>
+                            <small class="clight" lang="en">Background color will appeare behind your content</small>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-4" style="padding-right: 0px;">
+                                    <span id="color_front3" data-toggle="tooltip" data-placement="top"
+                                        title="Click to choose color"></span>
+                                    <input type='color' class='bar' id='colour3' onchange="getcolour_bgcolor(this)">
+                                </div>
+                                <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
+                                    <p id="output-color3" class="clight">#f2edf3</p>
+                                </div>
+                                <input type="hidden" id="color_bgcolor" name="color_bgcolor" value="#f2edf3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-7">
+                            <h6 class="cgrey2 judulcomsetup" lang="en">Navbar Color</h6>
+                            <small class="clight" lang="en">Navbar color will appeare in top your web</small>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-4" style="padding-right: 0px;">
+                                    <span id="color_front4" data-toggle="tooltip" data-placement="top"
+                                        title="Click to choose color"></span>
+                                    <input type='color' class='bar' id='colour4' onchange="getcolour_navbar(this)">
+                                </div>
+                                <div class="col-md-8" style="margin-top: auto; margin-bottom: auto; text-align: left;">
+                                    <p id="output-color4" class="clight">#f6fbff</p>
+                                </div>
+                                <input type="hidden" id="color_navbar" name="color_navbar" value="#f6fbff">
+                            </div>
+                        </div>
+                    </div>
+
                     <hr>
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-md-7">
@@ -192,6 +233,7 @@
                         <div class="col-md-5">
                             <input type="text" name="subdomain" id="subdomain" class="form-control input-abu">
                         </div>
+                        <input type="hidden" id="cek_form_subdomain" name="cek_form_subdomain">
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none; text-align: right; padding: 5%; padding-bottom: 0px;">

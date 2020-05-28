@@ -1,10 +1,10 @@
-<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center bg-navbar-color">
     <a class="navbar-brand brand-logo" href="">
         <img src="/visual/commjuction.png" alt="logo" /></a>
     <a class="navbar-brand brand-logo-mini" href="">
         <img src="/visual/logo.png" alt="logo" class="img-logo-admincom" /></a>
 </div>
-<div class="navbar-menu-wrapper d-flex align-items-stretch">
+<div class="navbar-menu-wrapper d-flex align-items-stretch bg-navbar-color">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
         <span class="mdi mdi-menu"></span>
     </button>
@@ -86,7 +86,7 @@
                     <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                    <p class="mb-1 text-black nama_subs_login">
+                    <p class="mb-1 text-black nama_subs_login clr-accent-color">
                         @if(Session::has('fullname'))
                         {{ Session::get('fullname')}}
                         @endif

@@ -13,6 +13,7 @@
 </div>
 
 <div class="row">
+    <div id="page_dashboard_subscriber"></div>
     <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">

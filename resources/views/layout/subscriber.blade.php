@@ -47,14 +47,14 @@
 
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <nav class="sidebar sidebar-offcanvas bg-base-color" id="sidebar">
                 @include('subscriber.dashboard.subs_sidebar')
             </nav>
 
 
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper">
+                <div class="content-wrapper bgcolor-dash">
                     @yield('content')
                 </div>
 
@@ -548,7 +548,7 @@
     <!-- Sweetalert -->
     <!-- <script src="/js/sweetalert.min.js"></script> -->
 
-
+    <script src="{{asset('js/jquery.cookie.js')}}"></script>
 
     <!-- Sweetalert -->
     <script src="{{asset('js/sweetalert.min.js')}}"></script>

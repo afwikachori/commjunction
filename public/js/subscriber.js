@@ -7,7 +7,6 @@ lang.init({
     defaultLang: 'en'
 });
 
-
 var server_cdn = '';
 var ui = {
     popup: {
@@ -56,8 +55,10 @@ var ui = {
 
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
+    thematic_color();
+
     session_subscriber_logged();
-    ses_auth_subs();
+
     init_ready();
 
 });
@@ -95,7 +96,12 @@ function session_subscriber_logged() {
             console.log(result.access_token);
             console.log("cdn : " + server_cdn);
 
+
             var user = result.user;
+            $.cookie('id_komunitas_login', null);
+            $.cookie('id_komunitas_login', user.community_id);
+
+
             get_list_notif_navbar(user.community_id);
             get_inbox_navbar();
 
@@ -162,7 +168,28 @@ function session_subscriber_logged() {
 }
 
 
+function thematic_color() {
+    var base_color = $.cookie('base_color');
+    var accent_color = $.cookie('accent_color');
+    var background_color = $.cookie('background_color');
+    var navbar_color = $.cookie('navbar_color');
+
+    var idcomm_login = $.cookie('id_komunitas_login');
+
+    if (idcomm_login != null && idcomm_login != undefined) {
+        document.documentElement.style.setProperty('--base_color_dash', base_color);
+        document.documentElement.style.setProperty('--accent_color_dash', accent_color);
+        document.documentElement.style.setProperty('--bgcolor_dash', background_color);
+        document.documentElement.style.setProperty('--navbar_color_dash', navbar_color);
+    }
+}
+
 function ses_auth_subs() {
+    $.cookie('base_color', null);
+    $.cookie('accent_color', null);
+    $.cookie('background_color', null);
+    $.cookie('navbar_color', null);
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -174,14 +201,27 @@ function ses_auth_subs() {
         datatype: 'JSON',
         success: function (result) {
             var result = result[0];
+            console.log(result);
             var custom = result.cust_portal_login;
 
-            var base_color = custom.base_color;
-            document.documentElement.style.setProperty("--base_color_dash", base_color);
-          console.log(result);
+            // var base_color = custom.base_color;
+            // document.documentElement.style
+            //     .setProperty('--base_color_dash', base_color);
+            // ----------------------------------------------------------------
+
+            var id_kom_login = $(".id_komunitas").val();
+            var id_kom_auth = result.id;
+
+            $.cookie('base_color', custom.base_color, { expires: 30 });
+            $.cookie('accent_color', custom.accent_color, { expires: 30 });
+            $.cookie('background_color', custom.background_color, { expires: 30 });
+            $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
         },
         error: function (result) {
-            console.log("user config auth subs");
+            $.cookie('base_color', null);
+            $.cookie('accent_color', null);
+            $.cookie('background_color', null);
+            $.cookie('navbar_color', null);
         }
     });
 }
@@ -1017,6 +1057,9 @@ function LogoutSubscriber() {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
+                $.cookie('base_color', null);
+                $.cookie('accent_color', null);
+                $.cookie('id_komunitas_login', null);
                 location.href = '/subscriber/url/' + namakom;
             }
         },
@@ -1122,6 +1165,10 @@ $('#fileup').on('change', function () {
 
 
 function init_ready() {
+    if ($("#page_dashboard_subscriber").length != 0) {
+        ses_auth_subs();
+    }
+
     if ($("#page_news_management_subs").length != 0) {
         table_news_list();
     }
@@ -1130,6 +1177,25 @@ function init_ready() {
         suggestion_list();
         tabel_friend_list();
         tabel_tes_friends();
+    }
+
+
+    if ($("#page_transaction_management_subs").length != 0 ){
+        get_list_transaction_tipe();
+        get_list_subscriber_admin();
+
+        $("#reset_tbl_trans").click(function () {
+            resetparam_trans();
+        });
+
+        $("#btn_showtable_transaksi").click(function (e) {
+            show_card_transaksi();
+        });
+
+        $("#btn_filter_transaksi").click(function (e) {
+            filter_show_card_transaksi();
+            $("#modal_trasaksi_filter").modal("hide");
+        });
     }
 }
 
@@ -1544,3 +1610,444 @@ function get_profile_custom_regis(params) {
     $("#custom_input_regis").html(uihtml);
 }
 // --------------- END PROFIL MANAGEMENT SUBS ----------------
+
+
+//--------------------------- TRANSACTION MANAGEMENT SUBS ----------------------------
+function resetparam_trans() {
+    $("#komunitas").val("");
+    $("#tanggal_mulai").val("");
+    $("#tanggal_selesai").val("");
+    $("#tipe_trans").val("");
+    $("#status_trans").val("");
+    $("#subs_name").val("");
+}
+
+function get_list_transaction_tipe() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+        url: "/subscriber/get_list_transaction_tipe",
+        type: "POST",
+        dataType: "json",
+        data :{
+            "_token" : token
+        },
+        success: function (result) {
+            console.log(result);
+            $('#tipe_trans').empty();
+            $('#tipe_trans').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#tipe_trans").get(0).selectedIndex = 0;
+
+            const OldTipetrans = "{{old('tipe_trans')}}";
+
+            if (OldTipetrans !== '') {
+                $('#tipe_trans').val(OldTipetrans);
+            }
+            // ___________________________________________________________________
+            $('#tipe_trans2').empty();
+            $('#tipe_trans2').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#tipe_trans2").get(0).selectedIndex = 0;
+
+            const OldTipetrans2 = "{{old('tipe_trans2')}}";
+
+            if (OldTipetrans2 !== '') {
+                $('#tipe_trans2').val(OldTipetrans2);
+            }
+        }
+    });
+}
+
+function get_list_subscriber_admin() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_list_subcriber_name",
+        type: "POST",
+        dataType: "json",
+        data :{
+            "_token" : token,
+        },
+        success: function (result) {
+            console.log(result);
+            $('#subs_name').empty();
+            $('#subs_name').append("<option value='null'> Choose</option>");
+
+            var isilist = '';
+            $.each(result, function (i, item) {
+                isilist += '<option style="background-image:url(img/kosong.png);" value="' + item.id + '">' + item.full_name + '</option>';
+            });
+            $('#subs_name').html(isilist);
+
+            // for (var i = result.length - 1; i >= 0; i--) {
+            //     $('#subs_name').append('<option  style="" value=\''.concat(result[i].id, '\'>').concat(result[i].full_name, '</option>'));
+            // }
+            //Short Function Ascending//
+            $("#subs_name").html($('#subs_name option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#subs_name").get(0).selectedIndex = 0; const
+                OldSubs1 = "{{old('subs_name')}}";
+            if (OldSubs1 !== '') {
+                $('#subs_name').val(OldSubs1);
+            }
+            // _______________________________________________________________________________
+            $('#subs_name2').empty();
+            $('#subs_name2').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#subs_name2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].full_name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#subs_name2").html($('#subs_name2 option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#subs_name2").get(0).selectedIndex = 0; const
+                OldSubs2 = "{{old('subs_name2')}}";
+            if (OldSubs2 !== '') { $('#subs_name2').val(OldSubs2); }
+
+        },
+        error: function (result) {
+            ui.popup.show('Warning', 'Get list community', 'Warning');
+        }
+    });
+}
+
+function show_card_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_transaksi_show',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "komunitas": $("#komunitas").val(),
+            "tanggal_mulai": $("#tanggal_mulai").val(),
+            "tanggal_selesai": $("#tanggal_selesai").val(),
+            "tipe_trans": $("#tipe_trans").val(),
+            "status_trans": $("#status_trans").val(),
+            "subs_name": $("#subs_name").val(),
+            "_token" : token
+        },
+        success: function (result) {
+            console.log(result);
+
+            if (result.length != 0) {
+                var isiui = '';
+                var num = 0;
+                $.each(result, function (i, item) {
+                    console.log(item);
+                    num++;
+
+                    var dt = [item.invoice_number, item.payment_level, item.community_id];
+                    isiui +=
+                        '<div class="col-md-6 stretch-card ' +
+                        'grid-margin card-member' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                        '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                        '<div class="card-body member">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                        'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4" style="padding:0px;">' +
+                        '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                        '</div>' +
+                        '<div class="col-md-8">' +
+                        '<small class="ctosca">Total</small>' +
+                        '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-12">' +
+                        '<small class="cteal">' + item.transaction_type + '</small>' +
+                        '<h4>' + item.transaction + '</h4>' +
+                        '<p class="ctosca">' + item.invoice_number + '</p>' +
+                        '</div>' +
+                        '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                        '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                        '</small>' +
+                        '</div>' +
+                        '</div></div></div></div>';
+                });
+
+                $("#show_card_transaksi").html(isiui);
+
+                $(".showin_table_trans").show();
+                $("#tab_transaction_param").hide();
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+function filter_show_card_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_transaksi_show',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "komunitas": $("#komunitas2").val(),
+            "tanggal_mulai": $("#tanggal_mulai2").val(),
+            "tanggal_selesai": $("#tanggal_selesai2").val(),
+            "tipe_trans": $("#tipe_trans2").val(),
+            "status_trans": $("#status_trans2").val(),
+            "subs_name": $("#subs_name2").val(),
+            "_token" : token
+        },
+        success: function (result) {
+            if (result.length != 0) {
+                var isiui = '';
+                var num = 0;
+                $.each(result, function (i, item) {
+                    console.log(item);
+                    num++;
+
+                    var dt = [item.invoice_number, item.payment_level, item.community_id];
+                    isiui +=
+                        '<div class="col-md-6 stretch-card ' +
+                        'grid-margin card-member' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                        '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                        '<div class="card-body member">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                        'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4" style="padding:0px;">' +
+                        '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                        '</div>' +
+                        '<div class="col-md-8">' +
+                        '<small class="ctosca">Total</small>' +
+                        '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-12">' +
+                        '<small class="cteal">' + item.transaction_type + '</small>' +
+                        '<h4>' + item.transaction + '</h4>' +
+                        '<p class="ctosca">' + item.invoice_number + '</p>' +
+                        '</div>' +
+                        '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                        '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                        '</small>' +
+                        '</div>' +
+                        '</div></div></div></div>';
+                });
+
+                $("#show_card_transaksi").html(isiui);
+
+                $(".showin_table_trans").show();
+                $("#tab_transaction_param").hide();
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+function show_tabel_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $('#tabel_trans').dataTable().fnClearTable();
+    $('#tabel_trans').dataTable().fnDestroy();
+
+    $(".showin_table_trans").show();
+    $("#tab_transaction_param").hide();
+
+    var tabel = $('#tabel_trans').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print', {
+                text: 'JSON',
+                action: function (e, dt, button, config) {
+                    var data = dt.buttons.exportData();
+
+                    $.fn.dataTable.fileSave(
+                        new Blob([JSON.stringify(data)]),
+                        'Export.json'
+                    );
+                }
+            }
+        ],
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_transaksi_show',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "komunitas": $("#komunitas").val(),
+                "tanggal_mulai": $("#tanggal_mulai").val(),
+                "tanggal_selesai": $("#tanggal_selesai").val(),
+                "tipe_trans": $("#tipe_trans").val(),
+                "status_trans": $("#status_trans").val(),
+                "subs_name": $("#subs_name").val(),
+                "_token" : token
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                // $('#tabel_subscriber tbody').;
+                $('#tabel_trans tbody').empty().append(nofound);
+            },
+        },
+        error: function (request, status, errorThrown) {
+            ui.popup.show('error', status, 'Error');
+        },
+        columns: [
+            { mData: 'invoice_number' },
+            {
+                mData: 'created_at',
+                render: function (data, type, row, meta) {
+                    return dateFormat(data);
+                }
+            },
+            { mData: 'name' },
+            { mData: 'transaction_type' },
+            { mData: 'status_title' },
+            {
+                mData: 'id',
+                render: function (data, type, row, meta) {
+                    var dt = [row.invoice_number, row.payment_level, row.community_id];
+                    // console.log(data);
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+
+    });
+}
+
+function detail_transaksi_all(dt_trans) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var trans = dt_trans.split(',');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+        url: '/subscriber/detail_transaksi_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        timeout: 20000,
+        data: {
+            "invoice_number": trans[0],
+            "payment_level": trans[1],
+            "community_id": trans[2],
+            "_token" : token
+        },
+        success: function (result) {
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
+            console.log(result);
+            if (result.success == false) {
+                ui.popup.show('error', result.message, 'Error');
+                $("#modal_detail_trans").modal('hide');
+            } else {
+
+                $("#modal_detail_trans").modal('show');
+                $("#invoice_trans").html(result.invoice_number);
+                $("#date_trans").html(dateTime(result.created_at));
+                $("#komunitas_trans").html(result.community_name);
+                $("#subscriber_trans").html(result.name);
+                $("#level_title_trans").html(result.level_title);
+                $("#nominal_trans").html("Rp  " + rupiah(result.grand_total));
+                $("#jenis_trans").html(result.transaction_type);
+                $("#statusjudul_trans").html(result.status_title);
+                $("#transaksi_trans").html(result.transaction);
+
+                var uiku = '';
+                if (result.data_confirmation != "") {
+                    if (result.data_confirmation.file != null) {
+                        $("#img_pay_confirm").attr("src", server_cdn + cekimage_cdn(result.data_confirmation.file));
+                    }
+                    $("#nama_confirm_trans").html(result.data_confirmation.created_by);
+                    $("#date_confirm_trans").html(dateFormat(result.data_confirmation.created_at));
+
+                    uiku = '<button type="button" class="btn btn-accent' +
+                        'melengkung10px btn-sm"> Paid</button >';
+                    $("#status_color").html(uiku);
+                } else {
+                    $("#img_pay_confirm").attr("src", "");
+                    uiku = '<button type="button" class="btn btn-abu' +
+                        'melengkung10px btn-sm"> Not Yet</button >';
+                    $("#status_color").html(uiku);
+                }
+
+
+                if (result.data_verification.length != 0) {
+                    if (result.data_verification.file != undefined) {
+                        $("#img_pay_aprov").attr("src", server_cdn + cekimage_cdn(rresult.data_verification.file));
+                    }
+                    $("#name_approv_trans").html(result.data_verification.verification_by);
+                    $("#date_approv_trans").html(dateFormat(result.data_verification.verification_at));
+
+                }
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show Detail");
+        }
+    });
+}
+// ------------------------ END TRANSACTION MANAGEMENT SUBS -------------------------------

@@ -1,8 +1,8 @@
 <ul class="nav">
-    <li class="nav-item nav-profile">
+    <li class="nav-item nav-profile mgt-3">
         <center>
             <img src="/img/loading2.gif" class="rounded-circle img-fluid dash-img-profil foto_profil_subs"
-                style="height: 80px; width: 80px;" onerror="this.onerror=null;this.src='/img/cam.png';">
+            onerror="this.onerror=null;this.src='/img/cam.png';">
             <br>
         </center>
         <a href="#" class="nav-link" id="show_toltip" data-toggle="tooltip" data-placement="right" title="Profile subscriber">

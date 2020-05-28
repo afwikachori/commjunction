@@ -1132,6 +1132,12 @@ min-height: 11.5rem;
 margin-top: 5%;
 }
 
+.dash-img-profil{
+    height: 80px;
+    width: 80px;
+    margin-top: 1em;
+}
+
 
 .cd-pricing {
 width: 55%;

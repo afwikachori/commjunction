@@ -248,6 +248,14 @@ class RequestController extends Controller
                     'contents' =>  $requestImage["accent_color"]
                 ],
                 [
+                    'name'     => 'background_color',
+                    'contents' =>  $requestImage["background_color"]
+                ],
+                [
+                    'name'     => 'navbar_color',
+                    'contents' =>  $requestImage["navbar_color"]
+                ],
+                [
                     'name'      => 'file',
                     'contents'  => $requestImage["file"],
                     'filename'  => $requestImage["filename"]
