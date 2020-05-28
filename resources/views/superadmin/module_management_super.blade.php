@@ -18,6 +18,7 @@
 </div>
 
 <div class="row">
+    <div id="page_module_management"></div>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body memberku">
@@ -46,7 +47,7 @@
 
 
 
-<!-- MODAL ALL - aktifkan dan Detail-->
+<!-- MODAL ALL -detail-->
 <div class="modal fade" id="md_all_aktifkan_module" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -67,7 +68,8 @@
                                 <div class="row">
                                     <div class="col-md-5 kanan" style="padding-right: 1px;padding-left: 1.5em;">
                                         <img src="/img/cam.png" id="logo_fitur_module"
-                                            class="rounded-circle img-fluid img-fitur-module" alt="">
+                                            class="rounded-circle img-fluid img-fitur-module" alt=""
+                                            onerror = "this.onerror=null;this.src='/img/fitur.png';">
                                     </div>
                                     <div class="col-md-7 kiri">
                                         <h4 class="cwhite" style="margin-top: 0.5em;" id="module_name1">
@@ -145,7 +147,7 @@
                     <div class="col-md-6">
                         <small class="clight">Module Features</small>
                         <div class="row">
-                            <div class="card-deck show_subfitur_module" style="width:100%;">
+                            <div class="card-deck show_subfitur_module" style="width:100%;overflow-y: scroll; overflow-x: hidden; height:250px;">
 
                             </div>
                         </div> <!-- end-row deck -->
@@ -160,13 +162,9 @@
                         style="border-radius: 10px;">
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend"></i>
-                        Add Subfeature</button>
                 </center>
             </div> <!-- end-footer     -->
-            </form>
+
         </div> <!-- END-MDL CONTENT -->
     </div>
 </div>
@@ -192,11 +190,11 @@
                                 <div class="col-md-6 col-sm-12">
                                     <br>
                                     <div class="img-upload-profil">
-                                        <div class="circle">
+                                        <div class="circle module">
                                             <img id="view_img_module" class="profile-pic rounded-circle img-fluid"
                                                 src="/img/focus.png">
                                         </div>
-                                        <div class="p-image">
+                                        <div class="p-image module">
                                             <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
                                                 value="editprofil" style="width: 30px; height: 30px;">
                                                 <i id="browse_img_module" class="mdi mdi-camera upload-button"></i>
@@ -286,7 +284,7 @@
 
 
 
-<!-- MODAL ADD NEW USERTYPE-->
+<!-- MODAL ENDPOINT-->
 <div class="modal fade" id="modal_add_endpoint_module" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
@@ -306,20 +304,22 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="cgrey">Endpoint</small>
-                                <input type="text" id="endpoint" name="endpoint"
-                                    class="form-control input-abu">
+                                <input type="text" id="endpoint" name="endpoint" class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Directory</small>
-                                <input type="text" id="directory" name="directory" value="/module/example/controllers/" class="form-control input-abu">
+                                <input type="text" id="directory" name="directory" value="/module/example/controllers/"
+                                    class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Function</small>
-                                <input type="text" id="function" name="function" value="delete" class="form-control input-abu">
+                                <input type="text" id="function" name="function" value="delete"
+                                    class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Subfeature ID</small>
-                                <input type="text" id="subfiturid" name="subfiturid" value="154" class="form-control input-abu">
+                                <input type="text" id="subfiturid" name="subfiturid" value="154"
+                                    class="form-control input-abu">
                             </div>
                         </div> <!--  end-6 -->
 
@@ -334,7 +334,8 @@
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Controller</small>
-                                <input type="text" id="controller" name="controller" value="example" class="form-control input-abu">
+                                <input type="text" id="controller" name="controller" value="example"
+                                    class="form-control input-abu">
                             </div>
                             <div class="form-group">
                                 <small class="cgrey">Auth</small>
@@ -373,222 +374,14 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-        // session_logged_superadmin();
-        get_module_all_superadmin();
-        addRowSubModule();
+
+
 
     });
 
 
-    function get_module_all_superadmin() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/superadmin/get_all_module_list_superadmin',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                // console.log(result);
-
-                var isiui = '';
-                var nomer = 0;
-                $.each(result, function (i, item) {
-                    nomer++;
-                    var logo = server_cdn + item.logo;
-
-                    isiui += '<div class="col-lg-4 col-md-6 col-sm-12 stretch-card ' +
-                        'grid-margin card-member' +
-                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '">' +
-                        '<div class="card bg-gradient-blue card-img-holder text-white member">' +
-                        '<div class="card-body member">' +
-                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
-                        '<img src="' + logo + '" class="rounded-circle img-fluid img-card module">' +
-                        '<div class="row">' +
-                        '<div class="col-md-7">' +
-                        '<small class="cgrey">' + item.title + '</small>' +
-                        '<h5>' + item.feature_type_title + '</h5>' +
-                        '</div>' +
-                        '<div class="col-md-5" style="text-align: right;">' +
-                        '<button class="btn btn-sm btn-ready-card"' +
-                        'onclick="detail_module_all(\'' + item.feature_id + '\')">Detail</button>' +
-                        '</div>' +
-                        '</div></div></div></div>';
-
-
-                });
-                $("#total_module").html(nomer + " Modules");
-                $("#show_module_all_super").html(isiui);
-
-            },
-            error: function (result) {
-                console.log("Cant Show Module List");
-            }
-        });
-    }
-
-
-
-
-    function detail_module_all(idsubfitur) {
-        // alert(idsubfitur);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/superadmin/detail_module_all_super',
-            type: 'POST',
-            datatype: 'JSON',
-            data: {
-                "feature_id": idsubfitur
-            },
-            success: function (result) {
-                var dt = result[0];
-                console.log(dt);
-                //form aktivasi
-                $("#id_modulefitur").val(dt.feature_id);
-                $("#payment_time").val();
-                $("#payment_method_id").val();
-
-                $("#logo_fitur_module").attr("src", server_cdn + dt.logo);
-                $("#module_name").html(dt.title);
-                $("#module_name1").html(dt.title);
-                $("#module_deskripsi").html(dt.description);
-                $("#module_tipe").html(dt.feature_type_title);
-
-                //status aktif
-                var isistatus = '';
-                if (dt.status == false) {
-                    isistatus = '<label class="badge melengkung10px bg-abu cputih" ' +
-                        'style="min-width:100px;"> Not Active</label >';
-                } else {
-                    isistatus = '<label class="badge melengkung10px bg-ijo cputih" ' +
-                        'style="min-width:100px;"> Active</label >';
-                }
-                $(".status_aktif").html(isistatus);
-
-                //pricing
-                if (dt.price_annual != 0) {
-                    $("#harga_tahunan").html("Rp " + rupiah(dt.price_annual));
-                } else {
-                    $("#harga_tahunan").html('<center class="tebal cgrey">Free');
-                }
-
-                if (dt.price_monthly != 0) {
-                    $("#harga_bulanan").html("Rp " + rupiah(dt.price_monthly));
-                } else {
-                    $("#harga_bulanan").html('<center class="tebal cgrey">Free');
-                }
-
-                if (dt.grand_pricing != 0) {
-                    $("#harga_grand").html("Rp " + rupiah(dt.grand_pricing));
-                } else {
-                    $("#harga_grand").html('<center class="tebal cgrey">Free');
-                }
-
-                var subf = '';
-                var jum = 0;
-                $.each(dt.subfeature, function (i, item) {
-                    // console.log(item);
-                    jum++;
-
-                    subf += '<div class="col-md-6 stretch-card grid-margin' +
-                        'data-toggle="tooltip" data-placement="top" title="' + item.description + '"' +
-                        'style = "margin-bottom: 0.5em;" >' +
-                        '<div class="card bg-gradient-blue card-img-holder text-white">' +
-                        '<div class="card-body" style="padding: 1rem 0.5rem 1rem 0.5rem !important;">' +
-                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute"' +
-                        'alt="circle-image" /> ' +
-                        '<div class="row">' +
-                        '<div class="col-md-4">' +
-                        '<img src="' + server_cdn + item.logo + '" class="rounded-circle img-fluid img-card2">' +
-                        '</div>' +
-                        '<div class="col-md-8">' +
-                        '<small>' + item.title + '</small>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                });
-                $(".show_subfitur_module").html(subf);
-
-                $("#md_all_aktifkan_module").modal("show");
-            },
-            error: function (result) {
-                console.log("Cant Show Detail Module");
-            }
-        });
-    }
-
-    var readURLuser = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#view_img_module').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-
-    $("#file_img_module").on('change', function () {
-        readURLuser(this);
-    });
-
-    $("#browse_img_module").on('click', function () {
-        $("#file_img_module").click();
-    });
-
-
-
-    function addRowSubModule() {
-        // Add row
-        var row = 1;
-        var id = 2;
-
-        $(document).on("click", "#addnewrow", function () {
-            var new_row = '<div class="row form-group newly" id="row' + row + '"' +
-                'style="margin-top:1em;">' +
-                '<div class="col-md-4" style="padding-right:0px;">' +
-                '<input type="text" name="sub' + id + '[]" class="form-control input-abu" placeholder="Title">' +
-                '</div>' +
-                '<div class="col-md-7" style="padding-right:0px;">' +
-                '<input type="text" name="sub' + id + '[]" class="form-control input-abu" placeholder="Description">' +
-                '</div>' +
-                '<div class="col-md" style="padding-right:0px; padding-left: 5px;">' +
-                '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delete-row" style="width: 25px; height: 25px; margin-top: 0.7em;">' +
-                '<i class="mdi mdi-delete"></i>' +
-                '</button>' +
-                '</div>' +
-                '</div>';
-
-
-            $('#isi_newrow').append(new_row);
-            row++;
-            id++;
-            return false;
-        });
-
-        // Remove criterion
-        $(document).on("click", ".delete-row", function () {
-            //  alert("deleting row#"+row);
-            if (row > 1) {
-                $(this).closest('div .newly').remove();
-                row--;
-            }
-            return false;
-        });
-    }
 
 
 </script>

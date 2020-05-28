@@ -800,6 +800,11 @@ function init_ready() {
 
     }
 
+
+    if ($("#page_publish_commset_admin").length != 0){
+        cek_prepare_publish();
+    }
+
 }
 
 
@@ -2657,7 +2662,6 @@ function get_list_fitur_membership_admin() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
 
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {

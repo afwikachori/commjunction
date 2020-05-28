@@ -111,7 +111,7 @@
             },
             success: function (result) {
 
-                // console.log(result);
+                console.log(result);
             setTimeout(function () {
                 ui.popup.hideLoader();
             }, 5000);

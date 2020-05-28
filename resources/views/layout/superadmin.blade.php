@@ -117,14 +117,18 @@
                 </div>
                 <div class="modal-footer changepass" style="border: none;">
                     <center>
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i> No, Im Doubt
-                        </button>
-                        &nbsp;
-                        <a href="/superadmin/logout" type="button" class="btn btn-tosca btn-sm">
-                            <i class="mdi mdi-check btn-icon-prepend">
-                            </i> Yeah, Im Sure </a>
+                        <form method="POST" id="form_logout_superadmin" action="{{route('LogoutSuperadmin')}}">
+                            {{ csrf_field() }}
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                style="border-radius: 10px;">
+                                <i class="mdi mdi-close"></i> No, Im Doubt
+                            </button>
+                            &nbsp;
+
+                            <button type="submit" class="btn btn-tosca btn-sm">
+                                <i class="mdi mdi-check btn-icon-prepend">
+                                </i> Yeah, Im Sure </button>
+                        </form>
                     </center>
                 </div>
             </div>

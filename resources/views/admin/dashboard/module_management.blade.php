@@ -320,17 +320,3 @@
 
 
 @endsection
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-
-    $(document).ready(function () {
-
-    });
-
-
-
-
-</script>
-
-@endsection

@@ -679,7 +679,7 @@ position: absolute;
 }
 
 .nav-tabs .nav-link.disabled {
-  /* min-width: 50%; */
+  width: 50%;
     color: #BDBDBD !important;
     background-color: transparent;
     border-color: transparent;
@@ -692,8 +692,8 @@ position: absolute;
     border-bottom: 2.5px solid !important;
     font-size: 16px;
     font-weight: bold;
-    /* min-width: 50%;
-    width: 50% !important; */
+    /* min-width: 50%; */
+    width: 50%;
     text-align: center !important;
 }
 .nav-tabs .nav-link {
@@ -1000,13 +1000,13 @@ top: 28px;
   padding-right: 3em;
 }
 
-#LoginSubscriber{
+/* #LoginSubscriber{
 background: linear-gradient(180deg, #48C6EF 0%, #6F86D6 100%);
 border-radius: 6px;
 border:none;
 width: 165px;
 margin-bottom: 1em;
-}
+} */
 
 .textlogin{
   margin-top: 0em;

@@ -31,6 +31,8 @@
     <!-- export datatble -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
+     <link rel="stylesheet" href="{{asset('stylesheets/main.css')}}" />
+
     @yield('css')
 </head>
 
@@ -146,85 +148,126 @@
         </div>
     </div>
 
+
     <!-- MODAL EDIT PROFILE-->
     <div class="modal fade" id="modal_profile_management" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="background-color: #ffffff;">
 
-                <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}"
-                    enctype="multipart/form-data">
-                    {{ csrf_field() }}
+                <div class="modal-header" style="padding-bottom: 0em !important;border: none;">
+                    <h4 class="modal-title cgrey" lang="en">Edit Profile</h4>
 
-                    <div class="modal-header" style="padding-bottom: 0em !important;">
-                        <h4 class="modal-title cgrey" lang="en">Edit Profile</h4>
+                    <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
+                        style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_subs"
+                        data-dismiss="modal" lang="en">Change Password</button>
+                </div>
 
-                        <button type="button" id="btn_mdl_changepass" class="btn btn-tosca btn-sm"
-                            style="margin-bottom: 1em;" data-toggle="modal" data-target="#modal_changepass_subs"
-                            data-dismiss="modal" lang="en">Change Password</button>
-                    </div> <!-- end-header -->
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                       <div class="profile tabbable-line">
+                    <ul class="nav nav-tabs profile">
+                        <li class="tab-subs active" id="tab_all">
+                            <a href="#tab_default_1" data-toggle="tab">
+                                <span lang="en">Personal</span>
+                            </a>
+                        </li>
+                        <li class="tab-subs" id="tab_pending">
+                            <a href="#tab_default_2" data-toggle="tab">
+                                <span lang="en">Spesific</span>
+                            </a>
+                        </li>
 
-                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                        <div class="img-upload-profil editprofil">
-                            <div class="circle editprofil">
-                                <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil"
-                                    src="/img/loading.gif" onerror="this.onerror=null;this.src='/img/default.png';">
+                    </ul>
+                    <div class="tab-content" style="margin-bottom: 0em;">
+                        <div class="tab-pane active" id="tab_default_1">
+                            <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="img-upload-profil editprofil">
+                                    <div class="circle editprofil">
+                                        <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/loading.gif"
+                                            onerror="this.onerror=null;this.src='/img/default.png';">
+                                    </div>
+                                    <div class="p-image editprofil">
+                                        <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" value="editprofil"
+                                            style="width: 30px; height: 30px;">
+                                            <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
+                                        </button>
+                                        <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil" type="file"
+                                            name="fileup" accept="image/*" />
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <small class="clight" lang="en">Fullname</small>
+                                            <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
+                                        </div>
+                                        <div class="form-group">
+                                            <small class="clight" lang="en">Username</small>
+                                            <input type="text" id="username_subs" name="username_subs" class="form-control input-abu">
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <small class="clight" lang="en">Phone Number</small>
+                                            <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
+                                        </div>
+                                        <div class="form-group">
+                                            <small class="clight" lang="en">Email</small>
+                                            <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <small class="clight" lang="en">Address</small>
+                                        <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal-footer" style="border: none;">
+                                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
+                                    </button>
+                                    &nbsp;
+                                    <button type="submit" class="btn btn-tosca btn-sm">
+                                        <i class="mdi mdi-check btn-icon-prepend">
+                                        </i><span lang="en">Edit</span> </button>
+                                </div> <!-- end-footer     -->
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="tab_default_2">
+                            <form method="POST" id="form_edit_custom_profile" action="{{route('edit_profile_custom_regis')}}">
+                                {{ csrf_field() }}
+                            <div class="row" id="custom_input_regis">
+
                             </div>
-                            <div class="p-image editprofil">
-                                <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
-                                    value="editprofil" style="width: 30px; height: 30px;">
-                                    <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
+                            <div class="modal-footer" style="border: none;">
+                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
+                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>
-                                <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil"
-                                    type="file" name="fileup" accept="image/*" />
-                            </div>
+                                &nbsp;
+                                <button type="submit" class="btn btn-tosca btn-sm">
+                                    <i class="mdi mdi-check btn-icon-prepend">
+                                    </i><span lang="en">Edit</span> </button>
+                            </div> <!-- end-footer     -->
+                            </form>
                         </div>
 
 
+                    </div>
+                </div>
+                </div>
 
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <small class="clight" lang="en">Fullname</small>
-                                    <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
-                                </div>
-                                <div class="form-group">
-                                    <small class="clight" lang="en">Username</small>
-                                    <input type="text" id="username_subs" name="username_subs"
-                                        class="form-control input-abu">
-                                </div>
-                            </div>
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <small class="clight" lang="en">Phone Number</small>
-                                    <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
-                                </div>
-                                <div class="form-group">
-                                    <small class="clight" lang="en">Email</small>
-                                    <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 form-group">
-                                <small class="clight" lang="en">Address</small>
-                                <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs"
-                                    rows="3"></textarea>
-                            </div>
-                        </div>
-                    </div> <!-- end-body -->
 
-                    <div class="modal-footer" style="border: none;">
-                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                            style="border-radius: 10px;">
-                            <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                        </button>
-                        &nbsp;
-                        <button type="submit" class="btn btn-tosca btn-sm">
-                            <i class="mdi mdi-check btn-icon-prepend">
-                            </i><span lang="en">Edit</span> </button>
-                    </div> <!-- end-footer     -->
-                </form>
+
+
+
             </div> <!-- END-MDL CONTENT -->
 
         </div>
@@ -399,10 +442,10 @@
                     <center>
                         <img src="/img/default.png" class="rounded-circle img-fluid" id="img_membershiptipe"
                             onerror="this.onerror=null;this.src='/img/default.png';"
-                             style="margin-bottom:0.7em; width: 65px; height: 65px;">
+                            style="margin-bottom:0.7em; width: 65px; height: 65px;">
                     </center>
                     <div class="row">
-                         <div class="col-md-2"></div>
+                        <div class="col-md-2"></div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <small class="clight s13" lang="en">Title</small>

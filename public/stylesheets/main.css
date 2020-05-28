@@ -1,0 +1,17 @@
+.btn-basecolor {
+  background: linear-gradient(180deg, var(--base_color) 0%, #e3dcff 100%);
+  border-radius: 6px;
+  border: none;
+  width: 165px;
+  margin-bottom: 1em;
+}
+
+.accent_color {
+  color: var(--accent_color);
+}
+
+.bg-base-color {
+  background-color: var(--base_color);
+}
+
+/*# sourceMappingURL=main.css.map */

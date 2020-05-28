@@ -244,7 +244,7 @@ class SubscriberController extends Controller
             if (!$im) {
                 $bgportal = asset('img/bg_subs.jpg');
             } else {
-                $bgportal = env('CDN') .'/'. $portal;
+                $bgportal = env('CDN') . '/' . $portal;
             }
             // require $bgportal;
 
@@ -1784,7 +1784,7 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'module/friend/addfriend';
 
         $input = $request->all();
-        $body =[
+        $body = [
             "user_id"     => $input['user_id_subs'],
         ];
         $csrf = $input['_token'];
@@ -1795,7 +1795,6 @@ class SubscriberController extends Controller
         } else {
             return $json;
         }
-
     }
 
     public function tes_enkrip(Request $request)
@@ -1816,8 +1815,41 @@ class SubscriberController extends Controller
 
         // $res_enkkrip = $this->encryptedPost($request, $req_input, $url, null);
         // return $res_enkkrip;
+    }
 
+    public function edit_profile_custom_regis(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'profilemanagement/editprofilecustom';
 
+        $input = $request->all();
+        // return $input;
+        $csrf = $input['_token'];
+        $datain =  $request->except('_token');
 
+        $dtin = array_chunk($datain, 2);
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "param_id" => $dt[0],
+                "value" => $dt[1],
+            ];
+            array_push($data, $dataArray);
+        }
+        // return $data;
+        $body = [
+            "custom_input"  => $data
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            // return $json['data'];
+            session()->put('session_subscriber_logged.custom_input', $json['data']);
+            alert()->success('Successfully update your profile', 'Now Updated!')->persistent('Done');
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(3500);
+            return back();
+        }
     }
 } //end-class

@@ -1,6 +1,6 @@
 @extends('layout.superadmin')
 
-@section('title', 'Payment')
+@section('title', 'Verify Community')
 
 @section('content')
 <div class="row">
@@ -15,6 +15,7 @@
 <br>
 
 <div class="row">
+    <div id="page_verify_community"></div>
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -23,13 +24,13 @@
                 <table id="tabel_verify_superadmin" class="table table-hover dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Invoice Number</th>
-                            <th>Nama</th>
-                            <th>Bank</th>
-                            <th>Nominal</th>
-                            <th>Tanggal</th>
-                            <th>Bukti Bayar</th>
-                            <th>Action</th>
+                            <th><b>Invoice Number</b></th>
+                            <th><b>Nama</b></th>
+                            <th><b>Bank</b></th>
+                            <th><b>Nominal</b></th>
+                            <th><b>Tanggal</b></th>
+                            <th><b>Bukti Bayar</b></th>
+                            <th><b>Action</b></th>
                         </tr>
                     </thead>
                 </table>
@@ -94,7 +95,7 @@
                                     style="border-radius: 10px 0px 0px 10px; !important" value="{{ old('pass_super') }}"
                                     required autocomplete="pass_super">
                                 <div class="input-group-append">
-                                    <button class="btn btn-sm btn-light" type="button" onclick="showpass()"
+                                    <button class="btn btn-sm btn-light" type="button" onclick="show_pass_verify()"
                                         style="    border-radius: 0px 10px 10px 0px !important;">
                                         <i class="mdi mdi-eye"></i>
                                     </button>
@@ -121,156 +122,5 @@
 </div>
 
 
-
-@endsection
-
-@section('script')
-<script type="text/javascript">
-    var cdn = $("#server_cdn").val();
-    $(document).ready(function () {
-
-        // session_logged_superadmin();
-        tabel_req_verify(); //datables
-
-        tabel_tes();
-    });
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/list_req_admincomm',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant tabel tes");
-            }
-        });
-    }
-
-    function tabel_req_verify() {
-        var tabel = $('#tabel_verify_superadmin').DataTable({
-            responsive: true,
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: '/list_req_admincomm',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000
-            },
-            columns: [
-                { mData: 'invoice_number' },
-                { mData: 'nama' },
-                { mData: 'payment_bank_name' },
-                {
-                    mData: 'nominal',
-                    render: function (data, type, row, meta) {
-                        return "Rp " + rupiah(data);
-                    }
-                },
-                {
-                    mData: 'created_at',
-                    render: function (data, type, row, meta) {
-                        return dateFormat(data);
-                    }
-                },
-                {
-                    mData: 'file_customer',
-                    render: function (data, type, row, meta) {
-                        var noimg = '/img/noimg.jpg'
-                        var pic = cdn + cekimage_cdn(data);
-                        return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
-                    }
-                },
-                {
-                    mData: null,
-                    render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
-                            '<i class="mdi mdi-eye"></i>' +
-                            '</button>';
-                    }
-                }
-            ],
-            columnDefs:
-                [
-                    {
-                        "data": null,
-                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
-                        "targets": -1
-                    }
-                ],
-
-        });
-
-        //DETAIL USERTYPE FROM DATATABLE
-        $('#tabel_verify_superadmin tbody').on('click', 'button', function () {
-            var data = tabel.row($(this).parents('tr')).data();
-            // console.log(data);
-
-            $('input[name="invoice_num"]').val(data.invoice_number);
-            $("#modal_verify_admincom").modal('show');
-            $("#btn_verifyreq").attr("disabled", true);
-
-        });
-
-    }
-
-
-    function verify_reqadmin(invoice_num) {
-        alert(invoice_num);
-        // $("#invoice_num").val(invoice_num);
-        $('input[name="invoice_num"]').val(invoice_num);
-        $("#modal_verify_admincom").modal('show');
-        $("#btn_verifyreq").attr("disabled", true);
-
-
-    }
-
-
-    function list_req_admincomm() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/list_req_admincomm',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log("Cant Reach List Request Admin Community");
-            }
-        });
-    }
-
-
-    function showpass() {
-        var a = document.getElementById("pass_super");
-        if (a.type == "password") {
-            a.type = "text";
-        } else {
-            a.type = "password";
-        }
-    }
-
-
-
-</script>
 
 @endsection

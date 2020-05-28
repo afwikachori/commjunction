@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/teshtml', function () {
+    return view('teshtml');
+});
+
 
 
 Route::get('admin/finalreview', 'RegisterController@ReviewAdminView')->name('admin/finalreview');
@@ -284,8 +288,8 @@ Route::prefix('subscriber')->group(function () {
 
     Route::post('tes_enkrip', 'SubscriberController@tes_enkrip')->name('tes_enkrip');
 
+    Route::post('edit_profile_custom_regis', 'SubscriberController@edit_profile_custom_regis')->name('edit_profile_custom_regis');
     Route::post('add_friend_suggest_subs', 'SubscriberController@add_friend_suggest_subs')->name('add_friend_suggest_subs');
-
     Route::post('get_top_visit_club', 'SubscriberController@get_top_visit_club')->name('get_top_visit_club');
     Route::post('get_top_player', 'SubscriberController@get_top_player')->name('get_top_player');
     Route::post('get_topvisit_news', 'SubscriberController@get_topvisit_news')->name('get_topvisit_news');
@@ -346,9 +350,9 @@ Route::prefix('superadmin')->group(function () {
     Route::get('/', 'SuperadminController@loginSuperadminView')->name('superadmin');
     Route::get('/dashboard', 'SuperadminController@dashboarSuperView')->name('/dashboard');
     Route::get('/add_user', 'SuperadminController@UserSuperView')->name('/add_user');
-    Route::get('/payment', 'SuperadminController@paymentSuperView')->name('/payment');
+    Route::get('/verify', 'SuperadminController@paymentSuperView')->name('/verify');
     Route::get('/module', 'SuperadminController@ModuleManagementView')->name('/module');
-    Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
+    // Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
     Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
     Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
     Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');
@@ -363,6 +367,7 @@ Route::prefix('superadmin')->group(function () {
 
 
     //-------POST------
+    Route::post('LogoutSuperadmin', 'SuperadminController@LogoutSuperadmin')->name('LogoutSuperadmin');
     Route::post('get_dashboard_superadmin', 'SuperadminController@get_dashboard_superadmin');
     Route::post('get_all_module_list_superadmin', 'SuperadminController@get_all_module_list_superadmin');
     Route::post('detail_module_all_super', 'SuperadminController@detail_module_all_super');
@@ -383,7 +388,7 @@ Route::prefix('superadmin')->group(function () {
     Route::post('tabel_user_management_super', 'SuperadminController@tabel_user_management_super')->name('tabel_user_management_super');
     Route::post('detail_user_management_super', 'SuperadminController@detail_user_management_super')->name('detail_user_management_super');
     Route::post('tabel_log_management_super', 'SuperadminController@tabel_log_management_super')->name('tabel_log_management_super');
-    Route::post('list_komunitas_log', 'SuperadminController@list_komunitas_log')->name('list_komunitas_log');
+    Route::post('get_list_komunitas_log_manage', 'SuperadminController@get_list_komunitas_log_manage')->name('get_list_komunitas_log_manage');
     Route::post('get_list_community_modulereport', 'SuperadminController@get_list_community_modulereport')->name('get_list_community_modulereport');
     Route::post('get_list_fitur_modulereport', 'SuperadminController@get_list_fitur_modulereport')->name('get_list_fitur_modulereport');
     Route::post('get_subfitur_modulereport', 'SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');

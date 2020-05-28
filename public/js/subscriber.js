@@ -57,6 +57,7 @@ var ui = {
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
     session_subscriber_logged();
+    ses_auth_subs();
     init_ready();
 
 });
@@ -150,6 +151,9 @@ function session_subscriber_logged() {
                 get_pricing_membership();
             }
 
+
+            get_profile_custom_regis(result.custom_input);
+
         },
         error: function (result) {
             console.log("Cant Reach Session Logged User Dashboard");
@@ -157,6 +161,30 @@ function session_subscriber_logged() {
     });
 }
 
+
+function ses_auth_subs() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/ses_auth_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            var result = result[0];
+            var custom = result.cust_portal_login;
+
+            var base_color = custom.base_color;
+            document.documentElement.style.setProperty("--base_color_dash", base_color);
+          console.log(result);
+        },
+        error: function (result) {
+            console.log("user config auth subs");
+        }
+    });
+}
 
 // INITIAL LOGIN 2 - FITUR
 function get_initial_feature(datafitur) {
@@ -1238,8 +1266,8 @@ function tabel_friend_list() {
             url: '/subscriber/tabel_friend_management',
             type: 'POST',
             dataSrc: '',
-            data : {
-                "_token" : token
+            data: {
+                "_token": token
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
@@ -1288,7 +1316,7 @@ function suggestion_list() {
         },
         success: function (result) {
             console.log(result);
-            if(result.length == 0){
+            if (result.length == 0) {
                 $(".divkonco.pagefriend").hide();
             }
             if (result.success === false) {
@@ -1366,7 +1394,7 @@ function add_friend_suggest_subs(idsubs) {
             }
         },
         error: function (result) {
-            swal("Sorry!","Failed to add new friend", "error");
+            swal("Sorry!", "Failed to add new friend", "error");
             console.log(error);
         }
     });
@@ -1411,3 +1439,108 @@ function send_whatsapp(friend_id) {
 
 }
 ///---------- FRIEND MANAGEMENT SUBS ---------
+
+
+// --------------- PROFIL MANAGEMENT SUBS --------------
+function get_profile_custom_regis(params) {
+    var uihtml = '';
+
+    $.each(params, function (no, des) {
+        // console.log(des);
+        var item = des.param_form_array;
+        var inputipe = des.custom_input;
+        var cusinput = '';
+
+        if (inputipe.id == 1) {
+            var pilihan = item.splice(3);
+            $.each(pilihan, function (i, item) {
+                if (item == des.value) {
+                    cusinput += '<div class="col-md-6 nopadding">' +
+                        '<div class="form-check profile">' +
+                        '<small class="form-check-label">' +
+                        '<input type="radio" class="form-check-input input-abu" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '" checked> ' +
+                        item + '<i class="input-helper"></i></small>' +
+                        '</div></div>';
+                } else {
+                    cusinput += '<div class="col-md-6 nopadding">' +
+                        '<div class="form-check profile">' +
+                        '<small class="form-check-label">' +
+                        '<input type="radio" class="form-check-input input-abu" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '"> ' +
+                        item + '<i class="input-helper"></i></small>' +
+                        '</div></div>';
+                }
+            });
+        } else if (inputipe.id == 2) {
+            cusinput = '<input id="number' + no + '" type="text"' +
+                'class="form-control input-abu" name="number' + no + '"' +
+                'value="' + des.value + '"' +
+                'onkeypress="return isNumberKey(event)"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        } else if (inputipe.id == 3) {
+            cusinput = '<input id="text' + no + '" type="text"' +
+                'class="form-control input-abu" name="text' + no + '"' +
+                'value="' + des.value + '"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        } else if (inputipe.id == 4) {
+            cusinput = '<textarea id="textarea' + no + '" rows="2"' +
+                'class="form-control input-abu" name="textarea' + no + '">' + des.value + '</textarea >';
+
+        } else if (inputipe.id == 5) {
+            cusinput = '<input id="date' + no + '" type="date"' +
+                'class="form-control input-abu" name="date' + no + '"' +
+                'value="' + des.value + '"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        }
+        else if (inputipe.id == 6) {
+            var list = item.splice(3);
+            var cekbox = '';
+            var cek = '';
+            $.each(des.value, function (index, val) {
+                if (val == item) {
+                    cek += 'checked';
+                } else {
+                    cek = '';
+                }
+            });
+
+
+            $.each(list, function (i, item) {
+                cekbox += '<div class="form-check profile col-md-6">' +
+                    '<input class="form-check-input" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '" ' + cek + '>' +
+                    '<small class="form-check-label cekbox" for="checkbox' + no + '">' + item +
+                    '</small>' +
+                    '</div>';
+            });
+            cusinput = '<div class="row mgl-1em">' + cekbox + '</div>';
+        } else if (inputipe.id == 7) {
+            var pilihan = item.splice(2);
+            var dropdown = '';
+            $.each(pilihan, function (i, item) {
+                if (item == des.value) {
+                    dropdown += '<option value="' + item + '" selected>' + item + '</option>';
+                } else {
+                    dropdown += '<option value="' + item + '">' + item + '</option>';
+                }
+            });
+            cusinput = '<select class="form-control input-abu fullwidth" name="dropdown' + no + '" id="dropdown' + no + '">' + dropdown + '</select>';
+
+        }
+
+
+        uihtml += '<div class="col-md-6 kanankiri30px">' +
+            '<div class="form-group row">' +
+            '<input type="hidden" name="id_' + no + '" value="' + des.id + '">' +
+            '<label class="h6 cgrey s14" for="input' + no + '" lang="en">' + item[0] + '</label>' +
+            cusinput +
+            '</div>' +
+            '</div>';
+
+
+    });
+
+    $("#custom_input_regis").html(uihtml);
+}
+// --------------- END PROFIL MANAGEMENT SUBS ----------------
