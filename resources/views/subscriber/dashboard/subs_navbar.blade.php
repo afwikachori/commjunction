@@ -11,14 +11,14 @@
 
     <ul class="navbar-nav navbar-menu-wrapper d-flex align-items-stretch" id="nav_web_help">
         <li class="nav-item">
-            <a class="nav-link" href="/subscriber/news_list">
+            <a class="nav-link clr-accent-color" href="/subscriber/news_list">
                 <i class="mdi mdi-newspaper menu-icon"></i>
                 <span class="menu-title" lang="en">News</span>
 
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item clr-accent-color">
             <a class="nav-link" href="/subscriber/friend_list">
                 <i class="mdi mdi-account-multiple menu-icon"></i>
                 <span class="menu-title" lang="en">Friends</span>

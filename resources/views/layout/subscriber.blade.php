@@ -62,15 +62,15 @@
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en">Terms & Conditions</a>
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en">Privacy Policy</a>
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en" data-toggle="modal"
+                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en">Terms & Conditions</a>
+                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en">Privacy Policy</a>
+                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en" data-toggle="modal"
                                 data-target="#modal_confirmpay_membership">Payment Confirmation</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Documentation &nbsp;<i
+                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Documentation &nbsp;<i
                                     class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i
+                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i
                                     class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>

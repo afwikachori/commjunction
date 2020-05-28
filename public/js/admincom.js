@@ -1762,7 +1762,7 @@ function color_and_font() {
     }
 
     var input = document.getElementById('colour4');
-    input.addEventListener('change', getcolour_bgcolor);
+    input.addEventListener('change', getcolour_navbar);
     function getcolour_navbar(colr) {
         var colr = this.value;
         $("#output-color4").html(colr);
