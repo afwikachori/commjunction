@@ -1952,8 +1952,14 @@ function tabel_list_regisdata() {
             $("#edit_input_pilihan").fadeOut("slow").hide();
         }
 
+
         var len = isi.length;
-        var cek = isi.slice(3, len);
+        if (isi[2] != pilih.description) {
+            var cek = isi.slice(2, len);
+        }else{
+            var cek = isi.slice(3, len);
+        }
+
         var len_2 = cek.length;
         addRowRegisData_edit(len_2);
         var new_row2 = '';
