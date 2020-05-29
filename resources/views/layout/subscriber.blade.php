@@ -247,7 +247,7 @@
                             <div class="row" id="custom_input_regis">
 
                             </div>
-                            <div class="modal-footer" style="border: none;">
+                            <div class="modal-footer customprofil">
                                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
                                     <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                 </button>

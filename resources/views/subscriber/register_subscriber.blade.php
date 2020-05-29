@@ -509,7 +509,12 @@
             var klasinput;
 
             if (inputipe.id == 1) {
-                var pilihan = item.splice(3);
+                if (item[2] != des.description) {
+                    var pilihan = item.splice(2);
+                } else {
+                    var pilihan = item.splice(3);
+                }
+
                 var radio = '';
                 $.each(pilihan, function (i, item) {
                     cusinput += '<div class="col-md-6">' +
@@ -542,7 +547,12 @@
                 klasinput = "date" + no;
             }
             else if (inputipe.id == 6) {
-                var list = item.splice(3);
+                if (item[2] != des.description) {
+                    var list = item.splice(2);
+                } else {
+                    var list = item.splice(3);
+                }
+
                 $.each(list, function (i, item) {
                     cusinput += '<div class="form-check col-md-6">' +
                         '<input class="form-check-input" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '">' +
@@ -566,9 +576,9 @@
             uihtml += '<div class="col-md-5">' +
                 '<div class="form-group row">' +
                 '<input type="hidden" name="id_' + no + '" value="' + des.id + '">' +
-                '<label class="h6 cgrey s14" for="input' + no + '" lang="en">' + item[0] + '</label>' +
-                '&nbsp; &nbsp;<small class="ctosca"> (' + inputipe.title + ') &nbsp; </small><br>' +
-                '<small class="clight">' + des.description + '</small><br>' +
+                '<h6 class="h6 cgrey s14" for="input' + no + '" lang="en">' + item[0] + '</h6>' +
+                '&nbsp; &nbsp;<small class="ctosca"> (' + inputipe.title + ') &nbsp; </small>' +
+                '<div class="col-md-12 mgb-04-03"><span class="clight row s13">' + des.description + '</span></div>' +
                 cusinput +
                 '</div>' +
                 '</div>' +

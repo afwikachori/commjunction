@@ -1605,9 +1605,9 @@ function get_profile_custom_regis(params) {
         uihtml += '<div class="col-md-6 kanankiri30px">' +
             '<div class="form-group row">' +
             '<input type="hidden" name="id_' + no + '" value="' + des.id + '">' +
-            '<label class="h6 cgrey s14" for="input' + no + '" lang="en">' + item[0] + '</label>' +
+            '<div class="col-md-12 nopadding"><label class="h6 cgrey s14 tebal" for="input' + no + '">' + item[0] + '</label></div>' +
             cusinput +
-            '</div>' +
+            '</div><br>' +
             '</div>';
 
 
