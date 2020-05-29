@@ -1953,7 +1953,7 @@ function tabel_list_regisdata() {
         }
 
         var len = isi.length;
-        var cek = isi.slice(2, len);
+        var cek = isi.slice(3, len);
         var len_2 = cek.length;
         addRowRegisData_edit(len_2);
         var new_row2 = '';
@@ -1993,7 +1993,7 @@ function get_list_custum_inputipe() {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             $('#tipedata_regis').empty();
             $('#tipedata_regis').append("<option disabled value='0'> Choose</option>");
 
