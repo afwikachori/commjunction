@@ -201,7 +201,7 @@ function ses_auth_subs() {
         datatype: 'JSON',
         success: function (result) {
             var result = result[0];
-            console.log(result);
+            // console.log(result);
             var custom = result.cust_portal_login;
 
             // var base_color = custom.base_color;
@@ -1167,6 +1167,18 @@ $('#fileup').on('change', function () {
 function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
+
+        // get_payment_initial();
+
+        get_dashboard_news();
+        get_friends_total();
+        get_friends_sugestion();
+        get_last_news();
+        get_love_news();
+        get_topvisit_news();
+
+        get_top_player();
+        get_top_visit_club();
     }
 
     if ($("#page_news_management_subs").length != 0) {
@@ -1180,7 +1192,7 @@ function init_ready() {
     }
 
 
-    if ($("#page_transaction_management_subs").length != 0 ){
+    if ($("#page_transaction_management_subs").length != 0) {
         get_list_transaction_tipe();
         get_list_subscriber_admin();
 
@@ -1428,7 +1440,7 @@ function suggestion_list() {
 }
 
 function add_friend_suggest_subs(idsubs) {
-    alert(idsubs);
+    // alert(idsubs);
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
@@ -1563,17 +1575,11 @@ function get_profile_custom_regis(params) {
         else if (inputipe.id == 6) {
             var list = item.splice(3);
             var cekbox = '';
-            var cek = '';
-            $.each(des.value, function (index, val) {
-                if (val == item) {
-                    cek += 'checked';
-                } else {
-                    cek = '';
-                }
-            });
-
 
             $.each(list, function (i, item) {
+
+                var cek = isInArray(item, des.value) ? "checked " : " ";
+
                 cekbox += '<div class="form-check profile col-md-6">' +
                     '<input class="form-check-input" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '" ' + cek + '>' +
                     '<small class="form-check-label cekbox" for="checkbox' + no + '">' + item +
@@ -1633,8 +1639,8 @@ function get_list_transaction_tipe() {
         url: "/subscriber/get_list_transaction_tipe",
         type: "POST",
         dataType: "json",
-        data :{
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             console.log(result);
@@ -1690,8 +1696,8 @@ function get_list_subscriber_admin() {
         url: "/subscriber/get_list_subcriber_name",
         type: "POST",
         dataType: "json",
-        data :{
-            "_token" : token,
+        data: {
+            "_token": token,
         },
         success: function (result) {
             console.log(result);
@@ -1759,7 +1765,7 @@ function show_card_transaksi() {
             "tipe_trans": $("#tipe_trans").val(),
             "status_trans": $("#status_trans").val(),
             "subs_name": $("#subs_name").val(),
-            "_token" : token
+            "_token": token
         },
         success: function (result) {
             console.log(result);
@@ -1837,7 +1843,7 @@ function filter_show_card_transaksi() {
             "tipe_trans": $("#tipe_trans2").val(),
             "status_trans": $("#status_trans2").val(),
             "subs_name": $("#subs_name2").val(),
-            "_token" : token
+            "_token": token
         },
         success: function (result) {
             if (result.length != 0) {
@@ -1936,7 +1942,7 @@ function show_tabel_transaksi() {
                 "tipe_trans": $("#tipe_trans").val(),
                 "status_trans": $("#status_trans").val(),
                 "subs_name": $("#subs_name").val(),
-                "_token" : token
+                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -1991,7 +1997,7 @@ function detail_transaksi_all(dt_trans) {
             "invoice_number": trans[0],
             "payment_level": trans[1],
             "community_id": trans[2],
-            "_token" : token
+            "_token": token
         },
         success: function (result) {
             setTimeout(function () {
@@ -2051,3 +2057,465 @@ function detail_transaksi_all(dt_trans) {
     });
 }
 // ------------------------ END TRANSACTION MANAGEMENT SUBS -------------------------------
+
+
+
+// -------------------------- DASHBOARD PAGE SUBSCRIBER -------------------------------
+
+function get_dashboard_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_dashboard_news',
+        type: 'POST',
+        datatype: 'JSON',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_dash_artikel").show();
+                $("#idashbord_news").hide();
+            } else {
+                if (result != undefined) {
+                    var berita = '';
+                    $.each(result, function (i, item) {
+                        var imge = cekimage_cdn(item.image);
+                        var noimgnews = '/img/car1.png';
+
+                        berita += '<div class="col-md-6 stretch-card grid-margin">' +
+                            '<div class="card" style="height:217px;">' +
+                            '<div class="imgsub-cont">' +
+                            '<img src="' + server_cdn + imge + '" class="card-img-top artikeldash"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
+                            'style="border-radius: 8px 8px 0px 0px;"></div>' +
+                            '<div class="card-body card-dashsub">' +
+                            '<small class="card-text text-wrap">' + item.title +
+                            '</small>' +
+                            '</div>' +
+                            '<div class="card-footer card-dashsub">' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">' +
+                            '<p class="card-text"><small class="text-muted">' +
+                            dateTime(item.createdAt) + '</small></p>' +
+                            '</div>' +
+                            '<div class="col-md-4" style="text-align: right;">' +
+                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small> &nbsp; &nbsp;' +
+                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div></div></div>';
+                    });
+                    $("#idashbord_news").html(berita);
+                    $("#nodata_dash_artikel").hide();
+                    $("#idashbord_news").show();
+                }
+
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_dash_artikel").show();
+            $("#idashbord_news").hide();
+            console.log("Cant Get Articles News");
+        }
+    });
+}
+
+function get_friends_total() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_total',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".total_friend").html("0");
+                console.log(result);
+            } else {
+                if (result.total_friend != undefined) {
+                    $(".total_friend").html(result.total_friend);
+                }
+            }
+        },
+        error: function (result) {
+            $(".total_friend").html("0");
+            // console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+function get_friends_sugestion() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_sugestion',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 10,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".divkonco").hide();
+            } else {
+                if (result != undefined) {
+                    var nofoto = '/img/kosong.png';
+                    var isiui = '';
+                    var jumlah = 0;
+                    $.each(result, function (i, item) {
+                        jumlah++;
+                        news_id = parseInt(item.id);
+                        var headpic = server_cdn + cekimage_cdn(item.image);
+
+                        isiui += '<div class="card konco" id="' + item.user_id + '">' +
+                            '<div class="card-body color">' +
+                            '<div class="close_konco">' +
+                            '<button type="button" class="close cgrey2" aria-label="Close"' +
+                            'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                            '<span aria-hidden="true">&times;</span>' +
+                            '</button>' +
+                            '</div>' +
+                            '<center>' +
+                            '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                            '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                            '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                            '</button>' +
+                            '<center>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $(".divkonco").show();
+                    $("#div_friendsugest").html(isiui);
+                }
+
+            }
+        },
+        error: function (result) {
+            // console.log(result);
+            console.log("Cant Show Friend Suggest");
+            $(".divkonco").hide();
+        }
+    });
+}
+
+function hide_friendsugest(dtcard) {
+    var dt = dtcard.split('<>');
+    $("#" + dt[0]).hide();
+    if (dt[1] == 1) {
+        $(".divkonco").fadeOut("slow").hide();
+    }
+}
+
+function get_last_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_last_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_last_news").show();
+                $("#isi_last_news").hide();
+                // console.log(result);
+            } else {
+                var newsui = '';
+                $.each(result, function (i, item) {
+                    newsui += '<li>' +
+                        '<a href="/subscriber/detail_news/' + item.id + '">' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                        '<small class="cgrey s13">' + item.title + '</small><br>' +
+                        '</li>';
+                });
+                $("#isi_last_news").html(newsui);
+                $("#nodata_last_news").hide();
+                $("#isi_last_news").show();
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_last_news").show();
+            $("#isi_last_news").hide();
+            // console.log(result);
+            console.log("Cant Show Latest News");
+        }
+    });
+}
+
+function get_love_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_love_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            var noimg = '/img/fitur.png';
+            if (result.success == false) {
+                $("#nodata_love_news").show();
+                $("#isi_love_news").hide();
+            } else {
+                if (result != undefined) {
+
+                    var loveui = '';
+                    $.each(result, function (i, item) {
+                        loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
+                            '<center><img src="http://' + server_cdn + cekimage_cdn(item.image) + '" class="rounded-circle img-fluid mb-2 lovenews"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
+                            '</div>' +
+                            '<div class="col-md-10 pd-5px">' +
+                            '<a href="/subscriber/detail_news/' + item.id + '">' +
+                            '<small class="cblue s12">' + dateTime(item.createdAt) + '</small></a>' +
+                            '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
+                            '</div></div>';
+                    });
+                    $("#isi_love_news").html(loveui);
+                    $("#nodata_love_news").hide();
+                    $("#isi_love_news").show();
+                } else {
+                    $("#nodata_love_news").show();
+                    $("#isi_love_news").hide();
+                }
+
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_love_news").show();
+            $("#isi_love_news").hide();
+            // console.log(result);
+            console.log("Cant Show love news");
+        }
+    });
+}
+
+function get_topvisit_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_topvisit_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_topvisit_news").show();
+                $("#isi_topvisit_news").hide();
+            } else {
+                if (result != undefined) {
+                    var newsui = '';
+                    $.each(result, function (i, item) {
+                        newsui += '<li>' +
+                            '<a href="/subscriber/detail_news/' + item.id + '">' +
+                            '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                            '<small class="cgrey s13">' + item.title + '</small><br>' +
+                            '</li>';
+                    });
+                    $("#isi_topvisit_news").html(newsui);
+                    $("#nodata_topvisit_news").hide();
+                    $("#isi_topvisit_news").show();
+                } else {
+                    $("#nodata_topvisit_news").show();
+                    $("#isi_topvisit_news").hide();
+                }
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show top visit news");
+            $("#nodata_topvisit_news").show();
+            $("#isi_topvisit_news").hide();
+        }
+    });
+}
+
+function get_top_player() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_player',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                $("#topplayer_nodata").show();
+                $("#isi_top_player").hide();
+                console.log(result);
+            }
+
+            if (result.length == 0) {
+                $("#topplayer_nodata").show();
+                $("#isi_top_player").hide();
+            } else {
+                var iuplyr = '';
+                var nopic = '';
+                var gen = '';
+                $.each(result, function (i, item) {
+                    if (item.gender == "putri") {
+                        nopic = '/img/pl-girl.png';
+                        gen = 'Putri';
+                    } else {
+                        nopic = '/img/pl-boy.png';
+                        gen = 'Putra';
+                    }
+                    iuplyr += '<div class="col-md-6 mgt-half">' +
+                        '<div class="row pad-5px">' +
+                        '<div class="col-md-2 pad-5px dikanan">' +
+                        '<img src="' + server_cdn + item.photo + '" class="rounded-circle img-fluid wd-25px"' +
+                        'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
+                        '</div>' +
+                        '<div class="col-md-10 pad-5px">' +
+                        '<small class="cgrey2">' + item.name + '</small>' +
+                        '<small class="cblue"> &nbsp; (' + gen + ')</small><br>' +
+                        '<small class="clight">Club : ' + item.club.name + '</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+                $("#isi_top_player").html(iuplyr);
+                $("#topplayer_nodata").hide();
+                $("#isi_top_player").show();
+
+            }
+        },
+        error: function (result) {
+            $("#topplayer_nodata").show();
+            $("#isi_top_player").hide();
+            console.log("Cant Show top Player");
+        }
+    });
+}
+
+function get_top_visit_club() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_visit_club',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                console.log(result);
+                $("#topclubvisit_nodata").show();
+                $("#isi_top_visit_club").hide();
+            }
+
+            if (result.length == 0) {
+                $("#topclubvisit_nodata").show();
+                $("#isi_top_visit_club").hide();
+            }
+
+        },
+        error: function (result) {
+            $("#topclubvisit_nodata").show();
+            $("#isi_top_visit_club").hide();
+            console.log("Cant Show Top Club Visit");
+        }
+    });
+}
+
+
+$("#btn-initial1").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('show');
+    $("#initial3").modal('hide');
+});
+
+$("#btn-initial2").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('hide');
+    $("#initial3").modal('show');
+});
+
+$("#btn-initial3").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('hide');
+    $("#initial3").modal('hide');
+    $("#modal_initial_membership").modal('show');
+});
+
+// ------------------------ END DASHBOARD PAGE SUBSCRIBER ------------------------------
+
+
+// ------------------- PROFILE MANAGEMRNT -----------------
+function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+}

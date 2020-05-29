@@ -6,7 +6,7 @@
 </div>
 <div class="navbar-menu-wrapper d-flex align-items-stretch bg-navbar-color">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-        <span class="mdi mdi-menu"></span>
+        <span class="mdi mdi-menu clr-accent-color"></span>
     </button>
 
     <ul class="navbar-nav navbar-menu-wrapper d-flex align-items-stretch" id="nav_web_help">
@@ -114,7 +114,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
                 data-toggle="dropdown">
-                <i class="mdi mdi-bell-outline"></i>
+                <i class="mdi mdi-bell-outline clr-accent-color"></i>
                 <span class="count-symbol bg-danger" id="ada_notif" style="display: none;"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
@@ -135,7 +135,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
                 aria-expanded="false">
-                <i class="mdi mdi-email-outline"></i>
+                <i class="mdi mdi-email-outline clr-accent-color"></i>
                 <span class="count-symbol bg-warning"  id="ada_inbox" style="display: none;"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
@@ -156,7 +156,7 @@
         <li class="nav-item nav-logout dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                 aria-expanded="false">
-                <i class="mdi mdi-settings"></i>
+                <i class="mdi mdi-settings clr-accent-color"></i>
             </a>
 
 
