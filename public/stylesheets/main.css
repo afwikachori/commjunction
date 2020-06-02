@@ -1,0 +1,41 @@
+.btn-basecolor {
+  background: linear-gradient(180deg, var(--base_color) 0%, #e3dcff 100%);
+  border-radius: 6px;
+  border: none;
+  width: 165px;
+  margin-bottom: 1em;
+}
+
+.accent_color {
+  color: var(--accent_color);
+}
+
+.bg-base-color {
+  background-color: var(--base_color_dash) !important;
+}
+
+.clr-accent-color {
+  color: var(--accent_color_dash) !important;
+}
+
+.btn-accent {
+  background-color: var(--accent_color_dash) !important;
+  border-radius: 10px;
+}
+
+.bgcolor-dash {
+  background-color: var(--bgcolor_dash) !important;
+}
+
+.bg-navbar-color {
+  background-color: var(--navbar_color_dash) !important;
+}
+
+.sidebar .nav .nav-item.active {
+  background-color: var(--base_color_dash) !important;
+}
+.sidebar .nav .nav-item:hover {
+  background-color: #fff !important;
+}
+
+/*# sourceMappingURL=main.css.map */

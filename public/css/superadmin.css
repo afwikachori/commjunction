@@ -767,6 +767,28 @@ a.dt-button {
     margin-bottom: 1em !important;
 }
 
+
+.circle.paysuper {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #efefef;
+    position: absolute;
+    top: -1em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.p-image.paysuper {
+    margin-top: 1em;
+    left: 60%;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    position: relative;
+}
+
 .circle.subpay {
     position: relative !important;
     margin-bottom: 1em;
@@ -858,6 +880,27 @@ a.dt-button {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+.circle.module {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #efefef;
+    position: absolute;
+    top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.p-image.module {
+      margin-top: 0em;
+    margin-left: 3.5em;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    position: relative;
 }
 
 .circle.editpricing {

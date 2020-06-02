@@ -7,7 +7,6 @@ lang.init({
     defaultLang: 'en'
 });
 
-
 var server_cdn = '';
 var ui = {
     popup: {
@@ -56,7 +55,11 @@ var ui = {
 
 $(document).ready(function () {
     server_cdn = $("#server_cdn").val();
+    thematic_color();
+
     session_subscriber_logged();
+
+    init_ready();
 
 });
 
@@ -93,7 +96,12 @@ function session_subscriber_logged() {
             console.log(result.access_token);
             console.log("cdn : " + server_cdn);
 
+
             var user = result.user;
+            $.cookie('id_komunitas_login', null);
+            $.cookie('id_komunitas_login', user.community_id);
+
+
             get_list_notif_navbar(user.community_id);
             get_inbox_navbar();
 
@@ -145,9 +153,12 @@ function session_subscriber_logged() {
             $("#membership_id").val(user.membership_id);
             if (user.membership_id != 0) {
                 show_my_membership(user.membership_id);
-            }else{
+            } else {
                 get_pricing_membership();
             }
+
+
+            get_profile_custom_regis(result.custom_input);
 
         },
         error: function (result) {
@@ -156,6 +167,64 @@ function session_subscriber_logged() {
     });
 }
 
+
+function thematic_color() {
+    var base_color = $.cookie('base_color');
+    var accent_color = $.cookie('accent_color');
+    var background_color = $.cookie('background_color');
+    var navbar_color = $.cookie('navbar_color');
+
+    var idcomm_login = $.cookie('id_komunitas_login');
+
+    if (idcomm_login != null && idcomm_login != undefined) {
+        document.documentElement.style.setProperty('--base_color_dash', base_color);
+        document.documentElement.style.setProperty('--accent_color_dash', accent_color);
+        document.documentElement.style.setProperty('--bgcolor_dash', background_color);
+        document.documentElement.style.setProperty('--navbar_color_dash', navbar_color);
+    }
+}
+
+function ses_auth_subs() {
+    $.cookie('base_color', null);
+    $.cookie('accent_color', null);
+    $.cookie('background_color', null);
+    $.cookie('navbar_color', null);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/ses_auth_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            var result = result[0];
+            // console.log(result);
+            var custom = result.cust_portal_login;
+
+            // var base_color = custom.base_color;
+            // document.documentElement.style
+            //     .setProperty('--base_color_dash', base_color);
+            // ----------------------------------------------------------------
+
+            var id_kom_login = $(".id_komunitas").val();
+            var id_kom_auth = result.id;
+
+            $.cookie('base_color', custom.base_color, { expires: 30 });
+            $.cookie('accent_color', custom.accent_color, { expires: 30 });
+            $.cookie('background_color', custom.background_color, { expires: 30 });
+            $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
+        },
+        error: function (result) {
+            $.cookie('base_color', null);
+            $.cookie('accent_color', null);
+            $.cookie('background_color', null);
+            $.cookie('navbar_color', null);
+        }
+    });
+}
 
 // INITIAL LOGIN 2 - FITUR
 function get_initial_feature(datafitur) {
@@ -584,6 +653,7 @@ function show_card_pesan_inbox_subs(result) {
 
 function show_my_membership(idmember) {
     $('.hideisimember').hide();
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -596,6 +666,7 @@ function show_my_membership(idmember) {
         timeout: 30000,
         data: {
             "membership_id": idmember,
+            "_token": token,
         },
         success: function (result) {
             // console.log(result);
@@ -986,6 +1057,9 @@ function LogoutSubscriber() {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
+                $.cookie('base_color', null);
+                $.cookie('accent_color', null);
+                $.cookie('id_komunitas_login', null);
                 location.href = '/subscriber/url/' + namakom;
             }
         },
@@ -1088,3 +1162,1360 @@ $('#fileup').on('change', function () {
         $(this).next('.custom-file-label').html(fileName);
     }
 });
+
+
+function init_ready() {
+    if ($("#page_dashboard_subscriber").length != 0) {
+        ses_auth_subs();
+
+        // get_payment_initial();
+
+        get_dashboard_news();
+        get_friends_total();
+        get_friends_sugestion();
+        get_last_news();
+        get_love_news();
+        get_topvisit_news();
+
+        get_top_player();
+        get_top_visit_club();
+    }
+
+    if ($("#page_news_management_subs").length != 0) {
+        table_news_list();
+    }
+
+    if ($("#page_friends_subs").length != 0) {
+        suggestion_list();
+        tabel_friend_list();
+        tabel_tes_friends();
+    }
+
+
+    if ($("#page_transaction_management_subs").length != 0) {
+        get_list_transaction_tipe();
+        get_list_subscriber_admin();
+
+        $("#reset_tbl_trans").click(function () {
+            resetparam_trans();
+        });
+
+        $("#btn_showtable_transaksi").click(function (e) {
+            show_card_transaksi();
+        });
+
+        $("#btn_filter_transaksi").click(function (e) {
+            filter_show_card_transaksi();
+            $("#modal_trasaksi_filter").modal("hide");
+        });
+    }
+}
+
+
+
+/// ------ NEWS MANAGEMENT  -----------
+function table_news_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/table_news_list',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success === false) {
+                $("#nodata_news").show();
+                $("#news_container").hide();
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                if (result != "News Empty") {
+                    var newslist = '';
+                    var jumlah = 0;
+                    var nofoto = '/img/artikel.jpg';
+
+                    $.each(result, function (i, item) {
+                        jumlah++;
+                        $news_id = parseInt(item.id);
+                        // $date=item.author_name;
+
+                        var headpic = server_cdn + cekimage_cdn(item.image);
+                        newslist += '<div class="news-card" id="' + item.id + '">' +
+                            '<div class="row"><div class="col-md-6 news_pic_container">' +
+                            '<img src="' + headpic + '" class="img-fluid picimg_news"' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"></div>' +
+                            '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
+                            '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
+                            '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
+                            '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
+                            'See Detail' +
+                            '</a></div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#nodata_news").hide();
+                    $("#news_container").html(newslist);
+                } else {
+                    $("#nodata_news").show();
+                    $("#news_container").hide();
+                }
+
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show News");
+            console.log(result);
+            $("#nodata_news").show();
+            $("#news_container").hide();
+        }
+    });
+}
+
+function showPassword() {
+    var a = document.getElementById("confirmpass_user");
+    if (a.type == "password") {
+        a.type = "text";
+    } else {
+        a.type = "password";
+    }
+}
+
+function send_message(friend_id) {
+    $friend_id = friend_id;
+    $("#modal_send_message").modal("show");
+    $("#friend_id").val($friend_id);
+};
+
+function send_whatsapp(friend_id) {
+    $friend_id = friend_id;
+    $phonum = +628123229810;
+    $pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+
+}
+/// -------- END NEW MANAGEMENT -----------
+
+
+
+///---------- FRIEND MANAGEMENT SUBS ---------
+function tabel_tes_friends() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_friend_management',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (result) {
+            console.log("Cant Show");
+        }
+    });
+}
+
+function tabel_friend_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_friend_manage').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_friend_management',
+            type: 'POST',
+            dataSrc: '',
+            data: {
+                "_token": token
+            },
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                $('#tabel_friend_manage tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            {
+                mData: 'image',
+                render: function (data, type, row, meta) {
+                    // console.log(data);
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                }
+            },
+            { mData: 'full_name' },
+            {
+                mData: 'friend_id',
+                render: function (data, type, row, meta) {
+                    return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye matadetail"></i></a>' +
+                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<i class="mdi mdi-email matadetail"></i></i></a>' +
+                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + data + '")>' +
+                        '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
+                }
+            }
+        ],
+
+    });
+}
+
+function suggestion_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_sugestion',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.length == 0) {
+                $(".divkonco.pagefriend").hide();
+            }
+            if (result.success === false) {
+                $(".divkonco.pagefriend").hide();
+            } else {
+                var suggestionlist = '';
+                var jumlah = 0;
+                var nofoto = '/img/kosong.png';
+
+                $.each(result, function (i, item) {
+                    jumlah++;
+                    $news_id = parseInt(item.id);
+                    var $headpic = server_cdn + cekimage_cdn(item.image);
+
+                    suggestionlist += '<div class="card konco" id="' + item.user_id + '">' +
+                        '<div class="card-body color">' +
+                        '<div class="close_konco">' +
+                        '<button type="button" class="close cgrey2" aria-label="Close"' +
+                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>' +
+                        '<center>' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                        '</button>' +
+                        '<center>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+
+                $("#suggestion_list").html(suggestionlist);
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show");
+        }
+    });
+}
+
+function add_friend_suggest_subs(idsubs) {
+    // alert(idsubs);
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/add_friend_suggest_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "user_id_subs": idsubs
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                swal("Yeay!", "Friend has been added", "success");
+                location.reload();
+            }
+        },
+        error: function (result) {
+            swal("Sorry!", "Failed to add new friend", "error");
+            console.log(error);
+        }
+    });
+}
+
+function showPassword() {
+    var a = document.getElementById("confirmpass_user");
+    if (a.type == "password") {
+        a.type = "text";
+    } else {
+        a.type = "password";
+    }
+}
+
+function send_message(friend_id) {
+    $friend_id = friend_id;
+    $("#modal_send_message_subs").modal("show");
+    $("#friend_id").val($friend_id);
+    // var editor = new nicEditor({iconsPath : '/img//nicEditorIcons.gif'}).panelInstance('news_edit_content');
+    //  $('.nicEdit-panelContain').parent().width('100%');
+    // $('.nicEdit-main').parent().width('98%');
+    // $('.nicEdit-main').width('98%');
+    // $('.nicEdit-main').height('200px');
+
+    // var content  = nicEditors.findEditor('news_edit_content');
+    //       content.setContent(res.content);
+    //       $('textarea[name=news_edit_content]').val(res.content);
+
+    //$("#news_picture").attr("src", server_cdn+res.image);
+    // $("#news_picture").attr("src", server_cdn+res.image);
+    //   $("#edit_title").val(res.title);
+    //   $("#id_news").val(res.id);
+    //   $("#toggle-status").val(res.id);
+    //   $("#toggle-headline").val(res.id);
+};
+
+function send_whatsapp(friend_id) {
+    $friend_id = friend_id;
+    $phonum = +628123229810;
+    $pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+
+}
+///---------- FRIEND MANAGEMENT SUBS ---------
+
+
+// --------------- PROFIL MANAGEMENT SUBS --------------
+function get_profile_custom_regis(params) {
+    var uihtml = '';
+
+    $.each(params, function (no, des) {
+        // console.log(des);
+        var item = des.param_form_array;
+        var inputipe = des.custom_input;
+        var cusinput = '';
+
+        if (inputipe.id == 1) {
+            var pilihan = item.splice(3);
+            $.each(pilihan, function (i, item) {
+                if (item == des.value) {
+                    cusinput += '<div class="col-md-6 nopadding">' +
+                        '<div class="form-check profile">' +
+                        '<small class="form-check-label">' +
+                        '<input type="radio" class="form-check-input input-abu" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '" checked> ' +
+                        item + '<i class="input-helper"></i></small>' +
+                        '</div></div>';
+                } else {
+                    cusinput += '<div class="col-md-6 nopadding">' +
+                        '<div class="form-check profile">' +
+                        '<small class="form-check-label">' +
+                        '<input type="radio" class="form-check-input input-abu" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '"> ' +
+                        item + '<i class="input-helper"></i></small>' +
+                        '</div></div>';
+                }
+            });
+        } else if (inputipe.id == 2) {
+            cusinput = '<input id="number' + no + '" type="text"' +
+                'class="form-control input-abu" name="number' + no + '"' +
+                'value="' + des.value + '"' +
+                'onkeypress="return isNumberKey(event)"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        } else if (inputipe.id == 3) {
+            cusinput = '<input id="text' + no + '" type="text"' +
+                'class="form-control input-abu" name="text' + no + '"' +
+                'value="' + des.value + '"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        } else if (inputipe.id == 4) {
+            cusinput = '<textarea id="textarea' + no + '" rows="2"' +
+                'class="form-control input-abu" name="textarea' + no + '">' + des.value + '</textarea >';
+
+        } else if (inputipe.id == 5) {
+            cusinput = '<input id="date' + no + '" type="date"' +
+                'class="form-control input-abu" name="date' + no + '"' +
+                'value="' + des.value + '"' +
+                'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+
+        }
+        else if (inputipe.id == 6) {
+            var list = item.splice(3);
+            var cekbox = '';
+
+            $.each(list, function (i, item) {
+
+                var cek = isInArray(item, des.value) ? "checked " : " ";
+
+                cekbox += '<div class="form-check profile col-md-6">' +
+                    '<input class="form-check-input" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '" ' + cek + '>' +
+                    '<small class="form-check-label cekbox" for="checkbox' + no + '">' + item +
+                    '</small>' +
+                    '</div>';
+            });
+            cusinput = '<div class="row mgl-1em">' + cekbox + '</div>';
+        } else if (inputipe.id == 7) {
+            var pilihan = item.splice(2);
+            var dropdown = '';
+            $.each(pilihan, function (i, item) {
+                if (item == des.value) {
+                    dropdown += '<option value="' + item + '" selected>' + item + '</option>';
+                } else {
+                    dropdown += '<option value="' + item + '">' + item + '</option>';
+                }
+            });
+            cusinput = '<select class="form-control input-abu fullwidth" name="dropdown' + no + '" id="dropdown' + no + '">' + dropdown + '</select>';
+
+        }
+
+
+        uihtml += '<div class="col-md-6 kanankiri30px">' +
+            '<div class="form-group row">' +
+            '<input type="hidden" name="id_' + no + '" value="' + des.id + '">' +
+            '<div class="col-md-12 nopadding"><label class="h6 cgrey s14 tebal" for="input' + no + '">' + item[0] + '</label></div>' +
+            cusinput +
+            '</div><br>' +
+            '</div>';
+
+
+    });
+
+    $("#custom_input_regis").html(uihtml);
+}
+// --------------- END PROFIL MANAGEMENT SUBS ----------------
+
+
+//--------------------------- TRANSACTION MANAGEMENT SUBS ----------------------------
+function resetparam_trans() {
+    $("#komunitas").val("");
+    $("#tanggal_mulai").val("");
+    $("#tanggal_selesai").val("");
+    $("#tipe_trans").val("");
+    $("#status_trans").val("");
+    $("#subs_name").val("");
+}
+
+function get_list_transaction_tipe() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+        url: "/subscriber/get_list_transaction_tipe",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            $('#tipe_trans').empty();
+            $('#tipe_trans').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#tipe_trans").get(0).selectedIndex = 0;
+
+            const OldTipetrans = "{{old('tipe_trans')}}";
+
+            if (OldTipetrans !== '') {
+                $('#tipe_trans').val(OldTipetrans);
+            }
+            // ___________________________________________________________________
+            $('#tipe_trans2').empty();
+            $('#tipe_trans2').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#tipe_trans2").get(0).selectedIndex = 0;
+
+            const OldTipetrans2 = "{{old('tipe_trans2')}}";
+
+            if (OldTipetrans2 !== '') {
+                $('#tipe_trans2').val(OldTipetrans2);
+            }
+        }
+    });
+}
+
+function get_list_subscriber_admin() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_list_subcriber_name",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "_token": token,
+        },
+        success: function (result) {
+            console.log(result);
+            $('#subs_name').empty();
+            $('#subs_name').append("<option value='null'> Choose</option>");
+
+            var isilist = '';
+            $.each(result, function (i, item) {
+                isilist += '<option style="background-image:url(img/kosong.png);" value="' + item.id + '">' + item.full_name + '</option>';
+            });
+            $('#subs_name').html(isilist);
+
+            // for (var i = result.length - 1; i >= 0; i--) {
+            //     $('#subs_name').append('<option  style="" value=\''.concat(result[i].id, '\'>').concat(result[i].full_name, '</option>'));
+            // }
+            //Short Function Ascending//
+            $("#subs_name").html($('#subs_name option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#subs_name").get(0).selectedIndex = 0; const
+                OldSubs1 = "{{old('subs_name')}}";
+            if (OldSubs1 !== '') {
+                $('#subs_name').val(OldSubs1);
+            }
+            // _______________________________________________________________________________
+            $('#subs_name2').empty();
+            $('#subs_name2').append("<option value='null'> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#subs_name2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].full_name, "</option>"));
+            }
+            //Short Function Ascending//
+            $("#subs_name2").html($('#subs_name2 option').sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+
+            $("#subs_name2").get(0).selectedIndex = 0; const
+                OldSubs2 = "{{old('subs_name2')}}";
+            if (OldSubs2 !== '') { $('#subs_name2').val(OldSubs2); }
+
+        },
+        error: function (result) {
+            ui.popup.show('Warning', 'Get list community', 'Warning');
+        }
+    });
+}
+
+function show_card_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_transaksi_show',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "komunitas": $("#komunitas").val(),
+            "tanggal_mulai": $("#tanggal_mulai").val(),
+            "tanggal_selesai": $("#tanggal_selesai").val(),
+            "tipe_trans": $("#tipe_trans").val(),
+            "status_trans": $("#status_trans").val(),
+            "subs_name": $("#subs_name").val(),
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+
+            if (result.length != 0) {
+                var isiui = '';
+                var num = 0;
+                $.each(result, function (i, item) {
+                    console.log(item);
+                    num++;
+
+                    var dt = [item.invoice_number, item.payment_level, item.community_id];
+                    isiui +=
+                        '<div class="col-md-6 stretch-card ' +
+                        'grid-margin card-member' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                        '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                        '<div class="card-body member">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                        'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4" style="padding:0px;">' +
+                        '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                        '</div>' +
+                        '<div class="col-md-8">' +
+                        '<small class="ctosca">Total</small>' +
+                        '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-12">' +
+                        '<small class="cteal">' + item.transaction_type + '</small>' +
+                        '<h4>' + item.transaction + '</h4>' +
+                        '<p class="ctosca">' + item.invoice_number + '</p>' +
+                        '</div>' +
+                        '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                        '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                        '</small>' +
+                        '</div>' +
+                        '</div></div></div></div>';
+                });
+
+                $("#show_card_transaksi").html(isiui);
+
+                $(".showin_table_trans").show();
+                $("#tab_transaction_param").hide();
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+function filter_show_card_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/tabel_transaksi_show',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "komunitas": $("#komunitas2").val(),
+            "tanggal_mulai": $("#tanggal_mulai2").val(),
+            "tanggal_selesai": $("#tanggal_selesai2").val(),
+            "tipe_trans": $("#tipe_trans2").val(),
+            "status_trans": $("#status_trans2").val(),
+            "subs_name": $("#subs_name2").val(),
+            "_token": token
+        },
+        success: function (result) {
+            if (result.length != 0) {
+                var isiui = '';
+                var num = 0;
+                $.each(result, function (i, item) {
+                    console.log(item);
+                    num++;
+
+                    var dt = [item.invoice_number, item.payment_level, item.community_id];
+                    isiui +=
+                        '<div class="col-md-6 stretch-card ' +
+                        'grid-margin card-member' +
+                        'data-toggle="tooltip" data-placement="top" title="' + item.transaction_type + '">' +
+                        '<div class="card bg-gradient-abublue card-img-holder text-white member">' +
+                        '<div class="card-body member">' +
+                        '<img src="/purple/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />' +
+                        '<button class="btn btn-sm btn-gradient-ijo melengkung10px float-right"' +
+                        'style="padding: 0.3rem 0.5rem; position:relative;"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">Detail</button>' +
+                        '<div class="row">' +
+                        '<div class="col-md-4" style="padding:0px;">' +
+                        '<img src="/img/money.png" class="rounded-circle img-fluid img-card mediumsize">' +
+                        '</div>' +
+                        '<div class="col-md-8">' +
+                        '<small class="ctosca">Total</small>' +
+                        '<h3 class="cteal"> Rp  ' + rupiah(item.grand_total) + '</h3>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-md-12">' +
+                        '<small class="cteal">' + item.transaction_type + '</small>' +
+                        '<h4>' + item.transaction + '</h4>' +
+                        '<p class="ctosca">' + item.invoice_number + '</p>' +
+                        '</div>' +
+                        '<div class="col-md-12" style="text-align: right; margin-top:-1em;">' +
+                        '<small class="cteal"> ' + dateTime(item.created_at) + '</small><br>' +
+                        '<small lang="en" class="txt_detail_fitur h6 s12 cputih"> Status : ' + item.status_title +
+                        '</small>' +
+                        '</div>' +
+                        '</div></div></div></div>';
+                });
+
+                $("#show_card_transaksi").html(isiui);
+
+                $(".showin_table_trans").show();
+                $("#tab_transaction_param").hide();
+
+            }
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+}
+
+function show_tabel_transaksi() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $('#tabel_trans').dataTable().fnClearTable();
+    $('#tabel_trans').dataTable().fnDestroy();
+
+    $(".showin_table_trans").show();
+    $("#tab_transaction_param").hide();
+
+    var tabel = $('#tabel_trans').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print', {
+                text: 'JSON',
+                action: function (e, dt, button, config) {
+                    var data = dt.buttons.exportData();
+
+                    $.fn.dataTable.fileSave(
+                        new Blob([JSON.stringify(data)]),
+                        'Export.json'
+                    );
+                }
+            }
+        ],
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_transaksi_show',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "komunitas": $("#komunitas").val(),
+                "tanggal_mulai": $("#tanggal_mulai").val(),
+                "tanggal_selesai": $("#tanggal_selesai").val(),
+                "tipe_trans": $("#tipe_trans").val(),
+                "status_trans": $("#status_trans").val(),
+                "subs_name": $("#subs_name").val(),
+                "_token": token
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                // $('#tabel_subscriber tbody').;
+                $('#tabel_trans tbody').empty().append(nofound);
+            },
+        },
+        error: function (request, status, errorThrown) {
+            ui.popup.show('error', status, 'Error');
+        },
+        columns: [
+            { mData: 'invoice_number' },
+            {
+                mData: 'created_at',
+                render: function (data, type, row, meta) {
+                    return dateFormat(data);
+                }
+            },
+            { mData: 'name' },
+            { mData: 'transaction_type' },
+            { mData: 'status_title' },
+            {
+                mData: 'id',
+                render: function (data, type, row, meta) {
+                    var dt = [row.invoice_number, row.payment_level, row.community_id];
+                    // console.log(data);
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
+                        'onclick="detail_transaksi_all(\'' + dt + '\')">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+
+    });
+}
+
+function detail_transaksi_all(dt_trans) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var trans = dt_trans.split(',');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+        url: '/subscriber/detail_transaksi_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        timeout: 20000,
+        data: {
+            "invoice_number": trans[0],
+            "payment_level": trans[1],
+            "community_id": trans[2],
+            "_token": token
+        },
+        success: function (result) {
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
+            console.log(result);
+            if (result.success == false) {
+                ui.popup.show('error', result.message, 'Error');
+                $("#modal_detail_trans").modal('hide');
+            } else {
+
+                $("#modal_detail_trans").modal('show');
+                $("#invoice_trans").html(result.invoice_number);
+                $("#date_trans").html(dateTime(result.created_at));
+                $("#komunitas_trans").html(result.community_name);
+                $("#subscriber_trans").html(result.name);
+                $("#level_title_trans").html(result.level_title);
+                $("#nominal_trans").html("Rp  " + rupiah(result.grand_total));
+                $("#jenis_trans").html(result.transaction_type);
+                $("#statusjudul_trans").html(result.status_title);
+                $("#transaksi_trans").html(result.transaction);
+
+                var uiku = '';
+                if (result.data_confirmation != "") {
+                    if (result.data_confirmation.file != null) {
+                        $("#img_pay_confirm").attr("src", server_cdn + cekimage_cdn(result.data_confirmation.file));
+                    }
+                    $("#nama_confirm_trans").html(result.data_confirmation.created_by);
+                    $("#date_confirm_trans").html(dateFormat(result.data_confirmation.created_at));
+
+                    uiku = '<button type="button" class="btn btn-accent' +
+                        'melengkung10px btn-sm"> Paid</button >';
+                    $("#status_color").html(uiku);
+                } else {
+                    $("#img_pay_confirm").attr("src", "");
+                    uiku = '<button type="button" class="btn btn-abu' +
+                        'melengkung10px btn-sm"> Not Yet</button >';
+                    $("#status_color").html(uiku);
+                }
+
+
+                if (result.data_verification.length != 0) {
+                    if (result.data_verification.file != undefined) {
+                        $("#img_pay_aprov").attr("src", server_cdn + cekimage_cdn(rresult.data_verification.file));
+                    }
+                    $("#name_approv_trans").html(result.data_verification.verification_by);
+                    $("#date_approv_trans").html(dateFormat(result.data_verification.verification_at));
+
+                }
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show Detail");
+        }
+    });
+}
+// ------------------------ END TRANSACTION MANAGEMENT SUBS -------------------------------
+
+
+
+// -------------------------- DASHBOARD PAGE SUBSCRIBER -------------------------------
+
+function get_dashboard_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_dashboard_news',
+        type: 'POST',
+        datatype: 'JSON',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_dash_artikel").show();
+                $("#idashbord_news").hide();
+            } else {
+                if (result != undefined) {
+                    var berita = '';
+                    $.each(result, function (i, item) {
+                        var imge = cekimage_cdn(item.image);
+                        var noimgnews = '/img/car1.png';
+
+                        berita += '<div class="col-md-6 stretch-card grid-margin">' +
+                            '<div class="card" style="height:217px;">' +
+                            '<div class="imgsub-cont">' +
+                            '<img src="' + server_cdn + imge + '" class="card-img-top artikeldash"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimgnews + '\';"' +
+                            'style="border-radius: 8px 8px 0px 0px;"></div>' +
+                            '<div class="card-body card-dashsub">' +
+                            '<small class="card-text text-wrap">' + item.title +
+                            '</small>' +
+                            '</div>' +
+                            '<div class="card-footer card-dashsub">' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">' +
+                            '<p class="card-text"><small class="text-muted">' +
+                            dateTime(item.createdAt) + '</small></p>' +
+                            '</div>' +
+                            '<div class="col-md-4" style="text-align: right;">' +
+                            '<p class="card-text"><small class="text-muted">' + item.scala + '</small> &nbsp; &nbsp;' +
+                            '<a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco2"><small lang="en">See Detail</small></a></p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div></div></div>';
+                    });
+                    $("#idashbord_news").html(berita);
+                    $("#nodata_dash_artikel").hide();
+                    $("#idashbord_news").show();
+                }
+
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_dash_artikel").show();
+            $("#idashbord_news").hide();
+            console.log("Cant Get Articles News");
+        }
+    });
+}
+
+function get_friends_total() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_total',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".total_friend").html("0");
+                console.log(result);
+            } else {
+                if (result.total_friend != undefined) {
+                    $(".total_friend").html(result.total_friend);
+                }
+            }
+        },
+        error: function (result) {
+            $(".total_friend").html("0");
+            // console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+function get_friends_sugestion() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friends_sugestion',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 10,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".divkonco").hide();
+            } else {
+                if (result != undefined) {
+                    var nofoto = '/img/kosong.png';
+                    var isiui = '';
+                    var jumlah = 0;
+                    $.each(result, function (i, item) {
+                        jumlah++;
+                        news_id = parseInt(item.id);
+                        var headpic = server_cdn + cekimage_cdn(item.image);
+
+                        isiui += '<div class="card konco" id="' + item.user_id + '">' +
+                            '<div class="card-body color">' +
+                            '<div class="close_konco">' +
+                            '<button type="button" class="close cgrey2" aria-label="Close"' +
+                            'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                            '<span aria-hidden="true">&times;</span>' +
+                            '</button>' +
+                            '</div>' +
+                            '<center>' +
+                            '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                            '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                            '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                            '</button>' +
+                            '<center>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $(".divkonco").show();
+                    $("#div_friendsugest").html(isiui);
+                }
+
+            }
+        },
+        error: function (result) {
+            // console.log(result);
+            console.log("Cant Show Friend Suggest");
+            $(".divkonco").hide();
+        }
+    });
+}
+
+function hide_friendsugest(dtcard) {
+    var dt = dtcard.split('<>');
+    $("#" + dt[0]).hide();
+    if (dt[1] == 1) {
+        $(".divkonco").fadeOut("slow").hide();
+    }
+}
+
+function get_last_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_last_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_last_news").show();
+                $("#isi_last_news").hide();
+                // console.log(result);
+            } else {
+                var newsui = '';
+                $.each(result, function (i, item) {
+                    newsui += '<li>' +
+                        '<a href="/subscriber/detail_news/' + item.id + '">' +
+                        '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                        '<small class="cgrey s13">' + item.title + '</small><br>' +
+                        '</li>';
+                });
+                $("#isi_last_news").html(newsui);
+                $("#nodata_last_news").hide();
+                $("#isi_last_news").show();
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_last_news").show();
+            $("#isi_last_news").hide();
+            // console.log(result);
+            console.log("Cant Show Latest News");
+        }
+    });
+}
+
+function get_love_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_love_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            var noimg = '/img/fitur.png';
+            if (result.success == false) {
+                $("#nodata_love_news").show();
+                $("#isi_love_news").hide();
+            } else {
+                if (result != undefined) {
+
+                    var loveui = '';
+                    $.each(result, function (i, item) {
+                        loveui += '<div class="row" style="margin-bottom:-0.5em;"><div class="col-md-2 pd-5px">' +
+                            '<center><img src="http://' + server_cdn + cekimage_cdn(item.image) + '" class="rounded-circle img-fluid mb-2 lovenews"' +
+                            'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>' +
+                            '</div>' +
+                            '<div class="col-md-10 pd-5px">' +
+                            '<a href="/subscriber/detail_news/' + item.id + '">' +
+                            '<small class="cblue s12">' + dateTime(item.createdAt) + '</small></a>' +
+                            '<br><small class="cgrey2 s12">' + item.title + '</small><br>' +
+                            '</div></div>';
+                    });
+                    $("#isi_love_news").html(loveui);
+                    $("#nodata_love_news").hide();
+                    $("#isi_love_news").show();
+                } else {
+                    $("#nodata_love_news").show();
+                    $("#isi_love_news").hide();
+                }
+
+            }
+
+        },
+        error: function (result) {
+            $("#nodata_love_news").show();
+            $("#isi_love_news").hide();
+            // console.log(result);
+            console.log("Cant Show love news");
+        }
+    });
+}
+
+function get_topvisit_news() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_topvisit_news',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 5,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#nodata_topvisit_news").show();
+                $("#isi_topvisit_news").hide();
+            } else {
+                if (result != undefined) {
+                    var newsui = '';
+                    $.each(result, function (i, item) {
+                        newsui += '<li>' +
+                            '<a href="/subscriber/detail_news/' + item.id + '">' +
+                            '<small class="cblue">' + dateTime(item.createdAt) + '</small><br>' +
+                            '<small class="cgrey s13">' + item.title + '</small><br>' +
+                            '</li>';
+                    });
+                    $("#isi_topvisit_news").html(newsui);
+                    $("#nodata_topvisit_news").hide();
+                    $("#isi_topvisit_news").show();
+                } else {
+                    $("#nodata_topvisit_news").show();
+                    $("#isi_topvisit_news").hide();
+                }
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show top visit news");
+            $("#nodata_topvisit_news").show();
+            $("#isi_topvisit_news").hide();
+        }
+    });
+}
+
+function get_top_player() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_player',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                $("#topplayer_nodata").show();
+                $("#isi_top_player").hide();
+                console.log(result);
+            }
+
+            if (result.length == 0) {
+                $("#topplayer_nodata").show();
+                $("#isi_top_player").hide();
+            } else {
+                var iuplyr = '';
+                var nopic = '';
+                var gen = '';
+                $.each(result, function (i, item) {
+                    if (item.gender == "putri") {
+                        nopic = '/img/pl-girl.png';
+                        gen = 'Putri';
+                    } else {
+                        nopic = '/img/pl-boy.png';
+                        gen = 'Putra';
+                    }
+                    iuplyr += '<div class="col-md-6 mgt-half">' +
+                        '<div class="row pad-5px">' +
+                        '<div class="col-md-2 pad-5px dikanan">' +
+                        '<img src="' + server_cdn + item.photo + '" class="rounded-circle img-fluid wd-25px"' +
+                        'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
+                        '</div>' +
+                        '<div class="col-md-10 pad-5px">' +
+                        '<small class="cgrey2">' + item.name + '</small>' +
+                        '<small class="cblue"> &nbsp; (' + gen + ')</small><br>' +
+                        '<small class="clight">Club : ' + item.club.name + '</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+                $("#isi_top_player").html(iuplyr);
+                $("#topplayer_nodata").hide();
+                $("#isi_top_player").show();
+
+            }
+        },
+        error: function (result) {
+            $("#topplayer_nodata").show();
+            $("#isi_top_player").hide();
+            console.log("Cant Show top Player");
+        }
+    });
+}
+
+function get_top_visit_club() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_visit_club',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "limit": 4,
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                console.log(result);
+                $("#topclubvisit_nodata").show();
+                $("#isi_top_visit_club").hide();
+            }
+
+            if (result.length == 0) {
+                $("#topclubvisit_nodata").show();
+                $("#isi_top_visit_club").hide();
+            }
+
+        },
+        error: function (result) {
+            $("#topclubvisit_nodata").show();
+            $("#isi_top_visit_club").hide();
+            console.log("Cant Show Top Club Visit");
+        }
+    });
+}
+
+
+$("#btn-initial1").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('show');
+    $("#initial3").modal('hide');
+});
+
+$("#btn-initial2").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('hide');
+    $("#initial3").modal('show');
+});
+
+$("#btn-initial3").click(function () {
+    $("#initial1").modal('hide');
+    $("#initial2").modal('hide');
+    $("#initial3").modal('hide');
+    $("#modal_initial_membership").modal('show');
+});
+
+// ------------------------ END DASHBOARD PAGE SUBSCRIBER ------------------------------
+
+
+// ------------------- PROFILE MANAGEMRNT -----------------
+function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+}

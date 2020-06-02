@@ -5,6 +5,7 @@
 @section('content')
 <!-- <div class="page-header"> -->
 <div class="row">
+    <div id="page_notif_management_admin"></div>
     <div class="col-md-2">
         <h3 class="page-title" lang="en">Notification Management</h3>
     </div>
@@ -169,14 +170,16 @@
                                     required>
                                     <option selected disabled lang="en">Choose</option>
                                     <!-- <option value="1" {{ old('usertipe_notif') == 1 ? 'selected' : '' }} lang="en">Admin Commjuction</option> -->
-                                    <option value="2" {{ old('usertipe_notif') == 2 ? 'selected' : '' }} lang="en">Admin Community</option>
-                                    <option value="3" {{ old('usertipe_notif') == 3 ? 'selected' : '' }} lang="en">Subscriber</option>
+                                    <option value="2" {{ old('usertipe_notif') == 2 ? 'selected' : '' }} lang="en">Admin
+                                        Community</option>
+                                    <option value="3" {{ old('usertipe_notif') == 3 ? 'selected' : '' }} lang="en">
+                                        Subscriber</option>
                                 </select>
                             </div>
                             @if($errors->has('usertipe_notif'))
                             <small style="color: red;">{{ $errors->first('usertipe_notif')}}
                             </small>
-                        <input type="hidden" value="error" class="err_notif">
+                            <input type="hidden" value="error" class="err_notif">
                             @endif
                         </div>
                     </div>
@@ -186,12 +189,13 @@
                             <div class="form-group">
                                 <small class="clight s13" lang="en">Notification Description</small>
                                 <textarea type="text" id="deksripsi_notif" name="deksripsi_notif"
-                                    class="form-control input-abu" rows="2" required>{{ old('deksripsi_notif') }}</textarea>
+                                    class="form-control input-abu" rows="2"
+                                    required>{{ old('deksripsi_notif') }}</textarea>
                             </div>
                             @if($errors->has('deksripsi_notif'))
                             <small style="color: red;">{{ $errors->first('deksripsi_notif')}}
                             </small>
-                        <input type="hidden" value="error" class="err_notif">
+                            <input type="hidden" value="error" class="err_notif">
                             @endif
                         </div>
                     </div>
@@ -201,15 +205,19 @@
                             <small class="clight s13" lang="en">Notification Sub-Type</small>
                             <select class="form-control input-abu" name="subtipe_notif" id="subtipe_notif" required>
                                 <option selected disabled lang="en">Choose</option>
-                                <option value="1" {{ old('subtipe_notif') == 1 ? 'selected' : '' }} lang="en">System</option>
-                                <option value="2" {{ old('subtipe_notif') == 2 ? 'selected' : '' }} lang="en">Module</option>
-                                <option value="3" {{ old('subtipe_notif') == 3 ? 'selected' : '' }} lang="en">Single</option>
-                                <option value="4" {{ old('subtipe_notif') == 4 ? 'selected' : '' }} lang="en">Broadcast</option>
+                                <option value="1" {{ old('subtipe_notif') == 1 ? 'selected' : '' }} lang="en">System
+                                </option>
+                                <option value="2" {{ old('subtipe_notif') == 2 ? 'selected' : '' }} lang="en">Module
+                                </option>
+                                <option value="3" {{ old('subtipe_notif') == 3 ? 'selected' : '' }} lang="en">Single
+                                </option>
+                                <option value="4" {{ old('subtipe_notif') == 4 ? 'selected' : '' }} lang="en">Broadcast
+                                </option>
                             </select>
                             @if($errors->has('subtipe_notif'))
                             <small style="color: red;">{{ $errors->first('subtipe_notif')}}
                             </small>
-                        <input type="hidden" value="error" class="err_notif">
+                            <input type="hidden" value="error" class="err_notif">
                             @endif
                         </div>
                         <div class="col-md-6">
@@ -227,14 +235,16 @@
                                 <small class="clight s13" lang="en">Notification Type</small>
                                 <select class="form-control input-abu" name="tipenotif" id="tipenotif">
                                     <option selected disabled lang="en">Choose</option>
-                                    <option value="1" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Push Notification</option>
-                                    <option value="2" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Mail Notification</option>
+                                    <option value="1" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Push
+                                        Notification</option>
+                                    <option value="2" {{ old('tipenotif') == 1 ? 'selected' : '' }} lang="en">Mail
+                                        Notification</option>
                                 </select>
                             </div>
                             @if($errors->has('tipenotif'))
                             <small style="color: red;">{{ $errors->first('tipenotif')}}
                             </small>
-                        <input type="hidden" value="error" class="err_notif">
+                            <input type="hidden" value="error" class="err_notif">
                             @endif
                         </div>
                         <div class="col-md-6">
@@ -429,340 +439,5 @@
     </div>
 </div>
 
-
-@endsection
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-    $(document).ready(function () {
-        var err_notif = $(".err_notif").val();
-        if (err_notif != "" && err_notif != undefined) {
-            swal("Cant Null !", "Please Fill and Check All Fields", "error").then((value) => {
-                $("#modal_send_notif_super").modal('show');
-            });
-        }
-        get_list_setting_notif_admin();
-    });
-
-
-    function get_list_setting_notif_admin() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/get_list_setting_notif_admin',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (result) {
-                console.log(result);
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/admin';
-                        }, 5000);
-                    } else {
-                        ui.popup.show('warning', result.message, 'Warning Setting Notification');
-                    }
-                } else {
-                    var uiku = '';
-                    var inputipe = '';
-
-                    $.each(result, function (i, item) {
-
-                        if (item.input_type == 1) {
-                            inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
-                        } else if (item.input_type == 2) {
-                            if (item.value == 1) {
-                                var one = 'checked';
-                                var two = '';
-                            } else if (item.value == 2) {
-                                var one = '';
-                                var two = 'checked';
-                            } else {
-                                var one = '';
-                                var two = '';
-                            }
-                            inputipe = '<div class="form-group">' +
-                                '<div class="form-check" >' +
-                                '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
-                                'True <i class="input-helper"></i></label>' +
-                                '</div>' +
-                                '<div class="form-check">' +
-                                '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + one + '>' +
-                                'False <i class="input-helper"></i></label>' +
-                                '</div>' +
-                                '</div>';
-                        }
-
-                        uiku += '<div class="row">' +
-                            '<div class="col-6">' +
-                            '<div class="form-group">' +
-                            '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
-                            '<p class="clight s13 deskripsi_setting">' + item.description +
-                            '</p>' +
-                            '</div>' +
-                            '</div >' +
-                            '<div class="col-6">' + inputipe +
-                            '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
-                            '</div>' +
-                            '</div>';
-                    });
-                    $(".isi_seting_notifadmin").html(uiku);
-                }
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show");
-            }
-        });
-    }
-
-
-        function tabel_tes() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/admin/tabel_generate_notification_admin',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                data: {
-                    "community_id": $("#list_komunitas_notif").val(),
-                    "start_date": $("#tanggal_mulai2").val(),
-                    "end_date": $("#tanggal_selesai2").val(),
-                    "filter_title": $("#list_judul_notif").val(),
-                    "notification_sub_type": $("#tipe_notif").val(),
-                },
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (result) {
-                    console.log(result);
-                    console.log("Cant Show Tabel");
-                }
-            });
-        }
-
-
-    $("#btn_generate_notif_admin").click(function () {
-        tabel_generate_notif_admin();
-        tabel_tes();
-    });
-
-
-    function cek_param_list_user() {
-        var comm = $("#komunitas_notif").val();
-        var usertipe = $("#usertipe_notif").val();
-        if (comm === null && usertipe === null) {
-            $("#status_notif").attr("disabled", "disabled");
-            swal("Cant Null", "User Type and Community cant be null", "warning");
-        } else {
-            $("#status_notif").removeAttr("disabled", "disabled");
-        }
-    }
-
-
-    function tabel_generate_notif_admin() {
-        $('#tabel_generate_notif_admin').dataTable().fnClearTable();
-        $('#tabel_generate_notif_admin').dataTable().fnDestroy();
-        $('#tabel_generate_notif_admin').show();
-        $('#modal_filter_notif_admin').modal('hide');
-
-        var tabel = $('#tabel_generate_notif_admin').DataTable({
-            responsive: true,
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: '/admin/tabel_generate_notification_admin',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                data: {
-                    "community_id": $("#list_komunitas_notif").val(),
-                    "start_date": $("#tanggal_mulai2").val(),
-                    "end_date": $("#tanggal_selesai2").val(),
-                    "filter_title": $("#list_judul_notif").val(),
-                    "notification_sub_type": $("#tipe_notif").val(),
-                },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_generate_notif_admin tbody').empty().append(nofound);
-                },
-            },
-            error: function (request, status, errorThrown) {
-                console.log(errorThrown);
-            },
-            columns: [
-                { mData: 'id' },
-                { mData: 'title' },
-                { mData: 'notification_sub_type_title' },
-                { mData: 'user_type_title' },
-                { mData: 'community_name' },
-                { mData: 'notification_status' },
-                { mData: 'sender_level_title' },
-                {
-                    mData: 'created_at',
-                    render: function (data, type, row, meta) {
-                        return dateFormat(data);
-                    }
-                },
-                {
-                    mData: 'id',
-                    render: function (data, type, row, meta) {
-                        var inidt = [data, row.level_status, row.community_id];
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_notif_admin(\'' + inidt + '\')">' +
-                            '<i class="mdi mdi-eye"></i>' +
-                            '</button>';
-                    }
-                }
-            ],
-        });
-
-    }
-
-
-    var switchStatus = false;
-    $("#status_notif").on('change', function () {
-        if ($(this).is(':checked')) {
-            switchStatus = $(this).is(':checked');
-            $("#hide_user_notif").fadeIn('fast');
-            cek_param_list_user();
-            $("#idstatus_notif").val("1");
-        }
-        else {
-            switchStatus = $(this).is(':checked');
-            $("#hide_user_notif").fadeOut('fast');
-            cek_param_list_user();
-            $("#idstatus_notif").val("2");
-        }
-    });
-
-    function detail_notif_admin(dtku) {
-        var dtnya = dtku.split(',');
-        //   console.log(dtnya);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/detail_generate_notif_admin',
-            type: 'POST',
-            datatype: 'JSON',
-            data: {
-                "notification_id": dtnya[0],
-                "level_status": dtnya[1],
-                "community_id": dtnya[2],
-            },
-            success: function (result) {
-                console.log(result);
-                var res = result;
-                $("#modal_detail_notif").modal('show');
-                $("#detail_judul").html(res.title);
-                $("#detail_dekripsi").html(res.description);
-                $("#detail_komunitas").html(res.community_name);
-                $("#detail_tanggal").html(dateFormat(res.created_at));
-                $("#detail_user").html(res.user_title);
-                $("#detail_usertipe").html(res.user_type_title);
-                $("#detail_tipenotif").html(res.message_type_title);
-                $("#dibuat_oleh").html(res.created_by_title);
-                $("#status_notif_admin").html(res.status);
-                $("#status_msg").html(res.status_message);
-
-
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show Detail");
-            }
-        });
-    }
-
-
-    $('#tipenotif').change(function () {
-        var ipilih = this.value;
-        if (ipilih == "1") {
-            $("#hide_urlnotif").fadeIn('fast');
-        } else {
-            $("#hide_urlnotif").fadeOut('fast');
-        }
-    });
-
-
-    $('#usertipe_notif').change(function () {
-        get_list_user_notif();
-    });
-
-
-    //dropdown subs_name list
-    function get_list_user_notif() {
-        var itempilih = $('#komunitas_notif').val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/admin/get_list_user_notif_super",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "user_type": $("#usertipe_notif").val(),
-                "community_id": itempilih,
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/admin';
-                        }, 5000);
-                    } else {
-                        ui.popup.show('warning', result.message, 'Warning');
-                    }
-                } else {
-                    $('#user_notif').empty();
-                    $('#user_notif').append("<option disabled value='0'> Choose</option>");
-
-                    for (var i = result.length - 1; i >= 0; i--) {
-                        $('#user_notif').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
-                    }
-                    //Short Function Ascending//
-                    $("#user_notif").html($('#user_notif option').sort(function (x, y) {
-                        return $(x).val() < $(y).val() ? -1 : 1;
-                    }));
-
-                    $("#user_notif").get(0).selectedIndex = 0; const
-                        OldSubf = "{{old('user_notif')}}";
-                    if (OldSubf !== '') {
-                        $('#user_notif').val(OldSubf);
-                    }
-                }
-            },
-            error: function (result) {
-                $('#hide_user_notif').fadeOut("fast");
-                $('#user_notif').empty();
-                $('#user_notif').append("<option disabled value='0'>No Related User</option>");
-            }
-        });
-    }
-    //end list subscriber
-
-
-</script>
 
 @endsection

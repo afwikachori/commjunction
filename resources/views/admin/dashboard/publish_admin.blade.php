@@ -15,6 +15,7 @@
 </div> <!-- end-page header -->
 
 <div class="row" style="padding-top:2%; padding-right:20%; padding-left:20%;">
+    <div id="page_publish_commset_admin"></div>
     <div class="col-12">
         <div class="card">
             <div class="card-body" style="min-height: 420px; height: auto; margin-top: auto; margin-bottom: auto;">
@@ -26,19 +27,5 @@
     </div>
 </div>
 
-
-@endsection
-
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-    $(document).ready(function () {
-        cek_prepare_publish();
-
-    });
-
-
-
-</script>
 
 @endsection

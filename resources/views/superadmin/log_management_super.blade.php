@@ -14,14 +14,12 @@
 
 
 <div class="row">
+    <div id="page_log_management_super"></div>
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-
             <div class="card-header putih">
                 Log Activity
             </div>
-
-
             <div class="card-body">
                 <button type="button" class="btn btn-tosca btn-sm" style="margin-top: -1em; margin-bottom: 2em;"
                     data-toggle="modal" data-target="#modal_generate_log">
@@ -38,7 +36,7 @@
                             <th>Endpoint</th>
                             <th>Date Log</th>
                             <th>Code</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                 </table>
@@ -121,167 +119,5 @@
 
     </div>
 </div>
-
-@endsection
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-    $(document).ready(function () {
-        get_list_komunitas_log();
-        // tabel_tes();
-        // tabel_log_magement_super();
-
-    });
-
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/superadmin/tabel_log_management_super',
-            type: 'POST',
-            datatype: 'JSON',
-            data: {
-                "community_id": $("#list_komunitas").val(),
-                "start_date": $("#tanggal_mulai2").val(),
-                "end_date": $("#tanggal_selesai2").val(),
-                "user_level": $("#list_userlevel").val()
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (result) {
-                console.log("Cant Show");
-            }
-        });
-    }
-
-
-    $("#btn_filter_log_super").click(function () {
-        tabel_log_magement_super();
-        tabel_tes();
-    });
-
-
-
-    function tabel_log_magement_super() {
-        $('#tabel_log_magement_super').dataTable().fnClearTable();
-        $('#tabel_log_magement_super').dataTable().fnDestroy();
-
-        $('#tabel_log_magement_super').show();
-        $('#modal_generate_log').modal('hide');
-
-        var tabel = $('#tabel_log_magement_super').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel', 'pdf', 'print', {
-                    text: 'JSON',
-                    action: function (e, dt, button, config) {
-                        var data = dt.buttons.exportData();
-
-                        $.fn.dataTable.fileSave(
-                            new Blob([JSON.stringify(data)]),
-                            'Export.json'
-                        );
-                    }
-                }
-            ],
-            responsive: true,
-             language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: '/superadmin/tabel_log_management_super',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                data: {
-                    "community_id": $("#list_komunitas").val(),
-                    "start_date": $("#tanggal_mulai2").val(),
-                    "end_date": $("#tanggal_selesai2").val(),
-                    "user_level": $("#list_userlevel").val()
-                },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_log_magement_super tbody').empty().append(nofound);
-                },
-            },
-            error: function (request, status, errorThrown) {
-                console.log(errorThrown);
-            },
-            columns: [
-                { mData: 'user_name' },
-                { mData: 'user_level' },
-                { mData: 'module' },
-                { mData: 'activity' },
-                { mData: 'endpoint' },
-                { mData: 'date' },
-                { mData: 'code_response' },
-                { mData: 'code_response',
-                    render: function (data, type, row, meta) {
-                           var dt = [row.response];
-
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                             'onclick="detail_log_super(\'' + data + '\')">' +
-                            '<i class="mdi mdi-eye"></i>' +
-                            '</button>';
-                    }
-                }
-            ],
-
-        });
-
-    }
-
-
-
-    //dropdown komunitas list
-    function get_list_komunitas_log() {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "/superadmin/list_komunitas_log",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                $('#list_komunitas').empty();
-                $('#list_komunitas').append("<option disabled> Choose</option>");
-
-                for (var i = result.length - 1; i >= 0; i--) {
-                    $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-                }
-                //Short Function Ascending//
-                $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
-                    return $(y).val() < $(x).val() ? -1 : 1;
-                }));
-
-                $("#list_komunitas").get(0).selectedIndex = 0;
-
-                const OldKomunitas = "{{old('list_komunitas')}}";
-
-                if (OldKomunitas !== '') {
-                    $('#list_komunitas').val(OldKomunitas);
-                }
-
-            }
-        });
-    } //endfunction
-
-
-function detail_log_super(resp) {
-console.log(resp);
-}
-
-
-</script>
 
 @endsection

@@ -4,6 +4,19 @@
 @if (Session::has('auth_subs'))
 @foreach($subs_data as $dt)
 
+@section('css')
+    <style lang="sass">
+        :root {
+             --base_color: {{ $dt['cust_portal_login']['base_color'] }};
+               --accent_color: {{ $dt['cust_portal_login']['accent_color'] }};
+        }
+    </style>
+@endsection
+
+   {{-- "font_headline": "Times New Roman",
+      "font_link": "Times New Roman",
+      "base_color": "#FF5733 ",
+      "accent_color": "#FF5733 " --}}
 
 @section('content')
 <div class="row" style="overflow: hidden;">
@@ -55,7 +68,7 @@ style="background:{{$dt['maincolor']}} !important;">
         </div>
 
         <div class="container pdsubslogin">
-            <h2 lang="en" style="color: #4F4F4F;" lang="en">Welcome</h2>
+            <h2 class="accent_color" lang="en">Welcome</h2>
             <label lang="en" class="cgrey textlogin" lang="en">Please login to continue</label>
 
             <!-- login  Form -->
@@ -117,7 +130,7 @@ style="background:{{$dt['maincolor']}} !important;">
                 </div>
 
                 <div class="form-group mb-3">
-                    <button lang="en" type="submit" class="btn btn-primary" id="LoginSubscriber"
+                    <button lang="en" type="submit" class="btn btn-basecolor" id="LoginSubscriber"
                         lang="en">Login</button>
                 </div>
 

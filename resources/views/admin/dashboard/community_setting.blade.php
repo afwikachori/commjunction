@@ -83,6 +83,7 @@
     </div>
 
     <div class="row" style="margin-top: 1.5em;">
+        <div id="page_community_setting"></div>
         <div class="col-12">
             <div class="card">
                 <div class="card-body">

@@ -67,7 +67,7 @@
                 <div class="modal-header" style="border: none; padding-bottom: 0px;
                 padding-left: 5%; padding-right: 5%;">
                     <h4 class="modal-title cdarkgrey" lang="en">Detail Message Inbox</h4>
-                    <button type="button" class="btn btn-tosca btn-sm" style="text-align:right;" data-toggle="modal"
+                    <button type="button" class="btn btn-accent btn-sm" style="text-align:right;" data-toggle="modal"
                         data-target="#modal_changestatus_inbox" data-dismiss="modal" lang="en">Change Status</button>
                 </div> <!-- end-header -->
 

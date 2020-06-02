@@ -24,7 +24,7 @@
 <br><br>
 <div class="row">
     <div class="col-md-12">
-        <button type="button" class="btn btn-tosca btn-sm" style="margin-top: 0.5em; margin-bottom: 2em;" data-toggle="modal"
+        <button type="button" class="btn btn-accent btn-sm" style="margin-top: 0.5em; margin-bottom: 2em;" data-toggle="modal"
             data-target="#modal_filter_notif_subs">
             Filter Notification</button>
         </div>
@@ -48,7 +48,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body memberku">
-                <button type="button" class="btn btn-tosca btn-sm" style="margin-top: 0.5em; margin-bottom: 2em;"
+                <button type="button" class="btn btn-accent btn-sm" style="margin-top: 0.5em; margin-bottom: 2em;"
                     data-toggle="modal" data-target="#modal_filter_notif_subs">
                     Filter Notification</button>
 
@@ -111,7 +111,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="button" id="btn_generate_notif_admin" class="btn btn-teal btn-sm">
+                    <button type="button" id="btn_generate_notif_admin" class="btn btn-accent btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Filter </button>
                 </div>
@@ -237,7 +237,7 @@
             style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
             <div class="modal-header" style="padding-bottom: 1.5em !important; border:none;">
                 <h3 class="modal-title cgrey">Setting Notification</h3>
-                <!-- <label class="badge melengkung10px btn-tosca cputih" style="min-width:100px;"> Active</label> -->
+                <!-- <label class="badge melengkung10px btn-accent cputih" style="min-width:100px;"> Active</label> -->
             </div> <!-- end-header -->
 
             <div class="modal-body">
@@ -256,7 +256,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
+                    <button type="submit" class="btn btn-accent btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i>Setting</button>
                 </center>
@@ -336,7 +336,7 @@
                                 '<div class="row mt-3 mb-4">' +
                                 '<div class="col-md-7"><small class="cteal">' + item.read_status_title + '</small></div>' +
                                 '<div class="col-md-5" style="text-align:right;">' +
-                                '<a type="button" class="btn btn-tosca btn-sm konco2"' +
+                                '<a type="button" class="btn btn-accent btn-sm konco2"' +
                                 'onclick="detail_notif_subs(\'' + inidt + '\')">' +
                                 '<small class="cwhite" lang="en"><i class="mdi mdi-eye btn-icon-prepend"></i> &nbsp; Detail</small></a>' +
                                 '</div>' +

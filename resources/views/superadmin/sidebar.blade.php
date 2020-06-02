@@ -25,7 +25,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/superadmin/payment">
+        <a class="nav-link" href="/superadmin/verify">
             <span class="menu-title">Verify Payment</span>
             <i class="mdi mdi-coin menu-icon"></i>
         </a>

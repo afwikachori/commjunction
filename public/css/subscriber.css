@@ -401,6 +401,11 @@ font-size: 0.65rem !important;
 
 }
 
+.mgb-04-03{
+ margin-bottom: 0.4em;
+ margin-top: -0.3em;
+}
+
 .bg-gradient-kuning{
     background: linear-gradient(106.53deg, #fffef5 0%, #fffef5 56.6%);
 }
@@ -1132,6 +1137,12 @@ min-height: 11.5rem;
 margin-top: 5%;
 }
 
+.dash-img-profil{
+    height: 80px;
+    width: 80px;
+    margin-top: 1em;
+}
+
 
 .cd-pricing {
 width: 55%;
@@ -1385,6 +1396,14 @@ width: auto;
 
 
 
+.profile.tabbable-line > .nav-tabs.profile {
+border: none;
+    margin: 0px;
+    position: relative;
+    left: 0 !important;
+}
+
+
 /*SUBCRIBER MANAGEMEN TAB */
 .tabbable-panel {
   border:1px solid #eee;
@@ -1498,6 +1517,41 @@ border-bottom: 3px solid #0E5F75;
   padding-bottom: 0;
 }
 
+
+.form-check .form-check-label.cekbox {
+    margin-left: 0rem !important;
+}
+
+.form-check.profile {
+    position: relative;
+    display: block;
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+    padding-left: 0;
+}
+
+#custom_input_regis{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+}
+
+.customprofil{
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+border: none;
+margin-top: -1em;
+}
+
+.kanankiri30px{
+    padding-left: 30px !important;
+     padding-right: 30px !important;
+     margin-bottom: 0.4em;
+}
+
+.mgl-1em{
+    margin-left: 1.5em !important;
+}
 
 /* //img friends sugestion */
 img.konco{

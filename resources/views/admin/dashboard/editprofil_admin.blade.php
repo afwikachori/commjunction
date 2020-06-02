@@ -16,7 +16,7 @@
 <div class="row" style="padding-left: 18%; padding-right: 18%;">
     <div class="col-12">
         <div class="card">
-
+<div id="edit_profil_komunitas"></div>
             <form method="POST" id="form_edit_community" action="{{route('edit_profil_community')}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -29,14 +29,14 @@
                                 <div class="img-upload-profil editprof">
                                     <div class="circle">
                                         <img class="profile-pic rounded-circle img-fluid logo_komunitas editcom"
-                                            id="view_profil_com" src="/img/focus.png" onerror = "this.onerror=null;this.src='/img/focus.png';">
+                                            id="view_profil_kom" src="/img/focus.png" onerror = "this.onerror=null;this.src='/img/focus.png';">
                                     </div>
                                     <div class="p-imageditprof">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
                                             style="width: 30px; height: 30px;">
-                                            <i class="mdi mdi-camera upload-button" id="btn_up_logo_komunitas"></i>
+                                            <i class="mdi mdi-camera upload-button" id="btn_up_profil-kom"></i>
                                         </button>
-                                        <input class="file-upload file-upload-default" id="file-upload-komunitas"
+                                        <input class="file-upload file-upload-default" id="file-upload-profil-kom"
                                             type="file" id="fileup" name="fileup" accept="image/*" />
                                     </div>
                                 </div>
@@ -75,35 +75,3 @@
 
 @endsection
 
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-    $(document).ready(function () {
-        // file_browser_profil();
-    });
-
-
-
-
-    $("#file-upload-komunitas").on('change', function () {
-        readURLini(this);
-    });
-
-    $("#btn_up_logo_komunitas").on('click', function () {
-        $("#file-upload-komunitas").click();
-    });
-
-    var readURLini = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#view_profil_com').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-</script>
-
-@endsection
