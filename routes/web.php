@@ -273,9 +273,12 @@ Route::prefix('subscriber')->group(function () {
     Route::get('/detail_news/{id_news}', 'ModuleController@DetailNews')->name('/detail_news');
 
     // FRIEND MODULE
+    Route::post('confirm_new_friend', 'ModuleController@confirm_new_friend')->name('confirm_new_friend');
+
+ Route::post('/tabel_friend_pending_list', 'ModuleController@tabel_friend_pending_list')->name('tabel_friend_pending_list');
 
     Route::post('/tabel_friend_management', 'ModuleController@tabel_friend_management')->name('/tabel_friend_management');
-    Route::post('/view_profile', 'ModuleController@friendProfile')->name('/view_profile');
+    Route::post('/view_profile/{id_subs}', 'ModuleController@friendProfile')->name('/view_profile');
     Route::post('/friend_send_message', 'ModuleController@SendMessage')->name('friend_send_message');
 
     // NEWS MODULE

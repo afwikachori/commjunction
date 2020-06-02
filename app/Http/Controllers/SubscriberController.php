@@ -415,7 +415,7 @@ class SubscriberController extends Controller
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -474,7 +474,7 @@ class SubscriberController extends Controller
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -1404,6 +1404,7 @@ class SubscriberController extends Controller
     {
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/friend/friendsugest';
+
 
         $input = $request->all();
         $csrf = $input['_token'];

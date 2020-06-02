@@ -32,7 +32,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card" style="min-height: 450px;">
-            <div class="card-body">
+            <div class="card-body nopaddingtop">
                 <div class="tabbable-line">
                     <ul class="nav nav-tabs ">
                         <li class="tab-subs active" id="tab_all">
@@ -50,9 +50,12 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_default_1">
 
+                            <small class="clight">Friends Total : </small>
+                            <span class="clr-accent-color s20" id="text_total_friends"> 0 </span>
+                            <br><br>
                             <!-- tabel all susbcriber -->
                             <table id="tabel_friend_manage" class="table table-hover table-striped dt-responsive nowrap"
-                                style="width:100%">
+                                style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th><b lang="en">Profile</b></th>
@@ -67,13 +70,13 @@
 
                         <div class="tab-pane" id="tab_default_2">
                             <!-- tabel all susbcriber -->
-                            <table id="tabel_friend_manage" class="table table-hover table-striped dt-responsive nowrap"
-                                style="width:100%">
+                            <table id="tabel_friend_pending"
+                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th><b>Name</b></th>
-                                        <th><b>Action</b></th>
+                                        <th><b lang="en">Profile</b></th>
+                                        <th><b lang="en">Name</b></th>
+                                        <th><b lang="en">Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -192,6 +195,42 @@
 
     </div>
 </div>
+
+
+    <!-- MODAL CONFRIM FRIENDS-->
+    <div class="modal fade" id="modal_confirm_new_friend" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #ffffff; width: 80%; min-height: 350px;">
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <center>
+                        <img src="/img/check.png" class="img-modal-teman">
+                        <h3 class="cgrey" lang="en">Friend Confirmation</h3>
+                        <small class="clight" lang="en">Please give your Confirmation</small>
+                    </center>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer changepass" style="border: none;">
+                <form method="POST" id="form_confirm_new_friend" action="{{route('confirm_new_friend')}}">
+                            {{ csrf_field() }}
+                    <input type="hidden" id="id_new_friend" name="id_new_friend">
+                    <center>
+                        <button type="submit" name="status_acc" value="3" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i><span lang="en">Reject</span>
+                        </button>
+                        &nbsp;
+                        <button type="submit" name="status_acc" value="2" class="btn btn-accent btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend"></i>
+                            <span lang="en">Approve</span>
+                        </button>
+
+                    </center>
+                    </form>
+                </div> <!-- end-footer     -->
+            </div> <!-- END-MDL CONTENT -->
+        </div>
+    </div>
 
 
 @endsection

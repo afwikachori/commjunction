@@ -367,7 +367,7 @@ border-radius: 10px;
 }
 
 .bg-hijau{
-background-color: #cbe8b9;
+background-color: #cbe8b9 !important;
 }
 
 .bg-ijo{
@@ -876,6 +876,13 @@ a.dt-button {
     background-color: #50b7b9;
 }
 #img_signout_subs{
+  width: 90px;
+  height: 90px;
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+}
+
+.img-modal-teman{
   width: 90px;
   height: 90px;
   margin-top: 2em;
@@ -1604,10 +1611,16 @@ height: 55px;
     overflow-x : auto;
     overflow-y : hidden;
     white-space : nowrap;
-    margin-bottom : 2.5em;
+    margin-bottom : 0.5em;
 }
 
+.nopaddingtop{
+    padding-top: 0em !important;
+}
 
+.card .card-body.nopaddingtop {
+    padding: 0rem 2.5rem !important;
+}
 
 /* /top love news */
 img.lovenews{
@@ -1707,6 +1720,16 @@ width: 100%;
   .author_name{
     font-style: italic;
   }
+
+  .img-mini {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.img-profile-friends{
+    height: 100px;
+    width: auto;
+}
 
 .news-body{
     margin: 0 auto;

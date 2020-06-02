@@ -558,19 +558,37 @@ class ModuleController extends Controller
         }
     }
 
+
+    public function tabel_friend_pending_list(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/pendingfriendconfirmation';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
     public function friendProfile($friend_id)
     {
+        // return $friend_id;
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/friend/viewfriendprofile';
 
 
         $csrf = null;
 
-        $body = json_encode([
+        $body = [
             'user_id'   => $friend_id
-        ]);
+        ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
         if ($json['success'] == true) {
             $in = $json['data'];
 
@@ -627,4 +645,48 @@ class ModuleController extends Controller
             return back();
         }
     }
+
+
+
+
+    public function confirm_new_friend(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/approve';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'user_id'   => $input['id_new_friend'],
+            'status'   => $input['status_acc'],
+        ];
+
+        // return $body;
+
+        if($input['status_acc'] == "2"){
+            $text = 'Approved';
+        }else{
+            $text = 'Rejected';
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            alert()->success('Successfully give confirmation',$text)->persistent('Done');
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+    }
+
+
+
+
+
+
+
+
+
 } //end-class

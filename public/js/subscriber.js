@@ -1168,7 +1168,7 @@ function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
 
-        // get_payment_initial();
+        get_payment_initial();
 
         get_dashboard_news();
         get_friends_total();
@@ -1188,7 +1188,9 @@ function init_ready() {
     if ($("#page_friends_subs").length != 0) {
         suggestion_list();
         tabel_friend_list();
-        tabel_tes_friends();
+
+        tabel_friend_pending_list();
+        get_friends_total_tabel();
     }
 
 
@@ -1311,21 +1313,28 @@ function send_whatsapp(friend_id) {
 
 
 ///---------- FRIEND MANAGEMENT SUBS ---------
-function tabel_tes_friends() {
+function get_friends_total_tabel() {
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     $.ajax({
-        url: '/subscriber/tabel_friend_management',
+        url: '/subscriber/get_friends_total',
         type: 'POST',
         datatype: 'JSON',
+        data :{
+            "_token" : token
+        },
         success: function (result) {
             console.log(result);
-        },
+            if(result != undefined && result.success != false){
+                $("#text_total_friends").html(result.total_friend + '&nbsp;<small class="clr-accent-color" lang="en">Friends<small>');
+            }
+            },
         error: function (result) {
-            console.log("Cant Show");
+            console.log("Cant Total Friends");
         }
     });
 }
@@ -1355,10 +1364,12 @@ function tabel_friend_list() {
         },
         columns: [
             {
-                mData: 'image',
+                mData: 'picture',
                 render: function (data, type, row, meta) {
-                    // console.log(data);
-                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                    var noimg = '/img/kosong.png'
+                    var pic = server_cdn + cekimage_cdn(data);
+                    return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgteman' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
                 }
             },
             { mData: 'full_name' },
@@ -1377,6 +1388,64 @@ function tabel_friend_list() {
 
     });
 }
+
+
+function tabel_friend_pending_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_friend_pending').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_friend_pending_list',
+            type: 'POST',
+            dataSrc: '',
+            data: {
+                "_token": token
+            },
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                $('#tabel_friend_pending tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            {
+                mData: 'picture',
+                render: function (data, type, row, meta) {
+                    // console.log(data);
+                    var noimg = '/img/kosong.png'
+                    var pic = server_cdn + cekimage_cdn(data);
+                    // return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                    return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
+                }
+            },
+            { mData: 'full_name' },
+            {
+                mData: 'friend_id',
+                render: function (data, type, row, meta) {
+                    return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye matadetail"></i></a> &nbsp;&nbsp;' +
+                        '<a href="#" type="button" class="btn bg-hijau btn-rounded btn-icon detilhref" onclick=approv_new_friend("' + data + '")>' +
+                        '<i class="mdi mdi-check-circle matadetail"></i></i></a>';
+                }
+            }
+        ],
+
+    });
+}
+
+function approv_new_friend(id_friend) {
+// swal(id_friend);
+    $("#id_new_friend").val(id_friend);
+    $("#modal_confirm_new_friend").modal('show');
+}
+
 
 function suggestion_list() {
     var token = $('meta[name="csrf-token"]').attr('content');
@@ -1434,6 +1503,7 @@ function suggestion_list() {
             }
         },
         error: function (result) {
+            $(".divkonco.pagefriend").hide();
             console.log("Cant Show");
         }
     });
@@ -2079,6 +2149,7 @@ function get_dashboard_news() {
             "_token": token
         },
         success: function (result) {
+            console.log('data headline news');
             console.log(result);
             if (result.success == false) {
                 $("#nodata_dash_artikel").show();
@@ -2142,24 +2213,21 @@ function get_friends_total() {
         dataSrc: '',
         timeout: 30000,
         data: {
-            "limit": 4,
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $(".total_friend").html("0");
                 console.log(result);
             } else {
-                if (result.total_friend != undefined) {
                     $(".total_friend").html(result.total_friend);
-                }
             }
         },
         error: function (result) {
             $(".total_friend").html("0");
             // console.log(result);
-            console.log("Cant Show");
+            console.log("Cant Show total Friends");
         }
     });
 }
@@ -2177,7 +2245,6 @@ function get_friends_sugestion() {
         dataSrc: '',
         timeout: 30000,
         data: {
-            "limit": 10,
             "_token": token
         },
         success: function (result) {
@@ -2192,7 +2259,7 @@ function get_friends_sugestion() {
                     $.each(result, function (i, item) {
                         jumlah++;
                         news_id = parseInt(item.id);
-                        var headpic = server_cdn + cekimage_cdn(item.image);
+                        // var headpic = server_cdn + cekimage_cdn(item.image);
 
                         isiui += '<div class="card konco" id="' + item.user_id + '">' +
                             '<div class="card-body color">' +
@@ -2253,7 +2320,7 @@ function get_last_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_last_news").show();
                 $("#isi_last_news").hide();
@@ -2356,7 +2423,7 @@ function get_topvisit_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_topvisit_news").show();
                 $("#isi_topvisit_news").hide();
@@ -2404,7 +2471,7 @@ function get_top_player() {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             if (result.success == false) {
                 $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();
