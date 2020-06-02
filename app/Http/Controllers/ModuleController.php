@@ -628,7 +628,7 @@ class ModuleController extends Controller
         }
 
         $body = [
-            "title"        => $input['subject1'],
+            "title"        => $input['subject'],
             "description" => $input['message'],
             "user_id"        => $input['friend_id']
         ];
@@ -684,9 +684,77 @@ class ModuleController extends Controller
 
 
 
+    public function setting_module_friend(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/setting';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 2);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[1],
+                "value" => $dt[0],
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $body = [
+            "data_Setting" => $data
+        ];
+
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            alert()->success('Successfully Setting Up Friends Module', 'Success')->persistent('Done');
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+    }
 
 
+    public function get_list_setting_module_friends(Request $request){
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/listsetting';
 
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function find_search_filter_friends(Request $request){
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/searchfriend';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'name'   => $input['name']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
 
 
 } //end-class

@@ -1191,6 +1191,11 @@ function init_ready() {
 
         tabel_friend_pending_list();
         get_friends_total_tabel();
+        get_list_setting_module_friends();
+
+        $("#btn_find_filter_friend").click(function () {
+            find_search_filter_friends();
+        });
     }
 
 
@@ -1324,17 +1329,163 @@ function get_friends_total_tabel() {
         url: '/subscriber/get_friends_total',
         type: 'POST',
         datatype: 'JSON',
-        data :{
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             console.log(result);
-            if(result != undefined && result.success != false){
+            if (result != undefined && result.success != false) {
                 $("#text_total_friends").html(result.total_friend + '&nbsp;<small class="clr-accent-color" lang="en">Friends<small>');
             }
-            },
+        },
         error: function (result) {
             console.log("Cant Total Friends");
+        }
+    });
+}
+
+function get_list_setting_module_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_setting_module_friends',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+// console.log(item);
+                    if (item.input_type == 1) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                    } else if (item.input_type == 2) {
+                        if (item.value == 1) {
+                            var one = 'checked';
+                            var two = '';
+                        } else if (item.value == 2) {
+                            var one = '';
+                            var two = 'checked';
+                        } else {
+                            var one = '';
+                            var two = '';
+                        }
+                        inputipe = '<div class="form-group">' +
+                            '<div class="form-check" >' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + one + '>' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
+
+                    uiku += '<div class="row">' +
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-6">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
+                        '</div>' +
+                        '</div>';
+                });
+                $(".isi_seting_module_friend").html(uiku);
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show Setting Friends");
+            console.log(result);
+        }
+    });
+}
+
+function find_search_filter_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/find_search_filter_friends',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "name": $("#name_friend").val()
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".divkonco.pagefriend").hide();
+                $("#find_friend_modal").modal('hide');
+                swal("Failed", result.message , "error");
+            } else {
+                $("#suggestion_list").html("");
+                var suggestionlist = '';
+                var jumlah = 0;
+                var nofoto = '/img/kosong.png';
+
+                $.each(result, function (i, item) {
+                    jumlah++;
+                    $news_id = parseInt(item.id);
+                    var $headpic = server_cdn + cekimage_cdn(item.image);
+
+                    suggestionlist += '<div class="card konco" id="' + item.user_id + '">' +
+                        '<div class="card-body color">' +
+                        '<div class="close_konco">' +
+                        '<button type="button" class="close cgrey2" aria-label="Close"' +
+                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>' +
+                        '<center>' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
+                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                        '</button>' +
+                        '<center>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+
+                $("#suggestion_list").html(suggestionlist);
+                $("#find_friend_modal").modal('hide');
+            }
+        },
+        error: function (result) {
+            $(".divkonco.pagefriend").hide();
+            console.log("Cant Find Friends");
         }
     });
 }
@@ -1441,7 +1592,7 @@ function tabel_friend_pending_list() {
 }
 
 function approv_new_friend(id_friend) {
-// swal(id_friend);
+    // swal(id_friend);
     $("#id_new_friend").val(id_friend);
     $("#modal_confirm_new_friend").modal('show');
 }
@@ -2221,7 +2372,7 @@ function get_friends_total() {
                 $(".total_friend").html("0");
                 console.log(result);
             } else {
-                    $(".total_friend").html(result.total_friend);
+                $(".total_friend").html(result.total_friend);
             }
         },
         error: function (result) {
