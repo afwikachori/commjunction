@@ -300,6 +300,7 @@ Route::prefix('subscriber')->group(function () {
     //POST
 
     Route::post('tes_enkrip', 'SubscriberController@tes_enkrip')->name('tes_enkrip');
+    Route::post('get_inbox_navbar_subs', 'SubscriberController@get_inbox_navbar_subs')->name('get_inbox_navbar_subs');
 
     Route::post('edit_profile_custom_regis', 'SubscriberController@edit_profile_custom_regis')->name('edit_profile_custom_regis');
     Route::post('add_friend_suggest_subs', 'SubscriberController@add_friend_suggest_subs')->name('add_friend_suggest_subs');

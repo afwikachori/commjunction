@@ -679,6 +679,28 @@ class SubscriberController extends Controller
     }
 
 
+    public function get_inbox_navbar_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'inboxmanagement/listmessage';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'status' => "1",
+            "notification_status" => "Receive",
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
 
     public function tabel_generate_inbox_subs(Request $request)
     {

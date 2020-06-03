@@ -300,61 +300,7 @@
     }
 
 
-    function tabel_inbox_message_subs() {
-        $('#tabel_inbox_message_subs').dataTable().fnClearTable();
-        $('#tabel_inbox_message_subs').dataTable().fnDestroy();
-        $('#tabel_inbox_message_subs').show();
-        // $('#modal_generate_inbox_tabel').modal('hide');
 
-        var tabel = $('#tabel_inbox_message_subs').DataTable({
-            responsive: true,
-            language: {
-                paginate: {
-                    next: '<i class="mdi mdi-chevron-right"></i>',
-                    previous: '<i class="mdi mdi-chevron-left">'
-                }
-            },
-            ajax: {
-                url: '/subscriber/tabel_generate_inbox_subs',
-                type: 'POST',
-                dataSrc: '',
-                timeout: 30000,
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                    $('#tabel_inbox_message_subs tbody').empty().append(nofound);
-                },
-            },
-            error: function (request, status, errorThrown) {
-                console.log(errorThrown);
-            },
-            columns: [
-                { mData: 'id' },
-                { mData: 'title' },
-                { mData: 'message_type_title' },
-                { mData: 'user_type_title' },
-                { mData: 'community_name' },
-                { mData: 'status' },
-                {
-                    mData: 'created_at',
-                    render: function (data) {
-                        return (dateFormat(data));
-                    }
-                },
-                {
-                    mData: 'id',
-                    render: function (data, type, row, meta) {
-                        var inidt = [data, row.level_status, row.community_id, row.status];
-                        return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-                            'onclick="detail_message_inbox_admin(\'' + inidt + '\')">' +
-                            '<i class="mdi mdi-eye"></i>' +
-                            '</button>';
-                    }
-                }
-            ],
-
-        });
-
-    }
 
 
 
@@ -373,8 +319,7 @@
 
 
 
-    //dropdown subs list
-    function get_list_subscriber() {
+    function get_list_subscriber_inbox() {
         var itempilih = $("#komunitas_inbox").val();
         $.ajaxSetup({
             headers: {
@@ -415,7 +360,7 @@
             }
         });
 
-    } //endfunction
+    }
 
 
     function detail_message_inbox_admin(params) {

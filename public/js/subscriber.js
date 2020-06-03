@@ -103,7 +103,7 @@ function session_subscriber_logged() {
 
 
             get_list_notif_navbar(user.community_id);
-            get_inbox_navbar();
+            get_inbox_navbar_subs();
 
             if (user.picture != undefined || user.picture != null) {
 
@@ -529,17 +529,21 @@ function detail_membership_subs(index) {
 
 
 // navbar inbox
-function get_inbox_navbar() {
+function get_inbox_navbar_subs() {
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     $.ajax({
-        url: '/subscriber/tabel_generate_inbox_subs',
+        url: '/subscriber/get_inbox_navbar_subs',
         type: 'POST',
         dataSrc: '',
         timeout: 30000,
+        data:{
+            "_token" : token,
+        },
         success: function (result) {
             // console.log(result);
             if (result.success == false) {
@@ -568,10 +572,15 @@ function get_inbox_navbar() {
                     var isiku = '';
                     var total = 0;
                     $.each(result, function (i, item) {
+                        if (item.sender_picture != 0){
+                            var fotopic = server_cdn + cekimage_cdn(item.sender_picture);
+                        }else{
+                            var fotopic = '/img/avatar/'+avatar[num]+'.png';
+                        }
                         total++;
                         isiku += '<a class="dropdown-item preview-item">' +
                             '<div class="preview-thumbnail">' +
-                            '<img src="/img/avatar/' + avatar[num] + '.png" alt="image" class="profile-pic">' +
+                            '<img src="' + fotopic + '" alt="image" class="profile-pic">' +
                             '</div>' +
                             '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center">' +
                             '<span class="s14 tebal">' + item.message_type_title + ' &nbsp; &nbsp;</small>' +
