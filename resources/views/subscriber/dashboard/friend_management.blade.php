@@ -98,8 +98,6 @@
 
 
 
-
-
 <!-- MODAL FIND FRIEND -->
 <div class="modal fade" id="find_friend_modal" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">

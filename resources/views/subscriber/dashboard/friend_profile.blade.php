@@ -22,7 +22,9 @@
 
 <div class="card-body">
 <div class="profile-middle">
-<img src="{{ env('CDN') }}/{{$picture}}" class="img-profile-friends zoom">
+<img src="{{ env('CDN') }}/{{$picture}}" class="img-profile-friends zoom"
+ onerror="this.onerror=null;this.src='/img/noimg.jpg';">
+
 <div><b>{{ $full_name }}</b></div>
 </div>
 

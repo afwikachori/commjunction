@@ -1303,16 +1303,13 @@ function showPassword() {
 }
 
 function send_message(friend_id) {
-    $friend_id = friend_id;
-    $("#modal_send_message").modal("show");
-    $("#friend_id").val($friend_id);
+    $("#modal_send_message_subs").modal("show");
+    $("#friend_id").val(friend_id);
 };
 
-function send_whatsapp(friend_id) {
-    $friend_id = friend_id;
-    $phonum = +628123229810;
-    $pretext = "Halo, Salam kenal";
-    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+function send_whatsapp(nohp) {
+    var pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + nohp + '&text=' + pretext + '');
 
 }
 /// -------- END NEW MANAGEMENT -----------
@@ -1572,11 +1569,12 @@ function tabel_friend_list() {
             {
                 mData: 'friend_id',
                 render: function (data, type, row, meta) {
+                    var nohp = row.notelp;
                     return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                         '<i class="mdi mdi-eye matadetail"></i></a>' +
-                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
                         '<i class="mdi mdi-email matadetail"></i></i></a>' +
-                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + nohp + '")>' +
                         '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
                 }
             }
