@@ -574,6 +574,46 @@ class ModuleController extends Controller
         }
     }
 
+
+    public function get_top_friends(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/topfriend';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+       public function get_friend_profile(Request $request)
+    {
+        // return $friend_id;
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/viewfriendprofile';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'user_id'   => $input['user_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            return $json['data'];
+        }else{
+            return $json;
+        }
+    }
+
+
     public function friendProfile($friend_id)
     {
         // return $friend_id;

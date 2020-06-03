@@ -236,6 +236,35 @@
 </div>
 
 
+
+<div class="row">
+    <div class="col-md-12 stretch-card grid-margin">
+        <div class="card sumari">
+            <div class="card-body sumari">
+                <div class="row">
+                    <div class="col-md-2">
+                        <br>
+                        <h3 class="cteal" lang="en">Top Friends</h3>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="topfriend_nodata">
+                            <center>
+                                <h3 class="clight mgt-1half" lang="en">No Available Data</h3>
+                            </center>
+                        </div>
+                        <div class="row mgt-1half" id="isi_top_friends">
+
+                            <!-- <div class="col-md-3">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {{--
 <div class="row">
     <div class="col-md-4 stretch-card grid-margin">

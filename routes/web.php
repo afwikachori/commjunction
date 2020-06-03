@@ -273,8 +273,11 @@ Route::prefix('subscriber')->group(function () {
     Route::get('/detail_news/{id_news}', 'ModuleController@DetailNews')->name('/detail_news');
 
     // FRIEND MODULE
+    Route::post('get_top_friends', 'ModuleController@get_top_friends')->name('get_top_friends');
 
- Route::post('find_search_filter_friends', 'ModuleController@find_search_filter_friends')->name('find_search_filter_friends');
+    Route::post('get_friend_profile', 'ModuleController@get_friend_profile')->name('get_friend_profile');
+
+    Route::post('find_search_filter_friends', 'ModuleController@find_search_filter_friends')->name('find_search_filter_friends');
 
     Route::post('get_list_setting_module_friends', 'ModuleController@get_list_setting_module_friends')->name('get_list_setting_module_friends');
 

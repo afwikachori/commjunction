@@ -1173,6 +1173,8 @@ function init_ready() {
         get_dashboard_news();
         get_friends_total();
         get_friends_sugestion();
+        get_top_friends();
+
         get_last_news();
         get_love_news();
         get_topvisit_news();
@@ -1359,7 +1361,7 @@ function get_list_setting_module_friends() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 if (result.status === 401 || result.message === "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -1374,7 +1376,7 @@ function get_list_setting_module_friends() {
                 var inputipe = '';
 
                 $.each(result, function (i, item) {
-// console.log(item);
+                    // console.log(item);
                     if (item.input_type == 1) {
                         inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
                     } else if (item.input_type == 2) {
@@ -1442,11 +1444,11 @@ function find_search_filter_friends() {
             "name": $("#name_friend").val()
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $(".divkonco.pagefriend").hide();
                 $("#find_friend_modal").modal('hide');
-                swal("Failed", result.message , "error");
+                swal("Failed", result.message, "error");
             } else {
                 $("#suggestion_list").html("");
                 var suggestionlist = '';
@@ -1468,9 +1470,9 @@ function find_search_filter_friends() {
                         '</div>' +
                         '<center>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
-                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                        '<a href="" class="cgrey2 s13" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-accent btn-sm konco">' +
                         '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                         '</button>' +
                         '<center>' +
@@ -1486,6 +1488,49 @@ function find_search_filter_friends() {
         error: function (result) {
             $(".divkonco.pagefriend").hide();
             console.log("Cant Find Friends");
+        }
+    });
+}
+
+
+function get_friend_profile(id_subs) {
+    // swal(id_subs);
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friend_profile',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "user_id": id_subs
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                ui.popup.show('warning', result.message, 'Warning');
+            } else {
+                $('#profil_chat_wa').attr('onclick', 'send_whatsapp_teman(\'' + result.notelp + '\')');
+                $('#profil_send_msg').attr('onclick', 'send_message_teman(\'' + result.user_id + '\')');
+
+                if (result.picture != undefined && result.picture != 0) {
+                    $("#foto_teman").attr("src", server_cdn + cekimage_cdn(result.picture));
+                }
+                $("#teman_nama").html(result.full_name);
+                $("#teman_hp").html(result.notelp);
+                $("#teman_email").html(result.email);
+                $("#teman_username").html(result.user_name);
+
+                $("#modal_detail_profil_friend").modal('show');
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            ui.popup.show('warning', 'Cant Show Profile', 'Warning');
         }
     });
 }
@@ -1639,9 +1684,9 @@ function suggestion_list() {
                         '</div>' +
                         '<center>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
-                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                        '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-accent btn-sm konco">' +
                         '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                         '</button>' +
                         '<center>' +
@@ -1661,7 +1706,7 @@ function suggestion_list() {
 }
 
 function add_friend_suggest_subs(idsubs) {
-    // alert(idsubs);
+    // swal(idsubs);
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
@@ -1708,33 +1753,17 @@ function showPassword() {
     }
 }
 
-function send_message(friend_id) {
-    $friend_id = friend_id;
+function send_message_teman(friend_id) {
+    // swal(friend_id);
     $("#modal_send_message_subs").modal("show");
-    $("#friend_id").val($friend_id);
-    // var editor = new nicEditor({iconsPath : '/img//nicEditorIcons.gif'}).panelInstance('news_edit_content');
-    //  $('.nicEdit-panelContain').parent().width('100%');
-    // $('.nicEdit-main').parent().width('98%');
-    // $('.nicEdit-main').width('98%');
-    // $('.nicEdit-main').height('200px');
+    $("#friend_id").val(friend_id);
+}
 
-    // var content  = nicEditors.findEditor('news_edit_content');
-    //       content.setContent(res.content);
-    //       $('textarea[name=news_edit_content]').val(res.content);
-
-    //$("#news_picture").attr("src", server_cdn+res.image);
-    // $("#news_picture").attr("src", server_cdn+res.image);
-    //   $("#edit_title").val(res.title);
-    //   $("#id_news").val(res.id);
-    //   $("#toggle-status").val(res.id);
-    //   $("#toggle-headline").val(res.id);
-};
-
-function send_whatsapp(friend_id) {
-    $friend_id = friend_id;
-    $phonum = +628123229810;
-    $pretext = "Halo, Salam kenal";
-    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+function send_whatsapp_teman(phone) {
+    // var friend_id = friend_id;
+    //  var phone = +628123229810;
+    var pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + phone + '&text=' + pretext + '');
 
 }
 ///---------- FRIEND MANAGEMENT SUBS ---------
@@ -2301,7 +2330,7 @@ function get_dashboard_news() {
         },
         success: function (result) {
             console.log('data headline news');
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_dash_artikel").show();
                 $("#idashbord_news").hide();
@@ -2383,6 +2412,59 @@ function get_friends_total() {
     });
 }
 
+function get_top_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_friends',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#topfriend_nodata").show();
+                $("#isi_top_friends").hide();
+            } else {
+                if (result != undefined) {
+                    var uishow = '';
+                    var nopic = '/img/kosong.png';
+
+                    $.each(result, function (i, item) {
+                        if (item.picture != 0) {
+                            var imgprofil = server_cdn + cekimage_cdn(item.picture);
+                        } else {
+                            var imgprofil = '/img/kosong.png';
+                        }
+
+                        uishow += '<div class="col-md-3">' +
+                            '<img src="' + imgprofil + '" class="rounded-circle img-fluid wd-25px"' +
+                            'onerror="this.onerror=null;this.src=\'' + nopic + '\';"> &nbsp;&nbsp;' +
+                            '<a class="cgrey2 s14 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                            '</div>';
+                    });
+                    $("#topfriend_nodata").hide();
+                    $("#isi_top_friends").html(uishow);
+                } else {
+                    $("#topfriend_nodata").show();
+                    $("#isi_top_friends").hide();
+                }
+            }
+
+        },
+        error: function (result) {
+            console.log('Cant Show Top Friends');
+        }
+    });
+}
+
 function get_friends_sugestion() {
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -2399,7 +2481,7 @@ function get_friends_sugestion() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $(".divkonco").hide();
             } else {
@@ -2422,8 +2504,8 @@ function get_friends_sugestion() {
                             '</div>' +
                             '<center>' +
                             '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                            '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
                             '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
                             '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                             '</button>' +
@@ -2517,7 +2599,7 @@ function get_love_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             var noimg = '/img/fitur.png';
             if (result.success == false) {
                 $("#nodata_love_news").show();
