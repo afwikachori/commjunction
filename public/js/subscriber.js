@@ -1450,7 +1450,7 @@ function find_search_filter_friends() {
             "name": $("#name_friend").val()
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             if (result.success == false) {
                 $(".divkonco.pagefriend").hide();
                 $("#find_friend_modal").modal('hide');
@@ -1477,7 +1477,7 @@ function find_search_filter_friends() {
                         '<center>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
                         'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
-                        '<a href="" class="cgrey2 s13" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                        '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
                         '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-accent btn-sm konco">' +
                         '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                         '</button>' +
@@ -2451,7 +2451,7 @@ function get_top_friends() {
                             var imgprofil = '/img/kosong.png';
                         }
 
-                        uishow += '<div class="col-md-3">' +
+                        uishow += '<div class="col-md-3 mgb-05">' +
                             '<img src="' + imgprofil + '" class="rounded-circle img-fluid wd-25px"' +
                             'onerror="this.onerror=null;this.src=\'' + nopic + '\';"> &nbsp;&nbsp;' +
                             '<a class="cgrey2 s14 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +

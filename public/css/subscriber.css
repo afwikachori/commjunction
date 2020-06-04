@@ -406,6 +406,10 @@ font-size: 0.65rem !important;
  margin-top: -0.3em;
 }
 
+.mgb-05{
+    margin-bottom: 0.5em;
+}
+
 .bg-gradient-kuning{
     background: linear-gradient(106.53deg, #fffef5 0%, #fffef5 56.6%);
 }
