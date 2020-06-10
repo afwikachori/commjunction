@@ -40,7 +40,7 @@
     <!-- @stack('js') -->
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
-<body>
+<body id="supportpal_admin">
     @if (Session::has('session_admin_logged'))
 	<div class="wrapper sidebar_minimize">
 		<div class="main-header">
