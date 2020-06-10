@@ -28,6 +28,10 @@ Route::get('logout', 'RegisterController@logout');
 Route::get('404', 'RequestController@NotFoundView')->name('404');
 
 
+
+
+
+
 // ADMIN COMMUNITY
 Route::prefix('admin')->group(function () {
     Route::get('/featurelist', 'RegisterController@FeatureListRegisterView')->name('/featurelist');
@@ -51,6 +55,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/transaction', 'AdminCommController@TransactionManagementViewAdmin')->name('/transaction');
     Route::get('/module_report', 'AdminCommController@ModuleReportManagementView')->name('/module_report');
     Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
+    Route::get('logout_admin_href', 'AdminCommController@logout_admin_href')->name('logout_admin_href');
+
     //NEWS
     Route::get('/news_management', 'ModuleController@NewsManagementView')->name('/news_management');
     Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
@@ -156,9 +162,46 @@ Route::prefix('admin')->group(function () {
     Route::post('detail_module_all', 'AdminCommController@detail_module_all')->name('detail_module_all');
     Route::post('aktifasi_module_admincomm', 'AdminCommController@aktifasi_module_admincomm')->name('aktifasi_module_admincomm');
     Route::post('cek_prepare_publish', 'AdminCommController@cek_prepare_publish')->name('cek_prepare_publish');
-    /// report management/subscriber
     Route::post('tabel_subscriber_report_super', 'AdminCommController@tabel_subscriber_report_super')->name('tabel_subscriber_report_super');
     Route::post('get_list_subscriber_report_super', 'AdminCommController@get_list_subscriber_report_super')->name('get_list_subscriber_report_super');
+
+//=========================== SUPPORTPAL ==============================//
+Route::prefix('supportpal')->group(function () {
+    Route::get('/', function () {
+        if (session()->has('session_admin_logged')) {
+           return view('admin.supportpal.awal');
+        }else{
+            return redirect('admin');
+        }
+    });
+
+    Route::prefix('article')->group(function () {
+    Route::get('/', function () {
+        return view('admin.supportpal.article_view');
+    });
+    Route::get('article-list', 'SupportpalController@listArticle')->name('get.admin.list');
+    Route::post('article-detail', 'SupportpalController@detailArticle')->name('get.admin.detail');
+    Route::post('article-search', 'SupportpalController@searchArticle')->name('get.admin.search');
+    Route::post('set-rating', 'SupportpalController@setRating')->name('post.admin.rating');
+    });
+
+    Route::prefix('ticket')->group(function () {
+    Route::get('/', function () {
+        return view('admin.supportpal.ticket_view');
+    });
+    Route::get('ticket-list', 'SupportpalController@listTicket')->name('get.ticket.list.admin');
+    Route::get('ticket-detail/{id}', 'SupportpalController@detailTicket')->name('get.ticket.detail.admin');
+    Route::get('ticket-create', 'SupportpalController@createTicketView')->name('get.ticket.create.admin');
+    Route::post('ticket-createreq', 'SupportpalController@createTicketReq')->name('post.ticket.createreq.admin');
+    Route::get('ticket-update/{id}/{value}', 'SupportpalController@updateTicket')->name('get.ticket.update.admin');
+    });
+
+    Route::prefix('message')->group(function () {
+    Route::get('{id}', 'SupportpalController@listMessage')->name('get.message.list.admin');
+    Route::post('create', 'SupportpalController@createMessage')->name('post.message.create.admin');
+    });
+}); //end-supportpal
+
 }); //ADMIN-COMMUNITY
 
 
@@ -251,19 +294,17 @@ Route::post('cek_valid_username_subs', 'RegisterController@cek_valid_username_su
 Route::prefix('subscriber')->group(function () {
     Route::get('/', 'SubscriberController@loginView')->name('subscriber');
     Route::get('/url/{name_community}', 'SubscriberController@AuthSubscriber')->name('subscriber/url/{name_community}');
-
     Route::get('/dashboard', 'SubscriberController@DashboardSubsView')->name('/dashboard');
     Route::get('/membership', 'SubscriberController@MembershipSubsView')->name('/membership');
     Route::get('/inbox_management', 'SubscriberController@InboxManagementSubsView')->name('/inbox_management');
     Route::get('/transaction_management', 'SubscriberController@TransactionSubsView')->name('/transaction_management');
     Route::get('/notification_management', 'SubscriberController@NotificationManagementViewSubs')->name('/notification_management');
     Route::get('/dashboard_setting', 'SubscriberController@ModuleSettingSubsView')->name('/dashboard_setting');
+    Route::get('logout_subs_href', 'SubscriberController@logout_subs_href')->name('logout_subs_href');
 
     Route::get('/tes_enkrip', 'SubscriberController@TesEnkripView')->name('/tes_enkrip');
 
 
-
-    // MODULE ROUTE
     //FRIENDS
     Route::get('/friend_list', 'ModuleController@FriendList')->name('/friend_list');
     Route::get('/view_profile/{friend_id}', 'ModuleController@friendProfile')->name('/view_profile');
@@ -323,7 +364,7 @@ Route::prefix('subscriber')->group(function () {
     Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
     Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
     Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
-        Route::post('show_my_membership', 'SubscriberController@show_my_membership')->name('show_my_membership');
+    Route::post('show_my_membership', 'SubscriberController@show_my_membership')->name('show_my_membership');
     Route::post('change_status_inbox_message_subs', 'SubscriberController@change_status_inbox_message_subs')->name('change_status_inbox_message_subs');
     Route::post('detail_inbox_subscriber', 'SubscriberController@detail_inbox_subscriber')->name('detail_inbox_subscriber');
     Route::post('get_list_subscriber_inbox', 'SubscriberController@get_list_subscriber_inbox')->name('get_list_subscriber_inbox');
@@ -338,6 +379,52 @@ Route::prefix('subscriber')->group(function () {
     Route::post('ses_auth_subs', 'SubscriberController@ses_auth_subs')->name('ses_auth_subs');
     Route::post('LoginSubscriber', 'SubscriberController@LoginSubscriber')->name('LoginSubscriber');
     Route::post('session_subscriber_logged', 'SubscriberController@session_subscriber_logged')->name('session_subscriber_logged');
+
+
+//=========================== SUPPORTPAL ==============================//
+Route::prefix('supportpal')->group(function () {
+    Route::get('/', function () {
+    if (session()->has('session_subscriber_logged')) {
+           return view('subscriber.supportpal.awal');
+    }else{
+        if (session()->has('auth_subs')) {
+           $auth_subs = session()->get('auth_subs');
+            $url_loginsubs = '/subscriber/url/' . $auth_subs[0]['name'];
+            return redirect($url_loginsubs);
+        }else{
+            return redirect('/');
+        }
+    }
+    });
+
+    Route::prefix('article')->group(function () {
+    Route::get('/', function () {
+        return view('subscriber.supportpal.article_view');
+    });
+    Route::get('article-list', 'SupPalSubsController@listArticle')->name('get.user.list');
+    Route::post('article-detail', 'SupPalSubsController@detailArticle')->name('get.user.detail');
+    Route::post('article-search', 'SupPalSubsController@searchArticle')->name('get.user.search');
+    Route::post('set-rating', 'SupPalSubsController@setRating')->name('post.user.rating');
+    });
+
+    Route::prefix('ticket')->group(function () {
+    Route::get('/', function () {
+        return view('subscriber.supportpal.ticket_view');
+    });
+    Route::get('ticket-list', 'SupPalSubsController@listTicket')->name('get.ticket.list');
+    Route::get('ticket-detail/{id}', 'SupPalSubsController@detailTicket')->name('get.ticket.detail');
+    Route::get('ticket-create', 'SupPalSubsController@createTicketView')->name('get.ticket.create');
+    Route::post('ticket-createreq', 'SupPalSubsController@createTicketReq')->name('post.ticket.createreq');
+    Route::get('ticket-update/{id}/{value}', 'SupPalSubsController@updateTicket')->name('get.ticket.update');
+    });
+
+    Route::prefix('message')->group(function () {
+    Route::get('{id}', 'SupPalSubsController@listMessage')->name('get.message.list');
+    Route::post('create', 'SupPalSubsController@createMessage')->name('post.message.create');
+    });
+
+}); //end-supportpal
+
 });
 //GET
 Route::get('subscriber/register', 'SubscriberController@registerSubsView')->name('subscriber/register');

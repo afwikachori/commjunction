@@ -175,6 +175,23 @@ class AdminCommController extends Controller
         }
     }
 
+    public function logout_admin_href()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $crsf = "";
+        $url = env('SERVICE') . 'profilemanagement/logout';
+
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $crsf);
+
+        if ($json['success'] == true) {
+            session()->forget('session_admin_logged');
+            return redirect('/admin');
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+        }
+    }
+
 
 
     public function get_dashboard_admin(Request $request)
@@ -274,7 +291,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/publish';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
+        $csrf = "";
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
 
         if ($json['success'] == true) {
@@ -477,6 +495,7 @@ class AdminCommController extends Controller
                         "community_logo" => $hasil['logo'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
@@ -531,6 +550,7 @@ class AdminCommController extends Controller
                         "community_logo" => $hasil['logo'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
@@ -571,6 +591,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/setcustominterface';
         $req = new RequestController;
         $fileimg = "";
+
         if ($request->hasFile('fileup') && $request->hasFile('fileup_logo')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
@@ -619,7 +640,7 @@ class AdminCommController extends Controller
 
             if ($resImg['success'] == true) {
 
-                if ($input['cek_form_subdomain'] != true) {
+                if ($input['cek_form_subdomain'] != "true") {
                     if ($input['form_tipe'] != null && $input['subdomain'] != null) {
                         $url_domain = env('SERVICE') . 'commsetting/setformtypeandsubdomain';
                         $client = new \GuzzleHttp\Client();
@@ -972,6 +993,7 @@ class AdminCommController extends Controller
                         "community_logo" => $ses_user['community_logo'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
@@ -1027,6 +1049,7 @@ class AdminCommController extends Controller
                         "community_logo" => $ses_user['community_logo'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],

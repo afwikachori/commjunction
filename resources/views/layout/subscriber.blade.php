@@ -71,7 +71,7 @@
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                             <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Documentation
                                 &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i
+                            <a class="clr-accent-color" href="/subscriber/supportpal/" style="padding-left: 2em;" lang="en">Support &nbsp;<i
                                     class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>

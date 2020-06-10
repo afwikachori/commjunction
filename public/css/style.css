@@ -1,0 +1,389 @@
+/* ---------------------------------
+POST COMMENT
+--------------------------------- */
+
+.comment-form{ margin: 30px 0; padding: 30px; box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+	border: 1px solid #ddd; background: #fff; }
+
+.comment-form .form-control{ margin-bottom: 30px; border-radius: 1px; border: 0; border-bottom: 1px solid #ddd;
+	height: 45px; line-height: 45px; box-shadow: none; padding: 0; max-width: 100%; }
+
+.comment-form textarea.form-control{ height: auto; }
+
+.comment-form .form-control:focus{ border-color: #498BF9; }
+
+.comment-form .submit-btn{  border: 0; outline: 0; cursor: pointer;
+	border: 1px solid #D2E2FC; background: #D2E2FC; }
+
+/* .comment-form .submit-btn:hover{ background: none; } */
+
+
+
+/* COMMENTS */
+
+.commnets-area{
+     padding: 30px 40px;
+     margin: 2px 0;
+     overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+	background: #fff; }
+
+.comment{ padding-bottom: 30px; margin-bottom: 30px; border-bottom: 1px solid #eee; }
+
+.comment:last-child{ padding-bottom: 0px; margin-bottom: 0px; border-bottom: 0px; }
+
+.comment .reply-for{ margin-bottom: 20px; }
+
+.comment .post-info{ position: relative; padding: 30px 0; }
+
+.comment .post-info .left-area{ height: 70px; width: 70px; border-radius: 100px; overflow: hidden; position: absolute;
+    top: 50%; margin-top: -35px; border: 6px	solid #fff; box-shadow: 0px 0px 5px rgba(0,0,0,.3); }
+
+.comment .post-info .middle-area{ padding-left: 90px; width: calc(100% - 70px); display: inline-block; }
+
+.comment .post-info .date{ display: inline-block; color: #999; }
+
+.comment .post-info .right-area{ float: right; }
+
+
+.more-comment-btn{ display: block; margin-bottom: 30px; padding: 10px; text-align: center;
+	 color: #fff; }
+
+.more-comment-btn:hover{ border-color: #ccc; }
+
+/* upload */
+label.button {
+    display: inline-block;
+    font-size: 100%;
+    font-weight: 600;
+    margin-bottom: 0;
+    background: #888;
+    border: 0;
+    -moz-border-radius: 99px;
+    -webkit-border-radius: 99px;
+    border-radius: 99px;
+    color: #fff !important;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 4px 20px;
+    height: 30px;
+    text-transform: uppercase;
+    vertical-align: middle;
+
+}
+
+.fileupload {
+    display: none;
+}
+
+.submit-btn {
+    font-size: 100%;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 4px 20px;
+    height: 30px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: white !important;
+    background: #3480B6 !important;
+    border-bottom-color: #2C6384 !important;
+    border-radius: 5rem;
+}
+
+.submit-btn:hover {
+    background: #2C6384;
+}
+
+/* Attachments */
+
+.attachments {
+    margin-left: 68px;
+}
+
+.attachments-img {
+    width: 11rem;
+    border: 5px solid rgba(0, 0, 0, 0.3);
+}
+
+.attachments-img:hover {
+    cursor: pointer;
+}
+
+#imgPreviewModal{
+    width: 100%;
+}
+
+.attachments ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.attachments ul li {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 5px;
+    position: relative;
+    width: 200px;
+}
+
+.attachments ul li a {
+    display: block;
+    text-decoration: none;
+}
+
+.attachments ul li a:hover {
+    color: #333;
+}
+
+.attachments ul li div.deleteAttachment {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    line-height: 1em;
+    margin: 3px;
+    padding: 3px 4px;
+    position: absolute;
+    right: 0;
+    z-index: 100;
+}
+
+.attachments ul li div.deleteAttachment:hover {
+    background: #eee;
+}
+
+.attachments ul li .deleteAttachment .fa {
+    color: #777;
+}
+
+.attachments ul li .deleteAttachment:hover .fa {
+    color: #333;
+}
+
+.attachments ul li .preview {
+    height: 88px;
+    line-height: 88px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.attachments ul li .preview .fiv-viv {
+    font-size: 64px;
+    padding: 12px;
+}
+
+.attachments ul li .name {
+    background: #f5f5f5;
+    border-top: 1px solid #eee;
+    padding: 4px 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attachments ul li .name .underline {
+    text-decoration: underline;
+}
+
+.attachments ul li .preview-hover {
+    background: #454545;
+    background: rgba(0,0,0,0.8);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #fff;
+    height: 100%;
+    line-height: 1.2em;
+    padding: 12px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.attachments ul li .preview-hover .fiv-viv {
+    font-size: 20px;
+}
+
+.attachments ul li .preview-hover .attachment-details {
+    margin-left: 10px;
+    max-width: 142px;
+}
+
+.attachments ul li .preview-hover .hover-name {
+    display: block;
+    max-height: 46px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.attachments ul li .preview-hover .light {
+    color: #999;
+}
+
+.attachments ul li a:hover .preview-hover {
+    display: block;
+}
+
+.desk_content_padding .attachments ul li a:hover .preview-hover .fa {
+    color: #fff;
+}
+
+.attachments ul li a:hover .preview:not(.hover) {
+    opacity: 0.5;
+}
+
+.tebal{
+    font-weight: bold;
+}
+
+
+.modmedium{
+    width: 100%;
+    max-width: 760px;
+}
+
+.minlebar{
+    min-width: 300px;
+    width: auto;
+}
+
+
+.clight{
+  color: #BDBDBD !important;
+}
+
+.cred{
+    color: #e26c6c !important;
+}
+
+.cgrey{
+  color: #747474 !important;
+}
+
+.cblue{
+    color: #1572e8 !important;
+}
+
+.cwhite{
+    color: #fff !important;
+}
+
+.mgt-05{
+    margin-top: 0.5em;
+}
+
+.s13{
+    font-size: 13px;
+}
+
+
+.btn-light{
+    background-color: #dedede !important;
+}
+
+.mgt-2{
+    margin-top: 2em;
+}
+
+.main-panel{
+    padding-right: 75px;
+}
+
+.menus-link{
+    text-decoration: none !important;
+}
+.menus-link:hover{
+    color: #1572e8 !important;
+}
+
+.bg-menus:hover{
+  background: linear-gradient(117.13deg, #f5eeff 0%, #e1f0f1 56.6%) !important;
+}
+
+/* btn datatble export  */
+button.dt-button,
+div.dt-button,
+a.dt-button {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 0.333em !important;
+    margin-bottom: 0.333em !important;
+    padding: 0.5em 0.5em !important;
+    /* border: 1px solid #dcdcdc !important; */
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+    font-size: 0.88em;
+    line-height: 1em !important;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    background: linear-gradient(
+        106.53deg,
+        #e6e9ea 0%,
+        #e4f2f7 56.6%
+    ) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9');
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis;
+}
+
+button.dt-button:hover {
+   background: linear-gradient(
+        106.53deg,
+        #fdf1d0 0%,
+        #fff9e7 56.6%
+    ) !important;
+    font-weight: bold !important;
+    color: #1572e8 !important;
+}
+
+div.kananin{
+text-align: right !important;
+}
+
+/* //SCROLL BODY ALL */
+body::-webkit-scrollbar-track
+{
+  background: #F5F5F5;
+}
+
+body::-webkit-scrollbar
+{
+  width: 7px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+  background: linear-gradient(
+        to bottom,
+        #faf9da,
+        #e0fcfa,
+        #def0f3,
+        #c8cfd3,
+        #ded5e6
+    );
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+.main-panel{
+    padding: 0em !important;
+}
+}
