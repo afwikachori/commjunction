@@ -44,7 +44,7 @@
     @if (Session::has('session_admin_logged'))
 	<div class="wrapper sidebar_minimize">
 		<div class="main-header">
-		@include('layouts_supportpal.header')
+		@include('admin.supportpal.layouts.header')
         </div>
 
 
@@ -53,7 +53,7 @@
 			  @yield('content')
             </div>
 			<footer class="footer">
-				  @include('layouts_supportpal.footer')
+				  @include('admin.supportpal.layouts.footer')
 			</footer>
 		</div>
 
