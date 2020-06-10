@@ -826,7 +826,7 @@ function tabel_req_verify() {
                 mData: 'file_customer',
                 render: function (data, type, row, meta) {
                     var noimg = '/img/noimg.jpg'
-                    var pic = cdn + cekimage_cdn(data);
+                    var pic = server_cdn + cekimage_cdn(data);
                     return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
                 }
             },
