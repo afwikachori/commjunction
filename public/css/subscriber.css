@@ -84,6 +84,7 @@ color: teal !important;
     cursor: pointer;
 }
 
+
 /*end-imgae input*/
 
 
@@ -1565,6 +1566,19 @@ padding-top: 0px !important;
 padding-bottom: 0px !important;
 border: none;
 margin-top: -1em;
+}
+
+.kananin{
+    text-align: right !important;
+}
+.pad-right{
+padding-right: 40px;
+}
+
+.btn-loveme{
+    width: 26px !important;
+    height: 26px !important;
+    margin-right: 1em;
 }
 
 .kanankiri30px{

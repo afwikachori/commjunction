@@ -806,6 +806,10 @@ function init_ready() {
         cek_prepare_publish();
     }
 
+    if($("#page_detail_news_admin").length != 0){
+        $("#modal_ajax").modal('hide');
+    }
+
 }
 
 

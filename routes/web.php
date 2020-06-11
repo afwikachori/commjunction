@@ -312,8 +312,10 @@ Route::prefix('subscriber')->group(function () {
     //NEWS
     Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
     Route::get('/detail_news/{id_news}', 'ModuleController@DetailNews')->name('/detail_news');
+    Route::post('send_love_news_subs', 'ModuleController@send_love_news_subs')->name('send_love_news_subs');
 
     // FRIEND MODULE
+
     Route::post('get_top_friends', 'ModuleController@get_top_friends')->name('get_top_friends');
 
     Route::post('get_friend_profile', 'ModuleController@get_friend_profile')->name('get_friend_profile');

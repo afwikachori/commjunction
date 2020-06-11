@@ -156,6 +156,9 @@ class ModuleController extends Controller
         }
     }
 
+
+
+
     public function getDetailNews($news_id)
     {
         $ses_login = session()->get('session_admin_logged');
@@ -796,5 +799,25 @@ class ModuleController extends Controller
         }
     }
 
+
+    public function send_love_news_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/news/like';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'news_id'   => (int)$input['news_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
 
 } //end-class

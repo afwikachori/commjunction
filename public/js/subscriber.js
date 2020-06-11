@@ -1278,9 +1278,16 @@ function table_news_list() {
                             '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
                             '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
                             '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
-                            '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
+                            '<br>'+
+                            '<div class="row"><div class="col-md-6"><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
                             'See Detail' +
-                            '</a></div>' +
+                            '</a></div>'+
+                            '<div class="col-md-6 kananin pad-right">'+
+                            '<button type="button" class="btn btn-gradient-danger btn-rounded btn-icon btn-loveme"'+
+                            'onclick="send_love_news(\'' + item.id +  '\')">'+
+                            '<i class="mdi mdi-heart"></i>'+
+                            '</button></div></div>'+
+                            '</div>' +
                             '</div>' +
                             '</div>';
                     });
@@ -1298,6 +1305,36 @@ function table_news_list() {
             console.log(result);
             $("#nodata_news").show();
             $("#news_container").hide();
+        }
+    });
+}
+
+function send_love_news(idnews) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    alert(idnews);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/send_love_news_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "news_id" : idnews
+        },
+        success: function (result) {
+            console.log(result);
+            if (result != undefined && result.success != false) {
+                swal(result.message, 'Success', 'success');
+            }else{
+                swal(result.message,'Failed','error');
+            }
+        },
+        error: function (result) {
+            ui.popup.show('error', 'Cant Love this news', 'Failed');
         }
     });
 }

@@ -15,6 +15,7 @@
               </nav>
             </div>
 <div class="row">
+    <div id="page_detail_news_admin"></div>
   <div class="col-md-8 news-title">
     <h1>{{ $title }}</h1>
   </div>
@@ -30,7 +31,7 @@
 
 <div class="row">
 <div class="col-md-3 news-info">
-  <div><b>Publish Date</b> :<br><small class="cgrey2"> {{ $createdAt }}</small></div>
+  <div><b>Publish Date</b> :<br><small class="cgrey2"> <td>{{ date('d-M-y', strtotime($createdAt)) }}</small></div>
 </div>
 <div class="col-md-3 news-info">
   <div><b>Created By</b> :<br>
@@ -53,21 +54,6 @@
     </div>
   </div>
 </div>
-
-
 </div>
-
-
-@endsection
-@section('script')
-<script type="text/javascript">
-var server_cdn = '{{ env("CDN") }}';
-$(document).ready(function () {
-   $("#modal_ajax").modal('hide');
-});
-
-
-
-</script>
 
 @endsection
