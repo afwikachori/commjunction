@@ -820,4 +820,25 @@ class ModuleController extends Controller
         }
     }
 
+    public function send_love_news_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/news/like';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'news_id'   => (int) $input['news_id']
+        ];
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('News has been liked', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
 } //end-class

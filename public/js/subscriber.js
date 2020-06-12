@@ -1326,11 +1326,12 @@ function send_love_news(idnews) {
             "news_id" : idnews
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result != undefined && result.success != false) {
-                swal(result.message, 'Success', 'success');
+                ui.popup.show('success', 'News already loved', 'Success');
             }else{
-                swal(result.message,'Failed','error');
+                ui.popup.show('warning', result.message, 'Warning');
+
             }
         },
         error: function (result) {

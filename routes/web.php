@@ -66,6 +66,8 @@ Route::prefix('admin')->group(function () {
 
     //POST
     // NEWS MODULE
+    Route::post('send_love_news_admin', 'ModuleController@send_love_news_admin')->name('send_love_news_admin');
+
     Route::post('/tabel_news_management', 'ModuleController@tabel_news_management')->name('/tabel_news_management');
     Route::post('/get_detail_news', 'ModuleController@getDetailNews')->name('/get_detail_news');
     Route::post('get_data_edit', 'ModuleController@getDataEdit')->name('get_data_edit');

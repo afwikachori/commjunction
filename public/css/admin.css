@@ -2294,3 +2294,16 @@ input[type=color] {
 .badge-abu{
     background-color: #aaa8a8 !important;
 }
+
+
+.news-middle .btn-loveme{
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+
+.news-middle .btn-loveme:hover{
+    top: 45px;
+    color: red;
+    box-shadow: white;
+}
