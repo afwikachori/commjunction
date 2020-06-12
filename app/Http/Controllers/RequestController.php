@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ConnectException;
 use Exception;
 use Session;
 
@@ -801,5 +804,58 @@ class RequestController extends Controller
         $dataku = json_decode($request->getBody()->getContents(), true);
         return $dataku;
     }
+
+
+    public function send_image_formdata($reqdata, $url, $filename, $token)
+    {
+        $data = [];
+        foreach ($reqdata as $i => $dt) {
+            if($i == 'image'){
+                $dataArray = [
+                    "name" => $i,
+                    "contents" => $dt,
+                    "filename" => $filename,
+
+                ];
+            }else{
+                $dataArray = [
+                    "name" => $i,
+                    "contents" => $dt,
+                ];
+            }
+
+            array_push($data, $dataArray);
+        }
+        // $ini = ['multipart' =>
+        //         $data
+        // ];
+        // dd($ini);
+
+        try{
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+            'multipart' => $data,
+        ]);
+
+        $dataku = json_decode($request->getBody()->getContents(), true);
+        return $dataku;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['success'] = false;
+            $error['error'] = true;
+            return $error;
+        }
+    }
+
 
 } //END_CLASS

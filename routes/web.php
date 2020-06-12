@@ -57,6 +57,21 @@ Route::prefix('admin')->group(function () {
     Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
     Route::get('logout_admin_href', 'AdminCommController@logout_admin_href')->name('logout_admin_href');
 
+
+    // MODULE EVENT
+    Route::get('/event', 'ModuleController@EventModuleView')->name('get.admin.event-list');
+    Route::post('tabel_event_list_admin', 'ModuleController@tabel_event_list_admin')->name('tabel_event_list_admin');
+    Route::post('create_new_event_admin', 'ModuleController@create_new_event_admin')->name('post.admin.create-event');
+    Route::post('edit_new_event_admin', 'ModuleController@edit_new_event_admin')->name('post.admin.edit-event');
+    Route::post('share_event_admin', 'ModuleController@share_event_admin')->name('post.admin.share-event');
+    Route::post('create_new_ticket_admin', 'ModuleController@create_new_ticket_admin')->name('post.admin.create-ticket');
+    Route::post('tabel_ticket_list_admin', 'ModuleController@tabel_ticket_list_admin')->name('post.admin.list-ticket');
+
+
+   Route::get('/participant', 'ModuleController@participantEventModuleView')->name('get.admin.participant-list');
+
+
+
     //NEWS
     Route::get('/news_management', 'ModuleController@NewsManagementView')->name('/news_management');
     Route::get('/news_list', 'ModuleController@NewsList')->name('/news_list');
@@ -65,9 +80,7 @@ Route::prefix('admin')->group(function () {
 
 
     //POST
-    // NEWS MODULE
     Route::post('send_love_news_admin', 'ModuleController@send_love_news_admin')->name('send_love_news_admin');
-
     Route::post('/tabel_news_management', 'ModuleController@tabel_news_management')->name('/tabel_news_management');
     Route::post('/get_detail_news', 'ModuleController@getDetailNews')->name('/get_detail_news');
     Route::post('get_data_edit', 'ModuleController@getDataEdit')->name('get_data_edit');

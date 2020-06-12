@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  dev-platform-web:
+  php:
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,14 +17,11 @@ services:
       - 9899:80
     tty: true
     restart: always
-    
+
     networks:
-      - vascomm-app
-          
-  
+      - commj_web
+
+
 networks:
-  vascomm-app:
-     name : vascomm-app
-     driver : bridge
-
-
+  commj_web:
+     driver: bridge

@@ -724,7 +724,9 @@ padding-right: 3%;
     text-align: left;
 }
 
-
+.kananin{
+    text-align: right !important;
+}
 
 /*.logo_komunitas{
   width: 30px !important;
@@ -1397,6 +1399,16 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 .mgb-1 {
     margin-bottom: 1.5em;
+}
+
+.del-row{
+    padding: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.delrow-tiket{
+width: 25px !important; height: 25px !important;
 }
 
 .dashone {
