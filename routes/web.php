@@ -66,6 +66,7 @@ Route::prefix('admin')->group(function () {
     Route::post('share_event_admin', 'ModuleController@share_event_admin')->name('post.admin.share-event');
     Route::post('create_new_ticket_admin', 'ModuleController@create_new_ticket_admin')->name('post.admin.create-ticket');
     Route::post('tabel_ticket_list_admin', 'ModuleController@tabel_ticket_list_admin')->name('post.admin.list-ticket');
+   Route::post('delete_ticket_event_admin', 'ModuleController@delete_ticket_event_admin')->name('post.admin.delete-ticket');
 
 
    Route::get('/participant', 'ModuleController@participantEventModuleView')->name('get.admin.participant-list');

@@ -81,7 +81,7 @@
                                 </div>
                             </div>
 
-                            <table id="tabel_ticket_event" class="table table-hover table-striped dt-responsive nowrap hidendulu" style="width:100%">
+                            <table id="tabel_ticket_event" class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th><b lang="en">ID Ticket</b></th>

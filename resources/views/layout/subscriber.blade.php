@@ -257,7 +257,7 @@
                                 <form method="POST" id="form_edit_custom_profile"
                                     action="{{route('edit_profile_custom_regis')}}">
                                     {{ csrf_field() }}
-                                    <div class="row" id="custom_input_regis">
+                                    <div class="row div-custum-regis" id="custom_input_regis">
 
                                     </div>
                                     <div class="modal-footer customprofil">

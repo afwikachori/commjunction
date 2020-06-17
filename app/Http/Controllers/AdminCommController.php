@@ -1688,6 +1688,7 @@ class AdminCommController extends Controller
         $input = $request->all();
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 2);
+        $csrf= '';
 
         $data = [];
         foreach ($dtin as $i => $dt) {
@@ -1798,7 +1799,7 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'paymentmanagement/activation';
-
+        $input = $request->all();
 
         $bodyku = json_encode([
             "payment_method_id" => $input['id_pay_method_module'],

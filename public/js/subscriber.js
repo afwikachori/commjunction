@@ -159,6 +159,9 @@ function session_subscriber_logged() {
 
 
             get_profile_custom_regis(result.custom_input);
+            console.log("resgis custom input");
+            console.log(result.custom_input);
+
 
         },
         error: function (result) {
@@ -1817,7 +1820,6 @@ function send_whatsapp_teman(phone) {
 // --------------- PROFIL MANAGEMENT SUBS --------------
 function get_profile_custom_regis(params) {
     var uihtml = '';
-
     $.each(params, function (no, des) {
         // console.log(des);
         var item = des.param_form_array;

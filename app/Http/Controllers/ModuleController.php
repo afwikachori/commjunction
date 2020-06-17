@@ -1040,7 +1040,7 @@ class ModuleController extends Controller
     }
 
 
-        public function tabel_ticket_list_admin(Request $request)
+    public function tabel_ticket_list_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/listticket';
@@ -1060,5 +1060,24 @@ class ModuleController extends Controller
         }
     }
 
+     public function delete_ticket_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/deleteticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'event_id'   => (int)$input['event_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
 
 } //end-class

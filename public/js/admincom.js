@@ -91,6 +91,7 @@ function session_admin_logged() {
                         location.href = '/admin';
                     }, 5000);
                 } else {
+                    console.log('session login admin');
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
@@ -5881,8 +5882,6 @@ function tabel_event_list_admin() {
 }
 
 function addRow_create_tiket() {
-
-
     // Add set name and id row
     var row = 1;
     var id = 2;
@@ -6003,25 +6002,23 @@ $('#tiket_event_filter').change(function () {
 
 
 function tabel_ticket_list_admin(id_event) {
-    $('#tabel_ticket_event').show();
-    // $('#tabel_ticket_event').removeClass();
     $('#tabel_ticket_event').DataTable().clear().destroy();
     $('#tabel_ticket_event').empty();
 
-    var uihead = '<thead>'+
-        '<tr>' +
-        '<th><b lang="en">ID Ticket</b></th>' +
-        '<th><b lang="en">Title</b></th>' +
-        '<th><b lang="en">Description</b></th>' +
-        '<th><b lang="en">Type Ticket</b></th>' +
-        '<th><b lang="en">Price</b></th>' +
-        '<th><b lang="en">Total</b></th>' +
-        '<th><b lang="en">Date</b></th>' +
-        '<th><b lang="en">Remaining</b></th>' +
-        '<th><b lang="en">Action</b></th>' +
-        '</tr>' +
-        '</thead>';
-    $('#tabel_ticket_event').html(uihead);
+    // var uihead = '<thead>'+
+    //     '<tr>' +
+    //     '<th><b lang="en">ID Ticket</b></th>' +
+    //     '<th><b lang="en">Title</b></th>' +
+    //     '<th><b lang="en">Description</b></th>' +
+    //     '<th><b lang="en">Type Ticket</b></th>' +
+    //     '<th><b lang="en">Price</b></th>' +
+    //     '<th><b lang="en">Total</b></th>' +
+    //     '<th><b lang="en">Date</b></th>' +
+    //     '<th><b lang="en">Remaining</b></th>' +
+    //     '<th><b lang="en">Action</b></th>' +
+    //     '</tr>' +
+    //     '</thead>';
+    // $('#tabel_ticket_event').html(uihead);
 
     var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -6049,7 +6046,12 @@ function tabel_ticket_list_admin(id_event) {
         },
         columns: [
             { mData: 'id' },
-            { mData: 'title' },
+            {
+                mData: 'title',
+                render: function (data, type, row, meta) {
+                    return '<p class="s13 text-wrap width-100">' + data + '</p>';
+                }
+            },
             {
                 mData: 'description',
                 render: function (data, type, row, meta) {
@@ -6113,10 +6115,8 @@ function tabel_ticket_list_admin(id_event) {
 
         $('#edit_status').val(data.status).attr("selected", "selected");
         $('#edit_type').val(data.ticket_type).attr("selected", "selected");
-
-
-
     });
+
 }
 
 
