@@ -493,7 +493,9 @@ class AdminCommController extends Controller
                         "community_name" => $hasil['name'],
                         "community_description" => $hasil['description'],
                         "community_logo" => $hasil['logo'],
+                        "community_id" => $ses_user['community_id'],
                         /////////////////////
+
                         "user_id" => $ses_user['user_id'],
                         "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
@@ -548,6 +550,7 @@ class AdminCommController extends Controller
                         "community_name" => $hasil['name'],
                         "community_description" => $hasil['description'],
                         "community_logo" => $hasil['logo'],
+                        "community_id" => $ses_user['community_id'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
                         "supportpal_id" =>  $ses_user['supportpal_id'],
@@ -954,7 +957,7 @@ class AdminCommController extends Controller
         $req = new RequestController;
         $fileimg = "";
 
-        if ($request->hasFile('alamat_admin')) {
+        if ($request->has('alamat_admin')) {
             $alamat = $input['alamat_admin'];
         } else {
             $alamat = "null";
@@ -978,12 +981,13 @@ class AdminCommController extends Controller
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
-                // return $resImg['data'];
+                // return $resImg;
                 if ($resImg['success'] == true) {
+
                     session()->put('session_admin_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -991,6 +995,7 @@ class AdminCommController extends Controller
                         "community_name" => $ses_user['community_name'],
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
+                        "community_id" => $ses_user['community_id'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
                         "supportpal_id" =>  $ses_user['supportpal_id'],
@@ -1034,12 +1039,12 @@ class AdminCommController extends Controller
             $url = env('SERVICE') . 'profilemanagement/editprofile';
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
-
+                // return $resImg;
                 if ($resImg['success'] == true) {
                     session()->put('session_admin_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $ses_user['picture'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -1047,6 +1052,7 @@ class AdminCommController extends Controller
                         "community_name" => $ses_user['community_name'],
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
+                        "community_id" => $ses_user['community_id'],
                         /////////////////////
                         "user_id" => $ses_user['user_id'],
                         "supportpal_id" =>  $ses_user['supportpal_id'],
@@ -1726,7 +1732,7 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return "nodata";
         }
     }
 
@@ -1741,7 +1747,7 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return "nodata";
         }
     }
 
@@ -1801,18 +1807,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/activation';
         $input = $request->all();
 
-        $bodyku = json_encode([
+        $body = [
             "payment_method_id" => $input['id_pay_method_module'],
             "payment_type_id" => $input['aktif_id_payment'],
             "payment_time" => $input['payment_time_module']
-        ]);
-
-        $input = $request->all();
-        $csrf = $input['_token'];
-
-        $body = [
-            'limit'   => 5
         ];
+
+        $csrf = $input['_token'];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
 

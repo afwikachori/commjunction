@@ -36,6 +36,11 @@ class ModuleController extends Controller
         return view('admin/dashboard/event_module_admin');
     }
 
+    public function createNewVenueAdmin()
+    {
+        return view('admin/dashboard/venue_module_admin');
+    }
+
 
 
     public function get_all_news(Request $request)
@@ -1015,7 +1020,6 @@ class ModuleController extends Controller
             alert()->error($json['message'], 'Failed')->autoclose(4000);
             return back();
         }
-
     }
 
 
@@ -1060,7 +1064,7 @@ class ModuleController extends Controller
         }
     }
 
-     public function delete_ticket_event_admin(Request $request)
+    public function delete_ticket_event_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/deleteticket';
@@ -1069,7 +1073,7 @@ class ModuleController extends Controller
         $csrf = "";
 
         $body = [
-            'event_id'   => (int)$input['event_id']
+            'event_id'   => (int) $input['event_id']
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
@@ -1080,4 +1084,177 @@ class ModuleController extends Controller
         }
     }
 
+
+
+    public function buyTicketEvent(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'event/buyticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'ticket_id'   => '2',
+            'event_id'   => '2',
+            'payment_method_id'   => '5',
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    // -------------------------------  MODULE VENUE  -----------------------------------
+
+    public function VenueListAdmin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue';
+
+        $input = '';
+        $csrf = '';
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+
+    public function detailVenueAdmin($id_venue)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/detail';
+
+        $csrf = "";
+
+        $body = [
+            'venue_id'   => $id_venue
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function LastVenueListAdmin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/last';
+
+        $csrf = "";
+        $body = [
+            'limit'   => (int) "5"
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function publishVenueAdmin($id_venue)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/publish';
+
+        $csrf = "";
+        $body = [
+            'venue_id'   => $id_venue
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+
+
+    public function PostcreateNewVenueAdmin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        if ($input['action'] == "ADD") {
+            $url = env('SERVICE') . 'module/venue/create';
+        } else {
+            $url = env('SERVICE') . 'module/venue/edit';
+        }
+
+        $fasilitas = explode(",", $input['venue_fasilitas']);
+
+        $req = new RequestController;
+        if ($request->hasFile('photo_venue') || $request->hasFile('venue_thumbnail')) {
+
+            $img_thum = file_get_contents($request->file('venue_thumbnail')->getRealPath());
+            $nam_thum = $request->file('venue_thumbnail')->getClientOriginalName();
+
+
+            $photo = [];
+
+            foreach ($request->file('photo_venue') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $image_path = $image->path();
+
+                $files = [
+                    'name'     => 'photos',
+                    'contents' => fopen($image_path, 'r'),
+                    'filename' => $fileName
+                ];
+                array_push($photo, $files);
+            }
+
+            if ($input['action'] == "ADD") {
+                $imageRequest = [
+                    "name"         => $input['venue_judul'],
+                    "location"         => $input['venue_lokasi'],
+                    "capacity"   => $input['venue_kapasitas'],
+                    "open_time"    => $input["open_time"],
+                    "close_time"    => $input['close_time'],
+                    "facilities"        => $fasilitas,
+                    "thumbnail"      => [$img_thum => $nam_thum],
+                    "photo"          => $photo,
+                ];
+            } else {
+                $imageRequest = [
+                    "name"       => $input['venue_judul'],
+                    "location"   => $input['venue_lokasi'],
+                    "capacity"   => $input['venue_kapasitas'],
+                    "open_time"  => $input["open_time"],
+                    "close_time" => $input['close_time'],
+                    "facilities" => $fasilitas,
+                    "thumbnail"  => [$img_thum => $nam_thum],
+                    "photo"      => $photo,
+                    "venue_id"   => $input['id_venue'],
+                ];
+            }
+        }
+        // dd($imageRequest);
+
+        $resImg = $req->create_venue_multipart($imageRequest, $url, $ses_login['access_token']);
+        dd($resImg);
+        // if ($resImg['success'] == true) {
+        //     alert()->success('Success Edit event!', 'Success')->autoclose(4000);
+        //     return back();
+        // } else {
+        //     alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+        //     return back();
+        // }
+    }
 } //end-class

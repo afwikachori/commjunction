@@ -66,10 +66,22 @@ Route::prefix('admin')->group(function () {
     Route::post('share_event_admin', 'ModuleController@share_event_admin')->name('post.admin.share-event');
     Route::post('create_new_ticket_admin', 'ModuleController@create_new_ticket_admin')->name('post.admin.create-ticket');
     Route::post('tabel_ticket_list_admin', 'ModuleController@tabel_ticket_list_admin')->name('post.admin.list-ticket');
-   Route::post('delete_ticket_event_admin', 'ModuleController@delete_ticket_event_admin')->name('post.admin.delete-ticket');
+    Route::post('delete_ticket_event_admin', 'ModuleController@delete_ticket_event_admin')->name('post.admin.delete-ticket');
+   // PARTICIPANT
+    Route::get('/participant', 'ModuleController@participantEventModuleView')->name('get.admin.participant-list');
+
+    //VENUE
+    Route::get('/venue_list', 'ModuleController@VenueListAdmin')->name('get.admin.venue-list');
+    Route::get('/last_venue', 'ModuleController@LastVenueListAdmin')->name('get.admin.last-venue');
+    Route::get('detail_venue/{id_venue}', 'ModuleController@detailVenueAdmin')->name('get.admin.detail-venue/{id_subs}');
+    Route::get('/venue', 'ModuleController@createNewVenueAdmin')->name('get.admin.create-venue');
+    Route::get('/publish_venue/{id_venue}', 'ModuleController@publishVenueAdmin')->name('post.admin.publish-venue/{id_venue}');
 
 
-   Route::get('/participant', 'ModuleController@participantEventModuleView')->name('get.admin.participant-list');
+    Route::post('create_new_venue', 'ModuleController@PostcreateNewVenueAdmin')->name('post.admin.create-venue');
+
+
+
 
 
 
@@ -319,6 +331,9 @@ Route::prefix('subscriber')->group(function () {
     Route::get('logout_subs_href', 'SubscriberController@logout_subs_href')->name('logout_subs_href');
 
     Route::get('/tes_enkrip', 'SubscriberController@TesEnkripView')->name('/tes_enkrip');
+
+    //EVENT _ TICKET
+    Route::get('/buy_ticket', 'ModuleController@buyTicketEvent')->name('get.subs.buy-ticket');
 
 
     //FRIENDS

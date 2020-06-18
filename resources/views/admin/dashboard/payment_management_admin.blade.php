@@ -92,7 +92,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
 
-            <div class="modal-body" style="padding:25px; min-height: 550px; height: auto; padding: 5px 25px 0px 25px;">
+            <div class="modal-body" style="padding:25px; min-height: 570px; height: auto; padding: 5px 25px 0px 25px;">
                 <div class="row">
                     <div class="col-md-4">
                         <h4 class="cdarkgrey s20" lang="en">Detail Payment</h4>

@@ -704,31 +704,11 @@ function init_ready() {
     if ($("#page_payment_management_admin").length != 0) {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
-        get_payment_module();
+        get_payment_module_ku();
 
         $("#reset_tbl_payment_all").click(function () {
             tabel_payment_all_admin();
         });
-
-        function pilih_pay_bank(ini) {
-            $(".hidendulu").removeClass('dipilih');
-            $('.btn-blueline').removeClass('active');
-            $("#" + ini.id).addClass('active');
-            $("." + ini.id).addClass('dipilih');
-            $("." + ini.id).removeClass('active');
-        }
-
-        function pilihpay(idpay) {
-            $("#id_pay_method_module").val(idpay);
-            $(".border-oren").removeClass("active");
-            $("#cardpay" + idpay).addClass("active");
-            $("#btn_pay_next").removeAttr("disabled");
-
-            if ($("#payment_time_module").val() != "") {
-
-                $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
-            }
-        }
     }
 
     if ($("#page_notif_management_admin").length != 0) {
@@ -1358,7 +1338,7 @@ function tabel_cek_news() {
         },
         success: function (result) {
             console.log(result);
-            if (result.status === 401 || result.message === "Unauthorized") {
+            if (result.status == 401 || result.message == "Unauthorized") {
                 ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                 setTimeout(function () {
                     location.href = '/subscriber/url/' + $(".community_name").val();
@@ -1834,7 +1814,7 @@ function tabel_cek() {
         success: function (result) {
             console.log(result);
             if (result.success == false) {
-                if (result.status === 401 || result.message === "Unauthorized") {
+                if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
                         location.href = '/admin';
@@ -3214,7 +3194,7 @@ function get_module_active() {
         },
         success: function (result) {
             // console.log(result);
-            if (result.success === false) {
+            if (result.success == false) {
                 $("#nodata_module_active").show();
                 $("#show_module_active").hide();
             } else {
@@ -3352,7 +3332,7 @@ function get_module_all() {
         },
         success: function (result) {
             // console.log(result);
-            if (result.success === false) {
+            if (result.success == false) {
                 $("#nodata_module_all").show();
                 $("#show_module_all").hide();
             } else {
@@ -4980,8 +4960,8 @@ function detail_payment_all_admin(dtpay) {
             "_token": token
         },
         success: function (result) {
-            console.log(split);
-            console.log(result);
+            // console.log(split);
+            // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -4993,7 +4973,7 @@ function detail_payment_all_admin(dtpay) {
                 }
             } else {
                 var res = result[0];
-                if (res.status === false) {
+                if (res.status == false) {
                     $("#hide_btn_aktivasi").show();
                 } else {
                     $("#hide_btn_aktivasi").hide();
@@ -5111,7 +5091,7 @@ function detail_subpayment(subdata) {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             var isi = result[0];
             $("#aktif_id_subpayment").val(isi.id);
 
@@ -5195,7 +5175,7 @@ function get_setting_subpayment_admin(idnya) {
                         location.href = '/admin';
                     }, 5000);
                 } else {
-                    if (result.message === "Data Tidak ditemukan" || result.code === "PLQ97") {
+                    if (result.message == "Data Tidak ditemukan" || result.code == "PLQ97") {
                         $("#nosetting_pay").show();
                         $(".isi_setting_subpay").hide();
                         $("#btn_submit_setpay").hide();
@@ -5260,7 +5240,7 @@ function get_setting_subpayment_admin(idnya) {
     });
 }
 
-function get_payment_module() {
+function get_payment_module_ku() {
     // $("#btn_submit_paymethod").attr("disabled", "disabled");
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -5284,7 +5264,7 @@ function get_payment_module() {
 
             $.each(result, function (i, item) {
                 text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
-                    'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+                    'onclick="pilih_pay_bank_ku(this)">' + item.payment_title + '</button >';
                 var deskrip = '';
                 $.each(item.payment_methods, function (i, itm) {
                     $.each(itm.description, function (x, isides) {
@@ -5295,7 +5275,7 @@ function get_payment_module() {
                         '<div class="card-header" role="tab" sytle="background-color:#fff;">' +
                         '<h6 class="mb-0 pdb1">' +
                         '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
-                        'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
+                        'id="idpayq' + itm.id + '" onclick="pilihpay_ku(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
                         '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
@@ -5317,6 +5297,25 @@ function get_payment_module() {
             console.log("Cant Show");
         }
     });
+}
+function pilih_pay_bank_ku(ini) {
+    $(".hidendulu").removeClass('dipilih');
+    $('.btn-blueline').removeClass('active');
+    $("#" + ini.id).addClass('active');
+    $("." + ini.id).addClass('dipilih');
+    $("." + ini.id).removeClass('active');
+}
+
+function pilihpay_ku(idpay) {
+    $("#id_pay_method_module").val(idpay);
+    $(".border-oren").removeClass("active");
+    $("#cardpay" + idpay).addClass("active");
+    $("#btn_pay_next").removeAttr("disabled");
+
+    if ($("#payment_time_module").val() != "") {
+
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
 }
 // ---------------------- END PAYMENT MANAGEMENT ---------------------------
 
@@ -5408,7 +5407,7 @@ function get_list_setting_notif_admin() {
 function cek_param_list_user() {
     var comm = $("#komunitas_notif").val();
     var usertipe = $("#usertipe_notif").val();
-    if (comm === null && usertipe === null) {
+    if (comm == null && usertipe == null) {
         $("#status_notif").attr("disabled", "disabled");
         swal("Cant Null", "User Type and Community cant be null", "warning");
     } else {
