@@ -22,7 +22,9 @@
 
 <div class="card-body">
 <div class="profile-middle">
-<img src="{{' + server_cdn + $image '}}" class="img-mid">
+<img src="{{ env('CDN') }}/{{$picture}}" class="img-profile-friends zoom"
+ onerror="this.onerror=null;this.src='/img/noimg.jpg';">
+
 <div><b>{{ $full_name }}</b></div>
 </div>
 
@@ -42,7 +44,7 @@
         <a class="nav-link" href="#" onclick=send_message("{{ $user_id }}")>
             <i class="mdi mdi-newspaper menu-icon"></i>
             <span class="menu-title" lang="en">Send Message</span>
-            
+
         </a>
     </li>
 
@@ -50,11 +52,11 @@
         <a class="nav-link" href="#"  onclick=send_whatsapp("{{ $user_id }}")>
             <i class="mdi mdi-account-multiple menu-icon"></i>
             <span class="menu-title" lang="en">Chat Whatsapp</span>
-            
+
         </a>
     </li>
 
-    </ul> 
+    </ul>
 </div>
 
 </div>

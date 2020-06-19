@@ -373,6 +373,24 @@ class SubscriberController extends Controller
         }
     } //enfunc
 
+    public function logout_subs_href()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $crsf = "";
+        $url = env('SERVICE') . 'profilemanagement/logout';
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $crsf);
+
+        if ($json['success'] == true) {
+            session()->forget('session_subscriber_logged');
+            $auth_subs = session()->get('auth_subs');
+            $url_subs = '/subscriber/url/'.$auth_subs[0]['name'];
+            return redirect($url_subs);
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+        }
+    }
+
 
     public function edit_profile_subs(Request $request)
     {
@@ -415,7 +433,7 @@ class SubscriberController extends Controller
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -425,6 +443,7 @@ class SubscriberController extends Controller
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
@@ -474,7 +493,7 @@ class SubscriberController extends Controller
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['sso_picture'],
+                        "picture" => $resImg['data']['image'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -484,6 +503,7 @@ class SubscriberController extends Controller
                         "community_description" => $ses_user['community_description'],
                         "community_logo" => $ses_user['community_logo'],
                         "user_id" => $ses_user['user_id'],
+                        "supportpal_id" =>  $ses_user['supportpal_id'],
                         "level" => $ses_user['level'],
                         "status" => $ses_user['status'],
                         "community_created" => $ses_user['community_created'],
@@ -668,6 +688,28 @@ class SubscriberController extends Controller
             "invoice_number" => $input['invoice_number'],
             "community_id" => $input['community_id'],
             "payment_level" => $input['payment_level']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function get_inbox_navbar_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'inboxmanagement/listmessage';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'status' => "1",
+            "notification_status" => "Receive",
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
@@ -1404,6 +1446,7 @@ class SubscriberController extends Controller
     {
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/friend/friendsugest';
+
 
         $input = $request->all();
         $csrf = $input['_token'];

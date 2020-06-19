@@ -9,8 +9,8 @@ WORKDIR /var/www/html/project
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY . /var/www/html/project
-# RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs && \ 
-#    composer dump-autoload --optimize
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs && \
+    composer dump-autoload --optimize
 
 FROM gitlab.vascomm.co.id:4567/frontend-docker-image/php-7:latest
 

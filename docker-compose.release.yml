@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  php:
+  web_platform:
     build:
       context: .
       dockerfile: Dockerfile.release
@@ -18,13 +18,11 @@ services:
     tty: true
     restart: always
     networks:
-      community :
-        aliases:
-          - commjunction_web
+      - vascomm-app
 
 networks:
-  community:
-    name: community
+  vascomm-app:
+    name: vascomm-app
     driver: bridge
 
 

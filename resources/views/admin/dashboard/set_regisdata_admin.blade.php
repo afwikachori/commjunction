@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-8" style="margin-top: 0.5em;">
-        <small class="clight1 s14" lang="en">Registrasion Data</small>
+        <small class="clight1 s14" lang="en">Set up your Community Login Page & Registration Customization</small>
     </div>
     <div class="col-md-4" style="text-align: right;">
         <button class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_add_question" data-dismiss="modal"

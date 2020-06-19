@@ -54,7 +54,7 @@
 
 
 <body>
-    @if (Session::has('session_admin_logged'))
+@if (Session::has('session_admin_logged'))
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -81,7 +81,7 @@
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                             <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en" data-lang-token="Documentation">
                                 Documentation &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en" data-lang-token="Support">
+                            <a class="cdarkgrey" href="/admin/supportpal/" style="padding-left: 2em;" lang="en" data-lang-token="Support">
                                 Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>

@@ -31,7 +31,7 @@
     <!-- export datatble -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
-     <link rel="stylesheet" href="{{asset('stylesheets/main.css')}}" />
+    <link rel="stylesheet" href="{{asset('stylesheets/main.css')}}" />
 
     @yield('css')
 </head>
@@ -62,15 +62,16 @@
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en">Terms & Conditions</a>
+                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en">Terms &
+                                Conditions</a>
                             <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en">Privacy Policy</a>
-                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en" data-toggle="modal"
-                                data-target="#modal_confirmpay_membership">Payment Confirmation</a>
+                            <a class="clr-accent-color" href="" style="padding-right: 2em;" lang="en"
+                                data-toggle="modal" data-target="#modal_confirmpay_membership">Payment Confirmation</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Documentation &nbsp;<i
-                                    class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Support &nbsp;<i
+                            <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Documentation
+                                &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
+                            <a class="clr-accent-color" href="/subscriber/supportpal/" style="padding-left: 2em;" lang="en">Support &nbsp;<i
                                     class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>
@@ -164,104 +165,117 @@
                 </div>
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                       <div class="profile tabbable-line">
-                    <ul class="nav nav-tabs profile">
-                        <li class="tab-subs active" id="tab_all">
-                            <a href="#tab_default_1" data-toggle="tab">
-                                <span lang="en">Personal</span>
-                            </a>
-                        </li>
-                        <li class="tab-subs" id="tab_pending">
-                            <a href="#tab_default_2" data-toggle="tab">
-                                <span lang="en">Spesific</span>
-                            </a>
-                        </li>
+                    <div class="profile tabbable-line">
+                        <ul class="nav nav-tabs profile">
+                            <li class="tab-subs active" id="tab_all">
+                                <a href="#tab_default_1" data-toggle="tab">
+                                    <span lang="en">Personal</span>
+                                </a>
+                            </li>
+                            <li class="tab-subs" id="tab_pending">
+                                <a href="#tab_default_2" data-toggle="tab">
+                                    <span lang="en">Spesific</span>
+                                </a>
+                            </li>
 
-                    </ul>
-                    <div class="tab-content" style="margin-bottom: 0em;">
-                        <div class="tab-pane active" id="tab_default_1">
-                            <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <div class="img-upload-profil editprofil">
-                                    <div class="circle editprofil">
-                                        <img id="view_edit_user" class="profile-pic rounded-circle img-fluid editprofil" src="/img/loading.gif"
-                                            onerror="this.onerror=null;this.src='/img/default.png';">
+                        </ul>
+                        <div class="tab-content" style="margin-bottom: 0em;">
+                            <div class="tab-pane active" id="tab_default_1">
+                                <form method="POST" id="form_edit_profile_subs" action="{{route('edit_profile_subs')}}"
+                                    enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="img-upload-profil editprofil">
+                                        <div class="circle editprofil">
+                                            <img id="view_edit_user"
+                                                class="profile-pic rounded-circle img-fluid editprofil"
+                                                src="/img/loading.gif"
+                                                onerror="this.onerror=null;this.src='/img/default.png';">
+                                        </div>
+                                        <div class="p-image editprofil">
+                                            <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
+                                                value="editprofil" style="width: 30px; height: 30px;">
+                                                <i id="browse_user_admin"
+                                                    class="mdi mdi-camera upload-button editprofil"></i>
+                                            </button>
+                                            <input id="file_edit_profil_user"
+                                                class="file-upload file-upload-default editprofil" type="file"
+                                                name="fileup" accept="image/*" />
+                                        </div>
                                     </div>
-                                    <div class="p-image editprofil">
-                                        <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon" value="editprofil"
-                                            style="width: 30px; height: 30px;">
-                                            <i id="browse_user_admin" class="mdi mdi-camera upload-button editprofil"></i>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                <small class="clight" lang="en">Fullname</small>
+                                                <input type="text" id="name_subs" name="name_subs"
+                                                    class="form-control input-abu">
+                                            </div>
+                                            <div class="form-group">
+                                                <small class="clight" lang="en">Username</small>
+                                                <input type="text" id="username_subs" name="username_subs"
+                                                    class="form-control input-abu">
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                <small class="clight" lang="en">Phone Number</small>
+                                                <input type="text" id="phone_subs" name="phone_subs"
+                                                    class="form-control input-abu">
+                                            </div>
+                                            <div class="form-group">
+                                                <small class="clight" lang="en">Email</small>
+                                                <input type="text" id="email_subs" name="email_subs"
+                                                    class="form-control input-abu">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <small class="clight" lang="en">Address</small>
+                                            <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs"
+                                                rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-footer" style="border: none;">
+                                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                            style="border-radius: 10px;">
+                                            <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
                                         </button>
-                                        <input id="file_edit_profil_user" class="file-upload file-upload-default editprofil" type="file"
-                                            name="fileup" accept="image/*" />
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row">
-                                    <div class="col-md">
-                                        <div class="form-group">
-                                            <small class="clight" lang="en">Fullname</small>
-                                            <input type="text" id="name_subs" name="name_subs" class="form-control input-abu">
-                                        </div>
-                                        <div class="form-group">
-                                            <small class="clight" lang="en">Username</small>
-                                            <input type="text" id="username_subs" name="username_subs" class="form-control input-abu">
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="form-group">
-                                            <small class="clight" lang="en">Phone Number</small>
-                                            <input type="text" id="phone_subs" name="phone_subs" class="form-control input-abu">
-                                        </div>
-                                        <div class="form-group">
-                                            <small class="clight" lang="en">Email</small>
-                                            <input type="text" id="email_subs" name="email_subs" class="form-control input-abu">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <small class="clight" lang="en">Address</small>
-                                        <textarea class="form-control input-abu" id="alamat_subs" name="alamat_subs" rows="3"></textarea>
-                                    </div>
-                                </div>
-
-
-                                <div class="modal-footer" style="border: none;">
-                                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                                    </button>
-                                    &nbsp;
-                                    <button type="submit" class="btn btn-tosca btn-sm">
-                                        <i class="mdi mdi-check btn-icon-prepend">
-                                        </i><span lang="en">Edit</span> </button>
-                                </div> <!-- end-footer     -->
-                            </form>
-                        </div>
-
-                        <div class="tab-pane" id="tab_default_2">
-                            <form method="POST" id="form_edit_custom_profile" action="{{route('edit_profile_custom_regis')}}">
-                                {{ csrf_field() }}
-                            <div class="row" id="custom_input_regis">
-
+                                        &nbsp;
+                                        <button type="submit" class="btn btn-tosca btn-sm">
+                                            <i class="mdi mdi-check btn-icon-prepend">
+                                            </i><span lang="en">Edit</span> </button>
+                                    </div> <!-- end-footer     -->
+                                </form>
                             </div>
-                            <div class="modal-footer customprofil">
-                                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                                </button>
-                                &nbsp;
-                                <button type="submit" class="btn btn-tosca btn-sm">
-                                    <i class="mdi mdi-check btn-icon-prepend">
-                                    </i><span lang="en">Edit</span> </button>
-                            </div> <!-- end-footer     -->
-                            </form>
+
+                            <div class="tab-pane" id="tab_default_2">
+                                <form method="POST" id="form_edit_custom_profile"
+                                    action="{{route('edit_profile_custom_regis')}}">
+                                    {{ csrf_field() }}
+                                    <div class="row div-custum-regis" id="custom_input_regis">
+
+                                    </div>
+                                    <div class="modal-footer customprofil">
+                                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                                            style="border-radius: 10px;">
+                                            <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
+                                        </button>
+                                        &nbsp;
+                                        <button type="submit" class="btn btn-tosca btn-sm">
+                                            <i class="mdi mdi-check btn-icon-prepend">
+                                            </i><span lang="en">Edit</span> </button>
+                                    </div> <!-- end-footer     -->
+                                </form>
+                            </div>
+
+
                         </div>
-
-
                     </div>
-                </div>
                 </div>
 
 
@@ -492,6 +506,106 @@
 
 
 
+    <!-- MODAL PROFILE FRIENDS -->
+    <div class="modal fade" id="modal_detail_profil_friend" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #ffffff;">
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey" lang="en">Profile</h4>
+                </div>
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <div class="bunder-ring-mid">
+                        <img class="rounded-circle fototeman" id="foto_teman" src="/img/kosong.png">
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Fullname</small>
+                                <p class="cgrey1 tebal" id="teman_nama"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight" lang="en">Phone Number</small>
+                                <p class="cgrey1 tebal" id="teman_hp"></p>
+                            </div>
+                            <br><br>
+                            <a class="clr-accent-color" id="profil_send_msg">
+                                <i class="mdi mdi-newspaper menu-icon"></i>
+                                <span class="menu-title" lang="en">Send Message</span>
+                            </a>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Email</small>
+                                <p class="cgrey1 tebal" id="teman_email"></p>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight" lang="en">Username</small>
+                                <p class="cgrey1 tebal" id="teman_username"></p>
+                            </div>
+                            <br><br>
+                            <a class="clr-accent-color" id="profil_chat_wa">
+                                <i class="mdi mdi-account-multiple menu-icon"></i>
+                                <span class="menu-title" lang="en">Chat Whatsapp</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i><span lang="en">Close</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- MODAL SEND MESSAGE-->
+<div class="modal fade" id="modal_send_message_subs" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <form id="form_send_message_friend" method="POST" id="form_confirm_new_friend"
+                action="{{route('friend_send_message')}}">
+                {{ csrf_field() }}
+
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey">Send Message</h4>
+                </div>
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight">Subject</small>
+                                <input type="text" id="subject" name="subject"
+                                    class="form-control input-abu melengkung10px" required>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight">Message</small>
+                                <textarea class="form-control input-abu" label="Konten" req="" id="news_add_content2"
+                                    name="message"></textarea>
+                            </div>
+                            <input type="hidden" id="friend_id" name="friend_id" class="form-control input-abu">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-accent btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Send Message</button>
+                </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
 
 
     @else

@@ -26,7 +26,6 @@ html, body {
 
 body::-webkit-scrollbar-track
 {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
   background: #F5F5F5;
 }
 
@@ -724,7 +723,9 @@ padding-right: 3%;
     text-align: left;
 }
 
-
+.kananin{
+    text-align: right !important;
+}
 
 /*.logo_komunitas{
   width: 30px !important;
@@ -1397,6 +1398,16 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 .mgb-1 {
     margin-bottom: 1.5em;
+}
+
+.del-row{
+    padding: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.delrow-tiket{
+width: 25px !important; height: 25px !important;
 }
 
 .dashone {
@@ -2242,9 +2253,7 @@ float:right;
     width: 1px;
     height:3px;
 }
-#headline_cont::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
+
 
 
 
@@ -2293,4 +2302,17 @@ input[type=color] {
 
 .badge-abu{
     background-color: #aaa8a8 !important;
+}
+
+
+.news-middle .btn-loveme{
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+
+.news-middle .btn-loveme:hover{
+    top: 45px;
+    color: red;
+    box-shadow: white;
 }

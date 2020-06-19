@@ -34,9 +34,9 @@
 
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link homeq active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Community Information</a>
+    <a class="nav-item nav-link homeq registerui active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Community Information</a>
 
-    <a class="nav-item nav-link profileq disabled" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" aria-disabled="disabled">Personal Information</a>
+    <a class="nav-item nav-link profileq registerui disabled" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" aria-disabled="disabled">Personal Information</a>
   </div>
 </nav>
 

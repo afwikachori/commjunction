@@ -118,33 +118,6 @@
     });
 
 
-    function tabel_tes() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/support/tabel_knowledge_support',
-            type: 'POST',
-            dataSrc: '',
-            timeout: 30000,
-            data: {
-                "community_id": $("#list_komunitas").val(),
-                "activity_type": $("#activity_type").val(),
-                "subscriber_id": $("#list_subscriber").val(),
-            },
-            success: function (result) {
-                console.log('tabel log ');
-                console.log(result);
-            },
-            error: function (result) {
-                console.log(result);
-                console.log("Cant Show tabel log");
-            }
-        });
-    }
-
 
     function get_list_komunitas_support(id_status) {
         $('#tabel_komunitas_support').DataTable().clear().destroy();
@@ -255,7 +228,7 @@
                 {
                     mData: 'status_title',
                     render: function (data, type, row, meta) {
-                        return '<span class="s13">' + data + '</span>';
+                        return '<span class="s13 text-wrap width-100">' + data + '</span>';
                     }
                 },
                 {

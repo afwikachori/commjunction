@@ -103,7 +103,7 @@ function session_subscriber_logged() {
 
 
             get_list_notif_navbar(user.community_id);
-            get_inbox_navbar();
+            get_inbox_navbar_subs();
 
             if (user.picture != undefined || user.picture != null) {
 
@@ -159,6 +159,9 @@ function session_subscriber_logged() {
 
 
             get_profile_custom_regis(result.custom_input);
+            console.log("resgis custom input");
+            console.log(result.custom_input);
+
 
         },
         error: function (result) {
@@ -529,17 +532,21 @@ function detail_membership_subs(index) {
 
 
 // navbar inbox
-function get_inbox_navbar() {
+function get_inbox_navbar_subs() {
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     $.ajax({
-        url: '/subscriber/tabel_generate_inbox_subs',
+        url: '/subscriber/get_inbox_navbar_subs',
         type: 'POST',
         dataSrc: '',
         timeout: 30000,
+        data:{
+            "_token" : token,
+        },
         success: function (result) {
             // console.log(result);
             if (result.success == false) {
@@ -568,10 +575,15 @@ function get_inbox_navbar() {
                     var isiku = '';
                     var total = 0;
                     $.each(result, function (i, item) {
+                        if (item.sender_picture != 0){
+                            var fotopic = server_cdn + cekimage_cdn(item.sender_picture);
+                        }else{
+                            var fotopic = '/img/avatar/'+avatar[num]+'.png';
+                        }
                         total++;
                         isiku += '<a class="dropdown-item preview-item">' +
                             '<div class="preview-thumbnail">' +
-                            '<img src="/img/avatar/' + avatar[num] + '.png" alt="image" class="profile-pic">' +
+                            '<img src="' + fotopic + '" alt="image" class="profile-pic">' +
                             '</div>' +
                             '<div class="preview-item-content d-flex align-items-start flex-column justify-content-center">' +
                             '<span class="s14 tebal">' + item.message_type_title + ' &nbsp; &nbsp;</small>' +
@@ -1168,11 +1180,13 @@ function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
 
-        // get_payment_initial();
+        get_payment_initial();
 
         get_dashboard_news();
         get_friends_total();
         get_friends_sugestion();
+        get_top_friends();
+
         get_last_news();
         get_love_news();
         get_topvisit_news();
@@ -1188,7 +1202,14 @@ function init_ready() {
     if ($("#page_friends_subs").length != 0) {
         suggestion_list();
         tabel_friend_list();
-        tabel_tes_friends();
+
+        tabel_friend_pending_list();
+        get_friends_total_tabel();
+        get_list_setting_module_friends();
+
+        $("#btn_find_filter_friend").click(function () {
+            find_search_filter_friends();
+        });
     }
 
 
@@ -1260,9 +1281,16 @@ function table_news_list() {
                             '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
                             '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
                             '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
-                            '<br><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
+                            '<br>'+
+                            '<div class="row"><div class="col-md-6"><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
                             'See Detail' +
-                            '</a></div>' +
+                            '</a></div>'+
+                            '<div class="col-md-6 kananin pad-right">'+
+                            '<button type="button" class="btn btn-gradient-danger btn-rounded btn-icon btn-loveme"'+
+                            'onclick="send_love_news(\'' + item.id +  '\')">'+
+                            '<i class="mdi mdi-heart"></i>'+
+                            '</button></div></div>'+
+                            '</div>' +
                             '</div>' +
                             '</div>';
                     });
@@ -1284,6 +1312,37 @@ function table_news_list() {
     });
 }
 
+function send_love_news(idnews) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    alert(idnews);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/send_love_news_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "news_id" : idnews
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result != undefined && result.success != false) {
+                ui.popup.show('success', 'News already loved', 'Success');
+            }else{
+                ui.popup.show('warning', result.message, 'Warning');
+
+            }
+        },
+        error: function (result) {
+            ui.popup.show('error', 'Cant Love this news', 'Failed');
+        }
+    });
+}
+
 function showPassword() {
     var a = document.getElementById("confirmpass_user");
     if (a.type == "password") {
@@ -1294,16 +1353,13 @@ function showPassword() {
 }
 
 function send_message(friend_id) {
-    $friend_id = friend_id;
-    $("#modal_send_message").modal("show");
-    $("#friend_id").val($friend_id);
+    $("#modal_send_message_subs").modal("show");
+    $("#friend_id").val(friend_id);
 };
 
-function send_whatsapp(friend_id) {
-    $friend_id = friend_id;
-    $phonum = +628123229810;
-    $pretext = "Halo, Salam kenal";
-    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+function send_whatsapp(nohp) {
+    var pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + nohp + '&text=' + pretext + '');
 
 }
 /// -------- END NEW MANAGEMENT -----------
@@ -1311,21 +1367,217 @@ function send_whatsapp(friend_id) {
 
 
 ///---------- FRIEND MANAGEMENT SUBS ---------
-function tabel_tes_friends() {
+function get_friends_total_tabel() {
+    var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     $.ajax({
-        url: '/subscriber/tabel_friend_management',
+        url: '/subscriber/get_friends_total',
         type: 'POST',
         datatype: 'JSON',
+        data: {
+            "_token": token
+        },
         success: function (result) {
             console.log(result);
+            if (result != undefined && result.success != false) {
+                $("#text_total_friends").html(result.total_friend + '&nbsp;<small class="clr-accent-color" lang="en">Friends<small>');
+            }
         },
         error: function (result) {
-            console.log("Cant Show");
+            console.log("Cant Total Friends");
+        }
+    });
+}
+
+function get_list_setting_module_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_setting_module_friends',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status === 401 || result.message === "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + $(".community_name").val();
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+                    // console.log(item);
+                    if (item.input_type == 1) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                    } else if (item.input_type == 2) {
+                        if (item.value == 1) {
+                            var one = 'checked';
+                            var two = '';
+                        } else if (item.value == 2) {
+                            var one = '';
+                            var two = 'checked';
+                        } else {
+                            var one = '';
+                            var two = '';
+                        }
+                        inputipe = '<div class="form-group">' +
+                            '<div class="form-check" >' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + one + '>' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
+
+                    uiku += '<div class="row">' +
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-6">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
+                        '</div>' +
+                        '</div>';
+                });
+                $(".isi_seting_module_friend").html(uiku);
+            }
+        },
+        error: function (result) {
+            console.log("Cant Show Setting Friends");
+            console.log(result);
+        }
+    });
+}
+
+function find_search_filter_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/find_search_filter_friends',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "name": $("#name_friend").val()
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $(".divkonco.pagefriend").hide();
+                $("#find_friend_modal").modal('hide');
+                swal("Failed", result.message, "error");
+            } else {
+                $("#suggestion_list").html("");
+                var suggestionlist = '';
+                var jumlah = 0;
+                var nofoto = '/img/kosong.png';
+
+                $.each(result, function (i, item) {
+                    jumlah++;
+                    $news_id = parseInt(item.id);
+                    var $headpic = server_cdn + cekimage_cdn(item.image);
+
+                    suggestionlist += '<div class="card konco" id="' + item.user_id + '">' +
+                        '<div class="card-body color">' +
+                        '<div class="close_konco">' +
+                        '<button type="button" class="close cgrey2" aria-label="Close"' +
+                        'onclick="hide_friendsugest(\'' + item.user_id + "<>" + jumlah + '\')">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>' +
+                        '<center>' +
+                        '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                        '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-accent btn-sm konco">' +
+                        '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
+                        '</button>' +
+                        '<center>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                });
+
+                $("#suggestion_list").html(suggestionlist);
+                $("#find_friend_modal").modal('hide');
+            }
+        },
+        error: function (result) {
+            $(".divkonco.pagefriend").hide();
+            console.log("Cant Find Friends");
+        }
+    });
+}
+
+
+function get_friend_profile(id_subs) {
+    // swal(id_subs);
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_friend_profile',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token,
+            "user_id": id_subs
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                ui.popup.show('warning', result.message, 'Warning');
+            } else {
+                $('#profil_chat_wa').attr('onclick', 'send_whatsapp_teman(\'' + result.notelp + '\')');
+                $('#profil_send_msg').attr('onclick', 'send_message_teman(\'' + result.user_id + '\')');
+
+                if (result.picture != undefined && result.picture != 0) {
+                    $("#foto_teman").attr("src", server_cdn + cekimage_cdn(result.picture));
+                }
+                $("#teman_nama").html(result.full_name);
+                $("#teman_hp").html(result.notelp);
+                $("#teman_email").html(result.email);
+                $("#teman_username").html(result.user_name);
+
+                $("#modal_detail_profil_friend").modal('show');
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            ui.popup.show('warning', 'Cant Show Profile', 'Warning');
         }
     });
 }
@@ -1355,21 +1607,24 @@ function tabel_friend_list() {
         },
         columns: [
             {
-                mData: 'image',
+                mData: 'picture',
                 render: function (data, type, row, meta) {
-                    // console.log(data);
-                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                    var noimg = '/img/kosong.png'
+                    var pic = server_cdn + cekimage_cdn(data);
+                    return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgteman' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
                 }
             },
             { mData: 'full_name' },
             {
                 mData: 'friend_id',
                 render: function (data, type, row, meta) {
+                    var nohp = row.notelp;
                     return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                         '<i class="mdi mdi-eye matadetail"></i></a>' +
-                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
                         '<i class="mdi mdi-email matadetail"></i></i></a>' +
-                        '<a href="#" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + nohp + '")>' +
                         '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
                 }
             }
@@ -1377,6 +1632,64 @@ function tabel_friend_list() {
 
     });
 }
+
+
+function tabel_friend_pending_list() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_friend_pending').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_friend_pending_list',
+            type: 'POST',
+            dataSrc: '',
+            data: {
+                "_token": token
+            },
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                $('#tabel_friend_pending tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            {
+                mData: 'picture',
+                render: function (data, type, row, meta) {
+                    // console.log(data);
+                    var noimg = '/img/kosong.png'
+                    var pic = server_cdn + cekimage_cdn(data);
+                    // return '<img src=' + server_cdn + cekimage_cdn(data) + ' class="news-list-box">';
+                    return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
+                }
+            },
+            { mData: 'full_name' },
+            {
+                mData: 'friend_id',
+                render: function (data, type, row, meta) {
+                    return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye matadetail"></i></a> &nbsp;&nbsp;' +
+                        '<a href="#" type="button" class="btn bg-hijau btn-rounded btn-icon detilhref" onclick=approv_new_friend("' + data + '")>' +
+                        '<i class="mdi mdi-check-circle matadetail"></i></i></a>';
+                }
+            }
+        ],
+
+    });
+}
+
+function approv_new_friend(id_friend) {
+    // swal(id_friend);
+    $("#id_new_friend").val(id_friend);
+    $("#modal_confirm_new_friend").modal('show');
+}
+
 
 function suggestion_list() {
     var token = $('meta[name="csrf-token"]').attr('content');
@@ -1419,9 +1732,9 @@ function suggestion_list() {
                         '</div>' +
                         '<center>' +
                         '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                        '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
-                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
+                        'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                        '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                        '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-accent btn-sm konco">' +
                         '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                         '</button>' +
                         '<center>' +
@@ -1434,13 +1747,14 @@ function suggestion_list() {
             }
         },
         error: function (result) {
+            $(".divkonco.pagefriend").hide();
             console.log("Cant Show");
         }
     });
 }
 
 function add_friend_suggest_subs(idsubs) {
-    // alert(idsubs);
+    // swal(idsubs);
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
         headers: {
@@ -1487,33 +1801,17 @@ function showPassword() {
     }
 }
 
-function send_message(friend_id) {
-    $friend_id = friend_id;
+function send_message_teman(friend_id) {
+    // swal(friend_id);
     $("#modal_send_message_subs").modal("show");
-    $("#friend_id").val($friend_id);
-    // var editor = new nicEditor({iconsPath : '/img//nicEditorIcons.gif'}).panelInstance('news_edit_content');
-    //  $('.nicEdit-panelContain').parent().width('100%');
-    // $('.nicEdit-main').parent().width('98%');
-    // $('.nicEdit-main').width('98%');
-    // $('.nicEdit-main').height('200px');
+    $("#friend_id").val(friend_id);
+}
 
-    // var content  = nicEditors.findEditor('news_edit_content');
-    //       content.setContent(res.content);
-    //       $('textarea[name=news_edit_content]').val(res.content);
-
-    //$("#news_picture").attr("src", server_cdn+res.image);
-    // $("#news_picture").attr("src", server_cdn+res.image);
-    //   $("#edit_title").val(res.title);
-    //   $("#id_news").val(res.id);
-    //   $("#toggle-status").val(res.id);
-    //   $("#toggle-headline").val(res.id);
-};
-
-function send_whatsapp(friend_id) {
-    $friend_id = friend_id;
-    $phonum = +628123229810;
-    $pretext = "Halo, Salam kenal";
-    window.open('https://api.whatsapp.com/send?phone=' + $phonum + '&text=' + $pretext + '');
+function send_whatsapp_teman(phone) {
+    // var friend_id = friend_id;
+    //  var phone = +628123229810;
+    var pretext = "Halo, Salam kenal";
+    window.open('https://api.whatsapp.com/send?phone=' + phone + '&text=' + pretext + '');
 
 }
 ///---------- FRIEND MANAGEMENT SUBS ---------
@@ -1522,7 +1820,6 @@ function send_whatsapp(friend_id) {
 // --------------- PROFIL MANAGEMENT SUBS --------------
 function get_profile_custom_regis(params) {
     var uihtml = '';
-
     $.each(params, function (no, des) {
         // console.log(des);
         var item = des.param_form_array;
@@ -2079,7 +2376,8 @@ function get_dashboard_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            console.log('data headline news');
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_dash_artikel").show();
                 $("#idashbord_news").hide();
@@ -2142,24 +2440,74 @@ function get_friends_total() {
         dataSrc: '',
         timeout: 30000,
         data: {
-            "limit": 4,
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $(".total_friend").html("0");
                 console.log(result);
             } else {
-                if (result.total_friend != undefined) {
-                    $(".total_friend").html(result.total_friend);
-                }
+                $(".total_friend").html(result.total_friend);
             }
         },
         error: function (result) {
             $(".total_friend").html("0");
             // console.log(result);
-            console.log("Cant Show");
+            console.log("Cant Show total Friends");
+        }
+    });
+}
+
+function get_top_friends() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_top_friends',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#topfriend_nodata").show();
+                $("#isi_top_friends").hide();
+            } else {
+                if (result != undefined) {
+                    var uishow = '';
+                    var nopic = '/img/kosong.png';
+
+                    $.each(result, function (i, item) {
+                        if (item.picture != 0) {
+                            var imgprofil = server_cdn + cekimage_cdn(item.picture);
+                        } else {
+                            var imgprofil = '/img/kosong.png';
+                        }
+
+                        uishow += '<div class="col-md-3 mgb-05">' +
+                            '<img src="' + imgprofil + '" class="rounded-circle img-fluid wd-25px"' +
+                            'onerror="this.onerror=null;this.src=\'' + nopic + '\';"> &nbsp;&nbsp;' +
+                            '<a class="cgrey2 s14 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
+                            '</div>';
+                    });
+                    $("#topfriend_nodata").hide();
+                    $("#isi_top_friends").html(uishow);
+                } else {
+                    $("#topfriend_nodata").show();
+                    $("#isi_top_friends").hide();
+                }
+            }
+
+        },
+        error: function (result) {
+            console.log('Cant Show Top Friends');
         }
     });
 }
@@ -2177,11 +2525,10 @@ function get_friends_sugestion() {
         dataSrc: '',
         timeout: 30000,
         data: {
-            "limit": 10,
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $(".divkonco").hide();
             } else {
@@ -2192,7 +2539,7 @@ function get_friends_sugestion() {
                     $.each(result, function (i, item) {
                         jumlah++;
                         news_id = parseInt(item.id);
-                        var headpic = server_cdn + cekimage_cdn(item.image);
+                        // var headpic = server_cdn + cekimage_cdn(item.image);
 
                         isiui += '<div class="card konco" id="' + item.user_id + '">' +
                             '<div class="card-body color">' +
@@ -2204,8 +2551,8 @@ function get_friends_sugestion() {
                             '</div>' +
                             '<center>' +
                             '<img src="' + server_cdn + cekimage_cdn(item.picture) + '" class="rounded-circle img-fluid mb-2 konco"' +
-                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';">' +
-                            '<h6 class="cgrey2 s13">' + item.full_name + '</h6>' +
+                            'onerror = "this.onerror=null;this.src=\'' + nofoto + '\';"><br>' +
+                            '<a class="cgrey2 s13 clr-accent-color" onclick="get_friend_profile(\'' + item.user_id + '\')">' + item.full_name + '</a>' +
                             '<button type="button" onclick="add_friend_suggest_subs(\'' + item.user_id + '\')" class="btn btn-tosca btn-sm konco">' +
                             '<i class="mdi mdi-account-plus"></i> &nbsp; Add' +
                             '</button>' +
@@ -2253,7 +2600,7 @@ function get_last_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_last_news").show();
                 $("#isi_last_news").hide();
@@ -2299,7 +2646,7 @@ function get_love_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             var noimg = '/img/fitur.png';
             if (result.success == false) {
                 $("#nodata_love_news").show();
@@ -2356,7 +2703,7 @@ function get_topvisit_news() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             if (result.success == false) {
                 $("#nodata_topvisit_news").show();
                 $("#isi_topvisit_news").hide();
@@ -2404,7 +2751,7 @@ function get_top_player() {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             if (result.success == false) {
                 $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();

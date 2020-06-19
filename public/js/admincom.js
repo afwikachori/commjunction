@@ -1,4 +1,3 @@
-// onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 
 var server_cdn = '';
 // LANG -EN-ID
@@ -7,15 +6,6 @@ lang.dynamic('id', '/js/langpack/id.json');
 lang.init({
     defaultLang: 'en'
 });
-
-// (function () {
-//     window.ybug_settings = { "id": "ftwv8rsw7kbwf9t2bkvk" };
-//     var ybug = document.createElement('script'); ybug.type = 'text/javascript'; ybug.async = true;
-//     ybug.src = 'https://widget.ybug.io/button/' + window.ybug_settings.id + '.js';
-//     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ybug, s);
-// })();
-
-
 
 var ui = {
     popup: {
@@ -101,6 +91,7 @@ function session_admin_logged() {
                         location.href = '/admin';
                     }, 5000);
                 } else {
+                    console.log('session login admin');
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
@@ -543,6 +534,7 @@ $(document).on('click', '.tree label', function (e) {
     e.stopPropagation();
 });
 
+
 $(document).on('change', '.tree input[type=checkbox]', function (e) {
     $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
     $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
@@ -691,7 +683,7 @@ function init_ready() {
         cek_error_usertype();
     }
 
-    if ($("#page_transaction_management_admin").length != 0){
+    if ($("#page_transaction_management_admin").length != 0) {
         get_list_transaction_tipe();
         get_list_subscriber_admin();
 
@@ -704,42 +696,22 @@ function init_ready() {
         });
     }
 
-    if ($("#page_report_management_admin").length != 0 ){
+    if ($("#page_report_management_admin").length != 0) {
         get_list_transaction_type_admin();
         get_list_subscriber_report();
     }
 
-    if ($("#page_payment_management_admin").length != 0){
+    if ($("#page_payment_management_admin").length != 0) {
         tabel_payment_all_admin();
         tabel_payment_active_admin();
-        get_payment_module();
+        get_payment_module_ku();
 
         $("#reset_tbl_payment_all").click(function () {
             tabel_payment_all_admin();
         });
-
-        function pilih_pay_bank(ini) {
-            $(".hidendulu").removeClass('dipilih');
-            $('.btn-blueline').removeClass('active');
-            $("#" + ini.id).addClass('active');
-            $("." + ini.id).addClass('dipilih');
-            $("." + ini.id).removeClass('active');
-        }
-
-        function pilihpay(idpay) {
-            $("#id_pay_method_module").val(idpay);
-            $(".border-oren").removeClass("active");
-            $("#cardpay" + idpay).addClass("active");
-            $("#btn_pay_next").removeAttr("disabled");
-
-            if ($("#payment_time_module").val() != "") {
-
-                $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
-            }
-        }
     }
 
-    if ($("#page_notif_management_admin").length != 0 ){
+    if ($("#page_notif_management_admin").length != 0) {
         var err_notif = $(".err_notif").val();
         if (err_notif != "" && err_notif != undefined) {
             swal("Cant Null !", "Please Fill and Check All Fields", "error").then((value) => {
@@ -783,7 +755,7 @@ function init_ready() {
         });
     }
 
-    if($("#page_inbox_management_admin").length != 0 ){
+    if ($("#page_inbox_management_admin").length != 0) {
         $("#btn_generate_inbox_super").click(function () {
             tabel_inbox_message_admin();
         });
@@ -801,8 +773,20 @@ function init_ready() {
     }
 
 
-    if ($("#page_publish_commset_admin").length != 0){
+    if ($("#page_publish_commset_admin").length != 0) {
         cek_prepare_publish();
+    }
+
+    if ($("#page_detail_news_admin").length != 0) {
+        $("#modal_ajax").modal('hide');
+    }
+
+    if ($("#page_event_module_admin").length != 0) {
+        tabel_event_list_admin();
+        addRow_create_tiket();
+        get_list_event_admin(0);
+        get_list_event_admin("_filter");
+
     }
 
 }
@@ -1354,7 +1338,7 @@ function tabel_cek_news() {
         },
         success: function (result) {
             console.log(result);
-            if (result.status === 401 || result.message === "Unauthorized") {
+            if (result.status == 401 || result.message == "Unauthorized") {
                 ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                 setTimeout(function () {
                     location.href = '/subscriber/url/' + $(".community_name").val();
@@ -1830,7 +1814,7 @@ function tabel_cek() {
         success: function (result) {
             console.log(result);
             if (result.success == false) {
-                if (result.status === 401 || result.message === "Unauthorized") {
+                if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
                         location.href = '/admin';
@@ -1956,7 +1940,7 @@ function tabel_list_regisdata() {
         var len = isi.length;
         if (isi[2] != pilih.description) {
             var cek = isi.slice(2, len);
-        }else{
+        } else {
             var cek = isi.slice(3, len);
         }
 
@@ -3210,7 +3194,7 @@ function get_module_active() {
         },
         success: function (result) {
             // console.log(result);
-            if (result.success === false) {
+            if (result.success == false) {
                 $("#nodata_module_active").show();
                 $("#show_module_active").hide();
             } else {
@@ -3348,7 +3332,7 @@ function get_module_all() {
         },
         success: function (result) {
             // console.log(result);
-            if (result.success === false) {
+            if (result.success == false) {
                 $("#nodata_module_all").show();
                 $("#show_module_all").hide();
             } else {
@@ -3711,8 +3695,8 @@ function tabel_usertype_management_admin() {
             url: '/admin/tabel_usertype_admin',
             type: 'POST',
             dataSrc: '',
-            data : {
-                "_token" : token
+            data: {
+                "_token": token
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
@@ -3791,8 +3775,8 @@ function get_listfitur_usertype_ceklist() {
         url: '/admin/get_listfitur_usertype_ceklist',
         type: 'POST',
         datatype: 'JSON',
-        data :{
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             $(".btnsubmit").removeAttr("disabled", "disabled");
@@ -3954,8 +3938,8 @@ function get_list_transaction_tipe() {
         url: "/admin/get_list_transaction_tipe",
         type: "POST",
         dataType: "json",
-        data : {
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             $('#tipe_trans').empty();
@@ -4011,8 +3995,8 @@ function get_list_subscriber_admin() {
         url: "/admin/get_list_subcriber_name",
         type: "POST",
         dataType: "json",
-        data :{
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             console.log(result);
@@ -4098,11 +4082,11 @@ function show_tabel_transaksi() {
                 "tipe_trans": $("#tipe_trans").val(),
                 "status_trans": $("#status_trans").val(),
                 "subs_name": $("#subs_name").val(),
-                "_token" : token,
+                "_token": token,
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-              $('#tabel_trans tbody').empty().append(nofound);
+                $('#tabel_trans tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
@@ -4175,7 +4159,7 @@ $("#btn_filter_transaksi").click(function (e) {
                 "tipe_trans": $("#tipe_trans2").val(),
                 "status_trans": $("#status_trans2").val(),
                 "subs_name": $("#subs_name2").val(),
-                "_token" : token
+                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -4225,7 +4209,7 @@ function detail_transaksi_all(dt_trans) {
             "invoice_number": trans[0],
             "payment_level": trans[1],
             "community_id": trans[2],
-            "_token" : token,
+            "_token": token,
         },
         success: function (result) {
             if (result.success == false) {
@@ -4366,7 +4350,7 @@ $("#btn_showtable_report").click(function () {
                 "transaction_status": $("#status_transaksi2").val(),
                 "min_transaction": $("#min_trans2").val(),
                 "max_transaction": $("#max_trans2").val(),
-                "_token" : token
+                "_token": token
 
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
@@ -4472,7 +4456,7 @@ function tabel_report_concile_super(bulan, tahun) {
                 "community_id": $("#komuniti_trans2").val(),
                 "month": bulan,
                 "year": tahun,
-                "_token" : token
+                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -4563,7 +4547,7 @@ function tabel_report_transaksi_admin() {
                 "transaction_status": $("#status_transaksi").val(),
                 "min_transaction": $("#min_trans").val(),
                 "max_transaction": $("#max_trans").val(),
-                "_token" : token
+                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -4630,8 +4614,8 @@ function get_list_transaction_type_admin() {
         url: "/admin/get_list_transaction_type_admin",
         type: "POST",
         dataType: "json",
-        data : {
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             $('#jenis_transaksi').empty();
@@ -4686,8 +4670,8 @@ function get_list_subscriber_report() {
         url: "/admin/get_list_subscriber_report",
         type: "POST",
         dataType: "json",
-        data :{
-            "_token" : token
+        data: {
+            "_token": token
         },
         success: function (result) {
             $('#list_pengikut').empty();
@@ -4753,7 +4737,7 @@ function tabel_report_subscriber_admin() {
                 "start_date": $("#tanggal_mulai_subs").val(),
                 "end_date": $("#tanggal_selesai_subs").val(),
                 "subscriber_id": $("#list_pengikut").val(),
-                "_token" : token
+                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
@@ -4976,8 +4960,8 @@ function detail_payment_all_admin(dtpay) {
             "_token": token
         },
         success: function (result) {
-            console.log(split);
-            console.log(result);
+            // console.log(split);
+            // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -4989,7 +4973,7 @@ function detail_payment_all_admin(dtpay) {
                 }
             } else {
                 var res = result[0];
-                if (res.status === false) {
+                if (res.status == false) {
                     $("#hide_btn_aktivasi").show();
                 } else {
                     $("#hide_btn_aktivasi").hide();
@@ -5107,7 +5091,7 @@ function detail_subpayment(subdata) {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             var isi = result[0];
             $("#aktif_id_subpayment").val(isi.id);
 
@@ -5191,7 +5175,7 @@ function get_setting_subpayment_admin(idnya) {
                         location.href = '/admin';
                     }, 5000);
                 } else {
-                    if (result.message === "Data Tidak ditemukan" || result.code === "PLQ97") {
+                    if (result.message == "Data Tidak ditemukan" || result.code == "PLQ97") {
                         $("#nosetting_pay").show();
                         $(".isi_setting_subpay").hide();
                         $("#btn_submit_setpay").hide();
@@ -5256,7 +5240,7 @@ function get_setting_subpayment_admin(idnya) {
     });
 }
 
-function get_payment_module() {
+function get_payment_module_ku() {
     // $("#btn_submit_paymethod").attr("disabled", "disabled");
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -5280,7 +5264,7 @@ function get_payment_module() {
 
             $.each(result, function (i, item) {
                 text += '<button type="button" id="method' + item.id + '" class="btn btn-blueline col-md-5 btn-sm btn-fluid" value=""' +
-                    'onclick="pilih_pay_bank(this)">' + item.payment_title + '</button >';
+                    'onclick="pilih_pay_bank_ku(this)">' + item.payment_title + '</button >';
                 var deskrip = '';
                 $.each(item.payment_methods, function (i, itm) {
                     $.each(itm.description, function (x, isides) {
@@ -5291,7 +5275,7 @@ function get_payment_module() {
                         '<div class="card-header" role="tab" sytle="background-color:#fff;">' +
                         '<h6 class="mb-0 pdb1">' +
                         '<a data-toggle="collapse" data-parent="#isi_show_bank" href="#collapseOne' + itm.id + '" ' +
-                        'id="idpayq' + itm.id + '" onclick="pilihpay(' + itm.id + ');" aria-expanded="true"' +
+                        'id="idpayq' + itm.id + '" onclick="pilihpay_ku(' + itm.id + ');" aria-expanded="true"' +
                         'aria-controls="collapseOne' + itm.id + '">' +
                         '<img src="' + server_cdn + cekimage_cdn(itm.icon) + '" class="imgepay" style="width: 10%; height: auto;"' +
                         'onerror = "this.onerror=null;this.src=\'' + noimg + '\';"> &nbsp; &nbsp;' + itm.payment_title +
@@ -5313,6 +5297,25 @@ function get_payment_module() {
             console.log("Cant Show");
         }
     });
+}
+function pilih_pay_bank_ku(ini) {
+    $(".hidendulu").removeClass('dipilih');
+    $('.btn-blueline').removeClass('active');
+    $("#" + ini.id).addClass('active');
+    $("." + ini.id).addClass('dipilih');
+    $("." + ini.id).removeClass('active');
+}
+
+function pilihpay_ku(idpay) {
+    $("#id_pay_method_module").val(idpay);
+    $(".border-oren").removeClass("active");
+    $("#cardpay" + idpay).addClass("active");
+    $("#btn_pay_next").removeAttr("disabled");
+
+    if ($("#payment_time_module").val() != "") {
+
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
 }
 // ---------------------- END PAYMENT MANAGEMENT ---------------------------
 
@@ -5404,7 +5407,7 @@ function get_list_setting_notif_admin() {
 function cek_param_list_user() {
     var comm = $("#komunitas_notif").val();
     var usertipe = $("#usertipe_notif").val();
-    if (comm === null && usertipe === null) {
+    if (comm == null && usertipe == null) {
         $("#status_notif").attr("disabled", "disabled");
         swal("Cant Null", "User Type and Community cant be null", "warning");
     } else {
@@ -5576,12 +5579,12 @@ function get_list_user_notif() {
         }
     });
 }
- // ---------------------- END NOTIFICATION MANAGEMENT ------------------------
+// ---------------------- END NOTIFICATION MANAGEMENT ------------------------
 
 
 
 
- // -------------------- INBOX MANAGEMENT ----------------------
+// -------------------- INBOX MANAGEMENT ----------------------
 function tabel_inbox_message_admin() {
     $('#tabel_inbox_message_admin').dataTable().fnClearTable();
     $('#tabel_inbox_message_admin').dataTable().fnDestroy();
@@ -5754,4 +5757,367 @@ function detail_message_inbox_admin(params) {
         }
     });
 }
- // -------------------- END INBOX MANAGEMENT -------------------
+// -------------------- END INBOX MANAGEMENT -------------------
+
+// -----------------------  EVENT  MANAGEMENT ------------------------
+function tabel_event_list_admin() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    var tabel = $('#tabel_event_management').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_event_list_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "_token": token
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_event_management tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            { mData: 'title' },
+            {
+                mData: 'image',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgtbl' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            { mData: 'event_date' },
+            { mData: 'event_time' },
+            { mData: 'status_title' },
+            { mData: 'ticket_type_title' },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-share"> ' +
+                        '<i class="mdi mdi-link-variant"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-share"> ' +
+                        '<i class="mdi mdi-link-variant"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    //DETAIL
+    $('#tabel_event_management tbody').on('click', 'button.btn-edit', function () {
+        var data = tabel.row($(this).parents('tr')).data();
+        console.log(data);
+        $("#id_event_admin").val(data.id);
+        $("#modal_edit_event").modal('show');
+
+        $("#edit_judul").val(data.title);
+        $("#edit_deskripsi").text(data.description);
+        $("#edit_link").val(data.link);
+        $("#edit_tgl").val(data.event_date);
+        $("#edit_time").val(data.event_time);
+
+        $('#edit_status').val(data.status).attr("selected", "selected");
+        $('#edit_type').val(data.ticket_type).attr("selected", "selected");
+
+
+
+    });
+
+    $('#tabel_event_management tbody').on('click', 'button.btn-share', function () {
+        var data = tabel.row($(this).parents('tr')).data();
+
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/share_event_admin',
+            type: 'POST',
+            datatype: 'JSON',
+            data: {
+                "event_id": data.id,
+                "_token": token
+            },
+            success: function (result) {
+                // console.log(result);
+                if (result.success != false) {
+                    var pretext = "Ayo ikuti !!   " + data.title + " ,  tanggal : " + data.event_date + " " + data.event_time +
+                        " more information click -> " + data.link;
+                    window.open('https://api.whatsapp.com/send?phone=0822000000000&text=' + pretext + '');
+                } else {
+                    ui.popup.show('warning', result.message, 'Sorry');
+                }
+            },
+            error: function (result) {
+                ui.popup.show('error', 'Cant Share Event', 'Sorry');
+            }
+        });
+    });
+}
+
+function addRow_create_tiket() {
+    // Add set name and id row
+    var row = 1;
+    var id = 2;
+
+    $(document).on("click", "#addnewrow_ticket", function () {
+        var new_row = '<div class="row newly" id="row' + row + '">' +
+            '<div class="col-12"><hr></div>' +
+            '<div class="col-md-11">' +
+            '<div class="row">'+
+            '<div class="col-md-4">' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Title Ticket</small>' +
+            '<input type="text" id="tiket_judul' + id +'" name="tiket_judul'+id+'" class="form-control input-abu">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Select Event</small>' +
+            '<select class="form-control input-abu" name="tiket_event' + id + '" id="tiket_event' + id +'" required></select>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-md-3">' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Description Ticket</small>' +
+            '<input type="text" id="tiket_dekripsi' + id +'" name="tiket_dekripsi' + id +'"' +
+            'class="form-control input-abu" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Start Date</small>' +
+            '<input type="date" id="tiket_mulaidate' + id + '" name="tiket_mulaidate' + id +'"'+
+            'class="form-control input-abu" required>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-md-3">' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Type Ticket</small>' +
+            '<select class="form-control input-abu" name="tiket_type' + id + '" id="tiket_type' + id +'" required>' +
+            '<option selected disabled lang="en">Choose</option>' +
+            '<option value="0" lang="en">Free</option>' +
+            '<option value="1" lang="en">Paid</option>' +
+            '</select>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">End Date</small>' +
+            '<input type="date" id="tiket_akhirdate' + id +'" name="tiket_akhirdate' + id +'"' +
+            'class="form-control input-abu" required>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-md-2">' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Price</small>' +
+            '<input type="text" id="tiket_harga' + id + '" name="tiket_harga' + id +'" class="form-control input-abu" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<small class="clight" lang="en">Total Stock</small>' +
+            '<input type="text" id="tiket_total' + id + '" name="tiket_total' + id +'" class="form-control input-abu" required>' +
+            '</div>' +
+            '</div></div>'+
+            '</div>' +
+            '<div class="col-md-1 del-row">' +
+            '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delrow-tiket">' +
+            '<i class="mdi mdi-delete"></i>' +
+            '</button>' +
+            '</div>' +
+            '</div>';
+
+        $('#isi_newrow_ticket').append(new_row);
+        get_list_event_admin(id);
+        row++;
+        id++;
+        return false;
+    });
+
+    // Remove criterion
+    $(document).on("click", ".delrow-tiket", function () {
+        //  alert("deleting row#"+row);
+        if (row > 1) {
+            $(this).closest('div .newly').remove();
+            row--;
+        }
+        return false;
+    });
+
+}
+
+function get_list_event_admin(id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+        url: "/admin/tabel_event_list_admin",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+            $('#tiket_event'+id).empty();
+            $('#tiket_event' + id).append("<option disabled selected> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#tiket_event' + id).append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+            }
+            var idnya = '#tiket_event' + id +' option';
+            $("#tiket_event"+id).html($(idnya).sort(function (x, y) {
+                return $(y).val() < $(x).val() ? -1 : 1;
+            }));
+        }
+    });
+}
+
+
+$('#tiket_event_filter').change(function () {
+    var dipilih = this.value;
+    tabel_ticket_list_admin(dipilih);
+});
+
+
+function tabel_ticket_list_admin(id_event) {
+    $('#tabel_ticket_event').DataTable().clear().destroy();
+    $('#tabel_ticket_event').empty();
+
+    // var uihead = '<thead>'+
+    //     '<tr>' +
+    //     '<th><b lang="en">ID Ticket</b></th>' +
+    //     '<th><b lang="en">Title</b></th>' +
+    //     '<th><b lang="en">Description</b></th>' +
+    //     '<th><b lang="en">Type Ticket</b></th>' +
+    //     '<th><b lang="en">Price</b></th>' +
+    //     '<th><b lang="en">Total</b></th>' +
+    //     '<th><b lang="en">Date</b></th>' +
+    //     '<th><b lang="en">Remaining</b></th>' +
+    //     '<th><b lang="en">Action</b></th>' +
+    //     '</tr>' +
+    //     '</thead>';
+    // $('#tabel_ticket_event').html(uihead);
+
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    var tabel = $('#tabel_ticket_event').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_ticket_list_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "_token": token,
+                "id_event" : id_event
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_ticket_event tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            {
+                mData: 'title',
+                render: function (data, type, row, meta) {
+                    return '<p class="s13 text-wrap width-100">' + data + '</p>';
+                }
+            },
+            {
+                mData: 'description',
+                render: function (data, type, row, meta) {
+                    return '<p class="s13 text-wrap width-200">' + data + '</p>';
+                }
+            },
+            {
+                mData: 'ticket_type',
+                render: function (data, type, row, meta) {
+                    if(data == 0){
+                        return '<small class="cgrey">Free</small>';
+                    }else{
+                        return '<small class="cgrey">Paid</small>';
+                    }
+                }
+            },
+            { mData: 'price' },
+            { mData: 'total' },
+            {
+                mData: 'start_date',
+                render: function (data, type, row, meta) {
+                    var enddate = row.end_date;
+                    return '<small class="s13 text-wrap width-200">' + data + "<br>until<br>" + enddate +'</small>';
+                    }
+                    },
+            { mData: 'remaining_ticket' },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    //DETAIL
+    $('#tabel_ticket_event tbody').on('click', 'button.btn-edit', function () {
+        var data = tabel.row($(this).parents('tr')).data();
+        console.log(data);
+        $("#id_event_admin").val(data.id);
+        $("#modal_edit_event").modal('show');
+
+        $("#edit_judul").val(data.title);
+        $("#edit_deskripsi").text(data.description);
+        $("#edit_link").val(data.link);
+        $("#edit_tgl").val(data.event_date);
+        $("#edit_time").val(data.event_time);
+
+        $('#edit_status').val(data.status).attr("selected", "selected");
+        $('#edit_type').val(data.ticket_type).attr("selected", "selected");
+    });
+
+}
+
+
+
+// -----------------------  EVENT  MANAGEMENT ------------------------

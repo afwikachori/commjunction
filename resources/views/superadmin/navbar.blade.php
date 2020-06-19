@@ -36,7 +36,7 @@
             </div>
         </li>
 
-        {{-- <li class="nav-item nav-logout dropdown">
+        <li class="nav-item nav-logout dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-settings"></i>
             </a>
@@ -58,7 +58,7 @@
                         <img border="0" src="/img/en.png" width="20" height="20"> &nbsp; &nbsp; English</a>
                 </div>
             </div>
-        </li> --}}
+        </li>
 
 
 

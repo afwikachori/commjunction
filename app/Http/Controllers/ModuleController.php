@@ -31,6 +31,16 @@ class ModuleController extends Controller
         return view('subscriber/dashboard/news_management');
     }
 
+    public function EventModuleView()
+    {
+        return view('admin/dashboard/event_module_admin');
+    }
+
+    public function createNewVenueAdmin()
+    {
+        return view('admin/dashboard/venue_module_admin');
+    }
+
 
 
     public function get_all_news(Request $request)
@@ -155,6 +165,9 @@ class ModuleController extends Controller
             return $json;
         }
     }
+
+
+
 
     public function getDetailNews($news_id)
     {
@@ -558,19 +571,77 @@ class ModuleController extends Controller
         }
     }
 
+
+    public function tabel_friend_pending_list(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/pendingfriendconfirmation';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function get_top_friends(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/topfriend';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function get_friend_profile(Request $request)
+    {
+        // return $friend_id;
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/viewfriendprofile';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'user_id'   => $input['user_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
     public function friendProfile($friend_id)
     {
+        // return $friend_id;
         $ses_login = session()->get('session_subscriber_logged');
         $url = env('SERVICE') . 'module/friend/viewfriendprofile';
 
 
         $csrf = null;
 
-        $body = json_encode([
+        $body = [
             'user_id'   => $friend_id
-        ]);
+        ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
         if ($json['success'] == true) {
             $in = $json['data'];
 
@@ -610,7 +681,7 @@ class ModuleController extends Controller
         }
 
         $body = [
-            "title"        => $input['subject1'],
+            "title"        => $input['subject'],
             "description" => $input['message'],
             "user_id"        => $input['friend_id']
         ];
@@ -626,5 +697,564 @@ class ModuleController extends Controller
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
             return back();
         }
+    }
+
+
+
+
+    public function confirm_new_friend(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/approve';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'user_id'   => $input['id_new_friend'],
+            'status'   => $input['status_acc'],
+        ];
+
+        // return $body;
+
+        if ($input['status_acc'] == "2") {
+            $text = 'Approved';
+        } else {
+            $text = 'Rejected';
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            alert()->success('Successfully give confirmation', $text)->persistent('Done');
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+    }
+
+
+
+
+    public function setting_module_friend(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/setting';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 2);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[1],
+                "value" => $dt[0],
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $body = [
+            "data_Setting" => $data
+        ];
+
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $json;
+        if ($json['success'] == true) {
+            alert()->success('Successfully Setting Up Friends Module', 'Success')->persistent('Done');
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+    }
+
+
+    public function get_list_setting_module_friends(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/listsetting';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function find_search_filter_friends(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/searchfriend';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'name'   => $input['name']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function send_love_news_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/news/like';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'news_id'   => (int) $input['news_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+    public function send_love_news_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/news/like';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'news_id'   => (int) $input['news_id']
+        ];
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('News has been liked', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    //--------------------------- EVENT MODULE ------------------------
+    public function tabel_event_list_admin(Request $request)
+    {
+
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/list';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+
+
+    public function create_new_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/create';
+        $input = $request->all();
+        // return $input;
+        $req = new RequestController;
+        $fileimg = "";
+
+        if ($request->hasFile('event_img')) {
+            $imgku = file_get_contents($request->file('event_img')->getRealPath());
+            $filnam = $request->file('event_img')->getClientOriginalName();
+
+
+            $imageRequest = [
+                "title"         => $input['event_judul'],
+                "description"   => $input['event_deskripsi'],
+                "event_date"    => $input["event_tgl"],
+                "event_time"    => $input['event_time'],
+                "status"        => $input['event_status'],
+                "ticket_type"   => $input["event_type"],
+                "link"          => $input['event_link'],
+                "latitude"      => "-7.982398",
+                "longitude"     => "112.632224",
+                "venue_id"      => "1",
+                "image"          => $imgku,
+            ];
+
+            $resImg = $req->send_image_formdata($imageRequest, $url, $filnam, $ses_login['access_token']);
+            alert()->success('Success create event!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error('image required !', 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+    public function edit_new_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/update';
+        $input = $request->all();
+        // return $input;
+        $req = new RequestController;
+        if ($request->hasFile('edit_img')) {
+            $imgku = file_get_contents($request->file('edit_img')->getRealPath());
+            $filnam = $request->file('edit_img')->getClientOriginalName();
+            $imageRequest = [
+                "event_id"         => $input['id_event'],
+                "title"         => $input['edit_judul'],
+                "description"   => $input['edit_deskripsi'],
+                "edit_date"    => $input["edit_tgl"],
+                "edit_time"    => $input['edit_time'],
+                "status"        => $input['edit_status'],
+                "ticket_type"   => $input["edit_type"],
+                "link"          => $input['edit_link'],
+                "latitude"      => "-7.982398",
+                "longitude"     => "112.632224",
+                "venue_id"      => "1",
+                "image"          => $imgku,
+            ];
+        } else {
+            $filnam = '';
+            $imageRequest = [
+                "event_id"         => $input['id_event'],
+                "title"         => $input['edit_judul'],
+                "description"   => $input['edit_deskripsi'],
+                "edit_date"    => $input["edit_tgl"],
+                "edit_time"    => $input['edit_time'],
+                "status"        => $input['edit_status'],
+                "ticket_type"   => $input["edit_type"],
+                "link"          => $input['edit_link'],
+                "latitude"      => "-7.982398",
+                "longitude"     => "112.632224",
+                "venue_id"      => "1",
+                "image"          => "",
+            ];
+        }
+
+        $resImg = $req->send_image_formdata($imageRequest, $url, $filnam, $ses_login['access_token']);
+
+        if ($resImg['success'] == true) {
+            alert()->success('Success Edit event!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function share_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/share';
+
+        $input = $request->all();
+        $csrf = $input['_token'];
+
+        $body = [
+            'event_id'   => $input['event_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        return $json;
+    }
+
+    public function create_new_ticket_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/createticket';
+        $input = $request->all();
+
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 8);
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "title" => $dt[0],
+                "event_id" => $dt[1],
+                "description" => $dt[2],
+                "start_date" => $dt[3],
+                "ticket_type" => $dt[4],
+                "end_date" => $dt[5],
+                "price" => $dt[6],
+                "total" => $dt[7],
+
+
+
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $csrf = "";
+        $body = [
+            'data_ticket'   => $data
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            alert()->success('Success Create New Ticket!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function participantEventModuleView()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/listparticipant';
+
+        // $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'event_id'   => 2
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function tabel_ticket_list_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/listticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'event_id'   => $input['id_event']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+    public function delete_ticket_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/deleteticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'event_id'   => (int) $input['event_id']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+
+    public function buyTicketEvent(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'event/buyticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'ticket_id'   => '2',
+            'event_id'   => '2',
+            'payment_method_id'   => '5',
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    // -------------------------------  MODULE VENUE  -----------------------------------
+
+    public function VenueListAdmin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue';
+
+        $input = '';
+        $csrf = '';
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+
+    public function detailVenueAdmin($id_venue)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/detail';
+
+        $csrf = "";
+
+        $body = [
+            'venue_id'   => $id_venue
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function LastVenueListAdmin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/last';
+
+        $csrf = "";
+        $body = [
+            'limit'   => (int) "5"
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function publishVenueAdmin($id_venue)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/venue/publish';
+
+        $csrf = "";
+        $body = [
+            'venue_id'   => $id_venue
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+
+
+    public function PostcreateNewVenueAdmin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        if ($input['action'] == "ADD") {
+            $url = env('SERVICE') . 'module/venue/create';
+        } else {
+            $url = env('SERVICE') . 'module/venue/edit';
+        }
+
+        $fasilitas = explode(",", $input['venue_fasilitas']);
+
+        $req = new RequestController;
+        if ($request->hasFile('photo_venue') || $request->hasFile('venue_thumbnail')) {
+
+            $img_thum = file_get_contents($request->file('venue_thumbnail')->getRealPath());
+            $nam_thum = $request->file('venue_thumbnail')->getClientOriginalName();
+
+
+            $photo = [];
+
+            foreach ($request->file('photo_venue') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $image_path = $image->path();
+
+                $files = [
+                    'name'     => 'photos',
+                    'contents' => fopen($image_path, 'r'),
+                    'filename' => $fileName
+                ];
+                array_push($photo, $files);
+            }
+
+            if ($input['action'] == "ADD") {
+                $imageRequest = [
+                    "name"         => $input['venue_judul'],
+                    "location"         => $input['venue_lokasi'],
+                    "capacity"   => $input['venue_kapasitas'],
+                    "open_time"    => $input["open_time"],
+                    "close_time"    => $input['close_time'],
+                    "facilities"        => $fasilitas,
+                    "thumbnail"      => [$img_thum => $nam_thum],
+                    "photo"          => $photo,
+                ];
+            } else {
+                $imageRequest = [
+                    "name"       => $input['venue_judul'],
+                    "location"   => $input['venue_lokasi'],
+                    "capacity"   => $input['venue_kapasitas'],
+                    "open_time"  => $input["open_time"],
+                    "close_time" => $input['close_time'],
+                    "facilities" => $fasilitas,
+                    "thumbnail"  => [$img_thum => $nam_thum],
+                    "photo"      => $photo,
+                    "venue_id"   => $input['id_venue'],
+                ];
+            }
+        }
+        // dd($imageRequest);
+
+        $resImg = $req->create_venue_multipart($imageRequest, $url, $ses_login['access_token']);
+        dd($resImg);
+        // if ($resImg['success'] == true) {
+        //     alert()->success('Success Edit event!', 'Success')->autoclose(4000);
+        //     return back();
+        // } else {
+        //     alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+        //     return back();
+        // }
     }
 } //end-class
