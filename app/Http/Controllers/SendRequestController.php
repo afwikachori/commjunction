@@ -69,4 +69,31 @@ trait SendRequestController
             return $error;
         }
     }
+
+
+
+    function is_html($string)
+    {
+        return preg_match("/<[^<]+>/", $string, $m) != 0;
+    }
+
+    function cek_tag_html($input, $sendmethod)
+    {
+        // $sendmethod
+        // false : post data & alert
+        // true : ajax & return message
+
+        $jum = 0;
+        if ($input != null && $input != "") {
+
+            foreach ($input as $key => $value) {
+                $ini = $this->is_html($value);
+                if ($ini == TRUE) {
+                    $jum++;
+                }
+            }
+            return $jum;
+
+        }
+    }
 } //end-traits

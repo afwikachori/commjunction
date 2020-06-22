@@ -92,12 +92,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                <div class="form-group subs_name">
-                                                    <small class="clight" lang="en">Subscriber</small>
-                                                    <select class="form-control input-abu" name="subs_name"
+                                                <div class="form-group">
+                                                    <!-- <small class="clight" lang="en">Subscriber</small> -->
+                                                    <input type="hidden" id="id_user_subs_trans" name="id_user_subs_trans">
+                                                    <!-- <select class="form-control input-abu" name="subs_name"
                                                         id="subs_name">
 
-                                                    </select>
+                                                    </select> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -361,33 +362,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md">
-                            <center>
+                        <div class="col-md-12">
                                 <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Community</label>
-                            </center>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-group">
-                                <h5 class="nama_komunitas cgrey2" style="margin-top: 0.5em;"></h5>
+                                <h5 class="nama_komunitas cteal" style="margin-top: 0.5em;"></h5>
                                 <input type="hidden" class="form-control input-abu" name="komunitas2" id="komunitas2">
-                            </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md">
-                            <center>
-                                <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Subscriber</label>
-                            </center>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-group">
-                                <select class="form-control input-abu" name="subs_name2" id="subs_name2">
-                                    <option selected disabled lang="en">Choose Community First</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" id="subs_id_trans" name="subs_id_trans">
 
                 </div> <!-- end-body -->
 

@@ -804,7 +804,11 @@ function tabel_req_verify() {
             data: {
                 "_token": token
             },
-            timeout: 30000
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_verify_superadmin tbody').empty().append(nofound);
+            },
         },
         columns: [
             { mData: 'invoice_number' },

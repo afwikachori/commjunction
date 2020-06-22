@@ -173,6 +173,7 @@ class ModuleController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'module/news/detail';
+
         $body = [
             'news_id'   => intval($news_id)
         ];
@@ -296,6 +297,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/publish';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
         $csrf = $input['_token'];
 
         // return $input;
@@ -325,7 +335,14 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/setheadline';
 
         $input = $request->all();
-        // return $input;
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
         $csrf = $input['_token'];
         $body = [
             'news_id'   => $input['news_id']
@@ -353,6 +370,16 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/scrapnews';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $body = [
@@ -669,6 +696,16 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/sendmessage';
         $input = $request->all(); // getdata form by name
 
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         //VALIDATION EMPTY TITLE
         if ($input['subject'] == "") {
             alert()->error('Please Insert Message Subject')->persistent('Done');
@@ -708,6 +745,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/approve';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $csrf = $input['_token'];
 
         $body = [
@@ -743,6 +789,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/setting';
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $datain = $request->except('_token');
@@ -797,6 +852,14 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/searchfriend';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+           return $error;
+        }
         $csrf = $input['_token'];
 
         $body = [
@@ -985,6 +1048,15 @@ class ModuleController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/createticket';
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 8);

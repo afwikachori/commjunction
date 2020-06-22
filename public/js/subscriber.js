@@ -105,6 +105,9 @@ function session_subscriber_logged() {
             get_list_notif_navbar(user.community_id);
             get_inbox_navbar_subs();
 
+            $("#id_user_subs_trans").val(user.user_id);
+            $("#subs_id_trans").val(user.user_id);
+
             if (user.picture != undefined || user.picture != null) {
 
                 $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(user.picture));
@@ -157,12 +160,7 @@ function session_subscriber_logged() {
                 get_pricing_membership();
             }
 
-
             get_profile_custom_regis(result.custom_input);
-            console.log("resgis custom input");
-            console.log(result.custom_input);
-
-
         },
         error: function (result) {
             console.log("Cant Reach Session Logged User Dashboard");
@@ -941,7 +939,7 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
-            // console.log(result);
+            console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -1215,7 +1213,7 @@ function init_ready() {
 
     if ($("#page_transaction_management_subs").length != 0) {
         get_list_transaction_tipe();
-        get_list_subscriber_admin();
+        // get_list_subscriber_admin();
 
         $("#reset_tbl_trans").click(function () {
             resetparam_trans();
@@ -1978,6 +1976,9 @@ function get_list_transaction_tipe() {
             if (OldTipetrans2 !== '') {
                 $('#tipe_trans2').val(OldTipetrans2);
             }
+        },
+        error: function (result) {
+            get_list_transaction_tipe();
         }
     });
 }
@@ -2061,7 +2062,7 @@ function show_card_transaksi() {
             "tanggal_selesai": $("#tanggal_selesai").val(),
             "tipe_trans": $("#tipe_trans").val(),
             "status_trans": $("#status_trans").val(),
-            "subs_name": $("#subs_name").val(),
+            "subs_name": $("#id_user_subs_trans").val(),
             "_token": token
         },
         success: function (result) {
@@ -2139,7 +2140,7 @@ function filter_show_card_transaksi() {
             "tanggal_selesai": $("#tanggal_selesai2").val(),
             "tipe_trans": $("#tipe_trans2").val(),
             "status_trans": $("#status_trans2").val(),
-            "subs_name": $("#subs_name2").val(),
+            "subs_name": $("#subs_id_trans").val(),
             "_token": token
         },
         success: function (result) {

@@ -236,40 +236,39 @@ class SubscriberController extends Controller
                 $idkom_login = $ses_loggeduser['user']['community_id'];
                 $username = $ses_loggeduser['user']['user_name'];
                 // user_name
-                if($idkom_auth != $idkom_login){
-                    alert()->error('Please logout Subscriber account : '. $username, 'Failed Switch Community')->persistent('Done');
+                if ($idkom_auth != $idkom_login) {
+                    alert()->error('Please logout Subscriber account : ' . $username, 'Failed Switch Community')->persistent('Done');
                     return view('404');
                 }
             }
-                $portal = $json['data']['cust_portal_login']['image'];
+            $portal = $json['data']['cust_portal_login']['image'];
+            $bgportal = env('CDN') . '/' . $portal;
+            $arr_auth = [];
+
+            $im = @imagecreatefromjpeg($bgportal);
+            /* See if it failed */
+            if (!$im) {
+                $bgportal = asset('img/bg_subs.jpg');
+            } else {
                 $bgportal = env('CDN') . '/' . $portal;
-                $arr_auth = [];
+            }
+            // require $bgportal;
 
-                $im = @imagecreatefromjpeg($bgportal);
-                /* See if it failed */
-                if (!$im) {
-                    $bgportal = asset('img/bg_subs.jpg');
-                } else {
-                    $bgportal = env('CDN') . '/' . $portal;
-                }
-                // require $bgportal;
+            $image = imagecreatefromjpeg($bgportal);
+            $thumb = imagecreatetruecolor(1, 1);
+            imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
 
-                $image = imagecreatefromjpeg($bgportal);
-                $thumb = imagecreatetruecolor(1, 1);
-                imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
+            $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
+            $maincolor = '#' . $mainColor;
 
-                $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
-                $maincolor = '#' . $mainColor;
-
-                $new =  array_merge(["maincolor" => $maincolor], $json['data']);
-                array_push($arr_auth, $new);
+            $new =  array_merge(["maincolor" => $maincolor], $json['data']);
+            array_push($arr_auth, $new);
 
 
-                // return $arr_auth;
-                session()->put('auth_subs', $arr_auth);
-                // return redirect('subscriber')->with('subs_data', $arr_auth);
-                return view('subscriber/login')->with('subs_data', $arr_auth);
-
+            // return $arr_auth;
+            session()->put('auth_subs', $arr_auth);
+            // return redirect('subscriber')->with('subs_data', $arr_auth);
+            return view('subscriber/login')->with('subs_data', $arr_auth);
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(3500);
@@ -384,7 +383,7 @@ class SubscriberController extends Controller
         if ($json['success'] == true) {
             session()->forget('session_subscriber_logged');
             $auth_subs = session()->get('auth_subs');
-            $url_subs = '/subscriber/url/'.$auth_subs[0]['name'];
+            $url_subs = '/subscriber/url/' . $auth_subs[0]['name'];
             return redirect($url_subs);
         } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
@@ -404,7 +403,7 @@ class SubscriberController extends Controller
         $fileimg = "";
 
 
-        if ($request->hasFile('alamat_subs')) {
+        if ($request->has('alamat_subs')) {
             $alamat = $input['alamat_subs'];
         } else {
             $alamat = "null";
@@ -493,7 +492,7 @@ class SubscriberController extends Controller
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
                         "full_name" => $resImg['data']['full_name'],
-                        "picture" => $resImg['data']['image'],
+                        "picture" => $ses_user['picture'],
                         "notelp" => $resImg['data']['notelp'],
                         "email" => $resImg['data']['email'],
                         "alamat" => $resImg['data']['alamat'],
@@ -657,14 +656,22 @@ class SubscriberController extends Controller
         $input = $request->all();
         $csrf = $input['_token'];
 
-        $body = [
-            "start_date" => $input['tanggal_mulai'],
-            "end_date" => $input['tanggal_selesai'],
-            "community_id" => $input['komunitas'],
-            "transaction_type_id" => $input['tipe_trans'],
-            "subscriber_id" => $input['subs_name'],
-            "transaction_status" => $input['status_trans']
-        ];
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+           return $error;
+        }
+
+            $body = [
+                "start_date" => $input['tanggal_mulai'],
+                "end_date" => $input['tanggal_selesai'],
+                "community_id" => $input['komunitas'],
+                "transaction_type_id" => $input['tipe_trans'],
+                "subscriber_id" => $input['subs_name'],
+                "transaction_status" => $input['status_trans']
+            ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
@@ -682,6 +689,14 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'transmanagement/detail';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+           return $error;
+        }
         $csrf = $input['_token'];
 
         $body = [
@@ -826,7 +841,7 @@ class SubscriberController extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
-            return $json['data'];
+            // return $json['data'];
 
             if ($json['success'] == true) {
                 return $json['data'];
@@ -851,6 +866,15 @@ class SubscriberController extends Controller
     {
         $ses_login = session()->get('session_subscriber_logged');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $url = env('SERVICE') . 'inboxmanagement/changestatus';
         $client = new \GuzzleHttp\Client();
         // return $input;
@@ -1592,6 +1616,17 @@ class SubscriberController extends Controller
     {
         // dd(env('CDN'));
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
+
         $csrf = $input['_token'];
         $url = env('SERVICE') . 'auth/commsubs';
 
@@ -1614,6 +1649,16 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'profilemanagement/editprofilecustom';
 
         $input = $request->all();
+
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         // return $input;
         $csrf = $input['_token'];
         $datain =  $request->except('_token');
@@ -1643,4 +1688,14 @@ class SubscriberController extends Controller
             return back();
         }
     }
+
+
+function cek_array_multi($myarray){
+        if (count($myarray) == count($myarray, COUNT_RECURSIVE)) {
+            echo 'MyArray is not multidimensional';
+        } else {
+            echo 'MyArray is multidimensional';
+        }
+}
+
 } //end-class
