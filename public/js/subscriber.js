@@ -1219,6 +1219,7 @@ function init_ready() {
             resetparam_trans();
         });
 
+
         $("#btn_showtable_transaksi").click(function (e) {
             show_card_transaksi();
         });
@@ -1923,6 +1924,21 @@ function resetparam_trans() {
     $("#subs_name").val("");
 }
 
+$("#reset_card_filtertrans").click(function () {
+    $("#tanggal_mulai2").val("");
+    $("#tipe_trans2").val("");
+    $("#tanggal_selesai2").val("");
+    $("#status_trans2").val("");
+
+    $("#show_card_transaksi").html("");
+    $("#showin_table_trans").hide();
+    $(".showin_table_trans").hide();
+
+    resetparam_trans();
+
+    $("#tab_transaction_param").show();
+});
+
 function get_list_transaction_tipe() {
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -1938,9 +1954,11 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            if(result.success == false){
+                get_list_transaction_tipe();
+            }else{
             $('#tipe_trans').empty();
-            $('#tipe_trans').append("<option value='null'> Choose</option>");
+            $('#tipe_trans').append("<option disabled selected> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -1949,17 +1967,9 @@ function get_list_transaction_tipe() {
             $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
                 return $(y).val() < $(x).val() ? -1 : 1;
             }));
-
-            $("#tipe_trans").get(0).selectedIndex = 0;
-
-            const OldTipetrans = "{{old('tipe_trans')}}";
-
-            if (OldTipetrans !== '') {
-                $('#tipe_trans').val(OldTipetrans);
-            }
             // ___________________________________________________________________
             $('#tipe_trans2').empty();
-            $('#tipe_trans2').append("<option value='null'> Choose</option>");
+            $('#tipe_trans2').append("<option disabled selected> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -1968,14 +1978,7 @@ function get_list_transaction_tipe() {
             $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
                 return $(y).val() < $(x).val() ? -1 : 1;
             }));
-
-            $("#tipe_trans2").get(0).selectedIndex = 0;
-
-            const OldTipetrans2 = "{{old('tipe_trans2')}}";
-
-            if (OldTipetrans2 !== '') {
-                $('#tipe_trans2').val(OldTipetrans2);
-            }
+        }
         },
         error: function (result) {
             get_list_transaction_tipe();
@@ -2117,7 +2120,7 @@ function show_card_transaksi() {
             }
         },
         error: function (result) {
-            console.log(result);
+            ui.popup.show('error', 'Show Data Transaction', 'Failed');
         }
     });
 }

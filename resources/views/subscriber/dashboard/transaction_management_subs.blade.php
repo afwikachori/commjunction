@@ -94,7 +94,8 @@
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
                                                     <!-- <small class="clight" lang="en">Subscriber</small> -->
-                                                    <input type="hidden" id="id_user_subs_trans" name="id_user_subs_trans">
+                                                    <input type="hidden" id="id_user_subs_trans"
+                                                        name="id_user_subs_trans">
                                                     <!-- <select class="form-control input-abu" name="subs_name"
                                                         id="subs_name">
 
@@ -126,7 +127,7 @@
                                         lang="en">Filter</span></button>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
-                                <button type="button" id="reset_tbl_subsall"
+                                <button type="button" id="reset_card_filtertrans"
                                     class="btn btn-inverse-light btn-icon btn-sm btn_reset_dtable">
                                     <i class="mdi mdi-refresh"></i>
                                 </button>
@@ -363,9 +364,9 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                                <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Community</label>
-                                <h5 class="nama_komunitas cteal" style="margin-top: 0.5em;"></h5>
-                                <input type="hidden" class="form-control input-abu" name="komunitas2" id="komunitas2">
+                            <label class="cgrey2" style="margin-top: 1.5em;" lang="en">Community</label>
+                            <h5 class="nama_komunitas cteal" style="margin-top: 0.5em;"></h5>
+                            <input type="hidden" class="form-control input-abu" name="komunitas2" id="komunitas2">
                         </div>
                     </div>
                     <input type="hidden" id="subs_id_trans" name="subs_id_trans">
@@ -389,22 +390,5 @@
 </div>
 
 
-
-@endsection
-@section('script')
-<script type="text/javascript">
-    var server_cdn = '{{ env("CDN") }}';
-    $(document).ready(function () {
-
-    });
-
-
-
-
-
-
-
-
-</script>
 
 @endsection
