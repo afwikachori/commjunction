@@ -1351,9 +1351,14 @@ function showPassword() {
     }
 }
 
-function send_message(friend_id) {
-    $("#modal_send_message_subs").modal("show");
+function send_message(dtfriend) {
+    var teman = dtfriend.split('<>');
+    var friend_id = teman[0];
+    var nama_friend = teman[1];
+
+    $("#kepada_sendpesan").html(nama_friend);
     $("#friend_id").val(friend_id);
+    $("#modal_send_message_subs").modal("show");
 };
 
 function send_whatsapp(nohp) {
@@ -1619,11 +1624,14 @@ function tabel_friend_list() {
                 mData: 'friend_id',
                 render: function (data, type, row, meta) {
                     var nohp = row.notelp;
+                    var nama = row.full_name;
+                    var dtsend = data + '<>' + nama;
                     return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                         '<i class="mdi mdi-eye matadetail"></i></a>' +
-                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"'+
+                        'onclick="send_message(\'' + data + "<>" + nama + '\')">' +
                         '<i class="mdi mdi-email matadetail"></i></i></a>' +
-                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + nohp + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick="send_whatsapp("' + nohp + '")>' +
                         '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
                 }
             }
