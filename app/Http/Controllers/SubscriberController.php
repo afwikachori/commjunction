@@ -661,17 +661,17 @@ class SubscriberController extends Controller
             $error['status'] = 500;
             $error['message'] = "Contains tag html in input are not allowed";
             $error['success'] = false;
-           return $error;
+            return $error;
         }
 
-            $body = [
-                "start_date" => $input['tanggal_mulai'],
-                "end_date" => $input['tanggal_selesai'],
-                "community_id" => $input['komunitas'],
-                "transaction_type_id" => $input['tipe_trans'],
-                "subscriber_id" => $input['subs_name'],
-                "transaction_status" => $input['status_trans']
-            ];
+        $body = [
+            "start_date" => $input['tanggal_mulai'],
+            "end_date" => $input['tanggal_selesai'],
+            "community_id" => $input['komunitas'],
+            "transaction_type_id" => $input['tipe_trans'],
+            "subscriber_id" => $input['subs_name'],
+            "transaction_status" => $input['status_trans']
+        ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
@@ -695,7 +695,7 @@ class SubscriberController extends Controller
             $error['status'] = 500;
             $error['message'] = "Contains tag html in input are not allowed";
             $error['success'] = false;
-           return $error;
+            return $error;
         }
         $csrf = $input['_token'];
 
@@ -1077,43 +1077,19 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
         $input = $request->all();
 
-        if ($input['limit'] == 000) {
-            $dtnotif = [
-                "read_status"   => $input['read_status'],
-            ];
-        } else {
-            $dtnotif = [
-                "read_status"       => $input['read_status'],
-                "limit"             => $input['limit'],
-            ];
-        }
-
-        $client = new \GuzzleHttp\Client();
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
+        $body = [
+            "read_status"   => (int) $input['read_status'],
+            "limit"         => (int) $input['limit'],
         ];
-
-        $bodyku = json_encode($dtnotif);
-
-        if ($input['read_status'] == "3") {
-            $datakirim = [
-                'headers' => $headers,
-            ];
-        } else {
-            $datakirim = [
-                'body' => $bodyku,
-                'headers' => $headers,
-            ];
-        }
-
-
+        $csrf = '';
 
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-            return $json['data'];
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+            if ($json['success'] == true) {
+                return $json['data'];
+            } else {
+                return $json;
+            }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             return $error;
@@ -1128,6 +1104,46 @@ class SubscriberController extends Controller
         }
     }
 
+    public function get_list_notif_management(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'notificationmanagement/listnotification';
+        $input = $request->all();
+
+
+        if ($input['limit'] == 000) {
+            $body = [
+                "read_status"   => (int) $input['read_status'],
+                "limit"         => (int) 27,
+            ];
+        } else {
+            $body = [
+                "read_status"       => (int) $input['read_status'],
+                "limit"             => (int) $input['limit'],
+            ];
+        }
+
+
+        try {
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+            if ($json['success'] == true) {
+                return $json['data'];
+            } else {
+                return $json;
+            }
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Internal Server Error";
+            $error['success'] = false;
+            return $error;
+        }
+    }
 
 
 
@@ -1690,12 +1706,12 @@ class SubscriberController extends Controller
     }
 
 
-function cek_array_multi($myarray){
+    function cek_array_multi($myarray)
+    {
         if (count($myarray) == count($myarray, COUNT_RECURSIVE)) {
             echo 'MyArray is not multidimensional';
         } else {
             echo 'MyArray is multidimensional';
         }
-}
-
+    }
 } //end-class

@@ -3637,7 +3637,13 @@ function func_pay_module(params) {
         $(".border-oren").removeClass("active");
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
-        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+
+        if ($('#payment_time_module').val() != null && $('#payment_time_module').val() != ""){
+            $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+        }else{
+            $("#btn_submit_paymethod").attr("disabled", "disabled");
+        }
+
     }
 
 
@@ -5310,11 +5316,20 @@ function pilihpay_ku(idpay) {
     $("#cardpay" + idpay).addClass("active");
     $("#btn_pay_next").removeAttr("disabled");
 
-    if ($("#payment_time_module").val() != "") {
-
+    if ($('#payment_time_module_bayar').val() != null && $('#payment_time_module_bayar').val() != "") {
         $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    } else {
+        $("#btn_submit_paymethod").attr("disabled", "disabled");
     }
 }
+
+$('#payment_time_module_bayar').change(function () {
+    var dipilih = this.value;
+    if(dipilih != null && dipilih != ""){
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
+});
+
 // ---------------------- END PAYMENT MANAGEMENT ---------------------------
 
 

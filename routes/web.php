@@ -394,6 +394,7 @@ Route::prefix('subscriber')->group(function () {
     Route::post('LogoutSubscriber', 'SubscriberController@LogoutSubscriber')->name('LogoutSubscriber');
     Route::post('confirm_pay_membership_subs', 'SubscriberController@confirm_pay_membership_subs')->name('confirm_pay_membership_subs');
     Route::post('get_list_notif_navbar', 'SubscriberController@get_list_notif_navbar')->name('get_list_notif_navbar');
+    Route::post('get_list_notif_management', 'SubscriberController@get_list_notif_management')->name('get_list_notif_management');
     Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
     Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
     Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');

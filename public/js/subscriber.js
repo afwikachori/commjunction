@@ -933,8 +933,8 @@ function get_list_notif_navbar(idkom) {
             "community_id": idkom,
             "start_date": ago,
             "end_date": today,
-            "read_status": "1", //1:notread 2:read
             "notification_status": "receive", //send/receive
+            "read_status": "1", //1:notread 2:read
             "limit": 5
         },
         timeout: 30000,
@@ -1228,6 +1228,11 @@ function init_ready() {
             filter_show_card_transaksi();
             $("#modal_trasaksi_filter").modal("hide");
         });
+    }
+
+    if ($("#page_notification_management_subs").length != 0){
+        get_list_setting_notif_subs();
+        show_card_notification();
     }
 }
 
@@ -2878,3 +2883,256 @@ $("#btn-initial3").click(function () {
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
+
+
+// -------------------------- NOTIFICATION MANAGEMENT SUBS ----------------------------
+function show_card_notification() {
+    $('#modal_filter_notif_subs').modal('hide');
+    var filter = $("#filter_read").val();
+
+    if (filter != "") {
+        var read = filter;
+        var limit = 000;
+    } else {
+        var read = "1";
+        var limit = 10;
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_notif_management',
+        type: 'POST',
+        dataSrc: '',
+        data: {
+            "read_status": read, //1:notread 2:read
+            "limit": limit,
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#isi_card_notif").hide();
+                $("#nodata_card_notif").show();
+            } else {
+                if (result.length != 0) {
+                    var isiui = '';
+                    $.each(result, function (i, item) {
+                        var inidt = [item.id, item.level_status, item.community_id];
+                        isiui += '<div class="col-md-4 stretch-card grid-margin">' +
+                            '<div class="card sumari bg-gradient-kuning">' +
+                            '<div class="card-body sumari">' +
+                            '<div class="row">' +
+                            '<div class="col-9"></div>' +
+                            '<div class="col">' +
+                            '<i class="mdi mdi-bell-outline mdi-24px float-right top-ico ctosca"></i>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<span class="ctosca s15 tebal" lang="en">' + item.title + '</span>  &nbsp;' +
+                            '<span class="cteal s13">(' + item.notification_sub_type_title + ')</span><br>' +
+                            '<small class="cgrey2 mt-2">from : </small><br>' +
+                            '<small class="cgrey tebal">' + item.sender_level_title + '</small> &nbsp;&nbsp;' +
+                            '/ <small class="cgrey2">' + item.created_by_title + '</small><br>' +
+                            '<small class="clight mt-2 tebal">' + dateTime(item.created_at) + '</small><br>' +
+                            '</div></div>' +
+                            '<div class="row mt-3 mb-4">' +
+                            '<div class="col-md-7"><small class="cteal">' + item.read_status_title + '</small></div>' +
+                            '<div class="col-md-5" style="text-align:right;">' +
+                            '<a type="button" class="btn btn-accent btn-sm konco2"' +
+                            'onclick="detail_notif_subs(\'' + inidt + '\')">' +
+                            '<small class="cwhite" lang="en"><i class="mdi mdi-eye btn-icon-prepend"></i> &nbsp; Detail</small></a>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#isi_card_notif").html(isiui);
+                    $("#nodata_card_notif").hide();
+
+                }
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            $("#isi_card_notif").hide();
+            $("#nodata_card_notif").show();
+        }
+    });
+}
+
+
+$("#btn_generate_notif_subs").click(function () {
+    show_card_notification();
+});
+
+
+
+function get_list_setting_notif_subs() {
+    var namakom = $(".community_name").val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_setting_notif_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + namakom;
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+
+                    if (item.input_type == 1) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                    } else if (item.input_type == 2) {
+                        if (item.value == 1) {
+                            var one = 'checked';
+                            var two = '';
+                        } else if (item.value == 2) {
+                            var one = '';
+                            var two = 'checked';
+                        } else {
+                            var one = '';
+                            var two = '';
+                        }
+
+                        inputipe = '<div class="form-group">' +
+                            '<div class="form-check set_mod" >' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check set_mod">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + two + '>' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
+
+                    uiku += ' <div class="row style="margin-bottom:1.5em;">' +
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-6">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
+                        '</div>' +
+                        '</div>';
+                });
+                $(".isi_seting_notifadmin").html(uiku);
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+
+function cek_param_list_user() {
+    var comm = $("#komunitas_notif").val();
+    var usertipe = $("#usertipe_notif").val();
+    if (comm == null || usertipe == null) {
+        $("#status_notif").attr("disabled", "disabled");
+        swal("Cant Null", "User Type and Community cant be null", "warning");
+    } else {
+        $("#status_notif").removeAttr("disabled", "disabled");
+    }
+}
+
+
+var switchStatus_notif = false;
+$("#status_notif").on('change', function () {
+    if ($(this).is(':checked')) {
+        switchStatus_notif = $(this).is(':checked');
+        $("#hide_user_notif").fadeIn('fast');
+        cek_param_list_user();
+        $("#idstatus_notif").val("1");
+    }
+    else {
+        switchStatus_notif = $(this).is(':checked');
+        $("#hide_user_notif").fadeOut('fast');
+        cek_param_list_user();
+        $("#idstatus_notif").val("2");
+    }
+});
+
+function detail_notif_subs(dtku) {
+    var dtnya = dtku.split(',');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/detail_notif_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "notification_id": dtnya[0],
+            "level_status": dtnya[1],
+            "community_id": dtnya[2],
+        },
+        success: function (result) {
+            console.log(result);
+            var res = result;
+            $("#modal_detail_notif").modal('show');
+            $("#detail_judul").html(res.title);
+            $("#detail_dekripsi").html(res.description);
+            $("#detail_komunitas").html(res.community_name);
+            $("#detail_tanggal").html(dateFormat(res.created_at));
+            $("#detail_user").html(res.user_title);
+            $("#detail_usertipe").html(res.user_type_title);
+            $("#detail_tipenotif").html(res.message_type_title);
+            $("#dibuat_oleh").html(res.created_by_title);
+            $("#status_notif_admin").html(res.status);
+            $("#status_msg").html(res.status_message);
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show Detail");
+        }
+    });
+}
+
+
+$('#tipenotif').change(function () {
+    var ipilih = this.value;
+    if (ipilih == "1") {
+        $("#hide_urlnotif").fadeIn('fast');
+    } else {
+        $("#hide_urlnotif").fadeOut('fast');
+    }
+});
+
+
+$('#usertipe_notif').change(function () {
+    get_list_user_notif();
+});
+
+// ----------- xx -------------- NOTIFICATION MANAGEMENT SUBS ------------- xx --------------

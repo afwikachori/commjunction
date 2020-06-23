@@ -1609,11 +1609,17 @@ class AdminCommController extends Controller
         $input = $request->all();
         $csrf = $input['_token'];
 
-        $body = [
-            'feature_id' => $input['id_modulefitur'],
-            'payment_time' => $input['payment_time_module'],
-            'payment_method_id' => $input['id_pay_method_module']
-        ];
+        if ($request->has('payment_time_module')) {
+            $body = [
+                'feature_id' => $input['id_modulefitur'],
+                'payment_time' => $input['payment_time_module'],
+                'payment_method_id' => $input['id_pay_method_module']
+            ];
+        } else {
+            alert()->error('Please Select Payment Time', 'Can Not Null!')->autoclose(4500);
+            return back();
+        }
+
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
@@ -1936,11 +1942,16 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/activation';
         $input = $request->all();
 
-        $body = [
-            "payment_method_id" => $input['id_pay_method_module'],
-            "payment_type_id" => $input['aktif_id_payment'],
-            "payment_time" => $input['payment_time_module']
-        ];
+        if ($request->has('payment_time_module')) {
+            $body = [
+                "payment_method_id" => $input['id_pay_method_module'],
+                "payment_type_id" => $input['aktif_id_payment'],
+                "payment_time" => $input['payment_time_module']
+            ];
+        } else {
+            alert()->error('Please Select Payment Time', 'Required')->autoclose(4500);
+            return back();
+        }
 
         $csrf = $input['_token'];
 

@@ -973,13 +973,23 @@ try{
     public function adminconfirmpay(Request $request)
     {
         $inv_pay = session()->get('ses_invoice_pay');
-        // dd($inv_pay);
 
         $validator = $request->validate([
             'name_userpay'   => 'required',
             'invoice_number' => 'required',
             'file_payment'  => 'required|mimes:jpeg,jpg,png,pdf',
         ]);
+
+        $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->autoclose(4500);
+            return back();
+        }
+
 
         ///UPLOAD IMAGE KE BACK-EN
         $req = new RequestController;
@@ -1308,4 +1318,26 @@ try{
             return $error;
         }
     }
+
+
+    function is_html($string)
+    {
+        return preg_match("/<[^<]+>/", $string, $m) != 0;
+    }
+
+    function cek_tag_html($input)
+    {
+        $jum = 0;
+        if ($input != null && $input != "") {
+
+            foreach ($input as $key => $value) {
+                $ini = $this->is_html($value);
+                if ($ini == TRUE) {
+                    $jum++;
+                }
+            }
+            return $jum;
+        }
+    }
+
 } // END-CLASS

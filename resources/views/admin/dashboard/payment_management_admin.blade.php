@@ -340,7 +340,7 @@
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-md-4">
                             <h6 class="h6 cgrey2">Choose Payment Time</h6>
-                            <select id="payment_time_module" class="form-control input-abu" name="payment_time_module"
+                            <select id="payment_time_module_bayar" class="form-control input-abu" name="payment_time_module"
                                 required>
                                 <option disabled selected>Choose</option>
                                 <option value="1">Monthly</option>
