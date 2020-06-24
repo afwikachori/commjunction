@@ -1833,13 +1833,19 @@ function send_whatsapp_teman(phone) {
 function get_profile_custom_regis(params) {
     var uihtml = '';
     $.each(params, function (no, des) {
-        // console.log(des);
         var item = des.param_form_array;
         var inputipe = des.custom_input;
+        var deskripsi = des.description;
         var cusinput = '';
 
         if (inputipe.id == 1) {
-            var pilihan = item.splice(3);
+            if (item[2] == deskripsi ){
+                var pilihan = item.splice(3);
+            }else{
+                var pilihan = item.splice(2);
+            }
+            // var pilihan = item.splice(2);
+
             $.each(pilihan, function (i, item) {
                 if (item == des.value) {
                     cusinput += '<div class="col-md-6 nopadding">' +
@@ -1882,7 +1888,12 @@ function get_profile_custom_regis(params) {
 
         }
         else if (inputipe.id == 6) {
-            var list = item.splice(3);
+            if (item[2] == deskripsi) {
+                var list = item.splice(3);
+            } else {
+                var list = item.splice(2);
+            }
+            // var list = item.splice(3);
             var cekbox = '';
 
             $.each(list, function (i, item) {
@@ -2884,6 +2895,13 @@ function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
 
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
 
 // -------------------------- NOTIFICATION MANAGEMENT SUBS ----------------------------
 function show_card_notification() {
@@ -3136,3 +3154,4 @@ $('#usertipe_notif').change(function () {
 });
 
 // ----------- xx -------------- NOTIFICATION MANAGEMENT SUBS ------------- xx --------------
+

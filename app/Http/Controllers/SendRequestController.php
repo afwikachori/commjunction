@@ -71,18 +71,42 @@ trait SendRequestController
     }
 
 
+    public function formdata_nobody($url, $token)
+    {
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('POST', $url, [
+            'headers' => [
+                'Authorization' => $token
+            ],
+        ]);
+        try {
+            $json = json_decode($request->getBody()->getContents(), true);
+            return $json;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['success'] = false;
+            $error['error'] = true;
+            return $error;
+        }
+    }
+
 
     function is_html($string)
     {
-        return preg_match("/<[^<]+>/", $string, $m) != 0;
+        if(is_array($string) != 1){
+            return preg_match("/<[^<]+>/", $string, $m) != 0;
+        }
     }
 
     function cek_tag_html($input, $sendmethod)
     {
-        // $sendmethod
-        // false : post data & alert
-        // true : ajax & return message
-
         $jum = 0;
         if ($input != null && $input != "") {
 
@@ -93,7 +117,6 @@ trait SendRequestController
                 }
             }
             return $jum;
-
         }
     }
 } //end-traits

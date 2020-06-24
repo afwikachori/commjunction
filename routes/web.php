@@ -76,11 +76,29 @@ Route::prefix('admin')->group(function () {
     Route::get('detail_venue/{id_venue}', 'ModuleController@detailVenueAdmin')->name('get.admin.detail-venue/{id_subs}');
     Route::get('/venue', 'ModuleController@createNewVenueAdmin')->name('get.admin.create-venue');
     Route::get('/publish_venue/{id_venue}', 'ModuleController@publishVenueAdmin')->name('post.admin.publish-venue/{id_venue}');
-
-
     Route::post('create_new_venue', 'ModuleController@PostcreateNewVenueAdmin')->name('post.admin.create-venue');
 
 
+    // MARKET PLACE  - ADMIN
+    Route::prefix('marketplace')->group(function () {
+    Route::get('/status', 'ModuleController@marketplaceStatusCreate_admin')->name('get.admin.market-statuscreate');
+    Route::get('/category', 'ModuleController@marketplacecategoryCreate_admin')->name('get.admin.market-categorycreate');
+    Route::get('/category_list', 'ModuleController@marketplaceCategoryList_admin')->name('get.admin.market-categorylist');
+
+    Route::get('/', 'ModuleController@marketplaceItemCreateView_admin')->name('get.admin.marketplace');
+    Route::get('/item_list', 'ModuleController@marketplaceItemList_admin')->name('get.admin.marketplace-itemlist');
+    Route::get('/publish/{id_item}', 'ModuleController@marketplaceItemPublish_admin')->name('get.admin.marketplace-publish/{id_item}');
+    Route::get('/delete/{id_item}', 'ModuleController@marketplaceItemDelete_admin')->name('get.admin.marketplace-delete/{id_item}');
+
+    Route::get('/detail/{id_item}', 'ModuleController@marketplaceItemDetail_admin')->name('get.admin.marketplace-detail/{id_item}');
+
+    Route::get('/item_user', 'ModuleController@marketplaceItemListUser_admin')->name('get.admin.marketplace-itemuser');
+
+
+    Route::post('/item_post', 'ModuleController@marketplaceItemCreate_admin')->name('post.admin.market-createitem');
+
+
+    });
 
 
 
