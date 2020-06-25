@@ -162,9 +162,9 @@
 
 
             <div class="dropdown-menu navbar-dropdown dropdown-menu-right">
-                <a class="dropdown-item" href="" lang="en" data-lang-token="Settings">
+                {{-- <a class="dropdown-item" href="" lang="en" data-lang-token="Settings">
                     Settings
-                </a>
+                </a> --}}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item langimg" onclick="window.lang.change('id'); return false;">
                     <img border="0" src="/img/id.png" width="20" height="20"> &nbsp; &nbsp; Indonesia</a>

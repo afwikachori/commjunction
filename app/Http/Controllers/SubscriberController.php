@@ -87,6 +87,8 @@ class SubscriberController extends Controller
         ]);
 
         $input = $request->all();
+
+
         $url = env('SERVICE') . 'auth/commsubs';
         $client = new \GuzzleHttp\Client();
         try {
@@ -156,6 +158,16 @@ class SubscriberController extends Controller
         ]);
 
         $input = $request->all(); // getdata form by name
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
+
 
         $datain =  $request->except('_token', 'fullname_subs', 'notlp_subs', 'email_subs', 'username_subs', 'password_subs', 'passconfirm_subs', 'name_community', 'sso_type', 'sso_token', 'community_id');
 
@@ -399,6 +411,15 @@ class SubscriberController extends Controller
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
 
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
+
         $req = new RequestController;
         $fileimg = "";
 
@@ -541,26 +562,16 @@ class SubscriberController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'profilemanagement/changepassword';
 
-        // $client = new \GuzzleHttp\Client();
-        // $headers = [
-        //     'Content-Type' => 'application/json',
-        //     'Authorization' => $ses_login['access_token']
-        // ];
-        // $bodyku = json_encode([
-        //     'old_password' => $input['old_pass_subs'],
-        //     'new_password' => $input['new_pass_subs']
-        // ]);
-
-        // $datakirim = [
-        //     'body' => $bodyku,
-        //     'headers' => $headers,
-        // ];
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
 
         try {
-            // $response = $client->post($url, $datakirim);
-            // $response = $response->getBody()->getContents();
-            // $json = json_decode($response, true);
-
             $req_input =  [
                 'old_password' => $input['old_pass_subs'],
                 'new_password' => $input['new_pass_subs']
@@ -1149,8 +1160,16 @@ class SubscriberController extends Controller
 
     public function confirm_pay_membership_subs(Request $request)
     {
-        $input = $request->all(); // getdata form by name
-        // dd($request);
+        $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
+
         $validator = $request->validate([
             'invoice_number' => 'required',
             'fileup'     => 'required',
@@ -1335,6 +1354,17 @@ class SubscriberController extends Controller
     {
         $ses_login = session()->get('session_subscriber_logged');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
+
+
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 2);
 
@@ -1665,6 +1695,16 @@ class SubscriberController extends Controller
         $url = env('SERVICE') . 'profilemanagement/editprofilecustom';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden!')->autoclose(4500);
+            return back();
+        }
+
 
 
         $cekhtml = $this->cek_tag_html($input, false);
