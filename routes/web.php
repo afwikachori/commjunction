@@ -350,6 +350,24 @@ Route::prefix('subscriber')->group(function () {
 
     Route::get('/tes_enkrip', 'SubscriberController@TesEnkripView')->name('/tes_enkrip');
 
+
+    // MARKET PLACE  - Subscriber
+    Route::prefix('marketplace')->group(function () {
+    Route::get('/category_list', 'ModuleController@marketplaceCategoryList_subs')->name('get.subs.market-categorylist');
+
+    Route::get('/', 'ModuleController@marketplaceItemCreateView_subs')->name('get.subs.marketplace');
+    Route::post('/item_post', 'ModuleController@marketplaceItemCreate_subs')->name('post.subs.market-createitem');
+
+    Route::get('/publish/{id_item}', 'ModuleController@marketplaceItemPublish_subs')->name('get.subs.marketplace-publish/{id_item}');
+    Route::get('/delete/{id_item}', 'ModuleController@marketplaceItemDelete_subs')->name('get.subs.marketplace-delete/{id_item}');
+    Route::get('/detail/{id_item}', 'ModuleController@marketplaceItemDetail_subs')->name('get.subs.marketplace-detail/{id_item}');
+
+    Route::get('/item_user', 'ModuleController@marketplaceItemListUser_subs')->name('get.subs.marketplace-itemuser');
+
+
+    });
+
+
     //EVENT _ TICKET
     Route::get('/buy_ticket', 'ModuleController@buyTicketEvent')->name('get.subs.buy-ticket');
 

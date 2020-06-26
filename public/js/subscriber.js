@@ -1318,7 +1318,7 @@ function table_news_list() {
 
 function send_love_news(idnews) {
     var token = $('meta[name="csrf-token"]').attr('content');
-    alert(idnews);
+    // alert(idnews);
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
