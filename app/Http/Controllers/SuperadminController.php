@@ -23,6 +23,10 @@ class SuperadminController extends Controller
     use RequestHelper;
     use SendRequestController;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
 
     public function dashboarSuperView()
     {

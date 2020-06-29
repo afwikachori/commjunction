@@ -22,6 +22,10 @@ class AdminCommController extends Controller
     use RequestHelper;
     use SendRequestController;
 
+    public function __construct(){
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function adminDashboardView()
     {
         return view('admin/dashboard/dashboard_admin');
@@ -1254,7 +1258,7 @@ class AdminCommController extends Controller
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
-            alert()->success('Successfully to add new user', 'Added')->persistent('Done');
+            alert()->success('Successfully to add new user', 'Added')->autoclose(4500);
             return back();
         } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);

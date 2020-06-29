@@ -15,6 +15,11 @@ use Helper;
 
 class SupportCommjunction extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function OpeningSupportView()
     {
         return view('support/index_support');

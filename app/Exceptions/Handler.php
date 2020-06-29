@@ -49,8 +49,8 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
-        // alert()->error('Request Timeout', 'Sorry!')->autoclose(4500);
-        // return back();
+        // return parent::render($request, $exception);
+        alert()->error($exception->getMessage(), 'Sorry!')->autoclose(4500);
+        return back();
     }
 }

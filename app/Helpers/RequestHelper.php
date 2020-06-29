@@ -22,7 +22,7 @@ trait RequestHelper
 
     private $token;
 
-    public function __construct()
+    public function init_variable()
     {
         $this->publicKeyPath = storage_path('keys/public.pem');
         $this->privateKeyPath = storage_path('keys/private.pem');
@@ -39,6 +39,8 @@ trait RequestHelper
     public function encryptedPost(Request $request, $input, $endpoint, $token)
     {
         // dd($input);
+        $this->init_variable();
+
         if ($token == null) {
             $headers = [
                 'Content-Type' => 'application/json',
@@ -119,6 +121,7 @@ trait RequestHelper
 
     private function encrypt($plain)
     {
+        $this->init_variable();
         $openPubKey = fopen($this->publicKeyPath, "r");
         $readPubKey = fread($openPubKey, 8192);
 
@@ -149,6 +152,7 @@ trait RequestHelper
 
     private function decrypt($encrypted)
     {
+        $this->init_variable();
         $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
 
         $encrypted = base64_decode($encrypted);
@@ -176,6 +180,7 @@ trait RequestHelper
 
     private function encrypt_regis($plain)
     {
+        $this->init_variable();
         $data = [];
         $n  = count($plain);
         $index = 0;
@@ -205,7 +210,7 @@ trait RequestHelper
 
     private function encrypt_array($plain)
     {
-
+        $this->init_variable();
         $jcode = json_encode($plain);
         $output = '';
         $hasil = [];
@@ -221,6 +226,7 @@ trait RequestHelper
 
     private function proses_enkrip($plain)
     {
+        $this->init_variable();
         // return $plain;
         $openPubKey = fopen($this->publicKeyPath, "r");
         $readPubKey = fread($openPubKey, 8192);
@@ -252,6 +258,7 @@ trait RequestHelper
 
     private function dekrip_proses($encrypted)
     {
+        $this->init_variable();
         $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
         // dd($encrypted);
         // $encrypted = json_encode($encrypted);

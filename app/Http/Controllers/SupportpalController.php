@@ -12,6 +12,11 @@ class SupportpalController extends Controller
 {
     use RequestHelper;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     // ------------------------- ARTIKEL -------------------------
     public function listArticle()
     {

@@ -21,6 +21,11 @@ class ModuleController extends Controller
 
     use SendRequestController;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function NewsManagementView()
     {
         return view('admin/dashboard/news_management');

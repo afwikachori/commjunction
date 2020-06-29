@@ -21,6 +21,11 @@ class SubscriberController extends Controller
     use RequestHelper;
     use SendRequestController;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function loginView()
     {
         return view('subscriber/login');
@@ -257,29 +262,30 @@ class SubscriberController extends Controller
             $bgportal = env('CDN') . '/' . $portal;
             $arr_auth = [];
 
-            $im = @imagecreatefromjpeg($bgportal);
-            /* See if it failed */
-            if (!$im) {
-                $bgportal = asset('img/bg_subs.jpg');
-            } else {
-                $bgportal = env('CDN') . '/' . $portal;
-            }
-            // require $bgportal;
+            // $im = @imagecreatefromjpeg($bgportal);
+            // /* See if it failed */
+            // if (!$im) {
+            //     $bgportal = asset('img/bg_subs.jpg');
+            // } else {
+            //     $bgportal = env('CDN') . '/' . $portal;
+            // }
+            // // require $bgportal;
 
-            $image = imagecreatefromjpeg($bgportal);
-            $thumb = imagecreatetruecolor(1, 1);
-            imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
+            // $image = imagecreatefromjpeg($bgportal);
+            // $thumb = imagecreatetruecolor(1, 1);
+            // imagecopyresampled($thumb, $image, 0, 0, 0, 0, 1, 1, imagesx($image), imagesy($image));
 
-            $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
-            $maincolor = '#' . $mainColor;
+            // $mainColor = strtoupper(dechex(imagecolorat($thumb, 0, 0)));
+            // $maincolor = '#' . $mainColor;
 
-            $new =  array_merge(["maincolor" => $maincolor], $json['data']);
-            array_push($arr_auth, $new);
+            // $new =  array_merge(["maincolor" => $maincolor], $json['data']);
+            array_push($arr_auth, $json['data']);
 
 
             // return $arr_auth;
             session()->put('auth_subs', $arr_auth);
             // return redirect('subscriber')->with('subs_data', $arr_auth);
+            // return $json['data'];
             return view('subscriber/login')->with('subs_data', $arr_auth);
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);

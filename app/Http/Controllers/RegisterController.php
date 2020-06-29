@@ -17,6 +17,11 @@ class RegisterController extends Controller
 {
     use RequestHelper;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function ReviewAdminView()
     {
         return view('admin/final_review_admin');
@@ -1022,25 +1027,26 @@ try{
                     $reshasil = $responseImage['data'];
                     alert()->success('Successfully Upload', 'System will confirm your payment max 24hours, then Login');
                     session()->forget('ses_invoice_pay');
-                    return view('admin/login');
-                } else {
-                    return back()->with('response', [
-                        'status'   => 'error',
-                        'messages' => [
-                            'title'   => 'Insert Image',
-                            'messages' => $responseImage['message']
-                        ]
-                    ]);
+                    return redirect('/admin');
                 }
-            } catch (ClientException $exception) {
-                $status_error = $exception->getCode();
-
-                if ($status_error == 400) {
-                    session()->forget('ses_invoice_pay');
-                    alert()->warning('Anda sudah mengirim verifikasi lebih dari 3x hari ini, mohon bersabar dan tunggu', 'You have sending 3 Times!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['success'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
+        }else{
+            alert()->error('Image is required', 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
