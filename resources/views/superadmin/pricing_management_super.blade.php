@@ -46,14 +46,14 @@
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Pricing Name</th>
-                                        <th>Monthly Price</th>
-                                        <th>Annual Price</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Total Feature</th>
-                                        <th>Action</th>
+                                        <th><b>ID</b></th>
+                                        <th><b>Pricing Name</b></th>
+                                        <th><b>Monthly Price</b></th>
+                                        <th><b>Annual Price</b></th>
+                                        <th><b>Type</b></th>
+                                        <th><b>Status</b></th>
+                                        <th><b>Total Feature</b></th>
+                                        <th><b>Action</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -194,7 +194,7 @@
                                             <i id="browse_img_pricing" class="mdi mdi-camera upload-button"></i>
                                         </button>
                                         <input id="file_img_pricing" class="file-upload file-upload-default" type="file"
-                                            name="fileup" accept="image/*" required />
+                                            name="fileup" accept="image/*"/>
                                     </div>
                                 </div>
                             </div>

@@ -523,7 +523,8 @@ Route::prefix('superadmin')->group(function () {
     Route::get('/add_user', 'SuperadminController@UserSuperView')->name('/add_user');
     Route::get('/verify', 'SuperadminController@paymentSuperView')->name('/verify');
     Route::get('/module', 'SuperadminController@ModuleManagementView')->name('/module');
-    // Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
+    Route::get('/logout', 'SuperadminController@LogoutSuperadminhref')->name('/logout');
+
     Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
     Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
     Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');

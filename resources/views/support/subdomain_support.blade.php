@@ -123,7 +123,7 @@
         $('#tabel_komunitas_support').DataTable().clear().destroy();
         $('#tabel_komunitas_support').empty();
 
-        var thead = '<tr>' +
+        var thead = '<thead><tr>' +
             '<th><b>ID</b></th>' +
             '<th><b>Logo</b></th>' +
             '<th><b>Community Name</b></th>' +
@@ -132,7 +132,7 @@
             '<th><b>Status</b></th>' +
             '<th><b>Date Created</b></th>' +
             '<th><b>Action</b></th>' +
-            '</tr>';
+            '</tr></thead>';
 
         $('#tabel_komunitas_support').html(thead);
 

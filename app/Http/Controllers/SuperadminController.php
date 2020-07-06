@@ -349,7 +349,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-           return 'nodata';
+            return 'nodata';
         }
     }
 
@@ -426,6 +426,25 @@ class SuperadminController extends Controller
         } //END-IF  UPLOAD-IMAGE
     } //end-function
 
+
+    public function LogoutSuperadminhref()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $url = env('SERVICE') . 'profilemanagement/logout';
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            session()->forget('session_logged_superadmin');
+            return redirect('superadmin');
+        } else if ($json["status"] == 401 || $json["message"] == "Unauthorized") {
+            alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+            return redirect('superadmin');
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 
     public function LogoutSuperadmin(Request $request)
@@ -952,7 +971,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -974,7 +993,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1046,7 +1065,7 @@ class SuperadminController extends Controller
         $input = $request->all();
 
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         //    return $json;
         if ($json['status'] == 200) {
             return $json['data'];
@@ -1095,13 +1114,12 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listsubfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             'feature_id' => $input['feature_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1148,7 +1166,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1206,10 +1224,15 @@ class SuperadminController extends Controller
             return back();
         }
 
-        if (is_array($input['multi_fiturpricing'])) {
-            $fiturlist = implode(", ", $input['multi_fiturpricing']);
+        if ($request->has('multi_fiturpricing')) {
+            if (is_array($input['multi_fiturpricing'])) {
+                $fiturlist = implode(", ", $input['multi_fiturpricing']);
+            } else {
+                $fiturlist = $input['multi_fiturpricing'];
+            }
         } else {
-            $fiturlist = $input['multi_fiturpricing'];
+            alert()->error('Feature is Required', 'Required!')->autoclose(4500);
+            return back();
         }
 
         $req = new RequestController;
@@ -1256,7 +1279,10 @@ class SuperadminController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } //END-IF  UPLOAD-IMAGE
+        } else {
+            alert()->error('File Image is Required', 'Required!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -1365,7 +1391,7 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1381,8 +1407,6 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/admreporttrans';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-
         $body = [
             "start_date"  => $input['start_date'],
             "end_date"  => $input['end_date'],
@@ -1392,12 +1416,12 @@ class SuperadminController extends Controller
             "max_transaction"  => $input['max_transaction'],
             "community_id"  => $input['community_id'],
         ];
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1422,7 +1446,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1438,7 +1462,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1747,7 +1771,6 @@ class SuperadminController extends Controller
         }
 
         $token = $ses_login['access_token'];
-        // dd($input);
 
         $req = new RequestController;
         $fileimg = "";
@@ -1795,7 +1818,10 @@ class SuperadminController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } //END-IF  UPLOAD-IMAGE
+        } else {
+            alert()->error('File Image is Required', 'Required!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -1813,7 +1839,7 @@ class SuperadminController extends Controller
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
             'filter_title'  => $input['filter_title'],
-            'notification_sub_type' => $input['notification_sub_type'],
+            'notification_sub_type' => (int) $input['notification_sub_type'],
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
@@ -1834,7 +1860,7 @@ class SuperadminController extends Controller
         $csrf = $input['_token'];
 
         $body = [
-            "user_type" => $input['user_type'],
+            "user_type" => (int) $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
@@ -1906,6 +1932,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/detailnotification';
 
         $input = $request->all();
+        // return $input;
         $csrf = $input['_token'];
 
         $body = [
@@ -2138,7 +2165,7 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {

@@ -59,12 +59,12 @@
                                     style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th>ID Subscriber</th>
-                                            <th>Subscriber Name</th>
-                                            <th>Membership</th>
-                                            <th>Join Date</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th><b>ID Subscriber</b></th>
+                                            <th><b>Subscriber Name</b></th>
+                                            <th><b>Membership</b></th>
+                                            <th><b>Join Date</b></th>
+                                            <th><b>Status</b></th>
+                                            <th><b>Action</b></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -92,12 +92,12 @@
                                     class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>ID Subscriber</th>
-                                            <th>Membership</th>
-                                            <th>Subcriber Name</th>
-                                            <th>Status</th>
-                                            <th>Created Date</th>
-                                            <th>Action</th>
+                                            <th><b>ID Subscriber</b></th>
+                                            <th><b>Membership</b></th>
+                                            <th><b>Subcriber Name</b></th>
+                                            <th><b>Status</b></th>
+                                            <th><b>Created Date</b></th>
+                                            <th><b>Action</b></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -355,7 +355,5 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
