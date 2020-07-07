@@ -201,8 +201,11 @@ function ses_auth_subs() {
         type: 'POST',
         datatype: 'JSON',
         success: function (result) {
+            if(result.success == false){
+                location.href = '/404';
+            }else{
+                console.log(result);
             var result = result[0];
-            // console.log(result);
             var custom = result.cust_portal_login;
 
             // var base_color = custom.base_color;
@@ -217,6 +220,7 @@ function ses_auth_subs() {
             $.cookie('accent_color', custom.accent_color, { expires: 30 });
             $.cookie('background_color', custom.background_color, { expires: 30 });
             $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
+            }
         },
         error: function (result) {
             $.cookie('base_color', null);
@@ -546,6 +550,7 @@ function get_inbox_navbar_subs() {
             "_token" : token,
         },
         success: function (result) {
+            // console.log('------------- get_inbox_navbar_subs');
             // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
@@ -787,6 +792,7 @@ function get_payment_initial() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
+            // console.log('----------- get_payment_initial');
             // console.log(result);
             var text = '';
             var isibank = '';
@@ -939,6 +945,7 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
+            console.log('----------- get_list_notif_navbar');
             console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
@@ -1178,10 +1185,9 @@ function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
 
-        get_payment_initial();
-
         get_dashboard_news();
         get_friends_total();
+
         get_friends_sugestion();
         get_top_friends();
 
@@ -1718,7 +1724,8 @@ function suggestion_list() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('----------- suggestion_list');
+            // console.log(result);
             if (result.length == 0) {
                 $(".divkonco.pagefriend").hide();
             }
@@ -2404,7 +2411,7 @@ function get_dashboard_news() {
             "_token": token
         },
         success: function (result) {
-            console.log('data headline news');
+            // console.log('-------------- get_dashboard_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_dash_artikel").show();
@@ -2471,6 +2478,7 @@ function get_friends_total() {
             "_token": token
         },
         success: function (result) {
+            // console.log('---------- get_friends_total');
             // console.log(result);
             if (result.success == false) {
                 $(".total_friend").html("0");
@@ -2503,7 +2511,8 @@ function get_top_friends() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('--------- get_top_friends');
+            // console.log(result);
             if (result.success == false) {
                 $("#topfriend_nodata").show();
                 $("#isi_top_friends").hide();
@@ -2556,6 +2565,7 @@ function get_friends_sugestion() {
             "_token": token
         },
         success: function (result) {
+            // console.log('------------- get_friends_sugestion');
             // console.log(result);
             if (result.success == false) {
                 $(".divkonco").hide();
@@ -2628,6 +2638,7 @@ function get_last_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_last_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_last_news").show();
@@ -2674,6 +2685,7 @@ function get_love_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_love_news');
             // console.log(result);
             var noimg = '/img/fitur.png';
             if (result.success == false) {
@@ -2731,6 +2743,7 @@ function get_topvisit_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_topvisit_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_topvisit_news").show();
@@ -2779,12 +2792,13 @@ function get_top_player() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('------------- get_top_player');
+            // console.log(result);
             if (result.success == false) {
                 $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();
                 console.log(result);
-            }
+            }else{
 
             if (result.length == 0) {
                 $("#topplayer_nodata").show();
@@ -2818,7 +2832,7 @@ function get_top_player() {
                 $("#isi_top_player").html(iuplyr);
                 $("#topplayer_nodata").hide();
                 $("#isi_top_player").show();
-
+            }
             }
         },
         error: function (result) {
@@ -2846,18 +2860,18 @@ function get_top_visit_club() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('------------- get_top_visit_club');
+            // console.log(result);
             if (result.success == false) {
                 console.log(result);
                 $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
-            }
-
+            }else{
             if (result.length == 0) {
                 $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
             }
-
+        }
         },
         error: function (result) {
             $("#topclubvisit_nodata").show();

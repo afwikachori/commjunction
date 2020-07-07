@@ -806,7 +806,7 @@ function tabel_req_verify() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_verify_superadmin tbody').empty().append(nofound);
             },
         },
@@ -1607,7 +1607,7 @@ function tabel_usertype_management() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_usertype_manage tbody').empty().append(nofound);
             },
         },
@@ -1929,7 +1929,7 @@ function show_tabel_transaksi() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
                 $('#tabel_trans tbody').empty().append(nofound);
             },
@@ -2066,7 +2066,7 @@ $("#btn_filter_transaksi").click(function (e) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_trans tbody').empty().append(nofound);
             },
         },
@@ -2119,7 +2119,7 @@ function tabel_user_management() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3></td></tr>';
                 $('#tabel_user_manage tbody').empty().append(nofound);
             },
         },
@@ -2312,7 +2312,7 @@ function tabel_log_magement_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_log_magement_super tbody').empty().append(nofound);
             },
         },
@@ -2455,7 +2455,7 @@ function tabel_report_concile_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_concile_report tbody').empty().append(nofound);
             },
         },
@@ -2464,7 +2464,7 @@ function tabel_report_concile_super(bulan, tahun) {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_concile_report tbody').empty().append(nofound);
 
         },
@@ -2552,13 +2552,13 @@ function tabel_report_module_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_module_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_module_report tbody').empty().append(nofound);
 
         },
@@ -2617,13 +2617,13 @@ function tabel_report_komunitas_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_komunitas_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_komunitas_report tbody').empty().append(nofound);
 
         },
@@ -2684,13 +2684,13 @@ function tabel_report_transaksi_super() {
                 "community_id": $("#komuniti_trans").val(),
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_transaksi_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_transaksi_report tbody').empty().append(nofound);
 
         },
@@ -2798,6 +2798,9 @@ function get_list_komunitas_report() {
             "_token": token
         },
         success: function (result) {
+            if(result.success == false){
+                get_list_komunitas_report();
+            }else{
             $('#komuniti_trans').empty();
             $('#komuniti_trans').append("<option value='0' disabled> Choose</option>");
 
@@ -2835,6 +2838,7 @@ function get_list_komunitas_report() {
             }));
 
             $("#komuniti_trans3").get(0).selectedIndex = 0;
+        }
         }
     });
 }
@@ -3286,7 +3290,7 @@ function tabel_module_report_superadmin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_module_report_superadmin tbody').empty().append(nofound);
             },
         },
@@ -3545,7 +3549,7 @@ function tabel_payment_all_super() {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_payment_all_super tbody').empty().append(nofound);
 
         },
@@ -3907,7 +3911,7 @@ function tabel_generate_notif_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_generate_notif_super tbody').empty().append(nofound);
             },
         },
@@ -4040,17 +4044,7 @@ function detail_notif_super(dtku) {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/admin';
-                        }, 5000);
-                    } else {
-                        ui.popup.show('warning', result.message, 'Warning');
-                    }
-                } else {
-                    var res = result[0];
+                    var res = result;
                     $("#modal_detail_notif").modal('show');
                     $("#detail_judul").html(res.title);
                     $("#detail_dekripsi").html(res.description);
@@ -4060,7 +4054,7 @@ function detail_notif_super(dtku) {
                     $("#detail_usertipe").html(res.user_type_title);
                     $("#detail_tipenotif").html(res.notifcation_sub_type_title);
                     $("#dibuat_oleh").html(res.created_by);
-                }
+
             }
         },
         error: function (result) {
@@ -4213,7 +4207,7 @@ function tabel_inbox_message_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_inbox_message_super tbody').empty().append(nofound);
             },
         },

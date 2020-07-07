@@ -351,7 +351,10 @@ class SubscriberController extends Controller
             $auth_subs = session()->get('auth_subs');
             return $auth_subs;
         } else {
-            return view('404');
+            $error['status'] = 500;
+            $error['message'] = "No Session Auth";
+            $error['success'] = false;
+            return $error;
         }
     }
 
@@ -619,7 +622,7 @@ class SubscriberController extends Controller
             'limit' => $input['limit'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1509,7 +1512,7 @@ class SubscriberController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1612,7 +1615,7 @@ class SubscriberController extends Controller
             'limit' => $input['limit'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
