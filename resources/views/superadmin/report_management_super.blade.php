@@ -57,14 +57,14 @@
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Number</th>
-                                        <th>Transaction Date</th>
-                                        <th>Status</th>
-                                        <th>Type</th>
-                                        <th>Admin Name</th>
-                                        <th>Nominal</th>
-                                        <th>Payment Type</th>
-                                        <th>Payment Method</th>
+                                        <th><b>Invoice Number</b></th>
+                                        <th><b>Transaction Date</b></th>
+                                        <th><b>Status</b></th>
+                                        <th><b>Type</b></th>
+                                        <th><b>Admin Name</b></th>
+                                        <th><b>Nominal</b></th>
+                                        <th><b>Payment Type</b></th>
+                                        <th><b>Payment Method</b></th>
 
                                     </tr>
                                 </thead>
@@ -83,12 +83,12 @@
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Number</th>
-                                        <th>Transaction Date</th>
-                                        <th>Status</th>
-                                        <th>Type</th>
-                                        <th>Admin Name</th>
-                                        <th>Nominal</th>
+                                        <th><b>Invoice Number</b></th>
+                                        <th><b>Transaction Date</b></th>
+                                        <th><b>Status</b></th>
+                                        <th><b>Type</b></th>
+                                        <th><b>Admin Name</b></th>
+                                        <th><b>Nominal</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -104,11 +104,11 @@
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>ID Activity</th>
-                                        <th>Module</th>
-                                        <th>Activity</th>
-                                        <th>Endpoint</th>
-                                        <th>Date</th>
+                                        <th><b>ID Activity</b></th>
+                                        <th><b>Module</b></th>
+                                        <th><b>Activity</b></th>
+                                        <th><b>Endpoint</b></th>
+                                        <th><b>Date</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -123,11 +123,11 @@
                                 style="width:100% ; display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Community Name</th>
-                                        <th>Module</th>
-                                        <th>Activity</th>
-                                        <th>Endpoint</th>
-                                        <th>Date</th>
+                                        <th><b>Community Name</b></th>
+                                        <th><b>Module</b></th>
+                                        <th><b>Activity</b></th>
+                                        <th><b>Endpoint</b></th>
+                                        <th><b>Date</b></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -159,12 +159,12 @@
                             <div class="form-group">
                                 <small class="clight s13">Start Date</small>
                                 <input type="date" id="tanggal_mulai" name="tanggal_mulai"
-                                    class="form-control input-abu">
+                                    class="form-control input-abu" required>
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Transaction Type</small>
                                 <select class="form-control input-abu listjenistrans" name="jenis_transaksi"
-                                    id="jenis_transaksi">
+                                    id="jenis_transaksi" required>
                                     <option selected disabled> Choose </option>
                                 </select>
                             </div>
@@ -174,11 +174,12 @@
                             <div class="form-group">
                                 <small class="clight s13">End Date</small>
                                 <input type="date" id="tanggal_selesai" name="tanggal_selesai"
-                                    class="form-control input-abu">
+                                    class="form-control input-abu" required>
                             </div>
                             <div class="form-group">
                                 <small class="clight s13">Transaction Status</small>
-                                <select class="form-control input-abu" name="status_transaksi" id="status_transaksi">
+                                <select class="form-control input-abu" name="status_transaksi" id="status_transaksi"
+                                required>
                                     <option selected disabled> Choose </option>
                                     <option value="1"> Pending </option>
                                     <option value="2"> Approved </option>
@@ -192,7 +193,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community Name</small>
-                                <select class="form-control input-abu" name="komuniti_trans" id="komuniti_trans">
+                                <select class="form-control input-abu" name="komuniti_trans" id="komuniti_trans" required>
                                     <option selected disabled> Choose </option>
                                 </select>
                             </div>
@@ -210,7 +211,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control input-abu" id="min_trans"
-                                            name="min_trans">
+                                            name="min_trans" required>
                                     </div>
                                     <div class="col-md-2">
                                         <small class="clight s13"
@@ -218,7 +219,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control input-abu" id="max_trans"
-                                            name="max_trans">
+                                            name="max_trans" required>
                                     </div>
                                 </div>
                             </div>
@@ -352,7 +353,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
 
-            <form id="form_komunitas_report">
+            <form id="form_module_report">
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                     <small class="modal-title cdarkgrey">Generate Report</small>
                     <h4 class="cblue" style="margin-bottom: 1.5em;">Module Report</h4>

@@ -76,11 +76,29 @@ Route::prefix('admin')->group(function () {
     Route::get('detail_venue/{id_venue}', 'ModuleController@detailVenueAdmin')->name('get.admin.detail-venue/{id_subs}');
     Route::get('/venue', 'ModuleController@createNewVenueAdmin')->name('get.admin.create-venue');
     Route::get('/publish_venue/{id_venue}', 'ModuleController@publishVenueAdmin')->name('post.admin.publish-venue/{id_venue}');
-
-
     Route::post('create_new_venue', 'ModuleController@PostcreateNewVenueAdmin')->name('post.admin.create-venue');
 
 
+    // MARKET PLACE  - ADMIN
+    Route::prefix('marketplace')->group(function () {
+    Route::get('/status', 'ModuleController@marketplaceStatusCreate_admin')->name('get.admin.market-statuscreate');
+    Route::get('/category', 'ModuleController@marketplacecategoryCreate_admin')->name('get.admin.market-categorycreate');
+    Route::get('/category_list', 'ModuleController@marketplaceCategoryList_admin')->name('get.admin.market-categorylist');
+
+    Route::get('/', 'ModuleController@marketplaceItemCreateView_admin')->name('get.admin.marketplace');
+    Route::get('/item_list', 'ModuleController@marketplaceItemList_admin')->name('get.admin.marketplace-itemlist');
+    Route::get('/publish/{id_item}', 'ModuleController@marketplaceItemPublish_admin')->name('get.admin.marketplace-publish/{id_item}');
+    Route::get('/delete/{id_item}', 'ModuleController@marketplaceItemDelete_admin')->name('get.admin.marketplace-delete/{id_item}');
+
+    Route::get('/detail/{id_item}', 'ModuleController@marketplaceItemDetail_admin')->name('get.admin.marketplace-detail/{id_item}');
+
+    Route::get('/item_user', 'ModuleController@marketplaceItemListUser_admin')->name('get.admin.marketplace-itemuser');
+
+
+    Route::post('/item_post', 'ModuleController@marketplaceItemCreate_admin')->name('post.admin.market-createitem');
+
+
+    });
 
 
 
@@ -332,6 +350,24 @@ Route::prefix('subscriber')->group(function () {
 
     Route::get('/tes_enkrip', 'SubscriberController@TesEnkripView')->name('/tes_enkrip');
 
+
+    // MARKET PLACE  - Subscriber
+    Route::prefix('marketplace')->group(function () {
+    Route::get('/category_list', 'ModuleController@marketplaceCategoryList_subs')->name('get.subs.market-categorylist');
+
+    Route::get('/', 'ModuleController@marketplaceItemCreateView_subs')->name('get.subs.marketplace');
+    Route::post('/item_post', 'ModuleController@marketplaceItemCreate_subs')->name('post.subs.market-createitem');
+
+    Route::get('/publish/{id_item}', 'ModuleController@marketplaceItemPublish_subs')->name('get.subs.marketplace-publish/{id_item}');
+    Route::get('/delete/{id_item}', 'ModuleController@marketplaceItemDelete_subs')->name('get.subs.marketplace-delete/{id_item}');
+    Route::get('/detail/{id_item}', 'ModuleController@marketplaceItemDetail_subs')->name('get.subs.marketplace-detail/{id_item}');
+
+    Route::get('/item_user', 'ModuleController@marketplaceItemListUser_subs')->name('get.subs.marketplace-itemuser');
+
+
+    });
+
+
     //EVENT _ TICKET
     Route::get('/buy_ticket', 'ModuleController@buyTicketEvent')->name('get.subs.buy-ticket');
 
@@ -394,6 +430,7 @@ Route::prefix('subscriber')->group(function () {
     Route::post('LogoutSubscriber', 'SubscriberController@LogoutSubscriber')->name('LogoutSubscriber');
     Route::post('confirm_pay_membership_subs', 'SubscriberController@confirm_pay_membership_subs')->name('confirm_pay_membership_subs');
     Route::post('get_list_notif_navbar', 'SubscriberController@get_list_notif_navbar')->name('get_list_notif_navbar');
+    Route::post('get_list_notif_management', 'SubscriberController@get_list_notif_management')->name('get_list_notif_management');
     Route::post('set_initial_membership_pay', 'SubscriberController@set_initial_membership_pay')->name('set_initial_membership_pay');
     Route::post('get_payment_initial', 'SubscriberController@get_payment_initial')->name('get_payment_initial');
     Route::post('get_pricing_membership', 'SubscriberController@get_pricing_membership')->name('get_pricing_membership');
@@ -486,7 +523,8 @@ Route::prefix('superadmin')->group(function () {
     Route::get('/add_user', 'SuperadminController@UserSuperView')->name('/add_user');
     Route::get('/verify', 'SuperadminController@paymentSuperView')->name('/verify');
     Route::get('/module', 'SuperadminController@ModuleManagementView')->name('/module');
-    // Route::get('/logout', 'SuperadminController@LogoutSuperadmin')->name('/logout');
+    Route::get('/logout', 'SuperadminController@LogoutSuperadminhref')->name('/logout');
+
     Route::get('/usertype', 'SuperadminController@UserTypeView')->name('/usertype');
     Route::get('/subscriber', 'SuperadminController@SubscriberManagementSuperView')->name('/subscriber');
     Route::get('/user_manage', 'SuperadminController@UserManagementSuperView')->name('/user_manage');

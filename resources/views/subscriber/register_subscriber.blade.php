@@ -103,7 +103,8 @@
 
                                                 <input id="notlp_subs" type="text"
                                                     class="form-control @error('notlp_subs') is-invalid @enderror"
-                                                    name="notlp_subs" value="{{ old('notlp_subs') }}" required>
+                                                    name="notlp_subs" value="{{ old('notlp_subs') }}"
+                                                    onkeypress="return isNumberKey(event)" required>
                                                 <small id="pesan_phoneformat" class="redhide" lang="en">At least
                                                     contains 10 Numbers!</small>
                                                 <small id="pesan_phone" class="redhide" lang="en">Number phone has
@@ -257,6 +258,7 @@
                                     <div class="row" id="custom_input_regis">
 
                                     </div>
+                                    <input type="hidden" id="total_radio">
                                     <div class="row" style="margin-top: 1em;">
                                         <button type="button" class="btn btn-backregis1" lang="en"
                                             onclick="back_pesonal()">Go Back</button>
@@ -389,8 +391,39 @@
 
     });
 
+    var failed = 0;
+    var radiocek = 0;
     function next_submit() {
-        $("#nav-community-tab").trigger("click");
+        var failed = 0;
+        var radiocek = 0;
+
+        $('.customin').each(function () {
+            if ($(this).val().length == 0) {
+                failed++;
+                swal("Required !", "Some fields are empty", "warning");
+            } else {
+                 var radiocekin = $('input[type=radio].customin1:checked');
+                var radiocek = 0;
+                $(radiocekin).each(function (i) {
+                    radiocek++;
+                });
+
+
+                if ($("#total_radio").val() != radiocek) {
+                    failed++;
+                    swal("Required !", "Radio button are empty", "warning");
+                } else {
+                    failed = 0;
+                }
+            }
+        });
+
+
+
+        if (failed == 0) {
+            $("#nav-community-tab").trigger("click");
+        }
+
     }
 
 
@@ -499,8 +532,12 @@
         var uihtml = '';
         var uireview = '';
         var idinput = '';
+        var total = 0;
+        var jumradio = 0;
+
 
         $.each(params, function (no, des) {
+            total++;
             // console.log(des);
             var item = des.param_form_array;
             var inputipe = des.custom_input;
@@ -509,6 +546,7 @@
             var klasinput;
 
             if (inputipe.id == 1) {
+                jumradio++;
                 if (item[2] != des.description) {
                     var pilihan = item.splice(2);
                 } else {
@@ -520,30 +558,30 @@
                     cusinput += '<div class="col-md-6">' +
                         '<div class="form-check">' +
                         '<small class="form-check-label">' +
-                        '<input type="radio" class="form-check-input" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '"> ' +
+                        '<input type="radio" class="form-check-input customin1" name="radio' + no + '" id="radio' + no + i + '" value="' + item + '" required> ' +
                         item + '<i class="input-helper"></i></small>' +
                         '</div></div>';
                 });
                 klasinput = "radio" + no;
             } else if (inputipe.id == 2) {
                 cusinput = '<input id="number' + no + '" type="text"' +
-                    'class="form-control" name="number' + no + '"' +
+                    'class="form-control customin" name="number' + no + '"' +
                     'onkeypress="return isNumberKey(event)"' +
-                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '" required>';
                 klasinput = "number" + no;
             } else if (inputipe.id == 3) {
                 cusinput = '<input id="text' + no + '" type="text"' +
-                    'class="form-control" name="text' + no + '"' +
-                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+                    'class="form-control customin" name="text' + no + '"' +
+                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '" required>';
                 klasinput = "text" + no;
             } else if (inputipe.id == 4) {
                 cusinput = '<textarea id="textarea' + no + '" rows="2"' +
-                    'class="form-control" name="textarea' + no + '"></textarea >';
+                    'class="form-control customin" name="textarea' + no + '" required></textarea >';
                 klasinput = "textarea" + no;
             } else if (inputipe.id == 5) {
                 cusinput = '<input id="date' + no + '" type="date"' +
-                    'class="form-control" name="date' + no + '"' +
-                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '">';
+                    'class="form-control customin" name="date' + no + '"' +
+                    'data-toggle="tooltip" data-placement="top" title="' + des.description + '" required>';
                 klasinput = "date" + no;
             }
             else if (inputipe.id == 6) {
@@ -555,7 +593,7 @@
 
                 $.each(list, function (i, item) {
                     cusinput += '<div class="form-check col-md-6">' +
-                        '<input class="form-check-input" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '">' +
+                        '<input class="form-check-input customin" type="checkbox" name="checkbox' + no + '[]" value="' + item + '" id="checkbox' + i + '">' +
                         '<small class="form-check-label" for="checkbox' + no + '">' + item +
                         '</small>' +
                         '</div>';
@@ -567,7 +605,7 @@
                 $.each(pilihan, function (i, item) {
                     dropdown += '<option value="' + item + '">' + item + '</option>';
                 });
-                cusinput = '<select class="form-control fullwidth" name="dropdown' + no + '" id="dropdown' + no + '">' + dropdown + '</select>';
+                cusinput = '<select class="form-control customin fullwidth" name="dropdown' + no + '" id="dropdown' + no + '" required>' + dropdown + '</select>';
                 klasinput = "dropdown" + no;
             }
 
@@ -600,6 +638,8 @@
 
         $("#custom_input_regis").html(uihtml);
         $("#isi_review_custominput").html(uireview);
+
+        $("#total_radio").val(jumradio);
 
     }
 

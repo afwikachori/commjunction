@@ -8,7 +8,7 @@
     <style lang="sass">
         :root {
              --base_color: {{ $dt['cust_portal_login']['base_color'] }};
-               --accent_color: {{ $dt['cust_portal_login']['accent_color'] }};
+            --accent_color: {{ $dt['cust_portal_login']['accent_color'] }};
         }
     </style>
 @endsection
@@ -20,8 +20,7 @@
 
 @section('content')
 <div class="row" style="overflow: hidden;">
-    <div class="col-md-8 biruq"
-style="background:{{$dt['maincolor']}} !important;">
+    <div class="col-md-8 biruq">
         <img src="{{ env('CDN') }}/{{ $dt['cust_portal_login']['image'] }}" id="img_portal_bg"
         onerror="this.onerror=null;this.src='/visual/bg_subs.png';">
 

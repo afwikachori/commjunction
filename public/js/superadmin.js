@@ -804,7 +804,11 @@ function tabel_req_verify() {
             data: {
                 "_token": token
             },
-            timeout: 30000
+            timeout: 30000,
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
+                $('#tabel_verify_superadmin tbody').empty().append(nofound);
+            },
         },
         columns: [
             { mData: 'invoice_number' },
@@ -902,41 +906,44 @@ function get_list_komunitas_superadmin() {
         },
         timeout: 30000,
         success: function (result) {
-            // console.log(result);
-            $('#komunitas_list').empty();
-            $('#komunitas_list').append("<option value='null'> Choose</option>");
+            if (result.success == false) {
+                console.log(result);
+                get_list_komunitas_superadmin();
+            } else {
+                $('#komunitas_list').empty();
+                $('#komunitas_list').append("<option value='null'> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komunitas_list').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_list').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas_list").html($('#komunitas_list option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#komunitas_list").get(0).selectedIndex = 0;
+                const OldSubs1 = "{{old('komunitas_list')}}";
+                if (OldSubs1 !== '') {
+                    $('#komunitas_list').val(OldSubs1);
+                }
+                // ______________________________
+                $('#komunitas_list2').empty();
+                $('#komunitas_list2').append("<option value='null'> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_list2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas_list2").html($('#komunitas_list2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#komunitas_list2").get(0).selectedIndex = 0;
+                const OldSubs2 = "{{old('komunitas_list2')}}";
+                if (OldSubs2 !== '') {
+                    $('#komunitas_list2').val(OldSubs2);
+                }
             }
-            //Short Function Ascending//
-            $("#komunitas_list").html($('#komunitas_list option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#komunitas_list").get(0).selectedIndex = 0;
-            const OldSubs1 = "{{old('komunitas_list')}}";
-            if (OldSubs1 !== '') {
-                $('#komunitas_list').val(OldSubs1);
-            }
-            // ______________________________
-            $('#komunitas_list2').empty();
-            $('#komunitas_list2').append("<option value='null'> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komunitas_list2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            //Short Function Ascending//
-            $("#komunitas_list2").html($('#komunitas_list2 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#komunitas_list2").get(0).selectedIndex = 0;
-            const OldSubs2 = "{{old('komunitas_list2')}}";
-            if (OldSubs2 !== '') {
-                $('#komunitas_list2').val(OldSubs2);
-            }
-
         },
         error: function (result) {
             ui.popup.show('Warning', 'Get list community', 'Warning');
@@ -960,8 +967,23 @@ $('#komunitas_list2').change(function () {
 function tabel_subscriber_commjuction(idkomunitas) {
     var token = $('meta[name="csrf-token"]').attr('content');
     $('#tabel_show_subs_hide').show();
-    $('#tabel_show_subs').dataTable().fnClearTable();
-    $('#tabel_show_subs').dataTable().fnDestroy();
+    // $('#tabel_show_subs').dataTable().fnClearTable();
+    // $('#tabel_show_subs').dataTable().fnDestroy();
+
+
+    $('#tabel_show_subs').DataTable().clear().destroy();
+    $('#tabel_show_subs').empty();
+
+    var thead = '<thead><tr>' +
+        '<th><b>ID Subscriber</b></th>' +
+        '<th><b>Subscriber Name</b></th>' +
+        '<th><b>Membership</b></th>' +
+        '<th><b>Join Date</b></th>' +
+        '<th><b>Status</b></th>' +
+        '<th><b>Action</b></th>' +
+        '</tr></thead>';
+
+    $('#tabel_show_subs').html(thead);
 
     var tabel = $('#tabel_show_subs').DataTable({
         responsive: true,
@@ -981,7 +1003,7 @@ function tabel_subscriber_commjuction(idkomunitas) {
                 "_token": token
             }, timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5</td></tr>';
                 $('#tabel_show_subs tbody').empty().append(nofound);
             },
         },
@@ -1031,7 +1053,7 @@ function tabel_subscriber_commjuction(idkomunitas) {
             {
                 mData: null,
                 render: function (data, type, row, meta) {
-                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnshow">' +
                         '<i class="mdi mdi-eye"></i>' +
                         '</button>';
                 }
@@ -1041,7 +1063,7 @@ function tabel_subscriber_commjuction(idkomunitas) {
             [
                 {
                     "data": null,
-                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnshow"><i class="mdi mdi-eye"></i></button>',
                     "targets": -1
                 }
             ],
@@ -1050,11 +1072,9 @@ function tabel_subscriber_commjuction(idkomunitas) {
     $("#modal_generate_komunitas").modal('hide');
 
     //DETAIL USERTYPE FROM DATATABLE
-    $('#tabel_show_subs tbody').on('click', 'button', function () {
+    $('#tabel_show_subs tbody').on('click', 'button.btnshow', function () {
         var data = tabel.row($(this).parents('tr')).data();
-        console.log(data);
 
-        // sso_picture: "public/subscriber/editab91e5ab0cecf999987c560963857ff7809741e49c70f8a46cfb974308771d33.png"
         var stat = '';
         if (data.status == 0) {
             var stat = 'Waiting Approval';
@@ -1096,8 +1116,20 @@ function reset_subs_all() {
 function tabel_subs_pending_super(idkomunitas) {
     var token = $('meta[name="csrf-token"]').attr('content');
     $('#tabel_subs_pending_hide').show();
-    $('#tabel_subs_pending').dataTable().fnClearTable();
-    $('#tabel_subs_pending').dataTable().fnDestroy();
+
+    $('#tabel_subs_pending').DataTable().clear().destroy();
+    $('#tabel_subs_pending').empty();
+
+    var thead = '<thead><tr>' +
+        '<th><b>ID Subscriber</b></th>' +
+        '<th><b>Membership</b></th>' +
+        '<th><b>Subscriber Name</b></th>' +
+        '<th><b>Status</b></th>' +
+        '<th><b>Join Date</b></th>' +
+        '<th><b>Action</b></th>' +
+        '</tr></thead>';
+
+    $('#tabel_subs_pending').html(thead);
 
     var tabel = $('#tabel_subs_pending').DataTable({
         responsive: true,
@@ -1117,7 +1149,7 @@ function tabel_subs_pending_super(idkomunitas) {
                 "_token": token
             }, timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_subs_pending tbody').empty().append(nofound);
             },
         },
@@ -1166,7 +1198,7 @@ function tabel_subs_pending_super(idkomunitas) {
             {
                 mData: null,
                 render: function (data, type, row, meta) {
-                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnsee">' +
                         '<i class="mdi mdi-eye"></i>' +
                         '</button>';
                 }
@@ -1176,7 +1208,7 @@ function tabel_subs_pending_super(idkomunitas) {
             [
                 {
                     "data": null,
-                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnsee"><i class="mdi mdi-eye"></i></button>',
                     "targets": -1
                 }
             ],
@@ -1185,9 +1217,8 @@ function tabel_subs_pending_super(idkomunitas) {
     $("#modal_generate_pending").modal('hide');
 
     //DETAIL USERTYPE FROM DATATABLE
-    $('#tabel_subs_pending tbody').on('click', 'button', function () {
+    $('#tabel_subs_pending tbody').on('click', 'button.btnsee', function () {
         var data = tabel.row($(this).parents('tr')).data();
-        console.log(data);
 
         var stat = '';
         if (data.status == 0) {
@@ -1576,7 +1607,7 @@ function tabel_usertype_management() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_usertype_manage tbody').empty().append(nofound);
             },
         },
@@ -1898,7 +1929,7 @@ function show_tabel_transaksi() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
                 $('#tabel_trans tbody').empty().append(nofound);
             },
@@ -2035,7 +2066,7 @@ $("#btn_filter_transaksi").click(function (e) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_trans tbody').empty().append(nofound);
             },
         },
@@ -2088,7 +2119,7 @@ function tabel_user_management() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3></td></tr>';
                 $('#tabel_user_manage tbody').empty().append(nofound);
             },
         },
@@ -2281,7 +2312,7 @@ function tabel_log_magement_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_log_magement_super tbody').empty().append(nofound);
             },
         },
@@ -2359,6 +2390,7 @@ function get_list_komunitas_log_manage() {
 
 // ------------------------ REPORT MANAGEMENT -------------------------
 $("#btn_generate_trans").click(function () {
+
     tabel_report_transaksi_super();
 });
 
@@ -2423,7 +2455,7 @@ function tabel_report_concile_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_concile_report tbody').empty().append(nofound);
             },
         },
@@ -2432,7 +2464,7 @@ function tabel_report_concile_super(bulan, tahun) {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_concile_report tbody').empty().append(nofound);
 
         },
@@ -2520,13 +2552,13 @@ function tabel_report_module_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_module_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_module_report tbody').empty().append(nofound);
 
         },
@@ -2585,13 +2617,13 @@ function tabel_report_komunitas_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_komunitas_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_komunitas_report tbody').empty().append(nofound);
 
         },
@@ -2650,16 +2682,15 @@ function tabel_report_transaksi_super() {
                 "min_transaction": $("#min_trans").val(),
                 "max_transaction": $("#max_trans").val(),
                 "community_id": $("#komuniti_trans").val(),
-                "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_transaksi_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_transaksi_report tbody').empty().append(nofound);
 
         },
@@ -2714,7 +2745,10 @@ function get_list_transaction_type_super() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            if(result.success == false){
+              console.log(result);
+              get_list_transaction_type_super();
+            }else{
             $('#jenis_transaksi').empty();
             $('#jenis_transaksi').append("<option disabled> Choose</option>");
 
@@ -2738,7 +2772,7 @@ function get_list_transaction_type_super() {
             }));
 
             $("#jenis_transaksi2").get(0).selectedIndex = 0;
-
+        }
         },
         error: function (result) {
             console.log(result);
@@ -2764,6 +2798,9 @@ function get_list_komunitas_report() {
             "_token": token
         },
         success: function (result) {
+            if(result.success == false){
+                get_list_komunitas_report();
+            }else{
             $('#komuniti_trans').empty();
             $('#komuniti_trans').append("<option value='0' disabled> Choose</option>");
 
@@ -2802,6 +2839,7 @@ function get_list_komunitas_report() {
 
             $("#komuniti_trans3").get(0).selectedIndex = 0;
         }
+        }
     });
 }
 
@@ -2832,8 +2870,6 @@ function get_list_fitur_super() {
             }));
 
             $("#list_fiture").get(0).selectedIndex = 0;
-
-
         }
     });
 }
@@ -2921,7 +2957,7 @@ function tabel_all_pricing_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h class="cgrey">Data Not Found</h</td></tr>';
                 $('#tabel_module_report_superadmin tbody').empty().append(nofound);
             },
         },
@@ -3254,7 +3290,7 @@ function tabel_module_report_superadmin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_module_report_superadmin tbody').empty().append(nofound);
             },
         },
@@ -3504,7 +3540,7 @@ function tabel_payment_all_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_payment_all_super tbody').empty().append(nofound);
             },
         },
@@ -3513,7 +3549,7 @@ function tabel_payment_all_super() {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_payment_all_super tbody').empty().append(nofound);
 
         },
@@ -3685,7 +3721,7 @@ function mdl_detail_subpayment_all(params) {
 
     var dtk = localStorage.getItem("data_subpay");
     var isi = JSON.parse(dtk);
-    console.log("id payment method = " + isi.id);
+    // console.log("id payment method = " + isi.id);
     get_setting_subpayment_super(isi.id);
 
     var statusui = '';
@@ -3704,7 +3740,7 @@ function mdl_detail_subpayment_all(params) {
     } else {
         var isiimg = isi.icon;
     }
-    var imglogo = server_cdn + isiimg;
+    var imglogo = server_cdn + cekimage_cdn(isiimg);
 
     $('#img_subpay').attr('src', imglogo);
     $("#detail_nama_pay").html(isi.payment_title);
@@ -3825,11 +3861,11 @@ function get_list_bank_name_subpay() {
     });
 }
 
- //-------------------------- END PAYMENT MANAGEMENT SUPER -------------------------------
+//-------------------------- END PAYMENT MANAGEMENT SUPER -------------------------------
 
 
 
- // -------------------------- NOTIFCATION MANAGEMENT SUPER ------------------------------
+// -------------------------- NOTIFCATION MANAGEMENT SUPER ------------------------------
 
 $("#btn_generate_notif_super").click(function () {
     tabel_generate_notif_super();
@@ -3875,7 +3911,7 @@ function tabel_generate_notif_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_generate_notif_super tbody').empty().append(nofound);
             },
         },
@@ -3997,27 +4033,18 @@ function detail_notif_super(dtku) {
             "_token": token
         },
         success: function (result) {
+            console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
-                        location.href = '/admin';
+                        location.href = '/superadmin';
                     }, 5000);
                 } else {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
-                if (result.success == false) {
-                    if (result.status == 401 || result.message == "Unauthorized") {
-                        ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
-                        setTimeout(function () {
-                            location.href = '/admin';
-                        }, 5000);
-                    } else {
-                        ui.popup.show('warning', result.message, 'Warning');
-                    }
-                } else {
-                    var res = result[0];
+                    var res = result;
                     $("#modal_detail_notif").modal('show');
                     $("#detail_judul").html(res.title);
                     $("#detail_dekripsi").html(res.description);
@@ -4027,7 +4054,7 @@ function detail_notif_super(dtku) {
                     $("#detail_usertipe").html(res.user_type_title);
                     $("#detail_tipenotif").html(res.notifcation_sub_type_title);
                     $("#dibuat_oleh").html(res.created_by);
-                }
+
             }
         },
         error: function (result) {
@@ -4089,10 +4116,10 @@ $('#komunitas_notif').change(function () {
         }
     });
 });
- // ------------------------- END NOTIFICATION MANAGEMENT SUPER -----------------------------
+// ------------------------- END NOTIFICATION MANAGEMENT SUPER -----------------------------
 
 
- // -------------------------- INBOX MANAGEMENT SUPER ----------------------------
+// -------------------------- INBOX MANAGEMENT SUPER ----------------------------
 
 $("#btn_generate_inbox_super").click(function () {
     tabel_inbox_message_super();
@@ -4180,7 +4207,7 @@ function tabel_inbox_message_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_inbox_message_super tbody').empty().append(nofound);
             },
         },

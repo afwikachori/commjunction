@@ -131,7 +131,7 @@
 </div>
 
 
-<!-- MODAL SERTTING MODULE FRIEND -->
+<!-- MODAL SETTING MODULE FRIEND -->
 <div class="modal fade" id="modal_setting_friend" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

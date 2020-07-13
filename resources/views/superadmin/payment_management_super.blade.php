@@ -223,7 +223,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_default_1a">
                                     <center>
-                                        <img src="" class="rounded-circle img-fluid" id="img_detail_payment_super"
+                                        <img src="/img/noimg.jpg" class="rounded-circle img-fluid" id="img_detail_payment_super"
                                             onerror="this.onerror=null;this.src='/img/noimg.jpg';">
                                         <br>
                                         <small class="cblue">Payment Name</small>
@@ -424,7 +424,7 @@
                                 <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                     <div class="circle paysuper">
                                         <img id="view_img_subpay" class="profile-pic rounded-circle img-fluid"
-                                            src="/img/focus.png">
+                                            src="/img/focus.png" onerror="this.onerror=null;this.src='/img/kosong.png';">
                                     </div>
                                     <div class="p-image paysuper">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
@@ -541,8 +541,9 @@
                         <div class="tab-pane active" id="tab_default_1_subpay" style="height: auto; min-height: 455px;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="circle" style="position: relative; margin-bottom: 1em;">
-                                        <img src="" id="img_subpay" class="profile-pic rounded-circle img-fluid">
+                                    <div class="circle detailpaysuper" style="position: relative; margin-bottom: 1em;">
+                                        <img src="/img/kosong.png" id="img_subpay" class="profile-pic rounded-circle img-fluid"
+                                        onerror="this.onerror=null;this.src='/img/kosong.png';">
                                     </div>
                                 </div>
                             </div>
@@ -652,17 +653,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
-                                    <div class="circle">
+                                    <div class="circle upimgedit">
                                         <img id="view_img_subpay_edit" class="profile-pic rounded-circle img-fluid"
-                                            src="/img/focus.png">
+                                            src="/img/focus.png" onerror="this.onerror=null;this.src='/img/kosong.png';">
                                     </div>
-                                    <div class="p-image">
+                                    <div class="p-image upimgedit">
                                         <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
                                             style="width: 30px; height: 30px;">
                                             <i id="browse_img_subpay_edit" class="mdi mdi-camera upload-button"></i>
                                         </button>
                                         <input id="file_img_subpay_edit" class="file-upload file-upload-default"
-                                            type="file" name="fileup" accept="image/*" required />
+                                            type="file" name="fileup" accept="image/*"/>
                                     </div>
                                 </div>
                             </div>

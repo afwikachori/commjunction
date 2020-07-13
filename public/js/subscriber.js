@@ -105,6 +105,9 @@ function session_subscriber_logged() {
             get_list_notif_navbar(user.community_id);
             get_inbox_navbar_subs();
 
+            $("#id_user_subs_trans").val(user.user_id);
+            $("#subs_id_trans").val(user.user_id);
+
             if (user.picture != undefined || user.picture != null) {
 
                 $(".foto_profil_subs").attr("src", server_cdn + cekimage_cdn(user.picture));
@@ -157,12 +160,7 @@ function session_subscriber_logged() {
                 get_pricing_membership();
             }
 
-
             get_profile_custom_regis(result.custom_input);
-            console.log("resgis custom input");
-            console.log(result.custom_input);
-
-
         },
         error: function (result) {
             console.log("Cant Reach Session Logged User Dashboard");
@@ -203,8 +201,11 @@ function ses_auth_subs() {
         type: 'POST',
         datatype: 'JSON',
         success: function (result) {
+            if(result.success == false){
+                location.href = '/404';
+            }else{
+                console.log(result);
             var result = result[0];
-            // console.log(result);
             var custom = result.cust_portal_login;
 
             // var base_color = custom.base_color;
@@ -219,6 +220,7 @@ function ses_auth_subs() {
             $.cookie('accent_color', custom.accent_color, { expires: 30 });
             $.cookie('background_color', custom.background_color, { expires: 30 });
             $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
+            }
         },
         error: function (result) {
             $.cookie('base_color', null);
@@ -548,6 +550,7 @@ function get_inbox_navbar_subs() {
             "_token" : token,
         },
         success: function (result) {
+            // console.log('------------- get_inbox_navbar_subs');
             // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
@@ -789,6 +792,7 @@ function get_payment_initial() {
         dataSrc: '',
         timeout: 30000,
         success: function (result) {
+            // console.log('----------- get_payment_initial');
             // console.log(result);
             var text = '';
             var isibank = '';
@@ -935,13 +939,14 @@ function get_list_notif_navbar(idkom) {
             "community_id": idkom,
             "start_date": ago,
             "end_date": today,
-            "read_status": "1", //1:notread 2:read
             "notification_status": "receive", //send/receive
+            "read_status": "1", //1:notread 2:read
             "limit": 5
         },
         timeout: 30000,
         success: function (result) {
-            // console.log(result);
+            console.log('----------- get_list_notif_navbar');
+            console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -1180,10 +1185,9 @@ function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
 
-        get_payment_initial();
-
         get_dashboard_news();
         get_friends_total();
+
         get_friends_sugestion();
         get_top_friends();
 
@@ -1215,11 +1219,12 @@ function init_ready() {
 
     if ($("#page_transaction_management_subs").length != 0) {
         get_list_transaction_tipe();
-        get_list_subscriber_admin();
+        // get_list_subscriber_admin();
 
         $("#reset_tbl_trans").click(function () {
             resetparam_trans();
         });
+
 
         $("#btn_showtable_transaksi").click(function (e) {
             show_card_transaksi();
@@ -1229,6 +1234,11 @@ function init_ready() {
             filter_show_card_transaksi();
             $("#modal_trasaksi_filter").modal("hide");
         });
+    }
+
+    if ($("#page_notification_management_subs").length != 0){
+        get_list_setting_notif_subs();
+        show_card_notification();
     }
 }
 
@@ -1314,7 +1324,7 @@ function table_news_list() {
 
 function send_love_news(idnews) {
     var token = $('meta[name="csrf-token"]').attr('content');
-    alert(idnews);
+    // alert(idnews);
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1352,9 +1362,14 @@ function showPassword() {
     }
 }
 
-function send_message(friend_id) {
-    $("#modal_send_message_subs").modal("show");
+function send_message(dtfriend) {
+    var teman = dtfriend.split('<>');
+    var friend_id = teman[0];
+    var nama_friend = teman[1];
+
+    $("#kepada_sendpesan").html(nama_friend);
     $("#friend_id").val(friend_id);
+    $("#modal_send_message_subs").modal("show");
 };
 
 function send_whatsapp(nohp) {
@@ -1620,11 +1635,14 @@ function tabel_friend_list() {
                 mData: 'friend_id',
                 render: function (data, type, row, meta) {
                     var nohp = row.notelp;
+                    var nama = row.full_name;
+                    var dtsend = data + '<>' + nama;
                     return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                         '<i class="mdi mdi-eye matadetail"></i></a>' +
-                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_message("' + data + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"'+
+                        'onclick="send_message(\'' + data + "<>" + nama + '\')">' +
                         '<i class="mdi mdi-email matadetail"></i></i></a>' +
-                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick=send_whatsapp("' + nohp + '")>' +
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick="send_whatsapp("' + nohp + '")>' +
                         '<i class="mdi mdi-whatsapp matadetail"></i></i></a>';
                 }
             }
@@ -1706,7 +1724,8 @@ function suggestion_list() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('----------- suggestion_list');
+            // console.log(result);
             if (result.length == 0) {
                 $(".divkonco.pagefriend").hide();
             }
@@ -1821,13 +1840,19 @@ function send_whatsapp_teman(phone) {
 function get_profile_custom_regis(params) {
     var uihtml = '';
     $.each(params, function (no, des) {
-        // console.log(des);
         var item = des.param_form_array;
         var inputipe = des.custom_input;
+        var deskripsi = des.description;
         var cusinput = '';
 
         if (inputipe.id == 1) {
-            var pilihan = item.splice(3);
+            if (item[2] == deskripsi ){
+                var pilihan = item.splice(3);
+            }else{
+                var pilihan = item.splice(2);
+            }
+            // var pilihan = item.splice(2);
+
             $.each(pilihan, function (i, item) {
                 if (item == des.value) {
                     cusinput += '<div class="col-md-6 nopadding">' +
@@ -1870,7 +1895,12 @@ function get_profile_custom_regis(params) {
 
         }
         else if (inputipe.id == 6) {
-            var list = item.splice(3);
+            if (item[2] == deskripsi) {
+                var list = item.splice(3);
+            } else {
+                var list = item.splice(2);
+            }
+            // var list = item.splice(3);
             var cekbox = '';
 
             $.each(list, function (i, item) {
@@ -1925,6 +1955,21 @@ function resetparam_trans() {
     $("#subs_name").val("");
 }
 
+$("#reset_card_filtertrans").click(function () {
+    $("#tanggal_mulai2").val("");
+    $("#tipe_trans2").val("");
+    $("#tanggal_selesai2").val("");
+    $("#status_trans2").val("");
+
+    $("#show_card_transaksi").html("");
+    $("#showin_table_trans").hide();
+    $(".showin_table_trans").hide();
+
+    resetparam_trans();
+
+    $("#tab_transaction_param").show();
+});
+
 function get_list_transaction_tipe() {
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -1940,9 +1985,11 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            if(result.success == false){
+                get_list_transaction_tipe();
+            }else{
             $('#tipe_trans').empty();
-            $('#tipe_trans').append("<option value='null'> Choose</option>");
+            $('#tipe_trans').append("<option disabled selected> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -1951,17 +1998,9 @@ function get_list_transaction_tipe() {
             $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
                 return $(y).val() < $(x).val() ? -1 : 1;
             }));
-
-            $("#tipe_trans").get(0).selectedIndex = 0;
-
-            const OldTipetrans = "{{old('tipe_trans')}}";
-
-            if (OldTipetrans !== '') {
-                $('#tipe_trans').val(OldTipetrans);
-            }
             // ___________________________________________________________________
             $('#tipe_trans2').empty();
-            $('#tipe_trans2').append("<option value='null'> Choose</option>");
+            $('#tipe_trans2').append("<option disabled selected> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -1970,14 +2009,10 @@ function get_list_transaction_tipe() {
             $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
                 return $(y).val() < $(x).val() ? -1 : 1;
             }));
-
-            $("#tipe_trans2").get(0).selectedIndex = 0;
-
-            const OldTipetrans2 = "{{old('tipe_trans2')}}";
-
-            if (OldTipetrans2 !== '') {
-                $('#tipe_trans2').val(OldTipetrans2);
-            }
+        }
+        },
+        error: function (result) {
+            get_list_transaction_tipe();
         }
     });
 }
@@ -2061,7 +2096,7 @@ function show_card_transaksi() {
             "tanggal_selesai": $("#tanggal_selesai").val(),
             "tipe_trans": $("#tipe_trans").val(),
             "status_trans": $("#status_trans").val(),
-            "subs_name": $("#subs_name").val(),
+            "subs_name": $("#id_user_subs_trans").val(),
             "_token": token
         },
         success: function (result) {
@@ -2116,7 +2151,7 @@ function show_card_transaksi() {
             }
         },
         error: function (result) {
-            console.log(result);
+            ui.popup.show('error', 'Show Data Transaction', 'Failed');
         }
     });
 }
@@ -2139,7 +2174,7 @@ function filter_show_card_transaksi() {
             "tanggal_selesai": $("#tanggal_selesai2").val(),
             "tipe_trans": $("#tipe_trans2").val(),
             "status_trans": $("#status_trans2").val(),
-            "subs_name": $("#subs_name2").val(),
+            "subs_name": $("#subs_id_trans").val(),
             "_token": token
         },
         success: function (result) {
@@ -2376,7 +2411,7 @@ function get_dashboard_news() {
             "_token": token
         },
         success: function (result) {
-            console.log('data headline news');
+            // console.log('-------------- get_dashboard_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_dash_artikel").show();
@@ -2443,6 +2478,7 @@ function get_friends_total() {
             "_token": token
         },
         success: function (result) {
+            // console.log('---------- get_friends_total');
             // console.log(result);
             if (result.success == false) {
                 $(".total_friend").html("0");
@@ -2475,7 +2511,8 @@ function get_top_friends() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('--------- get_top_friends');
+            // console.log(result);
             if (result.success == false) {
                 $("#topfriend_nodata").show();
                 $("#isi_top_friends").hide();
@@ -2528,6 +2565,7 @@ function get_friends_sugestion() {
             "_token": token
         },
         success: function (result) {
+            // console.log('------------- get_friends_sugestion');
             // console.log(result);
             if (result.success == false) {
                 $(".divkonco").hide();
@@ -2600,6 +2638,7 @@ function get_last_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_last_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_last_news").show();
@@ -2646,6 +2685,7 @@ function get_love_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_love_news');
             // console.log(result);
             var noimg = '/img/fitur.png';
             if (result.success == false) {
@@ -2703,6 +2743,7 @@ function get_topvisit_news() {
             "_token": token
         },
         success: function (result) {
+            // console.log('--------- get_topvisit_news');
             // console.log(result);
             if (result.success == false) {
                 $("#nodata_topvisit_news").show();
@@ -2751,12 +2792,13 @@ function get_top_player() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('------------- get_top_player');
+            // console.log(result);
             if (result.success == false) {
                 $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();
                 console.log(result);
-            }
+            }else{
 
             if (result.length == 0) {
                 $("#topplayer_nodata").show();
@@ -2790,7 +2832,7 @@ function get_top_player() {
                 $("#isi_top_player").html(iuplyr);
                 $("#topplayer_nodata").hide();
                 $("#isi_top_player").show();
-
+            }
             }
         },
         error: function (result) {
@@ -2818,18 +2860,18 @@ function get_top_visit_club() {
             "_token": token
         },
         success: function (result) {
-            console.log(result);
+            // console.log('------------- get_top_visit_club');
+            // console.log(result);
             if (result.success == false) {
                 console.log(result);
                 $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
-            }
-
+            }else{
             if (result.length == 0) {
                 $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
             }
-
+        }
         },
         error: function (result) {
             $("#topclubvisit_nodata").show();
@@ -2866,3 +2908,264 @@ $("#btn-initial3").click(function () {
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
+
+// -------------------------- NOTIFICATION MANAGEMENT SUBS ----------------------------
+function show_card_notification() {
+    $('#modal_filter_notif_subs').modal('hide');
+    var filter = $("#filter_read").val();
+
+    if (filter != "") {
+        var read = filter;
+        var limit = 000;
+    } else {
+        var read = "1";
+        var limit = 10;
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_notif_management',
+        type: 'POST',
+        dataSrc: '',
+        data: {
+            "read_status": read, //1:notread 2:read
+            "limit": limit,
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                $("#isi_card_notif").hide();
+                $("#nodata_card_notif").show();
+            } else {
+                if (result.length != 0) {
+                    var isiui = '';
+                    $.each(result, function (i, item) {
+                        var inidt = [item.id, item.level_status, item.community_id];
+                        isiui += '<div class="col-md-4 stretch-card grid-margin">' +
+                            '<div class="card sumari bg-gradient-kuning">' +
+                            '<div class="card-body sumari">' +
+                            '<div class="row">' +
+                            '<div class="col-9"></div>' +
+                            '<div class="col">' +
+                            '<i class="mdi mdi-bell-outline mdi-24px float-right top-ico ctosca"></i>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<span class="ctosca s15 tebal" lang="en">' + item.title + '</span>  &nbsp;' +
+                            '<span class="cteal s13">(' + item.notification_sub_type_title + ')</span><br>' +
+                            '<small class="cgrey2 mt-2">from : </small><br>' +
+                            '<small class="cgrey tebal">' + item.sender_level_title + '</small> &nbsp;&nbsp;' +
+                            '/ <small class="cgrey2">' + item.created_by_title + '</small><br>' +
+                            '<small class="clight mt-2 tebal">' + dateTime(item.created_at) + '</small><br>' +
+                            '</div></div>' +
+                            '<div class="row mt-3 mb-4">' +
+                            '<div class="col-md-7"><small class="cteal">' + item.read_status_title + '</small></div>' +
+                            '<div class="col-md-5" style="text-align:right;">' +
+                            '<a type="button" class="btn btn-accent btn-sm konco2"' +
+                            'onclick="detail_notif_subs(\'' + inidt + '\')">' +
+                            '<small class="cwhite" lang="en"><i class="mdi mdi-eye btn-icon-prepend"></i> &nbsp; Detail</small></a>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#isi_card_notif").html(isiui);
+                    $("#nodata_card_notif").hide();
+
+                }
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            $("#isi_card_notif").hide();
+            $("#nodata_card_notif").show();
+        }
+    });
+}
+
+
+$("#btn_generate_notif_subs").click(function () {
+    show_card_notification();
+});
+
+
+
+function get_list_setting_notif_subs() {
+    var namakom = $(".community_name").val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_setting_notif_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/subscriber/url/' + namakom;
+                    }, 5000);
+                } else {
+                    ui.popup.show('warning', result.message, 'Warning');
+                }
+            } else {
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+
+                    if (item.input_type == 1) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                    } else if (item.input_type == 2) {
+                        if (item.value == 1) {
+                            var one = 'checked';
+                            var two = '';
+                        } else if (item.value == 2) {
+                            var one = '';
+                            var two = 'checked';
+                        } else {
+                            var one = '';
+                            var two = '';
+                        }
+
+                        inputipe = '<div class="form-group">' +
+                            '<div class="form-check set_mod" >' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check set_mod">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + two + '>' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
+
+                    uiku += ' <div class="row style="margin-bottom:1.5em;">' +
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-6">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
+                        '</div>' +
+                        '</div>';
+                });
+                $(".isi_seting_notifadmin").html(uiku);
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
+
+function cek_param_list_user() {
+    var comm = $("#komunitas_notif").val();
+    var usertipe = $("#usertipe_notif").val();
+    if (comm == null || usertipe == null) {
+        $("#status_notif").attr("disabled", "disabled");
+        swal("Cant Null", "User Type and Community cant be null", "warning");
+    } else {
+        $("#status_notif").removeAttr("disabled", "disabled");
+    }
+}
+
+
+var switchStatus_notif = false;
+$("#status_notif").on('change', function () {
+    if ($(this).is(':checked')) {
+        switchStatus_notif = $(this).is(':checked');
+        $("#hide_user_notif").fadeIn('fast');
+        cek_param_list_user();
+        $("#idstatus_notif").val("1");
+    }
+    else {
+        switchStatus_notif = $(this).is(':checked');
+        $("#hide_user_notif").fadeOut('fast');
+        cek_param_list_user();
+        $("#idstatus_notif").val("2");
+    }
+});
+
+function detail_notif_subs(dtku) {
+    var dtnya = dtku.split(',');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/detail_notif_subs',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "notification_id": dtnya[0],
+            "level_status": dtnya[1],
+            "community_id": dtnya[2],
+        },
+        success: function (result) {
+            console.log(result);
+            var res = result;
+            $("#modal_detail_notif").modal('show');
+            $("#detail_judul").html(res.title);
+            $("#detail_dekripsi").html(res.description);
+            $("#detail_komunitas").html(res.community_name);
+            $("#detail_tanggal").html(dateFormat(res.created_at));
+            $("#detail_user").html(res.user_title);
+            $("#detail_usertipe").html(res.user_type_title);
+            $("#detail_tipenotif").html(res.message_type_title);
+            $("#dibuat_oleh").html(res.created_by_title);
+            $("#status_notif_admin").html(res.status);
+            $("#status_msg").html(res.status_message);
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show Detail");
+        }
+    });
+}
+
+
+$('#tipenotif').change(function () {
+    var ipilih = this.value;
+    if (ipilih == "1") {
+        $("#hide_urlnotif").fadeIn('fast');
+    } else {
+        $("#hide_urlnotif").fadeOut('fast');
+    }
+});
+
+
+$('#usertipe_notif').change(function () {
+    get_list_user_notif();
+});
+
+// ----------- xx -------------- NOTIFICATION MANAGEMENT SUBS ------------- xx --------------
+

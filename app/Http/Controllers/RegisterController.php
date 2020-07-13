@@ -17,6 +17,11 @@ class RegisterController extends Controller
 {
     use RequestHelper;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function ReviewAdminView()
     {
         return view('admin/final_review_admin');
@@ -973,13 +978,23 @@ try{
     public function adminconfirmpay(Request $request)
     {
         $inv_pay = session()->get('ses_invoice_pay');
-        // dd($inv_pay);
 
         $validator = $request->validate([
             'name_userpay'   => 'required',
             'invoice_number' => 'required',
             'file_payment'  => 'required|mimes:jpeg,jpg,png,pdf',
         ]);
+
+        $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->autoclose(4500);
+            return back();
+        }
+
 
         ///UPLOAD IMAGE KE BACK-EN
         $req = new RequestController;
@@ -1012,25 +1027,26 @@ try{
                     $reshasil = $responseImage['data'];
                     alert()->success('Successfully Upload', 'System will confirm your payment max 24hours, then Login');
                     session()->forget('ses_invoice_pay');
-                    return view('admin/login');
-                } else {
-                    return back()->with('response', [
-                        'status'   => 'error',
-                        'messages' => [
-                            'title'   => 'Insert Image',
-                            'messages' => $responseImage['message']
-                        ]
-                    ]);
+                    return redirect('/admin');
                 }
-            } catch (ClientException $exception) {
-                $status_error = $exception->getCode();
-
-                if ($status_error == 400) {
-                    session()->forget('ses_invoice_pay');
-                    alert()->warning('Anda sudah mengirim verifikasi lebih dari 3x hari ini, mohon bersabar dan tunggu', 'You have sending 3 Times!')->autoclose(4500)->persistent('Done');
-                    return back();
-                }
+            } catch (ClientException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ServerException $errornya) {
+                $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
+            } catch (ConnectException $errornya) {
+                $error['status'] = 500;
+                $error['message'] = "Server bermasalah";
+                $error['success'] = false;
+                alert()->error($error['message'], 'Failed!')->autoclose(4500);
+                return back();
             }
+        }else{
+            alert()->error('Image is required', 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -1308,4 +1324,26 @@ try{
             return $error;
         }
     }
+
+
+    function is_html($string)
+    {
+        return preg_match("/<[^<]+>/", $string, $m) != 0;
+    }
+
+    function cek_tag_html($input)
+    {
+        $jum = 0;
+        if ($input != null && $input != "") {
+
+            foreach ($input as $key => $value) {
+                $ini = $this->is_html($value);
+                if ($ini == TRUE) {
+                    $jum++;
+                }
+            }
+            return $jum;
+        }
+    }
+
 } // END-CLASS

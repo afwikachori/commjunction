@@ -22,6 +22,10 @@ class AdminCommController extends Controller
     use RequestHelper;
     use SendRequestController;
 
+    public function __construct(){
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function adminDashboardView()
     {
         return view('admin/dashboard/dashboard_admin');
@@ -112,6 +116,14 @@ class AdminCommController extends Controller
             'passadmin' => 'required',
         ]);
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $url = env('SERVICE') . 'auth/commadmin';
         try {
@@ -291,6 +303,14 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/publish';
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $csrf = "";
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
@@ -458,7 +478,16 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
-        // return $ses_user;
+        $input = $request->all(); // getdata form by name
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $req = new RequestController;
         $fileimg = "";
@@ -467,7 +496,7 @@ class AdminCommController extends Controller
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
 
-            $input = $request->all(); // getdata form by name
+
             $imageRequest = [
                 "name"        => $input['edit_namacom'],
                 "description" => $input['edit_deskripsicom'],
@@ -524,7 +553,6 @@ class AdminCommController extends Controller
                 return back();
             }
         } else { //END-IF  UPLOAD-IMAGE
-            $input = $request->all(); // getdata form by name
             $imageRequest = [
                 "name"        => $input['edit_namacom'],
                 "description" => $input['edit_deskripsicom'],
@@ -590,6 +618,16 @@ class AdminCommController extends Controller
         $input = $request->all();
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         // return $input;
         $url = env('SERVICE') . 'commsetting/setcustominterface';
         $req = new RequestController;
@@ -613,7 +651,7 @@ class AdminCommController extends Controller
 
             $img_icon = file_get_contents($request->file('fileup_logo')->getRealPath());
             $filnam_logo = $request->file('fileup_logo')->getClientOriginalName();
-        }else{
+        } else {
             $imgku = '';
             $filnam = '';
 
@@ -688,7 +726,7 @@ class AdminCommController extends Controller
                         alert()->error('Set Login type and Subdomain', 'Failed!')->persistent('Done');
                         return back();
                     }
-                }else{
+                } else {
                     alert()->success('Successfully setting login and registrasion', 'Done!')->persistent('Done');
                     return back();
                 }
@@ -763,6 +801,16 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'commsetting/addregistrationdata';
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $in = $request->except('_token', 'deskripsi_regis');
 
         if ($input['tipedata_regis'] == "2" || $input['tipedata_regis'] == "3" || $input['tipedata_regis'] == "4" || $input['tipedata_regis'] == "5") {
@@ -954,6 +1002,16 @@ class AdminCommController extends Controller
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
         $input = $request->all(); // getdata form by name
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $req = new RequestController;
         $fileimg = "";
 
@@ -1091,6 +1149,15 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
 
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $url = env('SERVICE') . 'profilemanagement/changepassword';
 
 
@@ -1166,9 +1233,17 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'usermanagement/createuser';
-
-
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $body = [
@@ -1183,7 +1258,7 @@ class AdminCommController extends Controller
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
-            alert()->success('Successfully to add new user', 'Added')->persistent('Done');
+            alert()->success('Successfully to add new user', 'Added')->autoclose(4500);
             return back();
         } else {
             alert()->error($json['message'], 'Failed!')->autoclose(4500);
@@ -1223,6 +1298,16 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $input = $request->all(); // getdata req
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         // return $input;
         $req = new RequestController;
         $fileimg = "";
@@ -1299,6 +1384,16 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'subsmanagement/approvalsubs';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         if ($input['approval'] == "true") {
@@ -1363,6 +1458,16 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'usermanagement/edituser';
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $body = [
@@ -1391,6 +1496,15 @@ class AdminCommController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $body = [
             'payment_type_id' => $input['payment_tipe'],
@@ -1499,11 +1613,17 @@ class AdminCommController extends Controller
         $input = $request->all();
         $csrf = $input['_token'];
 
-        $body = [
-            'feature_id' => $input['id_modulefitur'],
-            'payment_time' => $input['payment_time_module'],
-            'payment_method_id' => $input['id_pay_method_module']
-        ];
+        if ($request->has('payment_time_module')) {
+            $body = [
+                'feature_id' => $input['id_modulefitur'],
+                'payment_time' => $input['payment_time_module'],
+                'payment_method_id' => $input['id_pay_method_module']
+            ];
+        } else {
+            alert()->error('Please Select Payment Time', 'Can Not Null!')->autoclose(4500);
+            return back();
+        }
+
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
@@ -1652,6 +1772,15 @@ class AdminCommController extends Controller
         $input = $request->all();
         $csrf = $input['_token'];
 
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
 
         if (isset($input['user_notif'])) {
             $user = $input['user_notif'];
@@ -1692,9 +1821,19 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 2);
-        $csrf= '';
+        $csrf = '';
 
         $data = [];
         foreach ($dtin as $i => $dt) {
@@ -1807,11 +1946,16 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/activation';
         $input = $request->all();
 
-        $body = [
-            "payment_method_id" => $input['id_pay_method_module'],
-            "payment_type_id" => $input['aktif_id_payment'],
-            "payment_time" => $input['payment_time_module']
-        ];
+        if ($request->has('payment_time_module')) {
+            $body = [
+                "payment_method_id" => $input['id_pay_method_module'],
+                "payment_type_id" => $input['aktif_id_payment'],
+                "payment_time" => $input['payment_time_module']
+            ];
+        } else {
+            alert()->error('Please Select Payment Time', 'Required')->autoclose(4500);
+            return back();
+        }
 
         $csrf = $input['_token'];
 
@@ -1899,6 +2043,17 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'inboxmanagement/sendmessage';
         $input = $request->all();
+
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
         if (isset($input['list_user'])) {
             $user = $input['list_user'];
@@ -1981,7 +2136,16 @@ class AdminCommController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'inboxmanagement/changestatus';
         $client = new \GuzzleHttp\Client();
-        // return $input;
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
@@ -2069,6 +2233,15 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $url = env('SERVICE') . 'membershipmanagement/createmembership';
 
@@ -2178,6 +2351,15 @@ class AdminCommController extends Controller
         $input = $request->all();
         $csrf = $input['_token'];
 
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $subftr = [];
         foreach ($input['subfitur'] as $i => $dt) {
             $dataArray = [
@@ -2275,6 +2457,16 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $in = $request->except('_token', 'id_question', 'deskripsi_regis');
 
         // return $input;
@@ -2407,6 +2599,15 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $url = env('SERVICE') . 'commsetting/editpayment';
         $client = new \GuzzleHttp\Client();
@@ -2574,7 +2775,15 @@ class AdminCommController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'modulemanagement/settingmodule';
-
+        $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 2);
         $data = [];
@@ -2585,7 +2794,7 @@ class AdminCommController extends Controller
             ];
             array_push($data, $dataArray);
         }
-        $input = $request->all();
+
         $csrf = $input['_token'];
         $body = [
             "data_setting" => $data
@@ -2609,11 +2818,22 @@ class AdminCommController extends Controller
             'dekripsi_usertipe_edit' => 'required',
             'edit_subfitur' => 'required',
         ]);
+        $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'usertype/edit';
         $subftr = [];
 
-        $input = $request->all();
+
         $csrf = $input['_token'];
 
         foreach ($input['edit_subfitur'] as $i => $dt) {
@@ -2691,6 +2911,17 @@ class AdminCommController extends Controller
     public function setting_subpayment_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
+
+        $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $datain = $request->except('_token');
         // return $datain;
         $dtin = array_chunk($datain, 2);

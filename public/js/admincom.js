@@ -3637,7 +3637,13 @@ function func_pay_module(params) {
         $(".border-oren").removeClass("active");
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
-        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+
+        if ($('#payment_time_module').val() != null && $('#payment_time_module').val() != ""){
+            $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+        }else{
+            $("#btn_submit_paymethod").attr("disabled", "disabled");
+        }
+
     }
 
 
@@ -3942,8 +3948,11 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
+            if(result.success == false){
+                get_list_transaction_tipe();
+            }else{
             $('#tipe_trans').empty();
-            $('#tipe_trans').append("<option value='null'> Choose</option>");
+            $('#tipe_trans').append("<option disabled> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -3954,15 +3963,9 @@ function get_list_transaction_tipe() {
             }));
 
             $("#tipe_trans").get(0).selectedIndex = 0;
-
-            const OldTipetrans = "{{old('tipe_trans')}}";
-
-            if (OldTipetrans !== '') {
-                $('#tipe_trans').val(OldTipetrans);
-            }
             // ___________________________________________________________________
             $('#tipe_trans2').empty();
-            $('#tipe_trans2').append("<option value='null'> Choose</option>");
+            $('#tipe_trans2').append("<option disabled> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -3973,12 +3976,13 @@ function get_list_transaction_tipe() {
             }));
 
             $("#tipe_trans2").get(0).selectedIndex = 0;
+        }
+        },
+          error: function (result) {
+              $('#tipe_trans').empty();
+              $('#tipe_trans').append("<option disabled selected> Can Not Load </option>");
 
-            const OldTipetrans2 = "{{old('tipe_trans2')}}";
-
-            if (OldTipetrans2 !== '') {
-                $('#tipe_trans2').val(OldTipetrans2);
-            }
+              get_list_transaction_tipe();
         }
     });
 }
@@ -5312,11 +5316,20 @@ function pilihpay_ku(idpay) {
     $("#cardpay" + idpay).addClass("active");
     $("#btn_pay_next").removeAttr("disabled");
 
-    if ($("#payment_time_module").val() != "") {
-
+    if ($('#payment_time_module_bayar').val() != null && $('#payment_time_module_bayar').val() != "") {
         $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    } else {
+        $("#btn_submit_paymethod").attr("disabled", "disabled");
     }
 }
+
+$('#payment_time_module_bayar').change(function () {
+    var dipilih = this.value;
+    if(dipilih != null && dipilih != ""){
+        $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
+    }
+});
+
 // ---------------------- END PAYMENT MANAGEMENT ---------------------------
 
 

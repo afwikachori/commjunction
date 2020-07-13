@@ -23,6 +23,10 @@ class SuperadminController extends Controller
     use RequestHelper;
     use SendRequestController;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
 
     public function dashboarSuperView()
     {
@@ -124,6 +128,14 @@ class SuperadminController extends Controller
         ]);
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $url = env('SERVICE') . 'registration/admcreate';
         $client = new \GuzzleHttp\Client();
 
@@ -177,6 +189,14 @@ class SuperadminController extends Controller
         ]);
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $url = env('SERVICE') . 'auth/superadmin';
         try {
 
@@ -222,6 +242,14 @@ class SuperadminController extends Controller
         ]);
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $url = env('SERVICE') . 'auth/superadmin';
 
 
@@ -321,7 +349,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -330,6 +358,14 @@ class SuperadminController extends Controller
     public function verify_admincom(Request $request)
     {
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $validator = $request->validate([
             'invoice_num' => 'required',
             'pass_super' => 'required',
@@ -390,6 +426,25 @@ class SuperadminController extends Controller
         } //END-IF  UPLOAD-IMAGE
     } //end-function
 
+
+    public function LogoutSuperadminhref()
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $url = env('SERVICE') . 'profilemanagement/logout';
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            session()->forget('session_logged_superadmin');
+            return redirect('superadmin');
+        } else if ($json["status"] == 401 || $json["message"] == "Unauthorized") {
+            alert()->error("Another user has logged", 'Unauthorized')->autoclose(4500);
+            return redirect('superadmin');
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
 
 
     public function LogoutSuperadmin(Request $request)
@@ -474,6 +529,14 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $token = $ses_login['access_token'];
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $subf = $request->except('_token', 'judul_modul', 'dekripsi_modul', 'fitur_tipe', 'fileup');
 
         $req = new RequestController;
@@ -607,6 +670,14 @@ class SuperadminController extends Controller
         ]);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $subftr = [];
         foreach ($input['subfitur'] as $i => $dt) {
@@ -644,6 +715,14 @@ class SuperadminController extends Controller
         ]);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $subftr = [];
         foreach ($input['edit_subfitur'] as $i => $dt) {
@@ -710,6 +789,14 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $url = env('SERVICE') . 'modulemanagement/addmoduleendpoint';
         $client = new \GuzzleHttp\Client();
 
@@ -717,7 +804,7 @@ class SuperadminController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => $ses_login['access_token']
         ];
-        $bodyku = json_encode([
+        $body = [
             "endpoint"      => $input['endpoint'],
             "method"        => $input['method'],
             "directory"     => $input['directory'],
@@ -726,18 +813,11 @@ class SuperadminController extends Controller
             "subfeature_id" => $input['subfiturid'],
             "auth"          => $input['auth'],
             "body"          => $input['bodyku'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
 
+        $csrf = '';
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Add New Module Endpoint', 'Added!')->autoclose(4000);
@@ -891,7 +971,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -913,7 +993,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -928,7 +1008,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -985,7 +1065,7 @@ class SuperadminController extends Controller
         $input = $request->all();
 
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         //    return $json;
         if ($json['status'] == 200) {
             return $json['data'];
@@ -1034,13 +1114,12 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listsubfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             'feature_id' => $input['feature_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1087,7 +1166,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1136,12 +1215,24 @@ class SuperadminController extends Controller
         $input = $request->all();
         $token = $ses_login['access_token'];
 
-        // return $input;
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
-        if (is_array($input['multi_fiturpricing'])) {
-            $fiturlist = implode(", ", $input['multi_fiturpricing']);
+        if ($request->has('multi_fiturpricing')) {
+            if (is_array($input['multi_fiturpricing'])) {
+                $fiturlist = implode(", ", $input['multi_fiturpricing']);
+            } else {
+                $fiturlist = $input['multi_fiturpricing'];
+            }
         } else {
-            $fiturlist = $input['multi_fiturpricing'];
+            alert()->error('Feature is Required', 'Required!')->autoclose(4500);
+            return back();
         }
 
         $req = new RequestController;
@@ -1188,7 +1279,10 @@ class SuperadminController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } //END-IF  UPLOAD-IMAGE
+        } else {
+            alert()->error('File Image is Required', 'Required!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -1201,6 +1295,15 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         $token = $ses_login['access_token'];
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         if ($request->has('edit_multi_fiturpricing')) {
 
@@ -1288,7 +1391,7 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1304,8 +1407,6 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/admreporttrans';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-
         $body = [
             "start_date"  => $input['start_date'],
             "end_date"  => $input['end_date'],
@@ -1315,12 +1416,12 @@ class SuperadminController extends Controller
             "max_transaction"  => $input['max_transaction'],
             "community_id"  => $input['community_id'],
         ];
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1345,7 +1446,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1361,7 +1462,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1411,6 +1512,16 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $url = env('SERVICE') . 'paymentmanagement/add';
         $client = new \GuzzleHttp\Client();
         // return $input;
@@ -1512,15 +1623,21 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
-        $url = env('SERVICE') . 'paymentmanagement/edit';
-        $client = new \GuzzleHttp\Client();
-        // return $input;
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => $ses_login['access_token']
-        ];
 
-        $bodyku = json_encode([
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
+        $url = env('SERVICE') . 'paymentmanagement/edit';
+
+
+
+        $body = [
             "payment_id"         => $input['edit_idpay'],
             "payment_title"      => $input['edit_nama_pay'],
             "description"        => $input['edit_deskripsi_pay'],
@@ -1528,18 +1645,11 @@ class SuperadminController extends Controller
             "price_annual"       => $input['edit_harga_tahunan_pay'],
             "minimum_monthly_subscription" => $input['edit_min_bulanan_pay'],
             "minimum_annual_subscription"  => $input['edit_min_tahunan_pay'],
-        ]);
-
-        $datakirim = [
-            'body' => $bodyku,
-            'headers' => $headers,
         ];
+        $csrf = '';
 
         try {
-            $response = $client->post($url, $datakirim);
-            $response = $response->getBody()->getContents();
-            $json = json_decode($response, true);
-
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Edit Payment', 'Edited!')->autoclose(4000);
@@ -1584,6 +1694,15 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $token = $ses_login['access_token'];
         // dd($input);
 
@@ -1642,8 +1761,16 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $token = $ses_login['access_token'];
-        // dd($input);
 
         $req = new RequestController;
         $fileimg = "";
@@ -1691,7 +1818,10 @@ class SuperadminController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } //END-IF  UPLOAD-IMAGE
+        } else {
+            alert()->error('File Image is Required', 'Required!')->autoclose(4500);
+            return back();
+        }
     }
 
 
@@ -1709,7 +1839,7 @@ class SuperadminController extends Controller
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
             'filter_title'  => $input['filter_title'],
-            'notification_sub_type' => $input['notification_sub_type'],
+            'notification_sub_type' => (int) $input['notification_sub_type'],
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
@@ -1730,7 +1860,7 @@ class SuperadminController extends Controller
         $csrf = $input['_token'];
 
         $body = [
-            "user_type" => $input['user_type'],
+            "user_type" => (int) $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
@@ -1748,6 +1878,15 @@ class SuperadminController extends Controller
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
         $url = env('SERVICE') . 'notificationmanagement/sendnotification';
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         if (isset($input['user_notif'])) {
             $user = $input['user_notif'];
@@ -1793,6 +1932,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/detailnotification';
 
         $input = $request->all();
+        // return $input;
         $csrf = $input['_token'];
 
         $body = [
@@ -1815,6 +1955,15 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $datain = $request->except('_token', 'set_id_paymethod');
         $dtin = array_chunk($datain, 5);
 
@@ -1872,7 +2021,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1884,6 +2033,15 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         if (isset($input['list_user'])) {
             $user = $input['list_user'];
@@ -2007,7 +2165,7 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2079,6 +2237,16 @@ class SuperadminController extends Controller
         $token = $ses_login['access_token'];
         $ses_user = $ses_login['user'];
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $url = env('SERVICE') . 'profilemanagement/editprofile';
 
 
@@ -2135,7 +2303,6 @@ class SuperadminController extends Controller
                 return back();
             }
         } else { //END-IF  UPLOAD-IMAGE
-            $input = $request->all(); // getdata form by name
             $imageRequest = [
                 "user_name" => $input['username_super'],
                 "full_name" => $input['name_super'],
@@ -2189,6 +2356,14 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $url = env('SERVICE') . 'profilemanagement/changepassword';
         $csrf = $input['_token'];
@@ -2243,6 +2418,15 @@ class SuperadminController extends Controller
         $input = $request->all();
         $url = env('SERVICE') . 'usermanagement/createuser';
 
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         try {
             $req_input =  [
                 "full_name" => $input['name_user'],
@@ -2286,6 +2470,15 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $body = [
             "user_id" => $input['idnya_user'],

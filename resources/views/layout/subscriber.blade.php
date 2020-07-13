@@ -71,8 +71,8 @@
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                             <a class="clr-accent-color" href="#" style="padding-left: 2em;" lang="en">Documentation
                                 &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="clr-accent-color" href="/subscriber/supportpal/" style="padding-left: 2em;" lang="en">Support &nbsp;<i
-                                    class="mdi mdi-phone cteal"></i> </a>
+                            <a class="clr-accent-color" href="/subscriber/supportpal/" style="padding-left: 2em;"
+                                lang="en">Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>
                 </footer>
@@ -562,50 +562,60 @@
         </div>
     </div>
 
-<!-- MODAL SEND MESSAGE-->
-<div class="modal fade" id="modal_send_message_subs" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-            <form id="form_send_message_friend" method="POST" id="form_confirm_new_friend"
-                action="{{route('friend_send_message')}}">
-                {{ csrf_field() }}
+    <!-- MODAL SEND MESSAGE-->
+    <div class="modal fade" id="modal_send_message_subs" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #ffffff;">
+                <form id="form_send_message_friend" method="POST" id="form_confirm_new_friend"
+                    action="{{route('friend_send_message')}}">
+                    {{ csrf_field() }}
 
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Send Message</h4>
-                </div>
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <small class="clight">Subject</small>
-                                <input type="text" id="subject" name="subject"
-                                    class="form-control input-abu melengkung10px" required>
+                    <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                        <h4 class="modal-title cgrey">Send Message</h4>
+                    </div>
+                    <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <small class="clight">To : </small>
+                                    <span class="ctosca s16" id="kepada_sendpesan">-</span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <small class="clight">Message</small>
-                                <textarea class="form-control input-abu" label="Konten" req="" id="news_add_content2"
-                                    name="message"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <small class="clight">Subject</small>
+                                    <input type="text" id="subject" name="subject"
+                                        class="form-control input-abu melengkung10px" required>
+                                </div>
+                                <div class="form-group">
+                                    <small class="clight">Message</small>
+                                    <textarea class="form-control input-abu" label="Konten" rows="10"
+                                        id="news_add_content2" name="message"></textarea>
+                                </div>
+                                <input type="hidden" id="friend_id" name="friend_id" class="form-control input-abu">
                             </div>
-                            <input type="hidden" id="friend_id" name="friend_id" class="form-control input-abu">
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="border: none;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i> Cancel
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-accent btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> Send Message</button>
-                </div> <!-- end-footer     -->
-            </form>
-        </div> <!-- END-MDL CONTENT -->
+                    <div class="modal-footer" style="border: none;">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> Cancel
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-accent btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend">
+                            </i> Send Message</button>
+                    </div> <!-- end-footer     -->
+                </form>
+            </div> <!-- END-MDL CONTENT -->
 
+        </div>
     </div>
-</div>
 
 
     @else

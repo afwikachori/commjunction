@@ -882,6 +882,42 @@ a.dt-button {
     text-align: center;
 }
 
+
+.circle.detailpaysuper{
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 128px;
+    height: 128px;
+    border: 8px solid #efefef;
+    position: absolute;
+    top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+.circle.upimgedit{
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width: 128px;
+    height: 128px;
+    border: 8px solid #efefef;
+    position: absolute;
+    top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.p-image.upimgedit {
+    margin-top: 4em;
+    left: 85%;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    position: relative;
+}
+
 .circle.module {
     border-radius: 1000px !important;
     overflow: hidden;

@@ -15,6 +15,11 @@ use Helper;
 
 class SupportCommjunction extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function OpeningSupportView()
     {
         return view('support/index_support');
@@ -773,6 +778,7 @@ class SupportCommjunction extends Controller
             $response = $client->post($url, $datakirim);
             $response = $response->getBody()->getContents();
             $json = json_decode($response, true);
+            // return $json;
             if ($json['success'] == true) {
                 alert()->success('Successfully change status domain', 'Status Updated!')->autoclose(4500);
                 return back();

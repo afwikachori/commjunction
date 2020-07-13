@@ -202,16 +202,18 @@ border : 2px solid;
 
 #img_portal_bg{
 position: absolute;
-height: auto;
+height: 100%;
 width: 100%;
 margin: auto;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
 }
 
 .biruq{
-  background: linear-gradient(180deg, #6F86D6 0%, #48C6EF 100%);
+  /* background: linear-gradient(180deg, #6F86D6 0%, #48C6EF 100%); */
   max-height: 1200px;
   min-height: 100vh;
- /* height: 100%;*/
   width: auto;
   overflow: hidden !important;
 }

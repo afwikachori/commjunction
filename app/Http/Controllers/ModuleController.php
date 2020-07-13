@@ -21,6 +21,11 @@ class ModuleController extends Controller
 
     use SendRequestController;
 
+    public function __construct()
+    {
+        $this->middleware(['XFrameOptions']);
+    }
+
     public function NewsManagementView()
     {
         return view('admin/dashboard/news_management');
@@ -39,6 +44,16 @@ class ModuleController extends Controller
     public function createNewVenueAdmin()
     {
         return view('admin/dashboard/venue_module_admin');
+    }
+
+    public function marketplaceItemCreateView_admin()
+    {
+        return view('admin/dashboard/marketplace_module_admin');
+    }
+
+    public function marketplaceItemCreateView_subs()
+    {
+        return view('subscriber/dashboard/marketplace_module_subs');
     }
 
 
@@ -87,7 +102,7 @@ class ModuleController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -173,6 +188,7 @@ class ModuleController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'module/news/detail';
+
         $body = [
             'news_id'   => intval($news_id)
         ];
@@ -296,6 +312,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/publish';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
         $csrf = $input['_token'];
 
         // return $input;
@@ -325,7 +350,14 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/setheadline';
 
         $input = $request->all();
-        // return $input;
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
         $csrf = $input['_token'];
         $body = [
             'news_id'   => $input['news_id']
@@ -353,6 +385,16 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/news/scrapnews';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $body = [
@@ -479,6 +521,10 @@ class ModuleController extends Controller
     {
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
+
+        $input = $request->all(); // getdata form by name
+
+
         $client = new \GuzzleHttp\Client();
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
@@ -499,7 +545,7 @@ class ModuleController extends Controller
         $imgku = file_get_contents($request->file('fileup2')->getRealPath());
         $filnam = $request->file('fileup2')->getClientOriginalName();
 
-        $input = $request->all(); // getdata form by name
+
 
         //VALIDATION EMPTY TITLE
         if ($input['add_title'] == "") {
@@ -512,8 +558,12 @@ class ModuleController extends Controller
             return back();
         }
 
+        if ($request->has('add_title')) {
+              $judul = preg_replace("#</?[^>]*>#i", "", $input['add_title']);
+        }
+
         $imageRequest = [
-            "title"        => $input['add_title'],
+            "title"        => $judul,
             "content" => $input['news_add_content'],
             "image"        => $imgku,
             "filename"      => $filnam,
@@ -595,7 +645,7 @@ class ModuleController extends Controller
 
         $input = $request->all();
         $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -669,6 +719,16 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/sendmessage';
         $input = $request->all(); // getdata form by name
 
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         //VALIDATION EMPTY TITLE
         if ($input['subject'] == "") {
             alert()->error('Please Insert Message Subject')->persistent('Done');
@@ -708,6 +768,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/approve';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
         $csrf = $input['_token'];
 
         $body = [
@@ -743,6 +812,15 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/setting';
 
         $input = $request->all();
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
         $csrf = $input['_token'];
 
         $datain = $request->except('_token');
@@ -797,6 +875,14 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/searchfriend';
 
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
         $csrf = $input['_token'];
 
         $body = [
@@ -985,6 +1071,15 @@ class ModuleController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/createticket';
         $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
 
         $datain = $request->except('_token');
         $dtin = array_chunk($datain, 8);
@@ -1245,7 +1340,6 @@ class ModuleController extends Controller
                 ];
             }
         }
-        // dd($imageRequest);
 
         $resImg = $req->create_venue_multipart($imageRequest, $url, $ses_login['access_token']);
         dd($resImg);
@@ -1257,4 +1351,436 @@ class ModuleController extends Controller
         //     return back();
         // }
     }
+
+
+
+
+    // --------------------------------- ADMIN - MODULE MARKET PLACE ----------------------------------
+
+    public function marketplaceStatusCreate_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/status';
+
+        $csrf = "";
+        $body = [
+            "name"  => "Status Baru",
+            "note"  => "Status baru masih transisi"
+        ];
+
+        $cekhtml = $this->cek_tag_html($body, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplacecategoryCreate_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/category/create';
+
+        $csrf = "";
+        $body = [
+            "name"  => 'Categori KEdua webfront',
+        ];
+
+        $cekhtml = $this->cek_tag_html($body, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceCategoryList_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/category';
+
+
+        $json = $this->formdata_nobody($url, $ses_login['access_token']);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceItemList_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $q = 'sabun';
+        $price = 'DESC';
+        $date = 'DESC';
+        $category_id = '1';
+
+        // $url = env('SERVICE') . 'module/marketplaceproliga/item?q=' . $q . '&price=' . $price . '&date=' . $date . '&category_id=' . $category_id;
+        $url = env('SERVICE') . 'module/marketplaceproliga/item?price=' . $price . '&date=' . $date;
+
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemListUser_admin()
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/user';
+
+        $body = [
+            "category_id"   => "",
+            "date"          => "",
+            "price"         => "",
+            "q"             => ""
+        ];
+
+        $cekhtml = $this->cek_tag_html($body, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceItemPublish_admin($id_item)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/publish';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceItemDelete_admin($id_item)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/delete';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemDetail_admin($id_item)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/itemdetail';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemCreate_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+        // return $input;
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden !')->autoclose(4500);
+            return back();
+        }
+
+        if ($input['action'] == "ADD") {
+            $url = env('SERVICE') . 'module/marketplaceproliga/item/create';
+        } else {
+            $url = env('SERVICE') . 'module/marketplaceproliga/item/edit';
+        }
+
+        $tags = explode(",", $input['item_tag']);
+
+
+        $req = new RequestController;
+        if ($request->hasFile('photo_item')) {
+            $photo = [];
+            foreach ($request->file('photo_item') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $image_path = $image->path();
+
+                $files = [
+                    'name'     => 'photo',
+                    'contents' => fopen($image_path, 'r'),
+                    'filename' => $fileName
+                ];
+                array_push($photo, $files);
+            }
+
+            if ($input['action'] == "ADD") {
+                $imageRequest = [
+                    "name"          => $input['item_name'],
+                    "category_id"   => $input['id_category'],
+                    "description"   => $input['item_deskripsi'],
+                    "store"         => $input["store"],
+                    "price"         => $input['item_price'],
+                    "tag"           => $tags,
+                    "photo"         => $photo,
+                ];
+            } else {
+                $imageRequest = [
+                    "name"         => $input['item_name'],
+                    "category_id"   => $input['id_category'],
+                    "description"   => $input['item_deskripsi'],
+                    "store"         => $input["store"],
+                    "price"         => $input['item_price'],
+                    "tag"           => $tags,
+                    "photo"         => $photo,
+                    "item_id"       => $input['item_id'],
+                    "stock"         => (int) 100,
+                    "weight"        => (int) '2',
+                    "condition"     => 'New',
+                    "insurance"     => 'Tidak Ada',
+                    "min_order"     => '1',
+                ];
+            }
+        } else {
+            alert()->error('Photo is reuired, multiple is allowed', 'Required')->autoclose(4000);
+            return back();
+        }
+
+        $resImg = $req->create_item_marketplace_multiple($imageRequest, $url, $ses_login['access_token']);
+        dd($resImg);
+    }
+
+    // --------------- xx -------------- ADMIN -  MODULE MARKET PLACE -------------- xx ----------------
+
+
+
+
+    // --------------------------------- SUBSCRIBER  - MODULE MARKET PLACE ----------------------------------
+
+    public function marketplaceCategoryList_subs()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/category';
+
+
+        $json = $this->formdata_nobody($url, $ses_login['access_token']);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemListUser_subs()
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/user';
+
+        $body = [
+            "category_id"   => "",
+            "date"          => "",
+            "price"         => "",
+            "q"             => ""
+        ];
+
+        $cekhtml = $this->cek_tag_html($body, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            return $error;
+        }
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceItemPublish_subs($id_item)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/publish';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function marketplaceItemDelete_subs($id_item)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/item/delete';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemDetail_subs($id_item)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/marketplaceproliga/itemdetail';
+
+        $body = [
+            "item_id"  => (int) $id_item,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json;
+        } else {
+            return $json;
+        }
+    }
+
+    public function marketplaceItemCreate_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $input = $request->all();
+        // return $input;
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Forbidden !')->autoclose(4500);
+            return back();
+        }
+
+        if ($input['action'] == "ADD") {
+            $url = env('SERVICE') . 'module/marketplaceproliga/item/create';
+        } else {
+            $url = env('SERVICE') . 'module/marketplaceproliga/item/edit';
+        }
+
+        $tags = explode(",", $input['item_tag']);
+
+
+        $req = new RequestController;
+        if ($request->hasFile('photo_item')) {
+            $photo = [];
+            foreach ($request->file('photo_item') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $image_path = $image->path();
+
+                $files = [
+                    'name'     => 'photo',
+                    'contents' => fopen($image_path, 'r'),
+                    'filename' => $fileName
+                ];
+                array_push($photo, $files);
+            }
+
+            if ($input['action'] == "ADD") {
+                $imageRequest = [
+                    "name"          => $input['item_name'],
+                    "category_id"   => $input['id_category'],
+                    "description"   => $input['item_deskripsi'],
+                    "store"         => $input["store"],
+                    "price"         => $input['item_price'],
+                    "tag"           => $tags,
+                    "photo"         => $photo,
+                ];
+            } else {
+                $imageRequest = [
+                    "name"         => $input['item_name'],
+                    "category_id"   => $input['id_category'],
+                    "description"   => $input['item_deskripsi'],
+                    "store"         => $input["store"],
+                    "price"         => $input['item_price'],
+                    "tag"           => $tags,
+                    "photo"         => $photo,
+                    "item_id"       => $input['item_id'],
+                    "stock"         => (int) 100,
+                    "weight"        => (int) '2',
+                    "condition"     => 'New',
+                    "insurance"     => 'Tidak Ada',
+                    "min_order"     => '1',
+                ];
+            }
+        } else {
+            alert()->error('Photo is reuired, multiple is allowed', 'Required')->autoclose(4000);
+            return back();
+        }
+
+        $resImg = $req->create_item_marketplace_multiple($imageRequest, $url, $ses_login['access_token']);
+        dd($resImg);
+    }
+
+    // --------------- xx -------------- SUBSCRIBER -  MODULE MARKET PLACE -------------- xx ----------------
+
+
+
+
 } //end-class

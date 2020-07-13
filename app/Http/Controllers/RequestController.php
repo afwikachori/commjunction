@@ -937,4 +937,77 @@ class RequestController extends Controller
             return $error;
         }
     }
+
+    public function create_item_marketplace_multiple($reqdata, $url, $token)
+    {
+        // dd($reqdata);
+        $data = [];
+
+        foreach ($reqdata as $i => $dt) {
+            if ($i == 'tag') {
+
+                foreach ($dt as  $tg) {
+                    $dataArray = [
+                        "name" => 'tag',
+                        "contents" => $tg
+                    ];
+                    array_push($data, $dataArray);
+                }
+            }
+        }
+
+
+        foreach ($reqdata as $key => $file) {
+
+            if ($key == 'photo') {
+                foreach ($file as $dt) {
+                    array_push($data, $dt);
+                }
+            }
+        }
+
+
+        foreach ($reqdata as $i => $dt) {
+                if ($i != 'photo' && $i != 'tag') {
+                    $dataArray = [
+                        "name" => $i,
+                        "contents" => $dt,
+                    ];
+                    array_push($data, $dataArray);
+                }
+        }
+
+        // $ini = ['multipart' =>
+        // $data];
+        // dd($ini);
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $request = $client->request('POST', $url, [
+                'headers' => [
+                    'Authorization' => $token
+                ],
+                'multipart' => $data,
+            ]);
+
+            $dataku = json_decode($request->getBody()->getContents(), true);
+            return $dataku;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['success'] = false;
+            $error['error'] = true;
+            return $error;
+        }
+    }
+
+
+
+
 } //END_CLASS

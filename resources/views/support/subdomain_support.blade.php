@@ -123,7 +123,7 @@
         $('#tabel_komunitas_support').DataTable().clear().destroy();
         $('#tabel_komunitas_support').empty();
 
-        var thead = '<tr>' +
+        var thead = '<thead><tr>' +
             '<th><b>ID</b></th>' +
             '<th><b>Logo</b></th>' +
             '<th><b>Community Name</b></th>' +
@@ -132,7 +132,7 @@
             '<th><b>Status</b></th>' +
             '<th><b>Date Created</b></th>' +
             '<th><b>Action</b></th>' +
-            '</tr>';
+            '</tr></thead>';
 
         $('#tabel_komunitas_support').html(thead);
 
@@ -173,11 +173,6 @@
                     var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                     $('#tabel_komunitas_support tbody').empty().append(nofound);
                 },
-            },
-            error: function (request, status, errorThrown) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                $('#tabel_komunitas_support tbody').empty().append(nofound);
-
             },
             columns: [
                 {
@@ -245,7 +240,7 @@
                             // } else if (data == 1) {
                             //     return '<small class="cgrey s13">First Login</small>';
                         } else {
-                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                            return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnsee">' +
                                 '<i class="mdi mdi-lead-pencil"></i>' +
                                 '</button>';
                         }
@@ -257,7 +252,7 @@
                 [
                     {
                         "data": null,
-                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-lead-pencil"></i></button>',
+                        "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnsee"><i class="mdi mdi-lead-pencil"></i></button>',
                         "targets": -1
                     }
                 ],
@@ -265,7 +260,7 @@
         });
 
         //DETAIL USERTYPE FROM DATATABLE
-        $('#tabel_komunitas_support tbody').on('click', 'button', function () {
+        $('#tabel_komunitas_support tbody').on('click', 'button.btnsee', function () {
 
             var data = tabel.row($(this).parents('tr')).data();
 
