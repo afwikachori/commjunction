@@ -233,16 +233,15 @@
                     }
                 },
                 {
-                    mData: 'status',
+                    mData: 'status_pending_subdomain_title',
                     render: function (data, type, row, meta) {
-                        if (data == 0) {
-                            return '<small class="cgrey s13">Newly</small>';
-                            // } else if (data == 1) {
-                            //     return '<small class="cgrey s13">First Login</small>';
-                        } else {
+                        var domain = row.subdomain;
+                        if (data == "Pending" && domain != null) {
                             return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnsee">' +
                                 '<i class="mdi mdi-lead-pencil"></i>' +
                                 '</button>';
+                        } else {
+                           return '<small class="cgrey s13">No Request</small>';
                         }
 
                     }

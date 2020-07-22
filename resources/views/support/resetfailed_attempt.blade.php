@@ -306,7 +306,7 @@
             '<th><b>Reset Attempt</b></th>' +
             '</tr>' +
             '</thead >';
-             $('#tabel_subscriber').html(header);
+        $('#tabel_subscriber').html(header);
 
 
         var tabel = $('#tabel_subscriber').DataTable({
@@ -352,7 +352,7 @@
                 {
                     mData: 'user_id',
                     render: function (data, type, row, meta) {
-                        return '<span class="s13 text-wrap width-300">' + data + '</span>';
+                        return '<span class="s13 text-wrap width-200">' + data + '</span>';
                     }
                 },
                 {
@@ -383,11 +383,23 @@
                     }
                 },
                 {
-                    mData: null,
+                    mData: 'otp_attempt',
                     render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp_subs">' +
-                            '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
-                            '<small>Login</small></button>';
+                        var otp = row.otp_attempt;
+                        var login = row.login_attempt;
+                        if (otp == true && login == true) {
+                            return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp_subs">' +
+                                '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
+                                '<small>Login</small></button>';
+                        } else if (otp == true && login == false) {
+                            return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp_subs">' +
+                                '<small>OTP</small></button>';
+                        } else if (otp == false && login == true) {
+                             return '<button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
+                                '<small>Login</small></button>';
+                        } else {
+                             return '<small class="cgrey s13">No Request</small>';
+                        }
                     }
                 }
             ],
@@ -477,7 +489,7 @@
         $('#tabel_admin_komunitas').DataTable().clear().destroy();
         $('#tabel_admin_komunitas').empty();
 
-                var header = '<thead>' +
+        var header = '<thead>' +
             '<tr>' +
             '<th><b>ID User</b></th>' +
             '<th><b>Photo</b></th>' +
@@ -536,7 +548,7 @@
                 {
                     mData: 'user_id',
                     render: function (data, type, row, meta) {
-                        return '<span class="s13">' + data + '</span>';
+                        return '<span class="s13 text-wrap width-200">' + data + '</span>';
                     }
                 },
                 {
@@ -567,11 +579,23 @@
                     }
                 },
                 {
-                    mData: null,
+                    mData: 'otp_attempt',
                     render: function (data, type, row, meta) {
-                        return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp">' +
-                            '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login">' +
-                            '<small>Login</small></button>';
+                         var otp = row.otp_attempt;
+                        var login = row.login_attempt;
+                        if (otp == true && login == true) {
+                            return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp">' +
+                                '<small>OTP</small></button> &nbsp;&nbsp; <button type="button" class="btn btn-tosca btn-sm btn_reset_login">' +
+                                '<small>Login</small></button>';
+                        } else if (otp == true && login == false) {
+                            return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp">' +
+                                '<small>OTP</small></button>';
+                        } else if (otp == false && login == true) {
+                            return '<button type="button" class="btn btn-tosca btn-sm btn_reset_login">' +
+                                '<small>Login</small></button>';
+                        } else {
+                            return '<small class="cgrey s13">No Request</small>';
+                        }
                     }
                 }
             ],
