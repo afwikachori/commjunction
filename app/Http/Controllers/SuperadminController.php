@@ -1835,7 +1835,7 @@ class SuperadminController extends Controller
         $csrf = $input['_token'];
 
         $body = [
-            'community_id' => $input['community_id'],
+            'community_id' => (int) $input['community_id'],
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
             'filter_title'  => $input['filter_title'],
@@ -1846,7 +1846,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 

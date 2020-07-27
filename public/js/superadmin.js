@@ -3910,13 +3910,13 @@ function tabel_generate_notif_super() {
                 "notification_sub_type": $("#tipe_notif").val(),
                 "_token": token
             },
+            // success: function (result) {
+            // console.log(result);
+            // },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_generate_notif_super tbody').empty().append(nofound);
             },
-        },
-        error: function (request, status, errorThrown) {
-            console.log(errorThrown);
         },
         columns: [
             { mData: 'id' },
@@ -3980,6 +3980,7 @@ function get_list_komunitas_notifsuper() {
             "_token": token
         },
         success: function (result) {
+            // console.log(result);
             $('#list_komunitas_notif').empty();
             $('#list_komunitas_notif').append("<option value='0' disabled> Choose</option>");
 
@@ -4009,6 +4010,9 @@ function get_list_komunitas_notifsuper() {
                 $('#komunitas_notif').val(Olddt);
             }
 
+        },
+        error: function (result) {
+            get_list_komunitas_notifsuper();
         }
     });
 }
