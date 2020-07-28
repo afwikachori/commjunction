@@ -40,7 +40,7 @@
                         role="tab" aria-controls="nav-home" aria-selected="false" aria-disabled="disabled" lang="en" data-lang-token="Community Information">Community
                         Information</a>
 
-                    <a class="nav-item nav-link profileq active" id="nav-profile-tab" data-toggle="tab"
+                    <a class="nav-item nav-link profileq personalinfo active" id="nav-profile-tab" data-toggle="tab"
                         href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true" lang="en" data-lang-token="Personal Information">Personal
                         Information</a>
                 </div>

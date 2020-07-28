@@ -232,8 +232,11 @@ $.ajax({
     type: "POST",
     dataType: "json",
     success: function (result) {
+        console.log(result);
+        if(result.success == false && result.message == "Internal Server Error"){
+            get_jenis();
+        }else{
       var data = result;
-      console.log(data);
 
       $('#type_com').empty();
       $('#type_com').append("<option disabled> --- </option>");
@@ -255,6 +258,10 @@ $.ajax({
     }
 
     get_session1();
+}
+    },
+    error: function (result) {
+        get_jenis();
     }
 });
 } //endfunction

@@ -169,13 +169,16 @@ function cekemailadmin(input) {
 $('#alamat_admin').on('keyup', function () {
     if (this.value == "") {
         $("#alamat_admin").removeClass("is-valid").addClass("is-invalid");
-    } else if (this.value.length >= 10) {
+        $("#btn_register2").attr("disabled");
+    } else if (this.value.length >= 5) {
         $("#alamat_admin").removeClass("is-invalid").addClass("is-valid");
         $("#pesan_alamatadmin").hide();
         $(".error_regis2").hide();
+        $("#btn_register2").removeAttr("disabled");
     } else {
         $("#alamat_admin").removeClass("is-valid").addClass("is-invalid");
         $("#pesan_alamatadmin").show();
+        $("#btn_register2").attr("disabled");
     }
 });
 

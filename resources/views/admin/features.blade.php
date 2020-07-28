@@ -94,6 +94,40 @@
         get_list_feature_regis();
     });
 
+    var ui = {
+    popup: {
+        show: function show(type, message, tittle) {
+            toastr[type](message, tittle);
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "800",
+                "timeOut": 0,
+                "onclick": null,
+                "onCloseClick": null,
+                "extendedTimeOut": 0,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false
+            };
+        },
+
+        showLoader: function showLoader() {
+            $("#mdl-loadingajax").modal('show');
+        },
+        hideLoader: function hideLoader() {
+            $("#mdl-loadingajax").modal('hide');
+        },
+    }
+};
 
     function get_list_feature_regis() {
         $.ajaxSetup({
@@ -107,10 +141,13 @@
             dataSrc: '',
             timeout: 30000,
             beforeSend: function () {
-                $('#mdl-loadingajax').modal('show');
+                 ui.popup.showLoader();
+            setTimeout(function () {
+                ui.popup.hideLoader();
+            }, 5000);
+                // $('#mdl-loadingajax').modal('show');
             },
             success: function (result) {
-
                 console.log(result);
             setTimeout(function () {
                 ui.popup.hideLoader();
@@ -120,7 +157,9 @@
                         .then((value) => {
                             window.location.href = "/admin/pricing";
                         });
-                } else {
+                } else if(result.success == false || result.message == "Internal Server Error"){
+                    get_list_feature_regis();
+                }else {
                     var noimg = '/img/fiturs.png';
                     var jum = 0;
                     var uifitur = '';

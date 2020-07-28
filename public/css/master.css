@@ -716,6 +716,19 @@ position: absolute;
 }
 
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.personalinfo.active {
+    color: #4F4F4F !important;
+    background-color: transparent;
+    border-color: transparent transparent #4F4F4F;
+    border-bottom: 2.5px solid !important;
+    font-size: 16px;
+    font-weight: bold;
+    /* min-width: 50%; */
+    width: 50%;
+    text-align: center !important;
+}
+
+
 .nav-tabs .nav-link {
     border: 0px solid transparent;
     border-bottom: 2px solid !important;
