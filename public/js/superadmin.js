@@ -1072,9 +1072,14 @@ function tabel_subscriber_commjuction(idkomunitas) {
     $("#modal_generate_komunitas").modal('hide');
 
     //DETAIL USERTYPE FROM DATATABLE
-    $('#tabel_show_subs tbody').on('click', 'button.btnshow', function () {
-        var data = tabel.row($(this).parents('tr')).data();
+    $('#tabel_show_subs tbody').on('click', 'button.btnshow', function (e) {
 
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        // var data = tabel.row($(this).parents('tr')).data();
+        console.log(data);
         var stat = '';
         if (data.status == 0) {
             var stat = 'Waiting Approval';
@@ -1102,6 +1107,7 @@ function tabel_subscriber_commjuction(idkomunitas) {
             $("#div_membrship").hide();
         }
         $("#modal_detail_subs_active").modal("show");
+
     });
 
 }
