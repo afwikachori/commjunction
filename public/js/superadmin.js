@@ -1224,7 +1224,11 @@ function tabel_subs_pending_super(idkomunitas) {
 
     //DETAIL USERTYPE FROM DATATABLE
     $('#tabel_subs_pending tbody').on('click', 'button.btnsee', function () {
-        var data = tabel.row($(this).parents('tr')).data();
+        // var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
 
         var stat = '';
         if (data.status == 0) {
