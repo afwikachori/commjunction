@@ -87,6 +87,11 @@ color: teal !important;
 /*end-imgae input*/
 
 
+.sidebar .nav.sub-sidebar .nav-item.sub-sidebar .nav-link {
+    padding: 0.75rem 0 0.75rem 1.25rem !important;
+    color: #a5a5a5 !important;
+}
+
 .text-imgedit {
   position: absolute;
   top:-200px; bottom:0; left:48.5%; right:0;
@@ -1769,6 +1774,23 @@ width: 100%;
     width: 50px !important;
     height: 50px !important;
 }
+
+  .img-supermini {
+    width: 50px !important;
+    height: 50px !important;
+
+}
+
+.img-event-card{
+    position: absolute;
+    width: 50px !important;
+    height: 50px !important;
+    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 100%;
+}
+
 
 .img-profile-friends{
     height: 100px;

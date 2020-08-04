@@ -32,13 +32,11 @@ trait SendRequestController
             ]
         ];
 
-
         // ------ $get -------
         // true = header + url
         // false = header + body + url
         // "getdata" = body + url
         // null = url
-
         try {
             if ($get == true) {
                 $response = $client->post($url, $headers);
@@ -96,6 +94,8 @@ trait SendRequestController
             return $error;
         }
     }
+
+
 
 
     function is_html($string)

@@ -64,11 +64,19 @@ Route::prefix('admin')->group(function () {
     Route::post('create_new_event_admin', 'ModuleController@create_new_event_admin')->name('post.admin.create-event');
     Route::post('edit_new_event_admin', 'ModuleController@edit_new_event_admin')->name('post.admin.edit-event');
     Route::post('share_event_admin', 'ModuleController@share_event_admin')->name('post.admin.share-event');
+    Route::post('set_reminder_event', 'ModuleController@set_reminder_event')->name('post.admin.set-reminder');
+
+    //MODULE TICKET
+    Route::get('/ticket/{id_event}', 'ModuleController@TicketEventModuleView')->name('get.admin.ticket-view/{id_event}');
     Route::post('create_new_ticket_admin', 'ModuleController@create_new_ticket_admin')->name('post.admin.create-ticket');
     Route::post('tabel_ticket_list_admin', 'ModuleController@tabel_ticket_list_admin')->name('post.admin.list-ticket');
     Route::post('delete_ticket_event_admin', 'ModuleController@delete_ticket_event_admin')->name('post.admin.delete-ticket');
-   // PARTICIPANT
-    Route::get('/participant', 'ModuleController@participantEventModuleView')->name('get.admin.participant-list');
+
+
+    // PARTICIPANT
+    Route::get('/participant/{id_event}', 'ModuleController@participantEventModuleView')->name('get.admin.participant-view/{id_event}');
+    Route::post('tabel_participant_event_admin', 'ModuleController@tabel_participant_event_admin')->name('post.admin.participant-list');
+
 
     //VENUE
     Route::get('/venue_list', 'ModuleController@VenueListAdmin')->name('get.admin.venue-list');
@@ -354,21 +362,23 @@ Route::prefix('subscriber')->group(function () {
     // MARKET PLACE  - Subscriber
     Route::prefix('marketplace')->group(function () {
     Route::get('/category_list', 'ModuleController@marketplaceCategoryList_subs')->name('get.subs.market-categorylist');
-
     Route::get('/', 'ModuleController@marketplaceItemCreateView_subs')->name('get.subs.marketplace');
     Route::post('/item_post', 'ModuleController@marketplaceItemCreate_subs')->name('post.subs.market-createitem');
-
     Route::get('/publish/{id_item}', 'ModuleController@marketplaceItemPublish_subs')->name('get.subs.marketplace-publish/{id_item}');
     Route::get('/delete/{id_item}', 'ModuleController@marketplaceItemDelete_subs')->name('get.subs.marketplace-delete/{id_item}');
     Route::get('/detail/{id_item}', 'ModuleController@marketplaceItemDetail_subs')->name('get.subs.marketplace-detail/{id_item}');
-
     Route::get('/item_user', 'ModuleController@marketplaceItemListUser_subs')->name('get.subs.marketplace-itemuser');
-
-
     });
 
 
     //EVENT _ TICKET
+    Route::get('/event', 'ModuleController@EventModuleSubsView')->name('get.subs.event-view');
+    Route::post('get_list_event_subs', 'ModuleController@get_list_event_subs')->name('post.subs.event-list');
+    Route::post('tabel_ticket_list_subs', 'ModuleController@tabel_ticket_list_subs')->name('post.subs.list-ticket');
+    Route::post('buy_ticket_subs', 'ModuleController@buy_ticket_subs')->name('post.subs.buy-ticket');
+
+
+
     Route::get('/buy_ticket', 'ModuleController@buyTicketEvent')->name('get.subs.buy-ticket');
 
 

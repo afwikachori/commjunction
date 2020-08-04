@@ -2,10 +2,11 @@
     <li class="nav-item nav-profile mgt-3">
         <center>
             <img src="/img/loading2.gif" class="rounded-circle img-fluid dash-img-profil foto_profil_subs"
-            onerror="this.onerror=null;this.src='/img/cam.png';">
+                onerror="this.onerror=null;this.src='/img/cam.png';">
             <br>
         </center>
-        <a href="#" class="nav-link" id="show_toltip" data-toggle="tooltip" data-placement="right" title="Profile subscriber">
+        <a href="#" class="nav-link" id="show_toltip" data-toggle="tooltip" data-placement="right"
+            title="Profile subscriber">
             <div class="nav-profile-text d-flex flex-column">
                 <span class="font-weight-bold mb-2 nama_subs_login cgrey"></span>
                 <span class="text-secondary text-small membership_status"></span>
@@ -43,11 +44,26 @@
         </a>
     </li>
 
-       <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="/subscriber/notification_management">
             <span class="menu-title" lang="en">Notification Management</span>
             <i class="mdi mdi-bell-ring menu-icon"></i>
         </a>
     </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false"
+                aria-controls="general-pages">
+                <span class="menu-title">Sample Pages</span>
+                <i class="mdi mdi-arrow-down-drop-circle menu-arrow"></i>
+                <i class="mdi mdi-view-module menu-icon"></i>
+            </a>
+            <div class="collapse" id="general-pages">
+                <ul class="nav sub-sidebar flex-column sub-menu">
+                    <li class="nav-item sub-sidebar">
+                        <a class="nav-link" href="/subscriber/event">Event</a>
+                    </li>
+            </div>
+        </li>
 
 </ul>

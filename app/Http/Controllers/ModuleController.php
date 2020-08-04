@@ -56,7 +56,21 @@ class ModuleController extends Controller
         return view('subscriber/dashboard/marketplace_module_subs');
     }
 
+    public function TicketEventModuleView($id_event)
+    {
+        return view('admin/dashboard/ticket_module_admin')->with(["id_event" => $id_event]);
+    }
 
+
+    public function participantEventModuleView($id_event)
+    {
+        return view('admin/dashboard/participant_module_admin')->with(["id_event" => $id_event]);
+    }
+
+    public function EventModuleSubsView()
+    {
+        return view('subscriber/dashboard/event_module_subs');
+    }
 
     public function get_all_news(Request $request)
     {
@@ -559,7 +573,7 @@ class ModuleController extends Controller
         }
 
         if ($request->has('add_title')) {
-              $judul = preg_replace("#</?[^>]*>#i", "", $input['add_title']);
+            $judul = preg_replace("#</?[^>]*>#i", "", $input['add_title']);
         }
 
         $imageRequest = [
@@ -940,7 +954,7 @@ class ModuleController extends Controller
     }
 
 
-    //--------------------------- EVENT MODULE ------------------------
+    //--------------------------- EVENT MODULE ADMIN ------------------------
     public function tabel_event_list_admin(Request $request)
     {
 
@@ -948,8 +962,7 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'event/list';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -964,14 +977,31 @@ class ModuleController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/create';
         $input = $request->all();
-        // return $input;
+        $lat = '';
+        $long = '';
+
+        if ($request->has('switch_jenis_event')) {
+            if ($input['switch_jenis_event'] == "on") {
+                $jenistiket = (int) 1;
+            } else {
+                $jenistiket = (int) 0;
+            }
+            $lokasion = $input['lokasi_online'];
+            $linkon =  $input['link_online'];
+        } else {
+            $lat =  "-7.982398";
+            $long = "112.632224";
+            $lokasion = "";
+            $linkon =  "";
+            $jenistiket = (int) 0;
+        }
+
         $req = new RequestController;
         $fileimg = "";
 
         if ($request->hasFile('event_img')) {
             $imgku = file_get_contents($request->file('event_img')->getRealPath());
             $filnam = $request->file('event_img')->getClientOriginalName();
-
 
             $imageRequest = [
                 "title"         => $input['event_judul'],
@@ -981,9 +1011,12 @@ class ModuleController extends Controller
                 "status"        => $input['event_status'],
                 "ticket_type"   => $input["event_type"],
                 "link"          => $input['event_link'],
-                "latitude"      => "-7.982398",
-                "longitude"     => "112.632224",
+                "latitude"      => $lat,
+                "longitude"     => $long,
                 "venue_id"      => "1",
+                "location"      => $lokasion,
+                "link_event_online" => $linkon,
+                "event_type"    => $jenistiket,
                 "image"          => $imgku,
             ];
 
@@ -1002,6 +1035,27 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'event/update';
         $input = $request->all();
         // return $input;
+
+
+        $lat = '';
+        $long = '';
+
+        if ($request->has('edit_switch_jenis_event')) {
+            if ($input['edit_switch_jenis_event'] == "on") {
+                $jenistiket = (int) 1;
+            } else {
+                $jenistiket = (int) 0;
+            }
+            $lokasion = $input['edit_lokasi_online'];
+            $linkon =  $input['edit_link_online'];
+        } else {
+            $lat =  "-7.982398";
+            $long = "112.632224";
+            $lokasion = "";
+            $linkon =  "";
+            $jenistiket = (int) 0;
+        }
+
         $req = new RequestController;
         if ($request->hasFile('edit_img')) {
             $imgku = file_get_contents($request->file('edit_img')->getRealPath());
@@ -1015,9 +1069,12 @@ class ModuleController extends Controller
                 "status"        => $input['edit_status'],
                 "ticket_type"   => $input["edit_type"],
                 "link"          => $input['edit_link'],
-                "latitude"      => "-7.982398",
-                "longitude"     => "112.632224",
+                "latitude"      => $lat,
+                "longitude"     => $long,
                 "venue_id"      => "1",
+                "location"      => $lokasion,
+                "link_event_online" => $linkon,
+                "event_type"    => $jenistiket,
                 "image"          => $imgku,
             ];
         } else {
@@ -1031,9 +1088,12 @@ class ModuleController extends Controller
                 "status"        => $input['edit_status'],
                 "ticket_type"   => $input["edit_type"],
                 "link"          => $input['edit_link'],
-                "latitude"      => "-7.982398",
-                "longitude"     => "112.632224",
+                "latitude"      => $lat,
+                "longitude"     => $long,
                 "venue_id"      => "1",
+                "location"      => $lokasion,
+                "link_event_online" => $linkon,
+                "event_type"    => $jenistiket,
                 "image"          => "",
             ];
         }
@@ -1118,23 +1178,22 @@ class ModuleController extends Controller
     }
 
 
-    public function participantEventModuleView()
+    public function tabel_participant_event_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'event/listparticipant';
 
-        // $input = $request->all();
-        $csrf = "";
+        $input = $request->all();
 
         $body = [
-            'event_id'   => 2
+            'event_id'   => $input['id_event']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1165,17 +1224,47 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'event/deleteticket';
 
         $input = $request->all();
-        $csrf = "";
+
 
         $body = [
-            'event_id'   => (int) $input['event_id']
+            "data_ticket" => [[
+                "ticket_id" => $input['id_tickets'],
+                "event_id"  => $input['id_eventtiket']
+            ]]
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        // return $json;
         if ($json['success'] == true) {
             return $json['data'];
         } else {
             return $json;
+        }
+    }
+
+    public function set_reminder_event(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/settingreminder';
+
+        $input = $request->all();
+
+        $body = [
+            'event_id'   => $input['idevent'],
+            'first_reminder' => $input['reminder_1'],
+            'second_reminder' => $input['reminder_2'],
+        ];
+
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Success Setting Reminder Event!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
         }
     }
 
@@ -1781,6 +1870,78 @@ class ModuleController extends Controller
     // --------------- xx -------------- SUBSCRIBER -  MODULE MARKET PLACE -------------- xx ----------------
 
 
+
+    // ----------------------------- SUBSCRIBER -  EVENT MODULE  ------------------------------
+
+    public function get_list_event_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'event/list';
+
+        $input = $request->all();
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+    public function tabel_ticket_list_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'event/listticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'event_id'   => $input['id_event']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+    public function buy_ticket_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'event/buyticket';
+
+        $input = $request->all();
+        $csrf = "";
+
+        $body = [
+            'ticket_id'   =>  $input['id_tiket_buy'],
+            'event_id'   =>   $input['id_event_buy'],
+            'payment_method_id'   => $input['id_pay_initial'],
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+
+        if ($input['id_pay_initial'] == "0") {
+            if ($json['success'] == true) {
+                return $json;
+            } else {
+                return $json;
+            }
+        } else {
+            if ($json['success'] == true) {
+                alert()->success('Ticket will be process, please cek email!', 'Success')->autoclose(4000);
+                return back();
+            } else {
+                alert()->error($json['message'], 'Failed')->autoclose(4000);
+                return back();
+            }
+        }
+    }
+
+
+    // --------------- x x -------------- SUBSCRIBER -  EVENT MODULE  -------------- x x ----------------
 
 
 } //end-class

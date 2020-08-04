@@ -783,10 +783,22 @@ function init_ready() {
 
     if ($("#page_event_module_admin").length != 0) {
         tabel_event_list_admin();
-        addRow_create_tiket();
-        get_list_event_admin(0);
-        get_list_event_admin("_filter");
 
+        // get_list_event_admin(0);
+        // get_list_event_admin("_filter");
+
+    }
+
+    if ($("#page_ticket_module_admin").length != 0) {
+        var id_eventtiket = $("#event_id_tiket").val();
+        tabel_ticket_list_admin(id_eventtiket);
+
+        addRow_create_tiket(id_eventtiket);
+    }
+
+    if ($("#page_participant_event").length != 0) {
+        var id_eventtiket = $("#event_id_par").val();
+        tabel_participant_event_admin(id_eventtiket);
     }
 
 }
@@ -3638,9 +3650,9 @@ function func_pay_module(params) {
         $("#cardpay" + idpay).addClass("active");
         $("#btn_pay_next").removeAttr("disabled");
 
-        if ($('#payment_time_module').val() != null && $('#payment_time_module').val() != ""){
+        if ($('#payment_time_module').val() != null && $('#payment_time_module').val() != "") {
             $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
-        }else{
+        } else {
             $("#btn_submit_paymethod").attr("disabled", "disabled");
         }
 
@@ -3948,41 +3960,41 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
-            if(result.success == false){
+            if (result.success == false) {
                 get_list_transaction_tipe();
-            }else{
-            $('#tipe_trans').empty();
-            $('#tipe_trans').append("<option disabled> Choose</option>");
+            } else {
+                $('#tipe_trans').empty();
+                $('#tipe_trans').append("<option disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#tipe_trans").get(0).selectedIndex = 0;
+                // ___________________________________________________________________
+                $('#tipe_trans2').empty();
+                $('#tipe_trans2').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#tipe_trans2").get(0).selectedIndex = 0;
             }
-            //Short Function Ascending//
-            $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#tipe_trans").get(0).selectedIndex = 0;
-            // ___________________________________________________________________
-            $('#tipe_trans2').empty();
-            $('#tipe_trans2').append("<option disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            //Short Function Ascending//
-            $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#tipe_trans2").get(0).selectedIndex = 0;
-        }
         },
-          error: function (result) {
-              $('#tipe_trans').empty();
-              $('#tipe_trans').append("<option disabled selected> Can Not Load </option>");
+        error: function (result) {
+            $('#tipe_trans').empty();
+            $('#tipe_trans').append("<option disabled selected> Can Not Load </option>");
 
-              get_list_transaction_tipe();
+            get_list_transaction_tipe();
         }
     });
 }
@@ -5325,7 +5337,7 @@ function pilihpay_ku(idpay) {
 
 $('#payment_time_module_bayar').change(function () {
     var dipilih = this.value;
-    if(dipilih != null && dipilih != ""){
+    if (dipilih != null && dipilih != "") {
         $("#btn_submit_paymethod").removeAttr("disabled", "disabled");
     }
 });
@@ -5789,11 +5801,11 @@ function tabel_event_list_admin() {
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
-            data: {
-                "_token": token
-            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
                 $('#tabel_event_management tbody').empty().append(nofound);
             },
         },
@@ -5812,6 +5824,13 @@ function tabel_event_list_admin() {
             { mData: 'status_title' },
             { mData: 'ticket_type_title' },
             {
+                mData: 'id',
+                render: function (data, type, row) {
+                    $uilink = '<a href="/admin/ticket/' + data + '/"  class="link-tbl-event">Ticket</a> <span> | <span> <a href="/admin/participant/' + data + '/" class="link-tbl-event">Participant</a>';
+                    return $uilink;
+                }
+            },
+            {
                 mData: null,
                 render: function (data, type, row, meta) {
                     return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
@@ -5819,6 +5838,9 @@ function tabel_event_list_admin() {
                         '</button>' +
                         '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-share"> ' +
                         '<i class="mdi mdi-link-variant"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-reminder"> ' +
+                        '<i class="mdi mdi-bell-outline"></i>' +
                         '</button>';
                 }
             }
@@ -5832,6 +5854,9 @@ function tabel_event_list_admin() {
                         '</button>' +
                         '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-share"> ' +
                         '<i class="mdi mdi-link-variant"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-reminder"> ' +
+                        '<i class="mdi mdi-bell-outline"></i>' +
                         '</button>',
                     "targets": -1
                 }
@@ -5841,7 +5866,12 @@ function tabel_event_list_admin() {
 
     //DETAIL
     $('#tabel_event_management tbody').on('click', 'button.btn-edit', function () {
-        var data = tabel.row($(this).parents('tr')).data();
+        // var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+
         console.log(data);
         $("#id_event_admin").val(data.id);
         $("#modal_edit_event").modal('show');
@@ -5855,12 +5885,24 @@ function tabel_event_list_admin() {
         $('#edit_status').val(data.status).attr("selected", "selected");
         $('#edit_type').val(data.ticket_type).attr("selected", "selected");
 
+        if (data.ticket_type != 0) {
+            $("#edit_switch_jenis_event").trigger("click");
+        }
+
+        $("#edit_lokasi_online").val(data.location);
+        $("#edit_link_online").val(data.link_event_online);
+
 
 
     });
 
     $('#tabel_event_management tbody').on('click', 'button.btn-share', function () {
-        var data = tabel.row($(this).parents('tr')).data();
+        // var data = tabel.row($(this).parents('tr')).data();
+
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
 
         var token = $('meta[name="csrf-token"]').attr('content');
         $.ajaxSetup({
@@ -5891,9 +5933,23 @@ function tabel_event_list_admin() {
             }
         });
     });
+
+
+    $('#tabel_event_management tbody').on('click', 'button.btn-reminder', function () {
+        // var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data(); s
+        $("#judul_event_reminder").html(data.title);
+        $("#date_event").html(data.event_date + "   " + data.event_time);
+        $("#idevent").val("");
+        $("#idevent").val(data.id);
+        $("#modal_reminder_event").modal('show');
+    });
 }
 
-function addRow_create_tiket() {
+function addRow_create_tiket(idevent) {
     // Add set name and id row
     var row = 1;
     var id = 2;
@@ -5902,33 +5958,34 @@ function addRow_create_tiket() {
         var new_row = '<div class="row newly" id="row' + row + '">' +
             '<div class="col-12"><hr></div>' +
             '<div class="col-md-11">' +
-            '<div class="row">'+
+            '<div class="row">' +
             '<div class="col-md-4">' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Title Ticket</small>' +
-            '<input type="text" id="tiket_judul' + id +'" name="tiket_judul'+id+'" class="form-control input-abu">' +
+            '<input type="text" id="tiket_judul' + id + '" name="tiket_judul' + id + '" class="form-control input-abu">' +
             '</div>' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Select Event</small>' +
-            '<select class="form-control input-abu" name="tiket_event' + id + '" id="tiket_event' + id +'" required></select>' +
+            '<input type="text"  name="tiket_event' + id + '" id="tiket_event' + id + '" value="' + idevent + '"' +
+            'class="form-control input-abu" readonly></input>' +
             '</div>' +
             '</div>' +
             '<div class="col-md-3">' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Description Ticket</small>' +
-            '<input type="text" id="tiket_dekripsi' + id +'" name="tiket_dekripsi' + id +'"' +
+            '<input type="text" id="tiket_dekripsi' + id + '" name="tiket_dekripsi' + id + '"' +
             'class="form-control input-abu" required>' +
             '</div>' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Start Date</small>' +
-            '<input type="date" id="tiket_mulaidate' + id + '" name="tiket_mulaidate' + id +'"'+
+            '<input type="date" id="tiket_mulaidate' + id + '" name="tiket_mulaidate' + id + '"' +
             'class="form-control input-abu" required>' +
             '</div>' +
             '</div>' +
             '<div class="col-md-3">' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Type Ticket</small>' +
-            '<select class="form-control input-abu" name="tiket_type' + id + '" id="tiket_type' + id +'" required>' +
+            '<select class="form-control input-abu" name="tiket_type' + id + '" id="tiket_type' + id + '" required>' +
             '<option selected disabled lang="en">Choose</option>' +
             '<option value="0" lang="en">Free</option>' +
             '<option value="1" lang="en">Paid</option>' +
@@ -5936,20 +5993,20 @@ function addRow_create_tiket() {
             '</div>' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">End Date</small>' +
-            '<input type="date" id="tiket_akhirdate' + id +'" name="tiket_akhirdate' + id +'"' +
+            '<input type="date" id="tiket_akhirdate' + id + '" name="tiket_akhirdate' + id + '"' +
             'class="form-control input-abu" required>' +
             '</div>' +
             '</div>' +
             '<div class="col-md-2">' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Price</small>' +
-            '<input type="text" id="tiket_harga' + id + '" name="tiket_harga' + id +'" class="form-control input-abu" required>' +
+            '<input type="text" id="tiket_harga' + id + '" name="tiket_harga' + id + '" class="form-control input-abu" required>' +
             '</div>' +
             '<div class="form-group">' +
             '<small class="clight" lang="en">Total Stock</small>' +
-            '<input type="text" id="tiket_total' + id + '" name="tiket_total' + id +'" class="form-control input-abu" required>' +
+            '<input type="text" id="tiket_total' + id + '" name="tiket_total' + id + '" class="form-control input-abu" required>' +
             '</div>' +
-            '</div></div>'+
+            '</div></div>' +
             '</div>' +
             '<div class="col-md-1 del-row">' +
             '<button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon delrow-tiket">' +
@@ -5959,7 +6016,7 @@ function addRow_create_tiket() {
             '</div>';
 
         $('#isi_newrow_ticket').append(new_row);
-        get_list_event_admin(id);
+        // get_list_event_admin(id);
         row++;
         id++;
         return false;
@@ -5992,45 +6049,78 @@ function get_list_event_admin(id) {
             "_token": token
         },
         success: function (result) {
-            $('#tiket_event'+id).empty();
+            $('#tiket_event' + id).empty();
             $('#tiket_event' + id).append("<option disabled selected> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#tiket_event' + id).append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
             }
-            var idnya = '#tiket_event' + id +' option';
-            $("#tiket_event"+id).html($(idnya).sort(function (x, y) {
+            var idnya = '#tiket_event' + id + ' option';
+            $("#tiket_event" + id).html($(idnya).sort(function (x, y) {
                 return $(y).val() < $(x).val() ? -1 : 1;
             }));
         }
     });
 }
 
-
-$('#tiket_event_filter').change(function () {
-    var dipilih = this.value;
-    tabel_ticket_list_admin(dipilih);
+var switchStatus1 = false;
+$(".onlined").css("display", "none");
+$("#switch_jenis_event").on('change', function () {
+    if ($(this).is(':checked')) {
+        switchStatus1 = $(this).is(':checked');
+        console.log('1 - ' + switchStatus1);
+        $("#jenis_event").html('Online');
+        $(".onlined").css("display", "block");
+        $(".offlined").css("display", "none");
+    }
+    else {
+        switchStatus1 = $(this).is(':checked');
+        console.log('2 - ' + switchStatus1);
+        $("#jenis_event").html('Offline');
+        $(".onlined").css("display", "none");
+        $(".offlined").css("display", "block");
+    }
 });
+
+var switchJenis = false;
+$(".onlined2").css("display", "none");
+$("#edit_switch_jenis_event").on('change', function () {
+    if ($(this).is(':checked')) {
+        switchJenis = $(this).is(':checked');
+        console.log('1 - ' + switchJenis);
+        $("#edit_jenis_event").html('Online');
+        $(".onlined2").css("display", "block");
+        $(".offlined2").css("display", "none");
+    }
+    else {
+        switchJenis = $(this).is(':checked');
+        console.log('2 - ' + switchJenis);
+        $("#edit_jenis_event").html('Offline');
+        $(".onlined2").css("display", "none");
+        $(".offlined2").css("display", "block");
+    }
+});
+
 
 
 function tabel_ticket_list_admin(id_event) {
     $('#tabel_ticket_event').DataTable().clear().destroy();
     $('#tabel_ticket_event').empty();
 
-    // var uihead = '<thead>'+
-    //     '<tr>' +
-    //     '<th><b lang="en">ID Ticket</b></th>' +
-    //     '<th><b lang="en">Title</b></th>' +
-    //     '<th><b lang="en">Description</b></th>' +
-    //     '<th><b lang="en">Type Ticket</b></th>' +
-    //     '<th><b lang="en">Price</b></th>' +
-    //     '<th><b lang="en">Total</b></th>' +
-    //     '<th><b lang="en">Date</b></th>' +
-    //     '<th><b lang="en">Remaining</b></th>' +
-    //     '<th><b lang="en">Action</b></th>' +
-    //     '</tr>' +
-    //     '</thead>';
-    // $('#tabel_ticket_event').html(uihead);
+    var uihead = '<thead>' +
+        '<tr>' +
+        '<th><b lang="en">ID Ticket</b></th>' +
+        '<th><b lang="en">Title</b></th>' +
+        '<th><b lang="en">Description</b></th>' +
+        '<th><b lang="en">Type Ticket</b></th>' +
+        '<th><b lang="en">Price</b></th>' +
+        '<th><b lang="en">Total</b></th>' +
+        '<th><b lang="en">Date</b></th>' +
+        '<th><b lang="en">Remaining</b></th>' +
+        '<th><b lang="en">Action</b></th>' +
+        '</tr>' +
+        '</thead>';
+    $('#tabel_ticket_event').html(uihead);
 
     var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -6049,8 +6139,11 @@ function tabel_ticket_list_admin(id_event) {
             timeout: 30000,
             data: {
                 "_token": token,
-                "id_event" : id_event
+                "id_event": id_event
             },
+            // success: function (result) {
+            //    console.log(result);
+            // },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
                 $('#tabel_ticket_event tbody').empty().append(nofound);
@@ -6073,9 +6166,9 @@ function tabel_ticket_list_admin(id_event) {
             {
                 mData: 'ticket_type',
                 render: function (data, type, row, meta) {
-                    if(data == 0){
+                    if (data == 0) {
                         return '<small class="cgrey">Free</small>';
-                    }else{
+                    } else {
                         return '<small class="cgrey">Paid</small>';
                     }
                 }
@@ -6086,15 +6179,18 @@ function tabel_ticket_list_admin(id_event) {
                 mData: 'start_date',
                 render: function (data, type, row, meta) {
                     var enddate = row.end_date;
-                    return '<small class="s13 text-wrap width-200">' + data + "<br>until<br>" + enddate +'</small>';
-                    }
-                    },
+                    return '<small class="s13 text-wrap width-200">' + data + "<br>until<br>" + enddate + '</small>';
+                }
+            },
             { mData: 'remaining_ticket' },
             {
                 mData: null,
                 render: function (data, type, row, meta) {
                     return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
                         '<i class="mdi mdi-eye"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-delete">' +
+                        '<i class="mdi mdi-delete"></i>' +
                         '</button>';
                 }
             }
@@ -6105,7 +6201,11 @@ function tabel_ticket_list_admin(id_event) {
                     "data": null,
                     "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-edit">' +
                         '<i class="mdi mdi-eye"></i>' +
-                        '</button>',
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-delete">' +
+                        '<i class="mdi mdi-delete"></i>' +
+                        '</button>'
+                    ,
                     "targets": -1
                 }
             ],
@@ -6114,7 +6214,10 @@ function tabel_ticket_list_admin(id_event) {
 
     //DETAIL
     $('#tabel_ticket_event tbody').on('click', 'button.btn-edit', function () {
-        var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
         console.log(data);
         $("#id_event_admin").val(data.id);
         $("#modal_edit_event").modal('show');
@@ -6129,6 +6232,71 @@ function tabel_ticket_list_admin(id_event) {
         $('#edit_type').val(data.ticket_type).attr("selected", "selected");
     });
 
+    $('#tabel_ticket_event tbody').on('click', 'button.btn-delete', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        console.log(data);
+        $("#modal_delete_ticket").modal('show');
+        $("#id_tickets").val(data.id);
+        var idevent = $("#event_id_tiket").val();
+        $("#id_eventtiket").val(idevent);
+
+    });
+
+}
+
+
+//PARTICIPANT MODULE
+function tabel_participant_event_admin(id_event) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_participant_event').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_participant_event_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "id_event": id_event
+            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_participant_event tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            { mData: 'user_id' },
+            {
+                mData: 'comm_subscriber.sso_picture',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgsee' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            { mData: 'comm_subscriber.full_name' },
+            { mData: 'event_ticket.title' },
+            {
+                mData: 'event_ticket.price',
+                render: function (data, type, row) {
+                    return "Rp. " + data;
+                }
+            },
+
+        ],
+
+    });
 }
 
 

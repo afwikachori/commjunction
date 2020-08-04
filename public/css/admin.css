@@ -1397,7 +1397,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 
 .mgb-1 {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5em !important;
 }
 
 .del-row{
@@ -2315,4 +2315,24 @@ input[type=color] {
     top: 45px;
     color: red;
     box-shadow: white;
+}
+
+
+#jenis_event{
+    margin-top: 0.5em;
+}
+
+.mgt-1{
+    margin-top: 1em !important;
+}
+
+
+#div_tipe_event{
+    margin-top: 0.5em !important;
+}
+
+.link-tbl-event {
+    text-decoration: none;
+    color: teal;
+    font-size: 12px;
 }

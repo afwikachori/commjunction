@@ -1,5 +1,6 @@
 // onerror = "this.onerror=null;this.src=\'' + noimg + '\';"
 
+
 // LANG -EN-ID
 var lang = new Lang();
 lang.dynamic('id', '/js/langpack/id.json');
@@ -201,25 +202,25 @@ function ses_auth_subs() {
         type: 'POST',
         datatype: 'JSON',
         success: function (result) {
-            if(result.success == false){
+            if (result.success == false) {
                 location.href = '/404';
-            }else{
+            } else {
                 console.log(result);
-            var result = result[0];
-            var custom = result.cust_portal_login;
+                var result = result[0];
+                var custom = result.cust_portal_login;
 
-            // var base_color = custom.base_color;
-            // document.documentElement.style
-            //     .setProperty('--base_color_dash', base_color);
-            // ----------------------------------------------------------------
+                // var base_color = custom.base_color;
+                // document.documentElement.style
+                //     .setProperty('--base_color_dash', base_color);
+                // ----------------------------------------------------------------
 
-            var id_kom_login = $(".id_komunitas").val();
-            var id_kom_auth = result.id;
+                var id_kom_login = $(".id_komunitas").val();
+                var id_kom_auth = result.id;
 
-            $.cookie('base_color', custom.base_color, { expires: 30 });
-            $.cookie('accent_color', custom.accent_color, { expires: 30 });
-            $.cookie('background_color', custom.background_color, { expires: 30 });
-            $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
+                $.cookie('base_color', custom.base_color, { expires: 30 });
+                $.cookie('accent_color', custom.accent_color, { expires: 30 });
+                $.cookie('background_color', custom.background_color, { expires: 30 });
+                $.cookie('navbar_color', custom.navbar_color, { expires: 30 });
             }
         },
         error: function (result) {
@@ -546,8 +547,8 @@ function get_inbox_navbar_subs() {
         type: 'POST',
         dataSrc: '',
         timeout: 30000,
-        data:{
-            "_token" : token,
+        data: {
+            "_token": token,
         },
         success: function (result) {
             // console.log('------------- get_inbox_navbar_subs');
@@ -578,10 +579,10 @@ function get_inbox_navbar_subs() {
                     var isiku = '';
                     var total = 0;
                     $.each(result, function (i, item) {
-                        if (item.sender_picture != 0){
+                        if (item.sender_picture != 0) {
                             var fotopic = server_cdn + cekimage_cdn(item.sender_picture);
-                        }else{
-                            var fotopic = '/img/avatar/'+avatar[num]+'.png';
+                        } else {
+                            var fotopic = '/img/avatar/' + avatar[num] + '.png';
                         }
                         total++;
                         isiku += '<a class="dropdown-item preview-item">' +
@@ -945,8 +946,8 @@ function get_list_notif_navbar(idkom) {
         },
         timeout: 30000,
         success: function (result) {
-            console.log('----------- get_list_notif_navbar');
-            console.log(result);
+            // console.log('----------- get_list_notif_navbar');
+            // console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
@@ -1236,9 +1237,13 @@ function init_ready() {
         });
     }
 
-    if ($("#page_notification_management_subs").length != 0){
+    if ($("#page_notification_management_subs").length != 0) {
         get_list_setting_notif_subs();
         show_card_notification();
+    }
+
+    if ($("#page_event_module_subs").length != 0) {
+        get_list_event_subs();
     }
 }
 
@@ -1291,15 +1296,15 @@ function table_news_list() {
                             '<div class="col-md-6 news_content_container"><h4 class="news-title">' + item.title + '</h4>' +
                             '<h6 class="author_name cgrey2 s13">Date : ' + item.createdAt + '</h6>' +
                             '<h6 class="author_name cgrey2 s13">Author : ' + item.author_name + '</h6>' +
-                            '<br>'+
+                            '<br>' +
                             '<div class="row"><div class="col-md-6"><a href="/subscriber/detail_news/' + item.id + '" class="btn btn-tosca btn-sm konco">' +
                             'See Detail' +
-                            '</a></div>'+
-                            '<div class="col-md-6 kananin pad-right">'+
-                            '<button type="button" class="btn btn-gradient-danger btn-rounded btn-icon btn-loveme"'+
-                            'onclick="send_love_news(\'' + item.id +  '\')">'+
-                            '<i class="mdi mdi-heart"></i>'+
-                            '</button></div></div>'+
+                            '</a></div>' +
+                            '<div class="col-md-6 kananin pad-right">' +
+                            '<button type="button" class="btn btn-gradient-danger btn-rounded btn-icon btn-loveme"' +
+                            'onclick="send_love_news(\'' + item.id + '\')">' +
+                            '<i class="mdi mdi-heart"></i>' +
+                            '</button></div></div>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -1336,13 +1341,13 @@ function send_love_news(idnews) {
         datatype: 'JSON',
         data: {
             "_token": token,
-            "news_id" : idnews
+            "news_id": idnews
         },
         success: function (result) {
             // console.log(result);
             if (result != undefined && result.success != false) {
                 ui.popup.show('success', 'News already loved', 'Success');
-            }else{
+            } else {
                 ui.popup.show('warning', result.message, 'Warning');
 
             }
@@ -1639,7 +1644,7 @@ function tabel_friend_list() {
                     var dtsend = data + '<>' + nama;
                     return '<a href="/subscriber/view_profile/' + data + '" type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
                         '<i class="mdi mdi-eye matadetail"></i></a>' +
-                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"'+
+                        '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
                         'onclick="send_message(\'' + data + "<>" + nama + '\')">' +
                         '<i class="mdi mdi-email matadetail"></i></i></a>' +
                         '<a type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref" onclick="send_whatsapp("' + nohp + '")>' +
@@ -1846,9 +1851,9 @@ function get_profile_custom_regis(params) {
         var cusinput = '';
 
         if (inputipe.id == 1) {
-            if (item[2] == deskripsi ){
+            if (item[2] == deskripsi) {
                 var pilihan = item.splice(3);
-            }else{
+            } else {
                 var pilihan = item.splice(2);
             }
             // var pilihan = item.splice(2);
@@ -1985,31 +1990,31 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
-            if(result.success == false){
+            if (result.success == false) {
                 get_list_transaction_tipe();
-            }else{
-            $('#tipe_trans').empty();
-            $('#tipe_trans').append("<option disabled selected> Choose</option>");
+            } else {
+                $('#tipe_trans').empty();
+                $('#tipe_trans').append("<option disabled selected> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            //Short Function Ascending//
-            $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-            // ___________________________________________________________________
-            $('#tipe_trans2').empty();
-            $('#tipe_trans2').append("<option disabled selected> Choose</option>");
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#tipe_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#tipe_trans").html($('#tipe_trans option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+                // ___________________________________________________________________
+                $('#tipe_trans2').empty();
+                $('#tipe_trans2').append("<option disabled selected> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#tipe_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
             }
-            //Short Function Ascending//
-            $("#tipe_trans2").html($('#tipe_trans2 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-        }
         },
         error: function (result) {
             get_list_transaction_tipe();
@@ -2798,41 +2803,41 @@ function get_top_player() {
                 $("#topplayer_nodata").show();
                 $("#isi_top_player").hide();
                 console.log(result);
-            }else{
-
-            if (result.length == 0) {
-                $("#topplayer_nodata").show();
-                $("#isi_top_player").hide();
             } else {
-                var iuplyr = '';
-                var nopic = '';
-                var gen = '';
-                $.each(result, function (i, item) {
-                    if (item.gender == "putri") {
-                        nopic = '/img/pl-girl.png';
-                        gen = 'Putri';
-                    } else {
-                        nopic = '/img/pl-boy.png';
-                        gen = 'Putra';
-                    }
-                    iuplyr += '<div class="col-md-6 mgt-half">' +
-                        '<div class="row pad-5px">' +
-                        '<div class="col-md-2 pad-5px dikanan">' +
-                        '<img src="' + server_cdn + item.photo + '" class="rounded-circle img-fluid wd-25px"' +
-                        'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
-                        '</div>' +
-                        '<div class="col-md-10 pad-5px">' +
-                        '<small class="cgrey2">' + item.name + '</small>' +
-                        '<small class="cblue"> &nbsp; (' + gen + ')</small><br>' +
-                        '<small class="clight">Club : ' + item.club.name + '</small>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                });
-                $("#isi_top_player").html(iuplyr);
-                $("#topplayer_nodata").hide();
-                $("#isi_top_player").show();
-            }
+
+                if (result.length == 0) {
+                    $("#topplayer_nodata").show();
+                    $("#isi_top_player").hide();
+                } else {
+                    var iuplyr = '';
+                    var nopic = '';
+                    var gen = '';
+                    $.each(result, function (i, item) {
+                        if (item.gender == "putri") {
+                            nopic = '/img/pl-girl.png';
+                            gen = 'Putri';
+                        } else {
+                            nopic = '/img/pl-boy.png';
+                            gen = 'Putra';
+                        }
+                        iuplyr += '<div class="col-md-6 mgt-half">' +
+                            '<div class="row pad-5px">' +
+                            '<div class="col-md-2 pad-5px dikanan">' +
+                            '<img src="' + server_cdn + item.photo + '" class="rounded-circle img-fluid wd-25px"' +
+                            'onerror="this.onerror=null;this.src=\'' + nopic + '\';">' +
+                            '</div>' +
+                            '<div class="col-md-10 pad-5px">' +
+                            '<small class="cgrey2">' + item.name + '</small>' +
+                            '<small class="cblue"> &nbsp; (' + gen + ')</small><br>' +
+                            '<small class="clight">Club : ' + item.club.name + '</small>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#isi_top_player").html(iuplyr);
+                    $("#topplayer_nodata").hide();
+                    $("#isi_top_player").show();
+                }
             }
         },
         error: function (result) {
@@ -2866,12 +2871,12 @@ function get_top_visit_club() {
                 console.log(result);
                 $("#topclubvisit_nodata").show();
                 $("#isi_top_visit_club").hide();
-            }else{
-            if (result.length == 0) {
-                $("#topclubvisit_nodata").show();
-                $("#isi_top_visit_club").hide();
+            } else {
+                if (result.length == 0) {
+                    $("#topclubvisit_nodata").show();
+                    $("#isi_top_visit_club").hide();
+                }
             }
-        }
         },
         error: function (result) {
             $("#topclubvisit_nodata").show();
@@ -3169,3 +3174,228 @@ $('#usertipe_notif').change(function () {
 
 // ----------- xx -------------- NOTIFICATION MANAGEMENT SUBS ------------- xx --------------
 
+
+
+// ------------------------- EVENT MODULE SUBS ---------------------------
+
+function get_list_event_subs() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/get_list_event_subs',
+        type: 'POST',
+        dataSrc: '',
+        success: function (result) {
+            console.log('----------- get_list_event_subs');
+            console.log(result);
+            var noimg = '/img/kosong.png';
+            if (result.success == false) {
+                $("#isi_card_event").hide();
+                $("#nodata_card_event").show();
+                ui.popup.show('warning', result.message, 'Warning');
+            } else {
+                if (result.length != 0) {
+                    var isiui = '';
+                    $.each(result, function (i, item) {
+                        isiui += '<div class="col-md-6 stretch-card grid-margin">' +
+                            '<div class="card sumari bg-gradient-kuning">' +
+                            '<div class="card-body sumari">' +
+                            '<div class="row">' +
+                            '<div class="col-2">' +
+                            '<img src="' + server_cdn + cekimage_cdn(item.image) + '" class="img-event-card zoom"' +
+                            'onerror="this.onerror=null;this.src=\'' + noimg + '\';">' +
+                            '</div>' +
+                            '<div class="col-10">' +
+                            '<span class="ctosca s18 tebal" lang = "en" > ' + item.title + '</span> &nbsp; ' +
+                            '<span class="clight s13">(' + item.ticket_type_title + ')</span>' +
+                            '<br><span class="cgrey s14">' + item.description + '</span><br>' +
+                            '<br><small class="cgrey2 mt-2">Information : </small><br>' +
+                            '<small class="cgrey tebal">' + item.event_date + '</small> &nbsp;&nbsp;' +
+                            '<small class="cgrey2">' + item.event_time + '</small><br>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row mgt-1half">' +
+                            '<div class="col-md-4">' +
+                            '<h5 class="clight"> ' + item.event_type_title + ' </h5>' +
+                            '</div>' +
+                            '<div class="col-md-8" style="text-align:right;">' +
+                            '<a type="button" class="btn btn-accent btn-sm" onclick="list_ticket_event_subs('+item.id+')">' +
+                            '<small class="cwhite" lang="en"><i class="mdi mdi-ticket-confirmation btn-icon-prepend"></i> &nbsp;' +
+                            'Buy Ticket</small></a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $("#isi_card_event").html(isiui);
+                    $("#nodata_card_event").hide();
+
+                }
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            $("#isi_card_event").hide();
+            $("#nodata_card_event").show();
+        }
+    });
+}
+
+function list_ticket_event_subs(id_event) {
+    $("#id_event_tiket").val(id_event);
+    get_payment_initial();
+
+    $('#tabel_ticket_event').DataTable().clear().destroy();
+    $('#tabel_ticket_event').empty();
+
+    var uihead = '<thead>' +
+        '<tr>' +
+        '<th><b lang="en">ID Ticket</b></th>' +
+        '<th><b lang="en">Title</b></th>' +
+        '<th><b lang="en">Description</b></th>' +
+        '<th><b lang="en">Type Ticket</b></th>' +
+        '<th><b lang="en">Price</b></th>' +
+        '<th><b lang="en">Date</b></th>' +
+        '<th><b lang="en">Action</b></th>' +
+        '</tr>' +
+        '</thead>';
+    $('#tabel_ticket_event').html(uihead);
+
+    var tabel = $('#tabel_ticket_event').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/subscriber/tabel_ticket_list_subs',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "id_event": id_event
+            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_ticket_event tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            {
+                mData: 'title',
+                render: function (data, type, row, meta) {
+                    return '<p class="s13 text-wrap width-100">' + data + '</p>';
+                }
+            },
+            {
+                mData: 'description',
+                render: function (data, type, row, meta) {
+                    return '<p class="s13 text-wrap width-200">' + data + '</p>';
+                }
+            },
+            {
+                mData: 'ticket_type',
+                render: function (data, type, row, meta) {
+                    if (data == 0) {
+                        return '<small class="cgrey">Free</small>';
+                    } else {
+                        return '<small class="cgrey">Paid</small>';
+                    }
+                }
+            },
+            { mData: 'price',
+                render: function (data, type, row, meta) {
+                    return 'Rp. ' + data;
+                }
+            },
+            {
+                mData: 'start_date',
+                render: function (data, type, row, meta) {
+                    var enddate = row.end_date;
+                    return '<small class="s13 text-wrap width-200">' + data + "<br>until<br>" + enddate + '</small>';
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-sm btn-tosca btn-buy-tiket">' +
+                        '<i class="mdi mdi-cash-multiple"></i> <small>Buy</small>' +
+                        '</button>'
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-sm btn-tosca btn-buy-tiket">' +
+                        '<i class="mdi mdi-cash-multiple"></i> <small>Buy</small>' +
+                        '</button>'
+                    ,
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    $("#modal_ticket_event_subs").modal('show');
+
+
+    $('#tabel_ticket_event tbody').on('click', 'button.btn-buy-tiket', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        console.log(data);
+
+        var idevent = $("#id_event_tiket").val();
+        $("#harga_tiket").html(data.price);
+        $("#id_event_buy").val(idevent);
+        $("#id_tiket_buy").val(data.id);
+
+
+        if(data.price == 0){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "/subscriber/buy_ticket_subs",
+                type: 'POST',
+                dataSrc: '',
+                timeout: 30000,
+                data: {
+                    "id_tiket_buy": data.id,
+                    "id_event_buy": idevent,
+                    "id_pay_initial" : 0
+                },
+                success: function (result) {
+                    console.log(result);
+                    if(result.success == true){
+                        swal('Sukses');
+                    }else{
+                        swal('Failed');
+                    }
+
+                }, error: function (result) {
+                    console.log(result);
+                }
+            });
+
+        }else{
+        $("#modal_pay_initial").modal('show');
+        }
+    });
+}
+// ----------- xx -------------- EVENT MODULE SUBS ------------- xx --------------
