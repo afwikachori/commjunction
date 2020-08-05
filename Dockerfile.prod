@@ -1,11 +1,15 @@
 FROM gitlab.vascomm.co.id:4567/frontend-docker-image/php-7:latest
 
+ENV http_proxy http://192.168.13.6:3128
+ENV https_proxy http://192.168.13.6:3128
+
 # Set working directory
 WORKDIR /var/www/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY composer.json .
+COPY composer.lock .
 
 RUN composer install --no-scripts --no-autoloader
 
