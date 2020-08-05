@@ -1,0 +1,25 @@
+FROM gitlab.vascomm.co.id:4567/frontend-docker-image/php-7:latest
+
+# Set working directory
+WORKDIR /var/www/html
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY composer.json .
+
+RUN composer install --no-scripts --no-autoloader
+
+RUN touch /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "upload_max_filesize = 15M;" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = 15M;" >> /usr/local/etc/php/conf.d/uploads.ini
+
+# Copy existing application directory permissions
+# COPY . /var/www/html
+COPY --chown=root:root . .
+
+RUN composer dump-autoload --no-scripts --optimize \
+#	&& chmod 777 /var/www/html/ -R
+	&& chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/nginx-conf/script.prod.sh
+
+# Expose port 9000 and start php-fpm server
+ENTRYPOINT ["sh", "/var/www/html/nginx-conf/script.prod.sh"]
