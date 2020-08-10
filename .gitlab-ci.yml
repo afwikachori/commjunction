@@ -1,6 +1,7 @@
 stages:
   - development
   - release
+  - production
 
 variables:
   GIT_CLEAN_FLAGS: -n
@@ -31,3 +32,16 @@ release:
     - release
   only:
     - release
+
+production:
+  before_script:
+    - export http_proxy=http://192.168.13.6:3128
+    - export https_proxy=http://192.168.13.6:3128
+  stage: production
+  script:
+    - docker-compose -f docker-compose.prod.yml up -d --force-recreate --build prod-commjaweb
+  tags:
+    - production
+  only:
+    - master
+    - /^hotfix-[a-zA-Z0-9.]*/
