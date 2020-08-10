@@ -94,4 +94,26 @@
         </a>
     </li>
 
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false"
+                aria-controls="general-pages">
+                <span class="menu-title">Module test</span>
+                <i class="mdi mdi-arrow-down-drop-circle menu-arrow"></i>
+                <i class="mdi mdi-view-module menu-icon"></i>
+            </a>
+            <div class="collapse" id="general-pages">
+                <ul class="nav sub-sidebar flex-column sub-menu">
+                    <li class="nav-item sub-sidebar">
+                        <a class="nav-link" href="/admin/event">Event</a>
+                    </li>
+            </div>
+
+              <div class="collapse" id="general-pages">
+                <ul class="nav sub-sidebar flex-column sub-menu">
+                    <li class="nav-item sub-sidebar">
+                        <a class="nav-link" href="/admin/forum">Forum</a>
+                    </li>
+            </div>
+        </li>
+
 </ul>

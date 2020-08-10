@@ -2336,3 +2336,53 @@ input[type=color] {
     color: teal;
     font-size: 12px;
 }
+
+.sidebar .nav.sub-sidebar .nav-item.sub-sidebar .nav-link {
+    padding: 0.75rem 0 0.75rem 1.25rem !important;
+    color: #a5a5a5 !important;
+}
+
+.modal-body.set-group{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+
+.profil-grup{
+    height: 165px !important;
+    width: 100%;
+}
+
+.card-img.profil-grup{
+opacity: 0.5;
+}
+
+.img-profil-grup{
+    width: 80px;
+    height: 80px;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: absolute;
+}
+
+.head-cover-group{
+    margin-left: 3em;
+}
+
+.set-admin{
+border: solid 1px #cacaca !important;
+}
+
+.btn-addadmingrup{
+    position: absolute;
+    bottom: 0px;
+    padding: 2px 10px 2px 10px !important;
+}
+
+.pas-tengah{
+        margin-bottom: auto;
+    margin-top: auto;
+}
+
+.des-group{
+    min-height: 82px;
+}

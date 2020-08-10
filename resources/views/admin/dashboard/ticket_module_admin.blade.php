@@ -170,8 +170,8 @@
                         <img src="/visual/warning.png" id="img_signout_admin">
                         <h3 class="cgrey" lang="en">Confirmation</h3>
                         <small class="clight" lang="en">Are you sure, you want to delete ?</small>
-                        <input type="text" id="id_tickets" name="id_tickets">
-                        <input type="text" id="id_eventtiket" name="id_eventtiket">
+                        <input type="hidden" id="id_tickets" name="id_tickets">
+                        <input type="hidden" id="id_eventtiket" name="id_eventtiket">
                     </center>
                 </div> <!-- end-body -->
 

@@ -783,7 +783,6 @@ function init_ready() {
 
     if ($("#page_event_module_admin").length != 0) {
         tabel_event_list_admin();
-
         // get_list_event_admin(0);
         // get_list_event_admin("_filter");
 
@@ -799,6 +798,11 @@ function init_ready() {
     if ($("#page_participant_event").length != 0) {
         var id_eventtiket = $("#event_id_par").val();
         tabel_participant_event_admin(id_eventtiket);
+    }
+
+
+    if ($("#page_forum_module_admin").length != 0) {
+        tabel_forum_group_admin();
     }
 
 }
@@ -5940,7 +5944,7 @@ function tabel_event_list_admin() {
         var rownya = $(this).parents('li').length ?
             $(this).parents('li') :
             $(this).parents('tr');
-        var data = tabel.row(rownya).data(); s
+        var data = tabel.row(rownya).data();
         $("#judul_event_reminder").html(data.title);
         $("#date_event").html(data.event_date + "   " + data.event_time);
         $("#idevent").val("");
@@ -6299,6 +6303,243 @@ function tabel_participant_event_admin(id_event) {
     });
 }
 
+// ----------- xx -----------  EVENT  MANAGEMENT ----------- xx -------------
 
 
-// -----------------------  EVENT  MANAGEMENT ------------------------
+
+
+// --------------------------- FORUM MODULE ADMIN ----------------------------
+
+function tabel_forum_group_admin() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    var tabel = $('#tabel_forum_group_admin').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_forum_group_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 40000,
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_forum_group_admin tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            { mData: 'title' },
+            {
+                mData: 'group_icon',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgicon' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            {
+                mData: 'banner_group',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgbaner' + row.id + '" class="img-mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            { mData: 'group_type' },
+            {
+                mData: 'private_group',
+                render: function (data, type, row) {
+                    if (data == true) {
+                        var txt = 'Private';
+                    } else {
+                        var txt = 'Public';
+                    }
+                    return '<span class="clight s14">' + txt + '</span>';
+                }
+            },
+
+            {
+                mData: 'created_at',
+                render: function (data, type, row) {
+                    return '<small class="cgrey">' + dateTime(data) + '</small>';
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-lihat">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-setting">' +
+                        '<i class="mdi mdi-settings"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-lihat">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-setting">' +
+                        '<i class="mdi mdi-settings"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    //DETAIL
+    $('#tabel_forum_group_admin tbody').on('click', 'button.btn-lihat', function () {
+        // var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+
+        console.log(data);
+        $("#icon-group").attr("src", server_cdn + cekimage_cdn(data.group_icon));
+        $("#banner-group").attr("src", server_cdn + cekimage_cdn(data.banner_group));
+        $("#info_deskripsi").html(data.description);
+        $("#info_title").html(data.title);
+        $("#info_judul").html(data.title);
+        $("#info_tanggal").html(dateTime(data.created_at));
+        $("#info_tipe").html(data.group_type);
+        $("#info_privat").html(data.private_group);
+        $("#info_invit").html(data.invitation_limitation);
+        $("#info_diskus").html(data.discussion_limitation);
+        $("#info_member").html(data.member_limitation);
+        $("#info_totalmember").html(data.member);
+
+        $("#group_id").val(data.id);
+        get_list_admin_group(data.id);
+
+        //edit
+        $("#id_group_edit").val(data.id);
+        $("#edit_judul").val(data.title);
+        $("#edit_deskripsi").text(data.description);
+        $("#edit_type").val(data.group_type);
+        if (data.private_group == true) {
+            var privat = 1;
+        } else {
+            var privat = 0;
+        }
+        $('#edit_private').val(privat);
+
+
+        $("#modal_detail_group").modal('show');
+
+    });
+    $('#tabel_forum_group_admin tbody').on('click', 'button.btn-setting', function () {
+        // var data = tabel.row($(this).parents('tr')).data();
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+
+        console.log(data);
+        $('#id_grup').val(data.id);
+        $('#judul_group').html(data.title);
+        $('#deskripsi_group').html(data.description);
+
+        if (data.member_limitation == true) {
+            $("#member_limit").trigger("click");
+            $("#total_member").val(data.member);
+            $(".on-member").css("display", "block");
+        }
+
+        if (data.invitation_limitation == true) {
+            $("#invit_limit").trigger("click");
+        }
+        if (data.discussion_limitation == true) {
+            $("#diskusi_limit").trigger("click");
+        }
+
+
+        $('#modal_setting_group').modal('show');
+
+    });
+}
+
+$("#member_limit").on('change', function () {
+    if ($(this).is(':checked')) {
+        $("#txt_member_limit").html('On');
+        // $(".on-member").css("display", "block");
+        $(".on-member").fadeIn();
+        $("#total_member").prop('required', true);
+    }
+    else {
+        $("#txt_member_limit").html('Off');
+        // $(".on-member").css("display", "none");
+        $(".on-member").fadeOut();
+    }
+});
+
+$("#diskusi_limit").on('change', function () {
+    if ($(this).is(':checked')) {
+        $("#txt_diskusi_limit").html('On');
+    }
+    else {
+        $("#txt_diskusi_limit").html('Off');
+    }
+});
+
+$("#invit_limit").on('change', function () {
+    if ($(this).is(':checked')) {
+        $("#txt_invit_limit").html('On');
+    }
+    else {
+        $("#txt_invit_limit").html('Off');
+    }
+});
+
+function get_list_admin_group(id_grup) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/admin/get_list_admin_group",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "group_id": id_grup
+        },
+        success: function (result) {
+            console.log(result);
+
+            if (result.success == false) {
+                get_list_admin_group(id_grup);
+            } else {
+                $('#list_admin').empty();
+                $('#list_admin').append("<option disabled selected> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_admin').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_admin").html($('#list_admin option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+
+}
+
+// ------------ XX ------------- FORUM MODULE ADMIN  -------------- XX --------------

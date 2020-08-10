@@ -3383,9 +3383,9 @@ function list_ticket_event_subs(id_event) {
                 success: function (result) {
                     console.log(result);
                     if(result.success == true){
-                        swal('Sukses');
+                        swal("Success!", "Ticket will be process, please cek email!", "success");
                     }else{
-                        swal('Failed');
+                        swal("Failed !", result.message , "error");
                     }
 
                 }, error: function (result) {

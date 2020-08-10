@@ -78,6 +78,18 @@ Route::prefix('admin')->group(function () {
     Route::post('tabel_participant_event_admin', 'ModuleController@tabel_participant_event_admin')->name('post.admin.participant-list');
 
 
+    // FORUM
+    Route::get('/forum', 'ModuleController@ForumModuleView')->name('get.admin.forum-view');
+    Route::post('tabel_forum_group_admin', 'ModuleController@tabel_forum_group_admin')->name('post.admin.forum-grouplist');
+    Route::post('add_group_forum_admin', 'ModuleController@add_group_forum_admin')->name('post.admin.forum-addgroup');
+    Route::post('edit_group_forum_admin', 'ModuleController@edit_group_forum_admin')->name('post.admin.forum-editgroup');
+    Route::post('setting_group_forum_admin', 'ModuleController@setting_group_forum_admin')->name('post.admin.forum-settinggroup');
+    Route::post('get_list_admin_group', 'ModuleController@get_list_admin_group')->name('post.admin.forum-listadmin');
+    Route::post('set_admin_group', 'ModuleController@set_admin_group')->name('post.admin.forum-setadmin');
+
+
+
+
     //VENUE
     Route::get('/venue_list', 'ModuleController@VenueListAdmin')->name('get.admin.venue-list');
     Route::get('/last_venue', 'ModuleController@LastVenueListAdmin')->name('get.admin.last-venue');

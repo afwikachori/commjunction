@@ -45,6 +45,55 @@ class RequestController extends Controller
         return $data;
     }
 
+    public function send_formdata_multiple($reqdata, $url, $token)
+    {
+        // dd($reqdata);
+        $data = [];
+        $fileimg = [];
+        foreach ($reqdata as $i => $dt) {
+            if (strpos($i, 'file_image') !== false) {
+
+                $dataArray = $dt;
+            } else {
+                $dataArray = [
+                    "name" => $i,
+                    "contents" => $dt,
+                ];
+            }
+
+            array_push($data, $dataArray);
+        }
+        // $ini = ['multipart' =>
+        //         $data
+        // ];
+        // dd($ini);
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $request = $client->request('POST', $url, [
+                'headers' => [
+                    'Authorization' => $token
+                ],
+                'multipart' => $data,
+            ]);
+
+            $dataku = json_decode($request->getBody()->getContents(), true);
+            return $dataku;
+        } catch (ClientException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ServerException $errornya) {
+            $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
+            return $error;
+        } catch (ConnectException $errornya) {
+            $error['status'] = 500;
+            $error['message'] = "Server bermasalah";
+            $error['success'] = false;
+            $error['error'] = true;
+            return $error;
+        }
+    }
+
 
 
     public function sendImagePayConfirm($requestImage, $url)
@@ -968,13 +1017,13 @@ class RequestController extends Controller
 
 
         foreach ($reqdata as $i => $dt) {
-                if ($i != 'photo' && $i != 'tag') {
-                    $dataArray = [
-                        "name" => $i,
-                        "contents" => $dt,
-                    ];
-                    array_push($data, $dataArray);
-                }
+            if ($i != 'photo' && $i != 'tag') {
+                $dataArray = [
+                    "name" => $i,
+                    "contents" => $dt,
+                ];
+                array_push($data, $dataArray);
+            }
         }
 
         // $ini = ['multipart' =>
@@ -1006,8 +1055,4 @@ class RequestController extends Controller
             return $error;
         }
     }
-
-
-
-
 } //END_CLASS
