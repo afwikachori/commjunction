@@ -25,26 +25,25 @@
 
                 <div class="row mgb-1">
                     <div class="col-md-6">
-
+                        <small class="cgrey2">ID Group </small>
+                        <input type="text" id="id_group" value="{{ $id_group }}" readonly>
                     </div>
                     <div class="col-md-6 kananin">
                         <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                            data-target="#modal_create_group" lang="en">Create Group</button>
+                            data-target="#modal_create_group" lang="en">Create Member</button>
                     </div>
                 </div>
+<br>
 
-
-                <table id="tabel_forum_group_admin" class="table table-hover table-striped dt-responsive nowrap"
+                <table id="tabel_memberlist_admin" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th><b lang="en">ID</b></th>
-                            <th><b lang="en">Title</b></th>
-                            <th><b lang="en">Icon</b></th>
-                            <th><b lang="en">Banner</b></th>
-                            <th><b lang="en">Type</b></th>
+                            <th><b lang="en">ID User</b></th>
+                            <th><b lang="en">Name</b></th>
+                            <th><b lang="en">Profile</b></th>
                             <th><b lang="en">Status</b></th>
-                            <th><b lang="en">Date Created</b></th>
+                            <th><b lang="en">Admin</b></th>
                             <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>

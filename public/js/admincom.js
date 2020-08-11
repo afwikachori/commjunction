@@ -805,6 +805,11 @@ function init_ready() {
         tabel_forum_group_admin();
     }
 
+    if ($("#page_member_forum_admin").length != 0) {
+        var id_group = $("#id_group").val();
+        tabel_memberlist_admin(id_group);
+    }
+
 }
 
 
@@ -6309,7 +6314,6 @@ function tabel_participant_event_admin(id_event) {
 
 
 // --------------------------- FORUM MODULE ADMIN ----------------------------
-
 function tabel_forum_group_admin() {
     var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -6368,6 +6372,13 @@ function tabel_forum_group_admin() {
                 mData: 'created_at',
                 render: function (data, type, row) {
                     return '<small class="cgrey">' + dateTime(data) + '</small>';
+                }
+            },
+            {
+                mData: 'id',
+                render: function (data, type, row) {
+                    $uilink = '<a href="/admin/forum_member/' + data + '/"  class="link-tbl-event">Member</a>';
+                    return $uilink;
                 }
             },
             {
@@ -6543,3 +6554,75 @@ function get_list_admin_group(id_grup) {
 }
 
 // ------------ XX ------------- FORUM MODULE ADMIN  -------------- XX --------------
+
+
+// ---------------------------- MEMBER - FORUM MODULE ADMIN  ------------------------------
+function tabel_memberlist_admin(group_id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_memberlist_admin').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_memberlist_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "group_id": group_id
+            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_memberlist_admin tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'user_id' },
+            { mData: 'full_name' },
+            {
+                mData: 'picture',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgsee' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            { mData: 'status_title' },
+            { mData: 'admin' },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+    });
+
+    //DETAIL
+    $('#tabel_memberlist_admin tbody').on('click', 'button.btn-edit', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        console.log(data);
+    });
+}
+// -------------- xx -------------- MEMBER - FORUM MODULE ADMIN  -------------- xx ----------------

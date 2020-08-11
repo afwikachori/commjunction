@@ -29,10 +29,10 @@
                     </div>
                     <div class="col-md-6 kananin">
                         <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                            data-target="#modal_create_group" lang="en">Create Group</button>
+                            data-target="#modal_create_group" lang="en">Add Member</button>
                     </div>
                 </div>
-
+<br>
 
                 <table id="tabel_forum_group_subs" class="table table-hover table-striped dt-responsive nowrap"
                     style="width:100%">
@@ -45,6 +45,7 @@
                             <th><b lang="en">Type</b></th>
                             <th><b lang="en">Status</b></th>
                             <th><b lang="en">Date Created</b></th>
+                             <th><b lang="en">Link</b></th>
                             <th><b lang="en">Action</b></th>
                         </tr>
                     </thead>

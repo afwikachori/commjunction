@@ -84,6 +84,17 @@ class ModuleController extends Controller
         return view('subscriber/dashboard/forum_module_subs');
     }
 
+    public function ForumMemberViewAdmin($id_group)
+    {
+        return view('admin/dashboard/forum_member_admin')->with(["id_group" =>  $id_group]);
+    }
+
+
+    public function ForumMemberViewSubs($id_group)
+    {
+        return view('subscriber/dashboard/forum_member_subs')->with(["id_group" =>  $id_group]);
+    }
+
 
 
     public function get_all_news(Request $request)
@@ -2380,6 +2391,48 @@ class ModuleController extends Controller
         } else {
             alert()->error($resImg['message'], 'Failed')->autoclose(4000);
             return back();
+        }
+    }
+
+
+    public function tabel_memberlist_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/listmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json['success'];
+        }
+    }
+
+
+    public function tabel_memberlist_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/listmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json['success'];
         }
     }
 
