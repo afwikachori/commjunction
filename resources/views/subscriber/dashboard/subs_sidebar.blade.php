@@ -64,6 +64,12 @@
                         <a class="nav-link" href="/subscriber/event">Event</a>
                     </li>
             </div>
+                     <div class="collapse" id="general-pages">
+                <ul class="nav sub-sidebar flex-column sub-menu">
+                    <li class="nav-item sub-sidebar">
+                        <a class="nav-link" href="/subscriber/forum">Forum</a>
+                    </li>
+            </div>
         </li>
 
 </ul>

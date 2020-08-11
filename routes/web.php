@@ -78,7 +78,7 @@ Route::prefix('admin')->group(function () {
     Route::post('tabel_participant_event_admin', 'ModuleController@tabel_participant_event_admin')->name('post.admin.participant-list');
 
 
-    // FORUM
+    // FORUM - GROUP
     Route::get('/forum', 'ModuleController@ForumModuleView')->name('get.admin.forum-view');
     Route::post('tabel_forum_group_admin', 'ModuleController@tabel_forum_group_admin')->name('post.admin.forum-grouplist');
     Route::post('add_group_forum_admin', 'ModuleController@add_group_forum_admin')->name('post.admin.forum-addgroup');
@@ -86,6 +86,9 @@ Route::prefix('admin')->group(function () {
     Route::post('setting_group_forum_admin', 'ModuleController@setting_group_forum_admin')->name('post.admin.forum-settinggroup');
     Route::post('get_list_admin_group', 'ModuleController@get_list_admin_group')->name('post.admin.forum-listadmin');
     Route::post('set_admin_group', 'ModuleController@set_admin_group')->name('post.admin.forum-setadmin');
+
+    // FORUM - MEMBER
+    Route::get('/forum', 'ModuleController@ForumModuleView')->name('get.admin.forum-view');
 
 
 
@@ -389,9 +392,18 @@ Route::prefix('subscriber')->group(function () {
     Route::post('tabel_ticket_list_subs', 'ModuleController@tabel_ticket_list_subs')->name('post.subs.list-ticket');
     Route::post('buy_ticket_subs', 'ModuleController@buy_ticket_subs')->name('post.subs.buy-ticket');
 
-
-
     Route::get('/buy_ticket', 'ModuleController@buyTicketEvent')->name('get.subs.buy-ticket');
+
+     // FORUM
+    Route::get('/forum', 'ModuleController@ForumModuleSubsView')->name('get.subs.forum-view');
+    Route::post('tabel_forum_group_subs', 'ModuleController@tabel_forum_group_subs')->name('post.subs.forum-grouplist');
+    Route::post('add_group_forum_subs', 'ModuleController@add_group_forum_subs')->name('post.subs.forum-addgroup');
+    Route::post('edit_group_forum_subs', 'ModuleController@edit_group_forum_subs')->name('post.subs.forum-editgroup');
+    Route::post('setting_group_forum_subs', 'ModuleController@setting_group_forum_subs')->name('post.subs.forum-settinggroup');
+    Route::post('get_list_admin_group_subs', 'ModuleController@get_list_admin_group_subs')->name('post.subs.forum-listadmin');
+    Route::post('set_admin_group_subs', 'ModuleController@set_admin_group_subs')->name('post.subs.forum-setadmin');
+
+
 
 
     //FRIENDS

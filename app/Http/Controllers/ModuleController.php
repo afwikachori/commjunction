@@ -79,6 +79,13 @@ class ModuleController extends Controller
     }
 
 
+    public function ForumModuleSubsView()
+    {
+        return view('subscriber/dashboard/forum_module_subs');
+    }
+
+
+
     public function get_all_news(Request $request)
     {
 
@@ -2016,7 +2023,6 @@ class ModuleController extends Controller
     }
 
 
-
     public function setting_group_forum_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
@@ -2154,7 +2160,112 @@ class ModuleController extends Controller
             "group_id"  => $input['group_id'],
             "user_id"  => $input['list_admin'],
         ];
-// return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Success Add and Set Admin Group', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+    // ----------------- xx --------------- ADMIN -  FORUM MODULE  -------------------- xx --------------
+
+
+    // --------------------------------- SUBSCRIBER -  FORUM MODULE  ----------------------------------
+    public function tabel_forum_group_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/listgroup';
+
+        $input = $request->all();
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json['success'];
+        }
+    }
+
+    public function add_group_forum_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/creategroup';
+
+        $input = $request->all();
+
+        if ($request->hasFile('img_group_icon')) {
+            $imgku = file_get_contents($request->file('img_group_icon')->getRealPath());
+            $filnam = $request->file('img_group_icon')->getClientOriginalName();
+        }
+
+
+        if ($request->hasFile('img_group_banner')) {
+            $imgku2 = file_get_contents($request->file('img_group_banner')->getRealPath());
+            $filnam2 = $request->file('img_group_banner')->getClientOriginalName();
+        }
+
+        $imageRequest = [
+            "title"         => $input['group_judul'],
+            "description"   => $input['group_deskripsi'],
+            "group_type"    => $input["group_type"],
+            "private_group" => $input['group_private'],
+            "file_image1"    =>  [
+                "name" => "group_icon",
+                "contents" => $imgku,
+                "filename" => $filnam,
+            ],
+            "file_image2"  => [
+                "name" => "banner_group",
+                "contents" => $imgku2,
+                "filename" => $filnam2,
+            ],
+        ];
+
+        $req = new RequestController;
+        $resImg = $req->send_formdata_multiple($imageRequest, $url, $ses_login['access_token']);
+
+        if ($resImg['success'] == true) {
+            alert()->success('Success Create New Group', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->success($resImg['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+    public function get_list_admin_group_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/listmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+    public function set_admin_group_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/addadmingroup';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+            "user_id"  => $input['list_admin'],
+        ];
+
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Success Add and Set Admin Group', 'Success')->autoclose(4000);
@@ -2165,8 +2276,114 @@ class ModuleController extends Controller
         }
     }
 
+    public function setting_group_forum_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/settinggroup';
 
- // ----------------- xx --------------- ADMIN -  FORUM MODULE  -------------------- xx --------------
+        $input = $request->all();
+
+        if ($request->has('invit_limit')) {
+            $invit = 1;
+        } else {
+            $invit = 0;
+        }
+
+        if ($request->has('diskusi_limit')) {
+            $diskus = 1;
+        } else {
+            $diskus = (int)0;
+        }
+
+
+        if ($request->has('member_limit')) {
+            $member = 1;
+        } else {
+            $member = 0;
+        }
+
+        if ($request->has('total_member')) {
+            $jum =  $input['total_member'];
+        } else {
+            $jum = 0;
+        }
+
+
+        $body = [
+            "group_id" => $input['id_grup'],
+            "member_limitation" => $member,
+            "member" => $jum,
+            "invitation_limitation" => $invit,
+            "discussion_limitation" => $diskus,
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Success Setting Group Forum!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function edit_group_forum_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/updategroup';
+
+        $input = $request->all();
+        // dd($request);
+
+        if ($request->hasFile('img_edit_icon')) {
+            $imgku = file_get_contents($request->file('img_edit_icon')->getRealPath());
+            $filnam = $request->file('img_edit_icon')->getClientOriginalName();
+        } else {
+            $imgku = '';
+            $filnam  = '';
+        }
+
+
+        if ($request->hasFile('img_edit_banner')) {
+            $imgku2 = file_get_contents($request->file('img_edit_banner')->getRealPath());
+            $filnam2 = $request->file('img_edit_banner')->getClientOriginalName();
+        } else {
+            $imgku2 = '';
+            $filnam2  = '';
+        }
+
+        $imageRequest = [
+            "group_id"      => $input['id_group_edit'],
+            "title"         => $input['edit_judul'],
+            "description"   => $input['edit_deskripsi'],
+            "group_type"    => $input["edit_type"],
+            "private_group" => $input['edit_private'],
+            "file_image1"    =>  [
+                "name" => "group_icon",
+                "contents" => $imgku,
+                "filename" => $filnam,
+            ],
+            "file_image2"  => [
+                "name" => "banner_group",
+                "contents" => $imgku2,
+                "filename" => $filnam2,
+            ],
+        ];
+
+        $req = new RequestController;
+        $resImg = $req->send_formdata_multiple($imageRequest, $url, $ses_login['access_token']);
+
+        if ($resImg['success'] == true) {
+            alert()->success('Success Edit Group', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+  // ----------------- xx --------------- SUBSCRIBER -  FORUM MODULE  -------------------- xx --------------
 
 
 
