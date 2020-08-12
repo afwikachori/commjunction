@@ -156,6 +156,8 @@
     </div>
 </div>
 
+
+
 <!-- MODAL DELETE TICKET-->
 <div class="modal fade" id="modal_delete_ticket" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -194,5 +196,104 @@
 
     </div>
 </div>
+
+
+
+<!-- MODAL EDIT EVENT -->
+<div class="modal fade" id="modal_edit_ticket" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form method="POST" id="form_edit_ticket" action="{{route('post.admin.edit-ticket')}}"
+                enctype="multipart/form-data">
+                {{ csrf_field() }}
+
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey" lang="en">Edit Ticket</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <input type="hidden" name="id_event_edit" value="{{ $id_event }}" readonly>
+                    <input type="hidden" id="id_ticket_edit" name="id_ticket_edit" readonly>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Title Ticket</small>
+                                <input type="text" id="edit_judul" name="edit_judul" class="form-control input-abu">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                                <small class="clight" lang="en">Type Ticket</small>
+                                <select class="form-control input-abu" name="edit_tiket_type" id="edit_tiket_type" required>
+                                    <option selected disabled lang="en">Choose</option>
+                                    <option value="0" lang="en">Free</option>
+                                    <option value="1" lang="en">Paid</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Description Event</small>
+                                <textarea type="text" id="edit_deskripsi" name="edit_deskripsi" rows="3"
+                                    class="form-control input-abu"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Start Date</small>
+                                <input type="date" id="edit_tgl_start" name="edit_tgl_start" class="form-control input-abu">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">End Date</small>
+                                <input type="date" id="edit_tgl_end" name="edit_tgl_end" class="form-control input-abu">
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Price Ticket</small>
+                                <input type="text" id="edit_price" name="edit_price" class="form-control input-abu">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                                <small class="clight" lang="en">Stock Ticket</small>
+                               <input type="text" id="edit_stock" name="edit_stock" class="form-control input-abu">
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-tosca btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> <span lang="en">Edit Ticket</span> </button>
+                </div>
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+
+    </div>
+</div>
+
 
 @endsection

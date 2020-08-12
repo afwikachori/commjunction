@@ -359,10 +359,6 @@
 </div>
 
 
-
-
-
-
 <!-- MODAL SET REMINDER EVENT -->
 <div class="modal fade" id="modal_reminder_event" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">

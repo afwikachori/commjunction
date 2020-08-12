@@ -2386,3 +2386,29 @@ border: solid 1px #cacaca !important;
 .des-group{
     min-height: 82px;
 }
+
+.img-supermini{
+width: 33px !important;
+height: 33px !important;
+margin-right: 10px;
+}
+
+.invit-member{
+    height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 30px;
+}
+
+.img-icon-acc{
+    margin-top: 3em;
+    margin-bottom: 1em;
+
+}
+
+.modal-acc{
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+}

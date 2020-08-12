@@ -808,6 +808,9 @@ function init_ready() {
     if ($("#page_member_forum_admin").length != 0) {
         var id_group = $("#id_group").val();
         tabel_memberlist_admin(id_group);
+        tabel_memberpending_admin(id_group);
+
+        get_list_subs_member();
     }
 
 }
@@ -6228,17 +6231,17 @@ function tabel_ticket_list_admin(id_event) {
             $(this).parents('tr');
         var data = tabel.row(rownya).data();
         console.log(data);
-        $("#id_event_admin").val(data.id);
-        $("#modal_edit_event").modal('show');
 
+        $("#id_ticket_edit").val(data.id);
         $("#edit_judul").val(data.title);
+        $("#edit_tgl_start").val(data.start_date);
+        $("#edit_tgl_end").val(data.end_date);
+        $("#edit_price").val(data.price);
+        $("#edit_stock").val(data.total);
         $("#edit_deskripsi").text(data.description);
-        $("#edit_link").val(data.link);
-        $("#edit_tgl").val(data.event_date);
-        $("#edit_time").val(data.event_time);
+        $('#edit_tiket_type').val(data.ticket_type).attr("selected", "selected");
 
-        $('#edit_status').val(data.status).attr("selected", "selected");
-        $('#edit_type').val(data.ticket_type).attr("selected", "selected");
+        $("#modal_edit_ticket").modal('show');
     });
 
     $('#tabel_ticket_event tbody').on('click', 'button.btn-delete', function () {
@@ -6333,7 +6336,8 @@ function tabel_forum_group_admin() {
             // success: function (result) {
             //    console.log(result);
             // },
-            error: function (jqXHR, ajaxOptions, thrownError) {
+            error: function (result) {
+                // console.log(result);
                 var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
                 $('#tabel_forum_group_admin tbody').empty().append(nofound);
             },
@@ -6594,12 +6598,22 @@ function tabel_memberlist_admin(group_id) {
                 }
             },
             { mData: 'status_title' },
-            { mData: 'admin' },
+            {
+                mData: 'admin',
+                render: function (data, type, row) {
+                    if(data == true){
+                        var ui = '<small class="badge badge-gradient-info">Admin</small>';
+                    }else{
+                        var ui = '<small class="tebal cgrey">Member</small>';
+                    }
+                    return ui;
+                }
+            },
             {
                 mData: null,
                 render: function (data, type, row, meta) {
-                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                        '<i class="mdi mdi-eye"></i>' +
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-del">' +
+                        '<i class="mdi mdi-delete"></i>' +
                         '</button>';
                 }
             }
@@ -6608,8 +6622,8 @@ function tabel_memberlist_admin(group_id) {
             [
                 {
                     "data": null,
-                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                        '<i class="mdi mdi-eye"></i>' +
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-del">' +
+                        '<i class="mdi mdi-delete"></i>' +
                         '</button>',
                     "targets": -1
                 }
@@ -6617,12 +6631,144 @@ function tabel_memberlist_admin(group_id) {
     });
 
     //DETAIL
-    $('#tabel_memberlist_admin tbody').on('click', 'button.btn-edit', function () {
+    $('#tabel_memberlist_admin tbody').on('click', 'button.btn-del', function () {
         var rownya = $(this).parents('li').length ?
             $(this).parents('li') :
             $(this).parents('tr');
         var data = tabel.row(rownya).data();
         console.log(data);
+
+        $('#nama_del_member').html(data.full_name);
+        $("#user_id_del").val(data.user_id);
+
+        $("#modal_delete_member").modal('show');
     });
 }
+
+function tabel_memberpending_admin(group_id) {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_memberpending_admin').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_memberpending_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "group_id": group_id
+            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_memberpending_admin tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'user_id' },
+            { mData: 'full_name' },
+            {
+                mData: 'picture',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgsee' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            { mData: 'status_title' },
+            {
+                mData: 'admin',
+                render: function (data, type, row) {
+                    if (data == true) {
+                        var ui = '<small class="badge badge-gradient-info">Admin</small>';
+                    } else {
+                        var ui = '<small class="tebal cgrey">Member</small>';
+                    }
+                    return ui;
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-acc">' +
+                        '<i class="mdi mdi-account-check"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-acc">' +
+                        '<i class="mdi mdi-account-check"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+    });
+
+    //DETAIL
+    $('#tabel_memberpending_admin tbody').on('click', 'button.btn-acc', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        console.log(data);
+
+        $("#user_id").val(data.user_id);
+        $("#nama_pendingmember").html(data.full_name);
+
+        $("#modal_approval_member").modal('show');
+    });
+}
+
+
+
+
+function get_list_subs_member() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/admin/get_list_subs_member_admin",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                get_list_subs_member();
+            } else {
+                var isidata = '';
+                $.each(result, function (i, item) {
+                    if (item.sso_picture != 0) {
+                        var foto = server_cdn + cekimage_cdn(item.sso_picture)
+                    } else {
+                        var foto = '/img/def-profil.png';
+                    }
+                    isidata += '<div class="form-check">' +
+                        '<input type="radio" id="radio_member' + i + '" name="radio_member_invit" value="' + item.user_id + '" class="form-check-input"/>' +
+                        '<label for="radio_member' + i + '"><img src="' + foto + '" class="rounded-circle img-supermini">' + item.full_name + '</label>' +
+                        '</div>';
+                });
+                $('#isi_memberlist').html(isidata);
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+
+}
+
 // -------------- xx -------------- MEMBER - FORUM MODULE ADMIN  -------------- xx ----------------

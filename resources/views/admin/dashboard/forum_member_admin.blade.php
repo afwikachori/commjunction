@@ -10,9 +10,8 @@
         <label class="cgrey" lang="en">Manage your forum and group or members activity<label>
     </div>
     <div class="col-md-4" style="text-align: right;">
-        <nav aria-label="breadcrumb">
-
-        </nav>
+        <small class="cgrey2">ID Group </small>
+        <input type="text" id="id_group" value="{{ $id_group }}" readonly>
     </div>
 </div>
 <br>
@@ -23,356 +22,78 @@
         <div class="card">
             <div class="card-body">
 
-                <div class="row mgb-1">
-                    <div class="col-md-6">
-                        <small class="cgrey2">ID Group </small>
-                        <input type="text" id="id_group" value="{{ $id_group }}" readonly>
-                    </div>
-                    <div class="col-md-6 kananin">
-                        <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                            data-target="#modal_create_group" lang="en">Create Member</button>
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="tab-subs active" id="tab_all">
+                            <a href="#tab_default_1" data-toggle="tab">
+                                <span lang="en">Member</span>
+                            </a>
+                        </li>
+                        <li class="tab-subs" id="tab_pending">
+                            <a href="#tab_default_2" data-toggle="tab">
+                                <span lang="en">Pending</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_default_1">
+                            <div class="row mgb-1">
+                                <div class="col-md-6">
+
+                                </div>
+                                <div class="col-md-6 kananin">
+                                    <button type="button" class="btn btn-teal btn-sm melengkung10px" data-toggle="modal"
+                                    data-target="#modal_bc_pesan_member" lang="en">Broadcast
+                                    Member</button>
+                                    &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-target="#modal_invite_member"
+                                        lang="en">Invite Member</button>
+                                </div>
+                            </div>
+                            <br>
+
+                            <table id="tabel_memberlist_admin"
+                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><b lang="en">ID User</b></th>
+                                        <th><b lang="en">Name</b></th>
+                                        <th><b lang="en">Profile</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Admin</b></th>
+                                        <th><b lang="en">Action</b></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+
+                        <div class="tab-pane" id="tab_default_2">
+                            <table id="tabel_memberpending_admin"
+                                class="table table-hover table-striped dt-responsive nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><b lang="en">ID User</b></th>
+                                        <th><b lang="en">Name</b></th>
+                                        <th><b lang="en">Profile</b></th>
+                                        <th><b lang="en">Status</b></th>
+                                        <th><b lang="en">Admin</b></th>
+                                        <th><b lang="en">Approval</b></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
-<br>
-
-                <table id="tabel_memberlist_admin" class="table table-hover table-striped dt-responsive nowrap"
-                    style="width:100%">
-                    <thead>
-                        <tr>
-                            <th><b lang="en">ID User</b></th>
-                            <th><b lang="en">Name</b></th>
-                            <th><b lang="en">Profile</b></th>
-                            <th><b lang="en">Status</b></th>
-                            <th><b lang="en">Admin</b></th>
-                            <th><b lang="en">Action</b></th>
-                        </tr>
-                    </thead>
-                </table>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- MODAL CREATE GROUP -->
-<div class="modal fade" id="modal_create_group" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-
-            <form method="POST" id="form_create_forum_group" action="{{route('post.admin.forum-addgroup')}}"
-                enctype="multipart/form-data">
-                {{ csrf_field() }}
-
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey" lang="en">Add Group - Forum</h4>
-                </div> <!-- end-header -->
-
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Title Group</small>
-                                <input type="text" id="group_judul" name="group_judul" class="form-control input-abu"
-                                    required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Description Group</small>
-                                <textarea type="text" id="group_deskripsi" name="group_deskripsi" rows="3"
-                                    class="form-control input-abu" required></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Group Type</small>
-                                <input type="text" id="group_type" name="group_type" class="form-control input-abu"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Private Group</small>
-                                <select class="form-control input-abu" name="group_private" id="group_private" required>
-                                    <option selected disabled lang="en">Choose</option>
-                                    <option value="0" lang="en">Public</option>
-                                    <option value="1" lang="en">Private</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Group Icon</small>
-                                <input type="file" id="img_group_icon" name="img_group_icon"
-                                    class="form-control input-abu" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Banner Group</small>
-                                <input type="file" id="img_group_banner" name="img_group_banner"
-                                    class="form-control input-abu" required>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> <!-- end-body -->
-
-                <div class="modal-footer" style="border: none;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-tosca btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> <span lang="en">Create</span> </button>
-                </div>
-            </form>
-        </div> <!-- END-MDL CONTENT -->
-
-    </div>
-</div>
-
-
-<!-- MODAL DETAIL GROUP -->
-<div class="modal fade" id="modal_detail_group" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-
-            <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                <div class="card bg-dark text-white profil-grup">
-                    <img src="/img/artikel.jpg" class="card-img profil-grup" id="banner-group">
-                    <div class="card-img-overlay">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="/img/noimg.jpg" class="rounded-circle img-fluid img-profil-grup"
-                                    id="icon-group">
-                                <a class="btn-sm btn-tosca btn-addadmingrup" data-toggle="collapse" href="#collapseExample" role="button"
-                                    aria-expanded="false" aria-controls="collapseExample">
-                                    <small>Add Admin</small>
-                                </a>
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="ctosca" id="info_title">Profile Group</h5>
-                                <p class="cwhite s13 des-group" id="info_deskripsi"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end-header -->
-
-            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Title Group</small>
-                            <h6 class="cgrey" id="info_judul"></h6>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Date Created Group</small>
-                            <h6 class="cgrey" id="info_tanggal"></h6>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Group Type</small>
-                            <h6 class="cgrey" id="info_tipe"></h6>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Private Group</small>
-                            <h6 class="cgrey" id="info_privat"></h6>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Invitation Limitation</small>
-                            <h6 class="cgrey" id="info_invit"></h6>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Discussion Limitation</small>
-                            <h6 class="cgrey" id="info_diskus"></h6>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Member Limitation</small>
-                            <h6 class="cgrey" id="info_member"></h6>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Total Member</small>
-                            <h6 class="cgrey" id="info_totalmember"></h6>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body set-admin">
-                        <form method="POST" id="form_set_admin_grup" action="{{route('post.admin.forum-setadmin')}}"
-                            enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" id="group_id" name="group_id">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <small class="clight" lang="en">Choose Admininstratot</small>
-                                        <select class="form-control input-abu" name="list_admin" id="list_admin"
-                                            required>
-                                            <option selected disabled lang="en">Loading ...</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 pas-tengah">
-                                    <button type="submit" class="btn btn-teal btn-sm">
-                                        <span lang="en s13">Add as Admin</span> </button>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-            </div> <!-- end-body -->
-
-            <div class="modal-footer" style="border: none;">
-                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" style="border-radius: 10px;">
-                    <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                </button>
-
-                <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal" data-dismiss="modal"
-                    data-target="#modal_edit_group" lang="en">Edit Group</button>
-            </div>
-        </div> <!-- END-MDL CONTENT -->
-
-    </div>
-</div>
-
-
-<!-- MODAL EDIT GROUP -->
-<div class="modal fade" id="modal_edit_group" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-
-            <form method="POST" id="form_edit_forum_group" action="{{route('post.admin.forum-editgroup')}}"
-                enctype="multipart/form-data">
-                {{ csrf_field() }}
-
-                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey" lang="en">Edit Group - Forum</h4>
-                </div> <!-- end-header -->
-
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Title Group</small>
-                                <input type="text" id="edit_judul" name="edit_judul" class="form-control input-abu"
-                                    required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Description Group</small>
-                                <textarea type="text" id="edit_deskripsi" name="edit_deskripsi" rows="3"
-                                    class="form-control input-abu" required></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Group Type</small>
-                                <input type="text" id="edit_type" name="edit_type" class="form-control input-abu"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Private Group</small>
-                                <select class="form-control input-abu" name="edit_private" id="edit_private" required>
-                                    <option selected disabled lang="en">Choose</option>
-                                    <option value="0" lang="en">Public</option>
-                                    <option value="1" lang="en">Private</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Group Icon</small>
-                                <input type="file" id="img_edit_icon" name="img_edit_icon" accept="image/*"
-                                    class="form-control input-abu">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Banner Group</small>
-                                <input type="file" id="img_edit_banner" name="img_edit_banner" accept="image/*"
-                                    class="form-control input-abu">
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="id_group_edit" name="id_group_edit" readonly>
-
-                </div> <!-- end-body -->
-
-                <div class="modal-footer" style="border: none;">
-                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
-                        style="border-radius: 10px;">
-                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
-                    </button>
-                    &nbsp;
-                    <button type="submit" class="btn btn-tosca btn-sm">
-                        <i class="mdi mdi-check btn-icon-prepend">
-                        </i> <span lang="en">Edit</span> </button>
-                </div>
-            </form>
-        </div> <!-- END-MDL CONTENT -->
-
-    </div>
-</div>
-
-<!-- MODAL SETTING GROUP -->
-<div class="modal fade" id="modal_setting_group" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<!-- MODAL INVITE MEMBER -->
+<div class="modal fade" id="modal_invite_member" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
@@ -382,54 +103,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" id="form_setting_group_admin" action="{{route('post.admin.forum-settinggroup')}}">
-                {{ csrf_field() }}
-                <div class="modal-body set-group">
-                    <h5 class="ctosca" id="judul_group"></h5>
-                    <small class="cgrey mgb-1" id="deskripsi_group"></small>
 
-                    <br><br>
+            <form method="POST" id="form_invite_member" action="{{route('post.admin.forum-invitemember')}}">
+                {{ csrf_field() }}
+                <input type="hidden" name="group_id_member" value="{{ $id_group }}">
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <small class="clight" lang="en">Invitation Limitation</small>
-                                <div class="custom-control custom-switch" id="div_invit_limit">
-                                    <input type="checkbox" class="custom-control-input" id="invit_limit"
-                                        name="invit_limit">
-                                    <label class="custom-control-label" for="invit_limit">
-                                        <span id="txt_invit_limit">Off</span></label>
-                                </div>
-                            </div>
+                            <h6 class="cgrey">List Subscriber</h6>
+                            <div class="form-group invit-member" id="isi_memberlist">
 
-                            <div class="form-group">
-                                <small class="clight" lang="en">Discussion Limitation</small>
-                                <div class="custom-control custom-switch" id="div_diskusi_limit">
-                                    <input type="checkbox" class="custom-control-input" id="diskusi_limit"
-                                        name="diskusi_limit">
-                                    <label class="custom-control-label" for="diskusi_limit">
-                                        <span id="txt_diskusi_limit">Off</span></label>
-                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <small class="clight" lang="en">Member Limitation</small>
-                                <div class="custom-control custom-switch" id="div_member_limit">
-                                    <input type="checkbox" class="custom-control-input" id="member_limit"
-                                        name="member_limit">
-                                    <label class="custom-control-label" for="member_limit">
-                                        <span id="txt_member_limit">Off</span></label>
-                                </div>
-                            </div>
-
-                            <div class="form-group on-member" style="display: none;">
-                                <small class="clight" lang="en">Total Member Limitation</small>
-                                <input type="text" id="total_member" name="total_member" class="form-control input-abu">
-                            </div>
-
                         </div>
                     </div>
-                    <input type="hidden" id="id_grup" name="id_grup">
                 </div>
+
                 <div class="modal-footer"
                     style="border: none; margin-bottom: 0.5em;
                             display: flex;align-items: center; justify-content: center; padding-left: 5%; padding-right: 5%;">
@@ -440,7 +128,7 @@
                     &nbsp;
                     <button type="submit" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
-                        </i><span lang="en">Setting</span></button>
+                        </i><span lang="en">Add</span></button>
                 </div>
             </form>
         </div>
@@ -448,6 +136,132 @@
 </div>
 
 
+
+<!-- MODAL APPROVAL MEMBER -->
+<div class="modal fade" id="modal_approval_member" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff; width: 80%; min-height: 350px;">
+            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                <center>
+                    <img src="/img/check.png" class="img-icon-acc">
+                    <h3 class="cgrey" lang="en">Member Approval</h3>
+                    <small class="clight" lang="en">Please give your approval to <b><span id="nama_pendingmember">new
+                                member</span></b></small>
+                </center>
+            </div> <!-- end-body -->
+
+            <div class="modal-footer modal-acc">
+                <form method="POST" id="form_acc_member_pending" action="{{route('post.admin.forum-accmember')}}">
+                    {{ csrf_field() }}
+                    <input type="hidden" id="id_group_acc" name="id_group_acc" value="{{ $id_group }}" readonly>
+                    <input type="hidden" id="user_id" name="user_id" readonly>
+
+                    <center>
+                        <button type="submit" name="status_acc" value="3" class="btn btn-light btn-sm"
+                            data-dismiss="modal" style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i><span lang="en">Reject</span>
+                        </button>
+                        &nbsp;
+                        <button type="submit" name="status_acc" value="2" class="btn btn-teal btn-sm">
+                            <i class="mdi mdi-check btn-icon-prepend"></i>
+                            <span lang="en">Approve</span>
+                        </button>
+                    </center>
+                </form>
+            </div>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
+
+
+
+<!-- MODAL DELETE MEMBER-->
+<div class="modal fade" id="modal_delete_member" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff; width: 80%;
+        min-height: 350px;">
+
+            <form method="POST" id="form_delete_member" action="{{route('post.admin.forum-deletemember')}}">
+                {{ csrf_field() }}
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <center>
+                        <img src="/visual/warning.png" id="img_signout_admin">
+                        <h3 class="cgrey" lang="en">Confirmation</h3>
+                        <small class="clight" lang="en">Are you sure, you want to delete
+                            <span id="nama_del_member" class="tebal">this member</span>
+                            from this group ?</small>
+
+
+                        <input type="hidden" id="user_id_del" name="user_id_del" readonly>
+                        <input type="hidden" name="group_id" value="{{ $id_group }}" readonly>
+                    </center>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer changepass" style="border: none;">
+                    <center>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> <span lang="en">No, Im Doubt</span>
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-tosca btn-sm" style="border-radius: 10px;">
+                            <i class="mdi mdi-check"></i> <span lang="en">Yes, Sure</span>
+                        </button>
+                    </center>
+                </div> <!-- end-footer     -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL SEND MESSAGE-->
+<div class="modal fade" id="modal_bc_pesan_member" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+
+            <form method="POST" id="form_bc_member" action="{{route('post.admin.forum-bcmember')}}">
+                {{ csrf_field() }}
+
+                <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
+                    <h4 class="modal-title cgrey">Send Broadcast Message</h4>
+                </div> <!-- end-header -->
+
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%; min-height: 300px;">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <small class="clight">Subject Title</small>
+                                <input type="text" id="judul_pesan" name="judul_pesan"
+                                    class="form-control input-abu melengkung10px" required>
+                            </div>
+                            <div class="form-group">
+                                <small class="clight">Message Description</small>
+                                <textarea class="form-control input-abu" id="deskripsi_pesan" rows="8"
+                                    name="deskripsi_pesan"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="group_id" value="{{ $id_group }}" readonly>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i> Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i> Send</button>
+                </div>
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
 
 
 @endsection

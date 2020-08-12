@@ -991,7 +991,7 @@ class ModuleController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return 'nodata';
+            return $json['success'];
         }
     }
 
@@ -1267,6 +1267,38 @@ class ModuleController extends Controller
             return $json['data'];
         } else {
             return $json;
+        }
+    }
+
+    public function edit_ticket_event_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'event/updateticket';
+
+        $input = $request->all();
+
+        $body = [
+            "data_ticket" => [[
+                "ticket_id" => $input['id_ticket_edit'],
+                "event_id"  => $input['id_event_edit'],
+                "title" => $input['edit_judul'],
+                "description" => $input['edit_deskripsi'],
+                "start_date" => $input['edit_tgl_start'],
+                "ticket_type" => $input['edit_tiket_type'],
+                "end_date" => $input['edit_tgl_end'],
+                "price" => $input['edit_price'],
+                "total" => $input['edit_stock']
+            ]]
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            alert()->success('Success Update Data Ticket!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
         }
     }
 
@@ -1981,7 +2013,7 @@ class ModuleController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json['success'];
+            return $json['message'];
         }
     }
 
@@ -2395,6 +2427,11 @@ class ModuleController extends Controller
     }
 
 
+
+
+    // --------------------------------- ADMIN -  FORUM - MEMBER   ----------------------------------
+
+
     public function tabel_memberlist_admin(Request $request)
     {
         $ses_login = session()->get('session_admin_logged');
@@ -2402,8 +2439,14 @@ class ModuleController extends Controller
 
         $input = $request->all();
 
+//status :
+// 0 tidak aktif
+// 1 pending
+// 2 approval
+// 3 reject
         $body = [
             "group_id"  => $input['group_id'],
+            "status" => "2"
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
@@ -2414,6 +2457,155 @@ class ModuleController extends Controller
             return $json['success'];
         }
     }
+
+    public function tabel_memberpending_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/listmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+            "status" => "1"
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json['success'];
+        }
+    }
+
+    public function get_list_subs_member_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'subsmanagement/listsubs';
+
+        $input = $request->all();
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function invite_member_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/invitemember';
+
+        $input = $request->all();
+        // return $input;
+
+        $body = [
+            "group_id" => $input['group_id_member'],
+            "user_id" => $input['radio_member_invit'],
+
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Success Invite Member to Group Forum!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+
+    public function approval_pending_member_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/approvalmember';
+
+        $input = $request->all();
+
+        if($input['status_acc'] == "2"){
+            $txt_acc = 'Approved';
+        }else{
+            $txt_acc = 'Rejected';
+        }
+
+        $body = [
+            "group_id" => $input['id_group_acc'],
+            "user_id" => $input['user_id'],
+            "status" => $input['status_acc']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Request Member Group has been'.$txt_acc, 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function delete_member_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/removemember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id" => $input['group_id'],
+            "user_id" => $input['user_id_del'],
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Member has been Deleted', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+
+    public function broadcast_member_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/broadcastmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id" => $input['group_id'],
+            "title" => $input['judul_pesan'],
+            "description" => $input['deskripsi_pesan'],
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Broadcast Message has been Sent', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+     // ----------------- xx ------------  ADMIN -  FORUM - MEMBER  -------------------- xx --------------
+
+
+
+
+
 
 
     public function tabel_memberlist_subs(Request $request)

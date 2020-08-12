@@ -71,6 +71,8 @@ Route::prefix('admin')->group(function () {
     Route::post('create_new_ticket_admin', 'ModuleController@create_new_ticket_admin')->name('post.admin.create-ticket');
     Route::post('tabel_ticket_list_admin', 'ModuleController@tabel_ticket_list_admin')->name('post.admin.list-ticket');
     Route::post('delete_ticket_event_admin', 'ModuleController@delete_ticket_event_admin')->name('post.admin.delete-ticket');
+    Route::post('edit_ticket_event_admin', 'ModuleController@edit_ticket_event_admin')->name('post.admin.edit-ticket');
+
 
 
     // PARTICIPANT
@@ -90,7 +92,14 @@ Route::prefix('admin')->group(function () {
     // FORUM - MEMBER
     Route::get('forum_member/{id_group}', 'ModuleController@ForumMemberViewAdmin')->name('get.admin.forum-member/{id_group}');
     Route::post('tabel_memberlist_admin', 'ModuleController@tabel_memberlist_admin')->name('post.admin.forum-memberlist');
+    Route::post('tabel_memberpending_admin', 'ModuleController@tabel_memberpending_admin')->name('post.admin.forum-memberpending');
 
+
+    Route::post('get_list_subs_member_admin', 'ModuleController@get_list_subs_member_admin')->name('post.admin.forum-listsubsmember');
+    Route::post('invite_member_admin', 'ModuleController@invite_member_admin')->name('post.admin.forum-invitemember');
+    Route::post('approval_pending_member_admin', 'ModuleController@approval_pending_member_admin')->name('post.admin.forum-accmember');
+    Route::post('delete_member_admin', 'ModuleController@delete_member_admin')->name('post.admin.forum-deletemember');
+    Route::post('broadcast_member_admin', 'ModuleController@broadcast_member_admin')->name('post.admin.forum-bcmember');
 
 
 
@@ -407,7 +416,6 @@ Route::prefix('subscriber')->group(function () {
     // FORUM - MEMBER
     Route::get('forum_member/{id_group}', 'ModuleController@ForumMemberViewSubs')->name('get.subs.forum-member/{id_group}');
     Route::post('tabel_memberlist_subs', 'ModuleController@tabel_memberlist_subs')->name('post.subs.forum-memberlist');
-
 
 
 
