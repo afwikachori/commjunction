@@ -82,6 +82,7 @@
     <input type="hidden" id="server_cdn" value="{{ env('CDN') }}">
     <input type="hidden" class="id_komunitas">
     <input type="hidden" class="community_name">
+    <input type="hidden" id="id_user_subs">
 
 
     <!-- MODAL LOADING AJAX -->

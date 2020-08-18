@@ -106,6 +106,7 @@ function session_subscriber_logged() {
             get_list_notif_navbar(user.community_id);
             get_inbox_navbar_subs();
 
+            $("#id_user_subs").val(user.user_id);
             $("#id_user_subs_trans").val(user.user_id);
             $("#subs_id_trans").val(user.user_id);
 
@@ -1254,6 +1255,8 @@ function init_ready() {
     if ($("#page_member_forum_subs").length != 0) {
         var id_group = $("#id_group").val();
         tabel_memberlist_subs(id_group);
+
+        get_list_friends_member();
     }
 }
 
@@ -3694,12 +3697,29 @@ function tabel_memberlist_subs(group_id) {
                 }
             },
             { mData: 'status_title' },
-            { mData: 'admin' },
+            {
+                mData: 'admin',
+                render: function (data, type, row) {
+                    var iduser = row.user_id;
+                    var id_subs_login = $("#id_user_subs").val();
+                    if(iduser == id_subs_login && data == true){
+                        $("#btn_bc_forum_member").show();
+                    }else{
+                        $("#btn_bc_forum_member").hide();
+                    }
+                    if (data == true) {
+                        var ui = '<small class="badge badge-gradient-info">Admin</small>';
+                    } else {
+                        var ui = '<small class="tebal cgrey">Member</small>';
+                    }
+                    return ui;
+                }
+            },
             {
                 mData: null,
                 render: function (data, type, row, meta) {
-                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                        '<i class="mdi mdi-eye"></i>' +
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-del">' +
+                        '<i class="mdi mdi-delete"></i>' +
                         '</button>';
                 }
             }
@@ -3708,8 +3728,8 @@ function tabel_memberlist_subs(group_id) {
             [
                 {
                     "data": null,
-                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref">' +
-                        '<i class="mdi mdi-eye"></i>' +
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-del">' +
+                        '<i class="mdi mdi-delete"></i>' +
                         '</button>',
                     "targets": -1
                 }
@@ -3717,12 +3737,59 @@ function tabel_memberlist_subs(group_id) {
     });
 
     //DETAIL
-    $('#tabel_memberlist_subs tbody').on('click', 'button.btn-edit', function () {
+    $('#tabel_memberlist_subs tbody').on('click', 'button.btn-del', function () {
         var rownya = $(this).parents('li').length ?
             $(this).parents('li') :
             $(this).parents('tr');
         var data = tabel.row(rownya).data();
         console.log(data);
+
+        $('#nama_del_member').html(data.full_name);
+        $("#user_id_del").val(data.user_id);
+
+        $("#modal_delete_member").modal('show');
     });
 }
+
+
+function get_list_friends_member() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/subscriber/get_list_friends_member",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                get_list_friends_member();
+            } else {
+                var isidata = '';
+                $.each(result, function (i, item) {
+                    if (item.picture != 0) {
+                        var foto = server_cdn + cekimage_cdn(item.picture)
+                    } else {
+                        var foto = '/img/def-profil.png';
+                    }
+                    isidata += '<div class="form-check">' +
+                        '<input type="radio" id="radio_member' + i + '" name="radio_member_invit" value="' + item.friend_id + '" class="form-check-input"/>' +
+                        '<label for="radio_member' + i + '"><img src="' + foto + '" class="rounded-circle img-supermini">' + item.full_name + '</label>' +
+                        '</div>';
+                });
+                $('#isi_memberlist').html(isidata);
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+
+}
+
+
 // -------------- xx -------------- MEMBER - FORUM MODULE ADMIN  -------------- xx ----------------

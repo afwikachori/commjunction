@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-6 kananin">
                         <button type="button" class="btn btn-tosca btn-sm" data-toggle="modal"
-                            data-target="#modal_create_group" lang="en">Add Member</button>
+                            data-target="#modal_create_group" lang="en">Add Group</button>
                     </div>
                 </div>
 <br>
@@ -162,7 +162,7 @@
                             <div class="col-md-3">
                                 <img src="/img/noimg.jpg" class="rounded-circle img-fluid img-profil-grup"
                                     id="icon-group">
-                                <a class="btn-sm btn-tosca btn-addadmingrup" data-toggle="collapse" href="#collapseExample" role="button"
+                                <a class="btn-sm btn-tosca btn-addadmingrup btn-addadmin-subs" data-toggle="collapse" href="#collapseExample" role="button"
                                     aria-expanded="false" aria-controls="collapseExample">
                                     <small>Add Admin</small>
                                 </a>

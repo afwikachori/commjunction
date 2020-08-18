@@ -2287,6 +2287,7 @@ class ModuleController extends Controller
 
         $body = [
             "group_id"  => $input['group_id'],
+            "status" => "2"
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
@@ -2308,6 +2309,8 @@ class ModuleController extends Controller
             "group_id"  => $input['group_id'],
             "user_id"  => $input['list_admin'],
         ];
+
+        // return $body;
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
@@ -2615,8 +2618,14 @@ class ModuleController extends Controller
 
         $input = $request->all();
 
+        //status :
+        // 0 tidak aktif
+        // 1 pending
+        // 2 approval
+        // 3 reject
         $body = [
             "group_id"  => $input['group_id'],
+            "status" => "2"
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
@@ -2628,6 +2637,117 @@ class ModuleController extends Controller
         }
     }
 
+    public function delete_member_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/removemember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id" => $input['group_id'],
+            "user_id" => $input['user_id_del'],
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Member has been Deleted', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function join_group_member_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/joingroup';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id" => $input['group_id_join'],
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Your Request As member group has been sent', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function get_list_friends_member(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/friend/viewfriendlist';
+
+        $input = $request->all();
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+    public function invite_member_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/invitemember';
+
+        $input = $request->all();
+        // return $input;
+
+        $body = [
+            "group_id" => $input['group_id_member'],
+            "user_id" => $input['radio_member_invit'],
+
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Success Invite Member to Group Forum!', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function broadcast_member_subs(Request $request)
+    {
+        $ses_login = session()->get('session_subscriber_logged');
+        $url = env('SERVICE') . 'module/forum/broadcastmember';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id" => $input['group_id'],
+            "title" => $input['judul_pesan'],
+            "description" => $input['deskripsi_pesan'],
+        ];
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Broadcast Message has been Sent', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
   // ----------------- xx --------------- SUBSCRIBER -  FORUM MODULE  -------------------- xx --------------
 
 

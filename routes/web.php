@@ -417,6 +417,13 @@ Route::prefix('subscriber')->group(function () {
     Route::get('forum_member/{id_group}', 'ModuleController@ForumMemberViewSubs')->name('get.subs.forum-member/{id_group}');
     Route::post('tabel_memberlist_subs', 'ModuleController@tabel_memberlist_subs')->name('post.subs.forum-memberlist');
 
+    Route::post('get_list_friends_member', 'ModuleController@get_list_friends_member')->name('post.subs.forum-listfriendmember');
+    Route::post('invite_member_subs', 'ModuleController@invite_member_subs')->name('post.subs.forum-invitemember');
+
+    Route::post('join_group_member_subs', 'ModuleController@join_group_member_subs')->name('post.subs.forum-joingroup');
+    Route::post('delete_member_subs', 'ModuleController@delete_member_subs')->name('post.subs.forum-deletemember');
+    Route::post('broadcast_member_subs', 'ModuleController@broadcast_member_subs')->name('post.subs.forum-bcmember');
+
 
 
 

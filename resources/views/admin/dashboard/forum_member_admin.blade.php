@@ -98,7 +98,7 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
             <div class="modal-header" style="border: none;">
-                <h3 class="modal-title" lang="en">Setting Group</h3>
+                <h3 class="modal-title" lang="en">Invite Member Group</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
