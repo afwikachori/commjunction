@@ -2848,6 +2848,46 @@ class ModuleController extends Controller
         }
     }
 
+    public function edit_diskusi_group_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/updatediscussion';
+
+        $input = $request->all();
+        $arr = $input['edit-tags'];
+        $tag = implode(",", $arr);
+
+        if ($request->hasFile('edit_img_discuss_banner')) {
+            $imgku = file_get_contents($request->file('edit_img_discuss_banner')->getRealPath());
+            $filnam = $request->file('edit_img_discuss_banner')->getClientOriginalName();
+        }
+
+        $imageRequest = [
+            "title"         => $input['edit_judul'],
+            "description"   => $input['edit_deskripsi'],
+            "group_id"      => $input["edit_id_group"],
+            "discussion_id" => $input["edit_id_diskusi"],
+            "tags"          => $tag,
+            "file_image1"  => [
+                "name" => "banner_discussion",
+                "contents" => $imgku,
+                "filename" => $filnam,
+            ],
+        ];
+
+        $req = new RequestController;
+        $resImg = $req->send_formdata_multiple($imageRequest, $url, $ses_login['access_token']);
+
+        if ($resImg['success'] == true) {
+            alert()->success('Success Update Data Discussion Group', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
     // ----------------xx-------------- ADMIN -  DISCUSSION GROUP FORUM MODULE  ----------------xx----------------
 
 } //end-class

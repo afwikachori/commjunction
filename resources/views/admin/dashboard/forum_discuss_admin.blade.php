@@ -238,7 +238,7 @@
                         <img src="/visual/warning.png" id="img_signout_admin">
                         <h3 class="cgrey" lang="en">Confirmation</h3>
                         <small class="clight" lang="en">Are you sure, you want to delete
-                            <span id="nama_del_member" class="tebal">this member</span>
+                            <span id="nama_del_diskusi" class="tebal">this member</span>
                             from this group ?</small>
 
 
@@ -270,7 +270,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #ffffff;">
 
-            <form method="POST" id="form_edit_diskusi_group_forum" action="{{route('post.admin.forum-adddiskusi')}}"
+            <form method="POST" id="form_edit_diskusi_group_forum" action="{{route('post.admin.forum-editdiskusi')}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="edit_id_group" value="{{ $id_group }}" readonly>
@@ -280,7 +280,7 @@
                     <h4 class="modal-title cgrey" lang="en">Edit Discussion Group</h4>
                 </div> <!-- end-header -->
 
-                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                <div class="modal-body edit-diskusi">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -308,9 +308,6 @@
                                 <small class="clight" lang="en">Tag Discussion</small>
                                 <ul class="tags">
                                     <div id="old_tags"></div>
-                                    <li class="addedTag">Discussion<span onclick="$(this).parent().remove();"
-                                            class="tagRemove">x</span><input type="hidden" name="edit-tags[]"
-                                            value="Discussion"></li>
                                     <li class="tagAdd taglist">
                                         <input type="text" id="search-field">
                                     </li>
@@ -324,14 +321,32 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="clight" lang="en">Banner Group</small>
-                                <img src="/img/noimg.jpg" class="zoom img-profil-grup" id="show_editbanner"
-                                    onclick="clickImage(this)">
-                                <button type="button" id="btn_close_banner"
-                                    class="btn btn-gradient-light btn-rounded btn-icon detilhref">
-                                    <i class="mdi mdi-window-close"></i>
-                                </button>
-                                <input type="file" id="edit_img_discuss_banner" name="edit_img_discuss_banner"
-                                    class="form-control input-abu hidendulu">
+
+                                <div class="row" id="div-show-banner">
+                                    <div class="col-md-6">
+                                        <img src="/img/noimg.jpg" class="zoom img-showbanner" id="show_editbanner"
+                                            onclick="clickImage(this)">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" id="btn_close_banner"
+                                            class="btn btn-gradient-light btn_close_banner btn-sm">
+                                            <small>Change</small>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row hidendulu" id="div-file-banner">
+                                    <div class="col-md-10">
+                                        <input type="file" id="edit_img_discuss_banner" name="edit_img_discuss_banner"
+                                            class="form-control input-abu">
+                                    </div>
+                                    <div class="col-md">
+                                        <a type="button" id="btn_close_file">
+                                        <i class="mdi mdi-window-close"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

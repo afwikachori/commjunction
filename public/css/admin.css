@@ -2462,3 +2462,31 @@ span.tagRemove:hover {
     position: absolute;
     bottom: 0px;
 }
+
+
+.img-showbanner{
+    width: auto;
+    height: 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: absolute;
+}
+
+.btn_close_banner{
+    position: absolute;
+    left: 0px;
+}
+
+.modal-body.edit-diskusi{
+    padding-left: 5%;
+    padding-right: 5%;
+    height: auto;
+    min-height: 450px;
+}
+
+#btn_close_file{
+     text-decoration: none;
+    position: absolute;
+    right: 40px;
+    margin-top: -2em;
+}

@@ -6948,6 +6948,7 @@ function tabel_discussion_group_forum(group_id) {
         $("#old_tags").html(edittags);
 
         //----------EDIT----------
+        $("#edit_id_diskusi").val(data.id);
         $("#edit_judul").val(data.title);
         $("#edit_deskripsi").val(data.title);
 
@@ -6964,8 +6965,19 @@ function tabel_discussion_group_forum(group_id) {
         // console.log(data);
 
         $("#discussion_id").val(data.id);
+        $("#nama_del_diskusi").html(data.title);
         $("#modal_delete_discussion").modal('show');
     });
 }
+
+$("#btn_close_banner").click(function () {
+    $("#div-show-banner").hide();
+    $("#div-file-banner").show();
+});
+
+$("#btn_close_file").click(function () {
+    $("#div-show-banner").show();
+    $("#div-file-banner").hide();
+});
 
 // -------------- xx -------------- MEMBER - FORUM MODULE ADMIN  -------------- xx ----------------

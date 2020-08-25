@@ -190,7 +190,7 @@ class SubscriberController extends Controller
 
         $url_comname = $input['name_community'];
         $url = env('SERVICE') . 'registration/subscriber';
-        try {
+
 
             $req_input =  [
                 'full_name'     => $input['fullname_subs'],
@@ -204,15 +204,17 @@ class SubscriberController extends Controller
                 "custom_input"  => $data
             ];
 
+        try {
             $respon_enkrp = $this->encryptedPost($request, $req_input, $url, "array");
             // return $respon_enkrp;
-            $respon = json_decode($respon_enkrp, true);
+            // $respon = json_decode($respon_enkrp, true);
+            // return $respon;
 
-            if ($respon['success'] == true) {
+            // if ($respon_enkrp['success'] == true) {
                 alert()->success('Your Subscriber registrasion is successfull', 'Yay !');
                 $url_sukses = '/subscriber/url/' . $url_comname;
                 return back()->with('register_sukses', $url_sukses);
-            }
+            // }
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
             alert()->error($error['message'], 'Failed!')->autoclose(3500);

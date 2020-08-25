@@ -8,14 +8,8 @@ Route::domain('{subdomain}.smartcomm.id')->group(function () {
 
 
 Route::get('/', function () {
-    // dd(env('CDN'));
     return view('welcome');
 });
-
-Route::get('/teshtml', function () {
-    return view('teshtml');
-});
-
 
 
 Route::get('admin/finalreview', 'RegisterController@ReviewAdminView')->name('admin/finalreview');
@@ -104,6 +98,7 @@ Route::prefix('admin')->group(function () {
     Route::post('add_diskusi_group_admin', 'ModuleController@add_diskusi_group_admin')->name('post.admin.forum-adddiskusi');
     Route::post('tabel_discussion_group_admin', 'ModuleController@tabel_discussion_group_admin')->name('post.admin.forum-discusslist');
     Route::post('delete_discussion_admin', 'ModuleController@delete_discussion_admin')->name('post.admin.forum-deletediskusi');
+    Route::post('edit_diskusi_group_admin', 'ModuleController@edit_diskusi_group_admin')->name('post.admin.forum-editdiskusi');
 
 
 
