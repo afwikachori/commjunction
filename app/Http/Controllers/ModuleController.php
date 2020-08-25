@@ -2888,6 +2888,53 @@ class ModuleController extends Controller
     }
 
 
+    public function like_diskusi_group_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/likediscussion';
+
+        $input = $request->all();
+
+
+        $body = [
+            "group_id" => $input['group_id_like'],
+            "discussion_id"  => $input['discussion_id_like']
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Like this discussion', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+    public function komen_diskusi_group_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/commentdiscussion';
+
+        $input = $request->all();
+
+
+        $body = [
+            "group_id" => $input['group_id_komen'],
+            "discussion_id"  => $input['discussion_id_komen'],
+            "message" => $input['komen_diskusi']
+        ];
+// return $body;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Comment Message Sent !', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
     // ----------------xx-------------- ADMIN -  DISCUSSION GROUP FORUM MODULE  ----------------xx----------------
 
 } //end-class

@@ -105,7 +105,7 @@
                                             class="tagRemove">x</span><input type="hidden" name="tags[]"
                                             value="Discussion"></li>
                                     <li class="tagAdd taglist">
-                                        <input type="text" id="search-field">
+                                        <input type="text" id="search-field-edit">
                                     </li>
                                 </ul>
 
@@ -145,8 +145,8 @@
 <!-- MODAL DETAIL DISCUSSION GROUP -->
 <div class="modal fade" id="modal_info_discussion" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
+        <div class="modal-dialog modal-lg info-diskusi" role="document">
+            <div class="modal-content" style="background-color: #ffffff;">
 
             <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
                 <div class="card bg-dark text-white profil-grup">
@@ -178,35 +178,84 @@
                 </div>
             </div> <!-- end-header -->
 
-            <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+            <div class="modal-body info-diskusi">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Title Discussion</small>
-                            <h6 class="cgrey" id="info_judul"></h6>
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Title Discussion</small>
+                                <h6 class="cgrey" id="info_judul"></h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Date Created Discussion</small>
+                                <h6 class="cgrey" id="info_tanggal"></h6>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Date Created Discussion</small>
-                            <h6 class="cgrey" id="info_tanggal"></h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Tags Discussion</small>
+                                <div class="cgrey" id="info_tags"></div>
+                            </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <small class="clight" lang="en">Status Discussion</small>
+                                <h6 class="cgrey" id="info_status"></h6>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <small class="clight" lang="en">Give Like</small>
+                                <br>
+                                <form method="POST" id="form_like_diskusi" action="{{route('post.admin.forum-likediskusi')}}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" id="discussion_id_like" name="discussion_id_like" readonly>
+                                    <input type="hidden" name="group_id_like" value="{{ $id_group }}" readonly>
+                                    <button type="submit" class="btn btn-gradient-light btn-rounded btn-icon detilhref">
+                                        <i class="mdi mdi-heart icon-md text-danger"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <form method="POST" id="form_komen_diskusi" action="{{route('post.admin.forum-komendiskusi')}}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <input type="hidden" id="discussion_id_komen" name="discussion_id_komen" readonly>
+                            <input type="hidden" name="group_id_komen" value="{{ $id_group }}" readonly>
+                            <textarea type="text" id="komen_diskusi" name="komen_diskusi" rows="2" class="form-control input-abu komen-diskusi"
+                                placeholder="Input your comment" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-teal btn-sm">
+                            <i class="mdi mdi-send btn-icon-prepend">
+                            </i> <small lang="en"> Send</small> </button>
+                    </form>
+                </div>
+                <div class="col-md-5">
+                    <div id="isi_komen_diskusi">
+                        <!-- <div class="row">
+                            <div class="col-md-2">
+                                <img src="/img/noimg.jpg" class="rounded-circle img-fluid zoom img-profil-komen" id="icon-discuss"
+                                    onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">
+                            </div>
+                            <div class="col-md-10">
+                                <span class="cteal">Genak Banadeko</span> &nbsp;&nbsp;
+                                <small class="clight">24/8/2020 15:13:21</small>
+                                <p class="s12 cgrey">Siapakah anggota yang ikut dalam piket ? atau semua member ikut ?</p>
+                            </div>
+                        </div>
+                        <hr class="clight"> -->
+
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Tags Discussion</small>
-                            <div class="cgrey" id="info_tags"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <small class="clight" lang="en">Status Discussion</small>
-                            <h6 class="cgrey" id="info_status"></h6>
-                        </div>
-                    </div>
                 </div>
+
+
             </div> <!-- end-body -->
 
             <div class="modal-footer" style="border: none;">
@@ -342,7 +391,7 @@
                                     </div>
                                     <div class="col-md">
                                         <a type="button" id="btn_close_file">
-                                        <i class="mdi mdi-window-close"></i>
+                                            <i class="mdi mdi-window-close"></i>
                                         </a>
                                     </div>
                                 </div>

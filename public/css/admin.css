@@ -2490,3 +2490,42 @@ span.tagRemove:hover {
     right: 40px;
     margin-top: -2em;
 }
+
+
+.modal-dialog.modal-lg.info-diskusi{
+    width: 100%;
+    max-width: 750px;
+}
+
+.modal-body.info-diskusi{
+    padding-left: 5%;
+    padding-right: 5%;
+    min-height: 275px;
+    height: auto;
+}
+
+.img-profil-komen{
+    width: 35px;
+    height: 35px;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: absolute;
+}
+
+#form_komen_diskusi{
+    margin-top: 0.5em;
+}
+
+.komen-diskusi{
+width: 275px !important;
+}
+
+.komenrow{
+border-bottom: 0.25px solid #e4e4e4;
+}
+
+#isi_komen_diskusi{
+height: 300px;
+overflow-y: scroll;
+overflow-x: hidden;
+}

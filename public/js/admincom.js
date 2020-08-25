@@ -6821,6 +6821,25 @@ function load_tags() {
             }
         });
 
+        $('ul.tags').click(function () {
+            $('#search-field-edit').focus();
+        });
+        $('#search-field-edit').keypress(function (event) {
+            if (event.which == '13') {
+                if (($(this).val() != '') && ($(".tags .addedTag:contains('" + $(this).val() + "') ").length == 0)) {
+
+
+
+                    $('<li class="addedTag">' + $(this).val() + '<span class="tagRemove" onclick="$(this).parent().remove();">x</span><input type="hidden" value="' + $(this).val() + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
+                    $(this).val('');
+
+                } else {
+                    $(this).val('');
+
+                }
+            }
+        });
+
     });
 
     $('#form_diskusi_group_forum').on('keyup keypress', function (e) {
@@ -6947,10 +6966,31 @@ function tabel_discussion_group_forum(group_id) {
         $("#info_tags").html(show);
         $("#old_tags").html(edittags);
 
+        $("#discussion_id_like").val(data.id);
+        $("#discussion_id_komen").val(data.id);
         //----------EDIT----------
         $("#edit_id_diskusi").val(data.id);
         $("#edit_judul").val(data.title);
-        $("#edit_deskripsi").val(data.title);
+        $("#edit_deskripsi").val(data.description);
+
+        var noprofil = '/img/noimg.jpg';
+        var komen = '';
+        $.each(data.comments, function (i, item) {
+            var fotoq = server_cdn + cekimage_cdn(item.photo);
+            komen += '<div class="row komenrow">'+
+                '<div class="col-md-2">' +
+                '<img src="' + fotoq +'" class="rounded-circle img-fluid zoom img-profil-komen" id="profilkomen'+i+'"' +
+                'onclick="clickImage(this)"' +
+                'onerror="this.onerror=null;this.src=\'' + noprofil + '\';">' +
+                '</div>' +
+                '<div class="col-md-10">' +
+                '<span class="cteal tebal s13">'+ item.name+'</span> &nbsp;&nbsp;' +
+                '<small class="clight">' + dateTime(item.created_at)+'</small>' +
+                '<p class="s14 cgrey">'+item.message+'</p>' +
+                '</div>' +
+                '</div>';
+        });
+        $("#isi_komen_diskusi").html(komen);
 
         $("#show_editbanner").attr("src", server_cdn + cekimage_cdn(data.banner_discussion));
         $("#modal_info_discussion").modal('show');

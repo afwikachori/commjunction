@@ -99,6 +99,8 @@ Route::prefix('admin')->group(function () {
     Route::post('tabel_discussion_group_admin', 'ModuleController@tabel_discussion_group_admin')->name('post.admin.forum-discusslist');
     Route::post('delete_discussion_admin', 'ModuleController@delete_discussion_admin')->name('post.admin.forum-deletediskusi');
     Route::post('edit_diskusi_group_admin', 'ModuleController@edit_diskusi_group_admin')->name('post.admin.forum-editdiskusi');
+    Route::post('like_diskusi_group_admin', 'ModuleController@like_diskusi_group_admin')->name('post.admin.forum-likediskusi');
+    Route::post('komen_diskusi_group_admin', 'ModuleController@komen_diskusi_group_admin')->name('post.admin.forum-komendiskusi');
 
 
 
