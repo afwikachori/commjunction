@@ -813,6 +813,14 @@ function init_ready() {
         get_list_subs_member();
     }
 
+
+    if ($("#page_discussion_group_admin").length != 0) {
+        var id_group = $("#id_group").val();
+        tabel_discussion_group_forum(id_group);
+        load_tags();
+    }
+
+
 }
 
 
@@ -6336,7 +6344,7 @@ function tabel_forum_group_admin() {
             // success: function (result) {
             //    console.log(result);
             // },
-            error: function (result) {
+            error: function (jqXHR, ajaxOptions, thrownError) {
                 // console.log(result);
                 var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
                 $('#tabel_forum_group_admin tbody').empty().append(nofound);
@@ -6381,7 +6389,8 @@ function tabel_forum_group_admin() {
             {
                 mData: 'id',
                 render: function (data, type, row) {
-                    $uilink = '<a href="/admin/forum_member/' + data + '/"  class="link-tbl-event">Member</a>';
+                    $uilink = '<a href="/admin/forum_member/' + data + '/"  class="link-tbl-event">Member</a> | ' +
+                        '<a href="/admin/discussion/' + data + '/"  class="link-tbl-event">Discussion</a>';
                     return $uilink;
                 }
             },
@@ -6601,9 +6610,9 @@ function tabel_memberlist_admin(group_id) {
             {
                 mData: 'admin',
                 render: function (data, type, row) {
-                    if(data == true){
+                    if (data == true) {
                         var ui = '<small class="badge badge-gradient-info">Admin</small>';
-                    }else{
+                    } else {
                         var ui = '<small class="tebal cgrey">Member</small>';
                     }
                     return ui;
@@ -6769,6 +6778,194 @@ function get_list_subs_member() {
         }
     });
 
+}
+
+
+function load_tags() {
+    $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+        return function (elem) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+    $(document).ready(function () {
+        $('#addTagBtn').click(function () {
+            $('#tags option:selected').each(function () {
+                $(this).appendTo($('#selectedTags'));
+            });
+        });
+        $('#removeTagBtn').click(function () {
+            $('#selectedTags option:selected').each(function (el) {
+                $(this).appendTo($('#tags'));
+            });
+        });
+        $('.tagRemove').click(function (event) {
+            event.preventDefault();
+            $(this).parent().remove();
+        });
+        $('ul.tags').click(function () {
+            $('#search-field').focus();
+        });
+        $('#search-field').keypress(function (event) {
+            if (event.which == '13') {
+                if (($(this).val() != '') && ($(".tags .addedTag:contains('" + $(this).val() + "') ").length == 0)) {
+
+
+
+                    $('<li class="addedTag">' + $(this).val() + '<span class="tagRemove" onclick="$(this).parent().remove();">x</span><input type="hidden" value="' + $(this).val() + '" name="tags[]"></li>').insertBefore('.tags .tagAdd');
+                    $(this).val('');
+
+                } else {
+                    $(this).val('');
+
+                }
+            }
+        });
+
+    });
+
+    $('#form_diskusi_group_forum').on('keyup keypress', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+}
+
+function tabel_discussion_group_forum(group_id) {
+    // alert(group_id);
+    var token = $('meta[name="csrf-token"]').attr('content');
+    var tabel = $('#tabel_diskusi_group').DataTable({
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/admin/tabel_discussion_group_admin',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "group_id": group_id
+            },
+            // success: function (result) {
+            //    console.log(result);
+            // },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_diskusi_group tbody').empty().append(nofound);
+            },
+        },
+        columns: [
+            { mData: 'id' },
+            { mData: 'title' },
+            {
+                mData: 'banner_discussion',
+                render: function (data, type, row) {
+                    var noimg = '/img/kosong.png';
+                    return '<img src=' + server_cdn + cekimage_cdn(data) + ' id="imgsee' + row.id + '" class="rounded-circle img-fluid mini zoom"  onclick="clickImage(this)" onerror="this.onerror=null;this.src=\'' + noimg + '\';">';
+                }
+            },
+            {
+                mData: 'tags',
+                render: function (data, type, row) {
+                    var arrTags = data.split(',');
+                    var show = '';
+                    $.each(arrTags, function (i, item) {
+                        show += ' <li><small>' + item + '</small></li>';
+                    });
+                    return show;
+                }
+            },
+            { mData: 'status' },
+            {
+                mData: 'created_at',
+                render: function (data, type, row) {
+                    return dateTime(data);
+                }
+            },
+            { mData: 'views' },
+            { mData: 'likes' },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-eye">' +
+                        '<i class="mdi mdi-information"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-delete">' +
+                        '<i class="mdi mdi-delete"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-eye">' +
+                        '<i class="mdi mdi-information"></i>' +
+                        '</button>' +
+                        '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btn-delete">' +
+                        '<i class="mdi mdi-delete"></i>' +
+                        '</button>',
+                    "targets": -1
+                }
+            ],
+    });
+
+    //DETAIL
+    $('#tabel_diskusi_group tbody').on('click', 'button.btn-eye', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        console.log(data);
+
+        $("#icon-discuss").attr("src", server_cdn + cekimage_cdn(data.owner_picture));
+        $("#banner-discuss").attr("src", server_cdn + cekimage_cdn(data.banner_discussion));
+        $("#info_deskripsi").html(data.description);
+        $("#info_judul").html(data.title);
+        $("#info_title").html(data.title);
+        $("#info_tanggal").html(dateTime(data.created_at));
+        $("#info_status").html(data.status_title);
+        $("#info_viewers").html(data.views);
+        $("#info_likers").html(data.likes);
+
+        var tg = data.tags;
+        var arrTags = tg.split(',');
+        var show = '';
+        var edittags = '';
+        $.each(arrTags, function (i, item) {
+            show += ' <li><small>' + item + '</small></li>';
+            edittags += '<li class="addedTag">'+item+'<span onclick="$(this).parent().remove();"' +
+                'class="tagRemove"> x </span> <input type="hidden" name="edit-tags[]"' +
+                'value="' + item +'"></li>';
+        });
+        $("#info_tags").html(show);
+        $("#old_tags").html(edittags);
+
+        //----------EDIT----------
+        $("#edit_judul").val(data.title);
+        $("#edit_deskripsi").val(data.title);
+
+        $("#show_editbanner").attr("src", server_cdn + cekimage_cdn(data.banner_discussion));
+        $("#modal_info_discussion").modal('show');
+
+    });
+
+    $('#tabel_diskusi_group tbody').on('click', 'button.btn-delete', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+        // console.log(data);
+
+        $("#discussion_id").val(data.id);
+        $("#modal_delete_discussion").modal('show');
+    });
 }
 
 // -------------- xx -------------- MEMBER - FORUM MODULE ADMIN  -------------- xx ----------------

@@ -93,13 +93,17 @@ Route::prefix('admin')->group(function () {
     Route::get('forum_member/{id_group}', 'ModuleController@ForumMemberViewAdmin')->name('get.admin.forum-member/{id_group}');
     Route::post('tabel_memberlist_admin', 'ModuleController@tabel_memberlist_admin')->name('post.admin.forum-memberlist');
     Route::post('tabel_memberpending_admin', 'ModuleController@tabel_memberpending_admin')->name('post.admin.forum-memberpending');
-
-
     Route::post('get_list_subs_member_admin', 'ModuleController@get_list_subs_member_admin')->name('post.admin.forum-listsubsmember');
     Route::post('invite_member_admin', 'ModuleController@invite_member_admin')->name('post.admin.forum-invitemember');
     Route::post('approval_pending_member_admin', 'ModuleController@approval_pending_member_admin')->name('post.admin.forum-accmember');
     Route::post('delete_member_admin', 'ModuleController@delete_member_admin')->name('post.admin.forum-deletemember');
     Route::post('broadcast_member_admin', 'ModuleController@broadcast_member_admin')->name('post.admin.forum-bcmember');
+
+    //FORUM - DISCUSSION
+    Route::get('discussion/{id_group}', 'ModuleController@ForumDiskusiViewAdmin')->name('get.admin.forum-discuss/{id_group}');
+    Route::post('add_diskusi_group_admin', 'ModuleController@add_diskusi_group_admin')->name('post.admin.forum-adddiskusi');
+    Route::post('tabel_discussion_group_admin', 'ModuleController@tabel_discussion_group_admin')->name('post.admin.forum-discusslist');
+    Route::post('delete_discussion_admin', 'ModuleController@delete_discussion_admin')->name('post.admin.forum-deletediskusi');
 
 
 

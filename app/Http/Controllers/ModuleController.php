@@ -95,6 +95,12 @@ class ModuleController extends Controller
         return view('subscriber/dashboard/forum_member_subs')->with(["id_group" =>  $id_group]);
     }
 
+    public function ForumDiskusiViewAdmin($id_group)
+    {
+        return view('admin/dashboard/forum_discuss_admin')->with(["id_group" =>  $id_group]);
+    }
+
+
 
 
     public function get_all_news(Request $request)
@@ -2013,7 +2019,7 @@ class ModuleController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json['message'];
+            return 'nodata';
         }
     }
 
@@ -2748,8 +2754,100 @@ class ModuleController extends Controller
             return back();
         }
     }
-  // ----------------- xx --------------- SUBSCRIBER -  FORUM MODULE  -------------------- xx --------------
+    // ----------------- xx --------------- SUBSCRIBER -  FORUM MODULE  -------------------- xx --------------
 
 
+
+
+    // ------------------------------ ADMIN -  DISCUSSION GROUP FORUM MODULE  --------------------------------
+    public function add_diskusi_group_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/creatediscussion';
+
+        $input = $request->all();
+        $arr = $input['tags'];
+        $tag = implode(",",$arr);
+        // return $input;
+
+        if ($request->hasFile('img_discuss_banner')) {
+            $imgku = file_get_contents($request->file('img_discuss_banner')->getRealPath());
+            $filnam = $request->file('img_discuss_banner')->getClientOriginalName();
+        }
+
+        $imageRequest = [
+            "title"         => $input['discuss_judul'],
+            "description"   => $input['discuss_deskripsi'],
+            "group_id"    => $input["id_group_add"],
+            "tags" => $tag,
+            "file_image1"  => [
+                "name" => "banner_discussion",
+                "contents" => $imgku,
+                "filename" => $filnam,
+            ],
+        ];
+
+        $req = new RequestController;
+        $resImg = $req->send_formdata_multiple($imageRequest, $url, $ses_login['access_token']);
+
+        if ($resImg['success'] == true) {
+            alert()->success('Success Create New Discussion Group', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+
+    public function tabel_discussion_group_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/listdiscussion';
+
+        $input = $request->all();
+
+        $body = [
+            "group_id"  => $input['group_id'],
+            // "status" => "2"
+        ];
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return 'nodata';
+        }
+    }
+
+
+    public function delete_discussion_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'module/forum/removediscussion';
+
+        $input = $request->all();
+
+
+        $body = [
+            "group_id" => $input['group_id'],
+            "discussion_id"  => $input['discussion_id']
+        ];
+
+        // return $body;
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        // return $json;
+        if ($json['success'] == true) {
+            alert()->success('Discussion Group has been deleted', 'Success')->autoclose(4000);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed')->autoclose(4000);
+            return back();
+        }
+    }
+
+    // ----------------xx-------------- ADMIN -  DISCUSSION GROUP FORUM MODULE  ----------------xx----------------
 
 } //end-class

@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-2">
-        <h3 class="page-title" lang="en">Forum Module</h3>
+        <h3 class="page-title" lang="en">Forum Group  Module</h3>
     </div>
     <div class="col-md-6">
         <label class="cgrey" lang="en">Manage your forum and group or members activity<label>
