@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- ICON WEB -->
-    <link rel="icon" href="/img/commjuction_icoweb.ico" />
+    <link rel="icon" href="{{asset('img/commjuction_icoweb.ico')}}" />
 
     <!-- CSS Files -->
 
@@ -39,7 +39,8 @@
 
 
     <!-- news management -->
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
 
 
     <script src="{{asset('js/jquery.3.2.1.min.js')}}"></script>
@@ -54,7 +55,7 @@
 
 
 <body>
-@if (Session::has('session_admin_logged'))
+    @if (Session::has('session_admin_logged'))
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -75,13 +76,17 @@
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en" data-lang-token="Terms & Conditions">Terms & Conditions</a>
-                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en" data-lang-token="">Privacy Policy</a>
+                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en"
+                                data-lang-token="Terms & Conditions">Terms & Conditions</a>
+                            <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en"
+                                data-lang-token="">Privacy Policy</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                            <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en" data-lang-token="Documentation">
+                            <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en"
+                                data-lang-token="Documentation">
                                 Documentation &nbsp;<i class="mdi mdi-checkbox-blank-circle cteal s10"></i> </a>
-                            <a class="cdarkgrey" href="/admin/supportpal/" style="padding-left: 2em;" lang="en" data-lang-token="Support">
+                            <a class="cdarkgrey" href="/admin/supportpal/" style="padding-left: 2em;" lang="en"
+                                data-lang-token="Support">
                                 Support &nbsp;<i class="mdi mdi-phone cteal"></i> </a>
                         </span>
                     </div>
@@ -273,8 +278,6 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="background-color: #ffffff; width: 80%;
     min-height: 350px;">
-
-
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
                     <center>
                         <img src="/img/logout.png" id="img_signout_admin">
@@ -296,7 +299,8 @@
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span class="sr-only" lang="en">Loading...</span>
                             </span>
-                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im Sure</span></div>
+                            <div id="text_logout"><i class="mdi mdi-check btn-icon-prepend"></i><span lang="en">Yeah, Im
+                                    Sure</span></div>
                         </button>
 
                     </center>
@@ -328,7 +332,7 @@
     <script src="{{asset('purple/js/todolist.js')}}"></script>
     <script src="{{asset('purple/js/file-upload.js')}}"></script>
 
-    <script src="/js/nicEdit.js"></script>
+    <script src="{{asset('js/nicEdit.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
     <script src="{{asset('js/admincom.js')}}"></script>

@@ -8,7 +8,7 @@ Route::domain('{subdomain}.smartcomm.id')->group(function () {
 
 
 Route::get('/', function () {
-    return view('welcome');
+      return view('admin/login');
 });
 
 

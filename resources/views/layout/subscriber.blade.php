@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- ICON WEB -->
-    <link rel="icon" href="/img/commjuction_icoweb.ico" />
+    <link rel="icon" href="{{asset('img/commjuction_icoweb.ico')}}" />
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('purple/vendors/mdi/css/materialdesignicons.min.css')}}">
@@ -677,10 +677,6 @@
 
     <!-- Sweetalert -->
     <script src="{{asset('js/sweetalert.min.js')}}"></script>
-
-
-    <!-- <script src="{{asset('')}}"></script> -->
-
 
 
 
