@@ -2776,6 +2776,8 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'modulemanagement/settingmodule';
         $input = $request->all();
+        // return $input;
+
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
             $error['status'] = 500;
@@ -2800,6 +2802,7 @@ class AdminCommController extends Controller
             "data_setting" => $data
         ];
 
+        // return $body;
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
         if ($json['success'] == true) {
             alert()->success('Successfully Setting up Module', 'Succesfully')->persistent('Done');

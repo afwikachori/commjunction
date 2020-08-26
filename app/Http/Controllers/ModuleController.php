@@ -997,7 +997,7 @@ class ModuleController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json['success'];
+            return 'nodata';
         }
     }
 
@@ -1051,10 +1051,16 @@ class ModuleController extends Controller
                 "image"          => $imgku,
             ];
 
-
             $resImg = $req->send_image_formdata($imageRequest, $url, $filnam, $ses_login['access_token']);
-            alert()->success('Success create event!', 'Success')->autoclose(4000);
-            return back();
+
+            if ($resImg['success'] == true) {
+                alert()->success('Success create event!', 'Success')->autoclose(4000);
+                return back();
+            } else {
+                alert()->error($resImg['message'], 'Failed')->autoclose(4000);
+                return back();
+            }
+
         } else {
             alert()->error('image required !', 'Failed')->autoclose(4000);
             return back();

@@ -3305,21 +3305,21 @@ function get_list_setting_module(idmod) {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id +'" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id +'" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         } else {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id +'" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id +'" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         }
                     }

@@ -460,6 +460,8 @@ class SubscriberController extends Controller
             try {
                 $resImg = $req->editProfileAdmin($imageRequest, $url, $token);
                 // return $resImg;
+                // return $ses_user;
+
                 if ($resImg['success'] == true) {
                     session()->put('session_subscriber_logged.user', [
                         "user_name" => $resImg['data']['user_name'],
@@ -482,7 +484,7 @@ class SubscriberController extends Controller
                         //////////////////////
                         "membership_id" => $ses_user['membership_id'],
                         "membership" => $ses_user['membership'],
-                        "membership_features" => $ses_user['membership_features'],
+                        "membership_type" => $ses_user['membership_type'],
 
                     ]);
 
