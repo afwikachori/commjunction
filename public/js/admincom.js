@@ -622,7 +622,7 @@ function init_ready() {
         $('#toggle-status').attr("disabled");
         //get_all_news();
         tabel_news_management();
-        tabel_cek_news();
+        // tabel_cek_news();
     }
 
 
@@ -1373,10 +1373,8 @@ function tabel_cek_news() {
             if (result.status == 401 || result.message == "Unauthorized") {
                 ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                 setTimeout(function () {
-                    location.href = '/subscriber/url/' + $(".community_name").val();
+                    location.href = '/admin';
                 }, 5000);
-            } else {
-                ui.popup.show('warning', result.message, 'Warning');
             }
         },
         error: function (result) {
@@ -1399,12 +1397,9 @@ function tabel_news_management() {
             url: '/admin/tabel_news_management',
             type: 'POST',
             dataSrc: '',
-            data: {
-                "_token": token
-            },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_news_manage tbody').empty().append(nofound);
             },
         },
@@ -2198,7 +2193,7 @@ function tabel_payment_community() {
             timeout: 30000,
         },
         error: function (jqXHR, ajaxOptions, thrownError) {
-            var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_paysubs tbody').empty().append(nofound);
         },
         columns: [
@@ -2432,7 +2427,7 @@ function tabel_subscriber_all() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
                 $('#tabel_subscriber tbody').empty().append(nofound);
             },
@@ -2642,7 +2637,7 @@ function filter_membership_subs() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
                 $('#tabel_subscriber tbody').empty().append(nofound);
             },
@@ -2945,7 +2940,7 @@ function tabel_req_membership() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_req_member tbody').empty().append(nofound);
             },
         },
@@ -3738,7 +3733,7 @@ function tabel_usertype_management_admin() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_usertype_manage_admin tbody').empty().append(nofound);
             },
         },
@@ -4121,7 +4116,7 @@ function show_tabel_transaksi() {
                 "_token": token,
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_trans tbody').empty().append(nofound);
             },
         },
@@ -4198,7 +4193,7 @@ $("#btn_filter_transaksi").click(function (e) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
                 $('#tabel_trans tbody').empty().append(nofound);
             },
@@ -4390,7 +4385,7 @@ $("#btn_showtable_report").click(function () {
 
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_transaksi_report tbody').empty().append(nofound);
             },
         },
@@ -4399,7 +4394,7 @@ $("#btn_showtable_report").click(function () {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_transaksi_report tbody').empty().append(nofound);
 
         },
@@ -4495,7 +4490,7 @@ function tabel_report_concile_super(bulan, tahun) {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_concile_report tbody').empty().append(nofound);
             },
         },
@@ -4504,7 +4499,7 @@ function tabel_report_concile_super(bulan, tahun) {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_concile_report tbody').empty().append(nofound);
 
         },
@@ -4586,7 +4581,7 @@ function tabel_report_transaksi_admin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_transaksi_report tbody').empty().append(nofound);
             },
         },
@@ -4595,7 +4590,7 @@ function tabel_report_transaksi_admin() {
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_transaksi_report tbody').empty().append(nofound);
 
         },
@@ -4650,10 +4645,11 @@ function get_list_transaction_type_admin() {
         url: "/admin/get_list_transaction_type_admin",
         type: "POST",
         dataType: "json",
-        data: {
-            "_token": token
-        },
         success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                get_list_transaction_type_admin();
+            } else {
             $('#jenis_transaksi').empty();
             $('#jenis_transaksi').append("<option disabled> Choose</option>");
 
@@ -4689,8 +4685,8 @@ function get_list_transaction_type_admin() {
             }));
 
             $("#jenis_transaksi3").get(0).selectedIndex = 0;
-
         }
+    }
     });
 }
 
@@ -4776,13 +4772,13 @@ function tabel_report_subscriber_admin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_subscriber_report tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_subscriber_report tbody').empty().append(nofound);
 
         },
@@ -4885,14 +4881,14 @@ function tabel_payment_all_admin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_payment_all_admin tbody').empty().append(nofound);
                 ui.popup.show('error', "Internal Server Error", 'Error');
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_payment_all_admin tbody').empty().append(nofound);
 
         },
@@ -4940,13 +4936,13 @@ function tabel_payment_active_admin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_payment_active_admin tbody').empty().append(nofound);
             },
         },
         error: function (request, status, errorThrown) {
             console.log(errorThrown);
-            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
             $('#tabel_payment_active_admin tbody').empty().append(nofound);
 
         },
@@ -5094,7 +5090,7 @@ function detail_payment_all_admin(dtpay) {
                     }); //end-datatable
 
                 } else {
-                    var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                    var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                     $('#tabel_sub_payment_super tbody').html(nofound);
                 }
                 $("#modal_detail_payment_all_admin").modal('show');
@@ -5129,7 +5125,7 @@ function detail_subpayment(subdata) {
             "_token": token
         },
         success: function (result) {
-            console.log('sukses detail_subpayment');
+            // console.log('sukses detail_subpayment');
             console.log(result);
 
             if (result.success == false){
@@ -5241,21 +5237,21 @@ function get_setting_subpayment_admin(idnya) {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id + '" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id + '" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         } else {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id + '" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id + '" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         }
                     }
@@ -5495,7 +5491,7 @@ function tabel_generate_notif_admin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_generate_notif_admin tbody').empty().append(nofound);
             },
         },
@@ -5665,7 +5661,7 @@ function tabel_inbox_message_admin() {
             //    console.log(result);
             // },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_inbox_message_admin tbody').empty().append(nofound);
             },
         },

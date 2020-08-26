@@ -344,8 +344,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'paymentverification/datapaymentconfirmation';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -454,8 +454,8 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         // return $input;
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             session()->forget('session_logged_superadmin');
@@ -475,8 +475,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'dashboard/commjunction';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             return $json['data'];
@@ -493,8 +493,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulemanagement/allmodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -509,13 +509,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulemanagement/detailmodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'feature_id' => $input['feature_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -635,8 +635,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'usertype/listusertype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -650,8 +650,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'usertype/listfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -688,14 +688,14 @@ class SuperadminController extends Controller
         }
         $url = env('SERVICE') . 'usertype/create';
 
-        $csrf = $input['_token'];
+
         $body = [
             'title' => $input['nama_usertipe'],
             'description' => $input['dekripsi_usertipe'],
             'subfeature' => $subftr,
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully Add User Type', 'Added!')->autoclose(4500);
@@ -734,14 +734,14 @@ class SuperadminController extends Controller
 
         $url = env('SERVICE') . 'usertype/edit';
 
-        $csrf = $input['_token'];
+
         $body = [
             'usertype_id' => $input['idfitur_usertype_edit'],
             'title' => $input['nama_usertipe_edit'],
             'description' => $input['dekripsi_usertipe_edit'],
             'subfeature' => $subftr,
         ];
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
@@ -817,7 +817,7 @@ class SuperadminController extends Controller
 
         $csrf = '';
         try {
-            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Add New Module Endpoint', 'Added!')->autoclose(4000);
@@ -843,8 +843,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'transmanagement/listcommunity';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -859,8 +859,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'transmanagement/listtransactiontype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -877,13 +877,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'transmanagement/listsubscriber';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'community_id' => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -899,7 +899,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'transmanagement/listall';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "start_date" => $input['tanggal_mulai'],
@@ -910,7 +910,7 @@ class SuperadminController extends Controller
             "transaction_status" => $input['status_trans']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -924,7 +924,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'transmanagement/detail';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "invoice_number" => $input['invoice_number'],
@@ -932,7 +932,7 @@ class SuperadminController extends Controller
             "payment_level" => $input['payment_level']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -946,8 +946,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'subsmanagement/listcomm';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -961,13 +961,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'subsmanagement/listsubspendingbycomm';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -983,13 +983,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'subsmanagement/listsubsbycomm';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1003,8 +1003,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'usermanagement/listuser';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1019,13 +1019,13 @@ class SuperadminController extends Controller
 
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'user_id' => $input['user_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1041,7 +1041,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listactivity';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'community_id' => $input['community_id'],
@@ -1050,7 +1050,7 @@ class SuperadminController extends Controller
             'user_level' => $input['user_level'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1064,7 +1064,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'logmanagement/listcommunity';
         $input = $request->all();
 
-        $csrf = $input['_token'];
+
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         //    return $json;
         if ($json['status'] == 200) {
@@ -1082,8 +1082,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listcommunity';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['status'] == 200) {
             return $json['data'];
         } else {
@@ -1099,8 +1099,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['status'] == 200) {
             return $json['data'];
         } else {
@@ -1134,7 +1134,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'modulereport/listactivity';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "community_id"  => $input['community_id'],
@@ -1145,7 +1145,7 @@ class SuperadminController extends Controller
             "user_level" => $input['user_level'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1161,8 +1161,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'pricingmanagement/listpricing';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1177,13 +1177,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'pricingmanagement/detailpricing';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'pricing_id' => $input['pricing_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1198,8 +1198,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'pricingmanagement/feature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1390,7 +1390,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/transactiontype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
@@ -1432,7 +1432,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/admreconcile';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "transaction_type_id"  => $input['transaction_type_id'],
@@ -1441,7 +1441,7 @@ class SuperadminController extends Controller
             "year" => $input['year'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             return $json['data'];
@@ -1457,8 +1457,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listall';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1580,7 +1580,7 @@ class SuperadminController extends Controller
 
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "payment_id" => $input['payment_id'],
@@ -1588,7 +1588,7 @@ class SuperadminController extends Controller
             "status" => $input['status']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1603,13 +1603,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listsetting';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "payment_method_id" => $input['payment_method_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['status'] == 200) {
             return $json['data'];
         } else {
@@ -1649,7 +1649,7 @@ class SuperadminController extends Controller
         $csrf = '';
 
         try {
-            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
             if ($json['success'] == true) {
                 alert()->success('Successfully Edit Payment', 'Edited!')->autoclose(4000);
@@ -1679,8 +1679,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listbank';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1832,7 +1832,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'community_id' => (int) $input['community_id'],
@@ -1842,7 +1842,7 @@ class SuperadminController extends Controller
             'notification_sub_type' => (int) $input['notification_sub_type'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1857,14 +1857,14 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listusers';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "user_type" => (int) $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1900,7 +1900,7 @@ class SuperadminController extends Controller
             $urlq = "";
         }
 
-        $csrf = $input['_token'];
+
 
         $body = [
             "title" => $input['judul_notif'],
@@ -1914,7 +1914,7 @@ class SuperadminController extends Controller
             "broadcast_status" => $input['idstatus_notif'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
             return back();
@@ -1933,7 +1933,7 @@ class SuperadminController extends Controller
 
         $input = $request->all();
         // return $input;
-        $csrf = $input['_token'];
+
 
         $body = [
             "notification_id" => $input['notification_id'],
@@ -1941,7 +1941,7 @@ class SuperadminController extends Controller
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1981,13 +1981,13 @@ class SuperadminController extends Controller
         }
         $url = env('SERVICE') . 'paymentmanagement/setting';
 
-        $csrf = $input['_token'];
+
 
         $body = [
             "data_setting" => $data
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
 
         if ($json['success'] == true) {
@@ -2007,7 +2007,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/listmessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'community_id' => $input['community_id'],
@@ -2017,7 +2017,7 @@ class SuperadminController extends Controller
             'message_type' => $input['message_type'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2032,7 +2032,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/sendmessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -2059,7 +2059,7 @@ class SuperadminController extends Controller
             "broadcast_status" => $input['bc_status'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
             return back();
@@ -2076,14 +2076,14 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/listusers';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "user_type" => $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2097,7 +2097,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/detailmessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "message_id" => $input['message_id'],
@@ -2105,7 +2105,7 @@ class SuperadminController extends Controller
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2121,13 +2121,13 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/deletemessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "id" => $input['id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2141,7 +2141,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/community';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "community_id"  => $input['community_id'],
@@ -2149,7 +2149,7 @@ class SuperadminController extends Controller
             "year" => $input['year'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             $dt = $json['data'][0];
             return $dt['activity'][0];
@@ -2164,7 +2164,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/listfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
@@ -2180,7 +2180,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'reportmanagement/module';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "feature_id"  => $input['feature_id'],
@@ -2188,7 +2188,7 @@ class SuperadminController extends Controller
             "year" => $input['year'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             $dt = $json['data'][0];
             return $dt['activity'];
@@ -2204,7 +2204,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/changestatus';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "id"     => $input['id_inbox'],
@@ -2213,7 +2213,7 @@ class SuperadminController extends Controller
             "level_status" => $input['level_status'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2366,7 +2366,7 @@ class SuperadminController extends Controller
         }
 
         $url = env('SERVICE') . 'profilemanagement/changepassword';
-        $csrf = $input['_token'];
+
         try {
             $req_input =  [
                 'old_password' => $input['old_pass_super'],
@@ -2402,8 +2402,8 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'usermanagement/listusertype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2469,7 +2469,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'usermanagement/edituser';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -2487,7 +2487,7 @@ class SuperadminController extends Controller
             "usertype_id" => $input['user_tipe_edit'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');

@@ -468,9 +468,6 @@ function get_dashboard_superadmin() {
         url: '/superadmin/get_dashboard_superadmin',
         type: 'POST',
         datatype: 'JSON',
-        data: {
-            "_token": token
-        },
         success: function (result) {
             console.log(result);
             if (result.success == false) {
