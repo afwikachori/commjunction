@@ -903,12 +903,12 @@ function get_list_komunitas_superadmin() {
         },
         timeout: 30000,
         success: function (result) {
+             console.log(result);
             if (result.success == false) {
-                console.log(result);
                 get_list_komunitas_superadmin();
             } else {
                 $('#komunitas_list').empty();
-                $('#komunitas_list').append("<option value='null'> Choose</option>");
+                $('#komunitas_list').append("<option selected disabled> Choose</option>");
 
                 for (var i = result.length - 1; i >= 0; i--) {
                     $('#komunitas_list').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
@@ -1486,10 +1486,12 @@ function get_listfitur_usertype_ceklist() {
         url: '/admin/get_listfitur_usertype_ceklist',
         type: 'POST',
         datatype: 'JSON',
-        data: {
-            "_token": token
-        },
         success: function (result) {
+            console.log(result);
+
+            if(result.success == false){
+                get_listfitur_usertype_ceklist();
+            }else{
             $(".btnsubmit").removeAttr("disabled", "disabled");
             $(".loading_tree").hide();
 
@@ -1578,7 +1580,7 @@ function get_listfitur_usertype_ceklist() {
                 }
             });
             $(".isi_cek_priviledge_edit").html(parent_ui2);
-
+        }
         },
         error: function (result) {
             $(".loading_tree").hide();
@@ -1609,17 +1611,11 @@ function tabel_usertype_management() {
             url: '/superadmin/tabel_usertype_superadmin',
             type: 'POST',
             dataSrc: '',
-            data: {
-                "_token": token
-            },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_usertype_manage tbody').empty().append(nofound);
             },
-        },
-        error: function (request, status, errorThrown) {
-            console.log(errorThrown);
         },
         columns: [
             {
