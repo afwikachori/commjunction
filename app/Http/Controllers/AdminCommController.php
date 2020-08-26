@@ -177,7 +177,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'profilemanagement/logout';
 
 
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $crsf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             session()->forget('session_admin_logged');
@@ -194,7 +194,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'profilemanagement/logout';
 
 
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $crsf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             session()->forget('session_admin_logged');
@@ -212,9 +212,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'dashboard/admincommunity';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -235,9 +234,8 @@ class AdminCommController extends Controller
                 'start_date'   => $input['subs_datemulai'],
                 'end_date'    => $input['subs_dateselesai']
             ]);
-            $csrf = $input['_token'];
 
-            $json = $this->post_get_request($body, $urlx, false, $ses_login['access_token'], $csrf);
+            $json = $this->post_get_request($body, $urlx, false, $ses_login['access_token'], null);
             if ($json['success'] == true) {
                 return $json['data'];
             } else {
@@ -245,8 +243,8 @@ class AdminCommController extends Controller
             }
         } else { //data-all
             $url2 = env('SERVICE') . 'subsmanagement/listsubs';
-            $csrf = $input['_token'];
-            $json = $this->post_get_request(null, $url2, true, $ses_login['access_token'], $csrf);
+
+            $json = $this->post_get_request(null, $url2, true, $ses_login['access_token'], null);
             if ($json['success'] == true) {
                 return $json['data'];
             } else {
@@ -264,13 +262,12 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'subsmanagement/filtersubsbymembership';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = json_encode([
             'membership_id'   => $input['membership'],
         ]);
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -285,9 +282,8 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'subsmanagement/listsubspending';
         $input = $request->all();
-        $csrf = $input['_token'];
 
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             return $json['data'];
@@ -312,8 +308,7 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = "";
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             $stpublish = array("status_publish" => 3);
@@ -759,13 +754,12 @@ class AdminCommController extends Controller
 
         $input = $request->all();
         $member = (int) $input['membership'];
-        $csrf = $input['_token'];
 
         $body = [
             'membership_type' => $member
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Succcessflly set Membership type for your community', 'Succcessflly Set Membership !')->persistent('Done');
@@ -784,8 +778,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listregistrationdata';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -819,15 +813,13 @@ class AdminCommController extends Controller
             $param_isi = array_values($in);
         }
 
-
-        $csrf = $input['_token'];
         $body = [
             'params' => $param_isi,
             'title' => $input['question_regis'],
             'description' => $input['deskripsi_regis']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Succcessflly adding new question', 'Question Added !')->persistent('Done');
             return redirect('/admin/community_setting');
@@ -844,8 +836,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/commstatus';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -861,8 +853,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'membershipmanagement/listmembership';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -877,8 +869,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listcustominput';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -895,8 +887,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'membershipmanagement/membershipreq';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -911,8 +903,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'subsmanagement/membership';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -928,8 +920,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listpaymenttype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -944,13 +936,12 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listpaymentcommjunction';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             'payment_type_id' => $input['payment_type_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -965,8 +956,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listpayment';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -981,13 +972,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'membershipmanagement/detailmembershipreq';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'user_id' => $input['user_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1201,8 +1192,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usermanagement/listuser';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1218,8 +1209,8 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'usermanagement/listusertype';
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1244,7 +1235,7 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = $input['_token'];
+
 
         $body = [
             "full_name" => $input['name_user'],
@@ -1256,7 +1247,7 @@ class AdminCommController extends Controller
             "password" => $input['pass_user'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully to add new user', 'Added')->autoclose(4500);
             return back();
@@ -1274,13 +1265,13 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'subsmanagement/nonactivesubs';
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'user_id' => $input['idsubs']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Succcessflly to change your subscriber status ', 'Success !')->persistent('Done');
             return redirect('admin/subs_management');
@@ -1394,7 +1385,7 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = $input['_token'];
+
 
         if ($input['approval'] == "true") {
             $appv = true;
@@ -1415,7 +1406,7 @@ class AdminCommController extends Controller
             ];
 
 
-            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+            $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
             if ($json['success'] == true) {
                 alert()->success('Successfully give a approval', $textatus)->persistent('Done');
                 return redirect('admin/subs_management');
@@ -1436,13 +1427,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usermanagement/detailuser';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'user_id' => $input['user_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1468,7 +1459,7 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = $input['_token'];
+
 
         $body = [
             "user_id" => $input['idnya_user'],
@@ -1477,7 +1468,7 @@ class AdminCommController extends Controller
             "usertype_id" => $input['user_tipe_edit'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully to edit data user', 'Updated')->persistent('Done');
             return back();
@@ -1495,7 +1486,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/addpayment';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -1515,7 +1506,7 @@ class AdminCommController extends Controller
             'status' => $input['payment_status']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully to add new payment method', 'Added')->persistent('Done');
@@ -1533,13 +1524,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/deletepayment';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'payment_id' => $input['id_paymentsubs']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully delete payment method', 'Deleted')->persistent('Done');
             return back();
@@ -1557,8 +1548,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/activemodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1574,8 +1565,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/allmodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1590,13 +1581,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/detailmodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'feature_id' => $input['feature_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1611,7 +1602,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/addmodule';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         if ($request->has('payment_time_module')) {
             $body = [
@@ -1625,7 +1616,7 @@ class AdminCommController extends Controller
         }
 
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Add Module Feature', 'Activated')->persistent('Done');
             return redirect('admin/module_management');
@@ -1644,8 +1635,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listsettingcomm';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1661,7 +1652,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/listsubscriber';
 
         $csrf = null;
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1675,7 +1666,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/subscriber';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "start_date"  => $input['start_date'],
@@ -1683,7 +1674,7 @@ class AdminCommController extends Controller
             "subscriber_id"  => $input['subscriber_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1698,7 +1689,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             'community_id' => $input['community_id'],
@@ -1708,7 +1699,7 @@ class AdminCommController extends Controller
             'notification_sub_type' => $input['notification_sub_type'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1724,7 +1715,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/detailnotification';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "notification_id" => $input['notification_id'],
@@ -1732,7 +1723,7 @@ class AdminCommController extends Controller
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1747,8 +1738,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listsetting';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1770,7 +1761,7 @@ class AdminCommController extends Controller
         $client = new \GuzzleHttp\Client();
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -1806,7 +1797,7 @@ class AdminCommController extends Controller
             "broadcast_status" => $input['idstatus_notif'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Send Notification', 'Already Sent!')->autoclose(4500);
             return back();
@@ -1849,7 +1840,7 @@ class AdminCommController extends Controller
         $body = [
             "data_setting" => $data
         ];
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Setting Notification', 'Done!')->autoclose(4500);
             return back();
@@ -1866,8 +1857,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listall';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1881,8 +1872,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listallactive';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1896,7 +1887,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/detail';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         if ($input['status'] == "true") {
             $tat = true;
@@ -1910,7 +1901,7 @@ class AdminCommController extends Controller
             "status" => $tat
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1925,13 +1916,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/listsetting';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $body = [
             "payment_method_id" => $input['payment_method_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -1957,9 +1948,9 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = $input['_token'];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully Activated Payment', 'Done!')->autoclose(4500);
@@ -1976,7 +1967,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/listmessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             'community_id' => $input['community_id'],
@@ -1986,11 +1976,11 @@ class AdminCommController extends Controller
             'message_type' => $input['message_type'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return "nodata";
         }
     }
 
@@ -2000,14 +1990,14 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/listusers';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "user_type" => $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2022,7 +2012,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/detailmessage';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "message_id" => $input['message_id'],
@@ -2030,7 +2019,7 @@ class AdminCommController extends Controller
             "community_id" => $input['community_id']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2054,7 +2043,6 @@ class AdminCommController extends Controller
             return back();
         }
 
-        $csrf = $input['_token'];
         if (isset($input['list_user'])) {
             $user = $input['list_user'];
         } else {
@@ -2071,7 +2059,7 @@ class AdminCommController extends Controller
             "broadcast_status" => $input['bc_status'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
 
         if ($json['success'] == true) {
             alert()->success('Successfully Send Message', 'Already Sent!')->autoclose(4500);
@@ -2196,13 +2184,12 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/listsetting';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "feature_id" => $input['feature_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2217,8 +2204,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usertype/listusertype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2312,8 +2299,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usertype/listfeature';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2327,8 +2313,8 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'membershipmanagement/listfeature';
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2349,7 +2335,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'usertype/create';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -2373,7 +2359,7 @@ class AdminCommController extends Controller
             'subfeature' => $subftr,
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success($json['message'], 'Successfully!')->autoclose(4500);
             return back();
@@ -2420,8 +2406,8 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'transmanagement/listtransactiontype';
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2438,13 +2424,12 @@ class AdminCommController extends Controller
         $comid = $user['community_id'];
         $url = env('SERVICE') . 'transmanagement/listsubscriber';
 
-        $csrf = $input['_token'];
         $body = [
             'community_id' => $comid
 
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2533,7 +2518,7 @@ class AdminCommController extends Controller
         $ses_login = session()->get('session_admin_logged');
         $url = env('SERVICE') . 'transmanagement/listall';
         $input = $request->all();
-        $csrf = $input['_token'];
+
         $body = [
             "start_date" => $input['tanggal_mulai'],
             "end_date" => $input['tanggal_selesai'],
@@ -2543,7 +2528,7 @@ class AdminCommController extends Controller
             "transaction_status" => $input['status_trans']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2557,7 +2542,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'transmanagement/detail';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "invoice_number" => $input['invoice_number'],
@@ -2565,7 +2549,7 @@ class AdminCommController extends Controller
             "payment_level" => $input['payment_level']
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2579,14 +2563,13 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listusers';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "user_type" => $input['user_type'],
             "community_id" => $input['community_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2660,7 +2643,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/commreporttrans';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "start_date"  => $input['start_date'],
@@ -2671,7 +2653,7 @@ class AdminCommController extends Controller
             "max_transaction"  => $input['max_transaction'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2686,7 +2668,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/commreconcile';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "transaction_type_id"  => $input['transaction_type_id'],
@@ -2694,7 +2675,7 @@ class AdminCommController extends Controller
             "year" => $input['year'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2709,8 +2690,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/transactiontype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2724,8 +2705,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/listsubscriber';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2739,7 +2720,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'reportmanagement/subscriber';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         $body = [
             "start_date"  => $input['start_date'],
@@ -2747,7 +2727,7 @@ class AdminCommController extends Controller
             "subscriber_id"  => $input['subscriber_id'],
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2761,8 +2741,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'commsetting/listsettingcomm';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2797,13 +2777,12 @@ class AdminCommController extends Controller
             array_push($data, $dataArray);
         }
 
-        $csrf = $input['_token'];
         $body = [
             "data_setting" => $data
         ];
 
         // return $body;
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Setting up Module', 'Succesfully')->persistent('Done');
             return back();
@@ -2837,8 +2816,6 @@ class AdminCommController extends Controller
         $subftr = [];
 
 
-        $csrf = $input['_token'];
-
         foreach ($input['edit_subfitur'] as $i => $dt) {
             $dataArray = [
                 'subfeature_id'       => $dt
@@ -2853,7 +2830,7 @@ class AdminCommController extends Controller
             'subfeature' => $subftr,
 
         ];
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             alert()->success('Successfully Edit Usertype', 'Updated!')->autoclose(4500);
             return back();
@@ -2870,7 +2847,6 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'paymentmanagement/detailsubpayment';
 
         $input = $request->all();
-        $csrf = $input['_token'];
 
         if ($input['status'] == "true") {
             $stat = true;
@@ -2884,7 +2860,7 @@ class AdminCommController extends Controller
             "status" => $stat
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2899,8 +2875,8 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'modulemanagement/paymenttype';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
@@ -2985,7 +2961,7 @@ class AdminCommController extends Controller
         $url = env('SERVICE') . 'notificationmanagement/listnotification';
 
         $input = $request->all();
-        $csrf = $input['_token'];
+
         $body = [
             'community_id'  => $input['community_id'],
             'start_date'    => $input['start_date'],
@@ -2996,7 +2972,7 @@ class AdminCommController extends Controller
             "notification_type" => "1"
         ];
 
-        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], $csrf);
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {

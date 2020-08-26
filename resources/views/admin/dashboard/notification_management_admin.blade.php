@@ -316,9 +316,7 @@
                             </center>
 
                             <h6 class="cgrey" lang="en">Notification Content</h6>
-                            <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
-                             border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%;">
+                            <div class="isi-notif-konten">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

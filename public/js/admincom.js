@@ -4996,6 +4996,7 @@ function detail_payment_all_admin(dtpay) {
             "_token": token
         },
         success: function (result) {
+            // console.log(result);
             // console.log(split);
             // console.log(result);
             if (result.success == false) {
@@ -5108,6 +5109,7 @@ function detail_payment_all_admin(dtpay) {
 
 function detail_subpayment(subdata) {
     var split = subdata.split('<>');
+    console.log('detail_subpayment' + subdata);
 
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -5127,7 +5129,12 @@ function detail_subpayment(subdata) {
             "_token": token
         },
         success: function (result) {
+            console.log('sukses detail_subpayment');
             console.log(result);
+
+            if (result.success == false){
+                ui.popup.show('warning', result.message, 'Warning');
+            }else{
             var isi = result[0];
             $("#aktif_id_subpayment").val(isi.id);
 
@@ -5173,6 +5180,7 @@ function detail_subpayment(subdata) {
 
             $("#modal_detail_payment_all_admin").modal("hide");
             $("#modal_detail_subpayment_super").modal("show");
+        }
         },
         error: function (result) {
             console.log(result);
@@ -5378,9 +5386,6 @@ function get_list_setting_notif_admin() {
         url: '/admin/get_list_setting_notif_admin',
         type: 'POST',
         datatype: 'JSON',
-        data: {
-            "_token": token
-        },
         success: function (result) {
             console.log(result);
             if (result.success == false) {
@@ -5390,7 +5395,7 @@ function get_list_setting_notif_admin() {
                         location.href = '/admin';
                     }, 5000);
                 } else {
-                    ui.popup.show('warning', result.message, 'Warning Setting Notification');
+                    ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
                 var uiku = '';
@@ -5656,13 +5661,13 @@ function tabel_inbox_message_admin() {
                 "filter_title": $("#filter_judul").val(),
                 "message_type": $("#tipe_pesan").val(),
             },
+            //   success: function (result) {
+            //    console.log(result);
+            // },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="9" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
                 $('#tabel_inbox_message_admin tbody').empty().append(nofound);
             },
-        },
-        error: function (request, status, errorThrown) {
-            console.log(errorThrown);
         },
         columns: [
             { mData: 'id' },
@@ -5696,6 +5701,7 @@ function tabel_inbox_message_admin() {
 
 function get_list_subscriber() {
     var itempilih = $("#komunitas_inbox").val();
+    // alert(itempilih + ' ---- ' + $("#usertipe_inbox1").val());
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -5710,17 +5716,17 @@ function get_list_subscriber() {
             "community_id": itempilih,
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
 
             $('#list_user').empty();
-            $('#list_user').append("<option disabled value='0'> Choose</option>");
+            $('#list_user').append("<option selected disabled> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#list_user').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
             }
             //Short Function Ascending//
             $("#list_user").html($('#list_user option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
+                return $(x).text() < $(y).text() ? -1 : 1;
             }));
 
             $("#list_user").get(0).selectedIndex = 0; const
@@ -5730,6 +5736,7 @@ function get_list_subscriber() {
             }
         },
         error: function (result) {
+            console.log(result);
             $('#list_user').empty();
             $('#list_user').append("<option disabled value='0'>No Related User</option>");
         }

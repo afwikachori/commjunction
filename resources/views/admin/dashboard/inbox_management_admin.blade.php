@@ -212,7 +212,7 @@
                             <div class="form-group" id="hide_user_notif" style="display: none;">
                                 <small class="clight s13" lang="en">List User</small>
                                 <select class="form-control input-abu" name="list_user" id="list_user">
-
+                                     <option disabled lang="en">Loading ... </option>
                                 </select>
                             </div>
                         </div>
