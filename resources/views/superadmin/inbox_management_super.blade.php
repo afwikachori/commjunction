@@ -262,9 +262,7 @@
                         </div>
                     </div>
 
-                    <div style="background-color: #f7f7f7; width: 50px; height: auto; min-height: 200px;
-                             border-radius: 10px; width: 100%; margin-top: 0.5em;
-                            padding: 5%;">
+                    <div class="isi-notif-konten">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -345,7 +343,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="button" id="btn_delete_message" class="btn btn-oren2 btn-sm">
+                    <button type="button" class="btn btn-oren2 btn-sm" data-toggle="modal" data-target="#modal_delete_pesan" data-dismiss="modal">
                         <i class="mdi mdi-delete btn-icon-prepend">
                         </i> Delete </button>
                 </div> <!-- end-footer     -->
@@ -404,6 +402,49 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- MODAL DELETE PESAN-->
+<div class="modal fade" id="modal_delete_pesan" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff; width: 80%;
+        min-height: 350px;">
+
+            <form method="POST" id="form_delete_pesan" action="{{route('delete_message_inbox_super')}}">
+                {{ csrf_field() }}
+                <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
+                    <center>
+                        <img src="/visual/warning.png" id="img_signout_admin">
+                        <h3 class="cgrey" lang="en">Confirmation</h3>
+                        <small class="clight" lang="en">Are you sure, you want to delete
+                            <span id="nama_pesan" class="tebal">this message</span> ?</small>
+
+
+                        <input type="hidden" id="message_id" name="message_id" readonly>
+                        <input type="hidden" id="level_statusq" name="level_statusq" readonly>
+                        <input type="hidden" id="community_id" name="community_id" readonly>
+                    </center>
+                </div> <!-- end-body -->
+
+                <div class="modal-footer changepass" style="border: none;">
+                    <center>
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                            style="border-radius: 10px;">
+                            <i class="mdi mdi-close"></i> <span lang="en">No, Im Doubt</span>
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-tosca btn-sm" style="border-radius: 10px;">
+                            <i class="mdi mdi-check"></i> <span lang="en">Yes, Sure</span>
+                        </button>
+                    </center>
+                </div> <!-- end-footer     -->
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 @endsection

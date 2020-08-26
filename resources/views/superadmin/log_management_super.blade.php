@@ -36,7 +36,6 @@
                             <th>Endpoint</th>
                             <th>Date Log</th>
                             <th>Code</th>
-                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                 </table>

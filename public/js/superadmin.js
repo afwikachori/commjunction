@@ -903,7 +903,7 @@ function get_list_komunitas_superadmin() {
         },
         timeout: 30000,
         success: function (result) {
-             console.log(result);
+            console.log(result);
             if (result.success == false) {
                 get_list_komunitas_superadmin();
             } else {
@@ -1489,98 +1489,98 @@ function get_listfitur_usertype_ceklist() {
         success: function (result) {
             console.log(result);
 
-            if(result.success == false){
+            if (result.success == false) {
                 get_listfitur_usertype_ceklist();
-            }else{
-            $(".btnsubmit").removeAttr("disabled", "disabled");
-            $(".loading_tree").hide();
+            } else {
+                $(".btnsubmit").removeAttr("disabled", "disabled");
+                $(".loading_tree").hide();
 
-            var parent_ui = '';
-            $.each(result, function (i, item) {
-                var child_ui = '';
-                var parent = item.title;
-                var jum = 0;
-                var idfitur = '';
+                var parent_ui = '';
+                $.each(result, function (i, item) {
+                    var child_ui = '';
+                    var parent = item.title;
+                    var jum = 0;
+                    var idfitur = '';
 
-                $.each(item.sub_features, function (i, item) {
-                    // console.log(item);
-                    idfitur = item.feature_id;
-                    child_ui += '<li class="">' +
-                        '<input type="checkbox" name="subfitur[]"' +
-                        'id="subfitur_' + item.subfeature_id + '"' +
-                        'value="' + item.subfeature_id + '">' +
-                        '<label>' + item.sub_feature_title + '</label>' +
-                        '</li>';
-                    jum++;
+                    $.each(item.sub_features, function (i, item) {
+                        // console.log(item);
+                        idfitur = item.feature_id;
+                        child_ui += '<li class="">' +
+                            '<input type="checkbox" name="subfitur[]"' +
+                            'id="subfitur_' + item.subfeature_id + '"' +
+                            'value="' + item.subfeature_id + '">' +
+                            '<label>' + item.sub_feature_title + '</label>' +
+                            '</li>';
+                        jum++;
+                    });
+
+                    if (jum == 0) {
+                        parent_ui += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="fitur_id[]" value="0"  onclick="cek_nofitur(' + item.feature_id + ')" id="id_' + item.feature_id + '">' +
+                            '<label>' + parent + ' &nbsp;' +
+                            '</label>' +
+                            '</li>' +
+                            '</ul>';
+                    } else {
+                        parent_ui += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
+                            '<label>' + parent + ' &nbsp;' +
+                            '<small class="total"> &nbsp; (' + jum + ') </small>' +
+                            '<i class="mdi mdi-chevron-down clight"></i>' +
+                            '</label>' +
+                            '<ul>' + child_ui + '</ul>' +
+                            '</li>' +
+                            '</ul>';
+                    }
+
+
                 });
+                $(".isi_cek_priviledge").html(parent_ui);
+                // ___________________________________________________________________________________
+                var parent_ui2 = '';
+                $.each(result, function (i, item) {
+                    var child_ui2 = '';
+                    var parent2 = item.title;
+                    var jum2 = 0;
+                    var idfitur_edit = '';
 
-                if (jum == 0) {
-                    parent_ui += '<ul class="tree">' +
-                        '<li class="has">' +
-                        '<input type="checkbox" name="fitur_id[]" value="0"  onclick="cek_nofitur(' + item.feature_id + ')" id="id_' + item.feature_id + '">' +
-                        '<label>' + parent + ' &nbsp;' +
-                        '</label>' +
-                        '</li>' +
-                        '</ul>';
-                } else {
-                    parent_ui += '<ul class="tree">' +
-                        '<li class="has">' +
-                        '<input type="checkbox" name="fitur_id[]"  value="' + idfitur + '">' +
-                        '<label>' + parent + ' &nbsp;' +
-                        '<small class="total"> &nbsp; (' + jum + ') </small>' +
-                        '<i class="mdi mdi-chevron-down clight"></i>' +
-                        '</label>' +
-                        '<ul>' + child_ui + '</ul>' +
-                        '</li>' +
-                        '</ul>';
-                }
+                    $.each(item.sub_features, function (i, item) {
+                        idfitur_edit = item.feature_id;
+                        child_ui2 += '<li class="">' +
+                            '<input type="checkbox" name="edit_subfitur[]"' +
+                            'id="edit_subfitur_' + item.subfeature_id + '"' +
+                            'value="' + item.subfeature_id + '"> ' +
+                            '<label>' + item.sub_feature_title + '</label>' +
+                            '</li>';
+                        jum2++;
+                    });
 
-
-            });
-            $(".isi_cek_priviledge").html(parent_ui);
-            // ___________________________________________________________________________________
-            var parent_ui2 = '';
-            $.each(result, function (i, item) {
-                var child_ui2 = '';
-                var parent2 = item.title;
-                var jum2 = 0;
-                var idfitur_edit = '';
-
-                $.each(item.sub_features, function (i, item) {
-                    idfitur_edit = item.feature_id;
-                    child_ui2 += '<li class="">' +
-                        '<input type="checkbox" name="edit_subfitur[]"' +
-                        'id="edit_subfitur_' + item.subfeature_id + '"' +
-                        'value="' + item.subfeature_id + '"> ' +
-                        '<label>' + item.sub_feature_title + '</label>' +
-                        '</li>';
-                    jum2++;
+                    if (jum2 == 0) {
+                        var idno = 111 + item.feature_id;
+                        parent_ui2 += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="0" onclick="cek_nofitur(' + idno + ')" id="id_' + idno + '">' +
+                            '<label>' + parent2 + ' &nbsp;' +
+                            '</label>' +
+                            '</li>' +
+                            '</ul>';
+                    } else {
+                        parent_ui2 += '<ul class="tree">' +
+                            '<li class="has">' +
+                            '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
+                            '<label>' + parent2 + ' &nbsp;' +
+                            '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
+                            '<i class="mdi mdi-chevron-down clight"></i>' +
+                            '</label>' +
+                            '<ul>' + child_ui2 + '</ul>' +
+                            '</li>' +
+                            '</ul>';
+                    }
                 });
-
-                if (jum2 == 0) {
-                    var idno = 111 + item.feature_id;
-                    parent_ui2 += '<ul class="tree">' +
-                        '<li class="has">' +
-                        '<input type="checkbox" name="edit_fitur_id[]" value="0" onclick="cek_nofitur(' + idno + ')" id="id_' + idno + '">' +
-                        '<label>' + parent2 + ' &nbsp;' +
-                        '</label>' +
-                        '</li>' +
-                        '</ul>';
-                } else {
-                    parent_ui2 += '<ul class="tree">' +
-                        '<li class="has">' +
-                        '<input type="checkbox" name="edit_fitur_id[]" value="' + idfitur_edit + '" id="edit_fitur_id' + idfitur_edit + '">' +
-                        '<label>' + parent2 + ' &nbsp;' +
-                        '<small class="total"> &nbsp; (' + jum2 + ') </small>' +
-                        '<i class="mdi mdi-chevron-down clight"></i>' +
-                        '</label>' +
-                        '<ul>' + child_ui2 + '</ul>' +
-                        '</li>' +
-                        '</ul>';
-                }
-            });
-            $(".isi_cek_priviledge_edit").html(parent_ui2);
-        }
+                $(".isi_cek_priviledge_edit").html(parent_ui2);
+            }
         },
         error: function (result) {
             $(".loading_tree").hide();
@@ -2273,8 +2273,25 @@ $("#btn_filter_log_super").click(function () {
 
 
 function tabel_log_magement_super() {
-    $('#tabel_log_magement_super').dataTable().fnClearTable();
-    $('#tabel_log_magement_super').dataTable().fnDestroy();
+    // $('#tabel_log_magement_super').dataTable().fnClearTable();
+    // $('#tabel_log_magement_super').dataTable().fnDestroy();
+
+    $('#tabel_log_magement_super').DataTable().clear().destroy();
+    $('#tabel_log_magement_super').empty();
+
+    var uihead = '<thead>' +
+        '<tr>' +
+        '<th><b>Username</b></th>' +
+        '<th><b>User Level</b></th>' +
+        '<th><b>Module</b></th>' +
+        '<th><b>Activity</b></th>' +
+        '<th><b>Endpoint</b></th>' +
+        '<th><b>Date Log</b></th>' +
+        '<th><b>Code</b></th>' +
+        '</tr>' +
+        '</thead>';
+
+    $('#tabel_log_magement_super').html(uihead);
 
     $('#tabel_log_magement_super').show();
     $('#modal_generate_log').modal('hide');
@@ -2311,22 +2328,24 @@ function tabel_log_magement_super() {
                 "community_id": $("#list_komunitas").val(),
                 "start_date": $("#tanggal_mulai2").val(),
                 "end_date": $("#tanggal_selesai2").val(),
-                "user_level": $("#list_userlevel").val(),
-                "_token": token
+                "user_level": $("#list_userlevel").val()
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="10" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_log_magement_super tbody').empty().append(nofound);
             },
         },
-        error: function (request, status, errorThrown) {
-            console.log(errorThrown);
-        },
         columns: [
             { mData: 'user_name' },
             { mData: 'user_level' },
             { mData: 'module' },
-            { mData: 'activity' },
+            {
+                mData: 'activity',
+                render: function (data, type, row, meta) {
+                    return '<span class="text-wrap width-300">' + data + '</span>';
+
+                }
+            },
             { mData: 'endpoint' },
             {
                 mData: 'date',
@@ -2334,16 +2353,17 @@ function tabel_log_magement_super() {
                     return dateFormat(data);
                 }
             },
-            { mData: 'code_response' },
-            // { mData: 'code_response',
-            //     render: function (data, type, row, meta) {
-
-            //         return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"' +
-            //              'onclick="detail_log_super(\'' + data + '\')">' +
-            //             '<i class="mdi mdi-eye"></i>' +
-            //             '</button>';
-            //     }
-            // }
+            {
+                mData: 'code_response',
+                render: function (data, type, row, meta) {
+                    if (data == null || data == "") {
+                        var ii = '-';
+                    } else {
+                        var ii = '<small>' + data + '</small>';
+                    }
+                    return ii;
+                }
+            }
         ],
 
     });
@@ -2363,24 +2383,25 @@ function get_list_komunitas_log_manage() {
         url: "/superadmin/get_list_komunitas_log_manage",
         type: "POST",
         dataType: "json",
-        data: {
-            "_token": token
-        },
         success: function (result) {
             // console.log(result);
-            $('#list_komunitas').empty();
-            $('#list_komunitas').append("<option disabled> Choose</option>");
+            if (result.success == false) {
+                get_list_komunitas_log_manage();
+            } else {
+                $('#list_komunitas').empty();
+                $('#list_komunitas').append("<option selected disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-            $("#list_komunitas").get(0).selectedIndex = 0;
-            const OldKomunitas = "{{old('list_komunitas')}}";
-            if (OldKomunitas !== '') {
-                $('#list_komunitas').val(OldKomunitas);
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
+                    return $(y).text() < $(x).text() ? -1 : 1;
+                }));
+                $("#list_komunitas").get(0).selectedIndex = 0;
+                const OldKomunitas = "{{old('list_komunitas')}}";
+                if (OldKomunitas !== '') {
+                    $('#list_komunitas').val(OldKomunitas);
+                }
             }
         },
         error: function (result) {
@@ -2566,7 +2587,17 @@ function tabel_report_module_super(bulan, tahun) {
 
         },
         columns: [
-            { mData: 'community_name' },
+            {
+                mData: 'community_name',
+                render: function (data, type, row, meta) {
+                    if (data == "" || data == null) {
+                        var dtk = "<div class='text-wrap width-200'>" + row.community_id + "</div>";
+                    } else {
+                        var dtk = "<div class='text-wrap width-200'>" + data + "</div>";
+                    }
+                    return "<div class='text-wrap width-200'>" + dtk + "</div>";
+                },
+            },
             { mData: 'module' },
             { mData: 'activity' },
             { mData: 'endpoint' },
@@ -2748,34 +2779,34 @@ function get_list_transaction_type_super() {
             "_token": token
         },
         success: function (result) {
-            if(result.success == false){
-              console.log(result);
-              get_list_transaction_type_super();
-            }else{
-            $('#jenis_transaksi').empty();
-            $('#jenis_transaksi').append("<option disabled> Choose</option>");
+            if (result.success == false) {
+                console.log(result);
+                get_list_transaction_type_super();
+            } else {
+                $('#jenis_transaksi').empty();
+                $('#jenis_transaksi').append("<option disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#jenis_transaksi').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#jenis_transaksi').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#jenis_transaksi").html($('#jenis_transaksi option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#jenis_transaksi").get(0).selectedIndex = 0;
+                // ______________________________________________________________
+                $('#jenis_transaksi2').empty();
+                $('#jenis_transaksi2').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#jenis_transaksi2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#jenis_transaksi2").html($('#jenis_transaksi2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#jenis_transaksi2").get(0).selectedIndex = 0;
             }
-            $("#jenis_transaksi").html($('#jenis_transaksi option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#jenis_transaksi").get(0).selectedIndex = 0;
-            // ______________________________________________________________
-            $('#jenis_transaksi2').empty();
-            $('#jenis_transaksi2').append("<option disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#jenis_transaksi2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#jenis_transaksi2").html($('#jenis_transaksi2 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#jenis_transaksi2").get(0).selectedIndex = 0;
-        }
         },
         error: function (result) {
             console.log(result);
@@ -2801,47 +2832,47 @@ function get_list_komunitas_report() {
             "_token": token
         },
         success: function (result) {
-            if(result.success == false){
+            if (result.success == false) {
                 get_list_komunitas_report();
-            }else{
-            $('#komuniti_trans').empty();
-            $('#komuniti_trans').append("<option value='0' disabled> Choose</option>");
+            } else {
+                $('#komuniti_trans').empty();
+                $('#komuniti_trans').append("<option value='0' disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komuniti_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komuniti_trans').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#komuniti_trans").html($('#komuniti_trans option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#komuniti_trans").get(0).selectedIndex = 0;
+                // _______________________________________________________________
+
+                $('#komuniti_trans2').empty();
+                $('#komuniti_trans2').append("<option value='0' disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komuniti_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#komuniti_trans2").html($('#komuniti_trans2 option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#komuniti_trans2").get(0).selectedIndex = 0;
+                // _______________________________________________________________
+
+                $('#komuniti_trans3').empty();
+                $('#komuniti_trans3').append("<option value='0' disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komuniti_trans3').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#komuniti_trans3").html($('#komuniti_trans3 option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#komuniti_trans3").get(0).selectedIndex = 0;
             }
-            $("#komuniti_trans").html($('#komuniti_trans option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
-            }));
-
-            $("#komuniti_trans").get(0).selectedIndex = 0;
-            // _______________________________________________________________
-
-            $('#komuniti_trans2').empty();
-            $('#komuniti_trans2').append("<option value='0' disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komuniti_trans2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#komuniti_trans2").html($('#komuniti_trans2 option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
-            }));
-
-            $("#komuniti_trans2").get(0).selectedIndex = 0;
-            // _______________________________________________________________
-
-            $('#komuniti_trans3').empty();
-            $('#komuniti_trans3').append("<option value='0' disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komuniti_trans3').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#komuniti_trans3").html($('#komuniti_trans3 option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
-            }));
-
-            $("#komuniti_trans3").get(0).selectedIndex = 0;
-        }
         }
     });
 }
@@ -2858,21 +2889,22 @@ function get_list_fitur_super() {
         url: "/superadmin/get_list_fitur_super",
         type: "POST",
         dataType: "json",
-        data: {
-            "_token": token
-        },
         success: function (result) {
-            $('#list_fiture').empty();
-            $('#list_fiture').append("<option disabled> Choose</option>");
+            if (result.success == false) {
+                get_list_fitur_super();
+            } else {
+                $('#list_fiture').empty();
+                $('#list_fiture').append("<option selected disabled>Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#list_fiture').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_fiture').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+                $("#list_fiture").html($('#list_fiture option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_fiture").get(0).selectedIndex = 0;
             }
-            $("#list_fiture").html($('#list_fiture option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#list_fiture").get(0).selectedIndex = 0;
         }
     });
 }
@@ -2974,7 +3006,6 @@ function tabel_all_pricing_super() {
                 render: function (data, type, full, meta) {
                     return "<div class='text-wrap width-200'>" + data + "</div>";
                 },
-                targets: 3
             },
             {
                 mData: 'price_monthly',
@@ -2990,7 +3021,12 @@ function tabel_all_pricing_super() {
                     return tahunan;
                 }
             },
-            { mData: 'pricing_type_title' },
+            {
+                mData: 'pricing_type_title',
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-200'>" + data + "</div>";
+                }
+            },
             {
                 mData: 'status_title',
                 render: function (data, type, row, meta) {
@@ -3340,19 +3376,24 @@ function get_list_community_modulereport() {
             "_token": token
         },
         success: function (result) {
-            $('#list_komunitas').empty();
-            $('#list_komunitas').append("<option disabled> Choose</option>");
+            console.log(result);
+            if (result.success == false) {
+                get_list_community_modulereport();
+            } else {
+                $('#list_komunitas').empty();
+                $('#list_komunitas').append("<option selected disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-            $("#list_komunitas").get(0).selectedIndex = 0;
-            const OldKomunitas = "{{old('list_komunitas')}}";
-            if (OldKomunitas !== '') {
-                $('#list_komunitas').val(OldKomunitas);
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+                $("#list_komunitas").get(0).selectedIndex = 0;
+                const OldKomunitas = "{{old('list_komunitas')}}";
+                if (OldKomunitas !== '') {
+                    $('#list_komunitas').val(OldKomunitas);
+                }
             }
         }
     });
@@ -3381,7 +3422,7 @@ function get_list_fitur_modulereport() {
                 $('#list_fitur').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
             }
             $("#list_fitur").html($('#list_fitur option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
+                return $(x).text() < $(y).text() ? -1 : 1;
             }));
             $("#list_fitur").get(0).selectedIndex = 0;
             const Oldfitur = "{{old('list_fitur')}}";
@@ -3539,9 +3580,6 @@ function tabel_payment_all_super() {
             type: 'POST',
             dataSrc: '',
             timeout: 30000,
-            data: {
-                "_token": token
-            },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_payment_all_super tbody').empty().append(nofound);
@@ -3790,27 +3828,33 @@ function get_setting_subpayment_super(idnya) {
         },
         success: function (result) {
             console.log(result);
-            var uiku = '';
-            $.each(result, function (i, item) {
-                if (item.setting_type == 1) {
-                    var tipe = 'Input Text';
-                } else {
-                    var tipe = 'Radio Button';
-                }
-                uiku += '<div class="row" style="margin-bottom:0.5em;">' +
-                    '<div class="col-9"><div class="form-group">' +
-                    '<h6 class="cgrey1 tebal name_setting">' + item.title +
-                    '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
-                    '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
-                    '</p>' +
-                    '</div>' +
-                    '</div >' +
-                    '<div class="col-3">' +
-                    '<input type="text" value="' + item.value + '"' +
-                    'class="form-control input-abu param_setting" disabled>' +
-                    '</div></div></div>';
-            });
-            $(".isi_setting_subpay").html(uiku);
+            if (result.success == false && result.status != 404) {
+                get_setting_subpayment_super(idnya);
+            } else if (result.success == false && result.status == 404) {
+                $(".isi_setting_subpay").html('<br><br><br><br><br><center><h5 class="clight">No Data Setting</h5></center>');
+            } else {
+                var uiku = '';
+                $.each(result, function (i, item) {
+                    if (item.setting_type == 1) {
+                        var tipe = 'Input Text';
+                    } else {
+                        var tipe = 'Radio Button';
+                    }
+                    uiku += '<div class="row" style="margin-bottom:0.5em;">' +
+                        '<div class="col-9"><div class="form-group">' +
+                        '<h6 class="cgrey1 tebal name_setting">' + item.title +
+                        '<small class="cblue"> &nbsp;&nbsp;&nbsp;' + tipe + '</small></h6>' +
+                        '<p class="clight s13" style="margin-top:-0.5em;">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-3">' +
+                        '<input type="text" value="' + item.value + '"' +
+                        'class="form-control input-abu param_setting" disabled>' +
+                        '</div></div></div>';
+                });
+                $(".isi_setting_subpay").html(uiku);
+            }
         },
         error: function (result) {
             if (result == '404') {
@@ -3979,40 +4023,43 @@ function get_list_komunitas_notifsuper() {
         url: "/superadmin/get_list_komunitas_log_manage",
         type: "POST",
         dataType: "json",
-        data: {
-            "_token": token
-        },
         success: function (result) {
-            // console.log(result);
-            $('#list_komunitas_notif').empty();
-            $('#list_komunitas_notif').append("<option value='0' disabled> Choose</option>");
+            console.log(result);
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#list_komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+            if (result.success == false) {
+                if (result.status != 404) {
+                    get_list_komunitas_notifsuper();
+                }
+            } else {
+                $('#list_komunitas_notif').empty();
+                $('#list_komunitas_notif').append("<option value='0' disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#list_komunitas_notif").html($('#list_komunitas_notif option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#list_komunitas_notif").get(0).selectedIndex = 0;
+                // _________________________________________________________________________
+
+                $('#komunitas_notif').empty();
+                $('#komunitas_notif').append("<option value='0' disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#komunitas_notif").html($('#komunitas_notif option').sort(function (x, y) {
+                    return $(x).val() < $(y).val() ? -1 : 1;
+                }));
+
+                $("#komunitas_notif").get(0).selectedIndex = 0;
+                Olddt = "{{old('usekomunitas_notifr_notif')}}";
+                if (Olddt !== '') {
+                    $('#komunitas_notif').val(Olddt);
+                }
             }
-            $("#list_komunitas_notif").html($('#list_komunitas_notif option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
-            }));
-
-            $("#list_komunitas_notif").get(0).selectedIndex = 0;
-            // _________________________________________________________________________
-
-            $('#komunitas_notif').empty();
-            $('#komunitas_notif').append("<option value='0' disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komunitas_notif').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#komunitas_notif").html($('#komunitas_notif option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
-            }));
-
-            $("#komunitas_notif").get(0).selectedIndex = 0;
-            Olddt = "{{old('usekomunitas_notifr_notif')}}";
-            if (Olddt !== '') {
-                $('#komunitas_notif').val(Olddt);
-            }
-
         },
         error: function (result) {
             get_list_komunitas_notifsuper();
@@ -4051,16 +4098,16 @@ function detail_notif_super(dtku) {
                     ui.popup.show('warning', result.message, 'Warning');
                 }
             } else {
-                    var res = result;
-                    $("#modal_detail_notif").modal('show');
-                    $("#detail_judul").html(res.title);
-                    $("#detail_dekripsi").html(res.description);
-                    $("#detail_komunitas").html(res.community_name);
-                    $("#detail_tanggal").html(dateFormat(res.created_at));
-                    $("#detail_user").html(res.user_id);
-                    $("#detail_usertipe").html(res.user_type_title);
-                    $("#detail_tipenotif").html(res.notifcation_sub_type_title);
-                    $("#dibuat_oleh").html(res.created_by);
+                var res = result;
+                $("#modal_detail_notif").modal('show');
+                $("#detail_judul").html(res.title);
+                $("#detail_dekripsi").html(res.description);
+                $("#detail_komunitas").html(res.community_name);
+                $("#detail_tanggal").html(dateFormat(res.created_at));
+                $("#detail_user").html(res.user_id);
+                $("#detail_usertipe").html(res.user_type_title);
+                $("#detail_tipenotif").html(res.notifcation_sub_type_title);
+                $("#dibuat_oleh").html(res.created_by);
 
             }
         },
@@ -4131,59 +4178,6 @@ $('#komunitas_notif').change(function () {
 $("#btn_generate_inbox_super").click(function () {
     tabel_inbox_message_super();
 });
-
-$("#btn_delete_message").click(function () {
-    var idpesan = $("#id_message_inbox").val();
-    swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this message!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-        .then((willDelete) => {
-            if (willDelete) {
-                delete_message_inbox_super(idpesan);
-            } else {
-                swal.close();
-            }
-        });
-});
-
-
-function delete_message_inbox_super(idpesan) {
-    var token = $('meta[name="csrf-token"]').attr('content');
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: '/superadmin/delete_message_inbox_super',
-        type: 'POST',
-        dataSrc: '',
-        timeout: 30000,
-        data: {
-            "id": idpesan,
-            "_token": token
-        },
-        success: function (result) {
-            // console.log(result);
-            if (result.success == true) {
-                tabel_inbox_message_super();
-                $("#modal_detail_message_inbox").modal('hide');
-                swal("Poof! Your message has been deleted!", {
-                    icon: "success",
-                });
-            }
-
-        },
-        error: function (result) {
-            console.log(result);
-            swal("Failed!", "Sorry failed to delete message, try again later!", "error");
-        }
-    });
-}
 
 
 function tabel_inbox_message_super() {
@@ -4315,36 +4309,36 @@ function get_list_komunitas_inbox() {
         }
     });
     $.ajax({
-        url: "/superadmin/get_list_komunitas_log_manage",
+        url: "/superadmin/get_list_komunitas_inbox",
         type: "POST",
         dataType: "json",
-        data: {
-            "_token": token
-        },
         success: function (result) {
+            console.log(result);
+
+            if (result.success == false) {
+                    get_list_komunitas_inbox();
+            } else {
             $('#list_komunitas_inbox').empty();
-            $('#list_komunitas_inbox').append("<option value='0' disabled> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#list_komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
             }
             //Short Function Ascending//
             $("#list_komunitas_inbox").html($('#list_komunitas_inbox option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
+                return $(x).text() < $(y).text() ? -1 : 1;
             }));
 
             $("#list_komunitas_inbox").get(0).selectedIndex = 0;
             // _________________________________________________________________________
 
             $('#komunitas_inbox').empty();
-            $('#komunitas_inbox').append("<option value='0' disabled> Choose</option>");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 $('#komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
             }
             //Short Function Ascending//
             $("#komunitas_inbox").html($('#komunitas_inbox option').sort(function (x, y) {
-                return $(x).val() < $(y).val() ? -1 : 1;
+                return $(x).text() < $(y).text() ? -1 : 1;
             }));
 
             $("#komunitas_inbox").get(0).selectedIndex = 0;
@@ -4354,6 +4348,7 @@ function get_list_komunitas_inbox() {
             }
 
         }
+    }
     });
 }
 
@@ -4378,7 +4373,7 @@ function detail_message_inbox_super(params) {
         success: function (result) {
             console.log(result);
             var res = result;
-            $("#modal_detail_message_inbox").modal('show');
+
             $("#detail_judul").html(res.title);
             $("#detail_dekripsi").html(res.description);
             $("#detail_komunitas").html(res.community_name);
@@ -4416,6 +4411,17 @@ function detail_message_inbox_super(params) {
                 $(".tipe1").hide();
                 $('#list_status option[id="id4"]').attr("selected", true);
             }
+
+
+            // --- data for delete ----
+            $("#message_id").val(res.id);
+            $("#level_statusq").val(res.level_status);
+            $("#community_id").val(res.community_id);
+            $("#nama_pesan").html(res.title);
+
+
+            $("#modal_detail_message_inbox").modal('show');
+
 
         },
         error: function (result) {

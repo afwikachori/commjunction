@@ -68,7 +68,7 @@
 
             <form>
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Filter Transaction</h4>
+                    <h4 class="modal-title cgrey">Filter Log</h4>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">

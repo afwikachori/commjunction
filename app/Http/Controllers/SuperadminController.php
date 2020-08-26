@@ -1067,7 +1067,23 @@ class SuperadminController extends Controller
 
         $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         //    return $json;
-        if ($json['status'] == 200) {
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+    public function get_list_komunitas_inbox(Request $request)
+    {
+        $ses_login = session()->get('session_logged_superadmin');
+        $url = env('SERVICE') . 'inboxmanagement/listusers';
+        $input = $request->all();
+
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        //    return $json;
+        if ($json['success'] == true) {
             return $json['data'];
         } else {
             return $json;
@@ -1149,7 +1165,7 @@ class SuperadminController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -1761,6 +1777,8 @@ class SuperadminController extends Controller
     {
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        $url = env('SERVICE') . 'paymentmanagement/editsubpayment';
+
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
             $error['status'] = 500;
@@ -1774,12 +1792,9 @@ class SuperadminController extends Controller
 
         $req = new RequestController;
         $fileimg = "";
-
         if ($request->hasFile('fileup')) {
             $imgku = file_get_contents($request->file('fileup')->getRealPath());
             $filnam = $request->file('fileup')->getClientOriginalName();
-
-            $input = $request->all(); // getdata form by name
 
             $imageRequest = [
                 "payment_title"     => $input['edit_sub_namapay'],
@@ -1793,9 +1808,23 @@ class SuperadminController extends Controller
                 "filename"    => $filnam,
                 "file"        => $imgku
             ];
+        } else {
+            $imageRequest = [
+                "payment_title"     => $input['edit_sub_namapay'],
+                "description"       => $input['edit_sub_deskripsi'],
+                "bank_name"         => $input['edit_sub_nama_bank'],
+                "no_rekening"       => $input['edit_sub_rekening'],
+                "payment_owner_name"     => $input['edit_sub_owner_bank'],
+                "payment_time_limit" => $input['edit_sub_timelimit'],
+                "payment_method_id"    => $input['payment_method_id'],
+                "_token"    => $input['_token'],
+                "filename"    => "",
+                "file"        => ""
+            ];
+        }
 
 
-            $url = env('SERVICE') . 'paymentmanagement/editsubpayment';
+
             try {
                 $resImg = $req->editSubPaymentSuper($imageRequest, $url, $token);
                 // return $resImg;
@@ -1818,10 +1847,7 @@ class SuperadminController extends Controller
                 alert()->error($error['message'], 'Failed!')->autoclose(4500);
                 return back();
             }
-        } else {
-            alert()->error('File Image is Required', 'Required!')->autoclose(4500);
-            return back();
-        }
+
     }
 
 
@@ -2121,7 +2147,7 @@ class SuperadminController extends Controller
         $url = env('SERVICE') . 'inboxmanagement/deletemessage';
 
         $input = $request->all();
-
+        return $input;
 
         $body = [
             "id" => $input['id'],
@@ -2129,9 +2155,11 @@ class SuperadminController extends Controller
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
-            return $json['data'];
+            alert()->success('Inbox deleted', 'Success !')->persistent('Done');
+            return back();
         } else {
-            return $json;
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+            return back();
         }
     }
 
@@ -2214,11 +2242,6 @@ class SuperadminController extends Controller
         ];
 
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
-        if ($json['success'] == true) {
-            return $json['data'];
-        } else {
-            return $json;
-        }
 
         if ($json['success'] == true) {
             alert()->success('Successfully Change Status Message Inbox', 'Has Been Change!')->autoclose(4000);

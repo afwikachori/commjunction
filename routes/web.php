@@ -617,6 +617,7 @@ Route::prefix('superadmin')->group(function () {
     Route::post('detail_user_management_super', 'SuperadminController@detail_user_management_super')->name('detail_user_management_super');
     Route::post('tabel_log_management_super', 'SuperadminController@tabel_log_management_super')->name('tabel_log_management_super');
     Route::post('get_list_komunitas_log_manage', 'SuperadminController@get_list_komunitas_log_manage')->name('get_list_komunitas_log_manage');
+    Route::post('get_list_komunitas_log_manage', 'SuperadminController@get_list_komunitas_inbox')->name('get_list_komunitas_inbox');
     Route::post('get_list_community_modulereport', 'SuperadminController@get_list_community_modulereport')->name('get_list_community_modulereport');
     Route::post('get_list_fitur_modulereport', 'SuperadminController@get_list_fitur_modulereport')->name('get_list_fitur_modulereport');
     Route::post('get_subfitur_modulereport', 'SuperadminController@get_subfitur_modulereport')->name('get_subfitur_modulereport');

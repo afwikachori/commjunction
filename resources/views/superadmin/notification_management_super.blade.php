@@ -90,8 +90,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <small class="clight s13">Community</small>
-                                <select class="form-control input-abu" name="list_komunitas_notif"
-                                    id="list_komunitas_notif">
+                                <select class="form-control input-abu" name="list_komunitas_notif" id="list_komunitas_notif">
 
                                 </select>
                             </div>

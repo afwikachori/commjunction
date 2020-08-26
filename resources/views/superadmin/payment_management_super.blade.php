@@ -57,10 +57,10 @@
                                 class="table table-hover table-striped dt-responsive wrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID Payment</th>
-                                        <th>Payment Title</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
+                                        <th><b>ID Payment</b></th>
+                                        <th><b>Payment Title</b></th>
+                                        <th><b>Description</b></th>
+                                        <th><b>Action</b></th>
                                     </tr>
                                 </thead>
                             </table>

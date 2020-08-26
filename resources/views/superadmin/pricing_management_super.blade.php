@@ -90,8 +90,8 @@
                     <div class="modal-body" style="padding-left: 5%;padding-right: 5%; padding-bottom: 0px;">
                         <div class="row">
                             <div class="col-md-12">
-                                <img src="/img/kosong.png" class="rounded-circle img-fluid" id="img_logo_pricing"
-                                    onerror="this.onerror=null;this.src='/img/kosong.png';">
+                                <img src="/img/fitur.png" class="rounded-circle img-fluid" id="img_logo_pricing"
+                                    onerror="this.onerror=null;this.src='/img/fitur.png';">
                             </div>
                         </div>
 
@@ -312,8 +312,8 @@
                             <div class="img-upload-profil" style="margin-top: -1.5em; margin-bottom: 5em;">
                                 <div class="circle editpricing">
                                     <img id="view_img_pricing_edit"
-                                        class="profile-pic editpricing rounded-circle img-fluid" src="/img/focus.png"
-                                        onerror="this.onerror=null;this.src='/img/kosong.png';">
+                                        class="profile-pic editpricing rounded-circle img-fluid" src="/img/fitur.png"
+                                        onerror="this.onerror=null;this.src='/img/fitur.png';">
                                 </div>
                                 <div class="p-image editpricing">
                                     <button type="button" class="btn btn-inverse-secondary btn-rounded btn-icon"
