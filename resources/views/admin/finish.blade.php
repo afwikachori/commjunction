@@ -78,7 +78,7 @@
                 if (result != 0) {
                     $('#btn_done').attr("href", "/admin/confirm");
                 } else {
-                    $('#btn_done').attr("href", '/admin');
+                    $('#btn_done').attr("href", '/');
                 }
                  $('#btn_done').removeAttr("disabled", "disabled");
             },

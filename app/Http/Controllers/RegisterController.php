@@ -860,27 +860,24 @@ try{
 
             $jsonlogin = $this->encryptedPost($request, $datafinal, $url, "regis_admin");
 
-            $hasil = json_decode($jsonlogin, true);
-            // return $hasil;
-            if($hasil == true){
+            // $hasil = json_decode($jsonlogin, true);
+            // if($hasil == true){
                 session()->forget('data_regis1');
                 session()->forget('data_regis1show');
-                session()->forget('data_idpay');
                 session()->forget('data_regis1');
                 session()->forget('data_regis2');
                 session()->forget('data_pricing');
                 session()->forget('listfitur');
                 session()->forget('pricing_id');
-                session()->forget('data_idpay');
                 session()->forget('datafitur');
                 session()->forget('data_fitur');
                 session()->forget('sesback_finalregis_admin');
                 session()->forget('list_payment');
-                session()->forget('data_idpay');
+                // session()->forget('data_idpay');
                 session()->forget('id_pay_type');
 
                 return redirect('admin/loading');
-            }
+            // }
 
         } catch (ClientException $errornya) {
             $error = json_decode($errornya->getResponse()->getBody()->getContents(), true);
