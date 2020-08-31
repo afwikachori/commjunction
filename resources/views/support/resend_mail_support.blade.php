@@ -223,6 +223,10 @@
             success: function (result) {
                 console.log(result);
 
+                 if (result.success == false && result.status != 404) {
+                     get_list_komunitas_support();
+                 }else{
+
                 $("#hide_status_kom").show();
                 $('#list_komunitas').empty();
                 if (result.success == false && result.code == "CMQ01") {
@@ -241,6 +245,7 @@
                     $("#list_komunitas").get(0).selectedIndex = 0;
                 }
             }
+        }
         });
     } //endfunction
 

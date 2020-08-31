@@ -260,6 +260,13 @@
             },
             success: function (result) {
                 console.log(result);
+                  if (result.success == false) {
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_support();
+                }
+            } else {
 
                 $("#hide_status_kom").show();
                 $('#list_komunitas').empty();

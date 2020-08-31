@@ -103,9 +103,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        if ($('#status_komunitas').val() == "all") {
             get_list_komunitas_support("all");
-        }
 
 
     });

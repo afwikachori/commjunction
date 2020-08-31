@@ -514,11 +514,6 @@
                     $('#tabel_knowledge_support tbody').empty().append(nofound);
                 },
             },
-            error: function (request, status, errorThrown) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
-                $('#tabel_knowledge_support tbody').empty().append(nofound);
-
-            },
             columns: [
                 {
                     mData: 'title',
