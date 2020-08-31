@@ -732,6 +732,11 @@ function init_ready() {
         get_list_komunitas_inbox();
     }
 
+
+    if ($("#page_support_inquirylog").length != 0) {
+        get_list_komunitas_support($('#status_komunitas').val());
+    }
+
     // if ($("#").length != 0) {
 
     // }
@@ -2383,9 +2388,12 @@ function get_list_komunitas_log_manage() {
         url: "/superadmin/get_list_komunitas_log_manage",
         type: "POST",
         dataType: "json",
+        data: {
+            "_token": token
+        },
         success: function (result) {
-            // console.log(result);
-            if (result.success == false) {
+            console.log(result);
+            if (result.success == false && result.status != 404) {
                 get_list_komunitas_log_manage();
             } else {
                 $('#list_komunitas').empty();
@@ -2395,7 +2403,7 @@ function get_list_komunitas_log_manage() {
                     $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
                 }
                 $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
-                    return $(y).text() < $(x).text() ? -1 : 1;
+                    return $(x).text() < $(y).text() ? -1 : 1;
                 }));
                 $("#list_komunitas").get(0).selectedIndex = 0;
                 const OldKomunitas = "{{old('list_komunitas')}}";
@@ -4316,39 +4324,39 @@ function get_list_komunitas_inbox() {
             console.log(result);
 
             if (result.success == false) {
-                    get_list_komunitas_inbox();
+                get_list_komunitas_inbox();
             } else {
-            $('#list_komunitas_inbox').empty();
+                $('#list_komunitas_inbox').empty();
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#list_komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_komunitas_inbox").html($('#list_komunitas_inbox option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_komunitas_inbox").get(0).selectedIndex = 0;
+                // _________________________________________________________________________
+
+                $('#komunitas_inbox').empty();
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#komunitas_inbox").html($('#komunitas_inbox option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#komunitas_inbox").get(0).selectedIndex = 0;
+                Olddt = "{{old('usekomunitas_notifr_notif')}}";
+                if (Olddt !== '') {
+                    $('#komunitas_inbox').val(Olddt);
+                }
+
             }
-            //Short Function Ascending//
-            $("#list_komunitas_inbox").html($('#list_komunitas_inbox option').sort(function (x, y) {
-                return $(x).text() < $(y).text() ? -1 : 1;
-            }));
-
-            $("#list_komunitas_inbox").get(0).selectedIndex = 0;
-            // _________________________________________________________________________
-
-            $('#komunitas_inbox').empty();
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#komunitas_inbox').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            //Short Function Ascending//
-            $("#komunitas_inbox").html($('#komunitas_inbox option').sort(function (x, y) {
-                return $(x).text() < $(y).text() ? -1 : 1;
-            }));
-
-            $("#komunitas_inbox").get(0).selectedIndex = 0;
-            Olddt = "{{old('usekomunitas_notifr_notif')}}";
-            if (Olddt !== '') {
-                $('#komunitas_inbox').val(Olddt);
-            }
-
         }
-    }
     });
 }
 
@@ -4429,4 +4437,482 @@ function detail_message_inbox_super(params) {
         }
     });
 }
- // ------------------------ END INBOX MANAGEMENT SUPER ---------------------------
+// ------------------------ END INBOX MANAGEMENT SUPER ---------------------------
+
+
+
+
+// ---------------------- OPERATIONAL SUPPORT SYSTEM _ SUPERADMIN ----------------------
+
+function tabel_tes_inquiry() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/support/tabel_inquiry_log_activity',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "community_id": $("#list_komunitas").val(),
+            "start_date": $("#tanggal_mulai").val(),
+            "end_date": $("#tanggal_selesai").val(),
+            "endpoint": $("#list_endpoint").val(),
+            "activity_type": $("#activity_type").val(),
+            "subscriber_id": $("#list_subscriber").val(),
+        },
+        success: function (result) {
+            console.log('tabel log ');
+            console.log(result);
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show tabel log");
+        }
+    });
+}
+
+
+$("#btn_generate_log_activity").click(function () {
+    tabel_inquiry_log_activity();
+    // tabel_tes_inquiry();
+});
+
+
+function tabel_inquiry_log_activity() {
+    // $('#tabel_inquiry_log_activity').dataTable().fnClearTable();
+    // $('#tabel_inquiry_log_activity').dataTable().fnDestroy();
+
+    $('#tabel_inquiry_log_activity').DataTable().clear().destroy();
+    $('#tabel_inquiry_log_activity').empty();
+
+    var uihead = '<thead>' +
+        '<tr>' +
+        '<th><b> Endpoint </b></th>' +
+        '<th><b> Activity </b></th>' +
+        '<th><b> Username</b></th>' +
+        '<th><b> User Level </b></th>' +
+        '<th><b> Date </b></th>' +
+        '<th><b> Log Status </b></th>' +
+        '<th><b> Action </b></th>' +
+        '</tr>' +
+        '</thead>';
+    $('#tabel_inquiry_log_activity').html(uihead);
+
+    $("#modal_generate_log_activity").modal('hide');
+    $("#tabel_inquiry_log_activity").show();
+
+    var tabel = $('#tabel_inquiry_log_activity').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print', {
+                text: 'JSON',
+                action: function (e, dt, button, config) {
+                    var data = dt.buttons.exportData();
+
+                    $.fn.dataTable.fileSave(
+                        new Blob([JSON.stringify(data)]),
+                        'Export.json'
+                    );
+                }
+            }
+        ],
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: '/support/tabel_inquiry_log_activity',
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "community_id": $("#list_komunitas").val(),
+                "start_date": $("#tanggal_mulai").val(),
+                "end_date": $("#tanggal_selesai").val(),
+                "endpoint": $("#list_endpoint").val(),
+                "activity_type": $("#activity_type").val(),
+                "subscriber_id": $("#list_subscriber").val(),
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_inquiry_log_activity tbody').empty().append(nofound);
+            },
+        },
+        error: function (request, status, errorThrown) {
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            $('#tabel_inquiry_log_activity tbody').empty().append(nofound);
+
+        },
+        columns: [
+            {
+                mData: 'endpoint',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'activity',
+                render: function (data, type, row, meta) {
+                    return '<span class="s12 text-wrap width-250">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'user_name',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'user_level',
+                render: function (data, type, row, meta) {
+                    var ini = '';
+                    if (data == 1) {
+                        ini = '<span class="s13">Admin Commjuction</span>';
+                    } else if (data == 2) {
+                        ini = '<span class="s13">Admin Community</span>';
+                    } else {
+                        ini = '<span class="s13">Subscriber</span>';
+                    }
+                    return ini;
+                }
+            },
+            {
+                mData: 'date',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + dateFormat(data) + '</span>';
+                }
+            },
+            {
+                mData: 'log_status',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnlihat">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnlihat"><i class="mdi mdi-eye"></i></button>',
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    //DETAIL USERTYPE FROM DATATABLE
+    $('#tabel_inquiry_log_activity tbody').on('click', 'button.btnlihat', function () {
+        var rownya = $(this).parents('li').length ?
+            $(this).parents('li') :
+            $(this).parents('tr');
+        var data = tabel.row(rownya).data();
+
+        $("#detail_response").jJsonViewer("");
+        $("#detail_judul").html("");
+        $("#detail_date").html("");
+        $("#detail_endpoint").html("");
+        $("#detail_ip").html("");
+        $("#detail_log_status").html("");
+        $("#detail_module").html("");
+        $("#detail_request").html("");
+        $("#detail_status").html("");
+        $("#detail_username").html("");
+        $("#detail_userid").html("");
+        $("#detail_level").html("");
+        $("#detail_elapsed").html("");
+        $("#detail_time").html("");
+
+        console.log(data);
+        $("#detail_response").jJsonViewer(data.response);
+        $("#detail_judul").html(data.activity);
+        $("#detail_date").html(dateTime(data.date));
+        $("#detail_endpoint").html(data.endpoint);
+        $("#detail_ip").html(data.ip);
+        $("#detail_log_status").html(data.log_status);
+        $("#detail_module").html(data.module);
+        $("#detail_request").html(data.request);
+        $("#detail_status").html(data.status);
+        $("#detail_username").html(data.user_name);
+        $("#detail_userid").html(data.user_id);
+        var lv = '';
+        if (data.user_level == 1) {
+            lv = 'Admin Commjunction';
+        } else if (data.user_level == 2) {
+            lv = 'Admin Community';
+        } else {
+            lv = 'Subscriber';
+        }
+        $("#detail_level").html(lv);
+        $("#detail_elapsed").html(data.elapsed_time);
+        $("#detail_time").html(data.time);
+
+        $("#modal_detail_log_activity").modal('show');
+
+    });
+
+    //RESET FORM FILTER
+    $("#list_komunitas").val("");
+    $("#tanggal_mulai").val("");
+    $("#tanggal_selesai").val("");
+   $("#list_endpoint").val("");
+    $("#activity_type").val("");
+    $("#list_subscriber").val("");
+    $("#list_feature").val("");
+    $("#list_subfeature").val("");
+}
+
+
+
+
+
+
+$('#status_komunitas').change(function () {
+    var item = $(this);
+    var id_status = item.val();
+
+    get_list_komunitas_support(id_status);
+});
+
+
+function get_list_komunitas_support(id_status) {
+    // alert(id_status);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_komunitas_support",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "community_status": id_status
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false && result.status != 404) {
+                get_list_komunitas_support(id_status)
+            } else {
+            get_list_feature_support();
+
+            $("#hide_status_kom").show();
+            $('#list_komunitas').empty();
+            if (result.success == false && result.code == "CMQ01") {
+                $('#list_komunitas').append("<option disabled selected> No Data </option>");
+            } else {
+                $('#list_komunitas').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_komunitas").get(0).selectedIndex = 0;
+            }
+        }
+    }
+    });
+} //endfunction
+
+$('#list_komunitas').change(function () {
+    var item = $(this);
+    var id_kom = item.val();
+
+    get_list_subscriber_support(id_kom);
+});
+
+function get_list_feature_support() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_feature_support",
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+
+            $('#list_feature').empty();
+            $('#list_feature').append("<option disabled> Choose</option>");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                $('#list_feature').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+            }
+
+            $("#list_feature").html($('#list_feature option').sort(function (x, y) {
+                return $(x).text() < $(y).text() ? -1 : 1;
+            }));
+
+            $("#list_feature").get(0).selectedIndex = 0;
+
+        }
+    });
+} //endfunction
+
+
+$('#list_feature').change(function () {
+    var item = $(this);
+    var id_fitur = item.val();
+
+    get_list_subfeature_support(id_fitur);
+});
+
+function get_list_subfeature_support(feature_id) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_subfeature_support",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "feature_id": feature_id
+        },
+        success: function (result) {
+            console.log(result);
+
+            $("#hide_subfitur").show();
+            $('#list_subfeature').empty();
+            if (result.success == false || result.code == "CMQ01") {
+                $('#list_subfeature').append("<option disabled selected> No Data </option>");
+            } else {
+                $('#list_subfeature').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_subfeature').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].title, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_subfeature").html($('#list_subfeature option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_subfeature").get(0).selectedIndex = 0;
+            }
+        }
+    });
+} //endfunction
+
+$('#list_subfeature').change(function () {
+    var item = $(this);
+    var id_subfitur = item.val();
+
+    get_list_endpoint_support(id_subfitur);
+});
+
+
+function get_list_endpoint_support(id_subfitur) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_endpoint_support",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "subfeature_id": id_subfitur
+        },
+        success: function (result) {
+            console.log(result);
+
+            $("#hide_endpoint").show();
+            $("#hide_aktivitastipe").show();
+            $('#list_endpoint').empty();
+            if (result.success == false && result.code == "CMQ01") {
+                $('#list_endpoint').append("<option disabled selected> No Data </option>");
+            } else {
+                $('#list_endpoint').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_endpoint').append("<option value=\"".concat(result[i].endpoint, "\">").concat(result[i].endpoint, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_endpoint").html($('#list_endpoint option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_endpoint").get(0).selectedIndex = 0;
+            }
+        }
+    });
+} //endfunction
+
+
+$('#activity_type').change(function () {
+    var item = $(this);
+    var id_tipe = item.val();
+
+    if (id_tipe == "2") {
+        $("#hide_subscriber").show();
+    } else {
+        $("#list_subscriber").val(null);
+        $("#hide_subscriber").hide();
+    }
+
+});
+
+
+function get_list_subscriber_support(id_kom) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_subscriber_support",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "community_id": id_kom
+        },
+        success: function (result) {
+            console.log(result);
+
+            $('#list_subscriber').empty();
+            if (result.success == false || result.code == "CMQ01") {
+                $('#list_subscriber').append("<option disabled selected> No Data </option>");
+            } else {
+                $('#list_subscriber').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_subscriber').append("<option value=\"".concat(result[i].user_id, "\">").concat(result[i].full_name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_subscriber").html($('#list_subscriber option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_subscriber").get(0).selectedIndex = 0;
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show Subcriber");
+        }
+    });
+} //endfunction
+
+
+ // ----------- XX ----------- OPERATIONAL SUPPORT SYSTEM _ SUPERADMIN ----------- XX -----------
