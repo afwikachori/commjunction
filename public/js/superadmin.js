@@ -3370,7 +3370,7 @@ function tabel_module_report_superadmin() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_module_report_superadmin tbody').empty().append(nofound);
             },
         },
@@ -3482,6 +3482,11 @@ function get_list_fitur_modulereport() {
 
 $('#list_fitur').change(function () {
     var itempilih = this.value;
+    get_subfitur_modulereport(itempilih);
+});
+
+
+function get_subfitur_modulereport(itempilih){
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3495,7 +3500,10 @@ $('#list_fitur').change(function () {
             "feature_id": itempilih,
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
+            if (result.success == false && result.status != 404) {
+                get_subfitur_modulereport(itempilih);
+            } else {
             $('#showin_subfitur').fadeIn("fast");
             $('#list_subfitur').empty();
             $('#list_subfitur').append("<option value='null'> Choose</option>");
@@ -3512,12 +3520,13 @@ $('#list_fitur').change(function () {
             if (OldSubf !== '') {
                 $('#list_subfitur').val(OldSubf);
             }
+        }
         },
         error: function (result) {
             $('#showin_subfitur').fadeOut("fast");
         }
     });
-});
+}
 // ------------------ END MODULE REPORT MANAGEMENT ------------------------
 
 

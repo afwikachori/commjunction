@@ -53,7 +53,7 @@
 
             <form>
                 <div class="modal-header" style="padding-left: 5%;padding-right: 5%;">
-                    <h4 class="modal-title cgrey">Filter Transaction</h4>
+                    <h4 class="modal-title cgrey">Filter Log Activity</h4>
                 </div> <!-- end-header -->
 
                 <div class="modal-body" style="padding-left: 5%;padding-right: 5%;">
@@ -82,7 +82,7 @@
                                 <small class="clight s13">Query Type</small>
                                 <select class="form-control input-abu" name="list_userlevel" id="list_userlevel">
                                     <option selected disabled> Choose </option>
-                                    <option value="1"> Admin Commjuction </option>
+                                    {{-- <option value="1"> Admin Commjuction </option> --}}
                                     <option value="2"> Admin Community </option>
                                     <option value="3"> Subscriber</option>
                                 </select>
