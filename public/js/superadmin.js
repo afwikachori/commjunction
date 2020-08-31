@@ -910,7 +910,11 @@ function get_list_komunitas_superadmin() {
         success: function (result) {
             console.log(result);
             if (result.success == false) {
-                get_list_komunitas_superadmin();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_superadmin();
+                }
             } else {
                 $('#komunitas_list').empty();
                 $('#komunitas_list').append("<option selected disabled> Choose</option>");
@@ -1495,7 +1499,12 @@ function get_listfitur_usertype_ceklist() {
             console.log(result);
 
             if (result.success == false) {
-                get_listfitur_usertype_ceklist();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_listfitur_usertype_ceklist();
+                }
+
             } else {
                 $(".btnsubmit").removeAttr("disabled", "disabled");
                 $(".loading_tree").hide();
@@ -2392,9 +2401,20 @@ function get_list_komunitas_log_manage() {
             "_token": token
         },
         success: function (result) {
+<<<<<<< HEAD
             console.log(result);
             if (result.success == false && result.status != 404) {
                 get_list_komunitas_log_manage();
+=======
+            // console.log(result);
+            if (result.success == false) {
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_log_manage();
+                }
+
+>>>>>>> 718f1df0c726e22680b87512c23242e999ab2972
             } else {
                 $('#list_komunitas').empty();
                 $('#list_komunitas').append("<option selected disabled> Choose</option>");
@@ -2789,7 +2809,12 @@ function get_list_transaction_type_super() {
         success: function (result) {
             if (result.success == false) {
                 console.log(result);
-                get_list_transaction_type_super();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_transaction_type_super();
+                }
+
             } else {
                 $('#jenis_transaksi').empty();
                 $('#jenis_transaksi').append("<option disabled> Choose</option>");
@@ -2841,7 +2866,11 @@ function get_list_komunitas_report() {
         },
         success: function (result) {
             if (result.success == false) {
-                get_list_komunitas_report();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_report();
+                }
             } else {
                 $('#komuniti_trans').empty();
                 $('#komuniti_trans').append("<option value='0' disabled> Choose</option>");
@@ -2899,7 +2928,11 @@ function get_list_fitur_super() {
         dataType: "json",
         success: function (result) {
             if (result.success == false) {
-                get_list_fitur_super();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_fitur_super();
+                }
             } else {
                 $('#list_fiture').empty();
                 $('#list_fiture').append("<option selected disabled>Choose</option>");
@@ -3386,7 +3419,11 @@ function get_list_community_modulereport() {
         success: function (result) {
             console.log(result);
             if (result.success == false) {
-                get_list_community_modulereport();
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_community_modulereport();
+                }
             } else {
                 $('#list_komunitas').empty();
                 $('#list_komunitas').append("<option selected disabled> Choose</option>");
@@ -4324,7 +4361,15 @@ function get_list_komunitas_inbox() {
             console.log(result);
 
             if (result.success == false) {
+<<<<<<< HEAD
                 get_list_komunitas_inbox();
+=======
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_inbox();
+                }
+>>>>>>> 718f1df0c726e22680b87512c23242e999ab2972
             } else {
                 $('#list_komunitas_inbox').empty();
 
