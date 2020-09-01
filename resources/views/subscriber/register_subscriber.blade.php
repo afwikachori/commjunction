@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Register Subscriber')
 @section('content')
 
 @if (session()->has('register_sukses'))

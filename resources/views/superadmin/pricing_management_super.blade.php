@@ -21,54 +21,28 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="cgrey" style="margin-bottom: -1em;">Pricing List</h4>
+                <h4 class="cgrey">Pricing List</h4>
 
-                <div class="tabbable-line">
-                    <ul class="nav nav-tabs ">
-                        <li class="tab-subs active" id="tab_all">
-                            <a href="#tab_default_1" data-toggle="tab">
-                                All
-                            </a>
-                        </li>
-                        <li class="tab-subs" id="tab_pending">
-                            <a href="#tab_default_2" data-toggle="tab">
-                                Active
-                            </a>
-                        </li>
+                <br>
 
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_default_1">
-                            <br>
+                <!-- tabel all susbcriber -->
+                <table id="tabel_all_pricing_super" class="table table-hover table-striped dt-responsive "
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th><b>ID</b></th>
+                            <th><b>Pricing Name</b></th>
+                            <th><b>Monthly Price</b></th>
+                            <th><b>Annual Price</b></th>
+                            <th><b>Type</b></th>
+                            <th><b>Status</b></th>
+                            <th><b>Feature</b></th>
+                            <th><b>Action</b></th>
+                        </tr>
+                    </thead>
+                </table>
+                <!-- end tabel all  -->
 
-                            <!-- tabel all susbcriber -->
-                            <table id="tabel_all_pricing_super" class="table table-hover table-striped dt-responsive "
-                                style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th><b>ID</b></th>
-                                        <th><b>Pricing Name</b></th>
-                                        <th><b>Monthly Price</b></th>
-                                        <th><b>Annual Price</b></th>
-                                        <th><b>Type</b></th>
-                                        <th><b>Status</b></th>
-                                        <th><b>Total Feature</b></th>
-                                        <th><b>Action</b></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <!-- end tabel all  -->
-                        </div>
-
-
-                        <div class="tab-pane" id="tab_default_2">
-                            <br>
-                            belum di set
-                        </div>
-
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -194,7 +168,7 @@
                                             <i id="browse_img_pricing" class="mdi mdi-camera upload-button"></i>
                                         </button>
                                         <input id="file_img_pricing" class="file-upload file-upload-default" type="file"
-                                            name="fileup" accept="image/*"/>
+                                            name="fileup" accept="image/*" />
                                     </div>
                                 </div>
                             </div>

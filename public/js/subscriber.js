@@ -1634,7 +1634,7 @@ function tabel_friend_list() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_friend_manage tbody').empty().append(nofound);
             },
         },
@@ -1689,7 +1689,7 @@ function tabel_friend_pending_list() {
             },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h4 class="cgrey">Data Not Found</h4</td></tr>';
+                var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 $('#tabel_friend_pending tbody').empty().append(nofound);
             },
         },

@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'COMMJUNCTION APP')
 @section('content')
 <nav class="navbar nav-oren">
 </nav>

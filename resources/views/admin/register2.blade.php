@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'COMMJUNCTION APP')
 @section('content')
 <div class="row">
     <div class="col orenq">

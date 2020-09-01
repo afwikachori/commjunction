@@ -16,7 +16,7 @@
                                 portal</small>
                         </div>
                         <div class="col-md-5">
-                            <input type="text" name="headline" id="headline" class="form-control input-abu">
+                            <input type="text" name="headline" id="headline" class="form-control input-abu" required>
                         </div>
                     </div>
 
@@ -28,14 +28,14 @@
                         </div>
                         <div class="col-md-5">
                             <textarea class="form-control input-abu" id="description_custom" name="description_custom"
-                                rows="2"></textarea>
+                                rows="2" required></textarea>
                         </div>
                     </div>
 
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-md-7">
                             <h6 class="cgrey2 judulcomsetup" lang="en">Image Login Portal</h6>
-                            <small class="clight" lang="en">This image will be show for subscriber login
+                            <small class="clight" lang="en">This image will be show for background subscriber login
                                 portal</small>
                         </div>
                         <div class="col-md-5">

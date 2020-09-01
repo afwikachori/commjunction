@@ -670,6 +670,7 @@ class SuperadminController extends Controller
         ]);
         $ses_login = session()->get('session_logged_superadmin');
         $input = $request->all();
+        return $input;
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
             $error['status'] = 500;
@@ -1380,7 +1381,7 @@ class SuperadminController extends Controller
         try {
             $resImg = $req->sendImgEditPricing($imageRequest, $urledit, $token);
             if ($resImg['success'] == true) {
-                alert()->success('Successfully Edit pricing type', 'Updated!')->autoclose(4500)->persistent('Done');
+                alert()->success('Successfully Edit pricing type', 'Updated!')->autoclose(4500);
                 return back();
             }
         } catch (ClientException $errornya) {

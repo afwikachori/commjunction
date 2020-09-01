@@ -657,12 +657,12 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/viewfriendlist';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        // $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
@@ -673,12 +673,12 @@ class ModuleController extends Controller
         $url = env('SERVICE') . 'module/friend/pendingfriendconfirmation';
 
         $input = $request->all();
-        $csrf = $input['_token'];
-        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], $csrf);
+        // $csrf = $input['_token'];
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 

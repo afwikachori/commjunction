@@ -1499,7 +1499,7 @@ function get_listfitur_usertype_ceklist() {
         }
     });
     $.ajax({
-        url: '/admin/get_listfitur_usertype_ceklist',
+        url: '/superadmin/get_listfitur_usertype_ceklist',
         type: 'POST',
         datatype: 'JSON',
         success: function (result) {
@@ -1511,8 +1511,9 @@ function get_listfitur_usertype_ceklist() {
                 } else {
                     get_listfitur_usertype_ceklist();
                 }
-
+                $("#btn_add_usertipe").attr("disabled", "disabled");
             } else {
+                $("#btn_add_usertipe").removeAttr("disabled", "disabled");
                 $(".btnsubmit").removeAttr("disabled", "disabled");
                 $(".loading_tree").hide();
 
@@ -1632,6 +1633,9 @@ function tabel_usertype_management() {
             url: '/superadmin/tabel_usertype_superadmin',
             type: 'POST',
             dataSrc: '',
+            data: {
+                "_token": token
+            },
             timeout: 30000,
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
@@ -2757,8 +2761,18 @@ function tabel_report_transaksi_super() {
 
         },
         columns: [
-            { mData: 'invoice_number' },
-            { mData: 'transaction_date' },
+            {
+                mData: 'invoice_number',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13 text-wrap width-100">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'transaction_date',
+                render: function (data, type, row) {
+                    return '<small>' + dateTime(data) + '</small>';
+                }
+             },
             {
                 mData: 'transaction_status',
                 render: function (data, type, row, meta) {
@@ -2773,8 +2787,18 @@ function tabel_report_transaksi_super() {
                     return ini;
                 }
             },
-            { mData: 'transaction_type' },
-            { mData: 'name' },
+            {
+                mData: 'transaction_type',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13 text-wrap width-100">' + data + '</span>';
+                }
+             },
+            {
+                mData: 'name',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13 text-wrap width-100">' + data + '</span>';
+                }
+             },
             {
                 mData: 'nominal',
                 render: function (data, type, row, meta) {
@@ -2782,8 +2806,18 @@ function tabel_report_transaksi_super() {
                     return rp;
                 }
             },
-            { mData: 'payment_type' },
-            { mData: 'payment_method' },
+            {
+                mData: 'payment_type',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13 text-wrap width-100">' + data + '</span>';
+                }
+             },
+            {
+                mData: 'payment_method',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13 text-wrap width-100">' + data + '</span>';
+                }
+             },
         ],
 
     });
@@ -3033,12 +3067,9 @@ function tabel_all_pricing_super() {
                 "_token": token
             },
             error: function (jqXHR, ajaxOptions, thrownError) {
-                var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h class="cgrey">Data Not Found</h</td></tr>';
-                $('#tabel_module_report_superadmin tbody').empty().append(nofound);
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
+                $('#tabel_all_pricing_super tbody').empty().append(nofound);
             },
-        },
-        error: function (request, status, errorThrown) {
-            console.log(errorThrown);
         },
         columns: [
             { mData: 'id' },
@@ -3051,21 +3082,21 @@ function tabel_all_pricing_super() {
             {
                 mData: 'price_monthly',
                 render: function (data, type, row, meta) {
-                    var bulanan = 'Rp. ' + rupiah(data);
+                    var bulanan = '<small>Rp. ' + rupiah(data)+ '</small>';
                     return bulanan;
                 }
             },
             {
                 mData: 'price_annual',
                 render: function (data, type, row, meta) {
-                    var tahunan = 'Rp. ' + rupiah(data);
+                    var tahunan = '<small>Rp. ' + rupiah(data) + '</small>';
                     return tahunan;
                 }
             },
             {
                 mData: 'pricing_type_title',
                 render: function (data, type, full, meta) {
-                    return "<div class='text-wrap width-200'>" + data + "</div>";
+                    return "<span class='text-wrap width-100'>" + data + "</span>";
                 }
             },
             {
@@ -3241,7 +3272,11 @@ function get_list_fitur_pricing() {
         },
         success: function (result) {
             console.log(result);
-
+            if(result.success == false){
+                if(result.status != 400){
+                    get_list_fitur_pricing();
+                }
+            }else{
             var listfitur = '';
 
             $.each(result, function (i, item) {
@@ -3302,6 +3337,7 @@ function get_list_fitur_pricing() {
             }
 
         }
+    }
     });
 }
 // ----------------------- END PRICIING MANAGEMENT ---------------------------

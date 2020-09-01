@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Login')
 @section('content')
 <div id="bg-superadmin">
     <div class="row">

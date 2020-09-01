@@ -57,12 +57,12 @@
                     <div class="form-group">
                         <small class="cgrey">User Type Name</small>
                         <input type="text" id="nama_usertipe" name="nama_usertipe" class="form-control input-abu"
-                            value="{{ old('nama_usertipe') }}">
+                            value="{{ old('nama_usertipe') }}" required>
                     </div>
                     <div class="form-group">
                         <small class="cgrey">Description</small>
                         <textarea class="form-control input-abu" id="dekripsi_usertipe" name="dekripsi_usertipe"
-                            rows="2">{{ old('dekripsi_usertipe') }}</textarea>
+                            rows="2" required>{{ old('dekripsi_usertipe') }}</textarea>
                     </div>
                     <br>
                     <div class="form-group">
@@ -89,7 +89,7 @@
                         <i class="mdi mdi-close"></i> Cancel
                     </button>
                     &nbsp;
-                    <button type="submit" class="btn btn-teal btn-sm">
+                    <button type="submit" id="btn_add_usertipe" class="btn btn-teal btn-sm">
                         <i class="mdi mdi-check btn-icon-prepend">
                         </i> Add </button>
                 </div>

@@ -13,8 +13,7 @@
             <div class="card-body">
                 <h4 class="cgrey" lang="en"> Your Registrasion Process Completed</h4>
                 <div class="col-8">
-                    <small class="clight">Our Community Administrators are on their way to approve your account, please
-                        check our email!</small>
+                    <small class="clight" id="txt_pesan_final"></small>
 
                     <a type="button" id="btn_done" class="btn btn-oren s14 btn-md btn-block"
                         style="width: 150px; margin-top: 2em;">Done</a>
@@ -77,8 +76,11 @@
                 console.log(result);
                 if (result != 0) {
                     $('#btn_done').attr("href", "/admin/confirm");
+                    $("#txt_pesan_final").html('Our Community Administrators are on their way to approve your account, please check our email!');
                 } else {
                     $('#btn_done').attr("href", '/');
+                     $("#txt_pesan_final").html('Login to Admin community page');
+
                 }
                  $('#btn_done').removeAttr("disabled", "disabled");
             },
