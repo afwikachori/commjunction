@@ -892,7 +892,7 @@ class AdminCommController extends Controller
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 

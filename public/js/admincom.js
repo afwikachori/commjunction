@@ -2995,7 +2995,15 @@ function detail_req_membership(id_subs) {
             $("#id_subs_acc").val(dt.user_id);
             $("#isi_username").html(dt.full_name);
             $("#isi_paytipe").html(dt.payment_method);
-            $("#isi_totalpay").html("Rp " + rupiah(dt.grand_total));
+
+            if (dt.grand_total == "Free" || dt.grand_total == 0 || dt.grand_total == "0"){
+                var tot = 'Free';
+            }else{
+                var tot = "Rp " + rupiah(dt.grand_total);
+            }
+            // alert(tot);
+
+            $("#isi_totalpay").html(tot);
             $("#isi_paystatus").html(dt.payment_status_title);
             $("#judul_member").html(dt.membership);
 
