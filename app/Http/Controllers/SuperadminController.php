@@ -911,11 +911,12 @@ class SuperadminController extends Controller
             "transaction_status" => $input['status_trans']
         ];
 
+fixin        // return $body;
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
         } else {
-            return $json;
+            return 'nodata';
         }
     }
 
