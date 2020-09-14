@@ -76,7 +76,7 @@
     <li class="nav-item">
         <a class="nav-link" href="/admin/notification_management">
             <span class="menu-title" lang="en">Notification Management</span>
-            <i class="mdi mdi-bell-ring menu-icon"></i>
+            <i class="mdi mdi-email-outline menu-icon"></i>
         </a>
     </li>
 
