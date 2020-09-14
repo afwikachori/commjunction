@@ -94,7 +94,7 @@
         </a>
     </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false"
                 aria-controls="general-pages">
                 <span class="menu-title">Module test</span>
@@ -114,6 +114,6 @@
                         <a class="nav-link" href="/admin/forum">Forum</a>
                     </li>
             </div>
-        </li>
+        </li> --}}
 
 </ul>
