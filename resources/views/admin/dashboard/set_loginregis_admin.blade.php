@@ -220,8 +220,7 @@
                                 <option value="2" lang="en">Phone Number & Password</option>
                                 <option value="3" lang="en">Email & Password</option>
                             </select>
-                            <input type="text" id="showtipeform" class="form-control input-abu" style="display: none;"
-                                disabled>
+                            <input type="text" id="showtipeform" class="form-control input-abu" style="display: none;" readonly disabled>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 1em;">

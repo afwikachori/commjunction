@@ -574,6 +574,9 @@ Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->na
 
 //SUPERADMIN
 Route::prefix('superadmin')->group(function () {
+//     Route::get('/', function () {
+//       return 'hal login super';
+// });
     Route::get('/', 'SuperadminController@loginSuperadminView')->name('superadmin');
     Route::get('/dashboard', 'SuperadminController@dashboarSuperView')->name('/dashboard');
     Route::get('/add_user', 'SuperadminController@UserSuperView')->name('/add_user');

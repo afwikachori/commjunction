@@ -35,6 +35,7 @@ class SuperadminController extends Controller
 
     public function loginSuperadminView()
     {
+        // return "string";
         return view('superadmin/login_superadmin');
     }
 
@@ -911,7 +912,6 @@ class SuperadminController extends Controller
             "transaction_status" => $input['status_trans']
         ];
 
-fixin        // return $body;
         $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
         if ($json['success'] == true) {
             return $json['data'];
