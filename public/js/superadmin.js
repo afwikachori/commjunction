@@ -744,6 +744,10 @@ function init_ready() {
         }
     }
 
+    if ($("#page_support_resetpassword").length != 0) {
+        get_list_komunitas_support_resetpass("all");
+    }
+
     // if ($("#").length != 0) {
 
     // }
@@ -1728,7 +1732,15 @@ function get_list_komunitas_trans() {
             "_token": token
         },
         success: function (result) {
-            // console.log(result);
+            console.log(result);
+            var result = result.data;
+            if (result.success == false) {
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'List Community');
+                } else {
+                    get_list_komunitas_trans();
+                }
+            } else {
             $('#komunitas').empty();
             $('#komunitas').append("<option disabled> Choose</option>");
 
@@ -1765,7 +1777,9 @@ function get_list_komunitas_trans() {
                 $('#komunitas2').val(OldKomunitas2);
             }
         }
+    }
     });
+
 }
 
 
@@ -1785,6 +1799,13 @@ function get_list_transaction_tipe() {
             "_token": token
         },
         success: function (result) {
+            if (result.success == false) {
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_transaction_tipe();
+                }
+            } else {
             $('#tipe_trans').empty();
             $('#tipe_trans').append("<option value='null'> Choose</option>");
 
@@ -1822,6 +1843,7 @@ function get_list_transaction_tipe() {
                 $('#tipe_trans2').val(OldTipetrans2);
             }
         }
+    }
     });
 }
 
@@ -1956,6 +1978,9 @@ function show_tabel_transaksi() {
                 "subs_name": $("#subs_name").val(),
                 "_token": token
             },
+            // success: function (result) {
+            //    console.log(result);
+            // },
             error: function (jqXHR, ajaxOptions, thrownError) {
                 var nofound = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty"><h5 class="cgrey">Data Not Found</h5></td></tr>';
                 // $('#tabel_subscriber tbody').;
@@ -4989,8 +5014,6 @@ function get_list_subscriber_support(id_kom) {
                 $("#list_subscriber").html($('#list_subscriber option').sort(function (x, y) {
                     return $(x).text() < $(y).text() ? -1 : 1;
                 }));
-
-                $("#list_subscriber").get(0).selectedIndex = 0;
             }
         },
         error: function (result) {
@@ -5323,7 +5346,258 @@ function get_list_subscriber_support(id_kom) {
 } //endfunction
 
 
+// SUPPORT RESET PASSWORD
 
+
+function tabel_user_resetpass(tipe) {
+    if (tipe == 2) {
+        var url_user = "/support/get_list_admin_support";
+    } else if (tipe == 3) {
+        var url_user = "/support/get_list_subscriber_support";
+    }
+    $('#tabel_user_resetpass').DataTable().clear().destroy();
+    $('#tabel_user_resetpass').empty();
+
+
+    var head = '<thead>' +
+        '<tr>' +
+        '<th><b>ID</b></th>' +
+        '<th><b>User</b></th>' +
+        '<th><b>Photo</b></th>' +
+        '<th><b>Fullname</b></th>' +
+        '<th><b>Email</b></th>' +
+        '<th><b>Action</b></th>' +
+        '</tr>' +
+        '</thead>';
+
+    $('#tabel_user_resetpass').html(head);
+
+
+    $("#modal_generate_user").modal('hide');
+    $("#tabel_user_resetpass").show();
+
+    var tabel = $('#tabel_user_resetpass').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print', {
+                text: 'JSON',
+                action: function (e, dt, button, config) {
+                    var data = dt.buttons.exportData();
+
+                    $.fn.dataTable.fileSave(
+                        new Blob([JSON.stringify(data)]),
+                        'Export.json'
+                    );
+                }
+            }
+        ],
+        responsive: true,
+        language: {
+            paginate: {
+                next: '<i class="mdi mdi-chevron-right"></i>',
+                previous: '<i class="mdi mdi-chevron-left">'
+            }
+        },
+        ajax: {
+            url: url_user,
+            type: 'POST',
+            dataSrc: '',
+            timeout: 30000,
+            data: {
+                "community_id": $("#list_komunitas_resetpas").val()
+            },
+            error: function (jqXHR, ajaxOptions, thrownError) {
+                var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+                $('#tabel_user_resetpass tbody').empty().append(nofound);
+            },
+        },
+        error: function (request, status, errorThrown) {
+            var nofound = '<tr class="odd"><td valign="top" colspan="8" class="dataTables_empty"><h3 class="cgrey">Data Not Found</h3</td></tr>';
+            $('#tabel_user_resetpass tbody').empty().append(nofound);
+
+        },
+        columns: [
+            {
+                mData: 'user_id',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'sso_picture',
+                render: function (data, type, row, meta) {
+                    var noimg = '/img/kosong.png';
+                    var pic = server_cdn + cekimage_cdn(data);
+                    return '<center><img src="' + pic + '" onclick="clickImage(this)" id="imgsprev' + meta.row + '" class="img-mini zoom rounded-circle" onerror = "this.onerror=null;this.src=\'' + noimg + '\';"></center>';
+
+                }
+            },
+            {
+                mData: 'full_name',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'email',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: 'user_name',
+                render: function (data, type, row, meta) {
+                    return '<span class="s13">' + data + '</span>';
+                }
+            },
+            {
+                mData: null,
+                render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref btnedit">' +
+                        '<i class="mdi mdi-eye"></i>' +
+                        '</button>';
+                }
+            }
+        ],
+        columnDefs:
+            [
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-gradient-light btn-rounded btn-icon detilhref"><i class="mdi mdi-eye"></i></button>',
+                    "targets": -1
+                }
+            ],
+
+    });
+
+    //DETAIL USERTYPE FROM DATATABLE
+    $('#tabel_user_resetpass tbody').on('click', 'button', function () {
+        var data = tabel.row($(this).parents('tr')).data();
+        console.log(data);
+
+
+        $("#id_komunitas").val("");
+        $("#user_tipe").val("");
+        $("#user_id").val("");
+
+        $("#detail_iduser").html(data.user_id);
+        $("#detail_fullname").html(data.full_name);
+        $("#detail_username").html(data.user_name);
+        $("#detail_email").html(data.email);
+
+        if (data.sso_picture != null && data.sso_picture != undefined) {
+            $("#imgsprev").attr("src", server_cdn + cekimage_cdn(data.sso_picture));
+        }
+        var idkom = $("#list_komunitas").val();
+        var tipeusr = $("#user_type").val();
+
+        $("#id_komunitas").val(idkom);
+        $("#user_tipe").val(tipeusr);
+        $("#user_id").val(data.user_id);
+
+        $("#modal_detail_user_reset").modal('show');
+    });
+
+}
+
+$('#status_komunitas').change(function () {
+    var item = $(this);
+    var id_status = item.val();
+
+    get_list_komunitas_support_resetpass(id_status);
+});
+
+
+function get_list_komunitas_support_resetpass(id_status) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: "/support/get_list_komunitas_support",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "community_status": id_status
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == false) {
+                if (result.status == 404) { // Apabila Data Tidak Ditemukan
+                    ui.popup.show('warning', result.message, 'Warning');
+                } else {
+                    get_list_komunitas_support_resetpass("all");
+                }
+            } else {
+            $("#hide_status_kom").show();
+            $('#list_komunitas_resetpas').empty();
+            if (result.success == false && result.code == "CMQ01") {
+                $('#list_komunitas_resetpas').append("<option disabled selected> No Data </option>");
+            } else {
+                $('#list_komunitas_resetpas').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#list_komunitas_resetpas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                //Short Function Ascending//
+                $("#list_komunitas_resetpas").html($('#list_komunitas_resetpas option').sort(function (x, y) {
+                    return $(x).text() < $(y).text() ? -1 : 1;
+                }));
+
+                $("#list_komunitas_resetpas").get(0).selectedIndex = 0;
+            }
+        }
+        }
+    });
+} //endfunction
+
+
+$("#btn_generate_user_resetpas").click(function () {
+    var usertipe = $("#user_type").val();
+
+    tabel_user_resetpass(usertipe);
+});
+
+
+$("#btn_send_otp_resetpas").click(function () {
+    get_random_otp();
+});
+
+
+function get_random_otp(params) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/support/get_random_otp',
+        type: 'POST',
+        dataSrc: '',
+        timeout: 30000,
+        data: {
+            "user_type": $("#user_tipe").val(),
+            "community_id": $("#id_komunitas").val(),
+            "user_id": $("#user_id").val(),
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.success == true) {
+                swal("OTP Sent", "Successfully resend otp number to email user", "success");
+            } else {
+                swal("Failed", result.message, "error");
+            }
+
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show detail login");
+        }
+    });
+}
 
 
  // ----------- XX ----------- OPERATIONAL SUPPORT SYSTEM _ SUPERADMIN ----------- XX -----------
+
+

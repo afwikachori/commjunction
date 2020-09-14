@@ -1677,9 +1677,6 @@ function get_result_setup_comsetting() {
                 if (domain.data != undefined) {
                     if (domain.data.subdomain != null || domain.data.subdomain == "") {
                         $('#subdomain').val(domain.data.subdomain);
-                        // if (domain.ready == true && domain.data.subdomain != "") {
-                        //     $('#subdomain').attr("disabled", "disabled");
-                        // }
                     }
                 }
 

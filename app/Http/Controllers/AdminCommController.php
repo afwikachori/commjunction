@@ -22,7 +22,8 @@ class AdminCommController extends Controller
     use RequestHelper;
     use SendRequestController;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware(['XFrameOptions']);
     }
 
@@ -613,6 +614,7 @@ class AdminCommController extends Controller
         $input = $request->all();
         $ses_login = session()->get('session_admin_logged');
         $token = $ses_login['access_token'];
+        $url = env('SERVICE') . 'commsetting/setcustominterface';
 
         $cekhtml = $this->cek_tag_html($input, false);
         if ($cekhtml >= 1) {
@@ -624,7 +626,13 @@ class AdminCommController extends Controller
         }
 
         // return $input;
-        $url = env('SERVICE') . 'commsetting/setcustominterface';
+        if (strpos($input['subdomain'], '.smartcomm.id') !== false) {
+            $cekdomain =  explode(".smartcomm.id", $input['subdomain']);
+            $subdomain = $cekdomain[0];
+        } else {
+              $subdomain = $input['subdomain'];
+        }
+
         $req = new RequestController;
         $fileimg = "";
 
@@ -686,7 +694,7 @@ class AdminCommController extends Controller
                         ];
                         $bodyku = json_encode([
                             "form_type"     => $input['form_tipe'],
-                            "subdomain"     => $input['subdomain'] . '.smartcomm.id',
+                            "subdomain"     => $subdomain . '.smartcomm.id',
                         ]);
 
                         $dtsend = [

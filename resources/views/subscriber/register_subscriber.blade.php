@@ -508,7 +508,7 @@
                     $("#deskripsi_comm").html(result.description);
                     $("#name_community").val(result.name);
 
-                    if (result.registration_data.length != 0) {
+                    if (result.registration_data.length != 0 && result.registration_data != "Belum di setting") {
                         get_custom_regis(result.registration_data);
                     } else {
 

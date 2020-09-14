@@ -17,7 +17,8 @@
                 <div class="row">
                     <div class="col-md-3 form-group">
                         <small class="clight s13">Choose Community</small>
-                        <select class="form-control list-blue" name="list_komunitas" id="list_komunitas" required>
+                        <select class="form-control list-blue" name="list_komunitas_failedattempt"
+                            id="list_komunitas_failedattempt" required>
                             <option selected disabled> Loading ... </option>
                         </select>
                     </div>
@@ -242,10 +243,10 @@
     var server_cdn = '{{ env("CDN") }}';
 
     $(document).ready(function () {
-        get_list_komunitas_support();
+        get_list_komunitas_failedattempt_support();
     });
 
-    function get_list_komunitas_support() {
+    function get_list_komunitas_failedattempt_support() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -260,46 +261,39 @@
             },
             success: function (result) {
                 console.log(result);
-                  if (result.success == false) {
-                if (result.status == 404) { // Apabila Data Tidak Ditemukan
-                    ui.popup.show('warning', result.message, 'Warning');
+                if (result.success == false && result.status != 404) {
+                    get_list_komunitas_failedattempt_support();
                 } else {
-                    get_list_komunitas_support();
-                }
-            } else {
+                    $("#hide_status_kom").show();
+                    $('#list_komunitas_failedattempt').empty();
 
-                $("#hide_status_kom").show();
-                $('#list_komunitas').empty();
-                if (result.success == false && result.code == "CMQ01") {
-                    $('#list_komunitas').append("<option disabled selected> No Data </option>");
-                } else {
-                    $('#list_komunitas').append("<option disabled> Choose</option>");
+                    $('#list_komunitas_failedattempt').append("<option disabled> Choose</option>");
 
                     for (var i = result.length - 1; i >= 0; i--) {
-                        $('#list_komunitas').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                        $('#list_komunitas_failedattempt').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
                     }
                     //Short Function Ascending//
-                    $("#list_komunitas").html($('#list_komunitas option').sort(function (x, y) {
+                    $("#list_komunitas_failedattempt").html($('#list_komunitas_failedattempt option').sort(function (x, y) {
                         return $(x).text() < $(y).text() ? -1 : 1;
                     }));
 
-                    $("#list_komunitas").get(0).selectedIndex = 0;
+                    $("#list_komunitas_failedattempt").get(0).selectedIndex = 0;
                 }
             }
         });
     } //endfunction
 
 
-    $('#list_komunitas').change(function () {
+    $('#list_komunitas_failedattempt').change(function () {
         var item = $(this);
         var id_kom = item.val();
 
-        get_list_subscriber_support(id_kom);
-        tabel_admin_komunitas(id_kom);
+        get_list_subscriber_support_failedattempt(id_kom);
+        tabel_admin_komunitas_failedattempt(id_kom);
     });
 
 
-    function get_list_subscriber_support(id_kom) {
+    function get_list_subscriber_support_failedattempt(id_kom) {
         $('#tabel_subscriber').DataTable().clear().destroy();
         $('#tabel_subscriber').empty();
 
@@ -402,10 +396,10 @@
                             return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp_subs">' +
                                 '<small>OTP</small></button>';
                         } else if (otp == false && login == true) {
-                             return '<button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
+                            return '<button type="button" class="btn btn-tosca btn-sm btn_reset_login_subs">' +
                                 '<small>Login</small></button>';
                         } else {
-                             return '<small class="cgrey s13">No Request</small>';
+                            return '<small class="cgrey s13">No Request</small>';
                         }
                     }
                 }
@@ -436,7 +430,7 @@
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas").val(),
+                    "community_id": $("#list_komunitas_failedattempt").val(),
                     "email": data.email
                 },
                 success: function (result) {
@@ -469,7 +463,7 @@
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas").val(),
+                    "community_id": $("#list_komunitas_failedattempt").val(),
                     "user_id": data.user_id,
                     "user_type": "3"
 
@@ -492,7 +486,7 @@
     } //endfunction
 
 
-    function tabel_admin_komunitas(id_kom) {
+    function tabel_admin_komunitas_failedattempt(id_kom) {
         $('#tabel_admin_komunitas').DataTable().clear().destroy();
         $('#tabel_admin_komunitas').empty();
 
@@ -588,7 +582,7 @@
                 {
                     mData: 'otp_attempt',
                     render: function (data, type, row, meta) {
-                         var otp = row.otp_attempt;
+                        var otp = row.otp_attempt;
                         var login = row.login_attempt;
                         if (otp == true && login == true) {
                             return '<button type="button" class="btn btn-abu btn-sm btn_reset_otp">' +
@@ -632,7 +626,7 @@
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas").val(),
+                    "community_id": $("#list_komunitas_failedattempt").val(),
                     "email": data.email
                 },
                 success: function (result) {
@@ -665,7 +659,7 @@
                 dataSrc: '',
                 timeout: 30000,
                 data: {
-                    "community_id": $("#list_komunitas").val(),
+                    "community_id": $("#list_komunitas_failedattempt").val(),
                     "user_id": data.user_id,
                     "user_type": "2"
 
