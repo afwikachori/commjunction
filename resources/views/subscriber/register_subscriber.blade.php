@@ -380,6 +380,8 @@
     </div>
 </div>
 
+@endsection
+
 @section('script')
 <script type="text/javascript">
     var server = '{{ env("SERVICE") }}';
