@@ -2120,8 +2120,9 @@ function show_card_transaksi() {
         },
         success: function (result) {
             console.log(result);
+            ui.popup.hideLoader();
 
-            if (result.length != 0) {
+            if (result.success==true) {
                 var isiui = '';
                 var num = 0;
                 $.each(result, function (i, item) {
@@ -2167,6 +2168,10 @@ function show_card_transaksi() {
                 $(".showin_table_trans").show();
                 $("#tab_transaction_param").hide();
 
+            }else{
+                setTimeout(function(){
+                    swal("Ops!", "Data Not found", "warning");
+                },500)
             }
         },
         error: function (result) {
