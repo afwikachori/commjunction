@@ -51,6 +51,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/report_management', 'AdminCommController@ReportManagementViewAdmin')->name('/report_management');
     Route::get('logout_admin_href', 'AdminCommController@logout_admin_href')->name('logout_admin_href');
 
+    //DASHBOARD ADMIN
+    Route::post('get_list_setting_dashboard_admin', 'AdminCommController@get_list_setting_dashboard_admin')->name('post.admin.list-dashsetting');
+    Route::post('setting_dashboard_admin', 'AdminCommController@setting_dashboard_admin')->name('post.admin.setting-dashboard');
+
+
+
 
     // MODULE EVENT
     Route::get('/event', 'ModuleController@EventModuleView')->name('get.admin.event-list');
@@ -574,9 +580,6 @@ Route::post('registerSubscriber', 'SubscriberController@registerSubscriber')->na
 
 //SUPERADMIN
 Route::prefix('superadmin')->group(function () {
-//     Route::get('/', function () {
-//       return 'hal login super';
-// });
     Route::get('/', 'SuperadminController@loginSuperadminView')->name('superadmin');
     Route::get('/dashboard', 'SuperadminController@dashboarSuperView')->name('/dashboard');
     Route::get('/add_user', 'SuperadminController@UserSuperView')->name('/add_user');

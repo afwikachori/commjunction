@@ -10,11 +10,11 @@
 
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="" class="nav-link text-primary" lang="en" data-lang-token="Refresh">Refresh<i
-                        class="mdi mdi-refresh icon-sm text-primary align-middle"></i>
-                </a>
-            </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <a href="#" class="nav-link text-primary"  data-toggle="modal" data-target="#modal_setting_dashboard_admin">
+                <span lang="en">Dashboard Setting</span>
+            </a>
+        </li>
         </ul>
     </nav>
 </div>
@@ -393,6 +393,44 @@
     </div>
 </div>
 <!-- END-MODAL -->
+
+
+<!-- MODAL SETTING  DASHBOARD ADMIN -->
+<div class="modal fade" id="modal_setting_dashboard_admin" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+            style="background-color: #ffffff; min-height: 350px; padding-left: 3%; padding-right: 3%;">
+            <div class="modal-header" style="padding-bottom: 2em !important; border:none;">
+                <h4 class="modal-title cgrey" lang="en">Setting Dashboard</h4>
+            </div> <!-- end-header -->
+
+            <div class="modal-body">
+                <form>
+                <!-- <form method="POST" id="form_setting_notif_admin" action="{{route('setting_notification_admin')}}">
+                    {{ csrf_field() }} -->
+                    <div id="isi_seting_dashadmin" class="div-setting-dash">
+
+                    </div>
+
+            </div> <!-- end-body -->
+
+            <div class="modal-footer" style="border: none;">
+                <center>
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal"
+                        style="border-radius: 10px;">
+                        <i class="mdi mdi-close"></i><span lang="en">Cancel</span>
+                    </button>
+                    &nbsp;
+                    <!-- <button type="submit" class="btn btn-teal btn-sm">
+                        <i class="mdi mdi-check btn-icon-prepend">
+                        </i><span lang="en">Setting</span></button> -->
+                </center>
+            </div> <!-- end-footer     -->
+            </form>
+        </div> <!-- END-MDL CONTENT -->
+    </div>
+</div>
 
 
 @endsection

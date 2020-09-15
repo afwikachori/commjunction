@@ -169,12 +169,6 @@
 
 
 
-
-
-
-
-
-
 <!-- MODAL EDIT NEWS -->
 <div class="modal fade" id="modal_edit_news" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
     aria-hidden="true">

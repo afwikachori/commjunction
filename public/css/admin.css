@@ -2542,3 +2542,20 @@ overflow-x: hidden;
     margin-top: 0.5em;
     padding: 5%;
 }
+
+
+.div-setting-dash{
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.radset-margin{
+    margin-top: -0.7em;
+}
+
+.hrcgreywhite{
+    color: #fbfbfb !important;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}

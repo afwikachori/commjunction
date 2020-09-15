@@ -1187,6 +1187,7 @@ function init_ready() {
     if ($("#page_dashboard_subscriber").length != 0) {
         ses_auth_subs();
 
+        total_news_dashboard();
         get_dashboard_news();
         get_friends_total();
 
@@ -2480,6 +2481,39 @@ function get_dashboard_news() {
     });
 }
 
+/// ------ NEWS MANAGEMENT  -----------
+function total_news_dashboard() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/subscriber/table_news_list',
+        type: 'POST',
+        datatype: 'JSON',
+        data: {
+            "_token": token
+        },
+        success: function (result) {
+
+            var jumlah = 0 ;
+            $.each(result, function (i, item) {
+                jumlah++;
+            });
+            console.log("news total = "+ jumlah);
+            $(".total_news").html(jumlah);
+
+
+        },
+        error: function (result) {
+            console.log("Cant Show Total News Dashboard");
+            console.log(result);
+        }
+    });
+}
+
 function get_friends_total() {
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -3235,7 +3269,7 @@ function get_list_event_subs() {
                             '<h5 class="clight"> ' + item.event_type_title + ' </h5>' +
                             '</div>' +
                             '<div class="col-md-8" style="text-align:right;">' +
-                            '<a type="button" class="btn btn-accent btn-sm" onclick="list_ticket_event_subs('+item.id+')">' +
+                            '<a type="button" class="btn btn-accent btn-sm" onclick="list_ticket_event_subs(' + item.id + ')">' +
                             '<small class="cwhite" lang="en"><i class="mdi mdi-ticket-confirmation btn-icon-prepend"></i> &nbsp;' +
                             'Buy Ticket</small></a>' +
                             '</div>' +
@@ -3326,7 +3360,8 @@ function list_ticket_event_subs(id_event) {
                     }
                 }
             },
-            { mData: 'price',
+            {
+                mData: 'price',
                 render: function (data, type, row, meta) {
                     return 'Rp. ' + data;
                 }
@@ -3377,7 +3412,7 @@ function list_ticket_event_subs(id_event) {
         $("#id_tiket_buy").val(data.id);
 
 
-        if(data.price == 0){
+        if (data.price == 0) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3391,14 +3426,14 @@ function list_ticket_event_subs(id_event) {
                 data: {
                     "id_tiket_buy": data.id,
                     "id_event_buy": idevent,
-                    "id_pay_initial" : 0
+                    "id_pay_initial": 0
                 },
                 success: function (result) {
                     console.log(result);
-                    if(result.success == true){
+                    if (result.success == true) {
                         swal("Success!", "Ticket will be process, please cek email!", "success");
-                    }else{
-                        swal("Failed !", result.message , "error");
+                    } else {
+                        swal("Failed !", result.message, "error");
                     }
 
                 }, error: function (result) {
@@ -3406,8 +3441,8 @@ function list_ticket_event_subs(id_event) {
                 }
             });
 
-        }else{
-        $("#modal_pay_initial").modal('show');
+        } else {
+            $("#modal_pay_initial").modal('show');
         }
     });
 }
@@ -3702,9 +3737,9 @@ function tabel_memberlist_subs(group_id) {
                 render: function (data, type, row) {
                     var iduser = row.user_id;
                     var id_subs_login = $("#id_user_subs").val();
-                    if(iduser == id_subs_login && data == true){
+                    if (iduser == id_subs_login && data == true) {
                         $("#btn_bc_forum_member").show();
-                    }else{
+                    } else {
                         $("#btn_bc_forum_member").hide();
                     }
                     if (data == true) {

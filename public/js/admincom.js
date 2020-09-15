@@ -225,15 +225,21 @@ function get_list_notif_navbar(idkom) {
         success: function (result) {
             // console.log(result);
             if (result.success == false) {
+                console.log();
                 if (result.status == 401 || result.message == "Unauthorized") {
                     ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
                     setTimeout(function () {
                         location.href = '/admin';
                     }, 5000);
                 } else {
-                    var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
-                    $("#isi_notif_navbar").html(nonotif);
-                    $("#ada_notif").hide();
+                    if (result.status != 404) {
+                        get_list_notif_navbar(idkom);
+                    } else {
+                        var nonotif = '<center><br><h3 class="clight">No Notification</h3><br></center>';
+                        $("#isi_notif_navbar").html(nonotif);
+                        $("#ada_notif").hide();
+                    }
+
                 }
             } else {
 
@@ -609,11 +615,12 @@ function listsetting() {
 
 function init_ready() {
     if ($("#page_dashboard_admin").length != 0) {
-        get_dashboard_admin(); //data dashboard
+        // get_dashboard_admin(); //data dashboard
         get_headline_news(); //data headline news
-        get_last_news(); //data Last news
-        get_topvisit_news(); //data Top Visit news
-        get_toploved_news(); //data Top Loved news
+        // get_last_news(); //data Last news
+        // get_topvisit_news(); //data Top Visit news
+        // get_toploved_news(); //data Top Loved news
+        // get_list_setting_dashboard_admin();
     }
 
 
@@ -1025,6 +1032,7 @@ function get_headline_news() {
             "_token": token
         },
         success: function (result) {
+            console.log("get_headline_news dash");
             console.log(result);
             if (result.success == false) {
                 if (result.status == 401 || result.message == "Unauthorized") {
@@ -1033,6 +1041,7 @@ function get_headline_news() {
                         location.href = '/admin';
                     }, 5000);
                 } else {
+                    // get_headline_news();
                     $("#hide_nodata_headline").show();
                     $("#headline_cont").hide();
                 }
@@ -1221,6 +1230,93 @@ function get_toploved_news() {
 
     });
 }
+
+function get_list_setting_dashboard_admin() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/admin/get_list_setting_dashboard_admin',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (result) {
+            console.log("get_list_setting_dashboard_admin");
+            console.log(result);
+
+
+            if (result.success == false) {
+                if (result.status == 401 || result.message == "Unauthorized") {
+                    ui.popup.show('error', 'Another user has been logged', 'Unauthorized ');
+                    setTimeout(function () {
+                        location.href = '/admin';
+                    }, 5000);
+                } else {
+                    if (result.status != 404){
+                        get_list_setting_dashboard_admin();
+                    }else{
+                        ui.popup.show('warning', result.message, 'Warning');
+                    }
+                }
+            } else {
+                var result = result.module_setting;
+                var uiku = '';
+                var inputipe = '';
+
+                $.each(result, function (i, item) {
+
+                    if (item.setting_type == 2) {
+                        inputipe = ' <input type="text" name="param' + item.id + '" value="' + item.value + '" class="form-control input-abu param_setting">';
+                    } else if (item.setting_type == 1) {
+                        if (item.value == 1) {
+                            var one = 'checked';
+                            var two = '';
+                        } else if (item.value == 2) {
+                            var one = '';
+                            var two = 'checked';
+                        } else {
+                            var one = '';
+                            var two = '';
+                        }
+                        inputipe = '<div class="form-group radset-margin">' +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiotrue' + item.id + '" value="1" ' + one + '>' +
+                            'True <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios' + item.id + '" id="radiofalse' + item.id + '" value="2" ' + one + '>' +
+                            'False <i class="input-helper"></i></label>' +
+                            '</div>' +
+                            '</div>';
+                    }
+
+                    uiku += '<div class="row">' +
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<small class="cgrey1 tebal name_setting">' + item.title + '</small>' +
+                        '<p class="clight s13 deskripsi_setting">' + item.description +
+                        '</p>' +
+                        '</div>' +
+                        '</div >' +
+                        '<div class="col-6">' + inputipe +
+                        '<input type="hidden" id="id_set' + item.id + '" name="id_set' + item.id + '" value="' + item.id + '">' +
+                        '</div>' +
+                        '</div><hr class="hrcgreywhite">';
+                });
+                $("#isi_seting_dashadmin").html(uiku);
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Cant Show");
+        }
+    });
+}
+
 // ---- END-DASHBOARD ------
 
 
@@ -2993,9 +3089,9 @@ function detail_req_membership(id_subs) {
             $("#isi_username").html(dt.full_name);
             $("#isi_paytipe").html(dt.payment_method);
 
-            if (dt.grand_total == "Free" || dt.grand_total == 0 || dt.grand_total == "0"){
+            if (dt.grand_total == "Free" || dt.grand_total == 0 || dt.grand_total == "0") {
                 var tot = 'Free';
-            }else{
+            } else {
                 var tot = "Rp " + rupiah(dt.grand_total);
             }
             // alert(tot);
@@ -3305,21 +3401,21 @@ function get_list_setting_module(idmod) {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id +'" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id + '" id="true_' + item.id + '" value="true" checked> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id +'" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id + '" id="false_' + item.id + '" value="false"> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         } else {
                             htmltag = '<div class="form-group">' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id +'" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-input" name="radio_pilih' + item.id + '" id="true_' + item.id + '" value="true"> True <i class="input-helper"></i></label>' +
                                 '</div>' +
                                 '<div class="form-check set_mod">' +
                                 '<label class="form-check-label">' +
-                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id +'" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
+                                '<input type="radio" class="form-check-inpu" name="radio_pilih' + item.id + '" id="false_' + item.id + '" value="false" checked> False <i class="input-helper"></i></label>' +
                                 '</div>';
                         }
                     }
@@ -4655,43 +4751,43 @@ function get_list_transaction_type_admin() {
             if (result.success == false) {
                 get_list_transaction_type_admin();
             } else {
-            $('#jenis_transaksi').empty();
-            $('#jenis_transaksi').append("<option disabled> Choose</option>");
+                $('#jenis_transaksi').empty();
+                $('#jenis_transaksi').append("<option disabled> Choose</option>");
 
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#jenis_transaksi').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#jenis_transaksi').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#jenis_transaksi").html($('#jenis_transaksi option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#jenis_transaksi").get(0).selectedIndex = 0;
+                // ______________________________________________________________
+                $('#jenis_transaksi2').empty();
+                $('#jenis_transaksi2').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#jenis_transaksi2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#jenis_transaksi2").html($('#jenis_transaksi2 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#jenis_transaksi2").get(0).selectedIndex = 0;
+                // ______________________________________________________________
+                $('#jenis_transaksi3').empty();
+                $('#jenis_transaksi3').append("<option disabled> Choose</option>");
+
+                for (var i = result.length - 1; i >= 0; i--) {
+                    $('#jenis_transaksi3').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
+                }
+                $("#jenis_transaksi3").html($('#jenis_transaksi3 option').sort(function (x, y) {
+                    return $(y).val() < $(x).val() ? -1 : 1;
+                }));
+
+                $("#jenis_transaksi3").get(0).selectedIndex = 0;
             }
-            $("#jenis_transaksi").html($('#jenis_transaksi option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#jenis_transaksi").get(0).selectedIndex = 0;
-            // ______________________________________________________________
-            $('#jenis_transaksi2').empty();
-            $('#jenis_transaksi2').append("<option disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#jenis_transaksi2').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#jenis_transaksi2").html($('#jenis_transaksi2 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#jenis_transaksi2").get(0).selectedIndex = 0;
-            // ______________________________________________________________
-            $('#jenis_transaksi3').empty();
-            $('#jenis_transaksi3').append("<option disabled> Choose</option>");
-
-            for (var i = result.length - 1; i >= 0; i--) {
-                $('#jenis_transaksi3').append("<option value=\"".concat(result[i].id, "\">").concat(result[i].name, "</option>"));
-            }
-            $("#jenis_transaksi3").html($('#jenis_transaksi3 option').sort(function (x, y) {
-                return $(y).val() < $(x).val() ? -1 : 1;
-            }));
-
-            $("#jenis_transaksi3").get(0).selectedIndex = 0;
         }
-    }
     });
 }
 
@@ -5133,55 +5229,55 @@ function detail_subpayment(subdata) {
             // console.log('sukses detail_subpayment');
             console.log(result);
 
-            if (result.success == false){
+            if (result.success == false) {
                 ui.popup.show('warning', result.message, 'Warning');
-            }else{
-            var isi = result[0];
-            $("#aktif_id_subpayment").val(isi.id);
-
-            var statusui = '';
-            if (isi.status == 0) {
-                statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
             } else {
-                statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
-            }
-            $("#subpay_status").html(statusui);
+                var isi = result[0];
+                $("#aktif_id_subpayment").val(isi.id);
 
-            if (isi.icon != null) {
-                var icn = isi.icon;
-                var cekimg = icn.slice(0, 1);
-
-                if (cekimg == "/") {
-                    var isiimg = icn.slice(1);
+                var statusui = '';
+                if (isi.status == 0) {
+                    statusui = '<small class="badge bg-abu melengkung10px cwhite" style="width :100px">Deactive</small>';
                 } else {
-                    var isiimg = isi.icon;
+                    statusui = '<small class="badge bg-biru melengkung10px cdarkgrey" style="width :100px">Active</small>';
                 }
-                imglogo = server_cdn + cekimage_cdn(isiimg);
-                $('#img_subpay').attr('src', imglogo);
+                $("#subpay_status").html(statusui);
+
+                if (isi.icon != null) {
+                    var icn = isi.icon;
+                    var cekimg = icn.slice(0, 1);
+
+                    if (cekimg == "/") {
+                        var isiimg = icn.slice(1);
+                    } else {
+                        var isiimg = isi.icon;
+                    }
+                    imglogo = server_cdn + cekimage_cdn(isiimg);
+                    $('#img_subpay').attr('src', imglogo);
+                }
+
+                $("#detail_nama_pay").html(isi.payment_title);
+                $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
+
+                var uiku2 = '';
+                $.each(isi.description, function (i, item) {
+                    uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
+                });
+                $("#detail_deskripsi_pay").html(uiku2);
+
+                $("#detail_bank_pay").html(isi.payment_bank_name);
+                $("#detail_rekening").html(isi.payment_account);
+                $("#detail_bankname").html(isi.payment_owner_name);
+
+                if (isi.level_status != 2) {
+                    $(".isi_setting_subpay").html('<center><br><br><br><h4 class="clight" lang="en">Please activate this payment to start setting</h4></center');
+                } else {
+                    get_setting_subpayment_admin(isi.id);
+                }
+
+                $("#modal_detail_payment_all_admin").modal("hide");
+                $("#modal_detail_subpayment_super").modal("show");
             }
-
-            $("#detail_nama_pay").html(isi.payment_title);
-            $("#detail_time_limit").html(isi.payment_time_limit + "  Day");
-
-            var uiku2 = '';
-            $.each(isi.description, function (i, item) {
-                uiku2 += '<li style="background-color: #ffffff !important;">' + item + '</li>';
-            });
-            $("#detail_deskripsi_pay").html(uiku2);
-
-            $("#detail_bank_pay").html(isi.payment_bank_name);
-            $("#detail_rekening").html(isi.payment_account);
-            $("#detail_bankname").html(isi.payment_owner_name);
-
-            if (isi.level_status != 2) {
-                $(".isi_setting_subpay").html('<center><br><br><br><h4 class="clight" lang="en">Please activate this payment to start setting</h4></center');
-            } else {
-                get_setting_subpayment_admin(isi.id);
-            }
-
-            $("#modal_detail_payment_all_admin").modal("hide");
-            $("#modal_detail_subpayment_super").modal("show");
-        }
         },
         error: function (result) {
             console.log(result);
@@ -6967,9 +7063,9 @@ function tabel_discussion_group_forum(group_id) {
         var edittags = '';
         $.each(arrTags, function (i, item) {
             show += ' <li><small>' + item + '</small></li>';
-            edittags += '<li class="addedTag">'+item+'<span onclick="$(this).parent().remove();"' +
+            edittags += '<li class="addedTag">' + item + '<span onclick="$(this).parent().remove();"' +
                 'class="tagRemove"> x </span> <input type="hidden" name="edit-tags[]"' +
-                'value="' + item +'"></li>';
+                'value="' + item + '"></li>';
         });
         $("#info_tags").html(show);
         $("#old_tags").html(edittags);
@@ -6985,16 +7081,16 @@ function tabel_discussion_group_forum(group_id) {
         var komen = '';
         $.each(data.comments, function (i, item) {
             var fotoq = server_cdn + cekimage_cdn(item.photo);
-            komen += '<div class="row komenrow">'+
+            komen += '<div class="row komenrow">' +
                 '<div class="col-md-2">' +
-                '<img src="' + fotoq +'" class="rounded-circle img-fluid zoom img-profil-komen" id="profilkomen'+i+'"' +
+                '<img src="' + fotoq + '" class="rounded-circle img-fluid zoom img-profil-komen" id="profilkomen' + i + '"' +
                 'onclick="clickImage(this)"' +
                 'onerror="this.onerror=null;this.src=\'' + noprofil + '\';">' +
                 '</div>' +
                 '<div class="col-md-10">' +
-                '<span class="cteal tebal s13">'+ item.name+'</span> &nbsp;&nbsp;' +
-                '<small class="clight">' + dateTime(item.created_at)+'</small>' +
-                '<p class="s14 cgrey">'+item.message+'</p>' +
+                '<span class="cteal tebal s13">' + item.name + '</span> &nbsp;&nbsp;' +
+                '<small class="clight">' + dateTime(item.created_at) + '</small>' +
+                '<p class="s14 cgrey">' + item.message + '</p>' +
                 '</div>' +
                 '</div>';
         });

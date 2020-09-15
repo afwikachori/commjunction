@@ -2987,4 +2987,67 @@ class AdminCommController extends Controller
             return $json;
         }
     }
+
+
+
+    public function get_list_setting_dashboard_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $url = env('SERVICE') . 'dashboard/listsetting';
+
+        $input = $request->all();
+
+        $json = $this->post_get_request(null, $url, true, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            return $json['data'];
+        } else {
+            return $json;
+        }
+    }
+
+
+    public function setting_dashboard_admin(Request $request)
+    {
+        $ses_login = session()->get('session_admin_logged');
+        $input = $request->all();
+
+        $cekhtml = $this->cek_tag_html($input, false);
+        if ($cekhtml >= 1) {
+            $error['status'] = 500;
+            $error['message'] = "Contains tag html in input are not allowed";
+            $error['success'] = false;
+            alert()->error($error['message'], 'Failed')->persistent('Done');
+            return back();
+        }
+
+        $datain = $request->except('_token');
+        $dtin = array_chunk($datain, 2);
+        $csrf = '';
+
+        $data = [];
+        foreach ($dtin as $i => $dt) {
+            $dataArray = [
+                "setting_id" => $dt[1],
+                "value" => $dt[0],
+            ];
+            array_push($data, $dataArray);
+        }
+
+        $url = env('SERVICE') . 'notificationmanagement/setting';
+
+        $body = [
+            "data_setting" => $data
+        ];
+
+        return $body;
+        $json = $this->post_get_request($body, $url, false, $ses_login['access_token'], null);
+        if ($json['success'] == true) {
+            alert()->success('Successfully Setting Dashboard Admin Community', 'Done!')->autoclose(4500);
+            return back();
+        } else {
+            alert()->error($json['message'], 'Failed!')->autoclose(4500);
+            return back();
+        }
+    }
+
 } //end-class

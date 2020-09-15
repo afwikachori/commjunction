@@ -80,6 +80,8 @@
                                 data-lang-token="Terms & Conditions">Terms & Conditions</a>
                             <a class="cdarkgrey" href="" style="padding-right: 2em;" lang="en"
                                 data-lang-token="">Privacy Policy</a>
+                            <a class="cdarkgrey" href="/admin/confirm" style="padding-right: 2em;" lang="en"
+                                data-lang-token="">Confirm Payment</a>
                         </span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                             <a class="cdarkgrey" href="" style="padding-left: 2em;" lang="en"
